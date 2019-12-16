@@ -13,17 +13,17 @@
 
         public void SetRasterState(RasterStateDescription description)
         {
-            throw new System.NotImplementedException();
+            invoker.SetRasterState(description);
         }
 
         public void SetScissor(int x, int y, int width, int height)
         {
-            throw new System.NotImplementedException();
+            invoker.SetScissor(x, y, width, height);
         }
 
         public void SetViewport(int x, int y, int width, int height)
         {
-            throw new System.NotImplementedException();
+            invoker.SetViewport(x, y, width, height);
         }
     }
 }

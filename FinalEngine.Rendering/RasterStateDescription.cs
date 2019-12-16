@@ -1,6 +1,6 @@
 ﻿namespace FinalEngine.Rendering
 {
-    public enum CullFaceMode
+    public enum CullFaceType
     {
         Front,
 
@@ -30,7 +30,7 @@
                 return new RasterStateDescription()
                 {
                     CullEnabled = false,
-                    CullFaceMode = CullFaceMode.Back,
+                    CullFaceType = CullFaceType.Back,
                     WindingDirection = WindingDirection.CounterClockwise,
                     FillMode = RasterMode.Fill,
                     ScissorEnabled = false
@@ -40,7 +40,7 @@
 
         public bool CullEnabled { get; set; }
 
-        public CullFaceMode CullFaceMode { get; set; }
+        public CullFaceType CullFaceType { get; set; }
 
         public RasterMode FillMode { get; set; }
 
