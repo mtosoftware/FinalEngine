@@ -1,8 +1,8 @@
-﻿using System;
-using Vortice.Direct3D11;
-
-namespace FinalEngine.Rendering.Direct3D
+﻿namespace FinalEngine.Rendering.Direct3D
 {
+    using System;
+    using Vortice.Direct3D11;
+
     public sealed class Direct3DRasterizer : IRasterizer
     {
         private readonly ID3D11DeviceInvoker device;

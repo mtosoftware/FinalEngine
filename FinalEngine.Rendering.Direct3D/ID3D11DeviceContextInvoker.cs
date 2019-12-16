@@ -1,7 +1,7 @@
-﻿using Vortice.Direct3D11;
-
-namespace FinalEngine.Rendering.Direct3D
+﻿namespace FinalEngine.Rendering.Direct3D
 {
+    using Vortice.Direct3D11;
+
     public interface ID3D11DeviceContextInvoker
     {
         void RSSetScissor(int x, int y, int width, int height);

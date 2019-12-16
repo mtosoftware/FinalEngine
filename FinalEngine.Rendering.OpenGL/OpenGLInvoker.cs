@@ -2,7 +2,7 @@
 {
     using OpenTK.Graphics.OpenGL;
 
-    public sealed class OpenGL3Invoker : IOpenGLInvoker
+    public sealed class OpenGLInvoker : IOpenGLInvoker
     {
         public void CullFace(CullFaceMode mode)
         {
