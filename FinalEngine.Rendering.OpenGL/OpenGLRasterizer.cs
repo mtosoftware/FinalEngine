@@ -1,6 +1,7 @@
 ﻿namespace FinalEngine.Rendering.OpenGL
 {
     using System;
+    using OpenTK.Graphics.OpenGL;
 
     public sealed class OpenGLRasterizer : IRasterizer
     {
@@ -13,7 +14,27 @@
 
         public void SetRasterState(RasterStateDescription description)
         {
-            invoker.SetRasterState(description);
+            if (description.CullEnabled)
+            {
+                invoker.Enable(EnableCap.CullFace);
+            }
+            else
+            {
+                invoker.Disable(EnableCap.CullFace);
+            }
+
+            if (description.ScissorEnabled)
+            {
+                GL.Enable(EnableCap.ScissorTest);
+            }
+            else
+            {
+                invoker.Disable(EnableCap.ScissorTest);
+            }
+
+            invoker.CullFace(description.CullFaceType == CullFaceType.Front ? CullFaceMode.Front : CullFaceMode.Back);
+            invoker.FrontFace(description.WindingDirection == WindingDirection.Clockwise ? FrontFaceDirection.Cw : FrontFaceDirection.Ccw);
+            invoker.PolygonMode(MaterialFace.FrontAndBack, description.FillMode == RasterMode.Fill ? PolygonMode.Fill : PolygonMode.Line);
         }
 
         public void SetScissor(int x, int y, int width, int height)

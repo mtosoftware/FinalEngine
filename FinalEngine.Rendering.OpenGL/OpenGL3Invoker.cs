@@ -4,29 +4,29 @@
 
     public sealed class OpenGL3Invoker : IOpenGLInvoker
     {
-        public void SetRasterState(RasterStateDescription description)
+        public void CullFace(CullFaceMode mode)
         {
-            if (description.CullEnabled)
-            {
-                GL.Enable(EnableCap.CullFace);
-            }
-            else
-            {
-                GL.Disable(EnableCap.CullFace);
-            }
+            GL.CullFace(mode);
+        }
 
-            if (description.ScissorEnabled)
-            {
-                GL.Enable(EnableCap.ScissorTest);
-            }
-            else
-            {
-                GL.Disable(EnableCap.ScissorTest);
-            }
+        public void Disable(EnableCap cap)
+        {
+            GL.Disable(cap);
+        }
 
-            GL.CullFace(description.CullFaceType == CullFaceType.Front ? CullFaceMode.Front : CullFaceMode.Back);
-            GL.FrontFace(description.WindingDirection == WindingDirection.Clockwise ? FrontFaceDirection.Cw : FrontFaceDirection.Ccw);
-            GL.PolygonMode(MaterialFace.FrontAndBack, description.FillMode == RasterMode.Fill ? PolygonMode.Fill : PolygonMode.Line);
+        public void Enable(EnableCap cap)
+        {
+            GL.Enable(cap);
+        }
+
+        public void FrontFace(FrontFaceDirection mode)
+        {
+            GL.FrontFace(mode);
+        }
+
+        public void PolygonMode(MaterialFace face, PolygonMode mode)
+        {
+            GL.PolygonMode(face, mode);
         }
 
         public void SetScissor(int x, int y, int width, int height)

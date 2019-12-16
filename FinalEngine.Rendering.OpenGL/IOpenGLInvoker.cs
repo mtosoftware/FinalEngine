@@ -1,8 +1,18 @@
 ﻿namespace FinalEngine.Rendering.OpenGL
 {
+    using OpenTK.Graphics.OpenGL;
+
     public interface IOpenGLInvoker
     {
-        void SetRasterState(RasterStateDescription description);
+        void CullFace(CullFaceMode mode);
+
+        void Disable(EnableCap cap);
+
+        void Enable(EnableCap cap);
+
+        void FrontFace(FrontFaceDirection mode);
+
+        void PolygonMode(MaterialFace face, PolygonMode mode);
 
         void SetScissor(int x, int y, int width, int height);
 
