@@ -6,6 +6,8 @@
 
     public interface ID3D11DeviceContextInvoker
     {
+        void DrawIndexed(int indexCount, int startIndexLocation, int baseVertexLocation);
+
         void IASetIndexBuffer(ID3D11Buffer indexBuffer, Format format, int offset);
 
         void IASetPrimitiveTopology(PrimitiveTopology topology);

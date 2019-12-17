@@ -1,4 +1,6 @@
-﻿namespace RenderingAPI
+﻿using FinalEngine.Rendering;
+
+namespace RenderingAPI
 {
     using System;
     using System.Runtime.InteropServices;
@@ -82,9 +84,11 @@
             var deviceContextInvoker = new D3D11DeviceContextInvoker(deviceContext);
             var swapChainInvoker = new D3D11SwapChainInvoker(swapChain);
 
-            var inputAssembler = new Direct3D11InputAssembler(deviceContextInvoker);
-            var renderContext = new Direct3D11SwapChain(swapChainInvoker);
-            var resourceFactory = new Direct3D11GPUResourceFactory(deviceInvoker);
+            var renderDevice = new Direct3D11RenderDevice(deviceInvoker, deviceContextInvoker, swapChainInvoker);
+
+            IInputAssembler inputAssembler = renderDevice.InputAssembler;
+            ISwapChain renderContext = renderDevice.SwapChain;
+            IGPUResourceFactory resourceFactory = renderDevice.Factory;
 
             // Bind the color attachment "framebuffer"
             deviceContext.OMSetRenderTargets(defaultTarget);

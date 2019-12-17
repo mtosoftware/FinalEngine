@@ -14,6 +14,11 @@
             this.deviceContext = deviceContext ?? throw new ArgumentNullException(nameof(deviceContext), $"The specified { nameof(deviceContext) } parameter is null.");
         }
 
+        public void DrawIndexed(int indexCount, int startIndexLocation, int baseVertexLocation)
+        {
+            deviceContext.DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
+        }
+
         public void IASetIndexBuffer(ID3D11Buffer indexBuffer, Format format, int offset)
         {
             deviceContext.IASetIndexBuffer(indexBuffer, format, offset);
