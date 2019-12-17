@@ -18,13 +18,13 @@
     [StructLayout(LayoutKind.Sequential)]
     public struct Vertex
     {
+        public static readonly int SizeInBytes = Marshal.SizeOf<Vertex>();
+
         public float X;
 
         public float Y;
 
         public float Z;
-
-        public static readonly int SizeInBytes = Marshal.SizeOf<Vertex>();
 
         public Vertex(float x, float y, float z)
         {
@@ -83,11 +83,9 @@
             var deviceContextInvoker = new D3D11DeviceContextInvoker(deviceContext);
             var swapChainInvoker = new D3D11SwapChainInvoker(swapChain);
 
-            var renderDevice = new Direct3D11RenderDevice(deviceInvoker, deviceContextInvoker, swapChainInvoker);
-
-            IInputAssembler inputAssembler = renderDevice.InputAssembler;
-            ISwapChain renderContext = renderDevice.SwapChain;
-            IGPUResourceFactory resourceFactory = renderDevice.Factory;
+            IInputAssembler inputAssembler = new Direct3D11InputAssembler(deviceContextInvoker);
+            ISwapChain renderContext = new Direct3D11SwapChain(swapChainInvoker);
+            IGPUResourceFactory resourceFactory = new Direct3D11GPUResourceFactory(deviceInvoker);
 
             // Bind the color attachment "framebuffer"
             deviceContext.OMSetRenderTargets(defaultTarget);
@@ -144,7 +142,7 @@
             {
                 deviceContext.ClearRenderTargetView(defaultTarget, new Color4(0.0f, 0.0f, 0.0f, 1.0f));
 
-                renderDevice.DrawIndices(0, indices.Length);
+                deviceContext.DrawIndexed(indices.Length, 0, 0);
 
                 renderContext.Present();
                 window.ProcessEvents();
