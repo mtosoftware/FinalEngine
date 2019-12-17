@@ -1,5 +1,6 @@
 ﻿namespace RenderingAPI
 {
+    #region Usings
     using System;
     using System.IO;
     using System.Numerics;
@@ -16,7 +17,9 @@
     using Vortice.DXGI;
     using Vortice.Mathematics;
     using Usage = Vortice.DXGI.Usage;
+    #endregion
 
+    #region Vertex
     [StructLayout(LayoutKind.Sequential)]
     public struct Vertex
     {
@@ -32,11 +35,14 @@
             Color = color;
         }
     }
+    #endregion
 
     internal static class Program
     {
         private static void Main()
         {
+            #region Just setup stuff
+
             var window = new OpenTKWindow(800, 600, "Final Engine")
             {
                 Visible = true
@@ -81,6 +87,8 @@
             // Bind the color attachment "framebuffer"
             deviceContext.OMSetRenderTargets(defaultTarget);
 
+            #endregion
+
             var deviceInvoker = new D3D11DeviceInvoker(device);
             var contextInvoker = new D3D11DeviceContextInvoker(deviceContext);
             var compilerInvoker = new D3D11CompilerInvoker(Compiler.Compile);
@@ -93,23 +101,6 @@
 
             var vertexShader = (Direct3DVertexShader)shaderCompiler.CompileShaderFromSource(PipelineTarget.Vertex, File.ReadAllText("vertex.hlsl", Encoding.ASCII));
             var fragmentShader = (Direct3DFragmentShader)shaderCompiler.CompileShaderFromSource(PipelineTarget.Fragment, File.ReadAllText("fragment.hlsl", Encoding.ASCII));
-
-            /*
-            // Start IShaderCopmiler
-            if (Compiler.CompileFromFile("vertex.hlsl", "VShader", "vs_5_0", out Blob vsBlob, out Blob vsError).Failure)
-            {
-                Console.WriteLine(vsError.ConvertToString());
-            }
-
-            if (Compiler.CompileFromFile("fragment.hlsl", "PShader", "ps_5_0", out Blob fsBlob, out Blob fsError).Failure)
-            {
-                Console.WriteLine(fsError.ConvertToString());
-            }
-
-            ID3D11VertexShader vertexShader = device.CreateVertexShader(vsBlob.BufferPointer, vsBlob.BufferSize);
-            ID3D11PixelShader fragmentShader = device.CreatePixelShader(fsBlob.BufferPointer, fsBlob.BufferSize);
-            // End IShaderCompiler
-            */
 
             deviceContext.VSSetShader(vertexShader.Resource);
             deviceContext.PSSetShader(fragmentShader.Resource);
