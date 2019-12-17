@@ -15,15 +15,11 @@
             this.deviceContext = deviceContext ?? throw new ArgumentNullException(nameof(deviceContext), $"The specified { nameof(deviceContext) } parameter is null.");
         }
 
-        public void DrawIndices(int first, int count)
-        {
-            deviceContext.DrawIndexed(count, first, 0);
-        }
-
         public void SetBuffer(IBuffer buffer)
         {
-            ID3D11Buffer resource = buffer.Cast<Direct3D11Buffer>().Resource;
-            int stride = resource.Description.StructureByteStride;
+            Direct3D11Buffer dxBuffer = buffer.Cast<Direct3D11Buffer>();
+            ID3D11Buffer resource = dxBuffer.Resource;
+            int stride = dxBuffer.StrideReference;
 
             switch (buffer.Type)
             {

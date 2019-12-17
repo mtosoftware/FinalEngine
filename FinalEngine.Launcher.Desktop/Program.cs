@@ -3,11 +3,14 @@
     using System;
     using System.Runtime.InteropServices;
     using FinalEngine.Platform.Desktop;
+    using FinalEngine.Rendering.Buffers;
+    using FinalEngine.Rendering.Direct3D11;
     using Vortice.D3DCompiler;
     using Vortice.Direct3D;
     using Vortice.Direct3D11;
     using Vortice.DXGI;
     using Vortice.Mathematics;
+    using PrimitiveTopology = FinalEngine.Rendering.PrimitiveTopology;
     using Usage = Vortice.DXGI.Usage;
 
     [StructLayout(LayoutKind.Sequential)]
@@ -123,16 +126,13 @@
                 new Vertex(-0.5f, -0.5f, 0, 0, 0, 1, 1.0f)
             };
 
-            ID3D11Buffer vertexBuffer = device.CreateBuffer(vertices, new BufferDescription()
-            {
-                Usage = Vortice.Direct3D11.Usage.Dynamic,
-                SizeInBytes = Vertex.SizeInBytes * vertices.Length,
-                BindFlags = BindFlags.VertexBuffer,
-                CpuAccessFlags = CpuAccessFlags.Write,
-            });
+            var inputAssembler = new Direct3D11InputAssembler(deviceContext);
+            var resourceFactory = new Direct3D11GPUResourceFactory(device);
 
-            deviceContext.IASetVertexBuffers(0, 1, new ID3D11Buffer[] { vertexBuffer }, new int[] { Vertex.SizeInBytes }, new int[] { 0 });
-            deviceContext.IASetPrimitiveTopology(PrimitiveTopology.TriangleList);
+            IBuffer buffer = resourceFactory.CreateBuffer(BufferType.VertexBuffer, vertices, vertices.Length * Vertex.SizeInBytes, Vertex.SizeInBytes);
+
+            inputAssembler.SetPrimitiveTopology(PrimitiveTopology.Triangle);
+            inputAssembler.SetBuffer(buffer);
 
             while (!window.IsClosing)
             {
@@ -142,7 +142,8 @@
                 window.ProcessEvents();
             }
 
-            vertexBuffer.Release();
+            buffer.Dispose();
+
             fragmentShader.Release();
             vertexShader.Release();
             defaultTarget.Release();

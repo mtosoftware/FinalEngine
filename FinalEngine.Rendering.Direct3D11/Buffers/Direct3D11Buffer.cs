@@ -26,11 +26,14 @@
                 Usage = Usage.Immutable,
                 CpuAccessFlags = CpuAccessFlags.None,
                 SizeInBytes = sizeInBytes,
-                StructureByteStride = strideReference,
                 OptionFlags = ResourceOptionFlags.None
             };
 
             Resource = device.CreateBuffer(description, data);
+
+            Type = type;
+            SizeInBytes = sizeInBytes;
+            StrideReference = strideReference;
         }
 
         ~Direct3D11Buffer()
@@ -39,6 +42,8 @@
         }
 
         public int SizeInBytes { get; }
+
+        public int StrideReference { get; }
 
         public BufferType Type { get; }
 
