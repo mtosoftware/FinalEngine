@@ -23,15 +23,6 @@
                 invoker.Disable(EnableCap.CullFace);
             }
 
-            if (description.ScissorEnabled)
-            {
-                GL.Enable(EnableCap.ScissorTest);
-            }
-            else
-            {
-                invoker.Disable(EnableCap.ScissorTest);
-            }
-
             invoker.CullFace(description.CullFaceType == CullFaceType.Front ? CullFaceMode.Front : CullFaceMode.Back);
             invoker.FrontFace(description.WindingDirection == WindingDirection.Clockwise ? FrontFaceDirection.Cw : FrontFaceDirection.Ccw);
             invoker.PolygonMode(MaterialFace.FrontAndBack, description.FillMode == RasterMode.Fill ? PolygonMode.Fill : PolygonMode.Line);

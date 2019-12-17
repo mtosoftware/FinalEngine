@@ -14,23 +14,6 @@
         void SetRasterState(RasterStateDescription description);
 
         /// <summary>
-        ///   Sets the current scissor testing area to the specified <paramref name="x"/>, <paramref name="y"/>, <paramref name="width"/> and <paramref name="height"/> coordinates respectively.
-        /// </summary>
-        /// <param name="x">
-        ///   Specifies a <see cref="Int32"/> that represents the X-coordinate (from the lower left corner) of the testing area.
-        /// </param>
-        /// <param name="y">
-        ///   Specifies a <see cref="Int32"/> that represents the Y-coordainte (From the lower left corner) of the testing area.
-        /// </param>
-        /// <param name="width">
-        ///   Specifies a <see cref="Int32"/> that represents the width of the testing area.
-        /// </param>
-        /// <param name="height">
-        ///   Specifies a <see cref="Int32"/> that represents the height of the testing area.
-        /// </param>
-        void SetScissor(int x, int y, int width, int height);
-
-        /// <summary>
         ///   Sets the viewport.
         /// </summary>
         /// <param name="x">

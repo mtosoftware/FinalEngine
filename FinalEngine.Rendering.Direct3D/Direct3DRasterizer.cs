@@ -19,7 +19,6 @@
         {
             ID3D11RasterizerState state = device.CreateRasterizerState(new RasterizerDescription()
             {
-                ScissorEnable = description.ScissorEnabled,
                 CullMode = !description.CullEnabled ? CullMode.None : description.CullFaceType == CullFaceType.Front ? CullMode.Front : CullMode.Back,
                 FrontCounterClockwise = description.WindingDirection == WindingDirection.CounterClockwise,
                 FillMode = description.FillMode == RasterMode.Fill ? FillMode.Solid : FillMode.Wireframe

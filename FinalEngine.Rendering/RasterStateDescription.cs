@@ -32,8 +32,7 @@
                     CullEnabled = false,
                     CullFaceType = CullFaceType.Back,
                     WindingDirection = WindingDirection.CounterClockwise,
-                    FillMode = RasterMode.Fill,
-                    ScissorEnabled = false
+                    FillMode = RasterMode.Fill
                 };
             }
         }
@@ -43,8 +42,6 @@
         public CullFaceType CullFaceType { get; set; }
 
         public RasterMode FillMode { get; set; }
-
-        public bool ScissorEnabled { get; set; }
 
         public WindingDirection WindingDirection { get; set; }
     }
