@@ -26,6 +26,7 @@
                 Usage = Usage.Immutable,
                 CpuAccessFlags = CpuAccessFlags.None,
                 SizeInBytes = sizeInBytes,
+                StructureByteStride = strideReference,
                 OptionFlags = ResourceOptionFlags.None
             };
 

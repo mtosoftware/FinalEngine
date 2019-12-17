@@ -3,6 +3,7 @@
     using System;
     using System.Runtime.InteropServices;
     using FinalEngine.Platform.Desktop;
+    using FinalEngine.Rendering;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.Direct3D11;
     using Vortice.D3DCompiler;
@@ -22,25 +23,13 @@
 
         public float Z;
 
-        public float CX;
-
-        public float CY;
-
-        public float CZ;
-
-        public float CA;
-
         public static readonly int SizeInBytes = Marshal.SizeOf<Vertex>();
 
-        public Vertex(float x, float y, float z, float cX, float cY, float cZ, float cA)
+        public Vertex(float x, float y, float z)
         {
             X = x;
             Y = y;
             Z = z;
-            CX = cX;
-            CY = cY;
-            CZ = cZ;
-            CA = cA;
         }
     }
 
@@ -113,7 +102,6 @@
             InputElementDescription[] inputElements =
             {
                 new InputElementDescription("POSITION", 0, Format.R32G32B32_Float, 0, 0, InputClassification.PerVertexData, 0),
-                new InputElementDescription("COLOR", 0, Format.R32G32B32_Float, 12, 0, InputClassification.PerVertexData, 0)
             };
 
             ID3D11InputLayout inputLayout = device.CreateInputLayout(inputElements, vsBlob);
@@ -121,28 +109,39 @@
 
             Vertex[] vertices =
             {
-                new Vertex(0, 0.5f, 0, 1, 0, 0, 1.0f),
-                new Vertex(0.5f, -0.5f, 0, 0, 1, 0, 1.0f),
-                new Vertex(-0.5f, -0.5f, 0, 0, 0, 1, 1.0f)
+                new Vertex(0.5f,  0.5f, 0.0f),
+                new Vertex(0.5f, -0.5f, 0.0f),
+                new Vertex(-0.5f, -0.5f, 0.0f),
+                new Vertex(-0.5f,  0.5f, 0.0f)
+            };
+
+            int[] indices =
+            {
+                0, 1, 3,
+                1, 2, 3
             };
 
             var inputAssembler = new Direct3D11InputAssembler(deviceContext);
-            var resourceFactory = new Direct3D11GPUResourceFactory(device);
+            IGPUResourceFactory resourceFactory = new Direct3D11GPUResourceFactory(device);
 
-            IBuffer buffer = resourceFactory.CreateBuffer(BufferType.VertexBuffer, vertices, vertices.Length * Vertex.SizeInBytes, Vertex.SizeInBytes);
+            IBuffer vertexBuffer = resourceFactory.CreateBuffer(BufferType.VertexBuffer, vertices, vertices.Length * Vertex.SizeInBytes, Vertex.SizeInBytes);
+            IBuffer indexBuffer = resourceFactory.CreateBuffer(BufferType.IndexBuffer, indices, indices.Length * sizeof(int), 0);
 
             inputAssembler.SetPrimitiveTopology(PrimitiveTopology.Triangle);
-            inputAssembler.SetBuffer(buffer);
+
+            inputAssembler.SetBuffer(vertexBuffer);
+            inputAssembler.SetBuffer(indexBuffer);
 
             while (!window.IsClosing)
             {
-                deviceContext.ClearRenderTargetView(defaultTarget, new Color4(1.0f, 1.0f, 0.0f, 1.0f));
-                deviceContext.Draw(3, 0);
+                deviceContext.ClearRenderTargetView(defaultTarget, new Color4(0.0f, 0.0f, 0.0f, 1.0f));
+                deviceContext.DrawIndexed(indices.Length, 0, 0);
                 swapChain.Present(0, PresentFlags.None);
                 window.ProcessEvents();
             }
 
-            buffer.Dispose();
+            vertexBuffer.Dispose();
+            indexBuffer.Dispose();
 
             fragmentShader.Release();
             vertexShader.Release();
