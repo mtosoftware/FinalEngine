@@ -1,10 +1,9 @@
-﻿using FinalEngine.Rendering;
-
-namespace RenderingAPI
+﻿namespace RenderingAPI
 {
     using System;
     using System.Runtime.InteropServices;
     using FinalEngine.Platform.Desktop;
+    using FinalEngine.Rendering;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.Direct3D11;
     using FinalEngine.Rendering.Direct3D11.Invokers;
@@ -144,7 +143,9 @@ namespace RenderingAPI
             while (!window.IsClosing)
             {
                 deviceContext.ClearRenderTargetView(defaultTarget, new Color4(0.0f, 0.0f, 0.0f, 1.0f));
-                deviceContext.DrawIndexed(indices.Length, 0, 0);
+
+                renderDevice.DrawIndices(0, indices.Length);
+
                 renderContext.Present();
                 window.ProcessEvents();
             }

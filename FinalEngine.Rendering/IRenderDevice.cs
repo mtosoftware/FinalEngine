@@ -1,6 +1,6 @@
 ﻿namespace FinalEngine.Rendering
 {
-    public interface IRenderDevice
+    public interface IRenderDevice : IRenderContext
     {
         IGPUResourceFactory Factory { get; }
 
