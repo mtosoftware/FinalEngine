@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Vortice.D3DCompiler" Version="1.4.0" />
     <PackageReference Include="Vortice.Direct3D11" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Logging\FinalEngine.Logging.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
   </ItemGroup>
 
