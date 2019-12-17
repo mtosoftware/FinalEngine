@@ -6,8 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.Logging\FinalEngine.Logging.csproj" />
+    <PackageReference Include="Vortice.D3DCompiler" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering.Direct3D11\FinalEngine.Rendering.Direct3D11.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="fragment.hlsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="vertex.hlsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
