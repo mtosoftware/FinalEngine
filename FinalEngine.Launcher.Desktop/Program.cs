@@ -80,8 +80,10 @@
 
             var deviceInvoker = new D3D11DeviceInvoker(device);
             var deviceContextInvoker = new D3D11DeviceContextInvoker(deviceContext);
+            var swapChainInvoker = new D3D11SwapChainInvoker(swapChain);
 
             var inputAssembler = new Direct3D11InputAssembler(deviceContextInvoker);
+            var renderContext = new Direct3D11SwapChain(swapChainInvoker);
             var resourceFactory = new Direct3D11GPUResourceFactory(deviceInvoker);
 
             // Bind the color attachment "framebuffer"
@@ -139,7 +141,7 @@
             {
                 deviceContext.ClearRenderTargetView(defaultTarget, new Color4(0.0f, 0.0f, 0.0f, 1.0f));
                 deviceContext.DrawIndexed(indices.Length, 0, 0);
-                swapChain.Present(0, PresentFlags.None);
+                renderContext.Present();
                 window.ProcessEvents();
             }
 
