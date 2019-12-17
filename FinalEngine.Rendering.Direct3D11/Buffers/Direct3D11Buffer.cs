@@ -8,9 +8,7 @@
     {
         private bool isDisposed;
 
-        private ID3D11Buffer resource;
-
-        public Direct3D11Buffer(ID3D11Device device, BufferType type, IntPtr data, int sizeInBytes)
+        public Direct3D11Buffer(ID3D11Device device, BufferType type, IntPtr data, int sizeInBytes, int strideReference)
         {
             if (device == null)
             {
@@ -24,15 +22,15 @@
 
             var description = new BufferDescription()
             {
-                BindFlags = type == BufferType.VertexBuffer ? BindFlags.VertexBuffer : BindFlags.IndexBuffer,
+                BindFlags = type.ToDirect3D(),
                 Usage = Usage.Immutable,
                 CpuAccessFlags = CpuAccessFlags.None,
                 SizeInBytes = sizeInBytes,
-                StructureByteStride = 0,
+                StructureByteStride = strideReference,
                 OptionFlags = ResourceOptionFlags.None
             };
 
-            resource = device.CreateBuffer(description, data);
+            Resource = device.CreateBuffer(description, data);
         }
 
         ~Direct3D11Buffer()
@@ -43,6 +41,8 @@
         public int SizeInBytes { get; }
 
         public BufferType Type { get; }
+
+        internal ID3D11Buffer Resource { get; private set; }
 
         public void Dispose()
         {
@@ -59,10 +59,10 @@
 
             if (disposing)
             {
-                if (resource != null)
+                if (Resource != null)
                 {
-                    resource.Dispose();
-                    resource = null;
+                    Resource.Dispose();
+                    Resource = null;
                 }
             }
 
