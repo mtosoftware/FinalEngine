@@ -4,5 +4,6 @@
 
     public interface IShader : IDisposable
     {
+        PipelineTarget EntryPoint { get; }
     }
 }
