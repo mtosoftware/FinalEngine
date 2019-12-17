@@ -3,14 +3,15 @@
     using System;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.Direct3D11.Buffers;
+    using FinalEngine.Rendering.Direct3D11.Invokers;
     using Vortice.Direct3D11;
     using Vortice.DXGI;
 
     public sealed class Direct3D11InputAssembler : IInputAssembler
     {
-        private readonly ID3D11DeviceContext deviceContext;
+        private readonly ID3D11DeviceContextInvoker deviceContext;
 
-        public Direct3D11InputAssembler(ID3D11DeviceContext deviceContext)
+        public Direct3D11InputAssembler(ID3D11DeviceContextInvoker deviceContext)
         {
             this.deviceContext = deviceContext ?? throw new ArgumentNullException(nameof(deviceContext), $"The specified { nameof(deviceContext) } parameter is null.");
         }
@@ -24,7 +25,7 @@
             switch (buffer.Type)
             {
                 case BufferType.VertexBuffer:
-                    deviceContext.IASetVertexBuffers(0, 1, new ID3D11Buffer[] { resource }, new int[] { stride }, new int[] { 0 });
+                    deviceContext.IASetVertexBuffer(resource, stride, 0);
                     break;
 
                 case BufferType.IndexBuffer:

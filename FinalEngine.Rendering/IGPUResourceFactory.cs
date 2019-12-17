@@ -26,7 +26,7 @@
         ///   Specifies a <see cref="Int32"/> that represents the size (in bytes) of the structure of type <typeparamref name="T"/> (if any).
         /// </param>
         /// <returns>
-        ///   The newly created <see cref="IBuffer"/>, containg the specified <paramref name="data"/> of type, <typeparamref name="T"/>.
+        ///   The newly created <see cref="IBuffer"/>, containing the specified <paramref name="data"/> of type, <typeparamref name="T"/>.
         /// </returns>
         IBuffer CreateBuffer<T>(BufferType type, T[] data, int sizeInBytes, int structStride) where T : struct;
     }

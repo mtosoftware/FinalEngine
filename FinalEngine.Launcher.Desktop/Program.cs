@@ -3,9 +3,9 @@
     using System;
     using System.Runtime.InteropServices;
     using FinalEngine.Platform.Desktop;
-    using FinalEngine.Rendering;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.Direct3D11;
+    using FinalEngine.Rendering.Direct3D11.Invokers;
     using Vortice.D3DCompiler;
     using Vortice.Direct3D;
     using Vortice.Direct3D11;
@@ -78,6 +78,12 @@
             ID3D11RenderTargetView defaultTarget = device.CreateRenderTargetView(backBuffer);
             backBuffer.Release();
 
+            var deviceInvoker = new D3D11DeviceInvoker(device);
+            var deviceContextInvoker = new D3D11DeviceContextInvoker(deviceContext);
+
+            var inputAssembler = new Direct3D11InputAssembler(deviceContextInvoker);
+            var resourceFactory = new Direct3D11GPUResourceFactory(deviceInvoker);
+
             // Bind the color attachment "framebuffer"
             deviceContext.OMSetRenderTargets(defaultTarget);
 
@@ -120,9 +126,6 @@
                 0, 1, 3,
                 1, 2, 3
             };
-
-            var inputAssembler = new Direct3D11InputAssembler(deviceContext);
-            IGPUResourceFactory resourceFactory = new Direct3D11GPUResourceFactory(device);
 
             IBuffer vertexBuffer = resourceFactory.CreateBuffer(BufferType.VertexBuffer, vertices, vertices.Length * Vertex.SizeInBytes, Vertex.SizeInBytes);
             IBuffer indexBuffer = resourceFactory.CreateBuffer(BufferType.IndexBuffer, indices, indices.Length * sizeof(int), 0);

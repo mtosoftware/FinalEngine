@@ -4,13 +4,13 @@
     using System.Runtime.InteropServices;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.Direct3D11.Buffers;
-    using Vortice.Direct3D11;
+    using FinalEngine.Rendering.Direct3D11.Invokers;
 
     public sealed class Direct3D11GPUResourceFactory : IGPUResourceFactory
     {
-        private readonly ID3D11Device device;
+        private readonly ID3D11DeviceInvoker device;
 
-        public Direct3D11GPUResourceFactory(ID3D11Device device)
+        public Direct3D11GPUResourceFactory(ID3D11DeviceInvoker device)
         {
             this.device = device ?? throw new ArgumentNullException(nameof(device), $"The specified { nameof(device) } parameter is null.");
         }
