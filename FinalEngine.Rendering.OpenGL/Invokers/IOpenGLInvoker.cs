@@ -1,4 +1,4 @@
-﻿namespace FinalEngine.Rendering.OpenGL
+﻿namespace FinalEngine.Rendering.OpenGL.Invokers
 {
     using OpenTK.Graphics.OpenGL;
 

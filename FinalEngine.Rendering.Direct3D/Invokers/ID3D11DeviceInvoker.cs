@@ -1,4 +1,4 @@
-﻿namespace FinalEngine.Rendering.Direct3D
+﻿namespace FinalEngine.Rendering.Direct3D.Invokers
 {
     using Vortice.Direct3D11;
 
