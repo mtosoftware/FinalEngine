@@ -4,5 +4,10 @@
 
     public interface IBuffer : IDisposable
     {
+        int SizeInBytes { get; }
+
+        BufferType Type { get; }
+
+        BufferUsage Usage { get; }
     }
 }
