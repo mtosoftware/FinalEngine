@@ -1,11 +1,15 @@
 ﻿namespace RenderingAPI
 {
     using System;
+    using System.IO;
     using System.Numerics;
     using System.Runtime.InteropServices;
+    using System.Text;
     using FinalEngine.Platform.Desktop;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.Direct3D.Invokers;
+    using FinalEngine.Rendering.Direct3D.Pipeline;
+    using FinalEngine.Rendering.Pipeline;
     using Vortice.D3DCompiler;
     using Vortice.Direct3D;
     using Vortice.Direct3D11;
@@ -79,12 +83,18 @@
 
             var deviceInvoker = new D3D11DeviceInvoker(device);
             var contextInvoker = new D3D11DeviceContextInvoker(deviceContext);
+            var compilerInvoker = new D3D11CompilerInvoker(Compiler.Compile);
 
             var rasterizer = new Direct3DRasterizer(deviceInvoker, contextInvoker);
+            var shaderCompiler = new Direct3DShaderCompiler(deviceInvoker, compilerInvoker);
 
             rasterizer.SetRasterState(RasterStateDescription.Default);
             rasterizer.SetViewport(0, 0, window.Width, window.Height);
 
+            var vertexShader = (Direct3DVertexShader)shaderCompiler.CompileShaderFromSource(PipelineTarget.Vertex, File.ReadAllText("vertex.hlsl", Encoding.ASCII));
+            var fragmentShader = (Direct3DFragmentShader)shaderCompiler.CompileShaderFromSource(PipelineTarget.Fragment, File.ReadAllText("fragment.hlsl", Encoding.ASCII));
+
+            /*
             // Start IShaderCopmiler
             if (Compiler.CompileFromFile("vertex.hlsl", "VShader", "vs_5_0", out Blob vsBlob, out Blob vsError).Failure)
             {
@@ -99,9 +109,10 @@
             ID3D11VertexShader vertexShader = device.CreateVertexShader(vsBlob.BufferPointer, vsBlob.BufferSize);
             ID3D11PixelShader fragmentShader = device.CreatePixelShader(fsBlob.BufferPointer, fsBlob.BufferSize);
             // End IShaderCompiler
+            */
 
-            deviceContext.VSSetShader(vertexShader);
-            deviceContext.PSSetShader(fragmentShader);
+            deviceContext.VSSetShader(vertexShader.Resource);
+            deviceContext.PSSetShader(fragmentShader.Resource);
 
             InputElementDescription[] inputElements =
             {
@@ -109,7 +120,7 @@
                 new InputElementDescription("COLOR", 0, Format.R32G32B32_Float, 12, 0, InputClassification.PerVertexData, 0)
             };
 
-            ID3D11InputLayout inputLayout = device.CreateInputLayout(inputElements, vsBlob);
+            ID3D11InputLayout inputLayout = device.CreateInputLayout(inputElements, vertexShader.Blob);
             deviceContext.IASetInputLayout(inputLayout);
 
             Vertex[] vertices =
@@ -139,8 +150,8 @@
             }
 
             vertexBuffer.Release();
-            fragmentShader.Release();
-            vertexShader.Release();
+            fragmentShader.Dispose();
+            vertexShader.Dispose();
             defaultTarget.Release();
             swapChain.Release();
             deviceContext.Release();

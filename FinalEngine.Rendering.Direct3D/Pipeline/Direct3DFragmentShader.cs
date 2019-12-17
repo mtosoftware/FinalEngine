@@ -1,18 +1,23 @@
 ﻿namespace FinalEngine.Rendering.Direct3D.Pipeline
 {
     using System;
+    using FinalEngine.Rendering.Direct3D.Invokers;
     using FinalEngine.Rendering.Pipeline;
+    using Vortice.Direct3D;
     using Vortice.Direct3D11;
 
     public sealed class Direct3DFragmentShader : IShader
     {
         private bool isDisposed;
 
-        private ID3D11PixelShader resource;
-
-        public Direct3DFragmentShader(ID3D11PixelShader resource)
+        public Direct3DFragmentShader(ID3D11DeviceInvoker device, Blob blob)
         {
-            this.resource = resource ?? throw new ArgumentNullException(nameof(resource), $"The specified { nameof(resource) } parameter is null.");
+            if (device == null)
+            {
+                throw new ArgumentNullException(nameof(device), $"The specified { nameof(device) } parameter is null.");
+            }
+
+            Resource = device.CreatePixelShader(blob.BufferPointer, blob.BufferSize);
         }
 
         ~Direct3DFragmentShader()
@@ -24,6 +29,8 @@
         {
             get { return PipelineTarget.Fragment; }
         }
+
+        public ID3D11PixelShader Resource { get; private set; }
 
         public void Dispose()
         {
@@ -40,10 +47,10 @@
 
             if (disposing)
             {
-                if (resource != null)
+                if (Resource != null)
                 {
-                    resource.Release();
-                    resource = null;
+                    Resource.Release();
+                    Resource = null;
                 }
             }
 

@@ -30,26 +30,14 @@
             switch (target)
             {
                 case PipelineTarget.Vertex:
-                    return CreateAndCompileVertexShader(sourceCode);
+                    return new Direct3DVertexShader(device, CreateShaderBlob(sourceCode, "VShader", "vs"));
 
                 case PipelineTarget.Fragment:
-                    return CreateAndCompileFragmentShader(sourceCode);
+                    return new Direct3DFragmentShader(device, CreateShaderBlob(sourceCode, "PShader", "ps"));
 
                 default:
                     throw new NotSupportedException($"The specified { nameof(target) } is not supported.");
             }
-        }
-
-        private IShader CreateAndCompileFragmentShader(string sourceCode)
-        {
-            Blob blob = CreateShaderBlob(sourceCode, "PShader", "ps");
-            return new Direct3DFragmentShader(device.CreatePixelShader(blob.BufferPointer, blob.BufferSize));
-        }
-
-        private IShader CreateAndCompileVertexShader(string sourceCode)
-        {
-            Blob blob = CreateShaderBlob(sourceCode, "VShader", "vs");
-            return new Direct3DVertexShader(device.CreateVertexShader(blob.BufferPointer, blob.BufferSize));
         }
 
         private Blob CreateShaderBlob(string sourceCode, string entryPoint, string profileSuffix)
