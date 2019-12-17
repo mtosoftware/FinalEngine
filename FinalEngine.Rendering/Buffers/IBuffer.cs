@@ -7,7 +7,5 @@
         int SizeInBytes { get; }
 
         BufferType Type { get; }
-
-        BufferUsage Usage { get; }
     }
 }
