@@ -14,6 +14,8 @@ namespace FinalEngine.Rendering
     /// </summary>
     public interface IPipeline
     {
+        int MaxTextureSlots { get; }
+
         /// <summary>
         ///   Sets the specified <paramref name="program"/>, binding it to the GPU.
         /// </summary>

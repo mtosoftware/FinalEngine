@@ -74,20 +74,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetTexture(texture.Object);
 
             // Assert
-            texture.Verify(x => x.Bind(), Times.Once);
-        }
-
-        [Test]
-        public void SetTextureShouldInvokeSlotWhenInvoked()
-        {
-            // Arrange
-            var texture = new Mock<IOpenGLTexture>();
-
-            // Act
-            this.pipeline.SetTexture(texture.Object, 24);
-
-            // Assert
-            texture.Verify(x => x.Slot(24), Times.Once);
+            texture.Verify(x => x.Bind(0), Times.Once);
         }
 
         [Test]

@@ -38,12 +38,6 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         }
 
         /// <inheritdoc/>
-        public void ActiveTexture(TextureUnit texture)
-        {
-            GL.ActiveTexture(texture);
-        }
-
-        /// <inheritdoc/>
         public void AttachShader(int program, int shader)
         {
             GL.AttachShader(program, shader);
@@ -59,6 +53,12 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         public void BindTexture(TextureTarget target, int texture)
         {
             GL.BindTexture(target, texture);
+        }
+
+        /// <inheritdoc/>
+        public void BindTextureUnit(int unit, int texture)
+        {
+            GL.BindTextureUnit(unit, texture);
         }
 
         /// <inheritdoc/>
@@ -262,6 +262,12 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         public int GenVertexArray()
         {
             return GL.GenVertexArray();
+        }
+
+        /// <inheritdoc/>
+        public int GetInteger(GetPName pname)
+        {
+            return GL.GetInteger(pname);
         }
 
         /// <inheritdoc/>

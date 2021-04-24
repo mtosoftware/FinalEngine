@@ -131,19 +131,22 @@ namespace FinalEngine.Rendering.OpenGL.Textures
         protected bool IsDisposed { get; private set; }
 
         /// <summary>
-        ///   Binds this <see cref="OpenGLTexture2D"/> to the graphics processing unit.
+        ///   Binds this <see cref="IOpenGLTexture"/> to the graphics processing unit.
         /// </summary>
+        /// <param name="unit">
+        ///   Specifies an <see cref="int"/> that represents which texture slot to activate.
+        /// </param>
         /// <exception cref="ObjectDisposedException">
         ///   The <see cref="OpenGLTexture2D"/> has been disposed.
         /// </exception>
-        public void Bind()
+        public void Bind(int unit)
         {
             if (this.IsDisposed)
             {
                 throw new ObjectDisposedException(nameof(OpenGLTexture2D));
             }
 
-            this.invoker.BindTexture(TextureTarget.Texture2D, this.rendererID);
+            this.invoker.BindTextureUnit(unit, this.rendererID);
         }
 
         /// <summary>
@@ -153,25 +156,6 @@ namespace FinalEngine.Rendering.OpenGL.Textures
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        ///   Activates the specified <paramref name="index"/> to a texture slot.
-        /// </summary>
-        /// <param name="index">
-        ///   Specifies an <see cref="int"/> that represents which texture slot to activate.
-        /// </param>
-        /// <exception cref="ObjectDisposedException">
-        ///   The <see cref="OpenGLTexture2D"/> has been disposed.
-        /// </exception>
-        public void Slot(int index)
-        {
-            if (this.IsDisposed)
-            {
-                throw new ObjectDisposedException(nameof(OpenGLTexture2D));
-            }
-
-            this.invoker.ActiveTexture(TextureUnit.Texture0 + index);
         }
 
         /// <summary>

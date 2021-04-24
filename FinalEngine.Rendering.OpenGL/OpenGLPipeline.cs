@@ -13,6 +13,7 @@ namespace FinalEngine.Rendering.OpenGL
     using FinalEngine.Rendering.OpenGL.Textures;
     using FinalEngine.Rendering.Pipeline;
     using FinalEngine.Rendering.Textures;
+    using OpenTK.Graphics.OpenGL4;
 
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IPipeline"/>.
@@ -64,6 +65,11 @@ namespace FinalEngine.Rendering.OpenGL
         {
             this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
             this.uniformLocations = new Dictionary<string, int>(InitialSizeCapacity);
+        }
+
+        public int MaxTextureSlots
+        {
+            get { return this.invoker.GetInteger(GetPName.MaxTextureImageUnits); }
         }
 
         /// <summary>
@@ -128,9 +134,7 @@ namespace FinalEngine.Rendering.OpenGL
             }
 
             this.boundTexture = glTexture;
-
-            this.boundTexture.Bind();
-            this.boundTexture.Slot(slot);
+            this.boundTexture.Bind(slot);
         }
 
         /// <summary>

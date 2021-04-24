@@ -35,13 +35,13 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         private OpenGLTexture2D texture;
 
         [Test]
-        public void BindShouldInvokeBindTextureWhenTextureIsNotDisposed()
+        public void BindShouldInvokeBindTextureUnitWhenTextureIsNotDisposed()
         {
             // Act
-            this.texture.Bind();
+            this.texture.Bind(4);
 
             // Assert
-            this.invoker.Verify(x => x.BindTexture(TextureTarget.Texture2D, ID), Times.Once);
+            this.invoker.Verify(x => x.BindTextureUnit(4, ID), Times.Once);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
             this.texture.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.texture.Bind());
+            Assert.Throws<ObjectDisposedException>(() => this.texture.Bind(0));
         }
 
         [Test]
@@ -168,26 +168,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
             };
 
             this.texture = new OpenGLTexture2D(this.invoker.Object, this.mapper.Object, this.description, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1));
-        }
-
-        [Test]
-        public void SlotShouldInvokeActiveTextureWhenTextureIsNotDisposed()
-        {
-            // Act
-            this.texture.Slot(15);
-
-            // Assert
-            this.invoker.Verify(x => x.ActiveTexture(TextureUnit.Texture0 + 15));
-        }
-
-        [Test]
-        public void SlotShouldThrowObjectDisposedExceptionWhenTextureIsDisposed()
-        {
-            // Arrange
-            this.texture.Dispose();
-
-            // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.texture.Slot(3));
         }
 
         [TearDown]

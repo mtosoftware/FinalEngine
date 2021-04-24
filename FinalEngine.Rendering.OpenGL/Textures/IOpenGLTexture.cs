@@ -16,21 +16,13 @@ namespace FinalEngine.Rendering.OpenGL.Textures
         /// <summary>
         ///   Binds this <see cref="IOpenGLTexture"/> to the graphics processing unit.
         /// </summary>
-        /// <exception cref="ObjectDisposedException">
-        ///   The <see cref="IOpenGLTexture"/> has been disposed.
-        /// </exception>
-        void Bind();
-
-        /// <summary>
-        ///   Activates the specified <paramref name="index"/> to a texture slot.
-        /// </summary>
-        /// <param name="index">
+        /// <param name="unit">
         ///   Specifies an <see cref="int"/> that represents which texture slot to activate.
         /// </param>
         /// <exception cref="ObjectDisposedException">
         ///   The <see cref="IOpenGLTexture"/> has been disposed.
         /// </exception>
-        void Slot(int index);
+        void Bind(int unit);
 
         /// <summary>
         ///   Unbinds this <see cref="IOpenGLTexture"/> from the graphics processing unit.
