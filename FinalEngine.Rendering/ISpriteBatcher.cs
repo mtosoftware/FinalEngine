@@ -22,8 +22,8 @@ namespace FinalEngine.Rendering
 
         void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale);
 
-        void ProcessBatch(IVertexBuffer vertexBuffer);
-
         void Reset();
+
+        void UpdateBatch(IVertexBuffer vertexBuffer);
     }
 }

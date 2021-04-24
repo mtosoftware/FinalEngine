@@ -17,13 +17,7 @@ namespace FinalEngine.Rendering
         public TextureBinder(IPipeline pipeline)
         {
             this.pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline), $"The specified {nameof(pipeline)} parameter cannot be null.");
-
             this.textureToSlotMap = new Dictionary<ITexture, int>();
-
-            for (int i = 0; i < pipeline.MaxTextureSlots; i++)
-            {
-                pipeline.SetUniform($"u_textures[{i}]", i);
-            }
         }
 
         public bool ShouldReset
@@ -46,6 +40,8 @@ namespace FinalEngine.Rendering
             int slot = this.textureToSlotMap.Count;
 
             this.pipeline.SetTexture(texture, slot);
+            this.pipeline.SetUniform($"u_textures[{slot}]", slot);
+
             this.textureToSlotMap.Add(texture, slot);
 
             return slot;

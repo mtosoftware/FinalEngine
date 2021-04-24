@@ -34,10 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Shaders\shader.frag">
+    <None Update="Resources\Shaders\sprite_batching.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\shader.vert">
+    <None Update="Resources\Shaders\sprite_batching.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Textures\wood.png">

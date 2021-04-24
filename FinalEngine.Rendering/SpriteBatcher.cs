@@ -104,7 +104,7 @@ namespace FinalEngine.Rendering
             this.CurrentVertexCount += 4;
         }
 
-        public void ProcessBatch(IVertexBuffer vertexBuffer)
+        public void UpdateBatch(IVertexBuffer vertexBuffer)
         {
             if (vertexBuffer == null)
             {
@@ -117,6 +117,8 @@ namespace FinalEngine.Rendering
         public void Reset()
         {
             this.vertices.Clear();
+            this.CurrentIndexCount = 0;
+            this.CurrentVertexCount = 0;
         }
     }
 }
