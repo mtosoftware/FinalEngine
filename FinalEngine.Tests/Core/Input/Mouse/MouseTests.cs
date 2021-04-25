@@ -19,9 +19,33 @@ namespace FinalEngine.Tests.Core.Input.Mouse
         private Mock<IMouseDevice> mouseDevice;
 
         [Test]
+        public void DeltaShouldReturnDeviceLocationDeltaWhenDeviceIsNotNull()
+        {
+            // Act
+            PointF actual = this.mouse.Delta;
+
+            // Assert
+            this.mouseDevice.VerifyGet(x => x.LocationDelta, Times.Once);
+        }
+
+        [Test]
+        public void DeltaShouldReturnPointEmptyWhenDeviceIsNull()
+        {
+            // Arrange
+            var mouse = new Mouse(null);
+            PointF expected = Point.Empty;
+
+            // Act
+            PointF actual = mouse.Delta;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void DeviceButtonDownShouldThrowArgumentNullExceptionWhenEventDataIsNull()
         {
-            // At and assert
+            // Act and assert
             Assert.Throws<ArgumentNullException>(() => this.mouseDevice.Raise(x => x.ButtonDown += null, new object[] { new object(), null }));
         }
 

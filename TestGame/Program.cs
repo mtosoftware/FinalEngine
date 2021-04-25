@@ -87,7 +87,7 @@ namespace TestGame
             float rot = 0;
             float x = 0;
             float y = 0;
-            float speed = 4;
+            const float speed = 4;
 
             while (!window.IsExiting)
             {
