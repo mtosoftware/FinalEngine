@@ -67,6 +67,12 @@ namespace FinalEngine.Rendering.OpenGL
             this.uniformLocations = new Dictionary<string, int>(InitialSizeCapacity);
         }
 
+        /// <summary>
+        ///   Gets the maximum texture slots that can be utilized by the GPU.
+        /// </summary>
+        /// <value>
+        ///   The maximum texture slots that can be utilized by the GPU.
+        /// </value>
         public int MaxTextureSlots
         {
             get { return this.invoker.GetInteger(GetPName.MaxTextureImageUnits); }

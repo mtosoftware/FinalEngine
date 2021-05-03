@@ -49,6 +49,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         /// <inheritdoc cref="NativeWindow.MousePosition"/>
         Vector2 MousePosition { get; set; }
 
+        /// <inheritdoc cref="NativeWindow.MouseState"/>
         IMouseStateInvoker MouseState { get; }
 
         /// <inheritdoc cref="NativeWindow.Title"/>
