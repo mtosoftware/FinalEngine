@@ -88,7 +88,7 @@ namespace FinalEngine.Rendering
               layout(location = 2) out float out_textureID;
 
               uniform mat4 u_projection;
-              uniform mat4 u_view;
+              uniform mat4 u_transform;
 
               void main()
               {
@@ -96,7 +96,7 @@ namespace FinalEngine.Rendering
                   out_texCoord = in_texCoord;
                   out_textureID = in_textureID;
 
-                  gl_Position = u_projection * u_view * vec4(in_position, 0.0, 1.0);
+                  gl_Position = u_projection * u_transform * vec4(in_position, 0.0, 1.0);
               }";
 
         private IShader? fragmentShader;
@@ -118,15 +118,7 @@ namespace FinalEngine.Rendering
             this.vertexShader = renderDevice.Factory.CreateShader(PipelineTarget.Vertex, this.vertexShaderSource);
             this.fragmentShader = renderDevice.Factory.CreateShader(PipelineTarget.Fragment, this.fragmentShaderSource);
             this.shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { this.vertexShader, this.fragmentShader });
-
-            this.inputLayout = renderDevice.Factory.CreateInputLayout(
-                new[]
-                {
-                    new InputElement(0, 2, InputElementType.Float, 0),
-                    new InputElement(1, 4, InputElementType.Float, 2 * sizeof(float)),
-                    new InputElement(2, 2, InputElementType.Float, 6 * sizeof(float)),
-                    new InputElement(3, 1, InputElementType.Float, 8 * sizeof(float)),
-                });
+            this.inputLayout = renderDevice.Factory.CreateInputLayout(Vertex.InputElements);
 
             this.vertexBuffer = renderDevice.Factory.CreateVertexBuffer(
                 BufferUsageType.Dynamic,
@@ -181,7 +173,7 @@ namespace FinalEngine.Rendering
             this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram);
 
             this.renderDevice.Pipeline.SetUniform("u_projection", this.Projection);
-            this.renderDevice.Pipeline.SetUniform("u_view", this.Transform);
+            this.renderDevice.Pipeline.SetUniform("u_transform", this.Transform);
 
             this.batcher.Reset();
             this.binder.Reset();

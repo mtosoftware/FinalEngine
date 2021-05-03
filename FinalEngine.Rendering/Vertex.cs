@@ -4,8 +4,10 @@
 
 namespace FinalEngine.Rendering
 {
+    using System.Collections.Generic;
     using System.Numerics;
     using System.Runtime.InteropServices;
+    using FinalEngine.Rendering.Buffers;
 
     [StructLayout(LayoutKind.Sequential)]
     public struct Vertex
@@ -27,5 +29,19 @@ namespace FinalEngine.Rendering
         public Vector2 TextureCoordinate { get; set; }
 
         public float TextureSlotIndex { get; set; }
+
+        public static IReadOnlyCollection<InputElement> InputElements
+        {
+            get
+            {
+                return new InputElement[]
+                {
+                    new (0, 2, InputElementType.Float, 0),
+                    new (1, 4, InputElementType.Float, 2 * sizeof(float)),
+                    new (2, 2, InputElementType.Float, 6 * sizeof(float)),
+                    new (3, 1, InputElementType.Float, 8 * sizeof(float)),
+                };
+            }
+        }
     }
 }
