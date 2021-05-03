@@ -300,7 +300,7 @@ namespace FinalEngine.Tests.Rendering
             this.drawer.End();
 
             // Assert
-            this.batcher.Verify(x => x.UpdateBatch(this.vertexBuffer.Object), Times.Once);
+            this.batcher.Verify(x => x.Update(this.vertexBuffer.Object), Times.Once);
         }
 
         [Test]

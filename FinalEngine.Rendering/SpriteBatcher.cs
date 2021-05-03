@@ -41,7 +41,7 @@ namespace FinalEngine.Rendering
 
         public bool ShouldReset
         {
-            get { return this.vertices.Count >= this.MaxVertexCount; }
+            get { return this.CurrentVertexCount >= this.MaxVertexCount; }
         }
 
         public void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale)
@@ -104,7 +104,14 @@ namespace FinalEngine.Rendering
             this.CurrentVertexCount += 4;
         }
 
-        public void UpdateBatch(IVertexBuffer vertexBuffer)
+        public void Reset()
+        {
+            this.vertices.Clear();
+            this.CurrentIndexCount = 0;
+            this.CurrentVertexCount = 0;
+        }
+
+        public void Update(IVertexBuffer vertexBuffer)
         {
             if (vertexBuffer == null)
             {
@@ -112,13 +119,6 @@ namespace FinalEngine.Rendering
             }
 
             this.inputAssembler.UpdateVertexBuffer(vertexBuffer, (IReadOnlyCollection<Vertex>)this.vertices, Vertex.SizeInBytes);
-        }
-
-        public void Reset()
-        {
-            this.vertices.Clear();
-            this.CurrentIndexCount = 0;
-            this.CurrentVertexCount = 0;
         }
     }
 }

@@ -213,7 +213,7 @@ namespace FinalEngine.Rendering
                 throw new ObjectDisposedException(nameof(SpriteDrawer));
             }
 
-            this.batcher.UpdateBatch(this.vertexBuffer);
+            this.batcher.Update(this.vertexBuffer);
 
             this.renderDevice.InputAssembler.SetInputLayout(this.inputLayout);
             this.renderDevice.InputAssembler.SetVertexBuffer(this.vertexBuffer);

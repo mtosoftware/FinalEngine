@@ -24,6 +24,6 @@ namespace FinalEngine.Rendering
 
         void Reset();
 
-        void UpdateBatch(IVertexBuffer vertexBuffer);
+        void Update(IVertexBuffer vertexBuffer);
     }
 }
