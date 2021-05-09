@@ -14,9 +14,7 @@
       - Shader :)
       - Shader Program :)
   - Texture Loader :)
-  - Sprite Batching
-    - Sprites
-  - Camera abstraction
+  - Sprite Batching :)
 - Audio
 - Physics
 - Scene & Entity Management
