@@ -25,6 +25,8 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
     {
         private OpenTKMouseDevice mouseDevice;
 
+        private Mock<IMouseStateInvoker> mouseState;
+
         private Mock<INativeWindowInvoker> nativeWindow;
 
         [Test]
@@ -67,6 +69,30 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         {
             // Assert
             this.nativeWindow.VerifyAdd(x => x.MouseWheel += It.IsAny<Action<TKMouseWheelEventArgs>>(), Times.Once);
+        }
+
+        [Test]
+        public void LocationDeltaShouldReturnDeltaWhenInvoked()
+        {
+            // Arrange
+            var expected = new PointF(10432, 325);
+            this.mouseState.SetupGet(x => x.Delta).Returns(new Vector2(expected.X, expected.Y));
+
+            // Act
+            PointF actual = this.mouseDevice.LocationDelta;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void LocationDetlaShouldInvokeDeltaWhenInvoked()
+        {
+            // Act
+            _ = this.mouseDevice.LocationDelta;
+
+            // Assert
+            this.nativeWindow.VerifyGet(x => x.MouseState.Delta, Times.Exactly(2));
         }
 
         [Test]
@@ -180,6 +206,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         {
             // Arrange
             this.nativeWindow = new Mock<INativeWindowInvoker>();
+            this.mouseState = new Mock<IMouseStateInvoker>();
+
+            this.nativeWindow.SetupGet(x => x.MouseState).Returns(this.mouseState.Object);
+
             this.mouseDevice = new OpenTKMouseDevice(this.nativeWindow.Object);
         }
     }

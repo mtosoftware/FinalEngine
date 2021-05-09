@@ -6,6 +6,7 @@ namespace TestGame
 {
     using System;
     using System.Drawing;
+    using System.Numerics;
     using FinalEngine.Input.Keyboard;
     using FinalEngine.Input.Mouse;
     using FinalEngine.IO;
@@ -73,10 +74,20 @@ namespace TestGame
             IPipeline pipeline = renderDevice.Pipeline;
             IGPUResourceFactory factory = renderDevice.Factory;
 
+            var batcher = new SpriteBatcher(inputAssembler, 10000);
+            var binder = new TextureBinder(pipeline);
+            var drawer = new SpriteDrawer(renderDevice, batcher, binder, nativeWindow.ClientSize.X, nativeWindow.ClientSize.Y);
+
             var image = new ImageInvoker();
             var textureLoader = new Texture2DLoader(fileSystem, factory, image);
 
             ITexture2D texture = textureLoader.LoadTexture("Resources\\Textures\\default.png");
+            ITexture2D texture2 = textureLoader.LoadTexture("Resources\\Textures\\wood.png");
+
+            float rot = 0;
+            float x = 0;
+            float y = 0;
+            const float speed = 4;
 
             while (!window.IsExiting)
             {
@@ -85,15 +96,51 @@ namespace TestGame
                     break;
                 }
 
+                rot += 0.01f;
+
+                if (keyboard.IsKeyDown(Key.W))
+                {
+                    y -= speed;
+                }
+                else if (keyboard.IsKeyDown(Key.S))
+                {
+                    y += speed;
+                }
+                else if (keyboard.IsKeyDown(Key.A))
+                {
+                    x += speed;
+                }
+                else if (keyboard.IsKeyDown(Key.D))
+                {
+                    x -= speed;
+                }
+
                 keyboard.Update();
                 mouse.Update();
 
-                renderDevice.Clear(Color.CornflowerBlue);
+                renderDevice.Clear(Color.Black);
+
+                drawer.Transform = Matrix4x4.CreateTranslation(x, y, 0);
+
+                drawer.Begin();
+
+                for (int i = 0; i < 100; i++)
+                {
+                    for (int j = 0; j < 100; j++)
+                    {
+                        ITexture2D tex = (j + i) % 2 == 0 ? texture : texture2;
+
+                        drawer.Draw(tex, Color.White, new Vector2(32, 32), new Vector2(i * 64, j * 64), rot, new Vector2(64, 64));
+                    }
+                }
+
+                drawer.End();
 
                 renderContext.SwapBuffers();
                 window.ProcessEvents();
             }
 
+            drawer.Dispose();
             renderContext.Dispose();
             window.Dispose();
             nativeWindow.Dispose();

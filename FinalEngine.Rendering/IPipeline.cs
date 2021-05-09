@@ -14,6 +14,12 @@ namespace FinalEngine.Rendering
     /// </summary>
     public interface IPipeline
     {
+        /// <summary>
+        ///   Gets the maximum texture slots that can be utilized by the GPU.
+        /// </summary>
+        /// <value>
+        ///   The maximum texture slots that can be utilized by the GPU.
+        /// </value>
         int MaxTextureSlots { get; }
 
         /// <summary>

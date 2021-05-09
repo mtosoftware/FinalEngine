@@ -16,6 +16,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using FinalEngine.Rendering.Textures;
     using Moq;
     using NUnit.Framework;
+    using OpenTK.Graphics.OpenGL4;
 
     [ExcludeFromCodeCoverage]
     public class OpenGLPipelineTests
@@ -29,6 +30,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         {
             // Arrange, act and assert
             Assert.Throws<ArgumentNullException>(() => new OpenGLPipeline(null));
+        }
+
+        [Test]
+        public void MaxTextureSlotsShouldInvokeGetIntegerWhenInvoked()
+        {
+            // Act
+            _ = this.pipeline.MaxTextureSlots;
+
+            // Assert
+            this.invoker.Verify(x => x.GetInteger(GetPName.MaxTextureImageUnits), Times.Once);
+        }
+
+        [Test]
+        public void MaxTextureSlotsShouldReturnSameAsGetIntegerWhenInvoked()
+        {
+            // Arrange
+            const int Expected = 10;
+            this.invoker.Setup(x => x.GetInteger(GetPName.MaxTextureImageUnits)).Returns(Expected);
+
+            // Act
+            int actual = this.pipeline.MaxTextureSlots;
+
+            // Assert
+            Assert.AreEqual(Expected, actual);
         }
 
         [Test]

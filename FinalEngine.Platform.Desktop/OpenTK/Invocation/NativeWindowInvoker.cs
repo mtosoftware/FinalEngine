@@ -29,6 +29,12 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         public bool IsDisposed { get; private set; }
 
         /// <inheritdoc/>
+        IMouseStateInvoker INativeWindowInvoker.MouseState
+        {
+            get { return new MouseStateInvoker(this.MouseState); }
+        }
+
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

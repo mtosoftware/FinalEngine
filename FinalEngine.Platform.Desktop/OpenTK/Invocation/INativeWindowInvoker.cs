@@ -8,7 +8,6 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
     using global::OpenTK.Mathematics;
     using global::OpenTK.Windowing.Common;
     using global::OpenTK.Windowing.Desktop;
-    using global::OpenTK.Windowing.GraphicsLibraryFramework;
 
     /// <summary>
     ///   Defines an interface that provides methods for invocation of a <see cref="NativeWindow"/>.
@@ -50,7 +49,8 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         /// <inheritdoc cref="NativeWindow.MousePosition"/>
         Vector2 MousePosition { get; set; }
 
-        MouseState MouseState { get; }
+        /// <inheritdoc cref="NativeWindow.MouseState"/>
+        IMouseStateInvoker MouseState { get; }
 
         /// <inheritdoc cref="NativeWindow.Title"/>
         string Title { get; set; }
