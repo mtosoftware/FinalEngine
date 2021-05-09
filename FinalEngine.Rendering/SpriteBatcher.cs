@@ -10,12 +10,37 @@ namespace FinalEngine.Rendering
     using System.Numerics;
     using FinalEngine.Rendering.Buffers;
 
+    /// <summary>
+    ///   Provides a standard implementation of an <see cref="ISpriteBatcher"/> that batches quads to be filled into a vertex buffer.
+    /// </summary>
+    /// <seealso cref="FinalEngine.Rendering.ISpriteBatcher"/>
     public class SpriteBatcher : ISpriteBatcher
     {
+        /// <summary>
+        ///   The input assembler, used to fill the contents of a vertex buffer with <see cref="vertices"/>.
+        /// </summary>
         private readonly IInputAssembler inputAssembler;
 
+        /// <summary>
+        ///   The vertices that have been batched.
+        /// </summary>
         private readonly IList<Vertex> vertices;
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SpriteBatcher"/> class.
+        /// </summary>
+        /// <param name="inputAssembler">
+        ///   The input assembler, used to fill the contents of a vertex buffer with the batched vertices via <see cref="Update(IVertexBuffer)"/>.
+        /// </param>
+        /// <param name="maxCapacity">
+        ///   The maximum capacity of quads that can be batched.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///   iThe specified <paramref name="inputAssembler"/> parameter cannot be null.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   The specified <paramref name="maxCapacity"/> parameter must be greater than zero.
+        /// </exception>
         public SpriteBatcher(IInputAssembler inputAssembler, int maxCapacity)
         {
             this.inputAssembler = inputAssembler ?? throw new ArgumentNullException(nameof(inputAssembler), $"The specified {nameof(inputAssembler)} parameter cannot be null.");
@@ -31,19 +56,70 @@ namespace FinalEngine.Rendering
             this.vertices = new List<Vertex>();
         }
 
+        /// <summary>
+        ///   Gets the current number of indices that are batched.
+        /// </summary>
+        /// <value>
+        ///   The current number of indices that are batched.
+        /// </value>
         public int CurrentIndexCount { get; private set; }
 
+        /// <summary>
+        ///   Gets the current number of vertices that are batched.
+        /// </summary>
+        /// <value>
+        ///   The current number of vertices that are batched.
+        /// </value>
         public int CurrentVertexCount { get; private set; }
 
+        /// <summary>
+        ///   Gets the maximum number of indices that can be batched.
+        /// </summary>
+        /// <value>
+        ///   The maximum number of indices that can be batched.
+        /// </value>
         public int MaxIndexCount { get; }
 
+        /// <summary>
+        ///   Gets the maximum number of vertices that can be batched.
+        /// </summary>
+        /// <value>
+        ///   The maximum number of vertices that can be batched.
+        /// </value>
         public int MaxVertexCount { get; }
 
+        /// <summary>
+        ///   Gets a value indicating whether the <see cref="Reset"/> method should be invoked.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the method should be invoked; otherwise, <c>false</c>.
+        /// </value>
         public bool ShouldReset
         {
             get { return this.CurrentVertexCount >= this.MaxVertexCount; }
         }
 
+        /// <summary>
+        ///   Constructs a set of vertices from the specified parameters and stores to updated via the <see cref="Update(IVertexBuffer)"/> method.
+        /// </summary>
+        /// <param name="textureSlotIndex">
+        ///   The index of the texture slot.
+        /// </param>
+        /// <param name="color">
+        ///   The color of the vertices.
+        /// </param>
+        /// <param name="origin">
+        ///   The origin of the vertices.
+        /// </param>
+        /// <param name="position">
+        ///   The absolute position of the vertices.
+        /// </param>
+        /// <param name="rotation">
+        ///   The rotation of the vertices.
+        /// </param>
+        /// <param name="scale">
+        ///   The scale of the vertices.
+        /// </param>
         public void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale)
         {
             float x = position.X;
@@ -104,6 +180,9 @@ namespace FinalEngine.Rendering
             this.CurrentVertexCount += 4;
         }
 
+        /// <summary>
+        ///   Resets the sprite batcher by clearing all batched vertices from it's cache.
+        /// </summary>
         public void Reset()
         {
             this.vertices.Clear();
@@ -111,6 +190,15 @@ namespace FinalEngine.Rendering
             this.CurrentVertexCount = 0;
         }
 
+        /// <summary>
+        ///   Updates the specified <paramref name="vertexBuffer"/> with the vertices that have been batched.
+        /// </summary>
+        /// <param name="vertexBuffer">
+        ///   The vertex buffer to update the contents of.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="vertexBuffer"/> parameter cannot be null.
+        /// </exception>
         public void Update(IVertexBuffer vertexBuffer)
         {
             if (vertexBuffer == null)

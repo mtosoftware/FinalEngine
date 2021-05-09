@@ -12,10 +12,10 @@ namespace FinalEngine.Rendering
     public interface ITextureBinder
     {
         /// <summary>
-        ///   Gets a value indicating whether the <see cref="Reset"/> method should be called.
+        ///   Gets a value indicating whether the <see cref="Reset"/> method should be invoked.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if should be reset; otherwise, <c>false</c>.
+        ///   <c>true</c> if the method should be invoked; otherwise, <c>false</c>.
         /// </value>
         /// <seealso cref="Reset"/>
         bool ShouldReset { get; }
@@ -32,7 +32,7 @@ namespace FinalEngine.Rendering
         int GetTextureSlotIndex(ITexture texture);
 
         /// <summary>
-        ///   Resets the texture binder by clearing all binded textures from it's cache.
+        ///   Resets the texture binder by clearing all bound textures from it's cache.
         /// </summary>
         /// <remarks>
         ///   It's up to the implementation whether the textures should be unbound when <see cref="Reset"/> is called.
