@@ -11,12 +11,26 @@ namespace FinalEngine.Rendering
     using FinalEngine.Rendering.Pipeline;
     using FinalEngine.Rendering.Textures;
 
+    /// <summary>
+    ///   Provides a standard implementation of an <see cref="ISpriteDrawer"/>, which assumes batch rendering.
+    /// </summary>
+    /// <seealso cref="FinalEngine.Rendering.ISpriteDrawer"/>
+    /// <seealso cref="System.IDisposable"/>
     public class SpriteDrawer : ISpriteDrawer, IDisposable
     {
+        /// <summary>
+        ///   The sprite batcher.
+        /// </summary>
         private readonly ISpriteBatcher batcher;
 
+        /// <summary>
+        ///   The texture binder.
+        /// </summary>
         private readonly ITextureBinder binder;
 
+        /// <summary>
+        ///   The fragment shader source.
+        /// </summary>
         private readonly string fragmentShaderSource =
             @"#version 460
 
@@ -71,10 +85,19 @@ namespace FinalEngine.Rendering
                   out_color = color;
               }";
 
+        /// <summary>
+        ///   The input layout.
+        /// </summary>
         private readonly IInputLayout inputLayout;
 
+        /// <summary>
+        ///   The render device.
+        /// </summary>
         private readonly IRenderDevice renderDevice;
 
+        /// <summary>
+        ///   The vertex shader source code.
+        /// </summary>
         private readonly string vertexShaderSource =
             @"#version 460
 
@@ -99,16 +122,52 @@ namespace FinalEngine.Rendering
                   gl_Position = u_projection * u_transform * vec4(in_position, 0.0, 1.0);
               }";
 
+        /// <summary>
+        ///   The fragment shader.
+        /// </summary>
         private IShader? fragmentShader;
 
+        /// <summary>
+        ///   The index buffer.
+        /// </summary>
         private IIndexBuffer? indexBuffer;
 
+        /// <summary>
+        ///   The shader program.
+        /// </summary>
         private IShaderProgram? shaderProgram;
 
+        /// <summary>
+        ///   The vertex buffer.
+        /// </summary>
         private IVertexBuffer? vertexBuffer;
 
+        /// <summary>
+        ///   The vertex shader.
+        /// </summary>
         private IShader? vertexShader;
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SpriteDrawer"/> class.
+        /// </summary>
+        /// <param name="renderDevice">
+        ///   The render device.
+        /// </param>
+        /// <param name="batcher">
+        ///   The sprite batcher, used to batch draw calls to be rendered.
+        /// </param>
+        /// <param name="binder">
+        ///   The texture binder, used to bind textures to texture slots.
+        /// </param>
+        /// <param name="projectionWidth">
+        ///   The initial width of the projection.
+        /// </param>
+        /// <param name="projectionHeight">
+        ///   The initial height of the projection.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="renderDevice"/>, <paramref name="batcher"/> or <paramref name="binder"/> parameter cannot be null.
+        /// </exception>
         public SpriteDrawer(IRenderDevice renderDevice, ISpriteBatcher batcher, ITextureBinder binder, int projectionWidth, int projectionHeight)
         {
             this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice), $"The specified {nameof(renderDevice)} parameter cannot be null.");
@@ -152,17 +211,44 @@ namespace FinalEngine.Rendering
             this.Transform = Matrix4x4.CreateTranslation(Vector3.Zero);
         }
 
+        /// <summary>
+        ///   Finalizes an instance of the <see cref="SpriteDrawer"/> class.
+        /// </summary>
         ~SpriteDrawer()
         {
             this.Dispose(false);
         }
 
+        /// <summary>
+        ///   Gets or sets the projection.
+        /// </summary>
+        /// <value>
+        ///   The projection.
+        /// </value>
         public Matrix4x4 Projection { get; set; }
 
+        /// <summary>
+        ///   Gets or sets the transform.
+        /// </summary>
+        /// <value>
+        ///   The transform.
+        /// </value>
         public Matrix4x4 Transform { get; set; }
 
+        /// <summary>
+        ///   Gets a value indicating whether this instance is disposed.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+        /// </value>
         protected bool IsDisposed { get; private set; }
 
+        /// <summary>
+        ///   Initializes the drawer, this must be called <c>before</c> you invoke the <see cref="Draw(ITexture2D, Color, Vector2, Vector2, float, Vector2)"/> method.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">
+        ///   The <see cref="SpriteDrawer"/> has been disposed.
+        /// </exception>
         public void Begin()
         {
             if (this.IsDisposed)
@@ -179,12 +265,42 @@ namespace FinalEngine.Rendering
             this.binder.Reset();
         }
 
+        /// <summary>
+        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        ///   Draws the specified texture, blended with the specified <paramref name="color"/>, with the specified <paramref name="origin"/>, at the specified <paramref name="position"/>, <paramref name="rotation"/> and <paramref name="scale"/>.
+        /// </summary>
+        /// <param name="texture">
+        ///   The texture to draw.
+        /// </param>
+        /// <param name="color">
+        ///   The color of the texture.
+        /// </param>
+        /// <param name="origin">
+        ///   The origin of the texture.
+        /// </param>
+        /// <param name="position">
+        ///   The position of the texture, relative to it's origin.
+        /// </param>
+        /// <param name="rotation">
+        ///   The rotation of the texture, relative to it's origin.
+        /// </param>
+        /// <param name="scale">
+        ///   The scale of the texture.
+        /// </param>
+        /// <exception cref="ObjectDisposedException">
+        ///   The <see cref="SpriteDrawer"/> has been disposed.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="texture"/> parameter cannot be null.
+        /// </exception>
         public void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale)
         {
             if (this.IsDisposed)
@@ -206,6 +322,15 @@ namespace FinalEngine.Rendering
             this.batcher.Batch(this.binder.GetTextureSlotIndex(texture), color, origin, position, rotation, scale);
         }
 
+        /// <summary>
+        ///   Flushes the contents of the drawer to the unspecified surface.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">
+        ///   The <see cref="SpriteDrawer"/> has been disposed - or - the internal <see cref="vertexBuffer"/> is null.
+        /// </exception>
+        /// <remarks>
+        ///   This must be called <c>after</c> you've made a call too <see cref="Draw(ITexture2D, Color, Vector2, Vector2, float, Vector2)"/> as otherwise the drawer might behave incorrectly.
+        /// </remarks>
         public void End()
         {
             if (this.IsDisposed || this.vertexBuffer == null)
@@ -222,6 +347,12 @@ namespace FinalEngine.Rendering
             this.renderDevice.DrawIndices(PrimitiveTopology.Triangle, 0, this.batcher.CurrentIndexCount);
         }
 
+        /// <summary>
+        ///   Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (this.IsDisposed)
