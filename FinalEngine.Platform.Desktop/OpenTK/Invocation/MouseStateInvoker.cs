@@ -28,7 +28,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         ///   The state to invoke.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///   state - The specified <paramref name="state"/> parameter cannot be null.
+        ///   The specified <paramref name="state"/> parameter cannot be null.
         /// </exception>
         public MouseStateInvoker(MouseState state)
         {

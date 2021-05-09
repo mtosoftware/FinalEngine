@@ -53,7 +53,7 @@ namespace FinalEngine.Rendering
             this.MaxVertexCount = maxCapacity * 4;
             this.MaxIndexCount = maxCapacity * 6;
 
-            this.vertices = new List<Vertex>();
+            this.vertices = new List<Vertex>(this.MaxVertexCount);
         }
 
         /// <summary>

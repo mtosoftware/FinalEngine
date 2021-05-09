@@ -485,8 +485,6 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         {
             string messageString = Marshal.PtrToStringAnsi(message, length);
 
-            Console.WriteLine($"{severity} {type} | {messageString}");
-
             if (type == DebugType.DebugTypeError)
             {
                 throw new RenderContextException($"{severity} {type} | {messageString}");

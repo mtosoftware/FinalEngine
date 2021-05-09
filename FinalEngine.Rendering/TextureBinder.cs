@@ -36,7 +36,7 @@ namespace FinalEngine.Rendering
         public TextureBinder(IPipeline pipeline)
         {
             this.pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline), $"The specified {nameof(pipeline)} parameter cannot be null.");
-            this.textureToSlotMap = new Dictionary<ITexture, int>();
+            this.textureToSlotMap = new Dictionary<ITexture, int>(pipeline.MaxTextureSlots);
         }
 
         /// <summary>
