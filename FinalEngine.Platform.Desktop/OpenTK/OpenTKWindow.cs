@@ -5,7 +5,9 @@
 namespace FinalEngine.Platform.Desktop.OpenTK
 {
     using System;
+    using System.Drawing;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
+    using global::OpenTK.Mathematics;
 
     /// <summary>
     ///   Provides an OpenTK implementation of an <see cref="IWindow"/> and <see cref="IEventsProcessor"/>.
@@ -41,10 +43,22 @@ namespace FinalEngine.Platform.Desktop.OpenTK
             this.Dispose(false);
         }
 
+        public Size ClientSize
+        {
+            get { return new Size(this.nativeWindow.ClientSize.X, this.nativeWindow.ClientSize.Y); }
+            set { this.nativeWindow.ClientSize = new Vector2i(value.Width, value.Height); }
+        }
+
         /// <inheritdoc/>
         public bool IsExiting
         {
             get { return this.nativeWindow.IsExiting; }
+        }
+
+        public Size Size
+        {
+            get { return new Size(this.nativeWindow.Size.X, this.nativeWindow.Size.Y); }
+            set { this.nativeWindow.Size = new Vector2i(value.Width, value.Height); }
         }
 
         /// <inheritdoc/>

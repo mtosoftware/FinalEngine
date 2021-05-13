@@ -32,6 +32,9 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         /// <inheritdoc cref="NativeWindow.MouseWheel"/>
         event Action<MouseWheelEventArgs> MouseWheel;
 
+        /// <inheritdoc cref="NativeWindow.ClientSize"/>
+        Vector2i ClientSize { get; set; }
+
         /// <summary>
         ///   Gets a value indicating whether this instance is disposed.
         /// </summary>
@@ -51,6 +54,9 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
 
         /// <inheritdoc cref="NativeWindow.MouseState"/>
         IMouseStateInvoker MouseState { get; }
+
+        /// <inheritdoc cref="NativeWindow.Size"/>
+        Vector2i Size { get; set; }
 
         /// <inheritdoc cref="NativeWindow.Title"/>
         string Title { get; set; }

@@ -5,6 +5,7 @@
 namespace FinalEngine.Platform
 {
     using System;
+    using System.Drawing;
 
     /// <summary>
     ///   Defines an interface that represents a display or window.
@@ -12,6 +13,8 @@ namespace FinalEngine.Platform
     /// <seealso cref="IDisposable"/>
     public interface IWindow : IDisposable
     {
+        Size ClientSize { get; }
+
         /// <summary>
         ///   Gets a value indicating whether this <see cref="IWindow"/> is exiting.
         /// </summary>
@@ -19,6 +22,8 @@ namespace FinalEngine.Platform
         ///   <c>true</c> if this <see cref="IWindow"/> is exiting; otherwise, <c>false</c>.
         /// </value>
         bool IsExiting { get; }
+
+        Size Size { get; set; }
 
         /// <summary>
         ///   Gets or sets the title of this <see cref="IWindow"/>.
