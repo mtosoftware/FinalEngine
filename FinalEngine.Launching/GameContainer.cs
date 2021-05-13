@@ -5,6 +5,7 @@
 namespace FinalEngine.Launching
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Input.Keyboard;
     using FinalEngine.Input.Mouse;
     using FinalEngine.IO;
@@ -14,8 +15,15 @@ namespace FinalEngine.Launching
 
     public abstract class GameContainer : IDisposable
     {
+        private const int InitialWindowHeight = 720;
+
+        private const string InitialWindowTitle = "Final Engine";
+
+        private const int InitialWindowWidth = 1280;
+
         private bool isRunning;
 
+        [SuppressMessage("Design", "RCS1160:Abstract type should not have public constructors.", Justification = "It doesn't.")]
         protected internal GameContainer(IPlatformResolver resolver)
         {
             if (resolver == null)
@@ -26,7 +34,9 @@ namespace FinalEngine.Launching
             IGamePlatformFactory factory = resolver.Resolve();
 
             factory.InitializePlatform(
-                default,
+                InitialWindowWidth,
+                InitialWindowHeight,
+                InitialWindowTitle,
                 out IWindow window,
                 out IEventsProcessor eventsProcessor,
                 out IFileSystem fileSystem,
@@ -102,15 +112,18 @@ namespace FinalEngine.Launching
 
             while (this.isRunning && !(this.Window?.IsExiting ?? false))
             {
-                this.Update(gameTime);
+                if (gameTime.CanProcessNextFrame(out GameTimeInfo info))
+                {
+                    this.Update(info);
 
-                this.Keyboard.Update();
-                this.Mouse.Update();
+                    this.Keyboard.Update();
+                    this.Mouse.Update();
 
-                this.Render(gameTime);
+                    this.Render(info);
 
-                this.RenderContext?.SwapBuffers();
-                this.EventsProcessor.ProcessEvents();
+                    this.RenderContext?.SwapBuffers();
+                    this.EventsProcessor.ProcessEvents();
+                }
             }
         }
 
@@ -139,11 +152,11 @@ namespace FinalEngine.Launching
             this.IsDisposed = true;
         }
 
-        protected virtual void Render(IGameTime gameTime)
+        protected virtual void Render(GameTimeInfo gameTime)
         {
         }
 
-        protected virtual void Update(IGameTime gameTime)
+        protected virtual void Update(GameTimeInfo gameTime)
         {
         }
     }

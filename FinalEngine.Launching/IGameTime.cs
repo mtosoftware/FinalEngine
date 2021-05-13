@@ -6,8 +6,6 @@ namespace FinalEngine.Launching
 {
     public interface IGameTime
     {
-        double Delta { get; }
-
-        double FrameRate { get; }
+        bool CanProcessNextFrame(out GameTimeInfo info);
     }
 }

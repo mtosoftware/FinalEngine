@@ -7,6 +7,7 @@ namespace FinalEngine.Launching
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
+    using FinalEngine.Launching.Factories;
 
     public class PlatformResolver : IPlatformResolver
     {
@@ -17,6 +18,10 @@ namespace FinalEngine.Launching
         public PlatformResolver()
         {
             this.platformToFactoryMap = new Dictionary<OSPlatform, IGamePlatformFactory>();
+
+            this.Register<DesktopGamePlatformFactory>(OSPlatform.Windows);
+            this.Register<DesktopGamePlatformFactory>(OSPlatform.OSX);
+            this.Register<DesktopGamePlatformFactory>(OSPlatform.Linux);
         }
 
         public static IPlatformResolver Instance

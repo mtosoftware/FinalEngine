@@ -46,7 +46,6 @@ namespace FinalEngine.Platform.Desktop.OpenTK
         public Size ClientSize
         {
             get { return new Size(this.nativeWindow.ClientSize.X, this.nativeWindow.ClientSize.Y); }
-            set { this.nativeWindow.ClientSize = new Vector2i(value.Width, value.Height); }
         }
 
         /// <inheritdoc/>

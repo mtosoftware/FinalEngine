@@ -14,7 +14,9 @@ namespace FinalEngine.Launching
     public interface IGamePlatformFactory
     {
         void InitializePlatform(
-            GamePlatformSettings settings,
+            int width,
+            int height,
+            string title,
             out IWindow window,
             out IEventsProcessor eventsProcessor,
             out IFileSystem fileSystem,

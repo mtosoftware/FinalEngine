@@ -28,24 +28,32 @@ namespace FinalEngine.Launching
             this.watch = new Stopwatch();
         }
 
-        public double Delta { get; private set; }
-
-        public double FrameRate { get; private set; }
-
-        public bool CanProcessNextFrame()
+        public bool CanProcessNextFrame(out GameTimeInfo info)
         {
+            if (!this.watch.IsRunning)
+            {
+                this.watch.Restart();
+            }
+
             double currentTime = this.watch.Elapsed.TotalMilliseconds;
 
             if (currentTime >= this.lastTime + this.waitTime)
             {
-                this.Delta = currentTime - this.lastTime;
-                this.FrameRate = Math.Round(Second / this.Delta);
+                double delta = currentTime - this.lastTime;
+                double frameRate = Math.Round(Second / delta);
+
+                info = new GameTimeInfo()
+                {
+                    Delta = delta,
+                    FrameRate = frameRate,
+                };
 
                 this.lastTime = currentTime;
 
                 return true;
             }
 
+            info = default;
             return false;
         }
     }
