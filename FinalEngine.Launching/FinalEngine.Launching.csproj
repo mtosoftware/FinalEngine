@@ -24,4 +24,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
+    <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
+    <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
+  </ItemGroup>
 </Project>
