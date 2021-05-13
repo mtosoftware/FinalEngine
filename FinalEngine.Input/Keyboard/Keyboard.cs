@@ -98,9 +98,7 @@ namespace FinalEngine.Input.Keyboard
             return !this.keysDown.Contains(key) && this.keysDownLast.Contains(key);
         }
 
-        /// <summary>
-        ///   Updates this <see cref="Keyboard"/>.
-        /// </summary>
+        /// <inheritdoc/>
         /// <remarks>
         ///   This method should only be called after the user has checked for input state changes.
         /// </remarks>

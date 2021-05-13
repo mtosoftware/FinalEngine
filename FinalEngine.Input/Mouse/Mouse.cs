@@ -110,9 +110,7 @@ namespace FinalEngine.Input.Mouse
             return !this.buttonsDown.Contains(button) && this.buttonsDownLast.Contains(button);
         }
 
-        /// <summary>
-        ///   Updates this <see cref="Mouse"/>.
-        /// </summary>
+        /// <inheritdoc/>
         /// <remarks>
         ///   This method should only be called after the user has checked for input state changes.
         /// </remarks>

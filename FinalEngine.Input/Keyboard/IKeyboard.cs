@@ -81,5 +81,10 @@ namespace FinalEngine.Input.Keyboard
         ///   <c>true</c> if the specified <paramref name="key"/> has been released since the previous frame; otherwise, <c>false</c>.
         /// </returns>
         bool IsKeyReleased(Key key);
+
+        /// <summary>
+        ///   Updates this <see cref="IKeyboard"/>.
+        /// </summary>
+        void Update();
     }
 }

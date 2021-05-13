@@ -67,5 +67,10 @@ namespace FinalEngine.Input.Mouse
         ///   <c>true</c> if the specified <paramref name="button"/> has been released since the previous frame; otherwise, <c>false</c>.
         /// </returns>
         bool IsButtonReleased(MouseButton button);
+
+        /// <summary>
+        ///   Updates this <see cref="IMouse"/>.
+        /// </summary>
+        void Update();
     }
 }
