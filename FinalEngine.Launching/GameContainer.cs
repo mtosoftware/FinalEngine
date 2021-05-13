@@ -60,40 +60,106 @@ namespace FinalEngine.Launching
             this.TextureLoader = textureLoader;
         }
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GameContainer"/> class.
+        /// </summary>
         protected GameContainer()
             : this(PlatformResolver.Instance)
         {
         }
 
+        /// <summary>
+        ///   Finalizes an instance of the <see cref="GameContainer"/> class.
+        /// </summary>
         ~GameContainer()
         {
             this.Dispose(false);
         }
 
+        /// <summary>
+        ///   Gets the file system.
+        /// </summary>
+        /// <value>
+        ///   The file system.
+        /// </value>
         protected IFileSystem FileSystem { get; }
 
+        /// <summary>
+        ///   Gets a value indicating whether this instance is disposed.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+        /// </value>
         protected bool IsDisposed { get; private set; }
 
+        /// <summary>
+        ///   Gets the keyboard.
+        /// </summary>
+        /// <value>
+        ///   The keyboard.
+        /// </value>
         protected IKeyboard Keyboard { get; }
 
+        /// <summary>
+        ///   Gets the mouse.
+        /// </summary>
+        /// <value>
+        ///   The mouse.
+        /// </value>
         protected IMouse Mouse { get; }
 
+        /// <summary>
+        ///   Gets the render device.
+        /// </summary>
+        /// <value>
+        ///   The render device.
+        /// </value>
         protected IRenderDevice RenderDevice { get; }
 
+        /// <summary>
+        ///   Gets the texture loader.
+        /// </summary>
+        /// <value>
+        ///   The texture loader.
+        /// </value>
         protected ITexture2DLoader TextureLoader { get; }
 
+        /// <summary>
+        ///   Gets the window.
+        /// </summary>
+        /// <value>
+        ///   The window.
+        /// </value>
         protected IWindow? Window { get; private set; }
 
+        /// <summary>
+        ///   Gets the events processor.
+        /// </summary>
+        /// <value>
+        ///   The events processor.
+        /// </value>
         private IEventsProcessor EventsProcessor { get; }
 
+        /// <summary>
+        ///   Gets or sets the render context.
+        /// </summary>
+        /// <value>
+        ///   The render context.
+        /// </value>
         private IRenderContext? RenderContext { get; set; }
 
+        /// <summary>
+        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        ///   Exits the game, don't forget to call <see cref="Dispose"/>.
+        /// </summary>
         public void Exit()
         {
             this.isRunning = false;
@@ -127,6 +193,12 @@ namespace FinalEngine.Launching
             }
         }
 
+        /// <summary>
+        ///   Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (this.IsDisposed)
