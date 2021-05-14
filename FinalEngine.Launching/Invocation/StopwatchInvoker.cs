@@ -6,11 +6,13 @@ namespace FinalEngine.Launching.Invocation
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IStopwatchInvoker"/>.
     /// </summary>
     /// <seealso cref="FinalEngine.Launching.Invocation.IStopwatchInvoker"/>
+    [ExcludeFromCodeCoverage]
     public class StopwatchInvoker : IStopwatchInvoker
     {
         /// <summary>
