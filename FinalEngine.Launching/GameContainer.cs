@@ -165,16 +165,19 @@ namespace FinalEngine.Launching
             this.isRunning = false;
         }
 
-        public void Launch(double frameCap)
+        public void Launch(IGameTime gameTime)
         {
+            if (gameTime == null)
+            {
+                throw new ArgumentNullException(nameof(gameTime), $"The specified {nameof(gameTime)} parameter cannot be null.");
+            }
+
             if (this.isRunning)
             {
                 return;
             }
 
             this.isRunning = true;
-
-            var gameTime = new GameTime(frameCap);
 
             while (this.isRunning && !(this.Window?.IsExiting ?? false))
             {
