@@ -41,7 +41,7 @@ namespace FinalEngine.Rendering
         /// <exception cref="ArgumentOutOfRangeException">
         ///   The specified <paramref name="maxCapacity"/> parameter must be greater than zero.
         /// </exception>
-        public SpriteBatcher(IInputAssembler inputAssembler, int maxCapacity)
+        public SpriteBatcher(IInputAssembler inputAssembler, int maxCapacity = 10000)
         {
             this.inputAssembler = inputAssembler ?? throw new ArgumentNullException(nameof(inputAssembler), $"The specified {nameof(inputAssembler)} parameter cannot be null.");
 
