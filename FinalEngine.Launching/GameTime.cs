@@ -6,6 +6,7 @@ namespace FinalEngine.Launching
 {
     using System;
     using System.Diagnostics;
+    using FinalEngine.Launching.Invocation;
 
     public class GameTime : IGameTime
     {
@@ -13,19 +14,25 @@ namespace FinalEngine.Launching
 
         private readonly double waitTime;
 
-        private readonly Stopwatch watch;
+        private readonly IStopwatchInvoker watch;
 
         private double lastTime;
 
-        public GameTime(double frameCap)
+        public GameTime(IStopwatchInvoker watch, double frameCap)
         {
+            this.watch = watch ?? throw new ArgumentNullException(nameof(watch), $"The specified {nameof(watch)} parameter cannot be null.");
+
             if (frameCap <= 0.0d)
             {
                 throw new DivideByZeroException($"The specified {nameof(frameCap)} parameter must be greater than zero.");
             }
 
             this.waitTime = Second / frameCap;
-            this.watch = new Stopwatch();
+        }
+
+        public GameTime(double frameCap)
+            : this(new StopwatchInvoker(new Stopwatch()), frameCap)
+        {
         }
 
         public bool CanProcessNextFrame(out GameTimeInfo info)

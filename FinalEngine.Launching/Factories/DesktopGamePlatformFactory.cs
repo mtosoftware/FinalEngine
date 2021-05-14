@@ -22,6 +22,7 @@ namespace FinalEngine.Launching.Factories
     using OpenTK.Windowing.Desktop;
     using OpenTK.Windowing.GraphicsLibraryFramework;
 
+    [ExcludeFromCodeCoverage]
     public class DesktopGamePlatformFactory : IGamePlatformFactory
     {
         [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Handled by Game Container.")]
