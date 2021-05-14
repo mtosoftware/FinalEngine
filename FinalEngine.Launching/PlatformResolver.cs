@@ -8,6 +8,7 @@ namespace FinalEngine.Launching
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using FinalEngine.Launching.Factories;
+    using FinalEngine.Launching.Invocation;
 
     public class PlatformResolver : IPlatformResolver
     {
@@ -15,13 +16,21 @@ namespace FinalEngine.Launching
 
         private readonly IDictionary<OSPlatform, IGamePlatformFactory> platformToFactoryMap;
 
+        private readonly IRuntimeInformationInvoker runtime;
+
         public PlatformResolver()
+            : this(new RuntimeInformationInvoker())
         {
             this.platformToFactoryMap = new Dictionary<OSPlatform, IGamePlatformFactory>();
 
             this.Register<DesktopGamePlatformFactory>(OSPlatform.Windows);
             this.Register<DesktopGamePlatformFactory>(OSPlatform.OSX);
             this.Register<DesktopGamePlatformFactory>(OSPlatform.Linux);
+        }
+
+        public PlatformResolver(IRuntimeInformationInvoker runtime)
+        {
+            this.runtime = runtime ?? throw new ArgumentNullException(nameof(runtime), $"The specified {nameof(runtime)} parameter cannot be null.");
         }
 
         public static IPlatformResolver Instance
@@ -49,7 +58,7 @@ namespace FinalEngine.Launching
         {
             foreach (KeyValuePair<OSPlatform, IGamePlatformFactory> kvp in this.platformToFactoryMap)
             {
-                if (RuntimeInformation.IsOSPlatform(kvp.Key))
+                if (this.runtime.IsOSPlatform(kvp.Key))
                 {
                     return kvp.Value;
                 }
