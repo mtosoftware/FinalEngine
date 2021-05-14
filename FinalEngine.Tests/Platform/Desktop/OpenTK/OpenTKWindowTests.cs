@@ -6,8 +6,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
     using FinalEngine.Platform.Desktop.OpenTK;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
+    using global::OpenTK.Mathematics;
     using Moq;
     using NUnit.Framework;
 
@@ -18,6 +20,31 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         private Mock<INativeWindowInvoker> nativeWindow;
 
         private OpenTKWindow window;
+
+        [Test]
+        public void ClientSizeShouldInvokeNativeWindowClientSizePropertyWhenInvoked()
+        {
+            // Act
+            _ = this.window.ClientSize;
+
+            // Assert
+            this.nativeWindow.VerifyGet(x => x.ClientSize, Times.Exactly(2));
+        }
+
+        [Test]
+        public void ClientSizeShouldReturnSameAsNativeWindowClientSizeWhenInvoked()
+        {
+            // Arrange
+            var expected = new Size(10, 34);
+
+            this.nativeWindow.SetupGet(x => x.ClientSize).Returns(new Vector2i(expected.Width, expected.Height));
+
+            // Act
+            Size actual = this.window.ClientSize;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
 
         [Test]
         public void CloseShouldInvokeNativeWindowCloseWhenNativeWindowIsNotDisposed()
@@ -121,6 +148,44 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             // Arrange
             this.nativeWindow = new Mock<INativeWindowInvoker>();
             this.window = new OpenTKWindow(this.nativeWindow.Object);
+        }
+
+        [Test]
+        public void SizeShouldInvokeNativeWindowSizePropertyWhenInvoked()
+        {
+            // Act
+            _ = this.window.Size;
+
+            // Assert
+            this.nativeWindow.VerifyGet(x => x.Size, Times.Exactly(2));
+        }
+
+        [Test]
+        public void SizeShouldInvokeNativeWindowSizeWhenSet()
+        {
+            // Arrange
+            var expected = new Size(2423, 1243);
+
+            // Act
+            this.window.Size = expected;
+
+            // Assert
+            this.nativeWindow.VerifySet((x) => x.Size = new Vector2i(expected.Width, expected.Height));
+        }
+
+        [Test]
+        public void SizeShouldReturnSameAsNativeWindowSizePropertyWhenInvoked()
+        {
+            // Arrange
+            var expected = new Size(543, 124);
+
+            this.nativeWindow.SetupGet(x => x.Size).Returns(new Vector2i(expected.Width, expected.Height));
+
+            // Act
+            Size actual = this.window.Size;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
 
         [TearDown]

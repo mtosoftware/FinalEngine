@@ -13,6 +13,12 @@ namespace FinalEngine.Platform
     /// <seealso cref="IDisposable"/>
     public interface IWindow : IDisposable
     {
+        /// <summary>
+        ///   Gets the size of the client area of this <see cref="IWindow"/>.
+        /// </summary>
+        /// <value>
+        ///   The size of the client area of this <see cref="IWindow"/>.
+        /// </value>
         Size ClientSize { get; }
 
         /// <summary>
@@ -23,6 +29,12 @@ namespace FinalEngine.Platform
         /// </value>
         bool IsExiting { get; }
 
+        /// <summary>
+        ///   Gets or sets the size of this <see cref="IWindow"/>.
+        /// </summary>
+        /// <value>
+        ///   The size of this <see cref="IWindow"/>.
+        /// </value>
         Size Size { get; set; }
 
         /// <summary>
