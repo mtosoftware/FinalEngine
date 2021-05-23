@@ -22,9 +22,49 @@ namespace FinalEngine.Launching.Factories
     using OpenTK.Windowing.Desktop;
     using OpenTK.Windowing.GraphicsLibraryFramework;
 
+    /// <summary>
+    ///   Provides a standard desktop implementation of an <see cref="IGamePlatformFactory"/> that runs on Windows, Macintosh and Linux operating systems.
+    /// </summary>
+    /// <seealso cref="FinalEngine.Launching.IGamePlatformFactory"/>
     [ExcludeFromCodeCoverage]
     public class DesktopGamePlatformFactory : IGamePlatformFactory
     {
+        /// <summary>
+        ///   Initializes the platform.
+        /// </summary>
+        /// <param name="width">
+        ///   The width of the window (in pixels).
+        /// </param>
+        /// <param name="height">
+        ///   The height of the window (in pixels).
+        /// </param>
+        /// <param name="title">
+        ///   The title of the window.
+        /// </param>
+        /// <param name="window">
+        ///   The window.
+        /// </param>
+        /// <param name="eventsProcessor">
+        ///   The events processor.
+        /// </param>
+        /// <param name="fileSystem">
+        ///   The file system.
+        /// </param>
+        /// <param name="keyboard">
+        ///   The keyboard.
+        /// </param>
+        /// <param name="mouse">
+        ///   The mouse.
+        /// </param>
+        /// <param name="renderContext">
+        ///   The render context.
+        /// </param>
+        /// <param name="renderDevice">
+        ///   The render device.
+        /// </param>
+        /// <param name="textureLoader">
+        ///   The texture loader.
+        /// </param>
         [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Handled by Game Container.")]
         public void InitializePlatform(
             int width,
