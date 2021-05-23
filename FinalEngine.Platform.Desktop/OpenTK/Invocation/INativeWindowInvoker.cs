@@ -33,7 +33,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         event Action<MouseWheelEventArgs> MouseWheel;
 
         /// <inheritdoc cref="NativeWindow.ClientSize"/>
-        Vector2i ClientSize { get; set; }
+        Vector2i ClientSize { get; }
 
         /// <summary>
         ///   Gets a value indicating whether this instance is disposed.

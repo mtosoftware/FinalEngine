@@ -43,10 +43,10 @@ namespace FinalEngine.Platform.Desktop.OpenTK
             this.Dispose(false);
         }
 
+        /// <inheritdoc/>
         public Size ClientSize
         {
             get { return new Size(this.nativeWindow.ClientSize.X, this.nativeWindow.ClientSize.Y); }
-            set { this.nativeWindow.ClientSize = new Vector2i(value.Width, value.Height); }
         }
 
         /// <inheritdoc/>
@@ -55,6 +55,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK
             get { return this.nativeWindow.IsExiting; }
         }
 
+        /// <inheritdoc/>
         public Size Size
         {
             get { return new Size(this.nativeWindow.Size.X, this.nativeWindow.Size.Y); }
