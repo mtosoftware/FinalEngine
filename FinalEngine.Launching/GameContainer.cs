@@ -5,7 +5,6 @@
 namespace FinalEngine.Launching
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Input.Keyboard;
     using FinalEngine.Input.Mouse;
     using FinalEngine.IO;
@@ -23,8 +22,7 @@ namespace FinalEngine.Launching
 
         private bool isRunning;
 
-        [SuppressMessage("Design", "RCS1160:Abstract type should not have public constructors.", Justification = "It doesn't.")]
-        protected internal GameContainer(IPlatformResolver resolver)
+        protected GameContainer(IPlatformResolver resolver)
         {
             if (resolver == null)
             {

@@ -6,6 +6,7 @@ namespace FinalEngine.Launching
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using FinalEngine.Launching.Factories;
     using FinalEngine.Launching.Invocation;
@@ -18,29 +19,37 @@ namespace FinalEngine.Launching
 
         private readonly IRuntimeInformationInvoker runtime;
 
+        [ExcludeFromCodeCoverage]
         public PlatformResolver()
             : this(new RuntimeInformationInvoker())
         {
-            this.platformToFactoryMap = new Dictionary<OSPlatform, IGamePlatformFactory>();
+            var desktop = new DesktopGamePlatformFactory();
 
-            this.Register<DesktopGamePlatformFactory>(OSPlatform.Windows);
-            this.Register<DesktopGamePlatformFactory>(OSPlatform.OSX);
-            this.Register<DesktopGamePlatformFactory>(OSPlatform.Linux);
+            this.Register(OSPlatform.Windows, desktop);
+            this.Register(OSPlatform.OSX, desktop);
+            this.Register(OSPlatform.Linux, desktop);
         }
 
         public PlatformResolver(IRuntimeInformationInvoker runtime)
         {
             this.runtime = runtime ?? throw new ArgumentNullException(nameof(runtime), $"The specified {nameof(runtime)} parameter cannot be null.");
+
+            this.platformToFactoryMap = new Dictionary<OSPlatform, IGamePlatformFactory>();
         }
 
+        [ExcludeFromCodeCoverage]
         public static IPlatformResolver Instance
         {
             get { return instance ??= new PlatformResolver(); }
         }
 
-        public void Register<TFactory>(OSPlatform platform, bool remove = false)
-            where TFactory : IGamePlatformFactory, new()
+        public void Register(OSPlatform platform, IGamePlatformFactory factory, bool remove = false)
         {
+            if (factory == null)
+            {
+                throw new ArgumentNullException(nameof(factory), $"The specified {nameof(factory)} parameter cannot be null.");
+            }
+
             if (this.platformToFactoryMap.ContainsKey(platform))
             {
                 if (!remove)
@@ -51,7 +60,7 @@ namespace FinalEngine.Launching
                 this.platformToFactoryMap.Remove(platform);
             }
 
-            this.platformToFactoryMap.Add(platform, new TFactory());
+            this.platformToFactoryMap.Add(platform, factory);
         }
 
         public IGamePlatformFactory Resolve()

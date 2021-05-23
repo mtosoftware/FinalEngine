@@ -8,8 +8,7 @@ namespace FinalEngine.Launching
 
     public interface IPlatformResolver
     {
-        void Register<TFactory>(OSPlatform platform, bool remove = false)
-            where TFactory : IGamePlatformFactory, new();
+        void Register(OSPlatform platform, IGamePlatformFactory factory, bool remove = false);
 
         IGamePlatformFactory Resolve();
     }
