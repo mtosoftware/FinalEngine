@@ -18,6 +18,11 @@ namespace FinalEngine.Launching
     public class PlatformResolver : IPlatformResolver
     {
         /// <summary>
+        ///   The initial size capacity of the <see cref="platformToFactoryMap"/> dictionary.
+        /// </summary>
+        private const int InitialSizeCapacity = 10;
+
+        /// <summary>
         ///   The instance.
         /// </summary>
         private static IPlatformResolver? instance;
@@ -59,7 +64,7 @@ namespace FinalEngine.Launching
         {
             this.runtime = runtime ?? throw new ArgumentNullException(nameof(runtime), $"The specified {nameof(runtime)} parameter cannot be null.");
 
-            this.platformToFactoryMap = new Dictionary<OSPlatform, IGamePlatformFactory>();
+            this.platformToFactoryMap = new Dictionary<OSPlatform, IGamePlatformFactory>(InitialSizeCapacity);
         }
 
         /// <summary>

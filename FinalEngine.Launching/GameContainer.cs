@@ -166,6 +166,11 @@ namespace FinalEngine.Launching
             this.isRunning = false;
         }
 
+        public void Launch(double frameCap)
+        {
+            this.Launch(new GameTime(frameCap));
+        }
+
         public void Launch(IGameTime gameTime)
         {
             if (gameTime == null)
