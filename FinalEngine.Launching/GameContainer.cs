@@ -5,6 +5,7 @@
 namespace FinalEngine.Launching
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Input.Keyboard;
     using FinalEngine.Input.Mouse;
     using FinalEngine.IO;
@@ -12,6 +13,7 @@ namespace FinalEngine.Launching
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.Textures;
 
+    [ExcludeFromCodeCoverage]
     public abstract class GameContainer : IDisposable
     {
         private const int InitialWindowHeight = 720;

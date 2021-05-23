@@ -6,6 +6,7 @@ namespace FinalEngine.Launching
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Launching.Invocation;
 
     public class GameTime : IGameTime
@@ -30,6 +31,7 @@ namespace FinalEngine.Launching
             this.waitTime = Second / frameCap;
         }
 
+        [ExcludeFromCodeCoverage]
         public GameTime(double frameCap)
             : this(new StopwatchInvoker(new Stopwatch()), frameCap)
         {

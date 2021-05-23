@@ -4,7 +4,9 @@
 
 namespace FinalEngine.Launching
 {
-    public struct GameTimeInfo
+    using System;
+
+    public struct GameTimeInfo : IEquatable<GameTimeInfo>
     {
         public double Delta { get; init; }
 
@@ -18,6 +20,34 @@ namespace FinalEngine.Launching
         public float FrameRateF
         {
             get { return (float)this.FrameRate; }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is GameTimeInfo info && this.Equals(info);
+        }
+
+        public bool Equals(GameTimeInfo other)
+        {
+            return this.Delta == other.Delta &&
+                   this.FrameRate == other.FrameRate &&
+                   this.DeltaF == other.DeltaF &&
+                   this.FrameRateF == other.FrameRateF;
+        }
+
+        public override int GetHashCode()
+        {
+            const int Accumulator = 17;
+
+            return (this.Delta.GetHashCode() * Accumulator) +
+                   (this.FrameRate.GetHashCode() * Accumulator) +
+                   (this.DeltaF.GetHashCode() * Accumulator) +
+                   (this.FrameRateF.GetHashCode() * Accumulator);
+        }
+
+        public override string ToString()
+        {
+            return $"({this.Delta} : {this.FrameRate})";
         }
     }
 }
