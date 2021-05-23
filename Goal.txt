@@ -22,7 +22,7 @@
   - Some sort of scene management
 - Logging
 - File IO :)
-- Game Loop
+- Game Loop :)
 
 ============================================
 
