@@ -4,8 +4,20 @@
 
 namespace FinalEngine.Launching
 {
+    /// <summary>
+    ///   Defines an interface that provides a method for checking whether the next frame can be processed and rendered.
+    /// </summary>
     public interface IGameTime
     {
+        /// <summary>
+        ///   Determines whether the next frame can be processed and rendered.
+        /// </summary>
+        /// <param name="info">
+        ///   The information for the previous frame.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if this instance can process the next frame; otherwise, <c>false</c>.
+        /// </returns>
         bool CanProcessNextFrame(out GameTimeInfo info);
     }
 }
