@@ -14,6 +14,7 @@ namespace FinalEngine.Launching
     using FinalEngine.Rendering.Textures;
 
     [ExcludeFromCodeCoverage]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Class is constantly changing, not 100% certain if I'm going to keep it or not.")]
     public abstract class GameContainer : IDisposable
     {
         private const int InitialWindowHeight = 720;
