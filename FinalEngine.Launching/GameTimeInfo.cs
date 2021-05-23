@@ -22,6 +22,16 @@ namespace FinalEngine.Launching
             get { return (float)this.FrameRate; }
         }
 
+        public static bool operator !=(GameTimeInfo left, GameTimeInfo right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator ==(GameTimeInfo left, GameTimeInfo right)
+        {
+            return left.Equals(right);
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is GameTimeInfo info && this.Equals(info);
@@ -43,11 +53,6 @@ namespace FinalEngine.Launching
                    (this.FrameRate.GetHashCode() * Accumulator) +
                    (this.DeltaF.GetHashCode() * Accumulator) +
                    (this.FrameRateF.GetHashCode() * Accumulator);
-        }
-
-        public override string ToString()
-        {
-            return $"({this.Delta} : {this.FrameRate})";
         }
     }
 }
