@@ -75,15 +75,28 @@ namespace FinalEngine.Launching
         }
 
         /// <summary>
+        ///   Gets the delta (time that's passed since the previous frame).
+        /// </summary>
+        /// <value>
+        ///   The delta (time that's passed since the previous frame).
+        /// </value>
+        public static double Delta { get; private set; }
+
+        /// <summary>
+        ///   Gets the frame rate (or FPS).
+        /// </summary>
+        /// <value>
+        ///   The frame rate (or FPS).
+        /// </value>
+        public static double FrameRate { get; private set; }
+
+        /// <summary>
         ///   Determines whether the next frame can be processed and rendered.
         /// </summary>
-        /// <param name="info">
-        ///   The information for the previous frame.
-        /// </param>
         /// <returns>
         ///   <c>true</c> if this instance can process the next frame; otherwise, <c>false</c>.
         /// </returns>
-        public bool CanProcessNextFrame(out GameTimeInfo info)
+        public bool CanProcessNextFrame()
         {
             if (!this.watch.IsRunning)
             {
@@ -94,21 +107,14 @@ namespace FinalEngine.Launching
 
             if (currentTime >= this.lastTime + this.waitTime)
             {
-                double delta = currentTime - this.lastTime;
-                double frameRate = Math.Round(OneSecondAsMilliSeconds / delta);
-
-                info = new GameTimeInfo()
-                {
-                    Delta = delta,
-                    FrameRate = frameRate,
-                };
+                Delta = currentTime - this.lastTime;
+                FrameRate = Math.Round(OneSecondAsMilliSeconds / Delta);
 
                 this.lastTime = currentTime;
 
                 return true;
             }
 
-            info = default;
             return false;
         }
     }

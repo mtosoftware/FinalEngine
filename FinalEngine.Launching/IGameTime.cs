@@ -12,12 +12,9 @@ namespace FinalEngine.Launching
         /// <summary>
         ///   Determines whether the next frame can be processed and rendered.
         /// </summary>
-        /// <param name="info">
-        ///   The information for the previous frame.
-        /// </param>
         /// <returns>
         ///   <c>true</c> if this instance can process the next frame; otherwise, <c>false</c>.
         /// </returns>
-        bool CanProcessNextFrame(out GameTimeInfo info);
+        bool CanProcessNextFrame();
     }
 }
