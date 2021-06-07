@@ -21,56 +21,10 @@ namespace FinalEngine.Tests.Launching
         private Mock<IStopwatchInvoker> watch;
 
         [Test]
-        public void CanProcessNextFrameShouldInvokeWatchRestartWhenWatchIsNotRunning()
-        {
-            // Arrange
-            this.watch.SetupGet(x => x.IsRunning).Returns(false);
-
-            // Act
-            this.gameTime.CanProcessNextFrame(out _);
-
-            // Assert
-            this.watch.Verify(x => x.Restart(), Times.Once);
-        }
-
-        [Test]
-        public void CanProcessNextFrameShouldOutDefaultGameTimeInfoWhenCurrentTimeIsNotEqualToLastTimePlusWaitTime()
-        {
-            // Act
-            this.gameTime.CanProcessNextFrame(out GameTimeInfo actual);
-
-            // Assert
-            Assert.AreEqual(default(GameTimeInfo), actual);
-        }
-
-        [Test]
-        public void CanProcessNextFrameShouldReturnCorrectGameTimeInfoWhenCurrentTimeIsGreaterThanLastTimePlusWaitTime()
-        {
-            // Arrange
-            const double WaitTime = 8.4d;
-
-            this.watch.SetupGet(x => x.Elapsed).Returns(TimeSpan.FromMilliseconds(WaitTime));
-
-            double delta = TimeSpan.FromMilliseconds(WaitTime).TotalMilliseconds;
-
-            var expected = new GameTimeInfo()
-            {
-                Delta = delta,
-                FrameRate = Math.Round(1000.0d / delta),
-            };
-
-            // Act
-            this.gameTime.CanProcessNextFrame(out GameTimeInfo actual);
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void CanProcessNextFrameShouldReturnFalseWhenCurrentTimeIsNotEqualToLastTimePlusWaitTime()
         {
             // Act
-            bool actual = this.gameTime.CanProcessNextFrame(out _);
+            bool actual = this.gameTime.CanProcessNextFrame();
 
             // Assert
             Assert.False(actual);
@@ -83,7 +37,7 @@ namespace FinalEngine.Tests.Launching
             this.watch.SetupGet(x => x.Elapsed).Returns(TimeSpan.FromMilliseconds(8.4d));
 
             // Act
-            bool actual = this.gameTime.CanProcessNextFrame(out _);
+            bool actual = this.gameTime.CanProcessNextFrame();
 
             // Assert
             Assert.True(actual);
