@@ -8,9 +8,9 @@ namespace FinalEngine.ECS
     using System.Collections.Generic;
     using System.Dynamic;
 
-    public sealed class Entity : DynamicObject, IReadOnlyEntity
+    public class Entity : DynamicObject, IReadOnlyEntity
     {
-        internal EventHandler<EventArgs>? OnComponentsChanged;
+        public EventHandler<EventArgs>? OnComponentsChanged;
 
         private readonly IDictionary<Type, IComponent> typeToComponentMap;
 

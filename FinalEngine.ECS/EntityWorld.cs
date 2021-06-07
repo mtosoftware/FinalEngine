@@ -6,27 +6,21 @@ namespace FinalEngine.ECS
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
+    //// TODO: Write a unit testable version of this class.
+
+    [ExcludeFromCodeCoverage]
     public class EntityWorld : IEntityWorld, IEntitySystemsProcessor
     {
         private readonly IList<Entity> entities;
 
         private readonly IList<EntitySystemBase> systems;
 
-        public EntityWorld(params EntitySystemBase[] systems)
+        public EntityWorld()
         {
             this.entities = new List<Entity>();
             this.systems = new List<EntitySystemBase>();
-
-            foreach (EntitySystemBase system in systems)
-            {
-                this.AddSystem(system);
-            }
-        }
-
-        public EntityWorld()
-            : this(Array.Empty<EntitySystemBase>())
-        {
         }
 
         public void AddEntity(Entity entity)
