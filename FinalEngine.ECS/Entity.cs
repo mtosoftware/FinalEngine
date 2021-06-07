@@ -102,7 +102,7 @@ namespace FinalEngine.ECS
         public TComponent GetComponent<TComponent>()
             where TComponent : IComponent
         {
-            return this.GetComponent(typeof(TComponent));
+            return (TComponent)this.GetComponent(typeof(TComponent));
         }
 
         public void RemoveComponent(IComponent component)
@@ -158,9 +158,13 @@ namespace FinalEngine.ECS
             foreach (KeyValuePair<Type, IComponent> kvp in this.typeToComponentMap)
             {
                 string typeName = kvp.Key.Name;
-                string componentName = typeName.Remove(typeName.Length - "Component".Length);
 
-                if (componentName == memberName)
+                if (typeName.EndsWith("Component", StringComparison.CurrentCulture))
+                {
+                    typeName = typeName.Remove(typeName.Length - "Component".Length);
+                }
+
+                if (typeName == memberName)
                 {
                     result = kvp.Value;
                     return true;

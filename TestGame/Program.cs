@@ -4,16 +4,29 @@
 
 namespace TestGame
 {
-    using FinalEngine.Launching;
+    using System;
+    using FinalEngine.ECS;
+
+    public class CoolComponent : IComponent
+    {
+        public CoolComponent(string text)
+        {
+            this.Text = text;
+        }
+
+        public string Text { get; }
+    }
 
     internal static class Program
     {
         private static void Main()
         {
-            using (var game = new Game())
-            {
-                game.Launch(new GameTime(120.0d));
-            }
+            dynamic entity = new Entity();
+            entity.AddComponent(new CoolComponent("Testing This!"));
+
+            CoolComponent cool = entity.Cool;
+
+            Console.WriteLine(cool.Text);
         }
     }
 }
