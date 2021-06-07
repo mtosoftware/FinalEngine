@@ -10,6 +10,8 @@ namespace FinalEngine.ECS
 
     public sealed class Entity : DynamicObject, IReadOnlyEntity
     {
+        internal EventHandler<EventArgs>? OnComponentsChanged;
+
         private readonly IDictionary<Type, IComponent> typeToComponentMap;
 
         public Entity()
@@ -32,6 +34,7 @@ namespace FinalEngine.ECS
             }
 
             this.typeToComponentMap.Add(type, component);
+            this.OnComponentsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void AddComponent<TComponent>()
@@ -117,7 +120,7 @@ namespace FinalEngine.ECS
                 throw new ArgumentException($"The specified {nameof(component)} parameter has not been added to this entity.", nameof(component));
             }
 
-            this.typeToComponentMap.Remove(component.GetType());
+            this.RemoveComponent(component.GetType());
         }
 
         public void RemoveComponent(Type type)
@@ -138,6 +141,7 @@ namespace FinalEngine.ECS
             }
 
             this.typeToComponentMap.Remove(type);
+            this.OnComponentsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void RemoveComponent<TComponent>()

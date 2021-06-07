@@ -17,6 +17,8 @@ namespace FinalEngine.ECS
             this.entities = new List<Entity>();
         }
 
+        public abstract GameLoopType LoopType { get; }
+
         public void Process()
         {
             this.Process(this.entities);
