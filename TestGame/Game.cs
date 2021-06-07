@@ -6,10 +6,12 @@ namespace TestGame
 {
     using System.Drawing;
     using System.Numerics;
+    using FinalEngine.ECS;
     using FinalEngine.Input.Keyboard;
     using FinalEngine.Launching;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.Textures;
+    using TestGame.Temp;
 
     public class Game : GameContainer
     {
@@ -17,7 +19,7 @@ namespace TestGame
 
         private readonly ITexture2D textureA;
 
-        private readonly ITexture2D textureB;
+        private readonly EntityWorld world;
 
         public Game()
         {
@@ -25,21 +27,35 @@ namespace TestGame
             var batcher = new SpriteBatcher(this.RenderDevice.InputAssembler);
             this.drawer = new SpriteDrawer(this.RenderDevice, batcher, binder, this.Window!.ClientSize.Width, this.Window!.ClientSize.Height);
 
-            this.textureA = this.TextureLoader.LoadTexture("jedi.jpg");
-            this.textureB = this.TextureLoader.LoadTexture("cheese.jpg");
+            this.textureA = this.TextureLoader.LoadTexture("cheese.jpg");
+
+            this.world = new EntityWorld(
+                new SpriteRenderSystem(this.drawer));
+
+            var entity = new Entity();
+
+            entity.AddComponent(new TransformComponent()
+            {
+                Position = Vector2.Zero,
+                Rotation = 0,
+                Scale = new Vector2(256, 256),
+            });
+
+            entity.AddComponent(new Sprite()
+            {
+                Color = Color.Red,
+                Origin = new Vector2(128, 128),
+                Texture = this.textureA,
+            });
+
+            this.world.AddEntity(entity);
         }
 
         protected override void Render()
         {
             this.RenderDevice.Clear(Color.CornflowerBlue);
 
-            this.drawer.Begin();
-
-            this.drawer.Draw(this.textureA, Color.Red, Vector2.Zero, Vector2.Zero, 45, new Vector2(256, 256));
-            this.drawer.Draw(this.textureB, Color.Green, Vector2.Zero, new Vector2(256, 0), 142, new Vector2(256, 256));
-            this.drawer.Draw(this.textureA, Color.Purple, Vector2.Zero, new Vector2(0, 256), 5821, new Vector2(256, 256));
-
-            this.drawer.End();
+            this.world.ProcessAll(GameLoopType.Render);
 
             base.Render();
         }
@@ -50,6 +66,8 @@ namespace TestGame
             {
                 this.Exit();
             }
+
+            this.world.ProcessAll(GameLoopType.Update);
 
             base.Update();
         }
