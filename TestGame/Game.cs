@@ -29,7 +29,7 @@ namespace TestGame
             this.textureB = this.TextureLoader.LoadTexture("cheese.jpg");
         }
 
-        protected override void Render(GameTimeInfo gameTime)
+        protected override void Render()
         {
             this.RenderDevice.Clear(Color.CornflowerBlue);
 
@@ -41,17 +41,17 @@ namespace TestGame
 
             this.drawer.End();
 
-            base.Render(gameTime);
+            base.Render();
         }
 
-        protected override void Update(GameTimeInfo gameTime)
+        protected override void Update()
         {
             if (this.Keyboard.IsKeyReleased(Key.Escape))
             {
                 this.Exit();
             }
 
-            base.Update(gameTime);
+            base.Update();
         }
     }
 }
