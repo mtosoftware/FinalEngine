@@ -442,7 +442,7 @@ namespace FinalEngine.Tests.Core.ECS
 
             public override DynamicMetaObject FallbackGetMember(DynamicMetaObject target, DynamicMetaObject errorSuggestion)
             {
-                throw new NotImplementedException();
+                throw new Exception("This exception should never occur, something is horribly wrong with your test.");
             }
         }
 

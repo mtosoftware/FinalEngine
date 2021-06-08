@@ -10,7 +10,7 @@ namespace FinalEngine.ECS
 
     public class Entity : DynamicObject, IReadOnlyEntity
     {
-        public EventHandler<EventArgs>? OnComponentsChanged;
+        internal EventHandler<EventArgs>? OnComponentsChanged;
 
         private readonly IDictionary<Type, IComponent> typeToComponentMap;
 

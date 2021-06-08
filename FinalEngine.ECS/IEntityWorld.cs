@@ -12,15 +12,8 @@ namespace FinalEngine.ECS
 
         void AddSystem(EntitySystemBase system);
 
-        void ClearEntities();
-
-        void ClearSystems();
-
         void RemoveEntity(Entity entity);
 
         void RemoveSystem(Type type);
-
-        void RemoveSystem<TSystem>()
-            where TSystem : EntitySystemBase;
     }
 }

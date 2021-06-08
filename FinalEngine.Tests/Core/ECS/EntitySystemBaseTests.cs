@@ -5,23 +5,21 @@
 namespace FinalEngine.Tests.Core.ECS
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using FinalEngine.ECS;
+    using FinalEngine.Tests.Core.ECS.Mocks;
     using NUnit.Framework;
 
     [ExcludeFromCodeCoverage]
     public class EntitySystemBaseTests
     {
-        private readonly EntitySystemBase system;
-
         [Test]
         public void AddOrRemoveByAspectByAspectShouldAddEntityToSystemWhenIsMatchReturnsTrueAndEntityHasNotBeenPreviouslyAdded()
         {
             // Arrange
             var expected = new Entity();
-            var system = new MockEntitySystem(GameLoopType.Update)
+            var system = new MockEntitySystemA(GameLoopType.Update)
             {
                 IsMatchFunction = (_) => true,
                 ProcessFunction = (entities) =>
@@ -41,7 +39,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var entity = new Entity();
-            var system = new MockEntitySystem(GameLoopType.Update)
+            var system = new MockEntitySystemA(GameLoopType.Update)
             {
                 IsMatchFunction = (_) => true,
             };
@@ -64,7 +62,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var entity = new Entity();
-            var system = new MockEntitySystem(GameLoopType.Update)
+            var system = new MockEntitySystemA(GameLoopType.Update)
             {
                 IsMatchFunction = (_) => true,
             };
@@ -86,7 +84,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void AddOrRemoveByAspectShouldThrowArgumentNullExceptionWhenEntityIsNull()
         {
             // Arrange
-            var system = new MockEntitySystem(GameLoopType.Update);
+            var system = new MockEntitySystemA(GameLoopType.Update);
 
             // Act and assert
             Assert.Throws<ArgumentNullException>(() => system.AddOrRemoveByAspect(null));
@@ -97,7 +95,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             GameLoopType expected = GameLoopType.Update;
-            var system = new MockEntitySystem(expected);
+            var system = new MockEntitySystemA(expected);
 
             // Act
             GameLoopType actual = system.LoopType;
@@ -110,7 +108,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void ProcessShouldInvokeProtectedProcessWhenInvoked()
         {
             // Arrange
-            var system = new MockEntitySystem(GameLoopType.Update)
+            var system = new MockEntitySystemA(GameLoopType.Update)
             {
                 ProcessFunction = (_) =>
                 {
@@ -121,30 +119,6 @@ namespace FinalEngine.Tests.Core.ECS
 
             // Act
             system.Process();
-        }
-
-        private class MockEntitySystem : EntitySystemBase
-        {
-            public MockEntitySystem(GameLoopType type)
-            {
-                this.LoopType = type;
-            }
-
-            public Predicate<IReadOnlyEntity> IsMatchFunction { get; set; }
-
-            public override GameLoopType LoopType { get; }
-
-            public Action<IEnumerable<Entity>> ProcessFunction { get; set; }
-
-            protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
-            {
-                return this.IsMatchFunction?.Invoke(entity) ?? false;
-            }
-
-            protected override void Process([NotNull] IEnumerable<Entity> entities)
-            {
-                this.ProcessFunction?.Invoke(entities);
-            }
         }
     }
 }

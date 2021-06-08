@@ -6,11 +6,7 @@ namespace FinalEngine.ECS
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
 
-    //// TODO: Write a unit testable version of this class.
-
-    [ExcludeFromCodeCoverage]
     public class EntityWorld : IEntityWorld, IEntitySystemsProcessor
     {
         private readonly IList<Entity> entities;
@@ -68,22 +64,6 @@ namespace FinalEngine.ECS
             this.systems.Add(system);
         }
 
-        public void ClearEntities()
-        {
-            while (this.entities.Count > 0)
-            {
-                this.RemoveEntity(this.entities[0]);
-            }
-        }
-
-        public void ClearSystems()
-        {
-            while (this.systems.Count > 0)
-            {
-                this.RemoveSystem(this.systems[0].GetType());
-            }
-        }
-
         public void ProcessAll(GameLoopType type)
         {
             foreach (EntitySystemBase system in this.systems)
@@ -131,21 +111,17 @@ namespace FinalEngine.ECS
                 throw new ArgumentException($"The specified {nameof(type)} parameter does not inherit from {nameof(EntitySystemBase)}.", nameof(type));
             }
 
-            foreach (EntitySystemBase system in this.systems)
+            for (int i = this.systems.Count - 1; i >= 0; i--)
             {
-                if (system.GetType() == type)
+                if (this.systems[i].GetType() == type)
                 {
-                    this.systems.Remove(system);
+                    this.systems.RemoveAt(i);
+
+                    return;
                 }
             }
 
             throw new ArgumentException($"The specified {nameof(type)} parameter is not an entity system type that has been added to this entity world.", nameof(type));
-        }
-
-        public void RemoveSystem<TSystem>()
-            where TSystem : EntitySystemBase
-        {
-            this.RemoveSystem(typeof(TSystem));
         }
 
         private void Entity_OnComponentsChanged(object? sender, EventArgs e)
