@@ -187,14 +187,14 @@ namespace FinalEngine.Launching
 
             while (this.isRunning && !(this.Window?.IsExiting ?? false))
             {
-                if (gameTime.CanProcessNextFrame(out GameTimeInfo info))
+                if (gameTime.CanProcessNextFrame())
                 {
-                    this.Update(info);
+                    this.Update();
 
                     this.Keyboard.Update();
                     this.Mouse.Update();
 
-                    this.Render(info);
+                    this.Render();
 
                     this.RenderContext?.SwapBuffers();
                     this.EventsProcessor.ProcessEvents();
@@ -233,11 +233,11 @@ namespace FinalEngine.Launching
             this.IsDisposed = true;
         }
 
-        protected virtual void Render(GameTimeInfo gameTime)
+        protected virtual void Render()
         {
         }
 
-        protected virtual void Update(GameTimeInfo gameTime)
+        protected virtual void Update()
         {
         }
     }
