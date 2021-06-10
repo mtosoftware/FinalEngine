@@ -29,12 +29,12 @@ namespace FinalEngine.ECS
         }
 
         /// <summary>
-        ///   Gets the event that occurs when a component is added or removed from this <see cref="Entity"/>.
+        ///   Gets or sets the event that occurs when a component is added or removed from this <see cref="Entity"/>.
         /// </summary>
         /// <value>
         ///   The event that occurs when a component is added or removed from this <see cref="Entity"/>.
         /// </value>
-        internal EventHandler<EventArgs>? OnComponentsChanged { get; }
+        internal EventHandler<EventArgs>? OnComponentsChanged { get; set; }
 
         /// <summary>
         ///   Adds the specified <paramref name="component"/> to this <see cref="Entity"/>.
