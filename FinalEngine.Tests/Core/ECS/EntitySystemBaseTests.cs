@@ -94,14 +94,14 @@ namespace FinalEngine.Tests.Core.ECS
         public void LoopTypeShouldReturnSameAsConstructorWhenInvoked()
         {
             // Arrange
-            GameLoopType expected = GameLoopType.Update;
-            var system = new MockEntitySystemA(expected);
+            const GameLoopType Expected = GameLoopType.Update;
+            var system = new MockEntitySystemA(Expected);
 
             // Act
             GameLoopType actual = system.LoopType;
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(Expected, actual);
         }
 
         [Test]

@@ -148,10 +148,7 @@ namespace FinalEngine.Tests.Core.ECS
             var systemA = new MockEntitySystemA(GameLoopType.Update)
             {
                 IsMatchFunction = (_) => true,
-                ProcessFunction = (entities) =>
-                {
-                    Assert.AreSame(entity, entities.FirstOrDefault());
-                },
+                ProcessFunction = (entities) => Assert.AreSame(entity, entities.FirstOrDefault()),
             };
 
             var systemB = new MockEntitySystemB(GameLoopType.Render);

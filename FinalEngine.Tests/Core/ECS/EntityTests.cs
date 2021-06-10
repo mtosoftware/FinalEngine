@@ -345,10 +345,7 @@ namespace FinalEngine.Tests.Core.ECS
             // Arrange
             this.entity.AddComponent<MockComponentA>();
 
-            this.entity.OnComponentsChanged += (s, e) =>
-            {
-                Assert.AreSame(this.entity, s);
-            };
+            this.entity.OnComponentsChanged += (s, e) => Assert.AreSame(this.entity, s);
 
             // Act
             this.entity.RemoveComponent<MockComponentA>();
