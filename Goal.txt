@@ -18,7 +18,7 @@
 - Audio
 - Physics
 - Scene & Entity Management
-  - ECS
+  - ECS :)
   - Some sort of scene management
 - Logging
 - File IO :)
