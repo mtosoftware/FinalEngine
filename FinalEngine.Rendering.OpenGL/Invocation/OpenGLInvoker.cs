@@ -305,6 +305,13 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
 
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.DebugOutputSynchronous);
+
+#if DEBUG
+            Console.WriteLine($"Vendor: {GL.GetString(StringName.Vendor)}");
+            Console.WriteLine($"Version: {GL.GetString(StringName.Version)}");
+            Console.WriteLine($"Renderer: {GL.GetString(StringName.Renderer)}");
+            Console.WriteLine($"Shader Version: {GL.GetString(StringName.ShadingLanguageVersion)}");
+#endif
         }
 
         /// <inheritdoc/>

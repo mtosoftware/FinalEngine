@@ -82,7 +82,7 @@ namespace FinalEngine.Launching.Factories
             var settings = new NativeWindowSettings()
             {
                 API = ContextAPI.OpenGL,
-                APIVersion = new Version(4, 6),
+                APIVersion = new Version(4, 5),
 
                 Flags = ContextFlags.ForwardCompatible,
                 Profile = ContextProfile.Core,
