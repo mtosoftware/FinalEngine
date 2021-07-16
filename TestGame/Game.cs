@@ -16,6 +16,8 @@ namespace TestGame
 
     public class Game : GameContainer
     {
+        private readonly ITexture2D texture;
+
         private readonly IEntityWorld world;
 
         private SpriteDrawer? drawer;
@@ -34,6 +36,7 @@ namespace TestGame
 
             this.world = new EntityWorld();
             this.world.AddSystem(new SpriteRenderSystem(this.drawer));
+            this.texture = this.ResourceManager!.LoadResource<ITexture2D>("jedi.jpg");
 
             var entity = new Entity();
 
@@ -45,9 +48,9 @@ namespace TestGame
 
             entity.AddComponent(new SpriteComponent()
             {
-                Color = Color.MediumSpringGreen,
+                Color = Color.White,
                 Origin = new Vector2(256, 256),
-                Texture = this.ResourceManager!.LoadResource<ITexture2D>("jedi.jpg"),
+                Texture = this.texture,
             });
 
             this.world.AddEntity(entity);
@@ -87,7 +90,7 @@ namespace TestGame
             {
                 this.Exit();
             }
-
+            this.Window!.Title = GameTime.FrameRate.ToString();
             this.world.ProcessAll(GameLoopType.Update);
 
             base.Update();

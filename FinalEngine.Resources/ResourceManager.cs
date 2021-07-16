@@ -56,6 +56,8 @@ namespace FinalEngine.Resources
                     FilePath = filePath,
                     Reference = loader.LoadResource(filePath),
                 };
+
+                this.pathToResourceDataMap.Add(filePath, resourceData);
             }
 
             resourceData.IncrementReferenceCount();
