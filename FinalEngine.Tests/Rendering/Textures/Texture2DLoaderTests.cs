@@ -28,7 +28,7 @@ namespace FinalEngine.Tests.Rendering.Textures
 
         private Mock<IImageInvoker> invoker;
 
-        private ITexture2DLoader loader;
+        private Texture2DResourceLoader loader;
 
         private Mock<Stream> stream;
 
@@ -38,28 +38,28 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void ConstructorShouldThrowArgumentNullExceptionWhenFactoryIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DLoader(this.fileSystem.Object, null, this.invoker.Object));
+            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem.Object, null, this.invoker.Object));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenFileSystemIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DLoader(null, this.factory.Object, this.invoker.Object));
+            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(null, this.factory.Object, this.invoker.Object));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DLoader(this.fileSystem.Object, this.factory.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, null));
         }
 
         [Test]
-        public void LoadTextureShouldInvokeCreateTexture2DWhenLoaded()
+        public void LoadResourceShouldInvokeCreateTexture2DWhenLoaded()
         {
             // Act
-            this.loader.LoadTexture("texture");
+            this.loader.LoadResource("texture");
 
             // Assert
             this.factory.Verify(x => x.CreateTexture2D(
@@ -70,64 +70,64 @@ namespace FinalEngine.Tests.Rendering.Textures
         }
 
         [Test]
-        public void LoadTextureShouldInvokeLoadWhenFileExists()
+        public void LoadResourceShouldInvokeLoadWhenFileExists()
         {
             // Act
-            this.loader.LoadTexture("texture");
+            this.loader.LoadResource("texture");
 
             // Assert
             this.invoker.Verify(x => x.Load<Rgba32>(this.stream.Object));
         }
 
         [Test]
-        public void LoadTextureShouldInvokeOpenFileWhenFileExists()
+        public void LoadResourceShouldInvokeOpenFileWhenFileExists()
         {
             // Act
-            this.loader.LoadTexture("texture");
+            this.loader.LoadResource("texture");
 
             // Assert
             this.fileSystem.Verify(x => x.OpenFile("texture", FileAccessMode.Read));
         }
 
         [Test]
-        public void LoadTextureShouldReturnTextureWhenLoaded()
+        public void LoadResourceShouldReturnTextureWhenLoaded()
         {
             // Act
-            ITexture2D texture = this.loader.LoadTexture("texture");
+            ITexture2D texture = this.loader.LoadResource("texture");
 
             // Assert
             Assert.AreSame(this.texture.Object, texture);
         }
 
         [Test]
-        public void LoadTextureShouldThrowArgumentNullExceptionWhenFilePathIsEmpty()
+        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.loader.LoadTexture(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => this.loader.LoadResource(string.Empty));
         }
 
         [Test]
-        public void LoadTextureShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.loader.LoadTexture(null));
+            Assert.Throws<ArgumentNullException>(() => this.loader.LoadResource(null));
         }
 
         [Test]
-        public void LoadTextureShouldThrowArgumentNullExceptionWhenFilePathIsWhitespace()
+        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.loader.LoadTexture("\t\n\r"));
+            Assert.Throws<ArgumentNullException>(() => this.loader.LoadResource("\t\n\r"));
         }
 
         [Test]
-        public void LoadTextureShouldThrowFileNotFoundExceptionWhenFileExistsReturnsFalse()
+        public void LoadResourceShouldThrowFileNotFoundExceptionWhenFileExistsReturnsFalse()
         {
             // Arrange
             this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(false);
 
             // Act and assert
-            Assert.Throws<FileNotFoundException>(() => this.loader.LoadTexture("texture"));
+            Assert.Throws<FileNotFoundException>(() => this.loader.LoadResource("texture"));
         }
 
         [SetUp]
@@ -154,7 +154,7 @@ namespace FinalEngine.Tests.Rendering.Textures
                 PixelFormat.Rgba,
                 SizedFormat.Rgba8)).Returns(this.texture.Object);
 
-            this.loader = new Texture2DLoader(this.fileSystem.Object, this.factory.Object, this.invoker.Object);
+            this.loader = new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, this.invoker.Object);
         }
 
         [TearDown]
