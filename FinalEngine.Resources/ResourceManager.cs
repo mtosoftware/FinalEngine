@@ -48,6 +48,9 @@ namespace FinalEngine.Resources
 
             if (!this.pathToResourceDataMap.TryGetValue(filePath, out ResourceData? resourceData))
             {
+#if DEBUG
+                Console.WriteLine($"Loading Resource: {filePath}");
+#endif
                 resourceData = new ResourceData()
                 {
                     FilePath = filePath,
@@ -56,6 +59,10 @@ namespace FinalEngine.Resources
             }
 
             resourceData.IncrementReferenceCount();
+
+#if DEBUG
+            Console.WriteLine($"Incrementing Reference Count: {filePath} : {resourceData.ReferenceCount}");
+#endif
 
             return (T)resourceData.Reference;
         }
@@ -87,6 +94,10 @@ namespace FinalEngine.Resources
             {
                 KeyValuePair<string, ResourceData> kvp = this.pathToResourceDataMap.ElementAt(i);
                 ResourceData resourceData = kvp.Value;
+
+#if DEBUG
+                Console.WriteLine($"Decrementing Reference Count: {resourceData.FilePath} : {resourceData.ReferenceCount}");
+#endif
 
                 resourceData.DecrementReferenceCount();
 
