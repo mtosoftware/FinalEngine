@@ -21,6 +21,7 @@
   - ECS :)
   - Some sort of scene management
 - Logging
+- Resource Management
 - File IO :)
 - Game Loop :)
 
