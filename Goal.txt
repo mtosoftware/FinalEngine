@@ -1,3 +1,15 @@
+Sprint (17/07/1021 - 24/07/2021):
+
+#108 	- Provide documentation and unit testing for FinalEngine.Resources project
+#107 	- [BUG] GameTime is capped to 60 FPS due to VSyncing
+#106 	- [BUG] Transparent textures are not transparent when rendered by the SpriteDrawer
+#105 	- [BUG] Textures are loaded upside down
+#104 	- [FEATURE REQUEST] GameTime.Delta and GameTime.FrameRate should be floats, not doubles
+#103 	- [BUG] The viewport should be set to the dimension of the window
+#102 	- [BUG] Sprite drawer should starting drawing from the top left corner of the window
+#97 	- [FEATURE REQUEST 2.0] Support null textures for ISpriteBatch
+#109	- [FEATURE REQUEST] Scene Management
+
 - Windowing :)
 - Input :)
 - Rendering :)
