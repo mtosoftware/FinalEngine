@@ -23,7 +23,7 @@ namespace TestGame
 
             this.drawer = new SpriteDrawer(this.RenderDevice, batcher, binder, this.Window.ClientSize.Width, this.Window.ClientSize.Height);
 
-            this.texture = this.ResourceManager.LoadResource<ITexture2D>("jedi.jpg");
+            this.texture = this.ResourceManager.LoadResource<ITexture2D>("player.png");
         }
 
         protected override void Dispose(bool disposing)

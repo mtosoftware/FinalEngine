@@ -269,6 +269,14 @@ namespace FinalEngine.Rendering
             this.renderDevice.Pipeline.SetUniform("u_transform", this.Transform);
             this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, this.projectionWidth, this.projectionHeight));
 
+            this.renderDevice.OutputMerger.SetBlendState(
+                new BlendStateDescription()
+                {
+                    Enabled = true,
+                    SourceMode = BlendMode.SourceAlpha,
+                    DestinationMode = BlendMode.OneMinusSourceAlpha,
+                });
+
             this.batcher.Reset();
             this.binder.Reset();
         }
