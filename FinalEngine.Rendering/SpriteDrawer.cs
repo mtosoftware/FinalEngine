@@ -120,7 +120,7 @@ namespace FinalEngine.Rendering
               void main()
               {
                   out_color = in_color;
-                  out_texCoord = in_texCoord;
+                  out_texCoord = vec2(in_texCoord.x, 1.0 - in_texCoord.y);;
                   out_textureID = in_textureID;
 
                   gl_Position = u_projection * u_transform * vec4(in_position, 0.0, 1.0);
