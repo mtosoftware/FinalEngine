@@ -63,8 +63,8 @@ namespace FinalEngine.Launching.Factories
         /// <param name="renderDevice">
         ///   The render device.
         /// </param>
-        /// <param name="textureLoader">
-        ///   The texture loader.
+        /// <param name="resourceManager">
+        ///   The resource manager.
         /// </param>
         [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Handled by Game Container.")]
         public void InitializePlatform(

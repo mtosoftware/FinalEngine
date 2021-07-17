@@ -49,8 +49,8 @@ namespace FinalEngine.Launching
         /// <param name="renderDevice">
         ///   The render device.
         /// </param>
-        /// <param name="textureLoader">
-        ///   The texture loader.
+        /// <param name="resourceManager">
+        ///   The resource manager.
         /// </param>
         void InitializePlatform(
             int width,

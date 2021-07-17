@@ -1,4 +1,4 @@
-﻿// <copyright file="MockEntitySystem.cs" company="Software Antics">
+﻿// <copyright file="MockEntitySystemA.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
