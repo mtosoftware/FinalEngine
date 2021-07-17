@@ -80,7 +80,7 @@ namespace FinalEngine.Launching
         /// <value>
         ///   The delta (time that's passed since the previous frame).
         /// </value>
-        public static double Delta { get; private set; }
+        public static float Delta { get; private set; }
 
         /// <summary>
         ///   Gets the frame rate (or FPS).
@@ -88,7 +88,7 @@ namespace FinalEngine.Launching
         /// <value>
         ///   The frame rate (or FPS).
         /// </value>
-        public static double FrameRate { get; private set; }
+        public static float FrameRate { get; private set; }
 
         /// <summary>
         ///   Determines whether the next frame can be processed and rendered.
@@ -107,8 +107,8 @@ namespace FinalEngine.Launching
 
             if (currentTime >= this.lastTime + this.waitTime)
             {
-                Delta = currentTime - this.lastTime;
-                FrameRate = Math.Round(OneSecondAsMilliSeconds / Delta);
+                Delta = (float)(currentTime - this.lastTime);
+                FrameRate = (float)Math.Round(OneSecondAsMilliSeconds / Delta);
 
                 this.lastTime = currentTime;
 

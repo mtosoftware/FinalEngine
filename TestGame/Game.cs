@@ -58,6 +58,8 @@ namespace TestGame
 
             this.drawer.End();
 
+            this.Window.Title = $"FPS: {GameTime.FrameRate} : Delta: {GameTime.Delta}";
+
             base.Render();
         }
     }
