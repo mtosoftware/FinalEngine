@@ -90,6 +90,10 @@ namespace FinalEngine.Rendering
         /// </summary>
         private readonly IInputLayout inputLayout;
 
+        private readonly int projectionHeight;
+
+        private readonly int projectionWidth;
+
         /// <summary>
         ///   The render device.
         /// </summary>
@@ -209,6 +213,9 @@ namespace FinalEngine.Rendering
 
             this.Projection = Matrix4x4.CreateOrthographicOffCenter(0, projectionWidth, projectionHeight, 0, -1, 1);
             this.Transform = Matrix4x4.CreateTranslation(Vector3.Zero);
+
+            this.projectionWidth = projectionWidth;
+            this.projectionHeight = projectionHeight;
         }
 
         /// <summary>
@@ -260,6 +267,7 @@ namespace FinalEngine.Rendering
 
             this.renderDevice.Pipeline.SetUniform("u_projection", this.Projection);
             this.renderDevice.Pipeline.SetUniform("u_transform", this.Transform);
+            this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, this.projectionWidth, this.projectionHeight));
 
             this.batcher.Reset();
             this.binder.Reset();
