@@ -207,7 +207,7 @@ namespace FinalEngine.Rendering
                 indices,
                 indices.Length * sizeof(int));
 
-            this.Projection = Matrix4x4.CreateOrthographic(projectionWidth, projectionHeight, -1, 1);
+            this.Projection = Matrix4x4.CreateOrthographicOffCenter(0, projectionWidth, projectionHeight, 0, -1, 1);
             this.Transform = Matrix4x4.CreateTranslation(Vector3.Zero);
         }
 
