@@ -39,7 +39,11 @@ namespace FinalEngine.Tests.Rendering
 
         private Mock<IInputLayout> inputLayout;
 
+        private Mock<IOutputMerger> outputMerger;
+
         private Mock<IPipeline> pipeline;
+
+        private Mock<IRasterizer> rasterizer;
 
         private Mock<IRenderDevice> renderDevice;
 
@@ -157,7 +161,7 @@ namespace FinalEngine.Tests.Rendering
         public void ConstructorShouldSetProjectionUsingProjectionWidthAndHeightValuesWhenInvoked()
         {
             // Arrange
-            var expected = Matrix4x4.CreateOrthographic(ProjectionWidth, ProjectionHeight, -1, 1);
+            var expected = Matrix4x4.CreateOrthographicOffCenter(0, ProjectionWidth, ProjectionHeight, 0, -1, 1);
 
             // Act
             Matrix4x4 actual = this.drawer.Projection;
@@ -350,10 +354,14 @@ namespace FinalEngine.Tests.Rendering
             this.factory = new Mock<IGPUResourceFactory>();
             this.pipeline = new Mock<IPipeline>();
             this.inputAssembler = new Mock<IInputAssembler>();
+            this.rasterizer = new Mock<IRasterizer>();
+            this.outputMerger = new Mock<IOutputMerger>();
 
             this.renderDevice.SetupGet(x => x.Factory).Returns(this.factory.Object);
             this.renderDevice.SetupGet(x => x.Pipeline).Returns(this.pipeline.Object);
             this.renderDevice.SetupGet(x => x.InputAssembler).Returns(this.inputAssembler.Object);
+            this.renderDevice.SetupGet(x => x.Rasterizer).Returns(this.rasterizer.Object);
+            this.renderDevice.Setup(x => x.OutputMerger).Returns(this.outputMerger.Object);
 
             this.vertexShader = new Mock<IShader>();
             this.fragmentShader = new Mock<IShader>();
