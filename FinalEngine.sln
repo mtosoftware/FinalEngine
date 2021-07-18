@@ -16,8 +16,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Platform", "Fin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Platform.Desktop", "FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj", "{B123653E-BA9E-463C-B109-4C294385D74E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGame", "TestGame\TestGame.csproj", "{465D6A12-C4AB-4413-8385-1465331B4EAF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{198F3F27-340D-4617-86BB-AE9D9D5494A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Input", "FinalEngine.Input\FinalEngine.Input.csproj", "{F22EC955-61B2-4021-88F2-BD889DED8716}"
@@ -42,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Launching", "Fi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.ECS", "FinalEngine.ECS\FinalEngine.ECS.csproj", "{976CD388-3DE5-4BA3-942F-C61C8D8F4C89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Resources", "FinalEngine.Resources\FinalEngine.Resources.csproj", "{6E9F635E-3A47-4778-9925-D5C53FD2C9AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Resources", "FinalEngine.Resources\FinalEngine.Resources.csproj", "{6E9F635E-3A47-4778-9925-D5C53FD2C9AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +56,6 @@ Global
 		{B123653E-BA9E-463C-B109-4C294385D74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B123653E-BA9E-463C-B109-4C294385D74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B123653E-BA9E-463C-B109-4C294385D74E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{465D6A12-C4AB-4413-8385-1465331B4EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{465D6A12-C4AB-4413-8385-1465331B4EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{465D6A12-C4AB-4413-8385-1465331B4EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{465D6A12-C4AB-4413-8385-1465331B4EAF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F22EC955-61B2-4021-88F2-BD889DED8716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F22EC955-61B2-4021-88F2-BD889DED8716}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22EC955-61B2-4021-88F2-BD889DED8716}.Release|Any CPU.ActiveCfg = Release|Any CPU

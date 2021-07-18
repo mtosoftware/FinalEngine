@@ -90,8 +90,14 @@ namespace FinalEngine.Rendering
         /// </summary>
         private readonly IInputLayout inputLayout;
 
+        /// <summary>
+        ///   The projection height.
+        /// </summary>
         private readonly int projectionHeight;
 
+        /// <summary>
+        ///   The projection width.
+        /// </summary>
         private readonly int projectionWidth;
 
         /// <summary>

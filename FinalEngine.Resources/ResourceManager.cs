@@ -6,9 +6,9 @@ namespace FinalEngine.Resources
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-
-    //// TODO: Unit Test this
+    using FinalEngine.Resources.Exceptions;
 
     /// <summary>
     ///   Provides a standard resource manager with reference counting.
@@ -38,6 +38,7 @@ namespace FinalEngine.Resources
         /// <summary>
         ///   Finalizes an instance of the <see cref="ResourceManager"/> class.
         /// </summary>
+        [ExcludeFromCodeCoverage]
         ~ResourceManager()
         {
             this.Dispose(false);
@@ -88,7 +89,7 @@ namespace FinalEngine.Resources
 
             if (!this.typeToLoaderMap.TryGetValue(typeof(T), out IResourceLoaderInternal? loader))
             {
-                throw new Exception($"The specified {nameof(T)} parameter does not have an associated registered loader.");
+                throw new ResourceLoaderNotRegisteredException($"The specified {nameof(T)} parameter does not have an associated registered loader.");
             }
 
             if (!this.pathToResourceDataMap.TryGetValue(filePath, out ResourceData? resourceData))
@@ -216,13 +217,8 @@ namespace FinalEngine.Resources
             /// </exception>
             public ResourceData(string filePath, IResource reference)
             {
-                if (string.IsNullOrWhiteSpace(filePath))
-                {
-                    throw new ArgumentNullException(nameof(filePath), $"The specified {nameof(filePath)} parameter cannot be null.");
-                }
-
                 this.FilePath = filePath;
-                this.Reference = reference ?? throw new ArgumentNullException(nameof(reference), $"The specified {nameof(reference)} parameter cannot be null.");
+                this.Reference = reference;
             }
 
             /// <summary>

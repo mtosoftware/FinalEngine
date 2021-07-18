@@ -38,6 +38,7 @@
 		<ProjectReference Include="..\FinalEngine.Launching\FinalEngine.Launching.csproj" />
 		<ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
 		<ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
+		<ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

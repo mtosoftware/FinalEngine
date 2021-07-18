@@ -6,8 +6,6 @@ namespace FinalEngine.Resources
 {
     using System;
 
-    //// TODO: Unit Test this
-
     /// <summary>
     ///   Provides a base resource loader that can load a resource of type <typeparamref name="T"/>.
     /// </summary>
