@@ -40,6 +40,8 @@ namespace FinalEngine.Rendering.OpenGL
         /// </remarks>
         private readonly IEnumMapper mapper;
 
+        private bool isInitialized;
+
         /// <summary>
         ///   The global vertex array object.
         /// </summary>
@@ -131,9 +133,6 @@ namespace FinalEngine.Rendering.OpenGL
             };
 
             this.mapper = new EnumMapper(map);
-
-            this.vao = this.invoker.GenVertexArray();
-            this.invoker.BindVertexArray(this.vao);
 
             this.Factory = new OpenGLGPUResourceFactory(invoker, this.mapper);
             this.InputAssembler = new OpenGLInputAssembler(invoker);
@@ -242,6 +241,19 @@ namespace FinalEngine.Rendering.OpenGL
         public void DrawIndices(PrimitiveTopology topology, int first, int count)
         {
             this.invoker.DrawElements(this.mapper.Forward<PrimitiveType>(topology), count, DrawElementsType.UnsignedInt, first);
+        }
+
+        public void Initialize()
+        {
+            if (this.isInitialized)
+            {
+                throw new Exception("Render Device has already been initialized.");
+            }
+
+            this.vao = this.invoker.GenVertexArray();
+            this.invoker.BindVertexArray(this.vao);
+
+            this.isInitialized = true;
         }
 
         /// <summary>

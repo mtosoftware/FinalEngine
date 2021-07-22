@@ -106,5 +106,7 @@ namespace FinalEngine.Rendering
         ///   Specifies an <see cref="int"/> that represents the total number of indices to draw.
         /// </param>
         void DrawIndices(PrimitiveTopology topology, int first, int count);
+
+        void Initialize();
     }
 }
