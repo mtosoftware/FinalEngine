@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Rendering
 {
+    using System;
     using System.Drawing;
 
     /// <summary>
@@ -36,7 +37,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Defines an interface that represents a device, physical or hardware, that can provide low-level rendering functionality.
     /// </summary>
-    public interface IRenderDevice
+    public interface IRenderDevice : IDisposable
     {
         /// <summary>
         ///   Gets an <see cref="IGPUResourceFactory"/> that represents the factory used to create resources for this <see cref="IRenderDevice"/>.

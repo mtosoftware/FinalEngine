@@ -15,7 +15,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using OpenTK.Windowing.Common;
 
     [ExcludeFromCodeCoverage]
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLRenderContextTests
     {
         private const int VertexArrayID = 5094;
@@ -77,16 +76,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             Assert.Throws<ArgumentNullException>(() => new OpenGLRenderContext(null, this.bindingsContext.Object, this.graphicsContext.Object));
         }
 
-        [Test]
-        public void DisposeShouldInvokeDeleteVertexArrayWhenInvoked()
-        {
-            // Act
-            this.renderContext.Dispose();
-
-            // Assert
-            this.invoker.Verify(x => x.DeleteVertexArray(VertexArrayID), Times.Once);
-        }
-
         [SetUp]
         public void Setup()
         {
@@ -115,16 +104,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SwapBuffersShouldThrowObjectDisposedExceptionWhenRenderContextIsDisposed()
-        {
-            // Arrange
-            this.renderContext.Dispose();
-
-            // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.renderContext.SwapBuffers());
-        }
-
-        [Test]
         public void SwapBuffersShouldThrowRenderContextExceptionWhenContextIsNotCurrent()
         {
             // Arrange
@@ -132,12 +111,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
 
             // Act and assert
             Assert.Throws<RenderContextException>(() => this.renderContext.SwapBuffers());
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            this.renderContext.Dispose();
         }
     }
 }

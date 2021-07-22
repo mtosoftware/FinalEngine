@@ -115,7 +115,7 @@ namespace FinalEngine.Launching
         /// <value>
         ///   The render device.
         /// </value>
-        protected IRenderDevice RenderDevice { get; }
+        protected IRenderDevice? RenderDevice { get; private set; }
 
         protected IResourceManager? ResourceManager { get; private set; }
 
@@ -141,7 +141,7 @@ namespace FinalEngine.Launching
         /// <value>
         ///   The render context.
         /// </value>
-        private IRenderContext? RenderContext { get; set; }
+        private IRenderContext RenderContext { get; }
 
         /// <summary>
         ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -190,7 +190,7 @@ namespace FinalEngine.Launching
 
                     this.Render();
 
-                    this.RenderContext?.SwapBuffers();
+                    this.RenderContext.SwapBuffers();
                     this.EventsProcessor.ProcessEvents();
                 }
             }
@@ -217,10 +217,10 @@ namespace FinalEngine.Launching
                     this.ResourceManager = null;
                 }
 
-                if (this.RenderContext != null)
+                if (this.RenderDevice != null)
                 {
-                    this.RenderContext.Dispose();
-                    this.RenderContext = null;
+                    this.RenderDevice.Dispose();
+                    this.RenderDevice = null;
                 }
 
                 if (this.Window != null)

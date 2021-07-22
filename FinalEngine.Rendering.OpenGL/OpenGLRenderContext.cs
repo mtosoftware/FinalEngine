@@ -27,14 +27,6 @@ namespace FinalEngine.Rendering.OpenGL
         private readonly IOpenGLInvoker invoker;
 
         /// <summary>
-        ///   The global vertex array object.
-        /// </summary>
-        /// <remarks>
-        ///   A global vertex array object is required as the rendering API has no concept of VAOs.
-        /// </remarks>
-        private int vao;
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="OpenGLRenderContext"/> class.
         /// </summary>
         /// <param name="invoker">
@@ -62,34 +54,6 @@ namespace FinalEngine.Rendering.OpenGL
 
             context.MakeCurrent();
             invoker.LoadBindings(bindings);
-
-            this.vao = invoker.GenVertexArray();
-            invoker.BindVertexArray(this.vao);
-        }
-
-        /// <summary>
-        ///   Finalizes an instance of the <see cref="OpenGLRenderContext"/> class.
-        /// </summary>
-        ~OpenGLRenderContext()
-        {
-            this.Dispose(false);
-        }
-
-        /// <summary>
-        ///   Gets a value indicating whether this <see cref="OpenGLRenderContext"/> is disposed.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this <see cref="OpenGLRenderContext"/> is disposed; otherwise, <c>false</c>.
-        /// </value>
-        protected bool IsDisposed { get; private set; }
-
-        /// <summary>
-        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -103,39 +67,12 @@ namespace FinalEngine.Rendering.OpenGL
         /// </exception>
         public void SwapBuffers()
         {
-            if (this.IsDisposed)
-            {
-                throw new ObjectDisposedException(nameof(OpenGLRenderContext));
-            }
-
             if (!this.context.IsCurrent)
             {
                 throw new RenderContextException($"This {nameof(OpenGLRenderContext)} is not current on the calling thread.");
             }
 
             this.context.SwapBuffers();
-        }
-
-        /// <summary>
-        ///   Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing">
-        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (this.IsDisposed)
-            {
-                return;
-            }
-
-            if (disposing && this.vao != -1)
-            {
-                this.invoker.DeleteVertexArray(this.vao);
-                this.vao = -1;
-            }
-
-            this.IsDisposed = true;
         }
     }
 }
