@@ -46,8 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Extensions.Resources", "FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj", "{77328CBB-09C7-44E6-977F-C79812F6535A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{BD0CC717-954B-4FAC-A15C-B9711DEBC34E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,10 +100,6 @@ Global
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD0CC717-954B-4FAC-A15C-B9711DEBC34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD0CC717-954B-4FAC-A15C-B9711DEBC34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD0CC717-954B-4FAC-A15C-B9711DEBC34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD0CC717-954B-4FAC-A15C-B9711DEBC34E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
