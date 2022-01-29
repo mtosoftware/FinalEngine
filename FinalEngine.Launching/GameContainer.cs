@@ -178,6 +178,8 @@ namespace FinalEngine.Launching
 
             this.isRunning = true;
 
+            this.RenderDevice!.Initialize();
+
             while (this.isRunning && !(this.Window?.IsExiting ?? false))
             {
                 if (gameTime.CanProcessNextFrame())
