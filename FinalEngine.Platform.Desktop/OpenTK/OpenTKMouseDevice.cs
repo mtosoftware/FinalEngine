@@ -6,7 +6,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK
 {
     using System;
     using System.Drawing;
-    using FinalEngine.Input.Mouse;
+    using FinalEngine.Input;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
     using global::OpenTK.Mathematics;
     using TKMouseButtonEventArgs = global::OpenTK.Windowing.Common.MouseButtonEventArgs;

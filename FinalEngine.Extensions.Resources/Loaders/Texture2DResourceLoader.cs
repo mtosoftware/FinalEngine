@@ -6,16 +6,15 @@ namespace FinalEngine.Rendering.Textures
 {
     using System;
     using System.IO;
+    using FinalEngine.Extensions.Resources.Invocation;
     using FinalEngine.IO;
-    using FinalEngine.Rendering.Invocation;
     using FinalEngine.Resources;
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.PixelFormats;
 
     /// <summary>
-    ///   Provides a standard implementation of an <see cref="ITexture2DLoader"/>.
+    ///   Provides a resource loader for loading textures from a file system.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Textures.ITexture2DLoader"/>
     public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
     {
         /// <summary>

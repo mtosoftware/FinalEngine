@@ -7,9 +7,9 @@ namespace FinalEngine.Tests.Rendering.Textures
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
+    using FinalEngine.Extensions.Resources.Invocation;
     using FinalEngine.IO;
     using FinalEngine.Rendering;
-    using FinalEngine.Rendering.Invocation;
     using FinalEngine.Rendering.Textures;
     using Moq;
     using NUnit.Framework;

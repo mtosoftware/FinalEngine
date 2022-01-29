@@ -9,7 +9,7 @@ namespace FinalEngine.Rendering.Textures
     /// <summary>
     ///   Enumerates the available pixel data types.
     /// </summary>
-    [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Required for API")]
+    [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Required by API")]
     public enum PixelType
     {
         /// <summary>

@@ -15,6 +15,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using OpenTK.Graphics.OpenGL4;
 
     [ExcludeFromCodeCoverage]
+    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLRenderDeviceTests
     {
         private Mock<IOpenGLInvoker> invoker;
@@ -134,6 +135,12 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             // Arrange
             this.invoker = new Mock<IOpenGLInvoker>();
             this.renderDevice = new OpenGLRenderDevice(this.invoker.Object);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            this.renderDevice.Dispose();
         }
     }
 }

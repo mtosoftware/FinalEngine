@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Input.Keyboard
+namespace FinalEngine.Input
 {
     /// <summary>
     ///   Defines an interface that provides real time handling of keyboard operations.

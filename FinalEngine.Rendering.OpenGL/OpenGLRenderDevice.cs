@@ -8,6 +8,7 @@ namespace FinalEngine.Rendering.OpenGL
     using System.Collections.Generic;
     using System.Drawing;
     using FinalEngine.Rendering.Buffers;
+    using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Rendering.Pipeline;
     using FinalEngine.Rendering.Textures;
@@ -40,6 +41,9 @@ namespace FinalEngine.Rendering.OpenGL
         /// </remarks>
         private readonly IEnumMapper mapper;
 
+        /// <summary>
+        ///   Indicates whether this instance has been initialized.
+        /// </summary>
         private bool isInitialized;
 
         /// <summary>
@@ -243,11 +247,17 @@ namespace FinalEngine.Rendering.OpenGL
             this.invoker.DrawElements(this.mapper.Forward<PrimitiveType>(topology), count, DrawElementsType.UnsignedInt, first);
         }
 
+        /// <summary>
+        ///   Initializes this instance (should be called before creating any resources).
+        /// </summary>
+        /// <exception cref="RenderDeviceInitializationException">
+        ///   The OpenGL render device has already been initialized.
+        /// </exception>
         public void Initialize()
         {
             if (this.isInitialized)
             {
-                throw new Exception("Render Device has already been initialized.");
+                throw new RenderDeviceInitializationException("The OpenGL Render Device has already been initialized.");
             }
 
             this.vao = this.invoker.GenVertexArray();

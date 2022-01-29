@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Invocation
+namespace FinalEngine.Extensions.Resources.Invocation
 {
     using System.IO;
     using SixLabors.ImageSharp;

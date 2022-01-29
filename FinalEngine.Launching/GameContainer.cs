@@ -6,8 +6,7 @@ namespace FinalEngine.Launching
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using FinalEngine.Input.Keyboard;
-    using FinalEngine.Input.Mouse;
+    using FinalEngine.Input;
     using FinalEngine.IO;
     using FinalEngine.Platform;
     using FinalEngine.Rendering;
@@ -136,7 +135,7 @@ namespace FinalEngine.Launching
         private IEventsProcessor EventsProcessor { get; }
 
         /// <summary>
-        ///   Gets or sets the render context.
+        ///   Gets the render context.
         /// </summary>
         /// <value>
         ///   The render context.

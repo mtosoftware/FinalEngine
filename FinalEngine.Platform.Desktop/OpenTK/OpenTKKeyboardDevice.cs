@@ -5,7 +5,7 @@
 namespace FinalEngine.Platform.Desktop.OpenTK
 {
     using System;
-    using FinalEngine.Input.Keyboard;
+    using FinalEngine.Input;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
     using global::OpenTK.Windowing.Common;
 

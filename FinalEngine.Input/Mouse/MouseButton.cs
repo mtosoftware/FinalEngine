@@ -2,11 +2,14 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Input.Mouse
+namespace FinalEngine.Input
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     ///   Enumerates the available mouse buttons on a mouse.
     /// </summary>
+    [SuppressMessage("Design", "CA1027:Mark enums with FlagsAttribute", Justification = "Not required by API")]
     public enum MouseButton
     {
         /// <summary>

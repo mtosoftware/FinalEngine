@@ -7,7 +7,7 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
-    using FinalEngine.Input.Mouse;
+    using FinalEngine.Input;
     using FinalEngine.Platform.Desktop.OpenTK;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
     using global::OpenTK.Mathematics;

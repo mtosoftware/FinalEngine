@@ -2,14 +2,17 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Input.Keyboard
+namespace FinalEngine.Input
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     ///   Enumerates the available key codes and modifiers on a standard US keyboard.
     /// </summary>
     /// <remarks>
     ///   The values of each enumeration corresponds to OpenTK's Keys enumeration.
     /// </remarks>
+    [SuppressMessage("Design", "CA1008:Enums should have zero value", Justification = "Not required By API")]
     public enum Key
     {
         /// <summary>

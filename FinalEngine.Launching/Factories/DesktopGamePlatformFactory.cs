@@ -6,15 +6,14 @@ namespace FinalEngine.Launching.Factories
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using FinalEngine.Input.Keyboard;
-    using FinalEngine.Input.Mouse;
+    using FinalEngine.Extensions.Resources.Invocation;
+    using FinalEngine.Input;
     using FinalEngine.IO;
     using FinalEngine.IO.Invocation;
     using FinalEngine.Platform;
     using FinalEngine.Platform.Desktop.OpenTK;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
     using FinalEngine.Rendering;
-    using FinalEngine.Rendering.Invocation;
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Rendering.Textures;

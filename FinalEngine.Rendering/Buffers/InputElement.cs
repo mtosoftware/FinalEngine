@@ -10,7 +10,7 @@ namespace FinalEngine.Rendering.Buffers
     /// <summary>
     ///   Enumerates the available data types for an <see cref="InputElement"/>.
     /// </summary>
-    [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Required for API")]
+    [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Required by API")]
     public enum InputElementType
     {
         /// <summary>

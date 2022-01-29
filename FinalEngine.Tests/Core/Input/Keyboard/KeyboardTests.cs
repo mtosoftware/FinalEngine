@@ -6,7 +6,7 @@ namespace FinalEngine.Tests.Core.Input.Keyboard
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using FinalEngine.Input.Keyboard;
+    using FinalEngine.Input;
     using Moq;
     using NUnit.Framework;
 

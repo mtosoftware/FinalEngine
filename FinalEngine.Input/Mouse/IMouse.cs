@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Input.Mouse
+namespace FinalEngine.Input
 {
     using System.Drawing;
 

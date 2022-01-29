@@ -4,8 +4,7 @@
 
 namespace FinalEngine.Launching
 {
-    using FinalEngine.Input.Keyboard;
-    using FinalEngine.Input.Mouse;
+    using FinalEngine.Input;
     using FinalEngine.IO;
     using FinalEngine.Platform;
     using FinalEngine.Rendering;

@@ -107,6 +107,9 @@ namespace FinalEngine.Rendering
         /// </param>
         void DrawIndices(PrimitiveTopology topology, int first, int count);
 
+        /// <summary>
+        ///   Initializes this instance (should be called before creating any resources).
+        /// </summary>
         void Initialize();
     }
 }

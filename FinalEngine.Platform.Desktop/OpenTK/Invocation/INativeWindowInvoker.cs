@@ -5,6 +5,7 @@
 namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using global::OpenTK.Mathematics;
     using global::OpenTK.Windowing.Common;
     using global::OpenTK.Windowing.Desktop;
@@ -12,6 +13,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
     /// <summary>
     ///   Defines an interface that provides methods for invocation of a <see cref="NativeWindow"/>.
     /// </summary>
+    [SuppressMessage("Design", "CA1003:Use generic event handler instances", Justification = "Required by Invocation")]
     public interface INativeWindowInvoker : IDisposable
     {
         /// <inheritdoc cref="NativeWindow.KeyDown"/>
