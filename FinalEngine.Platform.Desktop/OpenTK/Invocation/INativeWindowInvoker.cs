@@ -63,6 +63,9 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         /// <inheritdoc cref="NativeWindow.Title"/>
         string Title { get; set; }
 
+        /// <inheritdoc cref="NativeWindow.VSync"/>
+        VSyncMode VSync { get; set; }
+
         /// <inheritdoc cref="NativeWindow.Close"/>
         void Close();
 

@@ -8,6 +8,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK
     using System.Drawing;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
     using global::OpenTK.Mathematics;
+    using global::OpenTK.Windowing.Common;
 
     /// <summary>
     ///   Provides an OpenTK implementation of an <see cref="IWindow"/> and <see cref="IEventsProcessor"/>.
@@ -33,6 +34,8 @@ namespace FinalEngine.Platform.Desktop.OpenTK
         public OpenTKWindow(INativeWindowInvoker nativeWindow)
         {
             this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow), $"The specified {nameof(nativeWindow)} parameter cannot be null.");
+
+            this.nativeWindow.VSync = VSyncMode.Off;
         }
 
         /// <summary>

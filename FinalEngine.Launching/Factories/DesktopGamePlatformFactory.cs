@@ -7,6 +7,7 @@ namespace FinalEngine.Launching.Factories
     using System;
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Extensions.Resources.Invocation;
+    using FinalEngine.Extensions.Resources.Loaders;
     using FinalEngine.Input;
     using FinalEngine.IO;
     using FinalEngine.IO.Invocation;
@@ -16,7 +17,6 @@ namespace FinalEngine.Launching.Factories
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Invocation;
-    using FinalEngine.Rendering.Textures;
     using FinalEngine.Resources;
     using OpenTK.Windowing.Common;
     using OpenTK.Windowing.Desktop;

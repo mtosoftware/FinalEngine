@@ -8,6 +8,8 @@ namespace FinalEngine.Extensions.Resources.Loaders
     using System.IO;
     using FinalEngine.Extensions.Resources.Invocation;
     using FinalEngine.IO;
+    using FinalEngine.Rendering;
+    using FinalEngine.Rendering.Textures;
     using FinalEngine.Resources;
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.PixelFormats;
