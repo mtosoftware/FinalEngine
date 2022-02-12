@@ -46,10 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Extensions.Resources", "FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj", "{77328CBB-09C7-44E6-977F-C79812F6535A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestGame", "TestGame", "{06589223-5D3D-4F4E-B579-DA597C49E585}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{654BDDCD-224D-44B6-8D60-07C14EA067BD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,10 +100,6 @@ Global
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{654BDDCD-224D-44B6-8D60-07C14EA067BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{654BDDCD-224D-44B6-8D60-07C14EA067BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{654BDDCD-224D-44B6-8D60-07C14EA067BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{654BDDCD-224D-44B6-8D60-07C14EA067BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,7 +117,6 @@ Global
 		{976CD388-3DE5-4BA3-942F-C61C8D8F4C89} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
 		{6E9F635E-3A47-4778-9925-D5C53FD2C9AC} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
 		{77328CBB-09C7-44E6-977F-C79812F6535A} = {D9E1214F-1365-4DE5-9385-87A5FFE0F30D}
-		{654BDDCD-224D-44B6-8D60-07C14EA067BD} = {06589223-5D3D-4F4E-B579-DA597C49E585}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}
