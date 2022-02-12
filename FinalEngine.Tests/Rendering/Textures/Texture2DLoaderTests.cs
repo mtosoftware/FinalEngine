@@ -8,6 +8,7 @@ namespace FinalEngine.Tests.Rendering.Textures
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using FinalEngine.Extensions.Resources.Invocation;
+    using FinalEngine.Extensions.Resources.Loaders;
     using FinalEngine.IO;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.Textures;
