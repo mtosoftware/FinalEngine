@@ -4,12 +4,13 @@
 
 namespace FinalEngine.Editor.Desktop.Views
 {
+    using FinalEngine.Editor.ViewModels.Interaction;
     using MahApps.Metro.Controls;
 
     /// <summary>
     ///   Interaction logic for NewProjectView.xaml.
     /// </summary>
-    public partial class NewProjectView : MetroWindow
+    public partial class NewProjectView : MetroWindow, ICloseable
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="NewProjectView"/> class.

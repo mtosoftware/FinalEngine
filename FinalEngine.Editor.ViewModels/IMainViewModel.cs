@@ -11,5 +11,9 @@ namespace FinalEngine.Editor.ViewModels
         ICommand ExitCommand { get; }
 
         ICommand NewProjectCommand { get; }
+
+        ICommand OpenProjectCommand { get; }
+
+        string ProjectName { get; }
     }
 }

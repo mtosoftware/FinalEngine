@@ -6,10 +6,13 @@ namespace FinalEngine.Editor.Desktop
 {
     using System;
     using System.Windows;
+    using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.Desktop.Interaction;
     using FinalEngine.Editor.Desktop.Views;
     using FinalEngine.Editor.ViewModels;
     using FinalEngine.Editor.ViewModels.Interaction;
+    using FinalEngine.IO;
+    using FinalEngine.IO.Invocation;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -42,8 +45,17 @@ namespace FinalEngine.Editor.Desktop
 
             services.AddLogging(x => x.AddConsole());
 
+            services.AddSingleton<IFileInvoker, FileInvoker>();
+            services.AddSingleton<IDirectoryInvoker, DirectoryInvoker>();
+            services.AddSingleton<IPathInvoker, PathInvoker>();
+            services.AddSingleton<IFileSystem, FileSystem>();
+
+            services.AddSingleton<IApplicationContext, ApplicationContext>();
+            services.AddSingleton<IProjectFileHandler, ProjectFileHandler>();
+
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
             services.AddSingleton<IViewPresenter, ViewPresenter>();
+            services.AddSingleton<IUserActionRequester, UserActionRequester>();
             services.AddSingleton<IMainViewModel, MainViewModel>();
 
             return services.BuildServiceProvider();

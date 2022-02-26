@@ -8,9 +8,17 @@ namespace FinalEngine.Editor.Desktop.Interaction
     using FinalEngine.Editor.Desktop.Views;
     using FinalEngine.Editor.ViewModels;
     using FinalEngine.Editor.ViewModels.Interaction;
+    using Microsoft.Extensions.Logging;
 
     public class ViewPresenter : IViewPresenter
     {
+        private readonly ILogger<ViewPresenter> logger;
+
+        public ViewPresenter(ILogger<ViewPresenter> logger)
+        {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public void ShowNewProjectView(INewProjectViewModel newProjectViewModel)
         {
             if (newProjectViewModel == null)
@@ -22,6 +30,8 @@ namespace FinalEngine.Editor.Desktop.Interaction
             {
                 DataContext = newProjectViewModel,
             };
+
+            this.logger.LogInformation("Display new project view...");
 
             view.ShowDialog();
         }

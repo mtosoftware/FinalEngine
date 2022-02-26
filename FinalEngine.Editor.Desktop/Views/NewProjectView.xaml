@@ -25,22 +25,18 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Project Name:" />
-        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="350" />
-
-        <!-- TODO: Errors for Project Name Here -->
+        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="350" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Row="2" Grid.Column="0" Content="Project Location:" />
 
         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left">
-            <TextBox MinWidth="350" Name="textBoxProjectLocation" Text="{Binding ProjectLocation}" />
-            <Button Content="Browse..." />
+            <TextBox MinWidth="350" Name="textBoxProjectLocation" Text="{Binding ProjectLocation, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Browse..." Command="{Binding BrowseCommand}" />
         </StackPanel>
-
-        <!-- TODO: Errors for Project Location Here -->
 
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button IsCancel="True" Content="Cancel" />
-            <Button IsDefault="True" Content="Create Project" Command="{Binding CreateCommand}" />
+            <Button IsDefault="True" Content="Create Project" Command="{Binding CreateCommand}" CommandParameter="{Binding ElementName=Window}" />
         </StackPanel>
     </Grid>
 </mah:MetroWindow>

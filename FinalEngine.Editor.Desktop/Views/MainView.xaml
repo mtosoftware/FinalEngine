@@ -12,11 +12,14 @@
                  WindowState="Maximized"
                  GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
                  NonActiveGlowBrush="{DynamicResource MahApps.Brushes.Accent4}"
-                 BorderThickness="2">
+                 BorderThickness="2"
+                 Title="{Binding ProjectName}">
 
+    <!-- KEY BINDINGS -->
     <Window.InputBindings>
-        <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" />
+        <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
         <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding OpenProjectCommand}" />
     </Window.InputBindings>
 
     <!-- MAIN MENU -->
@@ -26,6 +29,9 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_New">
                         <MenuItem Header="_Project..." InputGestureText="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
+                    </MenuItem>
+                    <MenuItem Header="_Open">
+                        <MenuItem Header="_Project..." InputGestureText="Ctrl+Shift+O" Command="{Binding OpenProjectCommand}" />
                     </MenuItem>
                     <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
                 </MenuItem>

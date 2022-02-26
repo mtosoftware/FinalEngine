@@ -68,6 +68,10 @@ namespace FinalEngine.IO
         /// </returns>
         bool FileExists(string path);
 
+        bool IsValidDirectory(string directory);
+
+        bool IsValidFileName(string fileName);
+
         /// <summary>
         ///   Opens a file located at the specified <paramref name="path"/>, with the specified <paramref name="mode"/>.
         /// </summary>
