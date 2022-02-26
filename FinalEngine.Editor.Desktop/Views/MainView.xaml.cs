@@ -4,12 +4,13 @@
 
 namespace FinalEngine.Editor.Desktop.Views
 {
+    using FinalEngine.Editor.ViewModels.Interaction;
     using MahApps.Metro.Controls;
 
     /// <summary>
     ///   Interaction logic for MainView.xaml.
     /// </summary>
-    public partial class MainView : MetroWindow
+    public partial class MainView : MetroWindow, ICloseable
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="MainView"/> class.

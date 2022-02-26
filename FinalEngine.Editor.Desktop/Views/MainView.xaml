@@ -14,12 +14,20 @@
                  NonActiveGlowBrush="{DynamicResource MahApps.Brushes.Accent4}"
                  BorderThickness="2">
 
+    <Window.InputBindings>
+        <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
+    </Window.InputBindings>
+
     <!-- MAIN MENU -->
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands ShowLastSeparator="False">
             <Menu IsMainMenu="True">
                 <MenuItem Header="_File">
-                    <MenuItem Header="E_xit" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
+                    <MenuItem Header="_New">
+                        <MenuItem Header="_Project..." InputGestureText="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
+                    </MenuItem>
+                    <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
                 </MenuItem>
             </Menu>
         </mah:WindowCommands>

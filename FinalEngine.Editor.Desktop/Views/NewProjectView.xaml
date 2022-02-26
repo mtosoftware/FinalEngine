@@ -1,0 +1,46 @@
+﻿<mah:MetroWindow x:Name="Window"
+                 x:Class="FinalEngine.Editor.Desktop.Views.NewProjectView"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 SizeToContent="WidthAndHeight"
+                 WindowStartupLocation="CenterScreen"
+                 ResizeMode="NoResize"
+                 GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
+                 Title="New Project">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Project Name:" />
+        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="350" />
+
+        <!-- TODO: Errors for Project Name Here -->
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Project Location:" />
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBox MinWidth="350" Name="textBoxProjectLocation" Text="{Binding ProjectLocation}" />
+            <Button Content="Browse..." />
+        </StackPanel>
+
+        <!-- TODO: Errors for Project Location Here -->
+
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button IsCancel="True" Content="Cancel" />
+            <Button IsDefault="True" Content="Create Project" Command="{Binding CreateCommand}" />
+        </StackPanel>
+    </Grid>
+</mah:MetroWindow>
