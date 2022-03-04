@@ -50,7 +50,6 @@ namespace FinalEngine.Editor.Desktop
             services.AddSingleton<IPathInvoker, PathInvoker>();
             services.AddSingleton<IFileSystem, FileSystem>();
 
-            services.AddSingleton<IApplicationContext, ApplicationContext>();
             services.AddSingleton<IProjectFileHandler, ProjectFileHandler>();
 
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();

@@ -4,10 +4,14 @@
 
 namespace FinalEngine.Editor.ViewModels
 {
+    using System;
     using System.Windows.Input;
+    using FinalEngine.Editor.ViewModels.Events;
 
     public interface INewProjectViewModel
     {
+        event EventHandler<NewProjectEventArgs> ProjectCreated;
+
         ICommand BrowseCommand { get; }
 
         ICommand CreateCommand { get; }

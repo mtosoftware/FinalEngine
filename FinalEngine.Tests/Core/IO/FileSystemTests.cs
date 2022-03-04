@@ -23,25 +23,34 @@ namespace FinalEngine.Tests.Core.IO
 
         private FileSystem fileSystem;
 
+        private Mock<IPathInvoker> path;
+
         [Test]
         public void ConstructorShouldNotThrowExceptionWhenParametersArentNull()
         {
             // Arrange, act and assert
-            Assert.DoesNotThrow(() => new FileSystem(new Mock<IFileInvoker>().Object, new Mock<IDirectoryInvoker>().Object));
+            Assert.DoesNotThrow(() => new FileSystem(new Mock<IFileInvoker>().Object, new Mock<IDirectoryInvoker>().Object, new Mock<IPathInvoker>().Object));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenDirectoryIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new FileSystem(new Mock<IFileInvoker>().Object, null));
+            Assert.Throws<ArgumentNullException>(() => new FileSystem(new Mock<IFileInvoker>().Object, null, new Mock<IPathInvoker>().Object));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenFileIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new FileSystem(null, new Mock<IDirectoryInvoker>().Object));
+            Assert.Throws<ArgumentNullException>(() => new FileSystem(null, new Mock<IDirectoryInvoker>().Object, new Mock<IPathInvoker>().Object));
+        }
+
+        [Test]
+        public void ConstructorShouldThrowArgumentNullExceptionWhenPathIsNull()
+        {
+            // Arrange, act and assert
+            Assert.Throws<ArgumentNullException>(() => new FileSystem(new Mock<IFileInvoker>().Object, new Mock<IDirectoryInvoker>().Object, null));
         }
 
         [Test]
@@ -347,7 +356,8 @@ namespace FinalEngine.Tests.Core.IO
             // Arrange
             this.file = new Mock<IFileInvoker>();
             this.directory = new Mock<IDirectoryInvoker>();
-            this.fileSystem = new FileSystem(this.file.Object, this.directory.Object);
+            this.path = new Mock<IPathInvoker>();
+            this.fileSystem = new FileSystem(this.file.Object, this.directory.Object, this.path.Object);
         }
     }
 }

@@ -8,14 +8,13 @@ namespace FinalEngine.Editor.ViewModels
     using System.Text.Json;
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.ViewModels.Events;
     using FinalEngine.Editor.ViewModels.Interaction;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
 
     public class MainViewModel : ObservableObject, IMainViewModel
     {
-        private readonly IApplicationContext applicationContext;
-
         private readonly IProjectFileHandler projectFileHandler;
 
         private readonly IUserActionRequester userActionRequester;
@@ -28,20 +27,14 @@ namespace FinalEngine.Editor.ViewModels
 
         private ICommand? newProjectCommand;
 
-        private ICommand? openProjectCommand;
+        private ICommand? openProejctCommand;
 
-        private string projectName;
+        private string? projectName;
 
-        public MainViewModel(
-            IViewModelFactory viewModelFactory,
-            IViewPresenter viewPresenter,
-            IApplicationContext applicationContext,
-            IUserActionRequester userActionRequester,
-            IProjectFileHandler projectFileHandler)
+        public MainViewModel(IViewModelFactory viewModelFactory, IViewPresenter viewPresenter, IUserActionRequester userActionRequester, IProjectFileHandler projectFileHandler)
         {
             this.viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
             this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
-            this.applicationContext = applicationContext ?? throw new ArgumentNullException(nameof(applicationContext));
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
         }
@@ -53,18 +46,27 @@ namespace FinalEngine.Editor.ViewModels
 
         public ICommand NewProjectCommand
         {
-            get { return this.newProjectCommand ??= new RelayCommand(this.ShowNewProjectView); }
+            get { return this.newProjectCommand ??= new RelayCommand(this.CreateNewProject); }
         }
 
         public ICommand OpenProjectCommand
         {
-            get { return this.openProjectCommand ??= new RelayCommand(this.ShowOpenProjectDialog); }
+            get { return this.openProejctCommand ??= new RelayCommand(this.OpenProject); }
         }
 
         public string ProjectName
         {
             get { return this.projectName ?? string.Empty; }
             private set { this.SetProperty(ref this.projectName, value); }
+        }
+
+        private void CreateNewProject()
+        {
+            INewProjectViewModel viewModel = this.viewModelFactory.CreateNewProjectViewModel();
+
+            viewModel.ProjectCreated += this.NewProjectViewModel_ProjectCreated;
+            this.viewPresenter.ShowNewProjectView(viewModel);
+            viewModel.ProjectCreated -= this.NewProjectViewModel_ProjectCreated;
         }
 
         private void Exit(ICloseable? closeable)
@@ -77,13 +79,12 @@ namespace FinalEngine.Editor.ViewModels
             closeable.Close();
         }
 
-        private void ShowNewProjectView()
+        private void NewProjectViewModel_ProjectCreated(object? sender, NewProjectEventArgs e)
         {
-            this.viewPresenter.ShowNewProjectView(this.viewModelFactory.CreateNewProjectViewModel());
-            this.ProjectName = this.applicationContext.Project?.Name ?? string.Empty;
+            this.ProjectName = e.ProjectName;
         }
 
-        private void ShowOpenProjectDialog()
+        private void OpenProject()
         {
             string? file = this.userActionRequester.RequestFileLocation("Please select a project file.", "Final Engine Project File | *.feproj");
 
@@ -94,14 +95,12 @@ namespace FinalEngine.Editor.ViewModels
 
             try
             {
-                this.projectFileHandler.OpenProject(file);
+                this.ProjectName = this.projectFileHandler.OpenProject(file) ?? string.Empty;
             }
             catch (JsonException)
             {
                 this.userActionRequester.RequestOk("Open Project", "Failed to open project file.");
             }
-
-            this.ProjectName = this.applicationContext.Project?.Name ?? string.Empty;
         }
     }
 }

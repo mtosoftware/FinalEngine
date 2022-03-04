@@ -9,6 +9,7 @@ namespace FinalEngine.Editor.ViewModels
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Exceptions;
     using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.ViewModels.Events;
     using FinalEngine.Editor.ViewModels.Interaction;
     using FinalEngine.Editor.ViewModels.Validation;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -36,6 +37,8 @@ namespace FinalEngine.Editor.ViewModels
             this.ProjectName = "My Project";
             this.ProjectLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
+
+        public event EventHandler<NewProjectEventArgs> ProjectCreated;
 
         public ICommand BrowseCommand
         {
@@ -107,6 +110,8 @@ namespace FinalEngine.Editor.ViewModels
                 this.userActionRequester.RequestOk("New Project", "A project already exists with that name at the specified location.");
                 return;
             }
+
+            this.ProjectCreated?.Invoke(this, new NewProjectEventArgs(this.ProjectName));
 
             closeable.Close();
         }

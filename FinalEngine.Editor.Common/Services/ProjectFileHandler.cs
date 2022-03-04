@@ -14,15 +14,14 @@ namespace FinalEngine.Editor.Common.Services
 
     public class ProjectFileHandler : IProjectFileHandler
     {
-        private readonly IApplicationContext context;
-
         private readonly IFileSystem fileSystem;
 
         private readonly ILogger<ProjectFileHandler> logger;
 
-        public ProjectFileHandler(IApplicationContext context, IFileSystem fileSystem, ILogger<ProjectFileHandler> logger)
+        private Project? project;
+
+        public ProjectFileHandler(IFileSystem fileSystem, ILogger<ProjectFileHandler> logger)
         {
-            this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -70,13 +69,13 @@ namespace FinalEngine.Editor.Common.Services
                 throw exception;
             }
 
-            var project = new Project(name, location);
+            this.project = new Project(name, location);
 
-            this.SaveProject(project);
+            this.SaveProject();
             this.OpenProject(fullPath);
         }
 
-        public void OpenProject(string fullPath)
+        public string? OpenProject(string fullPath)
         {
             this.logger.LogInformation("Opening project...");
 
@@ -96,9 +95,9 @@ namespace FinalEngine.Editor.Common.Services
                 {
                     this.logger.LogInformation("Reading project file...");
 
-                    Project? project = JsonSerializer.Deserialize<Project>(reader.ReadToEnd());
+                    this.project = JsonSerializer.Deserialize<Project>(reader.ReadToEnd());
 
-                    if (project == null)
+                    if (this.project == null)
                     {
                         string message = $"Failed to parse project file at location: {fullPath}.";
                         var exception = new JsonException(message);
@@ -107,27 +106,29 @@ namespace FinalEngine.Editor.Common.Services
                         throw exception;
                     }
 
-                    this.context.SetCurrentProject(ApplicationContext.Guid, project);
+                    return this.project.Name;
                 }
             }
+
+            return null;
         }
 
-        public void SaveProject(Project project)
+        public void SaveProject()
         {
             this.logger.LogInformation("Saving project...");
 
-            if (project == null)
+            if (this.project == null)
             {
-                throw new ArgumentNullException(nameof(project));
+                throw new InvalidProgramException(nameof(this.project));
             }
 
-            using (Stream stream = this.fileSystem.CreateFile(GetPotentialProjectFilePath(project.Name, project.Location)))
+            using (Stream stream = this.fileSystem.CreateFile(GetPotentialProjectFilePath(this.project.Name, this.project.Location)))
             {
                 using (var writer = new StreamWriter(stream))
                 {
                     this.logger.LogInformation("Writing to project file...");
 
-                    string result = JsonSerializer.Serialize(project);
+                    string result = JsonSerializer.Serialize(this.project);
                     writer.Write(result);
                 }
             }
