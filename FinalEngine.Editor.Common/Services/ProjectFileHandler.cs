@@ -12,20 +12,60 @@ namespace FinalEngine.Editor.Common.Services
     using FinalEngine.IO;
     using Microsoft.Extensions.Logging;
 
+    /// <summary>
+    ///   Provides a standard implementation of an <see cref="IProjectFileHandler"/>.
+    /// </summary>
+    /// <seealso cref="IProjectFileHandler"/>
     public class ProjectFileHandler : IProjectFileHandler
     {
+        /// <summary>
+        ///   The file system.
+        /// </summary>
         private readonly IFileSystem fileSystem;
 
+        /// <summary>
+        ///   The logger.
+        /// </summary>
         private readonly ILogger<ProjectFileHandler> logger;
 
+        /// <summary>
+        ///   The currently opened project, or <c>null</c> if one has not been opened.
+        /// </summary>
         private Project? project;
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ProjectFileHandler"/> class.
+        /// </summary>
+        /// <param name="fileSystem">
+        ///   The file system used to open and save projects.
+        /// </param>
+        /// <param name="logger">
+        ///   The logger.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="fileSystem"/> or <paramref name="logger"/> parameter cannot be null.
+        /// </exception>
         public ProjectFileHandler(IFileSystem fileSystem, ILogger<ProjectFileHandler> logger)
         {
             this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        ///   Creates a new project with specified <paramref name="name"/> at the specified <paramref name="location"/> and opens it.
+        /// </summary>
+        /// <param name="name">
+        ///   The name of the project.
+        /// </param>
+        /// <param name="location">
+        ///   The location of the project on the file system.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="name"/> or <paramref name="location"/> parameter cannot be null, empty or consist of only whitespace characters.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The specified <paramref name="name"/> parameter is not a valid file name or the specified <paramref name="location"/> parameter is not a valid directory.
+        /// </exception>
         public void CreateNewProject(string name, string location)
         {
             this.logger.LogInformation("Creating a new project...");
@@ -75,7 +115,22 @@ namespace FinalEngine.Editor.Common.Services
             this.OpenProject(fullPath);
         }
 
-        public string? OpenProject(string fullPath)
+        /// <summary>
+        ///   Opens the project at the specified <paramref name="fullPath"/>.
+        /// </summary>
+        /// <param name="fullPath">
+        ///   The full path/location of the project to open.
+        /// </param>
+        /// <returns>
+        ///   The name of the project that was opened.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="fullPath"/> parameter cannot be null, empty or consist of only whitespace characters.
+        /// </exception>
+        /// <exception cref="FileNotFoundException">
+        ///   The project file could not be located at the specified <paramref name="fullPath"/>.
+        /// </exception>
+        public string OpenProject(string fullPath)
         {
             this.logger.LogInformation("Opening project...");
 
@@ -86,7 +141,7 @@ namespace FinalEngine.Editor.Common.Services
 
             if (!this.fileSystem.FileExists(fullPath))
             {
-                throw new FileNotFoundException($"The specified project couldn't be located at path: {fullPath}", fullPath);
+                throw new FileNotFoundException($"The specified project file couldn't be located at path: {fullPath}", fullPath);
             }
 
             using (Stream stream = this.fileSystem.OpenFile(fullPath, FileAccessMode.Read))
@@ -109,10 +164,11 @@ namespace FinalEngine.Editor.Common.Services
                     return this.project.Name;
                 }
             }
-
-            return null;
         }
 
+        /// <summary>
+        ///   Saves the currently opened project.
+        /// </summary>
         public void SaveProject()
         {
             this.logger.LogInformation("Saving project...");
@@ -134,6 +190,18 @@ namespace FinalEngine.Editor.Common.Services
             }
         }
 
+        /// <summary>
+        ///   Gets the potential project file path.
+        /// </summary>
+        /// <param name="name">
+        ///   The name of the project.
+        /// </param>
+        /// <param name="location">
+        ///   The location of the project on the file system.
+        /// </param>
+        /// <returns>
+        ///   The potential project file path.
+        /// </returns>
         private static string GetPotentialProjectFilePath(string name, string location)
         {
             return $"{location}\\{name}\\{name}.feproj";

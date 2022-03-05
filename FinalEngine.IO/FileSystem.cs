@@ -26,6 +26,9 @@ namespace FinalEngine.IO
         /// </summary>
         private readonly IFileInvoker file;
 
+        /// <summary>
+        ///   The path invoker.
+        /// </summary>
         private readonly IPathInvoker path;
 
         /// <summary>
@@ -44,6 +47,9 @@ namespace FinalEngine.IO
         /// </param>
         /// <param name="directory">
         ///   Specifies a <see cref="IDirectoryInvoker"/> that represents the invoker used to handle directory operations.
+        /// </param>
+        /// <param name="path">
+        ///   Specifies a <see cref="IPathInvoker"/> that represents the invoker used to handle path operations.
         /// </param>
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="file"/> or <paramref name="directory"/> parameter is null.
@@ -139,6 +145,15 @@ namespace FinalEngine.IO
             return this.file.Exists(path);
         }
 
+        /// <summary>
+        ///   Determines whether the specified <paramref name="directory"/> parameter is a valid directory.
+        /// </summary>
+        /// <param name="directory">
+        ///   The directory location.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the specified <paramref name="directory"/> parameter is a valid directory; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsValidDirectory(string directory)
         {
             if (directory == null)
@@ -159,6 +174,15 @@ namespace FinalEngine.IO
             return true;
         }
 
+        /// <summary>
+        ///   Determines whether the specified <paramref name="fileName"/> parameter is a valid file name.
+        /// </summary>
+        /// <param name="fileName">
+        ///   The name of the file.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the specified <paramref name="fileName"/> parameter is a valid file name; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsValidFileName(string fileName)
         {
             if (fileName == null)

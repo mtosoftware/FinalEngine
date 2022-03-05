@@ -39,6 +39,12 @@ namespace FinalEngine.Editor.Desktop
             view.ShowDialog();
         }
 
+        /// <summary>
+        ///   Configures the services to be consumed by the application.
+        /// </summary>
+        /// <returns>
+        ///   The newly configuerd <see cref="IServiceProvider"/>.
+        /// </returns>
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();

@@ -15,20 +15,55 @@ namespace FinalEngine.Editor.ViewModels
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
 
+    /// <summary>
+    ///   Provides a standard implementation of an <see cref="INewProjectViewModel"/>.
+    /// </summary>
+    /// <seealso cref="ObservableValidator"/>
+    /// <seealso cref="INewProjectViewModel"/>
     public class NewProjectViewModel : ObservableValidator, INewProjectViewModel
     {
+        /// <summary>
+        ///   The project file handler.
+        /// </summary>
         private readonly IProjectFileHandler projectFileHandler;
 
+        /// <summary>
+        ///   The user action requester.
+        /// </summary>
         private readonly IUserActionRequester userActionRequester;
 
+        /// <summary>
+        ///   The browse command.
+        /// </summary>
         private ICommand? browseCommand;
 
+        /// <summary>
+        ///   The create command.
+        /// </summary>
         private IRelayCommand? createCommand;
 
+        /// <summary>
+        ///   The project location.
+        /// </summary>
         private string? projectLocation;
 
+        /// <summary>
+        ///   The project name.
+        /// </summary>
         private string? projectName;
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NewProjectViewModel"/> class.
+        /// </summary>
+        /// <param name="userActionRequester">
+        ///   The user action requester.
+        /// </param>
+        /// <param name="projectFileHandler">
+        ///   The project file handler.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="userActionRequester"/> or <paramref name="projectFileHandler"/> parameter cannot be null.
+        /// </exception>
         public NewProjectViewModel(IUserActionRequester userActionRequester, IProjectFileHandler projectFileHandler)
         {
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
@@ -38,18 +73,39 @@ namespace FinalEngine.Editor.ViewModels
             this.ProjectLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
-        public event EventHandler<NewProjectEventArgs> ProjectCreated;
+        /// <summary>
+        ///   Occurs when a new project is created.
+        /// </summary>
+        public event EventHandler<NewProjectEventArgs>? ProjectCreated;
 
+        /// <summary>
+        ///   Gets the browse command.
+        /// </summary>
+        /// <value>
+        ///   The browse command.
+        /// </value>
         public ICommand BrowseCommand
         {
             get { return this.browseCommand ??= new RelayCommand(this.Browse); }
         }
 
+        /// <summary>
+        ///   Gets the create command.
+        /// </summary>
+        /// <value>
+        ///   The create command.
+        /// </value>
         public ICommand CreateCommand
         {
             get { return this.createCommand ??= new RelayCommand<ICloseable>(this.Create, (o) => !this.HasErrors); }
         }
 
+        /// <summary>
+        ///   Gets or sets the project location.
+        /// </summary>
+        /// <value>
+        ///   The project location.
+        /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must specify a project location.")]
         [Directory]
         public string ProjectLocation
@@ -66,6 +122,12 @@ namespace FinalEngine.Editor.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Gets or sets the name of the project.
+        /// </summary>
+        /// <value>
+        ///   The name of the project.
+        /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must specify a project name.")]
         [File]
         public string ProjectName
@@ -82,6 +144,9 @@ namespace FinalEngine.Editor.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Browses for a project directory location for the project to be saved.
+        /// </summary>
         private void Browse()
         {
             string? location = this.userActionRequester.RequestDirectoryLocation();
@@ -94,6 +159,15 @@ namespace FinalEngine.Editor.ViewModels
             this.ProjectLocation = location;
         }
 
+        /// <summary>
+        ///   Creats a new project and then closes the view.
+        /// </summary>
+        /// <param name="closeable">
+        ///   The closeable.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="closeable"/> parameter cannot be null.
+        /// </exception>
         private void Create(ICloseable? closeable)
         {
             if (closeable == null)
