@@ -26,7 +26,7 @@ namespace FinalEngine.Editor.Common.Exceptions
         /// <param name="message">
         ///   The message that describes the error.
         /// </param>
-        public ProjectExistsException(string message)
+        public ProjectExistsException(string? message)
             : base(message)
         {
         }
