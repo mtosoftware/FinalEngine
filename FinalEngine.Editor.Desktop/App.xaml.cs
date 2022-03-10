@@ -4,8 +4,17 @@
 
 namespace FinalEngine.Editor.Desktop
 {
+    using System;
     using System.Windows;
+    using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.Desktop.Interaction;
     using FinalEngine.Editor.Desktop.Views;
+    using FinalEngine.Editor.ViewModels;
+    using FinalEngine.Editor.ViewModels.Interaction;
+    using FinalEngine.IO;
+    using FinalEngine.IO.Invocation;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     ///   Interaction logic for App.xaml.
@@ -20,8 +29,41 @@ namespace FinalEngine.Editor.Desktop
         /// </param>
         protected override void OnStartup(StartupEventArgs e)
         {
-            var view = new MainView();
-            view.Show();
+            IMainViewModel viewModel = ConfigureServices().GetRequiredService<IMainViewModel>();
+
+            var view = new MainView()
+            {
+                DataContext = viewModel,
+            };
+
+            view.ShowDialog();
+        }
+
+        /// <summary>
+        ///   Configures the services to be consumed by the application.
+        /// </summary>
+        /// <returns>
+        ///   The newly configuerd <see cref="IServiceProvider"/>.
+        /// </returns>
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            services.AddLogging(x => x.AddConsole());
+
+            services.AddSingleton<IFileInvoker, FileInvoker>();
+            services.AddSingleton<IDirectoryInvoker, DirectoryInvoker>();
+            services.AddSingleton<IPathInvoker, PathInvoker>();
+            services.AddSingleton<IFileSystem, FileSystem>();
+
+            services.AddSingleton<IProjectFileHandler, ProjectFileHandler>();
+
+            services.AddSingleton<IViewModelFactory, ViewModelFactory>();
+            services.AddSingleton<IViewPresenter, ViewPresenter>();
+            services.AddSingleton<IUserActionRequester, UserActionRequester>();
+            services.AddSingleton<IMainViewModel, MainViewModel>();
+
+            return services.BuildServiceProvider();
         }
     }
 }

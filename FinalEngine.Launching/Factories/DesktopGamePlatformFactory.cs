@@ -110,7 +110,8 @@ namespace FinalEngine.Launching.Factories
 
             var file = new FileInvoker();
             var directory = new DirectoryInvoker();
-            fileSystem = new FileSystem(file, directory);
+            var path = new PathInvoker();
+            fileSystem = new FileSystem(file, directory, path);
 
             var opengl = new OpenGLInvoker();
             var bindings = new GLFWBindingsContext();

@@ -108,7 +108,7 @@ namespace FinalEngine.Launching
             if (currentTime >= this.lastTime + this.waitTime)
             {
                 Delta = (float)(currentTime - this.lastTime);
-                FrameRate = (float)Math.Round(OneSecondAsMilliSeconds / Delta);
+                FrameRate = (float)Math.Ceiling(OneSecondAsMilliSeconds / Delta);
 
                 this.lastTime = currentTime;
 

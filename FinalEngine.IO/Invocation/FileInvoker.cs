@@ -8,7 +8,7 @@ namespace FinalEngine.IO.Invocation
     using System.IO;
 
     /// <summary>
-    ///   Provides an implementation of a n <see cref="IFileInvoker"/>.
+    ///   Provides an implementation of an <see cref="IFileInvoker"/>.
     /// </summary>
     /// <seealso cref="IFileInvoker"/>
     [ExcludeFromCodeCoverage]

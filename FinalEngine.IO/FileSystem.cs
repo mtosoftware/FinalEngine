@@ -5,7 +5,9 @@
 namespace FinalEngine.IO
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using FinalEngine.IO.Invocation;
 
     /// <summary>
@@ -25,6 +27,19 @@ namespace FinalEngine.IO
         private readonly IFileInvoker file;
 
         /// <summary>
+        ///   The path invoker.
+        /// </summary>
+        private readonly IPathInvoker path;
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FileSystem"/> class.
+        /// </summary>
+        public FileSystem()
+            : this(new FileInvoker(), new DirectoryInvoker(), new PathInvoker())
+        {
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="FileSystem"/> class.
         /// </summary>
         /// <param name="file">
@@ -33,13 +48,17 @@ namespace FinalEngine.IO
         /// <param name="directory">
         ///   Specifies a <see cref="IDirectoryInvoker"/> that represents the invoker used to handle directory operations.
         /// </param>
+        /// <param name="path">
+        ///   Specifies a <see cref="IPathInvoker"/> that represents the invoker used to handle path operations.
+        /// </param>
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="file"/> or <paramref name="directory"/> parameter is null.
         /// </exception>
-        public FileSystem(IFileInvoker file, IDirectoryInvoker directory)
+        public FileSystem(IFileInvoker file, IDirectoryInvoker directory, IPathInvoker path)
         {
             this.file = file ?? throw new ArgumentNullException(nameof(file), $"The specified {nameof(file)} parameter cannot be null.");
             this.directory = directory ?? throw new ArgumentNullException(nameof(directory), $"The specified {nameof(directory)} parameter cannot be null.");
+            this.path = path ?? throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null.");
         }
 
         /// <inheritdoc/>
@@ -124,6 +143,64 @@ namespace FinalEngine.IO
             }
 
             return this.file.Exists(path);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <paramref name="directory"/> parameter is a valid directory.
+        /// </summary>
+        /// <param name="directory">
+        ///   The directory location.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the specified <paramref name="directory"/> parameter is a valid directory; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsValidDirectory(string directory)
+        {
+            if (directory == null)
+            {
+                return false;
+            }
+
+            IEnumerable<char> invalidCharacters = this.path.GetInvalidPathChars();
+
+            foreach (char c in directory)
+            {
+                if (invalidCharacters.Contains(c))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <paramref name="fileName"/> parameter is a valid file name.
+        /// </summary>
+        /// <param name="fileName">
+        ///   The name of the file.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the specified <paramref name="fileName"/> parameter is a valid file name; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsValidFileName(string fileName)
+        {
+            if (fileName == null)
+            {
+                return false;
+            }
+
+            IEnumerable<char>? invalidCharacters = this.path.GetInvalidFileNameChars();
+
+            foreach (char c in fileName)
+            {
+                if (invalidCharacters.Contains(c))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>

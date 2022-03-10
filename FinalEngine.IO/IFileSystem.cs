@@ -69,6 +69,28 @@ namespace FinalEngine.IO
         bool FileExists(string path);
 
         /// <summary>
+        ///   Determines whether the specified <paramref name="directory"/> parameter is a valid directory.
+        /// </summary>
+        /// <param name="directory">
+        ///   The directory location.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the specified <paramref name="directory"/> parameter is a valid directory; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsValidDirectory(string directory);
+
+        /// <summary>
+        ///   Determines whether the specified <paramref name="fileName"/> parameter is a valid file name.
+        /// </summary>
+        /// <param name="fileName">
+        ///   The name of the file.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the specified <paramref name="fileName"/> parameter is a valid file name; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsValidFileName(string fileName);
+
+        /// <summary>
         ///   Opens a file located at the specified <paramref name="path"/>, with the specified <paramref name="mode"/>.
         /// </summary>
         /// <param name="path">

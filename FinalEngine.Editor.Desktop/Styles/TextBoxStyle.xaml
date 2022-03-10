@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:converters="clr-namespace:FinalEngine.Editor.Desktop.Converters"
+                    mc:Ignorable="d">
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MahApps.Styles.TextBox.VisualStudio}">
+        <Style.Resources>
+            <converters:ErrorsToMarginConverter x:Key="ErrorsToMarginConverter" />
+        </Style.Resources>
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder />
+                        <ItemsControl ItemsSource="{Binding}" Margin="0" Padding="0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding (ValidationError.ErrorContent)}" Foreground="Red" Padding="0" Margin="0, 5, 0, 5" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Trigger.Setters>
+                    <Setter Property="Margin" Value="{Binding (Validation.Errors).Count, RelativeSource={RelativeSource Self}, Converter={StaticResource ErrorsToMarginConverter}}" />
+                </Trigger.Setters>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
