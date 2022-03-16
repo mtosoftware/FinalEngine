@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.Common.Services
     using System;
     using System.IO;
     using System.Text.Json;
+    using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Exceptions;
     using FinalEngine.Editor.Common.Models;
     using FinalEngine.IO;
@@ -50,6 +51,8 @@ namespace FinalEngine.Editor.Common.Services
             this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        public event EventHandler<ProjectChangedEventArgs> ProjectChanged;
 
         /// <summary>
         ///   Creates a new project with specified <paramref name="name"/> at the specified <paramref name="location"/> and opens it.
@@ -121,16 +124,13 @@ namespace FinalEngine.Editor.Common.Services
         /// <param name="fullPath">
         ///   The full path/location of the project to open.
         /// </param>
-        /// <returns>
-        ///   The name of the project that was opened.
-        /// </returns>
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="fullPath"/> parameter cannot be null, empty or consist of only whitespace characters.
         /// </exception>
         /// <exception cref="FileNotFoundException">
         ///   The project file could not be located at the specified <paramref name="fullPath"/>.
         /// </exception>
-        public string OpenProject(string fullPath)
+        public void OpenProject(string fullPath)
         {
             this.logger.LogInformation("Opening project...");
 
@@ -160,10 +160,10 @@ namespace FinalEngine.Editor.Common.Services
                         this.logger.LogError(message);
                         throw exception;
                     }
-
-                    return this.project.Name;
                 }
             }
+
+            this.ProjectChanged?.Invoke(this, new ProjectChangedEventArgs(this.project));
         }
 
         /// <summary>

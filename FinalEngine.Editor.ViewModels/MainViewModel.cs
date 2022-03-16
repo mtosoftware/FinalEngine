@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.ViewModels
     using System;
     using System.Text.Json;
     using System.Windows.Input;
+    using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.ViewModels.Events;
     using FinalEngine.Editor.ViewModels.Interaction;
@@ -88,6 +89,8 @@ namespace FinalEngine.Editor.ViewModels
             this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
+
+            this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
         }
 
         /// <summary>
@@ -136,10 +139,10 @@ namespace FinalEngine.Editor.ViewModels
         }
 
         /// <summary>
-        ///   Exits the main view, closing the application.
+        ///   Exits the main application.
         /// </summary>
         /// <param name="closeable">
-        ///   The closeable.
+        ///   The closeable used to exit he application.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
         ///   The specified <paramref name="closeable"/> parameter cannot be null.
@@ -168,16 +171,17 @@ namespace FinalEngine.Editor.ViewModels
             this.ProjectName = e.ProjectName;
         }
 
+        private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)
+        {
+            this.ProjectName = e.Project.Name;
+        }
+
         /// <summary>
         ///   Shows a new project view.
         /// </summary>
         private void ShowNewProjectView()
         {
-            INewProjectViewModel viewModel = this.viewModelFactory.CreateNewProjectViewModel();
-
-            viewModel.ProjectCreated += this.NewProjectViewModel_ProjectCreated;
-            this.viewPresenter.ShowNewProjectView(viewModel);
-            viewModel.ProjectCreated -= this.NewProjectViewModel_ProjectCreated;
+            this.viewPresenter.ShowNewProjectView(this.viewModelFactory.CreateNewProjectViewModel());
         }
 
         /// <summary>
@@ -194,7 +198,7 @@ namespace FinalEngine.Editor.ViewModels
 
             try
             {
-                this.ProjectName = this.projectFileHandler.OpenProject(file) ?? string.Empty;
+                this.projectFileHandler.OpenProject(file);
             }
             catch (JsonException)
             {

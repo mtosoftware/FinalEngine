@@ -4,20 +4,13 @@
 
 namespace FinalEngine.Editor.ViewModels
 {
-    using System;
     using System.Windows.Input;
-    using FinalEngine.Editor.ViewModels.Events;
 
     /// <summary>
     ///   Defines an interface that represents a new project view.
     /// </summary>
     public interface INewProjectViewModel
     {
-        /// <summary>
-        ///   Occurs when a new project is created.
-        /// </summary>
-        event EventHandler<NewProjectEventArgs>? ProjectCreated;
-
         /// <summary>
         ///   Gets the browse command.
         /// </summary>
