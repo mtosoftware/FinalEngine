@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools
 {
-    public class ProjectExplorerViewModel : ToolViewModelBase
+    public class ProjectExplorerViewModel : ToolViewModelBase, IProjectExplorerViewModel
     {
         public ProjectExplorerViewModel()
         {

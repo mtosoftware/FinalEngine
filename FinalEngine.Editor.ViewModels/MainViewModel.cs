@@ -5,10 +5,13 @@
 namespace FinalEngine.Editor.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.Text.Json;
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.ViewModels.Docking;
+    using FinalEngine.Editor.ViewModels.Docking.Tools;
     using FinalEngine.Editor.ViewModels.Interaction;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
@@ -92,7 +95,16 @@ namespace FinalEngine.Editor.ViewModels
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
 
             this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
+
+            this.Tools = new List<IToolViewModel>()
+            {
+                new ProjectExplorerViewModel(),
+            };
+
+            this.Documents = new List<IPaneViewModel>();
         }
+
+        public IEnumerable<IPaneViewModel> Documents { get; }
 
         /// <summary>
         ///   Gets the exit command.
@@ -138,6 +150,8 @@ namespace FinalEngine.Editor.ViewModels
             get { return this.projectName ?? string.Empty; }
             private set { this.SetProperty(ref this.projectName, value); }
         }
+
+        public IEnumerable<IToolViewModel> Tools { get; }
 
         /// <summary>
         ///   Exits the main application.

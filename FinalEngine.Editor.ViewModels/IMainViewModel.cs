@@ -4,13 +4,17 @@
 
 namespace FinalEngine.Editor.ViewModels
 {
+    using System.Collections.Generic;
     using System.Windows.Input;
+    using FinalEngine.Editor.ViewModels.Docking;
 
     /// <summary>
     ///   Defines an interface that represents a main view.
     /// </summary>
     public interface IMainViewModel
     {
+        IEnumerable<IPaneViewModel> Documents { get; }
+
         /// <summary>
         ///   Gets the exit command.
         /// </summary>
@@ -42,5 +46,7 @@ namespace FinalEngine.Editor.ViewModels
         ///   The name of the project that is currently open.
         /// </value>
         string ProjectName { get; }
+
+        IEnumerable<IToolViewModel> Tools { get; }
     }
 }

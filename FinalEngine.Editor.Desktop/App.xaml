@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Styles/TextBoxStyle.xaml" />
                 <ResourceDictionary Source="Styles/LabelStyle.xaml" />
+                <ResourceDictionary Source="Styles/ToolStyle.xaml" />
+                <ResourceDictionary Source="Styles/DocumentStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
