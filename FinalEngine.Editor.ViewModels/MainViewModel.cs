@@ -9,10 +9,11 @@ namespace FinalEngine.Editor.ViewModels
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Services;
-    using FinalEngine.Editor.ViewModels.Events;
     using FinalEngine.Editor.ViewModels.Interaction;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
+
+    //// TODO: Implement IDisposable?
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IMainViewModel"/>.
@@ -155,20 +156,6 @@ namespace FinalEngine.Editor.ViewModels
             }
 
             closeable.Close();
-        }
-
-        /// <summary>
-        ///   Handles the <see cref="INewProjectViewModel.ProjectCreated"/> event.
-        /// </summary>
-        /// <param name="sender">
-        ///   The sender.
-        /// </param>
-        /// <param name="e">
-        ///   The <see cref="NewProjectEventArgs"/> instance containing the event data.
-        /// </param>
-        private void NewProjectViewModel_ProjectCreated(object? sender, NewProjectEventArgs e)
-        {
-            this.ProjectName = e.ProjectName;
         }
 
         private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)

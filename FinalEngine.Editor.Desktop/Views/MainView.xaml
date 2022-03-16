@@ -5,6 +5,8 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:selectors="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Docking"
+                 xmlns:tools="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking.Tools"
                  mc:Ignorable="d"
                  Width="800"
                  Height="450"
@@ -40,5 +42,25 @@
     </mah:MetroWindow.LeftWindowCommands>
 
     <Grid>
+        <!-- DOCKING MANAGER-->
+        <DockingManager AnchorablesSource="{Binding Tools}"
+                        DocumentsSource="{Binding Documents}">
+
+            <!-- TEMPLATE SELECTOR-->
+            <DockingManager.LayoutItemTemplateSelector>
+                <selectors:PanesTemplateSelector>
+
+                    <!-- PROJECT EXPLORER-->
+                    <selectors:PanesTemplateSelector.ProjectExplorerTemplate>
+                        <DataTemplate>
+                            <tools:ProjectExplorerView />
+                        </DataTemplate>
+                    </selectors:PanesTemplateSelector.ProjectExplorerTemplate>
+                </selectors:PanesTemplateSelector>
+            </DockingManager.LayoutItemTemplateSelector>
+
+            <DockingManager.LayoutItemContainerStyleSelector>
+            </DockingManager.LayoutItemContainerStyleSelector>
+        </DockingManager>
     </Grid>
 </mah:MetroWindow>
