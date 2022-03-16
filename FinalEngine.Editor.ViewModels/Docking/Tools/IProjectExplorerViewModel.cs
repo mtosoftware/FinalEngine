@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools
 {
-    public interface IProjectExplorerViewModel
+    public interface IProjectExplorerViewModel : IToolViewModel
     {
     }
 }

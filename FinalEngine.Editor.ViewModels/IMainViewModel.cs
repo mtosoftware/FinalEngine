@@ -47,6 +47,8 @@ namespace FinalEngine.Editor.ViewModels
         /// </value>
         string ProjectName { get; }
 
+        ICommand ToggleProjectExplorerCommand { get; }
+
         IEnumerable<IToolViewModel> Tools { get; }
     }
 }

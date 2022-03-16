@@ -25,6 +25,8 @@ namespace FinalEngine.Editor.ViewModels
     /// <seealso cref="IMainViewModel"/>
     public class MainViewModel : ObservableObject, IMainViewModel
     {
+        private readonly IProjectExplorerViewModel projectExplorerViewModel;
+
         /// <summary>
         ///   The project file handler.
         /// </summary>
@@ -65,6 +67,8 @@ namespace FinalEngine.Editor.ViewModels
         /// </summary>
         private string? projectName;
 
+        private ICommand? toggleProjectExplorerCommand;
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
@@ -96,9 +100,11 @@ namespace FinalEngine.Editor.ViewModels
 
             this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
 
+            this.projectExplorerViewModel = new ProjectExplorerViewModel();
+
             this.Tools = new List<IToolViewModel>()
             {
-                new ProjectExplorerViewModel(),
+                this.projectExplorerViewModel,
             };
 
             this.Documents = new List<IPaneViewModel>();
@@ -149,6 +155,11 @@ namespace FinalEngine.Editor.ViewModels
         {
             get { return this.projectName ?? string.Empty; }
             private set { this.SetProperty(ref this.projectName, value); }
+        }
+
+        public ICommand ToggleProjectExplorerCommand
+        {
+            get { return this.toggleProjectExplorerCommand ??= new RelayCommand(this.ToggleProjectExplorer); }
         }
 
         public IEnumerable<IToolViewModel> Tools { get; }
@@ -205,6 +216,13 @@ namespace FinalEngine.Editor.ViewModels
             {
                 this.userActionRequester.RequestOk("Open Project", "Failed to open project file.");
             }
+        }
+
+        private void ToggleProjectExplorer()
+        {
+            // TODO: Look at passing a parameter with the ContentID of the view model to toggle, then you can just do this: Tools.FirstOrDefault(x => x.ContentID == contentID).IsVisible = true.
+            // TODO: Also change the menu item for this to a checkbox menu item.
+            this.projectExplorerViewModel.IsVisible = !this.projectExplorerViewModel.IsVisible;
         }
     }
 }
