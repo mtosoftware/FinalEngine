@@ -6,6 +6,7 @@ namespace FinalEngine.Editor.ViewModels.Validation
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.IO;
 
     /// <summary>
@@ -14,6 +15,11 @@ namespace FinalEngine.Editor.ViewModels.Validation
     /// <seealso cref="ValidationAttribute"/>
     public sealed class DirectoryAttribute : ValidationAttribute
     {
+        /// <summary>
+        ///   The file system.
+        /// </summary>
+        private readonly IFileSystem fileSystem;
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="DirectoryAttribute"/> class.
         /// </summary>
@@ -31,18 +37,13 @@ namespace FinalEngine.Editor.ViewModels.Validation
         /// <exception cref="System.ArgumentNullException">
         ///   The specified <paramref name="fileSystem"/> parameter cannot be null.
         /// </exception>
+        [SuppressMessage("Design", "CA1019:Define accessors for attribute arguments", Justification = "Unit Testing")]
         public DirectoryAttribute(IFileSystem fileSystem)
         {
-            this.FileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+            this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
 
-        /// <summary>
-        ///   Gets the file system.
-        /// </summary>
-        /// <value>
-        ///   The file system.
-        /// </value>
-        public IFileSystem FileSystem { get; }
+        public bool ShouldExist { get; set; }
 
         /// <summary>
         ///   Returns true if the specified <paramref name="value"/> is a valid directory.
@@ -70,9 +71,14 @@ namespace FinalEngine.Editor.ViewModels.Validation
                 return new ValidationResult("You must specify a directory location.");
             }
 
-            if (!this.FileSystem.IsValidDirectory(directory))
+            if (!this.fileSystem.IsValidDirectory(directory))
             {
                 return new ValidationResult("You must specify a valid directory location.");
+            }
+
+            if (this.ShouldExist && !this.fileSystem.DirectoryExists(directory))
+            {
+                return new ValidationResult("The directory location doesn't exist.");
             }
 
             return ValidationResult.Success;

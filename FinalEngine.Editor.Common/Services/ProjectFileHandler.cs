@@ -101,7 +101,7 @@ namespace FinalEngine.Editor.Common.Services
                 this.fileSystem.CreateDirectory(directoryPath);
             }
 
-            string fullPath = GetPotentialProjectFilePath(name, location);
+            string fullPath = GetPotentialProjectFilePath(name, directoryPath);
 
             if (this.fileSystem.FileExists(fullPath))
             {
@@ -220,7 +220,7 @@ namespace FinalEngine.Editor.Common.Services
         /// </returns>
         private static string GetPotentialProjectFilePath(string name, string location)
         {
-            return $"{location}\\{name}\\{name}.feproj";
+            return $"{location}\\{name}.feproj";
         }
     }
 }

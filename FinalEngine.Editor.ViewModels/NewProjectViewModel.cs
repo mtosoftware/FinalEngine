@@ -101,7 +101,7 @@ namespace FinalEngine.Editor.ViewModels
         ///   The project location.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must specify a project location.")]
-        [Directory]
+        [Directory(ShouldExist = true)]
         public string ProjectLocation
         {
             get

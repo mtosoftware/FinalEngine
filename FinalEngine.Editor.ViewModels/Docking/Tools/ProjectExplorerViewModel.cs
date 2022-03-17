@@ -11,6 +11,13 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     using FinalEngine.Editor.Common.Models;
     using FinalEngine.Editor.Common.Services;
 
+    //// TODO: Beautiful icons - Any icons that are not supported should just be a blank file icon (easier and better than interoping) - folders should have open and close icons.
+    //// TODO: Documentation
+    //// TODO: Add a toolbar to the top of the view for expanding/collapsing all nodes - also add support for creating new folders (files will come later) - folders created via right click context AND toolbar.
+    //// TODO: Think about the whole assets/resource directory thing... Maybe the Project model should have a static property AssetsDirectoryName = "Assets"? Or should it not be static? who knows.
+    //// TODO: Fix that stupid binding issue with file nodes.
+    //// TODO: From there, document again and I think this feature is done.
+
     public class ProjectExplorerViewModel : ToolViewModelBase, IProjectExplorerViewModel
     {
         public ProjectExplorerViewModel(IProjectFileHandler projectFileHandler)
@@ -29,19 +36,9 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
 
         public ObservableCollection<FileNode> FileNodes { get; }
 
-        private void ConstructFileNodes(string location)
-        {
-            if (string.IsNullOrWhiteSpace(location))
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            this.FileNodes.ConstructHierarchy(location);
-        }
-
         private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)
         {
-            this.ConstructFileNodes(e.Location);
+            this.FileNodes.ConstructHierarchy(e.Location);
         }
     }
 }

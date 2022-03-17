@@ -1,4 +1,4 @@
-﻿// <copyright file="DirectoryNodeExtensions.cs" company="Software Antics">
+﻿// <copyright file="ObservableCollectionFileNodeExtensions.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
