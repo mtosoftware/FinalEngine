@@ -112,7 +112,11 @@ namespace FinalEngine.Editor.Common.Services
                 throw exception;
             }
 
-            this.project = new Project(name, location);
+            this.project = new Project()
+            {
+                Name = name,
+                Location = directoryPath,
+            };
 
             this.SaveProject();
             this.OpenProject(fullPath);
@@ -160,10 +164,22 @@ namespace FinalEngine.Editor.Common.Services
                         this.logger.LogError(message);
                         throw exception;
                     }
+
+                    string? directoryPath = Path.GetDirectoryName(fullPath);
+
+                    if (string.IsNullOrWhiteSpace(directoryPath))
+                    {
+                        throw new InvalidOperationException($"Failed to change project directory to path: {fullPath}");
+                    }
+
+                    if (this.project.Location != directoryPath)
+                    {
+                        this.project.Location = directoryPath;
+                    }
                 }
             }
 
-            this.ProjectChanged?.Invoke(this, new ProjectChangedEventArgs(this.project));
+            this.ProjectChanged?.Invoke(this, new ProjectChangedEventArgs(this.project.Name, this.project.Location));
         }
 
         /// <summary>

@@ -5,15 +5,17 @@
 namespace FinalEngine.Editor.Common.Events
 {
     using System;
-    using FinalEngine.Editor.Common.Models;
 
     public class ProjectChangedEventArgs : EventArgs
     {
-        public ProjectChangedEventArgs(Project project)
+        public ProjectChangedEventArgs(string name, string location)
         {
-            this.Project = project ?? throw new ArgumentNullException(nameof(project));
+            this.Name = name ?? throw new ArgumentNullException(nameof(name));
+            this.Location = location ?? throw new ArgumentNullException(nameof(location));
         }
 
-        public Project Project { get; }
+        public string Location { get; }
+
+        public string Name { get; }
     }
 }

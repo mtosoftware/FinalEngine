@@ -181,7 +181,7 @@ namespace FinalEngine.Editor.ViewModels
 
         private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)
         {
-            this.ProjectName = e.Project.Name;
+            this.ProjectName = e.Name;
         }
 
         /// <summary>

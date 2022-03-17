@@ -55,7 +55,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
 
         public IProjectExplorerViewModel CreateProjectExplorerViewModel()
         {
-            return new ProjectExplorerViewModel();
+            return new ProjectExplorerViewModel(this.projectFileHandler);
         }
     }
 }
