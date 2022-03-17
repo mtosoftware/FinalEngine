@@ -9,7 +9,7 @@
             <avalon:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </Style.Resources>
         <Setter Property="Title" Value="{Binding Model.Title}" />
-        <Setter Property="CanClose" Value="True" />
+        <Setter Property="CanClose" Value="False" />
         <Setter Property="Visibility" Value="{Binding Model.IsVisible, ConverterParameter={x:Static Visibility.Hidden}, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}" />
         <Setter Property="ContentId" Value="{Binding Model.ContentID}" />
         <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
