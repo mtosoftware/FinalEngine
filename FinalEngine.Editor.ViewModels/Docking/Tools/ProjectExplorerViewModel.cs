@@ -9,6 +9,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
         public ProjectExplorerViewModel()
         {
             this.Title = "Project Explorer";
+            this.ContentID = "ProjectExplorerTool";
         }
     }
 }

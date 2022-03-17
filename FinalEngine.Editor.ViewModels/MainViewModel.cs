@@ -6,12 +6,12 @@ namespace FinalEngine.Editor.ViewModels
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text.Json;
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.ViewModels.Docking;
-    using FinalEngine.Editor.ViewModels.Docking.Tools;
     using FinalEngine.Editor.ViewModels.Interaction;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
@@ -25,8 +25,6 @@ namespace FinalEngine.Editor.ViewModels
     /// <seealso cref="IMainViewModel"/>
     public class MainViewModel : ObservableObject, IMainViewModel
     {
-        private readonly IProjectExplorerViewModel projectExplorerViewModel;
-
         /// <summary>
         ///   The project file handler.
         /// </summary>
@@ -67,7 +65,7 @@ namespace FinalEngine.Editor.ViewModels
         /// </summary>
         private string? projectName;
 
-        private ICommand? toggleProjectExplorerCommand;
+        private ICommand? toggleToolWindowCommand;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -100,11 +98,9 @@ namespace FinalEngine.Editor.ViewModels
 
             this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
 
-            this.projectExplorerViewModel = new ProjectExplorerViewModel();
-
             this.Tools = new List<IToolViewModel>()
             {
-                this.projectExplorerViewModel,
+                this.viewModelFactory.CreateProjectExplorerViewModel(),
             };
 
             this.Documents = new List<IPaneViewModel>();
@@ -157,9 +153,9 @@ namespace FinalEngine.Editor.ViewModels
             private set { this.SetProperty(ref this.projectName, value); }
         }
 
-        public ICommand ToggleProjectExplorerCommand
+        public ICommand ToggleToolWindowCommand
         {
-            get { return this.toggleProjectExplorerCommand ??= new RelayCommand(this.ToggleProjectExplorer); }
+            get { return this.toggleToolWindowCommand ??= new RelayCommand<string>(this.ToggleToolWindow); }
         }
 
         public IEnumerable<IToolViewModel> Tools { get; }
@@ -218,11 +214,21 @@ namespace FinalEngine.Editor.ViewModels
             }
         }
 
-        private void ToggleProjectExplorer()
+        private void ToggleToolWindow(string? contentID)
         {
-            // TODO: Look at passing a parameter with the ContentID of the view model to toggle, then you can just do this: Tools.FirstOrDefault(x => x.ContentID == contentID).IsVisible = true.
-            // TODO: Also change the menu item for this to a checkbox menu item.
-            this.projectExplorerViewModel.IsVisible = !this.projectExplorerViewModel.IsVisible;
+            if (string.IsNullOrWhiteSpace(contentID))
+            {
+                throw new ArgumentNullException(nameof(contentID));
+            }
+
+            IToolViewModel? tool = this.Tools.FirstOrDefault(x => x.ContentID == contentID);
+
+            if (tool == null)
+            {
+                throw new ArgumentException($"Failed to locate tool window with content ID: {contentID}.", nameof(contentID));
+            }
+
+            tool.IsVisible = !tool.IsVisible;
         }
     }
 }

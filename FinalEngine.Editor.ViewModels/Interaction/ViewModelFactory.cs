@@ -6,6 +6,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
 {
     using System;
     using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IViewModelFactory"/>.
@@ -50,6 +51,11 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         public INewProjectViewModel CreateNewProjectViewModel()
         {
             return new NewProjectViewModel(this.userActionRequester, this.projectFileHandler);
+        }
+
+        public IProjectExplorerViewModel CreateProjectExplorerViewModel()
+        {
+            return new ProjectExplorerViewModel();
         }
     }
 }

@@ -23,7 +23,7 @@
         <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
         <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
         <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding OpenProjectCommand}" />
-        <KeyBinding Gesture="Ctrl+Shift+E" Command="{Binding ToggleProjectExplorerCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+E" Command="{Binding ToggleToolWindowCommand}" CommandParameter="ProjectExplorerTool" />
     </Window.InputBindings>
 
     <!-- MAIN MENU -->
@@ -41,7 +41,7 @@
                 </MenuItem>
                 <MenuItem Header="_View">
                     <MenuItem Header="_Tool Windows">
-                        <MenuItem Header="Project _Explorer" InputGestureText="Ctrl+Shift+E" Command="{Binding ToggleProjectExplorerCommand}" />
+                        <MenuItem Header="Project _Explorer" InputGestureText="Ctrl+Shift+E" Command="{Binding ToggleToolWindowCommand}" CommandParameter="ProjectExplorerTool" />
                     </MenuItem>
                 </MenuItem>
             </Menu>
