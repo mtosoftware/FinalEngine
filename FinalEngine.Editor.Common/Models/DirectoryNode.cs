@@ -4,10 +4,9 @@
 
 namespace FinalEngine.Editor.Common.Models
 {
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.IO;
+    using FinalEngine.Editor.Common.Extensions;
 
     public class DirectoryNode : FileNode, INotifyPropertyChanged
     {
@@ -45,7 +44,6 @@ namespace FinalEngine.Editor.Common.Models
             }
         }
 
-        // TODO: Turn this into an extension method since it's literally the exact same thing.
         private void Expand()
         {
             if (this.Children.Count > 1)
@@ -53,33 +51,7 @@ namespace FinalEngine.Editor.Common.Models
                 return;
             }
 
-            // TODO: Handle access denied issue, something to do with hidden and system files, etc.
-            IEnumerable<string> directories = Directory.EnumerateDirectories(this.DirectoryPath, string.Empty, SearchOption.TopDirectoryOnly);
-
-            foreach (string directory in directories)
-            {
-                var node = new DirectoryNode()
-                {
-                    Name = Path.GetFileName(directory),
-                    DirectoryPath = directory,
-                };
-
-                this.Children.Add(node);
-            }
-
-            // TODO: Handle access denied issue, something to do with hidden and system files, etc.
-            IEnumerable<string> files = Directory.EnumerateFiles(this.DirectoryPath, string.Empty, SearchOption.TopDirectoryOnly);
-
-            foreach (string file in files)
-            {
-                var node = new FileNode()
-                {
-                    Name = Path.GetFileName(file),
-                    DirectoryPath = file,
-                };
-
-                this.Children.Add(node);
-            }
+            this.Children.ConstructHierarchy(this.DirectoryPath);
         }
     }
 }
