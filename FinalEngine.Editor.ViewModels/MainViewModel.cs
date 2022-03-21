@@ -5,7 +5,6 @@
 namespace FinalEngine.Editor.ViewModels
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Text.Json;
     using System.Windows.Input;
@@ -96,17 +95,12 @@ namespace FinalEngine.Editor.ViewModels
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
 
+            this.DockViewModel = this.viewModelFactory.CreateDockViewModel();
+
             this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
-
-            this.Tools = new List<IToolViewModel>()
-            {
-                this.viewModelFactory.CreateProjectExplorerViewModel(),
-            };
-
-            this.Documents = new List<IPaneViewModel>();
         }
 
-        public IEnumerable<IPaneViewModel> Documents { get; }
+        public IDockViewModel DockViewModel { get; }
 
         /// <summary>
         ///   Gets the exit command.
@@ -157,8 +151,6 @@ namespace FinalEngine.Editor.ViewModels
         {
             get { return this.toggleToolWindowCommand ??= new RelayCommand<string>(this.ToggleToolWindow); }
         }
-
-        public IEnumerable<IToolViewModel> Tools { get; }
 
         /// <summary>
         ///   Exits the main application.
@@ -221,7 +213,7 @@ namespace FinalEngine.Editor.ViewModels
                 throw new ArgumentNullException(nameof(contentID));
             }
 
-            IToolViewModel? tool = this.Tools.FirstOrDefault(x => x.ContentID == contentID);
+            IToolViewModel? tool = this.DockViewModel.Tools.FirstOrDefault(x => x.ContentID == contentID);
 
             if (tool == null)
             {

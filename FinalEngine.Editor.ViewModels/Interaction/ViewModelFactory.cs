@@ -6,6 +6,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
 {
     using System;
     using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.ViewModels.Docking;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
@@ -40,6 +41,11 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         {
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
+        }
+
+        public IDockViewModel CreateDockViewModel()
+        {
+            return new DockViewModel(this);
         }
 
         /// <summary>

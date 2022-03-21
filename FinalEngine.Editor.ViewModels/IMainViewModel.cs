@@ -4,7 +4,6 @@
 
 namespace FinalEngine.Editor.ViewModels
 {
-    using System.Collections.Generic;
     using System.Windows.Input;
     using FinalEngine.Editor.ViewModels.Docking;
 
@@ -13,7 +12,7 @@ namespace FinalEngine.Editor.ViewModels
     /// </summary>
     public interface IMainViewModel
     {
-        IEnumerable<IPaneViewModel> Documents { get; }
+        IDockViewModel DockViewModel { get; }
 
         /// <summary>
         ///   Gets the exit command.
@@ -48,7 +47,5 @@ namespace FinalEngine.Editor.ViewModels
         string ProjectName { get; }
 
         ICommand ToggleToolWindowCommand { get; }
-
-        IEnumerable<IToolViewModel> Tools { get; }
     }
 }

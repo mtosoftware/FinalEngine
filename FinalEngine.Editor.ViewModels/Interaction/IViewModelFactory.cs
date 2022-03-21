@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Editor.ViewModels.Interaction
 {
+    using FinalEngine.Editor.ViewModels.Docking;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
@@ -11,6 +12,8 @@ namespace FinalEngine.Editor.ViewModels.Interaction
     /// </summary>
     public interface IViewModelFactory
     {
+        IDockViewModel CreateDockViewModel();
+
         /// <summary>
         ///   Creates the new project view model.
         /// </summary>

@@ -3,29 +3,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:FinalEngine.Editor.Common.Models;assembly=FinalEngine.Editor.Common"
+             xmlns:tools="clr-namespace:FinalEngine.Editor.ViewModels.Docking.Tools;assembly=FinalEngine.Editor.ViewModels"
              mc:Ignorable="d">
     <Grid>
         <TreeView ItemsSource="{Binding FileNodes}">
             <TreeView.Resources>
 
-                <!-- STYLING -->
-                <Style TargetType="{x:Type TreeViewItem}">
+                <Style x:Key="DirectoryItem" TargetType="{x:Type TreeViewItem}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Collapsed" />
+                            <!--<Setter Property="Visibility" Value="Collapsed" />-->
+                            <Setter Property="Header" Value="Hello, World!" />
                         </DataTrigger>
                     </Style.Triggers>
+                    <Setter Property="Background" Value="Red" />
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                 </Style>
 
-                <!-- DATA TEMPLATE -->
-                <HierarchicalDataTemplate DataType="{x:Type models:DirectoryNode}" ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Name}" />
+                <HierarchicalDataTemplate ItemContainerStyle="{StaticResource DirectoryItem}" DataType="{x:Type tools:DirectoryItemViewModel}" ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}" ToolTip="{Binding Path}" />
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type models:FileNode}">
-                    <TextBlock Text="{Binding Name}" />
-                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type tools:FileItemViewModel}">
+                    <TextBlock Text="{Binding Name}" ToolTip="{Binding Path}" />
+                </DataTemplate>
             </TreeView.Resources>
         </TreeView>
     </Grid>

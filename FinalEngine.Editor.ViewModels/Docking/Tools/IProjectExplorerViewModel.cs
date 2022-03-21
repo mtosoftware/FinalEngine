@@ -4,7 +4,10 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools
 {
+    using System.Collections.ObjectModel;
+
     public interface IProjectExplorerViewModel : IToolViewModel
     {
+        ObservableCollection<FileItemViewModel> FileNodes { get; }
     }
 }

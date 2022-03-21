@@ -5,9 +5,7 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:init="clr-namespace:FinalEngine.Editor.Desktop.Initialization"
-                 xmlns:selectors="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Docking"
-                 xmlns:tools="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking.Tools"
+                 xmlns:docking="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking"
                  mc:Ignorable="d"
                  Width="800"
                  Height="450"
@@ -49,52 +47,6 @@
     </mah:MetroWindow.LeftWindowCommands>
 
     <Grid>
-        <!-- DOCKING MANAGER -->
-        <DockingManager AnchorablesSource="{Binding Tools}"
-                        DocumentsSource="{Binding Documents}">
-
-            <!-- THEME -->
-            <DockingManager.Theme>
-                <Vs2013DarkTheme />
-            </DockingManager.Theme>
-
-            <!-- TEMPLATE SELECTOR -->
-            <DockingManager.LayoutItemTemplateSelector>
-                <selectors:PanesTemplateSelector>
-
-                    <!-- PROJECT EXPLORER -->
-                    <selectors:PanesTemplateSelector.ProjectExplorerTemplate>
-                        <DataTemplate>
-                            <tools:ProjectExplorerView />
-                        </DataTemplate>
-                    </selectors:PanesTemplateSelector.ProjectExplorerTemplate>
-                </selectors:PanesTemplateSelector>
-            </DockingManager.LayoutItemTemplateSelector>
-
-            <!-- STYLE SELECTOR -->
-            <DockingManager.LayoutItemContainerStyleSelector>
-                <selectors:PanesStyleSelector ToolStyle="{StaticResource ToolStyle}" DocumentStyle="{StaticResource DocumentStyle}" />
-            </DockingManager.LayoutItemContainerStyleSelector>
-
-            <!-- LAYOUT UPDATE STRATEGY -->
-            <DockingManager.LayoutUpdateStrategy>
-                <init:LayoutInitializer />
-            </DockingManager.LayoutUpdateStrategy>
-
-            <!-- LAYOUT ROOT -->
-            <LayoutRoot>
-                <LayoutPanel Orientation="Horizontal">
-                    <LayoutPanel Orientation="Vertical">
-
-                        <!-- DOCUMENTS -->
-                        <LayoutDocumentPane />
-                    </LayoutPanel>
-
-                    <LayoutAnchorablePaneGroup DockWidth="256" Orientation="Vertical">
-                        <LayoutAnchorablePane Name="ProjectExplorerTool" />
-                    </LayoutAnchorablePaneGroup>
-                </LayoutPanel>
-            </LayoutRoot>
-        </DockingManager>
+        <docking:DockViewModel DataContext="{Binding DockViewModel}" />
     </Grid>
 </mah:MetroWindow>
