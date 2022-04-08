@@ -31,7 +31,7 @@
                     continue;
                 }
 
-                var directoryItem = new FileItemViewModel()
+                var directoryItem = new FileItemViewModel(FileItemType.Directory)
                 {
                     Name = Path.GetFileName(directory),
                     Path = directory,
@@ -51,7 +51,7 @@
                     continue;
                 }
 
-                var fileItem = new FileItemViewModel()
+                var fileItem = new FileItemViewModel(FileItemType.File)
                 {
                     Name = Path.GetFileName(file),
                     Path = file,

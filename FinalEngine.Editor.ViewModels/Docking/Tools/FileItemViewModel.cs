@@ -8,6 +8,13 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     using FinalEngine.Editor.ViewModels.Extensions;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
 
+    public enum FileItemType
+    {
+        Directory,
+
+        File
+    }
+
     public class FileItemViewModel : ObservableObject
     {
         private bool isExpanded;
@@ -16,8 +23,11 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
 
         private string? path;
 
-        public FileItemViewModel()
+        private FileItemType type;
+
+        public FileItemViewModel(FileItemType type)
         {
+            this.Type = type;
             this.Children = new ObservableCollection<FileItemViewModel>();
         }
 
@@ -52,6 +62,12 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
         {
             get { return this.path ?? string.Empty; }
             set { this.SetProperty(ref this.path, value); }
+        }
+
+        public FileItemType Type
+        {
+            get { return this.type; }
+            set { this.SetProperty(ref this.type, value); }
         }
 
         private bool CanExpand

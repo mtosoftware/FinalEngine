@@ -14,6 +14,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\FileIcon.png" />
+	  <None Remove="Resources\FolderClosedIcon.png" />
+	  <None Remove="Resources\FolderOpenedIcon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<AdditionalFiles Include="..\Styling\StyleCop\Other\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>
 
@@ -43,6 +49,27 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\FileIcon.png" />
+	  <Resource Include="Resources\FolderClosedIcon.png" />
+	  <Resource Include="Resources\FolderOpenedIcon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
