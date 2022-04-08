@@ -11,9 +11,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     using FinalEngine.Editor.ViewModels.Extensions;
 
     //// TODO: Beautiful icons - Any icons that are not supported should just be a blank file icon (easier and better than interoping) - folders should have open and close icons.
-    //// TODO: proper checks for file system junk.
     //// TODO: Documentation
-    //// TODO: Fix that stupid binding issue with file nodes.
     //// TODO: From there, document again and I think this feature is done.
 
     public class ProjectExplorerViewModel : ToolViewModelBase, IProjectExplorerViewModel
@@ -29,9 +27,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
             this.ContentID = "ProjectExplorerTool";
             this.FileNodes = new ObservableCollection<FileItemViewModel>();
 
-            this.FileNodes.ConstructHierarchy("C:\\");
-
-            //projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
+            projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
         }
 
         public ObservableCollection<FileItemViewModel> FileNodes { get; }

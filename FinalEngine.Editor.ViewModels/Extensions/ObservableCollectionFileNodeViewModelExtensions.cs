@@ -26,6 +26,11 @@
 
             foreach (string directory in directories)
             {
+                if (!File.GetAttributes(directory).CanIncludeInSearch())
+                {
+                    continue;
+                }
+
                 var directoryItem = new FileItemViewModel()
                 {
                     Name = Path.GetFileName(directory),
@@ -41,6 +46,11 @@
 
             foreach (string file in files)
             {
+                if (!File.GetAttributes(file).CanIncludeInSearch())
+                {
+                    continue;
+                }
+
                 var fileItem = new FileItemViewModel()
                 {
                     Name = Path.GetFileName(file),
