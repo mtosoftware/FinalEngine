@@ -29,7 +29,9 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
             this.ContentID = "ProjectExplorerTool";
             this.FileNodes = new ObservableCollection<FileItemViewModel>();
 
-            projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
+            this.FileNodes.ConstructHierarchy("C:\\");
+
+            //projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
         }
 
         public ObservableCollection<FileItemViewModel> FileNodes { get; }

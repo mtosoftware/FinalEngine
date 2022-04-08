@@ -26,23 +26,13 @@
 
             foreach (string directory in directories)
             {
-                var directoryItem = new DirectoryItemViewModel()
+                var directoryItem = new FileItemViewModel()
                 {
                     Name = Path.GetFileName(directory),
                     Path = directory,
                 };
 
-                var ot = new DirectoryItemViewModel()
-                {
-                    Name = "Test",
-                };
-
-                ot.Children.Add(new FileItemViewModel()
-                {
-                    Name = "Tesattt",
-                });
-
-                directoryItem.Children.Add(ot);
+                directoryItem.Children.Add(null!);
 
                 fileItems.Add(directoryItem);
             }

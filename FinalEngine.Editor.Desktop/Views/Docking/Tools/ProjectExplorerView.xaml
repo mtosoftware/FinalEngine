@@ -8,24 +8,18 @@
     <Grid>
         <TreeView ItemsSource="{Binding FileNodes}">
             <TreeView.Resources>
-
-                <Style x:Key="DirectoryItem" TargetType="{x:Type TreeViewItem}">
+                <Style TargetType="{x:Type TreeViewItem}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                            <!--<Setter Property="Visibility" Value="Collapsed" />-->
-                            <Setter Property="Header" Value="Hello, World!" />
+                            <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
-                    <Setter Property="Background" Value="Red" />
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Style>
 
-                <HierarchicalDataTemplate ItemContainerStyle="{StaticResource DirectoryItem}" DataType="{x:Type tools:DirectoryItemViewModel}" ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Name}" ToolTip="{Binding Path}" />
+                <HierarchicalDataTemplate DataType="{x:Type tools:FileItemViewModel}" ItemsSource="{Binding Children, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Text="{Binding Name}" />
                 </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type tools:FileItemViewModel}">
-                    <TextBlock Text="{Binding Name}" ToolTip="{Binding Path}" />
-                </DataTemplate>
             </TreeView.Resources>
         </TreeView>
     </Grid>
