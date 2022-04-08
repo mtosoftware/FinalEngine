@@ -10,7 +10,6 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.ViewModels.Extensions;
 
-    //// TODO: Beautiful icons - Any icons that are not supported should just be a blank file icon (easier and better than interoping) - folders should have open and close icons.
     //// TODO: Documentation
     //// TODO: From there, document again and I think this feature is done.
 
