@@ -6,7 +6,19 @@
              xmlns:converters="clr-namespace:FinalEngine.Editor.Desktop.Converters"
              xmlns:tools="clr-namespace:FinalEngine.Editor.ViewModels.Docking.Tools;assembly=FinalEngine.Editor.ViewModels"
              mc:Ignorable="d">
-    <Grid>
+    <DockPanel>
+
+        <!-- TODO: STYLE THE TOOLBAR -->
+        <ToolBarTray DockPanel.Dock="Top" Visibility="{Binding CanViewToolBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ToolBar>
+                <Button Command="{Binding ExpandAllCommand}" ToolTip="Expand All.">
+                    <Image Source="pack://application:,,,/Resources/ExpandAllIcon.png" />
+                </Button>
+                <Button Command="{Binding CollapseAllCommand}" ToolTip="Collapse All.">
+                    <Image Source="pack://application:,,,/Resources/CollapseAllIcon.png" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         <TreeView ItemsSource="{Binding FileNodes}">
             <TreeView.Resources>
                 <converters:FileItemTypeToIconConverter x:Key="FileItemTypeToIconConverter" />
@@ -40,5 +52,5 @@
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>
-    </Grid>
+    </DockPanel>
 </UserControl>

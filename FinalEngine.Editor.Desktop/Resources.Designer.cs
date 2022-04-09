@@ -22,7 +22,7 @@ namespace FinalEngine.Editor.Desktop {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace FinalEngine.Editor.Desktop {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FinalEngine.Editor.Desktop.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace FinalEngine.Editor.Desktop {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,27 @@ namespace FinalEngine.Editor.Desktop {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FileIcon {
+        public static System.Drawing.Bitmap CollapseAllIcon {
+            get {
+                object obj = ResourceManager.GetObject("CollapseAllIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ExpandAllIcon {
+            get {
+                object obj = ResourceManager.GetObject("ExpandAllIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap FileIcon {
             get {
                 object obj = ResourceManager.GetObject("FileIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +93,7 @@ namespace FinalEngine.Editor.Desktop {
         /// <summary>
         ///   Looks up a localized string similar to pack://application:,,,/Resources/FileIcon.png.
         /// </summary>
-        internal static string FileIconUri {
+        public static string FileIconUri {
             get {
                 return ResourceManager.GetString("FileIconUri", resourceCulture);
             }
@@ -82,7 +102,7 @@ namespace FinalEngine.Editor.Desktop {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderClosedIcon {
+        public static System.Drawing.Bitmap FolderClosedIcon {
             get {
                 object obj = ResourceManager.GetObject("FolderClosedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -92,7 +112,7 @@ namespace FinalEngine.Editor.Desktop {
         /// <summary>
         ///   Looks up a localized string similar to pack://application:,,,/Resources/FolderClosedIcon.png.
         /// </summary>
-        internal static string FolderClosedIconUri {
+        public static string FolderClosedIconUri {
             get {
                 return ResourceManager.GetString("FolderClosedIconUri", resourceCulture);
             }
@@ -101,7 +121,7 @@ namespace FinalEngine.Editor.Desktop {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FolderOpenedIcon {
+        public static System.Drawing.Bitmap FolderOpenedIcon {
             get {
                 object obj = ResourceManager.GetObject("FolderOpenedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -111,7 +131,7 @@ namespace FinalEngine.Editor.Desktop {
         /// <summary>
         ///   Looks up a localized string similar to pack://application:,,,/Resources/FolderOpenedIcon.png.
         /// </summary>
-        internal static string FolderOpenedIconUri {
+        public static string FolderOpenedIconUri {
             get {
                 return ResourceManager.GetString("FolderOpenedIconUri", resourceCulture);
             }

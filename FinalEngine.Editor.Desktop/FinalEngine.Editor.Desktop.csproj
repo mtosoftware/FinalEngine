@@ -14,6 +14,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\CollapseAllIcon.png" />
+	  <None Remove="Resources\ExpandAllIcon.png" />
 	  <None Remove="Resources\FileIcon.png" />
 	  <None Remove="Resources\FolderClosedIcon.png" />
 	  <None Remove="Resources\FolderOpenedIcon.png" />
@@ -52,6 +54,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Resources\CollapseAllIcon.png" />
+	  <Resource Include="Resources\ExpandAllIcon.png" />
 	  <Resource Include="Resources\FileIcon.png" />
 	  <Resource Include="Resources\FolderClosedIcon.png" />
 	  <Resource Include="Resources\FolderOpenedIcon.png" />
@@ -67,7 +71,7 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>

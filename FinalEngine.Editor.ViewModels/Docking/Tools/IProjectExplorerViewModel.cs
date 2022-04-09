@@ -5,9 +5,16 @@
 namespace FinalEngine.Editor.ViewModels.Docking.Tools
 {
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
 
     public interface IProjectExplorerViewModel : IToolViewModel
     {
+        bool CanViewToolBar { get; set; }
+
+        ICommand CollapseAllCommand { get; }
+
+        ICommand ExpandAllCommand { get; }
+
         ObservableCollection<FileItemViewModel> FileNodes { get; }
     }
 }

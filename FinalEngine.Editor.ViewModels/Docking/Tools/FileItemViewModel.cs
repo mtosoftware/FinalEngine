@@ -75,6 +75,36 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
             get { return this.Children.Count > 0; }
         }
 
+        public void CollapseAll()
+        {
+            this.IsExpanded = false;
+
+            foreach (FileItemViewModel? child in this.Children)
+            {
+                if (child == null)
+                {
+                    continue;
+                }
+
+                child.CollapseAll();
+            }
+        }
+
+        public void ExpandAll()
+        {
+            this.IsExpanded = true;
+
+            foreach (FileItemViewModel? child in this.Children)
+            {
+                if (child == null)
+                {
+                    continue;
+                }
+
+                child.ExpandAll();
+            }
+        }
+
         private void Expand()
         {
             if (string.IsNullOrWhiteSpace(this.Path))
