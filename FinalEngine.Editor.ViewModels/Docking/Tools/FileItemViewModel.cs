@@ -19,6 +19,8 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     {
         private bool isExpanded;
 
+        private bool isSelected;
+
         private string? name;
 
         private string? path;
@@ -50,6 +52,12 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
                 this.SetProperty(ref this.isExpanded, value);
                 this.Expand();
             }
+        }
+
+        public bool IsSelected
+        {
+            get { return this.isSelected; }
+            set { this.SetProperty(ref this.isSelected, value); }
         }
 
         public string Name

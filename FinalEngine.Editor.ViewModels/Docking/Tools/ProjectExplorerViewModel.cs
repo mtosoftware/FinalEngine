@@ -6,6 +6,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Services;
@@ -17,11 +18,15 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
 
     public class ProjectExplorerViewModel : ToolViewModelBase, IProjectExplorerViewModel
     {
+        private readonly ICommand? newFolderCommand;
+
         private bool canViewToolBar;
 
-        private IRelayCommand? collapseAllCommand;
+        private ICommand? collapseAllCommand;
 
-        private IRelayCommand? expandAllCommand;
+        private ICommand? expandAllCommand;
+
+        private ICommand? refreshCommand;
 
         public ProjectExplorerViewModel(IProjectFileHandler projectFileHandler)
         {
@@ -55,6 +60,16 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
 
         public ObservableCollection<FileItemViewModel> FileNodes { get; }
 
+        public ICommand RefreshCommand
+        {
+            get { return this.refreshCommand ??= new RelayCommand(this.Refresh); }
+        }
+
+        private FileItemViewModel? SelectedItem
+        {
+            get { return this.FileNodes.FirstOrDefault(x => x.IsSelected); }
+        }
+
         private void CollapseAll()
         {
             foreach (FileItemViewModel? node in this.FileNodes)
@@ -85,6 +100,11 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
         {
             this.FileNodes.ConstructHierarchy(e.Location);
             this.CanViewToolBar = true;
+        }
+
+        private void Refresh()
+        {
+            this.CollapseAll();
         }
     }
 }

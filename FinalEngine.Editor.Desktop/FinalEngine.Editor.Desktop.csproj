@@ -19,6 +19,8 @@
 	  <None Remove="Resources\FileIcon.png" />
 	  <None Remove="Resources\FolderClosedIcon.png" />
 	  <None Remove="Resources\FolderOpenedIcon.png" />
+	  <None Remove="Resources\NewFolderIcon.png" />
+	  <None Remove="Resources\RefreshIcon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -59,6 +61,8 @@
 	  <Resource Include="Resources\FileIcon.png" />
 	  <Resource Include="Resources\FolderClosedIcon.png" />
 	  <Resource Include="Resources\FolderOpenedIcon.png" />
+	  <Resource Include="Resources\NewFolderIcon.png" />
+	  <Resource Include="Resources\RefreshIcon.png" />
 	</ItemGroup>
 
 	<ItemGroup>

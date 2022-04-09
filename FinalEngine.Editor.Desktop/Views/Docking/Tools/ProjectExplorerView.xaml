@@ -17,6 +17,9 @@
                 <Button Command="{Binding CollapseAllCommand}" ToolTip="Collapse All.">
                     <Image Source="pack://application:,,,/Resources/CollapseAllIcon.png" />
                 </Button>
+                <Button Command="{Binding RefreshCommand}" ToolTip="Refresh the explorer.">
+                    <Image Source="pack://application:,,,/Resources/RefreshIcon.png" />
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <TreeView ItemsSource="{Binding FileNodes}">
@@ -28,6 +31,7 @@
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Style>
 
