@@ -1,28 +1,22 @@
-﻿namespace FinalEngine.Editor.Desktop.Views.Docking
+﻿// <copyright file="DockViewModel.xaml.cs" company="Software Antics">
+//     Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
+namespace FinalEngine.Editor.Desktop.Views.Docking
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for DockViewModel.xaml
+    ///   Interaction logic for DockViewModel.xaml.
     /// </summary>
     public partial class DockViewModel : UserControl
     {
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="DockViewModel"/> class.
+        /// </summary>
         public DockViewModel()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

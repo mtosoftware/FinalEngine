@@ -9,7 +9,7 @@
     <DockPanel>
 
         <!-- TODO: STYLE THE TOOLBAR -->
-        <ToolBarTray DockPanel.Dock="Top" Visibility="{Binding CanViewToolBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <ToolBarTray DockPanel.Dock="Top" Visibility="{Binding CanShowToolBar, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ToolBar>
                 <Button Command="{Binding ExpandAllCommand}" ToolTip="Expand All.">
                     <Image Source="pack://application:,,,/Resources/ExpandAllIcon.png" />

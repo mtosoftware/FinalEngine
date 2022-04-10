@@ -52,7 +52,13 @@ namespace FinalEngine.Editor.Common.Services
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public event EventHandler<ProjectChangedEventArgs> ProjectChanged;
+        /// <summary>
+        ///   Occurs when the current project has changed.
+        /// </summary>
+        /// <remarks>
+        ///   The event will be raised when the currently loaded project has changed (for example, if a new project has been created).
+        /// </remarks>
+        public event EventHandler<ProjectChangedEventArgs>? ProjectChanged;
 
         /// <summary>
         ///   Creates a new project with specified <paramref name="name"/> at the specified <paramref name="location"/> and opens it.
@@ -112,11 +118,7 @@ namespace FinalEngine.Editor.Common.Services
                 throw exception;
             }
 
-            this.project = new Project()
-            {
-                Name = name,
-                Location = directoryPath,
-            };
+            this.project = new Project(name, directoryPath);
 
             this.SaveProject();
             this.OpenProject(fullPath);

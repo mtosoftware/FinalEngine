@@ -12,6 +12,12 @@ namespace FinalEngine.Editor.ViewModels.Interaction
     /// </summary>
     public interface IViewModelFactory
     {
+        /// <summary>
+        ///   Creates the dock view model.
+        /// </summary>
+        /// <returns>
+        ///   The newly created <see cref="IDockViewModel"/>.
+        /// </returns>
         IDockViewModel CreateDockViewModel();
 
         /// <summary>
@@ -22,6 +28,12 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         /// </returns>
         INewProjectViewModel CreateNewProjectViewModel();
 
+        /// <summary>
+        ///   Creates the project explorer view model.
+        /// </summary>
+        /// <returns>
+        ///   The newly created <see cref="IProjectExplorerViewModel"/>.
+        /// </returns>
         IProjectExplorerViewModel CreateProjectExplorerViewModel();
     }
 }

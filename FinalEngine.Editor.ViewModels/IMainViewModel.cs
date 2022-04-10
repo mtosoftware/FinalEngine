@@ -12,6 +12,12 @@ namespace FinalEngine.Editor.ViewModels
     /// </summary>
     public interface IMainViewModel
     {
+        /// <summary>
+        ///   Gets the dock view model.
+        /// </summary>
+        /// <value>
+        ///   The dock view model.
+        /// </value>
         IDockViewModel DockViewModel { get; }
 
         /// <summary>
@@ -46,6 +52,12 @@ namespace FinalEngine.Editor.ViewModels
         /// </value>
         string ProjectName { get; }
 
+        /// <summary>
+        ///   Gets the toggle tool window command.
+        /// </summary>
+        /// <value>
+        ///   The toggle tool window command.
+        /// </value>
         ICommand ToggleToolWindowCommand { get; }
     }
 }

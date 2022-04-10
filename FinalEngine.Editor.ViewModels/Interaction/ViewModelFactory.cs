@@ -43,6 +43,12 @@ namespace FinalEngine.Editor.ViewModels.Interaction
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
         }
 
+        /// <summary>
+        ///   Creates the dock view model.
+        /// </summary>
+        /// <returns>
+        ///   The newly created <see cref="IDockViewModel"/>.
+        /// </returns>
         public IDockViewModel CreateDockViewModel()
         {
             return new DockViewModel(this);
@@ -59,6 +65,12 @@ namespace FinalEngine.Editor.ViewModels.Interaction
             return new NewProjectViewModel(this.userActionRequester, this.projectFileHandler);
         }
 
+        /// <summary>
+        ///   Creates the project explorer view model.
+        /// </summary>
+        /// <returns>
+        ///   The newly created <see cref="IProjectExplorerViewModel"/>.
+        /// </returns>
         public IProjectExplorerViewModel CreateProjectExplorerViewModel()
         {
             return new ProjectExplorerViewModel(this.projectFileHandler);

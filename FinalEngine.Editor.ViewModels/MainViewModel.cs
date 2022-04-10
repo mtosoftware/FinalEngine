@@ -15,14 +15,12 @@ namespace FinalEngine.Editor.ViewModels
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
 
-    //// TODO: Implement IDisposable?
-
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IMainViewModel"/>.
     /// </summary>
     /// <seealso cref="ObservableObject"/>
     /// <seealso cref="IMainViewModel"/>
-    public class MainViewModel : ObservableObject, IMainViewModel
+    public sealed class MainViewModel : ObservableObject, IMainViewModel, IDisposable
     {
         /// <summary>
         ///   The project file handler.
@@ -50,6 +48,11 @@ namespace FinalEngine.Editor.ViewModels
         private ICommand? exitCommand;
 
         /// <summary>
+        ///   Indicates whether this instance is disposed.
+        /// </summary>
+        private bool isDisposed;
+
+        /// <summary>
         ///   The new project command.
         /// </summary>
         private ICommand? newProjectCommand;
@@ -64,6 +67,9 @@ namespace FinalEngine.Editor.ViewModels
         /// </summary>
         private string? projectName;
 
+        /// <summary>
+        ///   The toggle tool window command.
+        /// </summary>
         private ICommand? toggleToolWindowCommand;
 
         /// <summary>
@@ -100,6 +106,20 @@ namespace FinalEngine.Editor.ViewModels
             this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
         }
 
+        /// <summary>
+        ///   Finalizes an instance of the <see cref="MainViewModel"/> class.
+        /// </summary>
+        ~MainViewModel()
+        {
+            this.Dispose(false);
+        }
+
+        /// <summary>
+        ///   Gets the dock view model.
+        /// </summary>
+        /// <value>
+        ///   The dock view model.
+        /// </value>
         public IDockViewModel DockViewModel { get; }
 
         /// <summary>
@@ -147,9 +167,45 @@ namespace FinalEngine.Editor.ViewModels
             private set { this.SetProperty(ref this.projectName, value); }
         }
 
+        /// <summary>
+        ///   Gets the toggle tool window command.
+        /// </summary>
+        /// <value>
+        ///   The toggle tool window command.
+        /// </value>
         public ICommand ToggleToolWindowCommand
         {
             get { return this.toggleToolWindowCommand ??= new RelayCommand<string>(this.ToggleToolWindow); }
+        }
+
+        /// <summary>
+        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+        /// </param>
+        private void Dispose(bool disposing)
+        {
+            if (this.isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                this.projectFileHandler.ProjectChanged -= this.ProjectFileHandler_ProjectChanged;
+            }
+
+            this.isDisposed = true;
         }
 
         /// <summary>
@@ -171,6 +227,15 @@ namespace FinalEngine.Editor.ViewModels
             closeable.Close();
         }
 
+        /// <summary>
+        ///   Handles the <see cref="IProjectFileHandler.ProjectChanged"/> event.
+        /// </summary>
+        /// <param name="sender">
+        ///   The sender.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="ProjectChangedEventArgs"/> instance containing the event data.
+        /// </param>
         private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)
         {
             this.ProjectName = e.Name;
@@ -206,6 +271,18 @@ namespace FinalEngine.Editor.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Toggles the tool window visibility that matches the specified <paramref name="contentID"/>.
+        /// </summary>
+        /// <param name="contentID">
+        ///   The content identifier of the tool window to toggle.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="contentID"/> parametr cannot be null, empty or consist of whitespace characters.
+        /// </exception>
+        /// <exception cref="System.ArgumentException">
+        ///   Failed to locate a tool window that matches the specified <paramref name="contentID"/>.
+        /// </exception>
         private void ToggleToolWindow(string? contentID)
         {
             if (string.IsNullOrWhiteSpace(contentID))

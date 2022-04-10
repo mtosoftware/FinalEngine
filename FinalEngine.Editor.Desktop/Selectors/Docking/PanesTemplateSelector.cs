@@ -8,11 +8,33 @@ namespace FinalEngine.Editor.Desktop.Selectors.Docking
     using System.Windows.Controls;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
 
+    /// <summary>
+    ///   Provides a pane template style selector.
+    /// </summary>
+    /// <seealso cref="DataTemplateSelector"/>
     public class PanesTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate ProjectExplorerTemplate { get; set; }
+        /// <summary>
+        ///   Gets or sets the project explorer template.
+        /// </summary>
+        /// <value>
+        ///   The project explorer template.
+        /// </value>
+        public DataTemplate? ProjectExplorerTemplate { get; set; }
 
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        /// <summary>
+        ///   When overridden in a derived class, returns a <see cref="System.Windows.DataTemplate"/> based on custom logic.
+        /// </summary>
+        /// <param name="item">
+        ///   The data object for which to select the template.
+        /// </param>
+        /// <param name="container">
+        ///   The data-bound object.
+        /// </param>
+        /// <returns>
+        ///   Returns a <see cref="System.Windows.DataTemplate"/> or <c>null</c>. The default value is <c>null</c>.
+        /// </returns>
+        public override DataTemplate? SelectTemplate(object item, DependencyObject container)
         {
             if (item is IProjectExplorerViewModel)
             {
