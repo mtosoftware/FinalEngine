@@ -58,6 +58,8 @@ namespace FinalEngine.Launching
             this.RenderDevice = renderDevice;
 
             this.ResourceManager = resourceManager;
+
+            this.RenderDevice!.Initialize();
         }
 
         /// <summary>
@@ -177,8 +179,6 @@ namespace FinalEngine.Launching
             }
 
             this.isRunning = true;
-
-            this.RenderDevice!.Initialize();
 
             while (this.isRunning && !(this.Window?.IsExiting ?? false))
             {
