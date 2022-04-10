@@ -12,8 +12,6 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     using FinalEngine.Editor.ViewModels.Extensions;
     using Microsoft.Toolkit.Mvvm.Input;
 
-    //// TODO: From there, document again and I think this feature is done.
-
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IProjectExplorerViewModel"/>.
     /// </summary>
