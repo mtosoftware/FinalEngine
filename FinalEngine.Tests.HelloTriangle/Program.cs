@@ -13,9 +13,6 @@ namespace FinalEngine.Tests.HelloTriangle
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.Pipeline;
 
-    /// <summary>
-    ///   The main application.
-    /// </summary>
     public sealed class Program : GameContainer
     {
         private readonly IInputLayout inputLayout;
@@ -107,9 +104,6 @@ namespace FinalEngine.Tests.HelloTriangle
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        ///   Renders the triangle to the screen.
-        /// </summary>
         protected override void Render()
         {
             this.RenderDevice!.Clear(Color.CornflowerBlue);
@@ -118,9 +112,6 @@ namespace FinalEngine.Tests.HelloTriangle
             base.Render();
         }
 
-        /// <summary>
-        ///   Defines the entry point of the application.
-        /// </summary>
         private static void Main()
         {
             using (var game = new Program())
