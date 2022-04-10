@@ -6,6 +6,8 @@ namespace FinalEngine.Editor.ViewModels.Interaction
 {
     using System;
     using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.ViewModels.Docking;
+    using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IViewModelFactory"/>.
@@ -42,6 +44,17 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         }
 
         /// <summary>
+        ///   Creates the dock view model.
+        /// </summary>
+        /// <returns>
+        ///   The newly created <see cref="IDockViewModel"/>.
+        /// </returns>
+        public IDockViewModel CreateDockViewModel()
+        {
+            return new DockViewModel(this);
+        }
+
+        /// <summary>
         ///   Creates the new project view model.
         /// </summary>
         /// <returns>
@@ -50,6 +63,17 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         public INewProjectViewModel CreateNewProjectViewModel()
         {
             return new NewProjectViewModel(this.userActionRequester, this.projectFileHandler);
+        }
+
+        /// <summary>
+        ///   Creates the project explorer view model.
+        /// </summary>
+        /// <returns>
+        ///   The newly created <see cref="IProjectExplorerViewModel"/>.
+        /// </returns>
+        public IProjectExplorerViewModel CreateProjectExplorerViewModel()
+        {
+            return new ProjectExplorerViewModel(this.projectFileHandler);
         }
     }
 }

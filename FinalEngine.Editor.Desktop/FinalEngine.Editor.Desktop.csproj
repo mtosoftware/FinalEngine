@@ -14,10 +14,22 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\CollapseAllIcon.png" />
+	  <None Remove="Resources\ExpandAllIcon.png" />
+	  <None Remove="Resources\FileIcon.png" />
+	  <None Remove="Resources\FolderClosedIcon.png" />
+	  <None Remove="Resources\FolderOpenedIcon.png" />
+	  <None Remove="Resources\NewFolderIcon.png" />
+	  <None Remove="Resources\RefreshIcon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<AdditionalFiles Include="..\Styling\StyleCop\Other\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Dirkster.AvalonDock" Version="4.70.1" />
+		<PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.70.1" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
 		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -44,6 +56,39 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Resources\CollapseAllIcon.png" />
+	  <Resource Include="Resources\ExpandAllIcon.png" />
+	  <Resource Include="Resources\FileIcon.png" />
+	  <Resource Include="Resources\FolderClosedIcon.png" />
+	  <Resource Include="Resources\FolderOpenedIcon.png" />
+	  <Resource Include="Resources\NewFolderIcon.png" />
+	  <Resource Include="Resources\RefreshIcon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Styles\DocumentStyle.xaml">
+	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	    <SubType>Designer</SubType>
+	  </Page>
+	  <Page Update="Styles\ToolStyle.xaml">
+	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	    <SubType>Designer</SubType>
+	  </Page>
 	  <Page Update="Styles\LabelStyle.xaml">
 	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
 	    <SubType>Designer</SubType>

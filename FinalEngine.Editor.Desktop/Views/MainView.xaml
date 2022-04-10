@@ -5,6 +5,7 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:docking="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking"
                  mc:Ignorable="d"
                  Width="800"
                  Height="450"
@@ -20,6 +21,7 @@
         <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
         <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
         <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding OpenProjectCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+E" Command="{Binding ToggleToolWindowCommand}" CommandParameter="ProjectExplorerTool" />
     </Window.InputBindings>
 
     <!-- MAIN MENU -->
@@ -35,10 +37,16 @@
                     </MenuItem>
                     <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
                 </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem Header="_Tool Windows">
+                        <MenuItem Header="Project _Explorer" InputGestureText="Ctrl+Shift+E" Command="{Binding ToggleToolWindowCommand}" CommandParameter="ProjectExplorerTool" />
+                    </MenuItem>
+                </MenuItem>
             </Menu>
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
 
     <Grid>
+        <docking:DockViewModel DataContext="{Binding DockViewModel}" />
     </Grid>
 </mah:MetroWindow>

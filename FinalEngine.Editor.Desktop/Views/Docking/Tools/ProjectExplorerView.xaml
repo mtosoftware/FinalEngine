@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="FinalEngine.Editor.Desktop.Views.Docking.Tools.ProjectExplorerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:FinalEngine.Editor.Desktop.Converters"
+             xmlns:tools="clr-namespace:FinalEngine.Editor.ViewModels.Docking.Tools;assembly=FinalEngine.Editor.ViewModels"
+             mc:Ignorable="d">
+    <DockPanel>
+
+        <!-- TODO: STYLE THE TOOLBAR -->
+        <ToolBarTray DockPanel.Dock="Top" Visibility="{Binding CanShowToolBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ToolBar>
+                <Button Command="{Binding ExpandAllCommand}" ToolTip="Expand All.">
+                    <Image Source="pack://application:,,,/Resources/ExpandAllIcon.png" />
+                </Button>
+                <Button Command="{Binding CollapseAllCommand}" ToolTip="Collapse All.">
+                    <Image Source="pack://application:,,,/Resources/CollapseAllIcon.png" />
+                </Button>
+                <Button Command="{Binding RefreshCommand}" ToolTip="Refresh the explorer.">
+                    <Image Source="pack://application:,,,/Resources/RefreshIcon.png" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <TreeView ItemsSource="{Binding FileNodes}">
+            <TreeView.Resources>
+                <converters:FileItemTypeToIconConverter x:Key="FileItemTypeToIconConverter" />
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Style>
+
+                <HierarchicalDataTemplate DataType="{x:Type tools:FileItemViewModel}" ItemsSource="{Binding Children, UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <StackPanel.Children>
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="{Binding Path=., Converter={StaticResource FileItemTypeToIconConverter}}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=IsExpanded}" Value="True">
+                                                <Setter Property="Source" Value="{Binding Path=., Converter={StaticResource FileItemTypeToIconConverter}}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel.Children>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+    </DockPanel>
+</UserControl>

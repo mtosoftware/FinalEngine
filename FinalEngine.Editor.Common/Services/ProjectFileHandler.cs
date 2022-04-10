@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.Common.Services
     using System;
     using System.IO;
     using System.Text.Json;
+    using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Exceptions;
     using FinalEngine.Editor.Common.Models;
     using FinalEngine.IO;
@@ -50,6 +51,14 @@ namespace FinalEngine.Editor.Common.Services
             this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        ///   Occurs when the current project has changed.
+        /// </summary>
+        /// <remarks>
+        ///   The event will be raised when the currently loaded project has changed (for example, if a new project has been created).
+        /// </remarks>
+        public event EventHandler<ProjectChangedEventArgs>? ProjectChanged;
 
         /// <summary>
         ///   Creates a new project with specified <paramref name="name"/> at the specified <paramref name="location"/> and opens it.
@@ -98,7 +107,7 @@ namespace FinalEngine.Editor.Common.Services
                 this.fileSystem.CreateDirectory(directoryPath);
             }
 
-            string fullPath = GetPotentialProjectFilePath(name, location);
+            string fullPath = GetPotentialProjectFilePath(name, directoryPath);
 
             if (this.fileSystem.FileExists(fullPath))
             {
@@ -109,7 +118,7 @@ namespace FinalEngine.Editor.Common.Services
                 throw exception;
             }
 
-            this.project = new Project(name, location);
+            this.project = new Project(name, directoryPath);
 
             this.SaveProject();
             this.OpenProject(fullPath);
@@ -121,16 +130,13 @@ namespace FinalEngine.Editor.Common.Services
         /// <param name="fullPath">
         ///   The full path/location of the project to open.
         /// </param>
-        /// <returns>
-        ///   The name of the project that was opened.
-        /// </returns>
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="fullPath"/> parameter cannot be null, empty or consist of only whitespace characters.
         /// </exception>
         /// <exception cref="FileNotFoundException">
         ///   The project file could not be located at the specified <paramref name="fullPath"/>.
         /// </exception>
-        public string OpenProject(string fullPath)
+        public void OpenProject(string fullPath)
         {
             this.logger.LogInformation("Opening project...");
 
@@ -161,9 +167,21 @@ namespace FinalEngine.Editor.Common.Services
                         throw exception;
                     }
 
-                    return this.project.Name;
+                    string? directoryPath = Path.GetDirectoryName(fullPath);
+
+                    if (string.IsNullOrWhiteSpace(directoryPath))
+                    {
+                        throw new InvalidOperationException($"Failed to change project directory to path: {fullPath}");
+                    }
+
+                    if (this.project.Location != directoryPath)
+                    {
+                        this.project.Location = directoryPath;
+                    }
                 }
             }
+
+            this.ProjectChanged?.Invoke(this, new ProjectChangedEventArgs(this.project.Name, this.project.Location));
         }
 
         /// <summary>
@@ -204,7 +222,7 @@ namespace FinalEngine.Editor.Common.Services
         /// </returns>
         private static string GetPotentialProjectFilePath(string name, string location)
         {
-            return $"{location}\\{name}\\{name}.feproj";
+            return $"{location}\\{name}.feproj";
         }
     }
 }

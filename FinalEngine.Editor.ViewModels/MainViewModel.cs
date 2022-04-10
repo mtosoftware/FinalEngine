@@ -5,10 +5,12 @@
 namespace FinalEngine.Editor.ViewModels
 {
     using System;
+    using System.Linq;
     using System.Text.Json;
     using System.Windows.Input;
+    using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Services;
-    using FinalEngine.Editor.ViewModels.Events;
+    using FinalEngine.Editor.ViewModels.Docking;
     using FinalEngine.Editor.ViewModels.Interaction;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
@@ -18,7 +20,7 @@ namespace FinalEngine.Editor.ViewModels
     /// </summary>
     /// <seealso cref="ObservableObject"/>
     /// <seealso cref="IMainViewModel"/>
-    public class MainViewModel : ObservableObject, IMainViewModel
+    public sealed class MainViewModel : ObservableObject, IMainViewModel, IDisposable
     {
         /// <summary>
         ///   The project file handler.
@@ -46,6 +48,11 @@ namespace FinalEngine.Editor.ViewModels
         private ICommand? exitCommand;
 
         /// <summary>
+        ///   Indicates whether this instance is disposed.
+        /// </summary>
+        private bool isDisposed;
+
+        /// <summary>
         ///   The new project command.
         /// </summary>
         private ICommand? newProjectCommand;
@@ -59,6 +66,11 @@ namespace FinalEngine.Editor.ViewModels
         ///   The project name.
         /// </summary>
         private string? projectName;
+
+        /// <summary>
+        ///   The toggle tool window command.
+        /// </summary>
+        private ICommand? toggleToolWindowCommand;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -88,7 +100,27 @@ namespace FinalEngine.Editor.ViewModels
             this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
+
+            this.DockViewModel = this.viewModelFactory.CreateDockViewModel();
+
+            this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
         }
+
+        /// <summary>
+        ///   Finalizes an instance of the <see cref="MainViewModel"/> class.
+        /// </summary>
+        ~MainViewModel()
+        {
+            this.Dispose(false);
+        }
+
+        /// <summary>
+        ///   Gets the dock view model.
+        /// </summary>
+        /// <value>
+        ///   The dock view model.
+        /// </value>
+        public IDockViewModel DockViewModel { get; }
 
         /// <summary>
         ///   Gets the exit command.
@@ -136,10 +168,51 @@ namespace FinalEngine.Editor.ViewModels
         }
 
         /// <summary>
-        ///   Exits the main view, closing the application.
+        ///   Gets the toggle tool window command.
+        /// </summary>
+        /// <value>
+        ///   The toggle tool window command.
+        /// </value>
+        public ICommand ToggleToolWindowCommand
+        {
+            get { return this.toggleToolWindowCommand ??= new RelayCommand<string>(this.ToggleToolWindow); }
+        }
+
+        /// <summary>
+        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+        /// </param>
+        private void Dispose(bool disposing)
+        {
+            if (this.isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                this.projectFileHandler.ProjectChanged -= this.ProjectFileHandler_ProjectChanged;
+            }
+
+            this.isDisposed = true;
+        }
+
+        /// <summary>
+        ///   Exits the main application.
         /// </summary>
         /// <param name="closeable">
-        ///   The closeable.
+        ///   The closeable used to exit he application.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
         ///   The specified <paramref name="closeable"/> parameter cannot be null.
@@ -155,17 +228,17 @@ namespace FinalEngine.Editor.ViewModels
         }
 
         /// <summary>
-        ///   Handles the <see cref="INewProjectViewModel.ProjectCreated"/> event.
+        ///   Handles the <see cref="IProjectFileHandler.ProjectChanged"/> event.
         /// </summary>
         /// <param name="sender">
         ///   The sender.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="NewProjectEventArgs"/> instance containing the event data.
+        ///   The <see cref="ProjectChangedEventArgs"/> instance containing the event data.
         /// </param>
-        private void NewProjectViewModel_ProjectCreated(object? sender, NewProjectEventArgs e)
+        private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)
         {
-            this.ProjectName = e.ProjectName;
+            this.ProjectName = e.Name;
         }
 
         /// <summary>
@@ -173,11 +246,7 @@ namespace FinalEngine.Editor.ViewModels
         /// </summary>
         private void ShowNewProjectView()
         {
-            INewProjectViewModel viewModel = this.viewModelFactory.CreateNewProjectViewModel();
-
-            viewModel.ProjectCreated += this.NewProjectViewModel_ProjectCreated;
-            this.viewPresenter.ShowNewProjectView(viewModel);
-            viewModel.ProjectCreated -= this.NewProjectViewModel_ProjectCreated;
+            this.viewPresenter.ShowNewProjectView(this.viewModelFactory.CreateNewProjectViewModel());
         }
 
         /// <summary>
@@ -194,12 +263,41 @@ namespace FinalEngine.Editor.ViewModels
 
             try
             {
-                this.ProjectName = this.projectFileHandler.OpenProject(file) ?? string.Empty;
+                this.projectFileHandler.OpenProject(file);
             }
             catch (JsonException)
             {
                 this.userActionRequester.RequestOk("Open Project", "Failed to open project file.");
             }
+        }
+
+        /// <summary>
+        ///   Toggles the tool window visibility that matches the specified <paramref name="contentID"/>.
+        /// </summary>
+        /// <param name="contentID">
+        ///   The content identifier of the tool window to toggle.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="contentID"/> parametr cannot be null, empty or consist of whitespace characters.
+        /// </exception>
+        /// <exception cref="System.ArgumentException">
+        ///   Failed to locate a tool window that matches the specified <paramref name="contentID"/>.
+        /// </exception>
+        private void ToggleToolWindow(string? contentID)
+        {
+            if (string.IsNullOrWhiteSpace(contentID))
+            {
+                throw new ArgumentNullException(nameof(contentID));
+            }
+
+            IToolViewModel? tool = this.DockViewModel.Tools.FirstOrDefault(x => x.ContentID == contentID);
+
+            if (tool == null)
+            {
+                throw new ArgumentException($"Failed to locate tool window with content ID: {contentID}.", nameof(contentID));
+            }
+
+            tool.IsVisible = !tool.IsVisible;
         }
     }
 }

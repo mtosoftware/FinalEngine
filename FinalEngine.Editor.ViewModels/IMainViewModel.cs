@@ -5,12 +5,21 @@
 namespace FinalEngine.Editor.ViewModels
 {
     using System.Windows.Input;
+    using FinalEngine.Editor.ViewModels.Docking;
 
     /// <summary>
     ///   Defines an interface that represents a main view.
     /// </summary>
     public interface IMainViewModel
     {
+        /// <summary>
+        ///   Gets the dock view model.
+        /// </summary>
+        /// <value>
+        ///   The dock view model.
+        /// </value>
+        IDockViewModel DockViewModel { get; }
+
         /// <summary>
         ///   Gets the exit command.
         /// </summary>
@@ -42,5 +51,13 @@ namespace FinalEngine.Editor.ViewModels
         ///   The name of the project that is currently open.
         /// </value>
         string ProjectName { get; }
+
+        /// <summary>
+        ///   Gets the toggle tool window command.
+        /// </summary>
+        /// <value>
+        ///   The toggle tool window command.
+        /// </value>
+        ICommand ToggleToolWindowCommand { get; }
     }
 }
