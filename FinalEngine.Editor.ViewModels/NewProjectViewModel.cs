@@ -8,11 +8,14 @@ namespace FinalEngine.Editor.ViewModels
     using System.ComponentModel.DataAnnotations;
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Exceptions;
+    using FinalEngine.Editor.Common.Models;
     using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.ViewModels.Interaction;
+    using FinalEngine.Editor.ViewModels.Messages;
     using FinalEngine.Editor.ViewModels.Validation;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
+    using Microsoft.Toolkit.Mvvm.Messaging;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="INewProjectViewModel"/>.
@@ -21,6 +24,11 @@ namespace FinalEngine.Editor.ViewModels
     /// <seealso cref="INewProjectViewModel"/>
     public class NewProjectViewModel : ObservableValidator, INewProjectViewModel
     {
+        /// <summary>
+        ///   The messenger.
+        /// </summary>
+        private readonly IMessenger messenger;
+
         /// <summary>
         ///   The project file handler.
         /// </summary>
@@ -60,13 +68,17 @@ namespace FinalEngine.Editor.ViewModels
         /// <param name="projectFileHandler">
         ///   The project file handler.
         /// </param>
+        /// <param name="messenger">
+        ///   The messanger.
+        /// </param>
         /// <exception cref="System.ArgumentNullException">
         ///   The specified <paramref name="userActionRequester"/> or <paramref name="projectFileHandler"/> parameter cannot be null.
         /// </exception>
-        public NewProjectViewModel(IUserActionRequester userActionRequester, IProjectFileHandler projectFileHandler)
+        public NewProjectViewModel(IUserActionRequester userActionRequester, IProjectFileHandler projectFileHandler, IMessenger messenger)
         {
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
+            this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
 
             this.ProjectName = "My Project";
             this.ProjectLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -171,7 +183,8 @@ namespace FinalEngine.Editor.ViewModels
 
             try
             {
-                this.projectFileHandler.CreateNewProject(this.ProjectName, this.ProjectLocation);
+                Project project = this.projectFileHandler.CreateNewProject(this.ProjectName, this.ProjectLocation);
+                this.messenger.Send(new ProjectChangedMessage(project));
             }
             catch (ProjectExistsException)
             {

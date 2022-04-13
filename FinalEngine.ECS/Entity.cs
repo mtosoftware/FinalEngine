@@ -299,26 +299,6 @@ namespace FinalEngine.ECS
         /// <remarks>
         ///   If the name of the component you wish to access has a suffix of `Component`, you can choose whether to omit it when retrieving the component. See the example for further explanation.
         /// </remarks>
-        /// <example>
-        ///   <code>
-        /// // Create an entity and add a component.
-        /// dynamic entity = new Entity();
-        /// var component = new ExampleComponent();
-        ///
-        /// entity.AddComponent(component);
-        ///
-        /// // You can then retrieve the component like so:
-        /// var example = entity.GetComponent(typeof(ExampleComponent));
-        ///
-        /// // Or just the generic version for compile time stuff.
-        /// var example = entity.GetComponent&lt;ExampleComponent&gt;();
-        ///
-        /// // Or even access it dynamically via it's class name.
-        /// ExampleComponent example = entity.ExampleComponent;
-        ///
-        /// // Lastly, you can make it shorter by dropping the suffix.
-        /// ExampleComponent example = entity.Example;</code>
-        /// </example>
         public override bool TryGetMember(GetMemberBinder binder, out object? result)
         {
             if (binder == null)

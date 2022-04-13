@@ -15,6 +15,7 @@ namespace FinalEngine.Editor.Desktop
     using FinalEngine.IO.Invocation;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Toolkit.Mvvm.Messaging;
 
     /// <summary>
     ///   Interaction logic for App.xaml.
@@ -50,6 +51,7 @@ namespace FinalEngine.Editor.Desktop
             var services = new ServiceCollection();
 
             services.AddLogging(x => x.AddConsole());
+            services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
             services.AddSingleton<IFileInvoker, FileInvoker>();
             services.AddSingleton<IDirectoryInvoker, DirectoryInvoker>();

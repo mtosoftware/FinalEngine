@@ -43,6 +43,12 @@ namespace FinalEngine.Editor.ViewModels.Validation
             this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
 
+        /// <summary>
+        ///   Gets or sets a value indicating whether the directory should exist on the file system.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the directory should exist on the file system; otherwise, <c>false</c>.
+        /// </value>
         public bool ShouldExist { get; set; }
 
         /// <summary>

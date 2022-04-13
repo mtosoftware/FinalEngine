@@ -4,22 +4,13 @@
 
 namespace FinalEngine.Editor.Common.Services
 {
-    using System;
-    using FinalEngine.Editor.Common.Events;
+    using FinalEngine.Editor.Common.Models;
 
     /// <summary>
     ///   Defines an interface that provides functionality for handling projects.
     /// </summary>
     public interface IProjectFileHandler
     {
-        /// <summary>
-        ///   Occurs when the current project has changed.
-        /// </summary>
-        /// <remarks>
-        ///   The event will be raised when the currently loaded project has changed (for example, if a new project has been created).
-        /// </remarks>
-        event EventHandler<ProjectChangedEventArgs>? ProjectChanged;
-
         /// <summary>
         ///   Creates a new project with specified <paramref name="name"/> at the specified <paramref name="location"/> and opens it.
         /// </summary>
@@ -29,7 +20,10 @@ namespace FinalEngine.Editor.Common.Services
         /// <param name="location">
         ///   The location of the project on the file system.
         /// </param>
-        void CreateNewProject(string name, string location);
+        /// <returns>
+        ///   The newly created, saved and opened project.
+        /// </returns>
+        Project CreateNewProject(string name, string location);
 
         /// <summary>
         ///   Opens the project at the specified <paramref name="fullPath"/>.
@@ -37,11 +31,17 @@ namespace FinalEngine.Editor.Common.Services
         /// <param name="fullPath">
         ///   The full path/location of the project to open.
         /// </param>
-        void OpenProject(string fullPath);
+        /// <returns>
+        ///   The project that has been opened.
+        /// </returns>
+        Project OpenProject(string fullPath);
 
         /// <summary>
         ///   Saves the currently opened project.
         /// </summary>
-        void SaveProject();
+        /// <param name="project">
+        ///   The project to save.
+        /// </param>
+        void SaveProject(Project project);
     }
 }

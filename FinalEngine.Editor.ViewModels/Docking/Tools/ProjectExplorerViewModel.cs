@@ -7,16 +7,17 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     using System;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
-    using FinalEngine.Editor.Common.Events;
-    using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.Common.Models;
     using FinalEngine.Editor.ViewModels.Extensions;
+    using FinalEngine.Editor.ViewModels.Messages;
     using Microsoft.Toolkit.Mvvm.Input;
+    using Microsoft.Toolkit.Mvvm.Messaging;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IProjectExplorerViewModel"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Editor.ViewModels.Docking.ToolViewModelBase"/>
-    /// <seealso cref="FinalEngine.Editor.ViewModels.Docking.Tools.IProjectExplorerViewModel"/>
+    /// <seealso cref="ToolViewModelBase"/>
+    /// <seealso cref="IProjectExplorerViewModel"/>
     public class ProjectExplorerViewModel : ToolViewModelBase, IProjectExplorerViewModel
     {
         /// <summary>
@@ -45,21 +46,24 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
         /// <param name="projectFileHandler">
         ///   The project file handler.
         /// </param>
+        /// <param name="messenger">
+        ///   The messanger.
+        /// </param>
         /// <exception cref="System.ArgumentNullException">
         ///   The specified <paramref name="projectFileHandler"/> parameter cannot be null.
         /// </exception>
-        public ProjectExplorerViewModel(IProjectFileHandler projectFileHandler)
+        public ProjectExplorerViewModel(IMessenger messenger)
         {
-            if (projectFileHandler == null)
+            if (messenger == null)
             {
-                throw new ArgumentNullException(nameof(projectFileHandler));
+                throw new ArgumentNullException(nameof(messenger));
             }
 
             this.Title = "Project Explorer";
             this.ContentID = "ProjectExplorerTool";
             this.FileNodes = new ObservableCollection<FileItemViewModel>();
 
-            projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
+            messenger.Register<ProjectExplorerViewModel, ProjectChangedMessage>(this, (r, m) => r.HandleProjectChanged(m));
         }
 
         /// <summary>
@@ -148,17 +152,24 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
         }
 
         /// <summary>
-        ///   Handles the <see cref="IProjectFileHandler.ProjectChanged"/> event.
+        ///   Handles when the new project has opened.
         /// </summary>
-        /// <param name="sender">
-        ///   The sender.
+        /// <param name="message">
+        ///   The message.
         /// </param>
-        /// <param name="e">
-        ///   The <see cref="ProjectChangedEventArgs"/> instance containing the event data.
-        /// </param>
-        private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="message"/> parameter cannot be null.
+        /// </exception>
+        private void HandleProjectChanged(ProjectChangedMessage message)
         {
-            this.FileNodes.ConstructHierarchy(e.Location);
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            Project project = message.Project;
+
+            this.FileNodes.ConstructHierarchy(project.Location);
             this.CanShowToolBar = true;
         }
 

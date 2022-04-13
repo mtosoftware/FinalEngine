@@ -8,20 +8,27 @@ namespace FinalEngine.Editor.ViewModels
     using System.Linq;
     using System.Text.Json;
     using System.Windows.Input;
-    using FinalEngine.Editor.Common.Events;
+    using FinalEngine.Editor.Common.Models;
     using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.ViewModels.Docking;
     using FinalEngine.Editor.ViewModels.Interaction;
+    using FinalEngine.Editor.ViewModels.Messages;
     using Microsoft.Toolkit.Mvvm.ComponentModel;
     using Microsoft.Toolkit.Mvvm.Input;
+    using Microsoft.Toolkit.Mvvm.Messaging;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IMainViewModel"/>.
     /// </summary>
     /// <seealso cref="ObservableObject"/>
     /// <seealso cref="IMainViewModel"/>
-    public sealed class MainViewModel : ObservableObject, IMainViewModel, IDisposable
+    public sealed class MainViewModel : ObservableObject, IMainViewModel
     {
+        /// <summary>
+        ///   The messenger.
+        /// </summary>
+        private readonly IMessenger messenger;
+
         /// <summary>
         ///   The project file handler.
         /// </summary>
@@ -48,11 +55,6 @@ namespace FinalEngine.Editor.ViewModels
         private ICommand? exitCommand;
 
         /// <summary>
-        ///   Indicates whether this instance is disposed.
-        /// </summary>
-        private bool isDisposed;
-
-        /// <summary>
         ///   The new project command.
         /// </summary>
         private ICommand? newProjectCommand;
@@ -65,7 +67,7 @@ namespace FinalEngine.Editor.ViewModels
         /// <summary>
         ///   The project name.
         /// </summary>
-        private string? projectName;
+        private string? title;
 
         /// <summary>
         ///   The toggle tool window command.
@@ -87,6 +89,9 @@ namespace FinalEngine.Editor.ViewModels
         /// <param name="projectFileHandler">
         ///   The project file handler.
         /// </param>
+        /// <param name="messenger">
+        ///   The messanger.
+        /// </param>
         /// <exception cref="System.ArgumentNullException">
         ///   The specified <paramref name="viewModelFactory"/>, <paramref name="viewPresenter"/>, <paramref name="userActionRequester"/> or <paramref name="projectFileHandler"/> parameter cannot be null.
         /// </exception>
@@ -94,24 +99,18 @@ namespace FinalEngine.Editor.ViewModels
             IViewModelFactory viewModelFactory,
             IViewPresenter viewPresenter,
             IUserActionRequester userActionRequester,
-            IProjectFileHandler projectFileHandler)
+            IProjectFileHandler projectFileHandler,
+            IMessenger messenger)
         {
             this.viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
             this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
+            this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+
+            this.messenger.Register<MainViewModel, ProjectChangedMessage>(this, (r, m) => r.HandleProjectChanged(m));
 
             this.DockViewModel = this.viewModelFactory.CreateDockViewModel();
-
-            this.projectFileHandler.ProjectChanged += this.ProjectFileHandler_ProjectChanged;
-        }
-
-        /// <summary>
-        ///   Finalizes an instance of the <see cref="MainViewModel"/> class.
-        /// </summary>
-        ~MainViewModel()
-        {
-            this.Dispose(false);
         }
 
         /// <summary>
@@ -161,10 +160,10 @@ namespace FinalEngine.Editor.ViewModels
         /// <value>
         ///   The name of the project that is currently open.
         /// </value>
-        public string ProjectName
+        public string Title
         {
-            get { return this.projectName ?? string.Empty; }
-            private set { this.SetProperty(ref this.projectName, value); }
+            get { return this.title ?? string.Empty; }
+            private set { this.SetProperty(ref this.title, value); }
         }
 
         /// <summary>
@@ -176,36 +175,6 @@ namespace FinalEngine.Editor.ViewModels
         public ICommand ToggleToolWindowCommand
         {
             get { return this.toggleToolWindowCommand ??= new RelayCommand<string>(this.ToggleToolWindow); }
-        }
-
-        /// <summary>
-        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        ///   Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing">
-        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        private void Dispose(bool disposing)
-        {
-            if (this.isDisposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                this.projectFileHandler.ProjectChanged -= this.ProjectFileHandler_ProjectChanged;
-            }
-
-            this.isDisposed = true;
         }
 
         /// <summary>
@@ -228,17 +197,23 @@ namespace FinalEngine.Editor.ViewModels
         }
 
         /// <summary>
-        ///   Handles the <see cref="IProjectFileHandler.ProjectChanged"/> event.
+        ///   Handles when the project has opened.
         /// </summary>
-        /// <param name="sender">
-        ///   The sender.
+        /// <param name="message">
+        ///   The message.
         /// </param>
-        /// <param name="e">
-        ///   The <see cref="ProjectChangedEventArgs"/> instance containing the event data.
-        /// </param>
-        private void ProjectFileHandler_ProjectChanged(object? sender, ProjectChangedEventArgs e)
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="message"/> parameter cannot be null.
+        /// </exception>
+        private void HandleProjectChanged(ProjectChangedMessage message)
         {
-            this.ProjectName = e.Name;
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            Project project = message.Project;
+            this.Title = project.Name;
         }
 
         /// <summary>
@@ -263,7 +238,8 @@ namespace FinalEngine.Editor.ViewModels
 
             try
             {
-                this.projectFileHandler.OpenProject(file);
+                Project project = this.projectFileHandler.OpenProject(file);
+                this.messenger.Send(new ProjectChangedMessage(project));
             }
             catch (JsonException)
             {

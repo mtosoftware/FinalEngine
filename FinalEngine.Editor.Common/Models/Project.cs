@@ -9,7 +9,7 @@ namespace FinalEngine.Editor.Common.Models
     /// <summary>
     ///   Represents a game project used to store resources used throughout the lifetime of a game.
     /// </summary>
-    internal class Project
+    public class Project
     {
         /// <summary>
         ///   The location of the project on the file system.

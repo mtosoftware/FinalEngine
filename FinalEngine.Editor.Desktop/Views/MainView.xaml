@@ -14,7 +14,7 @@
                  GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
                  NonActiveGlowBrush="{DynamicResource MahApps.Brushes.Accent4}"
                  BorderThickness="2"
-                 Title="{Binding ProjectName}">
+                 Title="{Binding Title}">
 
     <!-- KEY BINDINGS -->
     <Window.InputBindings>

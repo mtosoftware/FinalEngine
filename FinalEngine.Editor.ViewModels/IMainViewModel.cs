@@ -50,7 +50,7 @@ namespace FinalEngine.Editor.ViewModels
         /// <value>
         ///   The name of the project that is currently open.
         /// </value>
-        string ProjectName { get; }
+        string Title { get; }
 
         /// <summary>
         ///   Gets the toggle tool window command.

@@ -7,7 +7,6 @@ namespace FinalEngine.Editor.Common.Services
     using System;
     using System.IO;
     using System.Text.Json;
-    using FinalEngine.Editor.Common.Events;
     using FinalEngine.Editor.Common.Exceptions;
     using FinalEngine.Editor.Common.Models;
     using FinalEngine.IO;
@@ -30,11 +29,6 @@ namespace FinalEngine.Editor.Common.Services
         private readonly ILogger<ProjectFileHandler> logger;
 
         /// <summary>
-        ///   The currently opened project, or <c>null</c> if one has not been opened.
-        /// </summary>
-        private Project? project;
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="ProjectFileHandler"/> class.
         /// </summary>
         /// <param name="fileSystem">
@@ -53,14 +47,6 @@ namespace FinalEngine.Editor.Common.Services
         }
 
         /// <summary>
-        ///   Occurs when the current project has changed.
-        /// </summary>
-        /// <remarks>
-        ///   The event will be raised when the currently loaded project has changed (for example, if a new project has been created).
-        /// </remarks>
-        public event EventHandler<ProjectChangedEventArgs>? ProjectChanged;
-
-        /// <summary>
         ///   Creates a new project with specified <paramref name="name"/> at the specified <paramref name="location"/> and opens it.
         /// </summary>
         /// <param name="name">
@@ -75,7 +61,10 @@ namespace FinalEngine.Editor.Common.Services
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="name"/> parameter is not a valid file name or the specified <paramref name="location"/> parameter is not a valid directory.
         /// </exception>
-        public void CreateNewProject(string name, string location)
+        /// <return>
+        ///   The newly created, saved and opened project.
+        /// </return>
+        public Project CreateNewProject(string name, string location)
         {
             this.logger.LogInformation("Creating a new project...");
 
@@ -118,10 +107,10 @@ namespace FinalEngine.Editor.Common.Services
                 throw exception;
             }
 
-            this.project = new Project(name, directoryPath);
+            var project = new Project(name, directoryPath);
 
-            this.SaveProject();
-            this.OpenProject(fullPath);
+            this.SaveProject(project);
+            return this.OpenProject(fullPath);
         }
 
         /// <summary>
@@ -130,13 +119,19 @@ namespace FinalEngine.Editor.Common.Services
         /// <param name="fullPath">
         ///   The full path/location of the project to open.
         /// </param>
+        /// <returns>
+        ///   The project that has been opened.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        ///   The specified <paramref name="fullPath"/> parameter cannot be null, empty or consist of only whitespace characters.
+        ///   The specified <paramref name="fullPath"/> parameter cannot be null, empty or consist of only white space characters.
         /// </exception>
         /// <exception cref="FileNotFoundException">
-        ///   The project file could not be located at the specified <paramref name="fullPath"/>.
+        ///   The project file couldn't be located at the specified <paramref name="fullPath"/>.
         /// </exception>
-        public void OpenProject(string fullPath)
+        /// <exception cref="InvalidOperationException">
+        ///   Failed to change project directory to it's new directory path.
+        /// </exception>
+        public Project OpenProject(string fullPath)
         {
             this.logger.LogInformation("Opening project...");
 
@@ -147,7 +142,7 @@ namespace FinalEngine.Editor.Common.Services
 
             if (!this.fileSystem.FileExists(fullPath))
             {
-                throw new FileNotFoundException($"The specified project file couldn't be located at path: {fullPath}", fullPath);
+                throw new FileNotFoundException($"The project file couldn't be located at path: {fullPath}", fullPath);
             }
 
             using (Stream stream = this.fileSystem.OpenFile(fullPath, FileAccessMode.Read))
@@ -156,9 +151,9 @@ namespace FinalEngine.Editor.Common.Services
                 {
                     this.logger.LogInformation("Reading project file...");
 
-                    this.project = JsonSerializer.Deserialize<Project>(reader.ReadToEnd());
+                    var project = JsonSerializer.Deserialize<Project>(reader.ReadToEnd());
 
-                    if (this.project == null)
+                    if (project == null)
                     {
                         string message = $"Failed to parse project file at location: {fullPath}.";
                         var exception = new JsonException(message);
@@ -174,35 +169,41 @@ namespace FinalEngine.Editor.Common.Services
                         throw new InvalidOperationException($"Failed to change project directory to path: {fullPath}");
                     }
 
-                    if (this.project.Location != directoryPath)
+                    if (project.Location != directoryPath)
                     {
-                        this.project.Location = directoryPath;
+                        project.Location = directoryPath;
                     }
+
+                    return project;
                 }
             }
-
-            this.ProjectChanged?.Invoke(this, new ProjectChangedEventArgs(this.project.Name, this.project.Location));
         }
 
         /// <summary>
         ///   Saves the currently opened project.
         /// </summary>
-        public void SaveProject()
+        /// <param name="project">
+        ///   The project to save.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="project"/> parameter cannot be null.
+        /// </exception>
+        public void SaveProject(Project project)
         {
-            this.logger.LogInformation("Saving project...");
-
-            if (this.project == null)
+            if (project == null)
             {
-                throw new InvalidProgramException(nameof(this.project));
+                throw new ArgumentNullException(nameof(project));
             }
 
-            using (Stream stream = this.fileSystem.CreateFile(GetPotentialProjectFilePath(this.project.Name, this.project.Location)))
+            this.logger.LogInformation("Saving project...");
+
+            using (Stream stream = this.fileSystem.CreateFile(GetPotentialProjectFilePath(project.Name, project.Location)))
             {
                 using (var writer = new StreamWriter(stream))
                 {
                     this.logger.LogInformation("Writing to project file...");
 
-                    string result = JsonSerializer.Serialize(this.project);
+                    string result = JsonSerializer.Serialize(project);
                     writer.Write(result);
                 }
             }

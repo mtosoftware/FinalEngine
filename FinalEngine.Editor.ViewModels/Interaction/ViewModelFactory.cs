@@ -8,6 +8,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
     using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.ViewModels.Docking;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
+    using Microsoft.Toolkit.Mvvm.Messaging;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IViewModelFactory"/>.
@@ -26,6 +27,11 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         private readonly IUserActionRequester userActionRequester;
 
         /// <summary>
+        ///   The messanger.
+        /// </summary>
+        private readonly IMessenger messenger;
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ViewModelFactory"/> class.
         /// </summary>
         /// <param name="userActionRequester">
@@ -34,13 +40,17 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         /// <param name="projectFileHandler">
         ///   The project file handler.
         /// </param>
+        /// <param name="messenger">
+        ///   The messanger.
+        /// </param>
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="userActionRequester"/> or <paramref name="projectFileHandler"/> parameter cannot be null.
         /// </exception>
-        public ViewModelFactory(IUserActionRequester userActionRequester, IProjectFileHandler projectFileHandler)
+        public ViewModelFactory(IUserActionRequester userActionRequester, IProjectFileHandler projectFileHandler, IMessenger messenger)
         {
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
+            this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         }
 
         /// <summary>
@@ -62,7 +72,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         /// </returns>
         public INewProjectViewModel CreateNewProjectViewModel()
         {
-            return new NewProjectViewModel(this.userActionRequester, this.projectFileHandler);
+            return new NewProjectViewModel(this.userActionRequester, this.projectFileHandler, this.messenger);
         }
 
         /// <summary>
@@ -73,7 +83,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         /// </returns>
         public IProjectExplorerViewModel CreateProjectExplorerViewModel()
         {
-            return new ProjectExplorerViewModel(this.projectFileHandler);
+            return new ProjectExplorerViewModel(this.messenger);
         }
     }
 }
