@@ -61,9 +61,9 @@ namespace FinalEngine.Editor.Common.Services
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="name"/> parameter is not a valid file name or the specified <paramref name="location"/> parameter is not a valid directory.
         /// </exception>
-        /// <return>
+        /// <returns>
         ///   The newly created, saved and opened project.
-        /// </return>
+        /// </returns>
         public Project CreateNewProject(string name, string location)
         {
             this.logger.LogInformation("Creating a new project...");
@@ -151,7 +151,7 @@ namespace FinalEngine.Editor.Common.Services
                 {
                     this.logger.LogInformation("Reading project file...");
 
-                    var project = JsonSerializer.Deserialize<Project>(reader.ReadToEnd());
+                    Project? project = JsonSerializer.Deserialize<Project>(reader.ReadToEnd());
 
                     if (project == null)
                     {
