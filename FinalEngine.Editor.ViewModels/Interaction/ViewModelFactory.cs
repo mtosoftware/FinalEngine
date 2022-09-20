@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
     using System;
     using FinalEngine.Editor.Common.Services;
     using FinalEngine.Editor.ViewModels.Docking;
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
     using Microsoft.Toolkit.Mvvm.Messaging;
 
@@ -17,6 +18,11 @@ namespace FinalEngine.Editor.ViewModels.Interaction
     public class ViewModelFactory : IViewModelFactory
     {
         /// <summary>
+        ///   The messanger.
+        /// </summary>
+        private readonly IMessenger messenger;
+
+        /// <summary>
         ///   The project file handler.
         /// </summary>
         private readonly IProjectFileHandler projectFileHandler;
@@ -25,11 +31,6 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         ///   The user action requester.
         /// </summary>
         private readonly IUserActionRequester userActionRequester;
-
-        /// <summary>
-        ///   The messanger.
-        /// </summary>
-        private readonly IMessenger messenger;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ViewModelFactory"/> class.
@@ -84,6 +85,11 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         public IProjectExplorerViewModel CreateProjectExplorerViewModel()
         {
             return new ProjectExplorerViewModel(this.messenger);
+        }
+
+        public ISceneViewModel CreateSceneViewModel()
+        {
+            return new SceneViewModel();
         }
     }
 }

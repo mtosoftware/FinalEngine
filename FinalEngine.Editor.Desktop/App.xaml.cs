@@ -13,6 +13,9 @@ namespace FinalEngine.Editor.Desktop
     using FinalEngine.Editor.ViewModels.Interaction;
     using FinalEngine.IO;
     using FinalEngine.IO.Invocation;
+    using FinalEngine.Rendering;
+    using FinalEngine.Rendering.OpenGL;
+    using FinalEngine.Rendering.OpenGL.Invocation;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Toolkit.Mvvm.Messaging;
@@ -57,6 +60,9 @@ namespace FinalEngine.Editor.Desktop
             services.AddSingleton<IDirectoryInvoker, DirectoryInvoker>();
             services.AddSingleton<IPathInvoker, PathInvoker>();
             services.AddSingleton<IFileSystem, FileSystem>();
+
+            services.AddSingleton<IOpenGLInvoker, OpenGLInvoker>();
+            services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
 
             services.AddSingleton<IProjectFileHandler, ProjectFileHandler>();
 

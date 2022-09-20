@@ -39,10 +39,12 @@
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+		<PackageReference Include="OpenTK.GLWpfControl" Version="4.2.2" />
 		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -53,6 +55,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj" />
+	  <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

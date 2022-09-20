@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:init="clr-namespace:FinalEngine.Editor.Desktop.Initialization"
              xmlns:selectors="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Docking"
+             xmlns:panes="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking.Panes"
              xmlns:tools="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking.Tools"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -28,6 +29,12 @@
                             <tools:ProjectExplorerView />
                         </DataTemplate>
                     </selectors:PanesTemplateSelector.ProjectExplorerTemplate>
+
+                    <selectors:PanesTemplateSelector.SceneTemplate>
+                        <DataTemplate>
+                            <panes:SceneView />
+                        </DataTemplate>
+                    </selectors:PanesTemplateSelector.SceneTemplate>
                 </selectors:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 
