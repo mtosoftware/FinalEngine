@@ -37,5 +37,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\FinalEngine.Editor.Common\FinalEngine.Editor.Common.csproj" />
 	  <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
+	  <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
 	</ItemGroup>
 </Project>
