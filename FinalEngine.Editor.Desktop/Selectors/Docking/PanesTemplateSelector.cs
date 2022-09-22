@@ -6,6 +6,7 @@ namespace FinalEngine.Editor.Desktop.Selectors.Docking
 {
     using System.Windows;
     using System.Windows.Controls;
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
@@ -21,6 +22,8 @@ namespace FinalEngine.Editor.Desktop.Selectors.Docking
         ///   The project explorer template.
         /// </value>
         public DataTemplate? ProjectExplorerTemplate { get; set; }
+
+        public DataTemplate? SceneTemplate { get; set; }
 
         /// <summary>
         ///   When overridden in a derived class, returns a <see cref="System.Windows.DataTemplate"/> based on custom logic.
@@ -39,6 +42,11 @@ namespace FinalEngine.Editor.Desktop.Selectors.Docking
             if (item is IProjectExplorerViewModel)
             {
                 return this.ProjectExplorerTemplate;
+            }
+
+            if (item is ISceneViewModel)
+            {
+                return this.SceneTemplate;
             }
 
             return base.SelectTemplate(item, container);

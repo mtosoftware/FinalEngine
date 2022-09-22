@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.ViewModels.Interaction
 {
     using FinalEngine.Editor.ViewModels.Docking;
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
@@ -35,5 +36,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         ///   The newly created <see cref="IProjectExplorerViewModel"/>.
         /// </returns>
         IProjectExplorerViewModel CreateProjectExplorerViewModel();
+
+        ISceneViewModel CreateSceneViewModel();
     }
 }

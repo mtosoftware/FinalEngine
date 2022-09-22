@@ -35,7 +35,10 @@ namespace FinalEngine.Editor.ViewModels.Docking
                 viewModelFactory.CreateProjectExplorerViewModel(),
             };
 
-            this.Documents = new List<IPaneViewModel>();
+            this.Documents = new List<IPaneViewModel>()
+            {
+                viewModelFactory.CreateSceneViewModel(),
+            };
         }
 
         /// <summary>

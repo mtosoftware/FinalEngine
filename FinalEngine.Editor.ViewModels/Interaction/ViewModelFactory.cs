@@ -6,7 +6,9 @@ namespace FinalEngine.Editor.ViewModels.Interaction
 {
     using System;
     using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.Common.Services.Scenes;
     using FinalEngine.Editor.ViewModels.Docking;
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
     using FinalEngine.Editor.ViewModels.Docking.Tools;
     using Microsoft.Toolkit.Mvvm.Messaging;
 
@@ -17,19 +19,21 @@ namespace FinalEngine.Editor.ViewModels.Interaction
     public class ViewModelFactory : IViewModelFactory
     {
         /// <summary>
+        ///   The messanger.
+        /// </summary>
+        private readonly IMessenger messenger;
+
+        /// <summary>
         ///   The project file handler.
         /// </summary>
         private readonly IProjectFileHandler projectFileHandler;
+
+        private readonly ISceneRenderer sceneRenderer;
 
         /// <summary>
         ///   The user action requester.
         /// </summary>
         private readonly IUserActionRequester userActionRequester;
-
-        /// <summary>
-        ///   The messanger.
-        /// </summary>
-        private readonly IMessenger messenger;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ViewModelFactory"/> class.
@@ -46,11 +50,16 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="userActionRequester"/> or <paramref name="projectFileHandler"/> parameter cannot be null.
         /// </exception>
-        public ViewModelFactory(IUserActionRequester userActionRequester, IProjectFileHandler projectFileHandler, IMessenger messenger)
+        public ViewModelFactory(
+            IUserActionRequester userActionRequester,
+            IProjectFileHandler projectFileHandler,
+            IMessenger messenger,
+            ISceneRenderer sceneRenderer)
         {
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
             this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+            this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
         }
 
         /// <summary>
@@ -84,6 +93,11 @@ namespace FinalEngine.Editor.ViewModels.Interaction
         public IProjectExplorerViewModel CreateProjectExplorerViewModel()
         {
             return new ProjectExplorerViewModel(this.messenger);
+        }
+
+        public ISceneViewModel CreateSceneViewModel()
+        {
+            return new SceneViewModel(this.sceneRenderer);
         }
     }
 }
