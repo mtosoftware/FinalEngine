@@ -9,7 +9,7 @@ namespace FinalEngine.Editor.ViewModels
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Exceptions;
     using FinalEngine.Editor.Common.Models;
-    using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.Common.Services.Projects;
     using FinalEngine.Editor.ViewModels.Interaction;
     using FinalEngine.Editor.ViewModels.Messages;
     using FinalEngine.Editor.ViewModels.Validation;

@@ -6,6 +6,8 @@ namespace FinalEngine.Editor.Common.Services.Scenes
 {
     public interface ISceneRenderer
     {
+        void ChangeProjection(int projectionWidth, int projectionHeight);
+
         void Render();
     }
 }

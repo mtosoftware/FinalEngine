@@ -5,7 +5,8 @@
 namespace FinalEngine.Editor.ViewModels.Interaction
 {
     using System;
-    using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.Common.Services.Factories;
+    using FinalEngine.Editor.Common.Services.Projects;
     using FinalEngine.Editor.Common.Services.Scenes;
     using FinalEngine.Editor.ViewModels.Docking;
     using FinalEngine.Editor.ViewModels.Docking.Panes;
@@ -18,6 +19,8 @@ namespace FinalEngine.Editor.ViewModels.Interaction
     /// <seealso cref="IViewModelFactory"/>
     public class ViewModelFactory : IViewModelFactory
     {
+        private readonly IGameTimeFactory gameTimeFactory;
+
         /// <summary>
         ///   The messanger.
         /// </summary>
@@ -54,12 +57,14 @@ namespace FinalEngine.Editor.ViewModels.Interaction
             IUserActionRequester userActionRequester,
             IProjectFileHandler projectFileHandler,
             IMessenger messenger,
-            ISceneRenderer sceneRenderer)
+            ISceneRenderer sceneRenderer,
+            IGameTimeFactory gameTimeFactory)
         {
             this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
             this.projectFileHandler = projectFileHandler ?? throw new ArgumentNullException(nameof(projectFileHandler));
             this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
             this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
+            this.gameTimeFactory = gameTimeFactory ?? throw new ArgumentNullException(nameof(gameTimeFactory));
         }
 
         /// <summary>
@@ -97,7 +102,7 @@ namespace FinalEngine.Editor.ViewModels.Interaction
 
         public ISceneViewModel CreateSceneViewModel()
         {
-            return new SceneViewModel(this.sceneRenderer);
+            return new SceneViewModel(this.sceneRenderer, this.gameTimeFactory);
         }
     }
 }

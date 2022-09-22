@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "FinalEngine.Editor.Desktop": {
+      "commandName": "Project"
+    }
+  }
+}

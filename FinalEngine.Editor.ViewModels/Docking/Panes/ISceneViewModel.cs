@@ -8,6 +8,10 @@ namespace FinalEngine.Editor.ViewModels.Docking.Panes
 
     public interface ISceneViewModel : IPaneViewModel
     {
+        int ProjectionHeight { get; set; }
+
+        int ProjectionWidth { get; set; }
+
         ICommand RenderCommand { get; }
     }
 }
