@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Launching
+namespace FinalEngine.Platform
 {
     /// <summary>
     ///   Defines an interface that provides a method for checking whether the next frame can be processed and rendered.

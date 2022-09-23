@@ -2,10 +2,9 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Launching.Invocation
+namespace FinalEngine.Platform.Invocation
 {
     using System;
-    using System.Diagnostics;
 
     /// <summary>
     ///   Defines an interface that provides methods for invocation of a <see cref="Stopwatch"/>.
