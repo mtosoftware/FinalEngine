@@ -42,7 +42,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"softwareantics_FinalEngine" /o:"softwareantics" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"softwareantics_FinalEngine" /o:"softwareantics" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url=https://sonarcloud.io
           dotnet clean
           dotnet build
           dotnet test
