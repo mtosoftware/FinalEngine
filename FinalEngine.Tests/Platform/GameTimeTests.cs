@@ -2,12 +2,12 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Launching
+namespace FinalEngine.Tests.Platform
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using FinalEngine.Launching;
-    using FinalEngine.Launching.Invocation;
+    using FinalEngine.Platform;
+    using FinalEngine.Platform.Invocation;
     using Moq;
     using NUnit.Framework;
 

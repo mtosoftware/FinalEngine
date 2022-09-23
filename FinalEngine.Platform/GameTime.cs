@@ -2,12 +2,12 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Launching
+namespace FinalEngine.Platform
 {
     using System;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using FinalEngine.Launching.Invocation;
+    using FinalEngine.Platform.Invocation;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IGameTime"/> using an <see cref="IStopwatchInvoker"/> to keep track of time.
@@ -108,7 +108,7 @@ namespace FinalEngine.Launching
             if (currentTime >= this.lastTime + this.waitTime)
             {
                 Delta = (float)(currentTime - this.lastTime);
-                FrameRate = (float)Math.Ceiling(OneSecondAsMilliSeconds / Delta);
+                FrameRate = (float)Math.Round(OneSecondAsMilliSeconds / Delta);
 
                 this.lastTime = currentTime;
 

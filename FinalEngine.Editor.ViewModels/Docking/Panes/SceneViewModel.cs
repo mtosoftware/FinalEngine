@@ -10,7 +10,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Panes
     using System.Windows.Input;
     using FinalEngine.Editor.Common.Services.Factories;
     using FinalEngine.Editor.Common.Services.Scenes;
-    using FinalEngine.Launching;
+    using FinalEngine.Platform;
     using Microsoft.Toolkit.Mvvm.Input;
 
     public class SceneViewModel : PaneViewModelBase, ISceneViewModel

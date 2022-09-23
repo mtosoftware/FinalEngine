@@ -35,7 +35,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
-	  <ProjectReference Include="..\FinalEngine.Launching\FinalEngine.Launching.csproj" />
+	  <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.csproj" />
 	  <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
 	</ItemGroup>
 </Project>

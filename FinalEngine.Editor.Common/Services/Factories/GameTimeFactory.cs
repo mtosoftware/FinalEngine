@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Editor.Common.Services.Factories
 {
-    using FinalEngine.Launching;
+    using FinalEngine.Platform;
 
     public class GameTimeFactory : IGameTimeFactory
     {
