@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.Common.Services
+namespace FinalEngine.Editor.Common.Services.Projects
 {
     using System;
     using System.IO;
@@ -37,7 +37,7 @@ namespace FinalEngine.Editor.Common.Services
         /// <param name="logger">
         ///   The logger.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="fileSystem"/> or <paramref name="logger"/> parameter cannot be null.
         /// </exception>
         public ProjectFileHandler(IFileSystem fileSystem, ILogger<ProjectFileHandler> logger)
@@ -185,7 +185,7 @@ namespace FinalEngine.Editor.Common.Services
         /// <param name="project">
         ///   The project to save.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="project"/> parameter cannot be null.
         /// </exception>
         public void SaveProject(Project project)

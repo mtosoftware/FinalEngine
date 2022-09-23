@@ -6,7 +6,8 @@ namespace FinalEngine.Editor.Desktop
 {
     using System;
     using System.Windows;
-    using FinalEngine.Editor.Common.Services;
+    using FinalEngine.Editor.Common.Services.Factories;
+    using FinalEngine.Editor.Common.Services.Projects;
     using FinalEngine.Editor.Common.Services.Scenes;
     using FinalEngine.Editor.Desktop.Interaction;
     using FinalEngine.Editor.Desktop.Views;
@@ -69,6 +70,7 @@ namespace FinalEngine.Editor.Desktop
             services.AddSingleton<ISceneRenderer, SceneRenderer>();
 
             services.AddSingleton<IProjectFileHandler, ProjectFileHandler>();
+            services.AddSingleton<IGameTimeFactory, GameTimeFactory>();
 
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
             services.AddSingleton<IViewPresenter, ViewPresenter>();
