@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.Desktop
 {
     using System;
+    using System.IO;
     using System.Windows;
     using FinalEngine.Editor.Common.Services.Factories;
     using FinalEngine.Editor.Common.Services.Projects;
@@ -18,6 +19,7 @@ namespace FinalEngine.Editor.Desktop
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Invocation;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -46,6 +48,14 @@ namespace FinalEngine.Editor.Desktop
             view.ShowDialog();
         }
 
+        private static IConfiguration BuildConfiguration()
+        {
+            return new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+        }
+
         /// <summary>
         ///   Configures the services to be consumed by the application.
         /// </summary>
@@ -55,8 +65,9 @@ namespace FinalEngine.Editor.Desktop
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
+            var configuration = BuildConfiguration();
 
-            services.AddLogging(x => x.AddConsole());
+            services.AddLogging(x => x.AddConsole().AddFile(configuration.GetSection("LoggingOptions")));
             services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
             services.AddSingleton<IFileInvoker, FileInvoker>();
