@@ -67,7 +67,7 @@ namespace FinalEngine.Editor.Desktop
             var services = new ServiceCollection();
             var configuration = BuildConfiguration();
 
-            services.AddLogging(x => x.AddConsole().AddFile(configuration.GetSection("Logging")));
+            services.AddLogging(x => x.AddConsole().AddFile(configuration.GetSection("LoggingOptions")));
             services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
             services.AddSingleton<IFileInvoker, FileInvoker>();
