@@ -6,7 +6,8 @@ namespace FinalEngine.Editor.Desktop.Selectors.Docking
 {
     using System.Windows;
     using System.Windows.Controls;
-    using FinalEngine.Editor.ViewModels.Docking;
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
+    using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
     ///   Provides a style selector for an <see cref="IPaneViewModel"/>.

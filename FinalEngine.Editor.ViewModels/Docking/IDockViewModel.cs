@@ -5,6 +5,8 @@
 namespace FinalEngine.Editor.ViewModels.Docking
 {
     using System.Collections.Generic;
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
+    using FinalEngine.Editor.ViewModels.Docking.Tools;
 
     /// <summary>
     ///   Defines an interface that represents a dockable view model.

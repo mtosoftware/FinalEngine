@@ -10,7 +10,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools
     /// <summary>
     ///   Defines an interface that represents a project explorer, used to handle resources within a game project.
     /// </summary>
-    /// <seealso cref="FinalEngine.Editor.ViewModels.Docking.IToolViewModel"/>
+    /// <seealso cref="Tools.IToolViewModel"/>
     public interface IProjectExplorerViewModel : IToolViewModel
     {
         /// <summary>

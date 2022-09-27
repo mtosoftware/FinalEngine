@@ -2,8 +2,10 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking
+namespace FinalEngine.Editor.ViewModels.Docking.Tools
 {
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
+
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IToolViewModel"/>.
     /// </summary>

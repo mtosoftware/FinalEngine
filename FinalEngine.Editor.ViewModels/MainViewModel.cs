@@ -11,6 +11,7 @@ namespace FinalEngine.Editor.ViewModels
     using FinalEngine.Editor.Common.Models;
     using FinalEngine.Editor.Common.Services.Projects;
     using FinalEngine.Editor.ViewModels.Docking;
+    using FinalEngine.Editor.ViewModels.Docking.Tools;
     using FinalEngine.Editor.ViewModels.Interaction;
     using FinalEngine.Editor.ViewModels.Messages;
     using Microsoft.Toolkit.Mvvm.ComponentModel;

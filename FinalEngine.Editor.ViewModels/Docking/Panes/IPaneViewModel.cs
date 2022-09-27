@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking
+namespace FinalEngine.Editor.ViewModels.Docking.Panes
 {
     /// <summary>
     ///   Defines an interface that represents a pane view model.

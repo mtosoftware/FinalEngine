@@ -2,15 +2,17 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking
+namespace FinalEngine.Editor.ViewModels.Docking.Tools
 {
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
+
     /// <summary>
     ///   Defines an interface that represents a tool window view model.
     /// </summary>
     /// <remarks>
     ///   A tool view is a view which is used as part of a dockable layout system. It represents any element that can be docked to the tool section of a dockable layout.
     /// </remarks>
-    /// <seealso cref="FinalEngine.Editor.ViewModels.Docking.IPaneViewModel"/>
+    /// <seealso cref="IPaneViewModel"/>
     public interface IToolViewModel : IPaneViewModel
     {
         /// <summary>

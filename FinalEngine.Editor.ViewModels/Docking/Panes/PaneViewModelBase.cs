@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking
+namespace FinalEngine.Editor.ViewModels.Docking.Panes
 {
     using Microsoft.Toolkit.Mvvm.ComponentModel;
 

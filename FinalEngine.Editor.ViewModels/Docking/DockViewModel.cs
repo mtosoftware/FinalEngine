@@ -6,6 +6,8 @@ namespace FinalEngine.Editor.ViewModels.Docking
 {
     using System;
     using System.Collections.Generic;
+    using FinalEngine.Editor.ViewModels.Docking.Panes;
+    using FinalEngine.Editor.ViewModels.Docking.Tools;
     using FinalEngine.Editor.ViewModels.Interaction;
 
     /// <summary>
