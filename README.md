@@ -1,6 +1,8 @@
 ![GitHub-Mark-Light](https://user-images.githubusercontent.com/50978201/193459338-32d71599-19d6-4eb6-b5b3-c34348d623b9.svg#gh-dark-mode-only)![GitHub-Mark-Dark](https://user-images.githubusercontent.com/50978201/193459322-b078ed0d-cf0d-4791-ad10-ee2f3131cd20.svg#gh-light-mode-only)
 
-_Final Engine_ is a *WIP* cross-platform _Game Engine_ developed in C# 9.0, using .NET 5.0. _FE_ originally started as a hobby project but has quickly developed into something that I wish to maintain and actively develop as time goes on. The primary goal and focus of _Final Engine_ is to provide a feature-rich 2D/3D _Game Engine_ that keeps the idea of simplicity and new users in mind. Our mission statement:
+<p align="center">
+Final Engine is a *WIP* cross-platform Game Engine developed in C# 9.0, using .NET 5.0. The engine originally started as a hobby project but has quickly developed into something that I wish to maintain and actively develop as time goes on. The primary goal and focus of Final Engine is to provide a feature-rich 2D and 3D Game Engine that keeps the idea of simplicity and new users in mind. Our mission statement:
+</p>
 
 <p align="center">
 <i>Create an engine that will make game development fun, simple and easy whilst giving the end user complete freedom.</i>
