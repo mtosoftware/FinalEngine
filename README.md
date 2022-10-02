@@ -1,8 +1,48 @@
 ![GitHub-Mark-Light](https://user-images.githubusercontent.com/50978201/193459338-32d71599-19d6-4eb6-b5b3-c34348d623b9.svg#gh-dark-mode-only)![GitHub-Mark-Dark](https://user-images.githubusercontent.com/50978201/193459322-b078ed0d-cf0d-4791-ad10-ee2f3131cd20.svg#gh-light-mode-only)
 
-### Description
+_Final Engine_ is a *WIP* cross-platform _Game Engine_ developed in C# 9.0, using .NET 5.0. _FE_ originally started as a hobby project but has quickly developed into something that I wish to maintain and actively develop as time goes on. The primary goal and focus of _Final Engine_ is to provide a feature-rich 2D/3D _Game Engine_ that keeps the idea of simplicity and new users in mind. The engine currently supports Windows, Macintosh and Linux operating systems with support for mobile and console backends to be provided after the initial first release. Our mission statement:
 
-Final Engine is a *WIP* cross-platform Game Engine developed in C# using .NET 5.0.
+> Create an engine that will make game development fun, simple and easy whilst giving the end user complete freedom.
+
+## Features
+
+Below you'll see a simple breakdown of the current features provided. Please note that _Final Engine_ is under active development and some features are continuously changing. Up until the first release we will make no efforts to maintain or keep leagcy/deprecated code.
+
+#### Cross Platform 
+
+_Final Engine_ can currently runs games on _Windows_, _Macintosh_ and _Linux_ operating systems seamlessly. Support for _Android_ and _iOS_ development will commence after the initial release.
+
+#### Modular
+
+Most logic within _Final Engine_ can be replaced because of the thorough use of the _Interface Segregation Orinciple_. We want to have the ability to provide end users with as must versatility as possible whilst allowing them to get setup quickly and easily. You don't like how we handle rendering? That's fine, replace it. You want to add support for a new input device? Go ahead! We're missing support for a new platform? Add it in! You get the idea.
+
+Another cool feature of _Final Engine_ is the solution is **not** monolithic. If you want to use a feature from our engine within another (such as Unity or Unreal) you can go right ahead! Whilst we don't maintain support for integrating with other engines we still like to keep a top-down kind of structure and allow the user to only reference libraries that are required. If you only want to use our _Rendering API_, you can do so, etc.
+
+#### Feature-rich Rendering API
+
+_Final Engine_ currently uses _OpenGL 4.5_ under the hood but active development is underway to provide support for other APIs such as _DirectX_, _Vulkan_ and _Metal_. You should ultimately be able to modify which API you want to use prior to runtime via some sort of configuration option. The current abstraction layer loosely mimics the _DirectX_ API and provides support for most requirements such as:
+
+- Buffers
+  - Vertex Buffers
+  - Index Buffers
+  - Input Layouts
+- Shaders
+- Shader Programs
+- 2D Textures
+
+The API will change over each release cycle iteration but only to accomodate new requirements (such as future support for 3D, we will need _Render Targets_).
+
+#### Input
+
+_Final Engine_ currently only supports standard _Keyboard_ and _Mouse_ input; however, work is underway to allow support for _Game Controllers_ and _Joysticks_. You can expect a feature-rich _Input Library_ for the first release.
+
+#### 2D Sprite Batching
+
+_Final Engine_ provides a standardized _Sprite Batching_ system which utilizies a few classes and rendering techniques to provide seamless and fast sprite batching for most requirements.
+
+#### Entity Component System based Architecture
+
+_ECS_ is a bit of a buzz word thrown around in the game development industry. That being said, there's a time and a place for it. The current implementation of our _ECS_ framework is pretty bare-bones but it gets the job done.
 
 ### Build Instructions
 
