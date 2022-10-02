@@ -2,7 +2,7 @@
 
 Final Engine is a *WIP* cross-platform Game Engine developed in C# using .NET 5.0.
 
-## Build Instructions!
+## Build Instructions
 
 Below is a list of prerequisites and build instructions.
 
