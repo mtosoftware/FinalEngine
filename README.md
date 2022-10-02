@@ -1,27 +1,29 @@
 ![GitHub-Mark-Light](https://user-images.githubusercontent.com/50978201/193459338-32d71599-19d6-4eb6-b5b3-c34348d623b9.svg#gh-dark-mode-only)![GitHub-Mark-Dark](https://user-images.githubusercontent.com/50978201/193459322-b078ed0d-cf0d-4791-ad10-ee2f3131cd20.svg#gh-light-mode-only)
 
+### Description
+
 Final Engine is a *WIP* cross-platform Game Engine developed in C# using .NET 5.0.
 
-## Build Instructions
+### Build Instructions
 
 Below is a list of prerequisites and build instructions.
 
-### Prerequisites
+#### Prerequisites
 
 - [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
 
-### Windows, Mac and Linux
+#### Windows, Mac and Linux
 
 1. Download or clone the repository.
 2. Open `FinalEngine.sln` your favourite IDE.
 3. Build the solution (or `dotnet build`).
 4. Run the *TestGame* project (or `dotnet run`). 
 
-## Download
+### Download
 
 Release builds will be available as NuGet packages.
 
-## Contributing
+### Contributing
 
 If you do not follow the steps below, it is unlikely your PR will be merged.
 
@@ -33,7 +35,7 @@ If you do not follow the steps below, it is unlikely your PR will be merged.
 6. Make your commits in *small*, *incremental* steps.
 7. Tag a maintainer when you're done and ask for your PR to be merged (don't forget about unit tests!).
 
-## Credits
+### Credits
 
 - [Learn OpenGL](https://learnopengl.com/)
 - [DirectX Tutorials](http://www.directxtutorial.com/)
