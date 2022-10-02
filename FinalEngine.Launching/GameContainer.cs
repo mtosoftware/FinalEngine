@@ -114,9 +114,9 @@ namespace FinalEngine.Launching
         /// <value>
         ///   The render device.
         /// </value>
-        protected IRenderDevice? RenderDevice { get; private set; }
+        protected IRenderDevice RenderDevice { get; private set; }
 
-        protected IResourceManager? ResourceManager { get; private set; }
+        protected IResourceManager ResourceManager { get; private set; }
 
         /// <summary>
         ///   Gets the window.
@@ -124,7 +124,7 @@ namespace FinalEngine.Launching
         /// <value>
         ///   The window.
         /// </value>
-        protected IWindow? Window { get; private set; }
+        protected IWindow Window { get; private set; }
 
         /// <summary>
         ///   Gets the events processor.

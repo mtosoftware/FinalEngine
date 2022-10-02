@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -20,8 +20,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenTK.Graphics" Version="4.6.7" />
-    <PackageReference Include="OpenTK.Windowing.Common" Version="4.6.7" />
+    <PackageReference Include="OpenTK.Core" Version="4.7.5" />
+    <PackageReference Include="OpenTK.Graphics" Version="4.7.5" />
+    <PackageReference Include="OpenTK.Windowing.Common" Version="4.7.5" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
