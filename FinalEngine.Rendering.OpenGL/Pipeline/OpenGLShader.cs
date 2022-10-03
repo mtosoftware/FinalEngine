@@ -14,7 +14,7 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IOpenGLShader"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.OpenGL.Pipeline.IOpenGLShader"/>
+    /// <seealso cref="IOpenGLShader"/>
     public class OpenGLShader : IOpenGLShader
     {
         /// <summary>

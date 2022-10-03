@@ -13,7 +13,7 @@ namespace FinalEngine.Resources
     /// <summary>
     ///   Provides a standard resource manager with reference counting.
     /// </summary>
-    /// <seealso cref="FinalEngine.Resources.IResourceManager"/>
+    /// <seealso cref="IResourceManager"/>
     public class ResourceManager : IResourceManager
     {
         /// <summary>

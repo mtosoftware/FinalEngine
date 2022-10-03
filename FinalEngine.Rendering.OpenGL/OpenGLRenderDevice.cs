@@ -14,10 +14,10 @@ namespace FinalEngine.Rendering.OpenGL
     using FinalEngine.Rendering.Textures;
     using FinalEngine.Utilities;
     using OpenTK.Graphics.OpenGL4;
-    using BlendEquationMode = FinalEngine.Rendering.BlendEquationMode;
-    using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
-    using PixelType = FinalEngine.Rendering.Textures.PixelType;
-    using TextureWrapMode = FinalEngine.Rendering.Textures.TextureWrapMode;
+    using BlendEquationMode = BlendEquationMode;
+    using PixelFormat = Rendering.Textures.PixelFormat;
+    using PixelType = Rendering.Textures.PixelType;
+    using TextureWrapMode = Rendering.Textures.TextureWrapMode;
     using TKBlendEquationMode = OpenTK.Graphics.OpenGL4.BlendEquationMode;
     using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
     using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
@@ -25,7 +25,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IRenderDevice"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IRenderDevice"/>
+    /// <seealso cref="IRenderDevice"/>
     public class OpenGLRenderDevice : IRenderDevice
     {
         /// <summary>

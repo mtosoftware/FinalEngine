@@ -18,7 +18,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IPipeline"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IPipeline"/>
+    /// <seealso cref="IPipeline"/>
     public class OpenGLPipeline : IPipeline
     {
         /// <summary>

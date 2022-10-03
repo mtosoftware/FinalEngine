@@ -9,7 +9,7 @@ namespace FinalEngine.Resources
     /// <summary>
     ///   Defines an interface that loads, unloads and manages resources.
     /// </summary>
-    /// <seealso cref="System.IDisposable"/>
+    /// <seealso cref="IDisposable"/>
     public interface IResourceManager : IDisposable
     {
         /// <summary>

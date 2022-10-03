@@ -12,7 +12,7 @@ namespace FinalEngine.Launching
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IGameTime"/> using an <see cref="IStopwatchInvoker"/> to keep track of time.
     /// </summary>
-    /// <seealso cref="FinalEngine.Launching.IGameTime"/>
+    /// <seealso cref="IGameTime"/>
     public class GameTime : IGameTime
     {
         /// <summary>

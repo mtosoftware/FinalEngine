@@ -17,12 +17,12 @@ namespace FinalEngine.Rendering.OpenGL
     using FinalEngine.Rendering.Textures;
     using FinalEngine.Utilities;
     using OpenTK.Graphics.OpenGL4;
-    using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
+    using PixelFormat = Rendering.Textures.PixelFormat;
 
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IGPUResourceFactory"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IGPUResourceFactory"/>
+    /// <seealso cref="IGPUResourceFactory"/>
     public class OpenGLGPUResourceFactory : IGPUResourceFactory
     {
         /// <summary>

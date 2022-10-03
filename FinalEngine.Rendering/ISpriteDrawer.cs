@@ -53,10 +53,10 @@ namespace FinalEngine.Rendering
         /// <param name="rotation">
         ///   The rotation of the texture, relative to it's origin.
         /// </param>
-        /// <param name="scale">
-        ///   The scale of the texture.
+        /// <param name="size">
+        ///   The size of the texture.
         /// </param>
-        void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale);
+        void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 size);
 
         /// <summary>
         ///   Flushes the contents of the drawer to the unspecified surface.

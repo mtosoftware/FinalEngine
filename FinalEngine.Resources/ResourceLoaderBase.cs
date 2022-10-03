@@ -12,7 +12,7 @@ namespace FinalEngine.Resources
     /// <typeparam name="T">
     ///   The resource to be loaded from this <see cref="ResourceLoaderBase{T}"/>.
     /// </typeparam>
-    /// <seealso cref="FinalEngine.Resources.IResourceLoaderInternal"/>
+    /// <seealso cref="IResourceLoaderInternal"/>
     public abstract class ResourceLoaderBase<T> : IResourceLoaderInternal
         where T : IResource
     {

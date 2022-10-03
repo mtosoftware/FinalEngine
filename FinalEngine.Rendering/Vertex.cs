@@ -13,7 +13,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Represents a vertex, generally used alongside with <see cref="SpriteBatcher"/>.
     /// </summary>
-    /// <seealso cref="System.IEquatable{FinalEngine.Rendering.Vertex}"/>
+    /// <seealso cref="IEquatable{Vertex}"/>
     [StructLayout(LayoutKind.Sequential)]
     public struct Vertex : IEquatable<Vertex>
     {

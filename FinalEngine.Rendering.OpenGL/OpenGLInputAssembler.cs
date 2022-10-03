@@ -14,7 +14,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IInputAssembler"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IInputAssembler"/>
+    /// <seealso cref="IInputAssembler"/>
     public class OpenGLInputAssembler : IInputAssembler
     {
         /// <summary>

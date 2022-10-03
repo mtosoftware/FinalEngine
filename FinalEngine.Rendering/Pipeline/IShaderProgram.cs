@@ -9,7 +9,7 @@ namespace FinalEngine.Rendering.Pipeline
     /// <summary>
     ///   Defines an interface that represents a shader program.
     /// </summary>
-    /// <seealso cref="System.IDisposable"/>
+    /// <seealso cref="IDisposable"/>
     public interface IShaderProgram : IDisposable
     {
     }

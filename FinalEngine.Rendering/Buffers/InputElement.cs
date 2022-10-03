@@ -42,7 +42,7 @@ namespace FinalEngine.Rendering.Buffers
     /// <summary>
     ///   Represents the formating of an individual vertex element.
     /// </summary>
-    /// <seealso cref="System.IEquatable{FinalEngine.Rendering.Buffers.InputElement}"/>
+    /// <seealso cref="IEquatable{InputElement}"/>
     public struct InputElement : IEquatable<InputElement>
     {
         /// <summary>

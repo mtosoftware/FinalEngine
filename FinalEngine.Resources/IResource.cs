@@ -9,7 +9,7 @@ namespace FinalEngine.Resources
     /// <summary>
     ///   Defines an interface that represents a resource that can be loaded by a <see cref="ResourceLoaderBase{T}"/>.
     /// </summary>
-    /// <seealso cref="System.IDisposable"/>
+    /// <seealso cref="IDisposable"/>
     public interface IResource : IDisposable
     {
     }

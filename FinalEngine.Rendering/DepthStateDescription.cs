@@ -9,7 +9,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Represents the depth state used in a call to <see cref="IOutputMerger.SetDepthState(DepthStateDescription)"/>.
     /// </summary>
-    /// <seealso cref="System.IEquatable{FinalEngine.Rendering.DepthStateDescription}"/>
+    /// <seealso cref="IEquatable{DepthStateDescription}"/>
     public struct DepthStateDescription : IEquatable<DepthStateDescription>
     {
         /// <summary>

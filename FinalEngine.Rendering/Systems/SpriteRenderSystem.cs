@@ -13,24 +13,64 @@ namespace FinalEngine.Rendering.Systems
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.Components;
 
+    /// <summary>
+    ///   Provides a system that can render sprites using an <see cref="ISpriteDrawer"/>.
+    /// </summary>
+    /// <seealso cref="EntitySystemBase"/>
     public class SpriteRenderSystem : EntitySystemBase
     {
+        /// <summary>
+        ///   The sprite drawer.
+        /// </summary>
         private readonly ISpriteDrawer spriteDrawer;
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SpriteRenderSystem"/> class.
+        /// </summary>
+        /// <param name="spriteDrawer">
+        ///   The sprite drawer.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///   The specified <paramref name="spriteDrawer"/> parameter cannot be null.
+        /// </exception>
         public SpriteRenderSystem(ISpriteDrawer spriteDrawer)
         {
             this.spriteDrawer = spriteDrawer ?? throw new ArgumentNullException(nameof(spriteDrawer));
             this.LoopType = GameLoopType.Render;
         }
 
+        /// <summary>
+        ///   Gets the game loop type for this <see cref="EntitySystemBase"/>.
+        /// </summary>
+        /// <value>
+        ///   The game loop type for this <see cref="EntitySystemBase"/>.
+        /// </value>
+        /// <remarks>
+        ///   A game loop type determines when the <see cref="EntitySystemBase.Process"/> function should be called.
+        /// </remarks>
         public override GameLoopType LoopType { get; }
 
+        /// <summary>
+        ///   Determines whether the specified <paramref name="entity"/> matches the aspect of this <see cref="EntitySystemBase"/>.
+        /// </summary>
+        /// <param name="entity">
+        ///   The entity to check.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the specified <paramref name="entity"/> matches the aspect of the system; otherwise, <c>false</c>.
+        /// </returns>
         protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
         {
             return entity.ContainsComponent<TransformComponent>() &&
                    entity.ContainsComponent<SpriteComponent>();
         }
 
+        /// <summary>
+        ///   Processes the specified <paramref name="entities"/>, rendering them with an <see cref="ISpriteDrawer"/>.
+        /// </summary>
+        /// <param name="entities">
+        ///   The entities to process and render.
+        /// </param>
         protected override void Process([NotNull] IEnumerable<Entity> entities)
         {
             this.spriteDrawer.Begin();

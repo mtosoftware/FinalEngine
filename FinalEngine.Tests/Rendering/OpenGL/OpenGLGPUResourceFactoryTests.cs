@@ -45,7 +45,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateIndexBufferShouldReturnOpenGLIndexBufferWhenInvoked()
         {
             // Act
-            IIndexBuffer actual = this.factory.CreateIndexBuffer<int>(BufferUsageType.Static, Array.Empty<int>(), 0);
+            IIndexBuffer actual = this.factory.CreateIndexBuffer(BufferUsageType.Static, Array.Empty<int>(), 0);
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLIndexBuffer<int>), actual);
@@ -150,7 +150,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateTexture2DShouldReturnOpenGLTexture2DWhenInvoked()
         {
             // Act
-            ITexture2D actual = this.factory.CreateTexture2D<int>(default, Array.Empty<int>());
+            ITexture2D actual = this.factory.CreateTexture2D(default, Array.Empty<int>());
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLTexture2D), actual);

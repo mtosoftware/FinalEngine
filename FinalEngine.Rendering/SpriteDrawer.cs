@@ -14,8 +14,8 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Provides a standard implementation of an <see cref="ISpriteDrawer"/>, which assumes batch rendering.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.ISpriteDrawer"/>
-    /// <seealso cref="System.IDisposable"/>
+    /// <seealso cref="ISpriteDrawer"/>
+    /// <seealso cref="IDisposable"/>
     public class SpriteDrawer : ISpriteDrawer, IDisposable
     {
         /// <summary>

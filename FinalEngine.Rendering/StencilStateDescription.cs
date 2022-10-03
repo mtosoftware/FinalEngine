@@ -55,7 +55,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Represents the stencil state used in a call to <see cref="IOutputMerger.SetStencilState(StencilStateDescription)"/>.
     /// </summary>
-    /// <seealso cref="System.IEquatable{FinalEngine.Rendering.StencilStateDescription}"/>
+    /// <seealso cref="IEquatable{StencilStateDescription}"/>
     public struct StencilStateDescription : IEquatable<StencilStateDescription>
     {
         /// <summary>

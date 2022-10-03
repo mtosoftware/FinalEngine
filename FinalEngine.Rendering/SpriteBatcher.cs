@@ -13,7 +13,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Provides a standard implementation of an <see cref="ISpriteBatcher"/> that batches quads to be filled into a vertex buffer.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.ISpriteBatcher"/>
+    /// <seealso cref="ISpriteBatcher"/>
     public class SpriteBatcher : ISpriteBatcher
     {
         /// <summary>

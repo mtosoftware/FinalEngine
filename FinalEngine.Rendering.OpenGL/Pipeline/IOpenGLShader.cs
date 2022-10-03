@@ -10,7 +10,7 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
     /// <summary>
     ///   Defines an interface that represents an OpenGL shader.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Pipeline.IShader"/>
+    /// <seealso cref="IShader"/>
     public interface IOpenGLShader : IShader
     {
         /// <summary>

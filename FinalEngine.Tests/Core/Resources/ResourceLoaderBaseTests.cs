@@ -49,7 +49,7 @@ namespace FinalEngine.Tests.Core.Resources
         [SetUp]
         public void Setup()
         {
-            this.resourceLoader = new Mock<FinalEngine.Resources.ResourceLoaderBase<IResource>>();
+            this.resourceLoader = new Mock<ResourceLoaderBase<IResource>>();
         }
     }
 }

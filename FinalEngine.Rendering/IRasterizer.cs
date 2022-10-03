@@ -11,6 +11,12 @@ namespace FinalEngine.Rendering
     /// </summary>
     public interface IRasterizer
     {
+        /// <summary>
+        ///   Gets the viewport.
+        /// </summary>
+        /// <returns>
+        ///   The viewport.
+        /// </returns>
         Rectangle GetViewport();
 
         /// <summary>

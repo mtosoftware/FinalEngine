@@ -47,6 +47,12 @@ namespace FinalEngine.Rendering.OpenGL
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
         }
 
+        /// <summary>
+        ///   Gets the viewport.
+        /// </summary>
+        /// <returns>
+        ///   The viewport.
+        /// </returns>
         public Rectangle GetViewport()
         {
             int[] data = new int[4];

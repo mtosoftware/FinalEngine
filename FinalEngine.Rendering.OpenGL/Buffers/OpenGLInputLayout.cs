@@ -14,7 +14,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IOpenGLInputLayout"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.OpenGL.Buffers.IOpenGLInputLayout"/>
+    /// <seealso cref="IOpenGLInputLayout"/>
     public class OpenGLInputLayout : IOpenGLInputLayout
     {
         /// <summary>

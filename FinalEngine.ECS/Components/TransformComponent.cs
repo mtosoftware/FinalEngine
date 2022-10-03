@@ -6,21 +6,26 @@ namespace FinalEngine.ECS.Components
 {
     using System.Numerics;
 
+    /// <summary>
+    ///   Provides a component that represents the position, rotation and scale of an entity.
+    /// </summary>
+    /// <seealso cref="IComponent"/>
     public class TransformComponent : IComponent
     {
-        private float scaleX;
-
-        private float scaleY;
-
-        private float x;
-
-        private float y;
-
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TransformComponent"/> class.
+        /// </summary>
         public TransformComponent()
         {
             this.Scale = Vector2.One;
         }
 
+        /// <summary>
+        ///   Gets or sets the position.
+        /// </summary>
+        /// <value>
+        ///   The position.
+        /// </value>
         public Vector2 Position
         {
             get
@@ -35,8 +40,20 @@ namespace FinalEngine.ECS.Components
             }
         }
 
+        /// <summary>
+        ///   Gets or sets the rotation.
+        /// </summary>
+        /// <value>
+        ///   The rotation.
+        /// </value>
         public float Rotation { get; set; }
 
+        /// <summary>
+        ///   Gets or sets the scale.
+        /// </summary>
+        /// <value>
+        ///   The scale.
+        /// </value>
         public Vector2 Scale
         {
             get
@@ -51,28 +68,36 @@ namespace FinalEngine.ECS.Components
             }
         }
 
-        public float ScaleX
-        {
-            get { return scaleX; }
-            set { this.scaleX = value; }
-        }
+        /// <summary>
+        ///   Gets or sets the X component of the <see cref="Scale"/> property.
+        /// </summary>
+        /// <value>
+        ///   The scale X component of the <see cref="Scale"/> property.
+        /// </value>
+        public float ScaleX { get; set; }
 
-        public float ScaleY
-        {
-            get { return this.scaleY; }
-            set { this.scaleY = value; }
-        }
+        /// <summary>
+        ///   Gets or sets the Y component of the <see cref="Scale"/> property.
+        /// </summary>
+        /// <value>
+        ///   The scale Y component of the <see cref="Scale"/> property.
+        /// </value>
+        public float ScaleY { get; set; }
 
-        public float X
-        {
-            get { return this.x; }
-            set { this.x = value; }
-        }
+        /// <summary>
+        ///   Gets or sets the X component of the <see cref="Position"/> property.
+        /// </summary>
+        /// <value>
+        ///   The X component of the <see cref="Position"/> property.
+        /// </value>
+        public float X { get; set; }
 
-        public float Y
-        {
-            get { return this.y; }
-            set { this.y = value; }
-        }
+        /// <summary>
+        ///   Gets or sets the Y component of the <see cref="Position"/> property.
+        /// </summary>
+        /// <value>
+        ///   The Y component of the <see cref="Position"/> property.
+        /// </value>
+        public float Y { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
     /// <typeparam name="T">
     ///   Specifies the type of data that the <see cref="OpenGLVertexBuffer{T}"/> will contain.
     /// </typeparam>
-    /// <seealso cref="FinalEngine.Rendering.OpenGL.Buffers.IOpenGLVertexBuffer"/>
+    /// <seealso cref="IOpenGLVertexBuffer"/>
     public class OpenGLVertexBuffer<T> : IOpenGLVertexBuffer
         where T : struct
     {

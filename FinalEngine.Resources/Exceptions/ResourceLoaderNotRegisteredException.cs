@@ -11,7 +11,7 @@ namespace FinalEngine.Resources.Exceptions
     /// <summary>
     ///   Provides an exception that is thrown when a call is made to <see cref="ResourceManager.LoadResource{T}(string)"/> and a resource loader for the specified type has not been registered with <see cref="ResourceManager.RegisterLoader{T}(ResourceLoaderBase{T})"/>.
     /// </summary>
-    /// <seealso cref="System.Exception"/>
+    /// <seealso cref="Exception"/>
     [Serializable]
     [ExcludeFromCodeCoverage]
     public class ResourceLoaderNotRegisteredException : Exception

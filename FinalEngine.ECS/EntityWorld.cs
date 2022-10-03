@@ -10,8 +10,8 @@ namespace FinalEngine.ECS
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IEntityWorld"/> and <see cref="IEntitySystemsProcessor"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.ECS.IEntityWorld"/>
-    /// <seealso cref="FinalEngine.ECS.IEntitySystemsProcessor"/>
+    /// <seealso cref="IEntityWorld"/>
+    /// <seealso cref="IEntitySystemsProcessor"/>
     public class EntityWorld : IEntityWorld, IEntitySystemsProcessor
     {
         /// <summary>
@@ -202,7 +202,7 @@ namespace FinalEngine.ECS
         ///   The sender or entity.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.EventArgs"/> instance containing the event data.
+        ///   The <see cref="EventArgs"/> instance containing the event data.
         /// </param>
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="sender"/> parameter cannot be null.
