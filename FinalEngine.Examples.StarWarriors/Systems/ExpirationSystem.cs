@@ -7,7 +7,6 @@ namespace FinalEngine.Examples.StarWarriors.Systems
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using FinalEngine.ECS;
     using FinalEngine.Examples.StarWarriors.Components;
     using FinalEngine.Launching;
@@ -30,11 +29,8 @@ namespace FinalEngine.Examples.StarWarriors.Systems
 
         protected override void Process([NotNull] IEnumerable<Entity> entities)
         {
-            var collection = entities.ToList();
-
-            for (int i = collection.Count - 1; i >= 0; i--)
+            foreach (var entity in entities)
             {
-                var entity = collection[i];
                 var expiresComponent = entity.GetComponent<ExpiresComponent>();
 
                 expiresComponent.ReduceLifeTime(GameTime.Delta);

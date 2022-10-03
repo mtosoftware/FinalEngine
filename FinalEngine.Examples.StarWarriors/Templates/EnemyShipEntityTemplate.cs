@@ -6,10 +6,12 @@ namespace FinalEngine.Examples.StarWarriors.Templates
 {
     using System.Drawing;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
+    using FinalEngine.Rendering.Components;
     using FinalEngine.Rendering.Textures;
 
-    public class EnemyShipEntityTemplate : IEntityTemplate
+    public class EnemyShipEntityTemplate : IEntityFactory
     {
         private readonly ITexture2D enemyTexture;
 
@@ -29,10 +31,7 @@ namespace FinalEngine.Examples.StarWarriors.Templates
                 Points = 10,
             });
 
-            entity.AddComponent(new TagComponent()
-            {
-                Tag = "Enemy",
-            });
+            entity.Tag = "Enemy";
 
             entity.AddComponent(new VelocityComponent());
             entity.AddComponent(new SpriteComponent()

@@ -8,23 +8,24 @@ namespace FinalEngine.Examples.StarWarriors.Systems
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
-    using FinalEngine.Platform;
+    using FinalEngine.Rendering;
 
     public class EnemyMovementSystem : EntitySystemBase
     {
-        private readonly IWindow window;
+        private readonly IRasterizer rasterizer;
 
-        public EnemyMovementSystem(IWindow window)
+        public EnemyMovementSystem(IRasterizer rasterizer)
         {
-            this.window = window ?? throw new ArgumentNullException(nameof(window));
+            this.rasterizer = rasterizer ?? throw new ArgumentNullException(nameof(rasterizer));
         }
 
         public override GameLoopType LoopType { get; } = GameLoopType.Update;
 
         protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
         {
-            return entity.ContainsComponent<TagComponent>() &&
+            return entity.Tag == "Enemy" &&
                    entity.ContainsComponent<VelocityComponent>() &&
                    entity.ContainsComponent<TransformComponent>();
         }
@@ -33,17 +34,11 @@ namespace FinalEngine.Examples.StarWarriors.Systems
         {
             foreach (var entity in entities)
             {
-                var isEnemy = entity.GetComponent<TagComponent>()?.Tag == "Enemy";
-
-                if (!isEnemy)
-                {
-                    continue;
-                }
-
                 var transform = entity.GetComponent<TransformComponent>();
                 var velocity = entity.GetComponent<VelocityComponent>();
+                var viewport = this.rasterizer.GetViewport();
 
-                if (transform != null && (transform.X < 0 || transform.X > this.window.ClientSize.Width))
+                if (transform != null && (transform.X < 0 || transform.X > viewport.Width))
                 {
                     velocity.AddAngle(180);
                 }

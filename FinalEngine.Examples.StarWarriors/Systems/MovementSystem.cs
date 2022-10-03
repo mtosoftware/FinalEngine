@@ -8,6 +8,7 @@ namespace FinalEngine.Examples.StarWarriors.Systems
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
     using FinalEngine.Launching;
 

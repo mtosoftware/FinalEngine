@@ -7,17 +7,20 @@ namespace FinalEngine.Examples.StarWarriors
     using System;
     using System.Drawing;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
     using FinalEngine.Examples.StarWarriors.Systems;
     using FinalEngine.Examples.StarWarriors.Templates;
     using FinalEngine.Input;
     using FinalEngine.Launching;
     using FinalEngine.Rendering;
+    using FinalEngine.Rendering.Components;
+    using FinalEngine.Rendering.Systems;
     using FinalEngine.Rendering.Textures;
 
     public sealed class Game : GameContainer
     {
-        private IEntityTemplate enemyTemplate;
+        private IEntityFactory enemyTemplate;
 
         private IEntityWorld entityWorld;
 
@@ -49,14 +52,14 @@ namespace FinalEngine.Examples.StarWarriors
             this.entityWorld.AddSystem(new SpriteRenderSystem(this.spriteDrawer));
             this.entityWorld.AddSystem(new MovementSystem());
             this.entityWorld.AddSystem(new ExpirationSystem(this.entityWorld));
-            this.entityWorld.AddSystem(new EnemyMovementSystem(this.Window));
+            this.entityWorld.AddSystem(new EnemyMovementSystem(this.RenderDevice.Rasterizer));
             this.entityWorld.AddSystem(new EnemyShooterSystem(missileTemplate, this.entityWorld));
-            this.entityWorld.AddSystem(new EnemySpawnSystem(this.enemyTemplate, this.entityWorld, this.Window));
+            this.entityWorld.AddSystem(new EnemySpawnSystem(this.enemyTemplate, this.entityWorld, this.RenderDevice.Rasterizer));
             this.entityWorld.AddSystem(new CollisionSystem(this.entityWorld));
             this.entityWorld.AddSystem(
                 new PlayerControllerSystem(
                     this.Keyboard,
-                    this.Window,
+                    this.RenderDevice.Rasterizer,
                     missileTemplate,
                     this.entityWorld));
 
@@ -113,16 +116,14 @@ namespace FinalEngine.Examples.StarWarriors
         {
             var entity = new Entity();
 
-            entity.AddComponent(new TagComponent()
-            {
-                Tag = "Player",
-            });
+            entity.Tag = "Player";
 
             entity.AddComponent(new TransformComponent()
             {
                 X = (this.Window.ClientSize.Width * 0.5f) - 16,
                 Y = this.Window.ClientSize.Height - 50,
             });
+
             entity.AddComponent(new SpriteComponent()
             {
                 Texture = this.ResourceManager.LoadResource<ITexture2D>("Resources\\Textures\\player.png"),

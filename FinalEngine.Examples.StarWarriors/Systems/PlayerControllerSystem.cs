@@ -7,28 +7,27 @@ namespace FinalEngine.Examples.StarWarriors.Systems
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
-    using FinalEngine.Examples.StarWarriors.Templates;
     using FinalEngine.Input;
     using FinalEngine.Launching;
-    using FinalEngine.Platform;
+    using FinalEngine.Rendering;
 
     public sealed class PlayerControllerSystem : EntitySystemBase
     {
         private readonly IKeyboard keyboard;
 
-        private readonly IEntityTemplate missileTemplate;
+        private readonly IEntityFactory missileTemplate;
 
-        private readonly IWindow window;
+        private readonly IRasterizer rasterizer;
 
         private readonly IEntityWorld world;
 
-        public PlayerControllerSystem(IKeyboard keyboard, IWindow window, IEntityTemplate missileTemplate, IEntityWorld world)
+        public PlayerControllerSystem(IKeyboard keyboard, IRasterizer rasterizer, IEntityFactory missileTemplate, IEntityWorld world)
         {
             this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
-            this.window = window ?? throw new ArgumentNullException(nameof(window));
+            this.rasterizer = rasterizer ?? throw new ArgumentNullException(nameof(rasterizer));
             this.missileTemplate = missileTemplate ?? throw new ArgumentNullException(nameof(missileTemplate));
             this.world = world ?? throw new ArgumentNullException(nameof(world));
         }
@@ -37,23 +36,15 @@ namespace FinalEngine.Examples.StarWarriors.Systems
 
         protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
         {
-            return entity.ContainsComponent<TagComponent>();
+            return entity.Tag == "Player";
         }
 
         protected override void Process([NotNull] IEnumerable<Entity> entities)
         {
-            var collection = entities.ToList();
+            var viewport = this.rasterizer.GetViewport();
 
-            for (int i = collection.Count - 1; i >= 0; i--)
+            foreach (var entity in entities)
             {
-                var entity = collection[i];
-                bool isPlayer = entity.GetComponent<TagComponent>()?.Tag == "Player";
-
-                if (!isPlayer)
-                {
-                    continue;
-                }
-
                 var transform = entity.GetComponent<TransformComponent>();
                 float moveSpeed = 0.3f * GameTime.Delta;
 
@@ -70,9 +61,9 @@ namespace FinalEngine.Examples.StarWarriors.Systems
                 {
                     transform.X += moveSpeed;
 
-                    if (transform.X > this.window.ClientSize.Width - 32)
+                    if (transform.X > viewport.Width - 32)
                     {
-                        transform.X = this.window.ClientSize.Width - 32;
+                        transform.X = viewport.Width - 32;
                     }
                 }
 
@@ -82,8 +73,6 @@ namespace FinalEngine.Examples.StarWarriors.Systems
                     this.AddMissile(transform, 89, -9);
                     this.AddMissile(transform, 91, +9);
                 }
-
-                this.window.Title = $"Health: {entity.GetComponent<HealthComponent>().Points}";
             }
         }
 

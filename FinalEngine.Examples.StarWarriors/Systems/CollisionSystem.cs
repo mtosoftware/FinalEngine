@@ -9,7 +9,9 @@ namespace FinalEngine.Examples.StarWarriors.Systems
     using System.Linq;
     using System.Numerics;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
+    using FinalEngine.Rendering.Components;
 
     public class CollisionSystem : EntitySystemBase
     {
@@ -25,20 +27,14 @@ namespace FinalEngine.Examples.StarWarriors.Systems
         protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
         {
             return entity.ContainsComponent<TransformComponent>() &&
-                   entity.ContainsComponent<SpriteComponent>();
+                   entity.ContainsComponent<SpriteComponent>() &&
+                   (entity.Tag == "Bullet" || entity.Tag == "Player" || entity.Tag == "Enemy");
         }
 
         protected override void Process([NotNull] IEnumerable<Entity> entities)
         {
-            var list = entities.ToList();
-
-            // Really shouldn't do this, but whatever.
-            var bullets = list.Where(x => x.GetComponent<TagComponent>()?.Tag == "Bullet").ToList();
-            var ships = list.Where(x =>
-            {
-                var component = x.GetComponent<TagComponent>();
-                return component.Tag is "Player" or "Enemy";
-            }).ToList();
+            var bullets = entities.Where(x => x.Tag == "Bullet").ToList();
+            var ships = entities.Where(x => x.Tag is "Player" or "Enemy").ToList();
 
             if (bullets == null || ships == null)
             {

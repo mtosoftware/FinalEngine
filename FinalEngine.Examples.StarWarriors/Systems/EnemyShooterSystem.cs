@@ -8,18 +8,18 @@ namespace FinalEngine.Examples.StarWarriors.Systems
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
-    using FinalEngine.Examples.StarWarriors.Templates;
 
     public class EnemyShooterSystem : EntitySystemBase
     {
         private static readonly long TwoSecondsTicks = TimeSpan.FromSeconds(2).Ticks;
 
-        private readonly IEntityTemplate missileTemplate;
+        private readonly IEntityFactory missileTemplate;
 
         private readonly IEntityWorld world;
 
-        public EnemyShooterSystem(IEntityTemplate missileTemplate, IEntityWorld world)
+        public EnemyShooterSystem(IEntityFactory missileTemplate, IEntityWorld world)
         {
             this.missileTemplate = missileTemplate ?? throw new ArgumentNullException(nameof(missileTemplate));
             this.world = world ?? throw new ArgumentNullException(nameof(world));
@@ -31,20 +31,13 @@ namespace FinalEngine.Examples.StarWarriors.Systems
         {
             return entity.ContainsComponent<TransformComponent>() &&
                    entity.ContainsComponent<WeaponComponent>() &&
-                   entity.ContainsComponent<TagComponent>();
+                   entity.Tag == "Enemy";
         }
 
         protected override void Process([NotNull] IEnumerable<Entity> entities)
         {
             foreach (var entity in entities)
             {
-                bool isEnemy = entity.GetComponent<TagComponent>()?.Tag == "Enemy";
-
-                if (!isEnemy)
-                {
-                    continue;
-                }
-
                 var transform = entity.GetComponent<TransformComponent>();
                 var weapon = entity.GetComponent<WeaponComponent>();
 

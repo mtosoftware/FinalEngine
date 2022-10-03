@@ -5,10 +5,12 @@
 namespace FinalEngine.Examples.StarWarriors.Templates
 {
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
+    using FinalEngine.Rendering.Components;
     using FinalEngine.Rendering.Textures;
 
-    public class MissileEntityTemplate : IEntityTemplate
+    public class MissileEntityTemplate : IEntityFactory
     {
         private readonly ITexture2D missileTexture;
 
@@ -34,10 +36,7 @@ namespace FinalEngine.Examples.StarWarriors.Templates
                 Texture = this.missileTexture,
             });
 
-            entity.AddComponent(new TagComponent()
-            {
-                Tag = "Bullet",
-            });
+            entity.Tag = "Bullet";
 
             return entity;
         }

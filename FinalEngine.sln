@@ -48,13 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Extensions.Reso
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{509CACD7-ABDB-4FEA-B227-8B10AAE4AC42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Examples.HelloWindow", "FinalEngine.Examples.HelloWindow\FinalEngine.Examples.HelloWindow.csproj", "{2676CEBF-BAD5-42FE-BD3C-DEF021ACDF60}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FInalEngine.Examples.HelloTriangle", "FInalEngine.Editor.HelloTriangle\FInalEngine.Examples.HelloTriangle.csproj", "{9C75DAF8-F548-4F6B-97EB-187D9EBBEDC6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Examples.HelloSpriteBatch", "FinalEngine.Examples.HelloSpriteBatch\FinalEngine.Examples.HelloSpriteBatch.csproj", "{2F530312-24D2-49CE-B989-4D8A155101C0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Examples.StarWarriors", "FinalEngine.Examples.StarWarriors\FinalEngine.Examples.StarWarriors.csproj", "{3F9AA913-8FF3-4E88-B3C6-B29C05E7AB4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Examples.StarWarriors", "FinalEngine.Examples.StarWarriors\FinalEngine.Examples.StarWarriors.csproj", "{3F9AA913-8FF3-4E88-B3C6-B29C05E7AB4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,18 +104,6 @@ Global
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77328CBB-09C7-44E6-977F-C79812F6535A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2676CEBF-BAD5-42FE-BD3C-DEF021ACDF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2676CEBF-BAD5-42FE-BD3C-DEF021ACDF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2676CEBF-BAD5-42FE-BD3C-DEF021ACDF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2676CEBF-BAD5-42FE-BD3C-DEF021ACDF60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C75DAF8-F548-4F6B-97EB-187D9EBBEDC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C75DAF8-F548-4F6B-97EB-187D9EBBEDC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C75DAF8-F548-4F6B-97EB-187D9EBBEDC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C75DAF8-F548-4F6B-97EB-187D9EBBEDC6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F530312-24D2-49CE-B989-4D8A155101C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F530312-24D2-49CE-B989-4D8A155101C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F530312-24D2-49CE-B989-4D8A155101C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F530312-24D2-49CE-B989-4D8A155101C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F9AA913-8FF3-4E88-B3C6-B29C05E7AB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F9AA913-8FF3-4E88-B3C6-B29C05E7AB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F9AA913-8FF3-4E88-B3C6-B29C05E7AB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -143,9 +125,6 @@ Global
 		{976CD388-3DE5-4BA3-942F-C61C8D8F4C89} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
 		{6E9F635E-3A47-4778-9925-D5C53FD2C9AC} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
 		{77328CBB-09C7-44E6-977F-C79812F6535A} = {D9E1214F-1365-4DE5-9385-87A5FFE0F30D}
-		{2676CEBF-BAD5-42FE-BD3C-DEF021ACDF60} = {509CACD7-ABDB-4FEA-B227-8B10AAE4AC42}
-		{9C75DAF8-F548-4F6B-97EB-187D9EBBEDC6} = {509CACD7-ABDB-4FEA-B227-8B10AAE4AC42}
-		{2F530312-24D2-49CE-B989-4D8A155101C0} = {509CACD7-ABDB-4FEA-B227-8B10AAE4AC42}
 		{3F9AA913-8FF3-4E88-B3C6-B29C05E7AB4B} = {509CACD7-ABDB-4FEA-B227-8B10AAE4AC42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

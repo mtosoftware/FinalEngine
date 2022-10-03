@@ -8,15 +8,17 @@ namespace FinalEngine.Examples.StarWarriors.Systems
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using FinalEngine.Examples.StarWarriors.Components;
-    using FinalEngine.Examples.StarWarriors.Templates;
-    using FinalEngine.Platform;
+    using FinalEngine.Rendering;
 
     public class EnemySpawnSystem : EntitySystemBase
     {
         private static readonly long ThreeSecondsTicks = TimeSpan.FromSeconds(3).Ticks;
 
-        private readonly IEntityTemplate enemyTemplate;
+        private readonly IEntityFactory enemyTemplate;
+
+        private readonly IRasterizer rastierzer;
 
         private readonly IEntityWorld world;
 
@@ -24,13 +26,11 @@ namespace FinalEngine.Examples.StarWarriors.Systems
 
         private long spawnedTicks;
 
-        private IWindow window;
-
-        public EnemySpawnSystem(IEntityTemplate enemyTemplate, IEntityWorld world, IWindow window)
+        public EnemySpawnSystem(IEntityFactory enemyTemplate, IEntityWorld world, IRasterizer rasterizer)
         {
             this.enemyTemplate = enemyTemplate ?? throw new ArgumentNullException(nameof(enemyTemplate));
             this.world = world ?? throw new ArgumentNullException(nameof(world));
-            this.window = window ?? throw new ArgumentNullException(nameof(window));
+            this.rastierzer = rasterizer ?? throw new ArgumentNullException(nameof(rasterizer));
             this.random = new Random();
         }
 
@@ -46,8 +46,9 @@ namespace FinalEngine.Examples.StarWarriors.Systems
             if ((this.spawnedTicks + ThreeSecondsTicks) < DateTime.Now.Ticks)
             {
                 var entity = this.enemyTemplate.CreateEntity();
+                var viewport = this.rastierzer.GetViewport();
 
-                entity.GetComponent<TransformComponent>().X = this.random.Next(this.window.ClientSize.Width);
+                entity.GetComponent<TransformComponent>().X = this.random.Next(viewport.Width);
                 entity.GetComponent<TransformComponent>().Y = this.random.Next(400) + 50;
 
                 entity.GetComponent<VelocityComponent>().Speed = 0.05f;
