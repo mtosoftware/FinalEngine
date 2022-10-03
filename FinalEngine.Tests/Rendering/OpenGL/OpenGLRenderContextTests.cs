@@ -28,20 +28,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         private OpenGLRenderContext renderContext;
 
         [Test]
-        public void ConstructorShouldInvokeBindVertexArrayWhenInvoked()
-        {
-            // Assert
-            this.invoker.Verify(x => x.BindVertexArray(VertexArrayID), Times.Once);
-        }
-
-        [Test]
-        public void ConstructorShouldInvokeGenVertexArrayWhenInvoked()
-        {
-            // Assert
-            this.invoker.Verify(x => x.GenVertexArray(), Times.Once);
-        }
-
-        [Test]
         public void ConstructorShouldInvokeLoadBindingsWhenInvoked()
         {
             // Assert
