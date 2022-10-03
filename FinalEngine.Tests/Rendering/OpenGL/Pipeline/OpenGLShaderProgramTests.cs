@@ -13,7 +13,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
     using Moq;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLShaderProgramTests
     {

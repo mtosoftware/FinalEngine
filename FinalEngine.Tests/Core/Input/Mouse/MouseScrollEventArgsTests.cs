@@ -4,11 +4,9 @@
 
 namespace FinalEngine.Tests.Core.Input.Mouse
 {
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Input;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class MouseScrollEventArgsTests
     {
         [Test]

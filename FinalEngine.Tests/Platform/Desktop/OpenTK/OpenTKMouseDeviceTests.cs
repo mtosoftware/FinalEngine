@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Platform.Desktop.OpenTK
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using FinalEngine.Input;
     using FinalEngine.Platform.Desktop.OpenTK;
@@ -20,7 +19,6 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
     using TKMouseMoveEventArgs = global::OpenTK.Windowing.Common.MouseMoveEventArgs;
     using TKMouseWheelEventArgs = global::OpenTK.Windowing.Common.MouseWheelEventArgs;
 
-    [ExcludeFromCodeCoverage]
     public class OpenTKMouseDeviceTests
     {
         private OpenTKMouseDevice mouseDevice;

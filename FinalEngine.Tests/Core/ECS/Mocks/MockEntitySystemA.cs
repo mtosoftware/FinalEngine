@@ -9,7 +9,6 @@ namespace FinalEngine.Tests.Core.ECS.Mocks
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.ECS;
 
-    [ExcludeFromCodeCoverage]
     public class MockEntitySystemA : EntitySystemBase
     {
         public MockEntitySystemA(GameLoopType type)

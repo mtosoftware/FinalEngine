@@ -5,13 +5,11 @@
 namespace FinalEngine.Tests.Rendering
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Numerics;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.Buffers;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class VertexTests
     {
         [Test]

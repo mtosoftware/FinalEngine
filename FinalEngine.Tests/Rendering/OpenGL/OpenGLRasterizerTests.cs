@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.OpenGL;
@@ -15,7 +14,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [ExcludeFromCodeCoverage]
     public class OpenGLRasterizerTests
     {
         private Mock<IOpenGLInvoker> invoker;

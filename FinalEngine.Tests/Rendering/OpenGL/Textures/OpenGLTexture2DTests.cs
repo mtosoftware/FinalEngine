@@ -20,7 +20,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
     using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
     using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
 
-    [ExcludeFromCodeCoverage]
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLTexture2DTests
     {

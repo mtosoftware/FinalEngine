@@ -4,12 +4,10 @@
 
 namespace FinalEngine.Tests.Rendering
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using FinalEngine.Rendering;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class BlendStateDescriptionTests
     {
         private BlendStateDescription description;

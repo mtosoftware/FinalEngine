@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.OpenGL;
@@ -17,7 +16,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using BlendEquationMode = FinalEngine.Rendering.BlendEquationMode;
     using TKBlendEquationMode = OpenTK.Graphics.OpenGL4.BlendEquationMode;
 
-    [ExcludeFromCodeCoverage]
     public class OpenGLOutputMergerTests
     {
         private BlendStateDescription blendState;

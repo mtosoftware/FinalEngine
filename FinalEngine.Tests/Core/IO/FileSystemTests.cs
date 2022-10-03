@@ -5,14 +5,12 @@
 namespace FinalEngine.Tests.Core.IO
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using FinalEngine.IO;
     using FinalEngine.IO.Invocation;
     using Moq;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class FileSystemTests
     {
         private const string Path = "test/path/to/file.txt";

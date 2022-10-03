@@ -5,14 +5,12 @@
 namespace FinalEngine.Tests.Launching
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using FinalEngine.Launching;
     using FinalEngine.Launching.Invocation;
     using Moq;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class PlatformResolverTests
     {
         private PlatformResolver resolver;

@@ -5,13 +5,11 @@
 namespace FinalEngine.Tests.Launching
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Launching;
     using FinalEngine.Launching.Invocation;
     using Moq;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class GameTimeTests
     {
         private const double FrameCap = 120.0d;

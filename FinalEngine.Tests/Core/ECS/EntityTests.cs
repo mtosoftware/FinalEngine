@@ -5,12 +5,10 @@
 namespace FinalEngine.Tests.Core.ECS
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Dynamic;
     using FinalEngine.ECS;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class EntityTests
     {
         private Entity entity;

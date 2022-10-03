@@ -17,7 +17,6 @@ namespace FinalEngine.Tests.Rendering.Textures
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.PixelFormats;
 
-    [ExcludeFromCodeCoverage]
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class Texture2DLoaderTests
     {

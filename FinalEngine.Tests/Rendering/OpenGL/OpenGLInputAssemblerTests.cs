@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Buffers;
@@ -14,7 +13,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [ExcludeFromCodeCoverage]
     public class OpenGLInputAssemblerTests
     {
         private Mock<IOpenGLIndexBuffer> indexBuffer;
