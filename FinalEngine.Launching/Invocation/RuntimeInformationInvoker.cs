@@ -11,7 +11,7 @@ namespace FinalEngine.Launching.Invocation
     ///   Provides a standard implementation of an <see cref="IRuntimeInformationInvoker"/>.
     /// </summary>
     /// <seealso cref="IRuntimeInformationInvoker"/>
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
     public class RuntimeInformationInvoker : IRuntimeInformationInvoker
     {
         /// <inheritdoc/>

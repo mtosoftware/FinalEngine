@@ -16,7 +16,7 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
     ///   Provides an OpenTK implementation of an <see cref="IOpenGLInvoker"/>.
     /// </summary>
     /// <seealso cref="IOpenGLInvoker"/>
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
     public class OpenGLInvoker : IOpenGLInvoker
     {
         /// <summary>

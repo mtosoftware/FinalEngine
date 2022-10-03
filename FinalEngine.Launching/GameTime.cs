@@ -5,8 +5,6 @@
 namespace FinalEngine.Launching
 {
     using System;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Launching.Invocation;
 
     /// <summary>
@@ -60,18 +58,6 @@ namespace FinalEngine.Launching
             }
 
             this.waitTime = OneSecondAsMilliSeconds / frameCap;
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GameTime"/> class.
-        /// </summary>
-        /// <param name="frameCap">
-        ///   The frame cap (frame rate).
-        /// </param>
-        [ExcludeFromCodeCoverage]
-        public GameTime(double frameCap)
-            : this(new StopwatchInvoker(new Stopwatch()), frameCap)
-        {
         }
 
         /// <summary>

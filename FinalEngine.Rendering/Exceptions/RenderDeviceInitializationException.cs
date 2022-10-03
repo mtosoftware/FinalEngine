@@ -13,7 +13,7 @@ namespace FinalEngine.Rendering.Exceptions
     /// </summary>
     /// <seealso cref="Exception"/>
     [Serializable]
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage(Justification = "Exception Class")]
     public class RenderDeviceInitializationException : Exception
     {
         /// <summary>

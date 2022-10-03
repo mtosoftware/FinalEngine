@@ -38,7 +38,7 @@ namespace FinalEngine.Resources
         /// <summary>
         ///   Finalizes an instance of the <see cref="ResourceManager"/> class.
         /// </summary>
-        [ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage(Justification = "Exception Class")]
         ~ResourceManager()
         {
             this.Dispose(false);

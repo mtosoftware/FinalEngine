@@ -12,7 +12,7 @@ namespace FinalEngine.Launching.Invocation
     ///   Provides a standard implementation of an <see cref="IStopwatchInvoker"/>.
     /// </summary>
     /// <seealso cref="IStopwatchInvoker"/>
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
     public class StopwatchInvoker : IStopwatchInvoker
     {
         /// <summary>
