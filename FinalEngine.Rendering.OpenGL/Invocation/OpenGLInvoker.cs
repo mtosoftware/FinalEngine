@@ -265,6 +265,12 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         }
 
         /// <inheritdoc/>
+        public void GetInteger(GetIndexedPName target, int index, int[] data)
+        {
+            GL.GetInteger(target, index, data);
+        }
+
+        /// <inheritdoc/>
         public int GetInteger(GetPName pname)
         {
             return GL.GetInteger(pname);

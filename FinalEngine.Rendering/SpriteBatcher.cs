@@ -117,10 +117,10 @@ namespace FinalEngine.Rendering
         /// <param name="rotation">
         ///   The rotation of the vertices.
         /// </param>
-        /// <param name="scale">
-        ///   The scale of the vertices.
+        /// <param name="size">
+        ///   The size of the vertices.
         /// </param>
-        public void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale)
+        public void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 size)
         {
             float x = position.X;
             float y = position.Y;
@@ -128,8 +128,8 @@ namespace FinalEngine.Rendering
             float dx = -origin.X;
             float dy = -origin.Y;
 
-            float w = scale.X;
-            float h = scale.Y;
+            float w = size.X;
+            float h = size.Y;
 
             float cos = (float)Math.Cos(rotation);
             float sin = (float)Math.Sin(rotation);

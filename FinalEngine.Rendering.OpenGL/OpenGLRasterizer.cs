@@ -13,7 +13,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IRasterizer"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IRasterizer"/>
+    /// <seealso cref="IRasterizer"/>
     public class OpenGLRasterizer : IRasterizer
     {
         /// <summary>
@@ -45,6 +45,20 @@ namespace FinalEngine.Rendering.OpenGL
         {
             this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
+        }
+
+        public Rectangle GetViewport()
+        {
+            int[] data = new int[4];
+            this.invoker.GetInteger(GetIndexedPName.Viewport, 0, data);
+
+            return new Rectangle()
+            {
+                X = data[0],
+                Y = data[1],
+                Width = data[2],
+                Height = data[3],
+            };
         }
 
         /// <summary>
