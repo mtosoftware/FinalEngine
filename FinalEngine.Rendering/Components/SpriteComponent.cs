@@ -59,9 +59,9 @@ namespace FinalEngine.Rendering.Components
         /// <value>
         ///   The height of the sprite.
         /// </value>
-        public int SpriteHeight
+        public float SpriteHeight
         {
-            get { return this.TextureHeight * (int)this.Scale.Y; }
+            get { return this.TextureHeight * this.Scale.Y; }
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace FinalEngine.Rendering.Components
         /// <value>
         ///   The width of the sprite.
         /// </value>
-        public int SpriteWidth
+        public float SpriteWidth
         {
-            get { return this.TextureWidth * (int)this.Scale.X; }
+            get { return this.TextureWidth * this.Scale.X; }
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace FinalEngine.Rendering.Components
         /// <value>
         ///   The height of the texture.
         /// </value>
-        public int TextureHeight
+        public float TextureHeight
         {
-            get { return this.Texture?.Description.Width ?? 0; }
+            get { return this.Texture?.Description.Height ?? 0; }
         }
 
         /// <summary>
@@ -100,9 +100,9 @@ namespace FinalEngine.Rendering.Components
         /// <value>
         ///   The width of the texture.
         /// </value>
-        public int TextureWidth
+        public float TextureWidth
         {
-            get { return this.Texture?.Description.Height ?? 0; }
+            get { return this.Texture?.Description.Width ?? 0; }
         }
     }
 }

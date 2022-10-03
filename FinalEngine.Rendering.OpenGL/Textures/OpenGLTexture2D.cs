@@ -9,7 +9,7 @@ namespace FinalEngine.Rendering.OpenGL.Textures
     using FinalEngine.Rendering.Textures;
     using FinalEngine.Utilities;
     using OpenTK.Graphics.OpenGL4;
-    using PixelFormat = Rendering.Textures.PixelFormat;
+    using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
     using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
     using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
     using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;

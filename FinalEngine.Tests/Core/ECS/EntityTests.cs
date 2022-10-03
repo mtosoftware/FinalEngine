@@ -7,6 +7,7 @@ namespace FinalEngine.Tests.Core.ECS
     using System;
     using System.Dynamic;
     using FinalEngine.ECS;
+    using FinalEngine.ECS.Components;
     using NUnit.Framework;
 
     public class EntityTests
@@ -74,6 +75,13 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Act and assert
             Assert.Throws<ArgumentNullException>(() => this.entity.AddComponent(null));
+        }
+
+        [Test]
+        public void ConstructorShouldAddTagComponentWhenInvoked()
+        {
+            // Assert
+            Assert.IsTrue(this.entity.ContainsComponent<TagComponent>());
         }
 
         [Test]
@@ -354,6 +362,60 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             this.entity = new Entity();
+        }
+
+        [Test]
+        public void TagSetShouldAddTagComponentIfNotExists()
+        {
+            // Arrange
+            this.entity.RemoveComponent<TagComponent>();
+
+            // Act
+            this.entity.Tag = "Test";
+
+            // Assert
+            Assert.IsTrue(this.entity.ContainsComponent<TagComponent>());
+        }
+
+        [Test]
+        public void TagSetShouldSetTagWhenInvoked()
+        {
+            // Arrange
+            const string Expected = "Cheese";
+            this.entity.Tag = Expected;
+
+            // Act
+            var actual = this.entity.Tag;
+
+            // Assert
+            Assert.AreEqual(Expected, actual);
+        }
+
+        [Test]
+        public void TagShouldReturnNullWhenNoTagComponent()
+        {
+            // Arrange
+            this.entity.RemoveComponent<TagComponent>();
+
+            // Act
+            string tag = this.entity.Tag;
+
+            // Assert
+            Assert.IsNull(tag);
+        }
+
+        [Test]
+        public void TagShouldReturnTagComponentTagWhenInvoked()
+        {
+            // Arrange
+            const string Expected = "Potato";
+            this.entity.GetComponent<TagComponent>().Tag = Expected;
+
+            // Act
+            var actual = this.entity.Tag;
+
+            // Assert
+            Assert.AreEqual(Expected, actual);
         }
 
         [Test]

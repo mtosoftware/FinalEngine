@@ -17,7 +17,7 @@ namespace FinalEngine.Rendering.OpenGL
     using FinalEngine.Rendering.Textures;
     using FinalEngine.Utilities;
     using OpenTK.Graphics.OpenGL4;
-    using PixelFormat = Rendering.Textures.PixelFormat;
+    using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
 
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IGPUResourceFactory"/>.

@@ -39,6 +39,27 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
+        public void GetViewportShouldInvokeGetIntegerWhenInvoked()
+        {
+            // Act
+            _ = this.rasterizer.GetViewport();
+
+            // Assert
+            this.invoker.Verify(x => x.GetInteger(GetIndexedPName.Viewport, 0, It.IsAny<int[]>()));
+        }
+
+        [Test]
+        public void GetViewportShouldReturnViewportWhenInvoked()
+        {
+            // Act
+            var expected = new Rectangle(0, 0, 0, 0);
+            var actual = this.rasterizer.GetViewport();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void SetRasterStateShouldInvokeCullFaceWhenInvoked()
         {
             // Arrange

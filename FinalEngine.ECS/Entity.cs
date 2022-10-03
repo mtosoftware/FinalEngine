@@ -40,14 +40,19 @@ namespace FinalEngine.ECS
         {
             get
             {
-                return this.GetComponent<TagComponent>()?.Tag;
+                if (!this.ContainsComponent<TagComponent>())
+                {
+                    return null;
+                }
+
+                return this.GetComponent<TagComponent>().Tag;
             }
 
             set
             {
-                var component = this.GetComponent<TagComponent>();
+                var hasTag = this.ContainsComponent<TagComponent>();
 
-                if (component == null)
+                if (!hasTag)
                 {
                     this.AddComponent(new TagComponent()
                     {
@@ -57,7 +62,7 @@ namespace FinalEngine.ECS
                     return;
                 }
 
-                component.Tag = value;
+                this.GetComponent<TagComponent>().Tag = value;
             }
         }
 
