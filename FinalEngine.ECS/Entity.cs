@@ -7,12 +7,13 @@ namespace FinalEngine.ECS
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
+    using FinalEngine.ECS.Components;
 
     /// <summary>
     ///   Provides a container for <see cref="IComponent"/> s that can be, added, removed or accessed during runtime through an <see cref="EntitySystemBase"/>.
     /// </summary>
-    /// <seealso cref="System.Dynamic.DynamicObject"/>
-    /// <seealso cref="FinalEngine.ECS.IReadOnlyEntity"/>
+    /// <seealso cref="DynamicObject"/>
+    /// <seealso cref="IReadOnlyEntity"/>
     public class Entity : DynamicObject, IReadOnlyEntity
     {
         /// <summary>
@@ -26,6 +27,38 @@ namespace FinalEngine.ECS
         public Entity()
         {
             this.typeToComponentMap = new Dictionary<Type, IComponent>();
+            this.AddComponent<TagComponent>();
+        }
+
+        /// <summary>
+        ///   Gets or sets the tag for this <see cref="IReadOnlyEntity"/>.
+        /// </summary>
+        /// <value>
+        ///   The tag for this <see cref="IReadOnlyEntity"/>.
+        /// </value>
+        public string? Tag
+        {
+            get
+            {
+                return this.GetComponent<TagComponent>()?.Tag;
+            }
+
+            set
+            {
+                var component = this.GetComponent<TagComponent>();
+
+                if (component == null)
+                {
+                    this.AddComponent(new TagComponent()
+                    {
+                        Tag = value,
+                    });
+
+                    return;
+                }
+
+                component.Tag = value;
+            }
         }
 
         /// <summary>
