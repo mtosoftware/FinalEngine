@@ -13,7 +13,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IRenderContext"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IRenderContext"/>
+    /// <seealso cref="IRenderContext"/>
     public class OpenGLRenderContext : IRenderContext
     {
         /// <summary>

@@ -19,7 +19,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
     /// <typeparam name="T">
     ///   Specifies the type of data that the <see cref="OpenGLIndexBuffer{T}"/> will contain.
     /// </typeparam>
-    /// <seealso cref="FinalEngine.Rendering.OpenGL.Buffers.IOpenGLIndexBuffer"/>
+    /// <seealso cref="IOpenGLIndexBuffer"/>
     public class OpenGLIndexBuffer<T> : IOpenGLIndexBuffer
         where T : struct
     {

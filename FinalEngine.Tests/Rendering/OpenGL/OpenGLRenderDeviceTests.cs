@@ -8,13 +8,13 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using FinalEngine.Rendering;
+    using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using Moq;
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [ExcludeFromCodeCoverage]
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLRenderDeviceTests
     {
@@ -70,6 +70,19 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
+        public void DisposeShouldNotExecuteWhenAlreadyDisposed()
+        {
+            // Arrange
+            this.renderDevice.Dispose();
+
+            // Act
+            this.renderDevice.Dispose();
+
+            // Assert
+            this.invoker.Verify(x => x.DeleteVertexArray(0), Times.Once);
+        }
+
+        [Test]
         public void DrawIndicesShouldInvokeDrawElementsWhenInvoked()
         {
             // Act
@@ -87,6 +100,36 @@ namespace FinalEngine.Tests.Rendering.OpenGL
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLGPUResourceFactory), actual);
+        }
+
+        [Test]
+        public void InitializeShouldInvokeBindVertexArrayWhenInvoked()
+        {
+            // Act
+            this.renderDevice.Initialize();
+
+            // Assert
+            this.invoker.Verify(x => x.BindVertexArray(0), Times.Once);
+        }
+
+        [Test]
+        public void InitializeShouldInvokeGenVertexArrayWhenInvoked()
+        {
+            // Act
+            this.renderDevice.Initialize();
+
+            // Assert
+            this.invoker.Verify(x => x.GenVertexArray(), Times.Once);
+        }
+
+        [Test]
+        public void InitializeShouldThrowRenderDeviceInitializationExceptionWhenInitializeAlreadyInvoked()
+        {
+            // Arrange
+            this.renderDevice.Initialize();
+
+            // Act and assert
+            Assert.Throws<RenderDeviceInitializationException>(() => this.renderDevice.Initialize());
         }
 
         [Test]

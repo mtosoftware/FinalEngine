@@ -15,7 +15,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [ExcludeFromCodeCoverage]
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLVertexBufferTests
     {

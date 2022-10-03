@@ -12,7 +12,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IOutputMerger"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IOutputMerger"/>
+    /// <seealso cref="IOutputMerger"/>
     public class OpenGLOutputMerger : IOutputMerger
     {
         /// <summary>

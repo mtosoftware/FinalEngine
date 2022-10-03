@@ -47,4 +47,8 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <EditorConfigFiles Remove="C:\dev\FinalEngine\FinalEngine.Tests\Core\ECS\Components\.editorconfig" />
+	</ItemGroup>
 </Project>

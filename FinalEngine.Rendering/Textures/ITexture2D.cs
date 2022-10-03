@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering.Textures
     /// <summary>
     ///   Defines an interface that represents a two-dimensional texture.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Textures.ITexture"/>
+    /// <seealso cref="ITexture"/>
     public interface ITexture2D : ITexture
     {
         /// <summary>

@@ -25,7 +25,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IRenderDevice"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IRenderDevice"/>
+    /// <seealso cref="IRenderDevice"/>
     public class OpenGLRenderDevice : IRenderDevice
     {
         /// <summary>

@@ -12,6 +12,14 @@ namespace FinalEngine.ECS
     public interface IReadOnlyEntity
     {
         /// <summary>
+        ///   Gets the tag for this <see cref="IReadOnlyEntity"/>.
+        /// </summary>
+        /// <value>
+        ///   The tag for this <see cref="IReadOnlyEntity"/>.
+        /// </value>
+        string? Tag { get; }
+
+        /// <summary>
         ///   Determines whether the specified <paramref name="component"/> is contained within this <see cref="IReadOnlyEntity"/>.
         /// </summary>
         /// <param name="component">

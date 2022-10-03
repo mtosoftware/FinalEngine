@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Rendering
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Numerics;
     using FinalEngine.Rendering;
@@ -14,7 +13,6 @@ namespace FinalEngine.Tests.Rendering
     using Moq;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class SpriteBatcherTests
     {
         private const int MaxCapacity = 1000;

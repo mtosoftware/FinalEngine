@@ -6,13 +6,11 @@ namespace FinalEngine.Tests.Core.ECS
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using FinalEngine.ECS;
     using FinalEngine.Tests.Core.ECS.Mocks;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class EntityWorldTests
     {
         private EntityWorld world;

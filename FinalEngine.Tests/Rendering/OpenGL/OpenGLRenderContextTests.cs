@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Invocation;
@@ -14,7 +13,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using OpenTK;
     using OpenTK.Windowing.Common;
 
-    [ExcludeFromCodeCoverage]
     public class OpenGLRenderContextTests
     {
         private const int VertexArrayID = 5094;
@@ -26,20 +24,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         private Mock<IOpenGLInvoker> invoker;
 
         private OpenGLRenderContext renderContext;
-
-        [Test]
-        public void ConstructorShouldInvokeBindVertexArrayWhenInvoked()
-        {
-            // Assert
-            this.invoker.Verify(x => x.BindVertexArray(VertexArrayID), Times.Once);
-        }
-
-        [Test]
-        public void ConstructorShouldInvokeGenVertexArrayWhenInvoked()
-        {
-            // Assert
-            this.invoker.Verify(x => x.GenVertexArray(), Times.Once);
-        }
 
         [Test]
         public void ConstructorShouldInvokeLoadBindingsWhenInvoked()

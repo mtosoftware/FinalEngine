@@ -7,6 +7,7 @@ namespace FinalEngine.ECS
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     /// <summary>
     ///   Provides a base implementation of an entity system that can process entities based on the aspect of the system.
@@ -45,7 +46,8 @@ namespace FinalEngine.ECS
         /// </summary>
         public void Process()
         {
-            this.Process(this.entities);
+            // Copy the list so that the collection can be modified in a foreach loop.
+            this.Process(this.entities.ToList());
         }
 
         /// <summary>

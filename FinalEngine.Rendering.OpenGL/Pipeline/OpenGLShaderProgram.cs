@@ -12,7 +12,7 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IOpenGLShaderProgram"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.OpenGL.Pipeline.IOpenGLShaderProgram"/>
+    /// <seealso cref="IOpenGLShaderProgram"/>
     public class OpenGLShaderProgram : IOpenGLShaderProgram
     {
         /// <summary>

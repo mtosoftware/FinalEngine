@@ -12,6 +12,14 @@ namespace FinalEngine.Rendering
     public interface IRasterizer
     {
         /// <summary>
+        ///   Gets the viewport.
+        /// </summary>
+        /// <returns>
+        ///   The viewport.
+        /// </returns>
+        Rectangle GetViewport();
+
+        /// <summary>
         ///   Sets the rasterization state of the rasterizer to the specified <paramref name="description"/>.
         /// </summary>
         /// <param name="description">

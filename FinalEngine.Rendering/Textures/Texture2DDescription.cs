@@ -9,7 +9,7 @@ namespace FinalEngine.Rendering.Textures
     /// <summary>
     ///   Represents the description of a 2D texture used in a call to <see cref="IGPUResourceFactory.CreateTexture2D{T}(Texture2DDescription, System.Collections.Generic.IReadOnlyCollection{T}?, PixelFormat, SizedFormat)"/>.
     /// </summary>
-    /// <seealso cref="System.IEquatable{FinalEngine.Rendering.Textures.Texture2DDescription}"/>
+    /// <seealso cref="IEquatable{Texture2DDescription}"/>
     public struct Texture2DDescription : IEquatable<Texture2DDescription>
     {
         /// <summary>

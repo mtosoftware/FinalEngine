@@ -22,7 +22,7 @@ namespace FinalEngine.Rendering.OpenGL
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IGPUResourceFactory"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.IGPUResourceFactory"/>
+    /// <seealso cref="IGPUResourceFactory"/>
     public class OpenGLGPUResourceFactory : IGPUResourceFactory
     {
         /// <summary>

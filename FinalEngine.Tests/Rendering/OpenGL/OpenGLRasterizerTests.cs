@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.OpenGL;
@@ -15,7 +14,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [ExcludeFromCodeCoverage]
     public class OpenGLRasterizerTests
     {
         private Mock<IOpenGLInvoker> invoker;
@@ -38,6 +36,27 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         {
             // Arrange, act and assert
             Assert.Throws<ArgumentNullException>(() => new OpenGLRasterizer(this.invoker.Object, null));
+        }
+
+        [Test]
+        public void GetViewportShouldInvokeGetIntegerWhenInvoked()
+        {
+            // Act
+            _ = this.rasterizer.GetViewport();
+
+            // Assert
+            this.invoker.Verify(x => x.GetInteger(GetIndexedPName.Viewport, 0, It.IsAny<int[]>()));
+        }
+
+        [Test]
+        public void GetViewportShouldReturnViewportWhenInvoked()
+        {
+            // Act
+            var expected = new Rectangle(0, 0, 0, 0);
+            var actual = this.rasterizer.GetViewport();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

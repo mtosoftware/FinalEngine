@@ -12,7 +12,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
     /// <summary>
     ///   Provides an implementation of an <see cref="IMouseStateInvoker"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Platform.Desktop.OpenTK.Invocation.IMouseStateInvoker"/>
+    /// <seealso cref="IMouseStateInvoker"/>
     [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
     public class MouseStateInvoker : IMouseStateInvoker
     {

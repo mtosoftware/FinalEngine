@@ -5,13 +5,11 @@
 namespace FinalEngine.Tests.Rendering
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.Textures;
     using Moq;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class TextureBinderTests
     {
         private TextureBinder binder;

@@ -11,7 +11,7 @@ namespace FinalEngine.IO.Invocation
     ///   Provides an implementation of an <see cref="IDirectoryInvoker"/>.
     /// </summary>
     /// <seealso cref="IDirectoryInvoker"/>
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
     public class DirectoryInvoker : IDirectoryInvoker
     {
         /// <inheritdoc/>

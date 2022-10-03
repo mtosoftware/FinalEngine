@@ -17,8 +17,8 @@ namespace FinalEngine.Rendering.OpenGL.Textures
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="ITexture2D"/> and <see cref="IOpenGLTexture"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Textures.ITexture2D"/>
-    /// <seealso cref="FinalEngine.Rendering.OpenGL.Textures.IOpenGLTexture"/>
+    /// <seealso cref="ITexture2D"/>
+    /// <seealso cref="IOpenGLTexture"/>
     public class OpenGLTexture2D : ITexture2D, IOpenGLTexture
     {
         /// <summary>

@@ -71,10 +71,10 @@ namespace FinalEngine.Rendering
         /// <param name="rotation">
         ///   The rotation of the vertices.
         /// </param>
-        /// <param name="scale">
-        ///   The scale of the vertices.
+        /// <param name="size">
+        ///   The size of the vertices.
         /// </param>
-        void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale);
+        void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 size);
 
         /// <summary>
         ///   Resets the sprite batcher by clearing all batched vertices from it's cache.

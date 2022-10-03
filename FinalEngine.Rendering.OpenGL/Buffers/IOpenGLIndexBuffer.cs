@@ -11,7 +11,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
     /// <summary>
     ///   Defines an interface that represents an OpenGL index buffer.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Buffers.IIndexBuffer"/>
+    /// <seealso cref="IIndexBuffer"/>
     public interface IOpenGLIndexBuffer : IIndexBuffer
     {
         /// <summary>

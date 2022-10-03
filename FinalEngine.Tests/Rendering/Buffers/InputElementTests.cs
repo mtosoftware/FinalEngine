@@ -4,11 +4,9 @@
 
 namespace FinalEngine.Tests.Rendering.Buffers
 {
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering.Buffers;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class InputElementTests
     {
         private const int Index = 234;

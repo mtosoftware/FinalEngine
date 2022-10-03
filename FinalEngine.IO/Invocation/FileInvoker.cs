@@ -11,7 +11,7 @@ namespace FinalEngine.IO.Invocation
     ///   Provides an implementation of a n <see cref="IFileInvoker"/>.
     /// </summary>
     /// <seealso cref="IFileInvoker"/>
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
     public class FileInvoker : IFileInvoker
     {
         /// <inheritdoc/>

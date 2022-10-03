@@ -14,8 +14,8 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Provides a standard implementation of an <see cref="ISpriteDrawer"/>, which assumes batch rendering.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.ISpriteDrawer"/>
-    /// <seealso cref="System.IDisposable"/>
+    /// <seealso cref="ISpriteDrawer"/>
+    /// <seealso cref="IDisposable"/>
     public class SpriteDrawer : ISpriteDrawer, IDisposable
     {
         /// <summary>
@@ -297,7 +297,7 @@ namespace FinalEngine.Rendering
         }
 
         /// <summary>
-        ///   Draws the specified texture, blended with the specified <paramref name="color"/>, with the specified <paramref name="origin"/>, at the specified <paramref name="position"/>, <paramref name="rotation"/> and <paramref name="scale"/>.
+        ///   Draws the specified texture, blended with the specified <paramref name="color"/>, with the specified <paramref name="origin"/>, at the specified <paramref name="position"/>, <paramref name="rotation"/> and <paramref name="size"/>.
         /// </summary>
         /// <param name="texture">
         ///   The texture to draw.
@@ -314,8 +314,8 @@ namespace FinalEngine.Rendering
         /// <param name="rotation">
         ///   The rotation of the texture, relative to it's origin.
         /// </param>
-        /// <param name="scale">
-        ///   The scale of the texture.
+        /// <param name="size">
+        ///   The size of the texture in pixels.
         /// </param>
         /// <exception cref="ObjectDisposedException">
         ///   The <see cref="SpriteDrawer"/> has been disposed.
@@ -323,7 +323,7 @@ namespace FinalEngine.Rendering
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="texture"/> parameter cannot be null.
         /// </exception>
-        public void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale)
+        public void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 size)
         {
             if (this.IsDisposed)
             {
@@ -341,7 +341,7 @@ namespace FinalEngine.Rendering
                 this.Begin();
             }
 
-            this.batcher.Batch(this.binder.GetTextureSlotIndex(texture), color, origin, position, rotation, scale);
+            this.batcher.Batch(this.binder.GetTextureSlotIndex(texture), color, origin, position, rotation, size);
         }
 
         /// <summary>

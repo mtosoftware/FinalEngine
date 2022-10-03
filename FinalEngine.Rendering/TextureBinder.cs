@@ -11,7 +11,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Provides a standard implementation of an <see cref="ITextureBinder"/>.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.ITextureBinder"/>
+    /// <seealso cref="ITextureBinder"/>
     public class TextureBinder : ITextureBinder
     {
         /// <summary>

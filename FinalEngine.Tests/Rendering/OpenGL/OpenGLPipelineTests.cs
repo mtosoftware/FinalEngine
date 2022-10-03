@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Numerics;
     using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.OpenGL;
@@ -18,7 +17,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [ExcludeFromCodeCoverage]
     public class OpenGLPipelineTests
     {
         private Mock<IOpenGLInvoker> invoker;

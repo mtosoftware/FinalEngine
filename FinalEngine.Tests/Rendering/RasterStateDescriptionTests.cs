@@ -4,11 +4,9 @@
 
 namespace FinalEngine.Tests.Rendering
 {
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class RasterStateDescriptionTests
     {
         private RasterStateDescription description;

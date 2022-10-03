@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Core.Utilities
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Utilities;
     using NUnit.Framework;
 
@@ -28,7 +27,6 @@ namespace FinalEngine.Tests.Core.Utilities
         F,
     }
 
-    [ExcludeFromCodeCoverage]
     public class EnumMapperTests
     {
         private IReadOnlyDictionary<Enum, Enum> forwardToReverseMap;

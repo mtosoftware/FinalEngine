@@ -57,7 +57,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Represents the rasterization state used in a call to <see cref="IRasterizer.SetRasterState(RasterStateDescription)"/>.
     /// </summary>
-    /// <seealso cref="System.IEquatable{FinalEngine.Rendering.RasterStateDescription}"/>
+    /// <seealso cref="IEquatable{RasterStateDescription}"/>
     public struct RasterStateDescription : IEquatable<RasterStateDescription>
     {
         /// <summary>

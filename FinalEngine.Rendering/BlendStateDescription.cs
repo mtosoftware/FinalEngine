@@ -97,7 +97,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Represents the blend state used in a call to <see cref="IOutputMerger.SetBlendState(BlendStateDescription)"/>.
     /// </summary>
-    /// <seealso cref="System.IEquatable{FinalEngine.Rendering.BlendStateDescription}"/>
+    /// <seealso cref="IEquatable{BlendStateDescription}"/>
     public struct BlendStateDescription : IEquatable<BlendStateDescription>
     {
         /// <summary>

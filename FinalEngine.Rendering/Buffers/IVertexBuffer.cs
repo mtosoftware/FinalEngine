@@ -9,7 +9,7 @@ namespace FinalEngine.Rendering.Buffers
     /// <summary>
     ///   Defines an interface that represents a vertex buffer.
     /// </summary>
-    /// <seealso cref="System.IDisposable"/>
+    /// <seealso cref="IDisposable"/>
     public interface IVertexBuffer : IDisposable
     {
         /// <summary>

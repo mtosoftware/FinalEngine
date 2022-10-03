@@ -12,7 +12,7 @@ namespace FinalEngine.Extensions.Resources.Invocation
     /// <summary>
     ///   Defines an interface that provides methods for invocation of the <see cref="Image"/> functions.
     /// </summary>
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
     public class ImageInvoker : IImageInvoker
     {
         /// <inheritdoc cref="Image.Load{TPixel}(Stream)"/>

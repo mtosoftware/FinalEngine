@@ -4,11 +4,9 @@
 
 namespace FinalEngine.Tests.Rendering.Textures
 {
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering.Textures;
     using NUnit.Framework;
 
-    [ExcludeFromCodeCoverage]
     public class Texture2DDescriptionTests
     {
         private Texture2DDescription description;

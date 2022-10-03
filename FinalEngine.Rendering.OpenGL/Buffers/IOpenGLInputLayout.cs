@@ -9,7 +9,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
     /// <summary>
     ///   Defines an interface that represents an OpenGL input layout that describes the formating of vertex buffer data.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Buffers.IInputLayout"/>
+    /// <seealso cref="IInputLayout"/>
     public interface IOpenGLInputLayout : IInputLayout
     {
         /// <summary>

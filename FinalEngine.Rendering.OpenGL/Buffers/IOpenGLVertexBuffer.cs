@@ -10,7 +10,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
     /// <summary>
     ///   Defines an interface that represents an OpenGL vertex buffer.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Buffers.IVertexBuffer"/>
+    /// <seealso cref="IVertexBuffer"/>
     public interface IOpenGLVertexBuffer : IVertexBuffer
     {
         /// <summary>

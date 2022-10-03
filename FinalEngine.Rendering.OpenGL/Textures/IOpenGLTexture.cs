@@ -10,7 +10,7 @@ namespace FinalEngine.Rendering.OpenGL.Textures
     /// <summary>
     ///   Defines an interface that represents an OpenGL texture.
     /// </summary>
-    /// <seealso cref="FinalEngine.Rendering.Textures.ITexture"/>
+    /// <seealso cref="ITexture"/>
     public interface IOpenGLTexture : ITexture
     {
         /// <summary>

@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.OpenGL.Buffers;
     using FinalEngine.Rendering.OpenGL.Invocation;
@@ -15,7 +14,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [ExcludeFromCodeCoverage]
     public class OpenGLInputLayoutTests
     {
         private readonly IReadOnlyCollection<InputElement> elements = new List<InputElement>()
