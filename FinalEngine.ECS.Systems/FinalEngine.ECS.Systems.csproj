@@ -31,4 +31,9 @@
       <_Parameter1>FinalEngine.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj" />
+    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+  </ItemGroup>
 </Project>

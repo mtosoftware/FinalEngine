@@ -14,6 +14,13 @@ namespace FinalEngine.Rendering
 
         private static readonly ITexture2D DefaultDiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_diffuse.png");
 
+        private static IMaterial? @default;
+
+        public static IMaterial Default
+        {
+            get { return @default ??= new Material(); }
+        }
+
         public ITexture2D? DiffuseTexture { get; set; }
 
         public void Bind(IPipeline pipeline)

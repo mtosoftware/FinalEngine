@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
-	<AnalysisMode>All</AnalysisMode>
+    <AnalysisMode>All</AnalysisMode>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -27,25 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>FinalEngine.Tests</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
-    <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\Shaders\shader.frag">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Shaders\shader.vert">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Textures\default_diffuse.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj" />
+    <ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
+    <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
+    <ProjectReference Include="..\FinalEngine.Launching\FinalEngine.Launching.csproj" />
+    <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
   </ItemGroup>
 </Project>
