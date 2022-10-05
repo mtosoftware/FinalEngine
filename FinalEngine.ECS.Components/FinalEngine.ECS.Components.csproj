@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -29,5 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
     <ProjectReference Include="..\FinalEngine.Maths\FinalEngine.Maths.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
   </ItemGroup>
 </Project>
