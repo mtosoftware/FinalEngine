@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.ECS.Components"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.ECS.Systems", "FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj", "{0AE758DD-27F9-4A80-B0E2-357D20D5270D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Maths", "FinalEngine.Maths\FinalEngine.Maths.csproj", "{74E1AF06-9309-4340-BC9D-464BE306425E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,10 @@ Global
 		{0AE758DD-27F9-4A80-B0E2-357D20D5270D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AE758DD-27F9-4A80-B0E2-357D20D5270D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AE758DD-27F9-4A80-B0E2-357D20D5270D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E1AF06-9309-4340-BC9D-464BE306425E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E1AF06-9309-4340-BC9D-464BE306425E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E1AF06-9309-4340-BC9D-464BE306425E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E1AF06-9309-4340-BC9D-464BE306425E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +139,7 @@ Global
 		{77328CBB-09C7-44E6-977F-C79812F6535A} = {D9E1214F-1365-4DE5-9385-87A5FFE0F30D}
 		{F3E04812-A26D-4166-A217-18972D05F37C} = {015D5E9E-7510-446B-90A8-895B7FD6DFA4}
 		{0AE758DD-27F9-4A80-B0E2-357D20D5270D} = {015D5E9E-7510-446B-90A8-895B7FD6DFA4}
+		{74E1AF06-9309-4340-BC9D-464BE306425E} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}

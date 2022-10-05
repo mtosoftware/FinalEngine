@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
-	<AnalysisMode>All</AnalysisMode>
+    <AnalysisMode>All</AnalysisMode>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,22 +24,5 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>FinalEngine.Tests</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
-    <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\Textures\default_diffuse.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
