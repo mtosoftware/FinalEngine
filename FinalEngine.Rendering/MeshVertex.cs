@@ -1,4 +1,4 @@
-﻿// <copyright file="SpriteVertex.cs" company="Software Antics">
+﻿// <copyright file="MeshVertex.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -11,19 +11,19 @@ namespace FinalEngine.Rendering
     using FinalEngine.Rendering.Buffers;
 
     /// <summary>
-    ///   Represents a sprite vertex, generally used alongside with <see cref="SpriteBatcher"/>.
+    ///   Represents a mesh vertex.
     /// </summary>
-    /// <seealso cref="IEquatable{SpriteVertex}"/>
+    /// <seealso cref="IEquatable{MeshVertex}"/>
     [StructLayout(LayoutKind.Sequential)]
-    public struct SpriteVertex : IEquatable<SpriteVertex>
+    public struct MeshVertex : IEquatable<MeshVertex>
     {
         /// <summary>
-        ///   The size in bytes of a <see cref="SpriteVertex"/>.
+        ///   The size in bytes of a <see cref="MeshVertex"/>.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf<SpriteVertex>();
+        public static readonly int SizeInBytes = Marshal.SizeOf<MeshVertex>();
 
         /// <summary>
-        ///   Gets the input elements required to create an <see cref="IInputLayout"/> for use with a <see cref="SpriteVertex"/>.
+        ///   Gets the input elements required to create an <see cref="IInputLayout"/> for use with a <see cref="MeshVertex"/>.
         /// </summary>
         /// <value>
         ///   The input elements.
@@ -34,10 +34,9 @@ namespace FinalEngine.Rendering
             {
                 return new InputElement[]
                 {
-                    new (0, 2, InputElementType.Float, 0),
-                    new (1, 4, InputElementType.Float, 2 * sizeof(float)),
-                    new (2, 2, InputElementType.Float, 6 * sizeof(float)),
-                    new (3, 1, InputElementType.Float, 8 * sizeof(float)),
+                    new InputElement(0, 3, InputElementType.Float, 0),
+                    new InputElement(1, 4, InputElementType.Float, 3 * sizeof(float)),
+                    new InputElement(2, 2, InputElementType.Float, 7 * sizeof(float)),
                 };
             }
         }
@@ -48,7 +47,7 @@ namespace FinalEngine.Rendering
         /// <value>
         ///   The position.
         /// </value>
-        public Vector2 Position { get; set; }
+        public Vector3 Position { get; set; }
 
         /// <summary>
         ///   Gets or sets the color.
@@ -67,14 +66,6 @@ namespace FinalEngine.Rendering
         public Vector2 TextureCoordinate { get; set; }
 
         /// <summary>
-        ///   Gets or sets the index of the texture slot.
-        /// </summary>
-        /// <value>
-        ///   The index of the texture slot.
-        /// </value>
-        public float TextureSlotIndex { get; set; }
-
-        /// <summary>
         ///   Implements the operator ==.
         /// </summary>
         /// <param name="left">
@@ -86,7 +77,7 @@ namespace FinalEngine.Rendering
         /// <returns>
         ///   The result of the operator.
         /// </returns>
-        public static bool operator ==(SpriteVertex left, SpriteVertex right)
+        public static bool operator ==(MeshVertex left, MeshVertex right)
         {
             return left.Equals(right);
         }
@@ -103,7 +94,7 @@ namespace FinalEngine.Rendering
         /// <returns>
         ///   The result of the operator.
         /// </returns>
-        public static bool operator !=(SpriteVertex left, SpriteVertex right)
+        public static bool operator !=(MeshVertex left, MeshVertex right)
         {
             return !(left == right);
         }
@@ -117,12 +108,11 @@ namespace FinalEngine.Rendering
         /// <returns>
         ///   <see langword="true"/> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool Equals(SpriteVertex other)
+        public bool Equals(MeshVertex other)
         {
             return this.Position == other.Position &&
                    this.Color == other.Color &&
-                   this.TextureCoordinate == other.TextureCoordinate &&
-                   this.TextureSlotIndex == other.TextureSlotIndex;
+                   this.TextureCoordinate == other.TextureCoordinate;
         }
 
         /// <summary>
@@ -136,7 +126,7 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override bool Equals(object? obj)
         {
-            return obj is SpriteVertex vertex && this.Equals(vertex);
+            return obj is MeshVertex vertex && this.Equals(vertex);
         }
 
         /// <summary>
@@ -151,8 +141,7 @@ namespace FinalEngine.Rendering
 
             return (this.Position.GetHashCode() * Accumulator) +
                    (this.Color.GetHashCode() * Accumulator) +
-                   (this.TextureCoordinate.GetHashCode() * Accumulator) +
-                   (this.TextureSlotIndex.GetHashCode() * Accumulator);
+                   (this.TextureCoordinate.GetHashCode() * Accumulator);
         }
     }
 }
