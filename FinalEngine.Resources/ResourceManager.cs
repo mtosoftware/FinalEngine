@@ -17,6 +17,11 @@ namespace FinalEngine.Resources
     public class ResourceManager : IResourceManager
     {
         /// <summary>
+        ///   The instance.
+        /// </summary>
+        private static IResourceManager? instance;
+
+        /// <summary>
         ///   The path to resource data map.
         /// </summary>
         private readonly IDictionary<string, ResourceData> pathToResourceDataMap;
@@ -42,6 +47,17 @@ namespace FinalEngine.Resources
         ~ResourceManager()
         {
             this.Dispose(false);
+        }
+
+        /// <summary>
+        ///   Gets the instance.
+        /// </summary>
+        /// <value>
+        ///   The instance.
+        /// </value>
+        public static IResourceManager Instance
+        {
+            get { return instance ??= new ResourceManager(); }
         }
 
         /// <summary>
@@ -160,7 +176,7 @@ namespace FinalEngine.Resources
                 if (resourceData.ReferenceCount == 0)
                 {
                     resourceData.Reference.Dispose();
-                    this.pathToResourceDataMap.Remove(resourceData.FilePath);
+                    _ = this.pathToResourceDataMap.Remove(resourceData.FilePath);
                 }
             }
         }
@@ -188,7 +204,7 @@ namespace FinalEngine.Resources
                         ResourceData resourceData = kvp.Value;
 
                         resourceData.Reference.Dispose();
-                        this.pathToResourceDataMap.Remove(resourceData.FilePath);
+                        _ = this.pathToResourceDataMap.Remove(resourceData.FilePath);
                     }
                 }
 
