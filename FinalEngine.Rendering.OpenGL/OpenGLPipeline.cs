@@ -45,14 +45,6 @@ namespace FinalEngine.Rendering.OpenGL
         private IOpenGLShaderProgram? boundProgram;
 
         /// <summary>
-        ///   The currently bound OpenGL texture.
-        /// </summary>
-        /// <remarks>
-        ///   Used to unbind when a user passes <c>null</c> to <see cref="SetTexture(ITexture?, int)"/>.
-        /// </remarks>
-        private IOpenGLTexture? boundTexture;
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="OpenGLPipeline"/> class.
         /// </summary>
         /// <param name="invoker">
@@ -84,9 +76,9 @@ namespace FinalEngine.Rendering.OpenGL
         /// <param name="program">
         ///   Specifies an <see cref="IShaderProgram"/> that represents the shader program to bind.
         /// </param>
-        /// <remarks>
-        ///   Passing <c>null</c> to <paramref name="program"/> will unbind the last shader program that was bound.
-        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="program"/> parameter cannot be null.
+        /// </exception>
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="program"/> is not the correct implementation. If this exception occurs, you're attempting to bind an shader program that does not implement <see cref="IOpenGLShaderProgram"/>.
         /// </exception>
@@ -94,10 +86,7 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (program == null)
             {
-                this.invoker.UseProgram(0);
-                this.boundProgram = null;
-
-                return;
+                throw new ArgumentNullException(nameof(program));
             }
 
             if (program is not IOpenGLShaderProgram glProgram)
@@ -118,20 +107,17 @@ namespace FinalEngine.Rendering.OpenGL
         /// <param name="slot">
         ///   Specifies an <see cref="int"/> that represents the texture slot to the bind the <paramref name="texture"/> too.
         /// </param>
-        /// <remarks>
-        ///   Passing <c>null</c> to the <paramref name="texture"/> parameter will unbind the previously bound texture.
-        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="texture"/> parameter cannot be null.
+        /// </exception>
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="texture"/> is not the correct implementation. If this exception occurs, you're attempting to bind an texture that does not implement <see cref="IOpenGLTexture"/>.
         /// </exception>
-        public void SetTexture(ITexture? texture, int slot = 0)
+        public void SetTexture(ITexture texture, int slot = 0)
         {
             if (texture == null)
             {
-                this.boundTexture?.Unbind();
-                this.boundTexture = null;
-
-                return;
+                throw new ArgumentNullException(nameof(texture));
             }
 
             if (texture is not IOpenGLTexture glTexture)
@@ -139,8 +125,7 @@ namespace FinalEngine.Rendering.OpenGL
                 throw new ArgumentException($"The specified {nameof(texture)} parameter is not of type {nameof(IOpenGLTexture)}.", nameof(texture));
             }
 
-            this.boundTexture = glTexture;
-            this.boundTexture.Bind(slot);
+            glTexture.Bind(slot);
         }
 
         /// <summary>

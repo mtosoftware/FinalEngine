@@ -30,6 +30,14 @@ namespace FinalEngine.Platform
         bool IsExiting { get; }
 
         /// <summary>
+        ///   Gets a value indicating whether this <see cref="IWindow"/> is focused.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this <see cref="IWindow"/> is focused; otherwise, <c>false</c>.
+        /// </value>
+        bool IsFocused { get; }
+
+        /// <summary>
         ///   Gets or sets the size of this <see cref="IWindow"/>.
         /// </summary>
         /// <value>

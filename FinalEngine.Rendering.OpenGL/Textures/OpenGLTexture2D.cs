@@ -159,22 +159,6 @@ namespace FinalEngine.Rendering.OpenGL.Textures
         }
 
         /// <summary>
-        ///   Unbinds this <see cref="OpenGLTexture2D"/> from the graphics processing unit.
-        /// </summary>
-        /// <exception cref="ObjectDisposedException">
-        ///   The <see cref="OpenGLTexture2D"/> has been disposed.
-        /// </exception>
-        public void Unbind()
-        {
-            if (this.IsDisposed)
-            {
-                throw new ObjectDisposedException(nameof(OpenGLTexture2D));
-            }
-
-            this.invoker.BindTexture(TextureTarget.Texture2D, 0);
-        }
-
-        /// <summary>
         ///   Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing">

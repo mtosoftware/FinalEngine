@@ -59,6 +59,12 @@ namespace FinalEngine.Platform.Desktop.OpenTK
         }
 
         /// <inheritdoc/>
+        public bool IsFocused
+        {
+            get { return this.nativeWindow.IsFocused; }
+        }
+
+        /// <inheritdoc/>
         public Size Size
         {
             get { return new Size(this.nativeWindow.Size.X, this.nativeWindow.Size.Y); }

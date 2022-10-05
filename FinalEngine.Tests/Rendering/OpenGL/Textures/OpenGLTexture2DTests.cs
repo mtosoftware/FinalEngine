@@ -50,7 +50,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
             this.texture.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.texture.Bind(0));
+            _ = Assert.Throws<ObjectDisposedException>(() => this.texture.Bind(0));
         }
 
         [Test]
@@ -106,14 +106,14 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(null, this.mapper.Object, default, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1)));
+            _ = Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(null, this.mapper.Object, default, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1)));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(this.invoker.Object, null, default, PixelFormat.Depth, SizedFormat.R8, new IntPtr(1)));
+            _ = Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(this.invoker.Object, null, default, PixelFormat.Depth, SizedFormat.R8, new IntPtr(1)));
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         {
             // Arrange
             this.invoker = new Mock<IOpenGLInvoker>();
-            this.invoker.Setup(x => x.CreateTexture(TextureTarget.Texture2D)).Returns(ID);
+            _ = this.invoker.Setup(x => x.CreateTexture(TextureTarget.Texture2D)).Returns(ID);
 
             this.mapper = new Mock<IEnumMapper>();
 
@@ -173,26 +173,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         public void Teardown()
         {
             this.texture.Dispose();
-        }
-
-        [Test]
-        public void UnbindShouldInvokeBindTextureWhenTextureIsNotDisposed()
-        {
-            // Act
-            this.texture.Unbind();
-
-            // Assert
-            this.invoker.Verify(x => x.BindTexture(TextureTarget.Texture2D, 0), Times.Once);
-        }
-
-        [Test]
-        public void UnbindShouldThrowObjectDisposedExceptionWhenTextureIsDisposed()
-        {
-            // Arrange
-            this.texture.Dispose();
-
-            // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.texture.Unbind());
         }
     }
 }

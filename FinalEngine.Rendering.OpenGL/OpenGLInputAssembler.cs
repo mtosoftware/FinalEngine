@@ -9,7 +9,6 @@ namespace FinalEngine.Rendering.OpenGL
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.OpenGL.Buffers;
     using FinalEngine.Rendering.OpenGL.Invocation;
-    using OpenTK.Graphics.OpenGL4;
 
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IInputAssembler"/>.
@@ -48,21 +47,19 @@ namespace FinalEngine.Rendering.OpenGL
         ///   Sets the specified <paramref name="buffer"/>, binding it to the GPU.
         /// </summary>
         /// <param name="buffer">
-        ///   Specifies a <see cref="Nullable{IIndexBuffer}"/> that represents the index buffer to bind.
+        ///   Specifies a <see cref="IIndexBuffer"/> that represents the index buffer to bind.
         /// </param>
-        /// <remarks>
-        ///   Passing <c>null</c> to the <paramref name="buffer"/> parameter will unbind the previously bound index buffer.
-        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="buffer"/> parameter cannot be null.
+        /// </exception>
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="buffer"/> is not the correct implementation. If this exception occurs, you're attempting to bind an index buffer that does not implement <see cref="IOpenGLIndexBuffer"/>.
         /// </exception>
-        public void SetIndexBuffer(IIndexBuffer? buffer)
+        public void SetIndexBuffer(IIndexBuffer buffer)
         {
             if (buffer == null)
             {
-                this.invoker.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-
-                return;
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (buffer is not IOpenGLIndexBuffer glIndexBuffer)
@@ -90,7 +87,6 @@ namespace FinalEngine.Rendering.OpenGL
             if (layout == null)
             {
                 this.boundLayout?.Unbind();
-
                 return;
             }
 
@@ -109,11 +105,11 @@ namespace FinalEngine.Rendering.OpenGL
         ///   Sets the specified <paramref name="buffer"/>, binding it to the GPU.
         /// </summary>
         /// <param name="buffer">
-        ///   Specifies a <see cref="Nullable{IVertexBuffer}"/> that represents the vertex buffer to bind.
+        ///   Specifies a <see cref="IVertexBuffer"/> that represents the vertex buffer to bind.
         /// </param>
-        /// <remarks>
-        ///   Passing <c>null</c> to the <paramref name="buffer"/> parameter will unbind the previously bound vertex buffer.
-        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="buffer"/> parameter cannot be null.
+        /// </exception>
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="buffer"/> is not the correct implementation. If this exception occurs, you're attempting to bind an vertex buffer that does not implement <see cref="IOpenGLVertexBuffer"/>.
         /// </exception>
@@ -121,13 +117,7 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (buffer == null)
             {
-                int[] buffers = new int[] { 0 };
-                int[] strides = new int[] { 0 };
-                var offsets = new IntPtr[] { IntPtr.Zero };
-
-                this.invoker.BindVertexBuffers(0, 1, buffers, offsets, strides);
-
-                return;
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (buffer is not IOpenGLVertexBuffer glVertexBuffer)

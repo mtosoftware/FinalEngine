@@ -23,13 +23,5 @@ namespace FinalEngine.Rendering.OpenGL.Textures
         ///   The <see cref="IOpenGLTexture"/> has been disposed.
         /// </exception>
         void Bind(int unit);
-
-        /// <summary>
-        ///   Unbinds this <see cref="IOpenGLTexture"/> from the graphics processing unit.
-        /// </summary>
-        /// <exception cref="ObjectDisposedException">
-        ///   The <see cref="IOpenGLTexture"/> has been disposed.
-        /// </exception>
-        void Unbind();
     }
 }

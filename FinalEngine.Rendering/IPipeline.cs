@@ -28,30 +28,30 @@ namespace FinalEngine.Rendering
         /// <param name="program">
         ///   Specifies an <see cref="IShaderProgram"/> that represents the shader program to bind.
         /// </param>
-        /// <remarks>
-        ///   Passing <c>null</c> to the <paramref name="program"/> parameter will unbind the previously bound shader program.
-        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="program"/> parameter cannot be null.
+        /// </exception>
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="program"/> is not the correct implementation. If this exception occurs, you're attempting to bind an shader program that was created with a different rendering API than the one that's currently in use.
         /// </exception>
-        void SetShaderProgram(IShaderProgram? program);
+        void SetShaderProgram(IShaderProgram program);
 
         /// <summary>
         ///   Sets the specified <paramref name="texture"/>, binding it to the GPU and activates the specified <paramref name="slot"/>.
         /// </summary>
         /// <param name="texture">
-        ///   Specifies a <see cref="Nullable{ITexture}"/> that represents The texture to bind.
+        ///   Specifies a <see cref="ITexture"/> that represents the texture to bind.
         /// </param>
         /// <param name="slot">
         ///   Specifies an <see cref="int"/> that represents the texture slot to activate.
         /// </param>
-        /// <remarks>
-        ///   Passing <c>null</c> to the <paramref name="texture"/> parameter will unbind the previously bound texture.
-        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="texture"/> parameter cannot be null.
+        /// </exception>
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="texture"/> is not the correct implementation. If this exception occurs, you're attempting to bind an texture that was created with a different rendering API than the one that's currently in use.
         /// </exception>
-        void SetTexture(ITexture? texture, int slot = 0);
+        void SetTexture(ITexture texture, int slot = 0);
 
         /// <summary>
         ///   Sets the uniform of the specified <paramref name="name"/>, contained in the currently bound program to the specified <paramref name="value"/>.

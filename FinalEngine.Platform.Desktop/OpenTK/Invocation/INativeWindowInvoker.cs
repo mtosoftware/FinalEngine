@@ -48,6 +48,9 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         /// <inheritdoc cref="NativeWindow.IsExiting"/>
         bool IsExiting { get; }
 
+        /// <inheritdoc cref="NativeWindow.IsFocused"/>
+        bool IsFocused { get; }
+
         /// <inheritdoc cref="NativeWindow.IsVisible"/>
         bool IsVisible { get; set; }
 

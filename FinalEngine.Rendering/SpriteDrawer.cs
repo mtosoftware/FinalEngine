@@ -269,7 +269,7 @@ namespace FinalEngine.Rendering
                 throw new ObjectDisposedException(nameof(SpriteDrawer));
             }
 
-            this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram);
+            this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram!);
 
             this.renderDevice.Pipeline.SetUniform("u_projection", this.Projection);
             this.renderDevice.Pipeline.SetUniform("u_transform", this.Transform);
@@ -355,16 +355,16 @@ namespace FinalEngine.Rendering
         /// </remarks>
         public void End()
         {
-            if (this.IsDisposed || this.vertexBuffer == null)
+            if (this.IsDisposed)
             {
                 throw new ObjectDisposedException(nameof(SpriteDrawer));
             }
 
-            this.batcher.Update(this.vertexBuffer);
+            this.batcher.Update(this.vertexBuffer!);
 
             this.renderDevice.InputAssembler.SetInputLayout(this.inputLayout);
-            this.renderDevice.InputAssembler.SetVertexBuffer(this.vertexBuffer);
-            this.renderDevice.InputAssembler.SetIndexBuffer(this.indexBuffer);
+            this.renderDevice.InputAssembler.SetVertexBuffer(this.vertexBuffer!);
+            this.renderDevice.InputAssembler.SetIndexBuffer(this.indexBuffer!);
 
             this.renderDevice.DrawIndices(PrimitiveTopology.Triangle, 0, this.batcher.CurrentIndexCount);
         }
