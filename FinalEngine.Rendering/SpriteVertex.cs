@@ -1,4 +1,4 @@
-﻿// <copyright file="Vertex.cs" company="Software Antics">
+﻿// <copyright file="SpriteVertex.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -11,19 +11,19 @@ namespace FinalEngine.Rendering
     using FinalEngine.Rendering.Buffers;
 
     /// <summary>
-    ///   Represents a vertex, generally used alongside with <see cref="SpriteBatcher"/>.
+    ///   Represents a sprite vertex, generally used alongside with <see cref="SpriteBatcher"/>.
     /// </summary>
     /// <seealso cref="IEquatable{Vertex}"/>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vertex : IEquatable<Vertex>
+    public struct SpriteVertex : IEquatable<SpriteVertex>
     {
         /// <summary>
-        ///   The size in bytes of a <see cref="Vertex"/>.
+        ///   The size in bytes of a <see cref="SpriteVertex"/>.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf<Vertex>();
+        public static readonly int SizeInBytes = Marshal.SizeOf<SpriteVertex>();
 
         /// <summary>
-        ///   Gets the input elements required to create an <see cref="IInputLayout"/> for use with a <see cref="Vertex"/>.
+        ///   Gets the input elements required to create an <see cref="IInputLayout"/> for use with a <see cref="SpriteVertex"/>.
         /// </summary>
         /// <value>
         ///   The input elements.
@@ -86,7 +86,7 @@ namespace FinalEngine.Rendering
         /// <returns>
         ///   The result of the operator.
         /// </returns>
-        public static bool operator ==(Vertex left, Vertex right)
+        public static bool operator ==(SpriteVertex left, SpriteVertex right)
         {
             return left.Equals(right);
         }
@@ -103,7 +103,7 @@ namespace FinalEngine.Rendering
         /// <returns>
         ///   The result of the operator.
         /// </returns>
-        public static bool operator !=(Vertex left, Vertex right)
+        public static bool operator !=(SpriteVertex left, SpriteVertex right)
         {
             return !(left == right);
         }
@@ -117,7 +117,7 @@ namespace FinalEngine.Rendering
         /// <returns>
         ///   <see langword="true"/> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool Equals(Vertex other)
+        public bool Equals(SpriteVertex other)
         {
             return this.Position == other.Position &&
                    this.Color == other.Color &&
@@ -136,7 +136,7 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override bool Equals(object? obj)
         {
-            return obj is Vertex vertex && this.Equals(vertex);
+            return obj is SpriteVertex vertex && this.Equals(vertex);
         }
 
         /// <summary>

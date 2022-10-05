@@ -17,7 +17,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             Vector4 expected = Vector4.Zero;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             Vector4 actual = vertex.Color;
@@ -31,7 +31,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             Vector4 expected = Vector4.UnitW;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             vertex.Color = expected;
@@ -44,7 +44,7 @@ namespace FinalEngine.Tests.Rendering
         public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -52,7 +52,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            var right = new Vertex()
+            var right = new SpriteVertex()
             {
                 Position = new Vector2(2, 2),
                 Color = new Vector4(1, 55, 33, 1),
@@ -71,7 +71,7 @@ namespace FinalEngine.Tests.Rendering
         public void EqualityOperatorShouldReturnTrueWhenPropertiesDoMatch()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -79,7 +79,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            var right = new Vertex()
+            var right = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -98,7 +98,7 @@ namespace FinalEngine.Tests.Rendering
         public void EqualsShouldReturnFalseWhenObjectIsNotVertex()
         {
             // Arrange
-            var left = default(Vertex);
+            var left = default(SpriteVertex);
             object right = new object();
 
             // Act
@@ -112,7 +112,7 @@ namespace FinalEngine.Tests.Rendering
         public void EqualsShouldReturnFalseWhenObjectIsNull()
         {
             // Act
-            bool actual = default(Vertex).Equals(null);
+            bool actual = default(SpriteVertex).Equals(null);
 
             // Assert
             Assert.False(actual);
@@ -122,7 +122,7 @@ namespace FinalEngine.Tests.Rendering
         public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -130,7 +130,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            var right = new Vertex()
+            var right = new SpriteVertex()
             {
                 Position = new Vector2(2, 2),
                 Color = new Vector4(1, 55, 33, 1),
@@ -149,7 +149,7 @@ namespace FinalEngine.Tests.Rendering
         public void EqualsShouldReturnTrueWhenObjectIsVertexAndHasSameProperties()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -157,7 +157,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            object right = new Vertex()
+            object right = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -176,7 +176,7 @@ namespace FinalEngine.Tests.Rendering
         public void EqualsShouldReturnTrueWhenPropertiesDoMatch()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -184,7 +184,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            var right = new Vertex()
+            var right = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -203,7 +203,7 @@ namespace FinalEngine.Tests.Rendering
         public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -211,7 +211,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            var right = new Vertex()
+            var right = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -231,7 +231,7 @@ namespace FinalEngine.Tests.Rendering
         public void InEqualityOperatorShouldReturnFalseWhenPropertiesDoMatch()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -239,7 +239,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            var right = new Vertex()
+            var right = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -258,7 +258,7 @@ namespace FinalEngine.Tests.Rendering
         public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
         {
             // Arrange
-            var left = new Vertex()
+            var left = new SpriteVertex()
             {
                 Position = new Vector2(1, 2),
                 Color = new Vector4(1, 2, 3, 4),
@@ -266,7 +266,7 @@ namespace FinalEngine.Tests.Rendering
                 TextureSlotIndex = 7.0f,
             };
 
-            var right = new Vertex()
+            var right = new SpriteVertex()
             {
                 Position = new Vector2(2, 2),
                 Color = new Vector4(1, 55, 33, 1),
@@ -301,7 +301,7 @@ namespace FinalEngine.Tests.Rendering
             };
 
             // Act
-            IReadOnlyCollection<InputElement> actual = Vertex.InputElements;
+            IReadOnlyCollection<InputElement> actual = SpriteVertex.InputElements;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -312,7 +312,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             Vector2 expected = Vector2.UnitX;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             vertex.Position = expected;
@@ -326,7 +326,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             Vector2 expected = Vector2.Zero;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             Vector2 actual = vertex.Position;
@@ -342,7 +342,7 @@ namespace FinalEngine.Tests.Rendering
             const int Expected = 36;
 
             // Act
-            int actual = Vertex.SizeInBytes;
+            int actual = SpriteVertex.SizeInBytes;
 
             // Assert
             Assert.AreEqual(Expected, actual);
@@ -353,7 +353,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             Vector2 expected = Vector2.Zero;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             Vector2 actual = vertex.TextureCoordinate;
@@ -367,7 +367,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             Vector2 expected = Vector2.UnitY;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             vertex.TextureCoordinate = expected;
@@ -381,7 +381,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             const float Expected = 7.0f;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             vertex.TextureSlotIndex = Expected;
@@ -395,7 +395,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             const float Expected = 0.0f;
-            var vertex = default(Vertex);
+            var vertex = default(SpriteVertex);
 
             // Act
             float actual = vertex.TextureSlotIndex;

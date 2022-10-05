@@ -187,13 +187,13 @@ namespace FinalEngine.Rendering
             this.vertexShader = renderDevice.Factory.CreateShader(PipelineTarget.Vertex, this.vertexShaderSource);
             this.fragmentShader = renderDevice.Factory.CreateShader(PipelineTarget.Fragment, this.fragmentShaderSource);
             this.shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { this.vertexShader, this.fragmentShader });
-            this.inputLayout = renderDevice.Factory.CreateInputLayout(Vertex.InputElements);
+            this.inputLayout = renderDevice.Factory.CreateInputLayout(SpriteVertex.InputElements);
 
             this.vertexBuffer = renderDevice.Factory.CreateVertexBuffer(
                 BufferUsageType.Dynamic,
-                Array.Empty<Vertex>(),
-                batcher.MaxVertexCount * Vertex.SizeInBytes,
-                Vertex.SizeInBytes);
+                Array.Empty<SpriteVertex>(),
+                batcher.MaxVertexCount * SpriteVertex.SizeInBytes,
+                SpriteVertex.SizeInBytes);
 
             int[] indices = new int[batcher.MaxIndexCount];
 

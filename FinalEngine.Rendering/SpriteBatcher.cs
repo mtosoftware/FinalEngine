@@ -24,7 +24,7 @@ namespace FinalEngine.Rendering
         /// <summary>
         ///   The vertices that have been batched.
         /// </summary>
-        private readonly IList<Vertex> vertices;
+        private readonly IList<SpriteVertex> vertices;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="SpriteBatcher"/> class.
@@ -53,7 +53,7 @@ namespace FinalEngine.Rendering
             this.MaxVertexCount = maxCapacity * 4;
             this.MaxIndexCount = maxCapacity * 6;
 
-            this.vertices = new List<Vertex>(this.MaxVertexCount);
+            this.vertices = new List<SpriteVertex>(this.MaxVertexCount);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace FinalEngine.Rendering
                 color.A / 255.0f);
 
             // Top right
-            this.vertices.Add(new Vertex()
+            this.vertices.Add(new SpriteVertex()
             {
                 Position = new Vector2(x + ((dx + w) * cos) - (dy * sin), y + ((dx + w) * sin) + (dy * cos)),
                 Color = vecColor,
@@ -150,7 +150,7 @@ namespace FinalEngine.Rendering
             });
 
             // Top left
-            this.vertices.Add(new Vertex()
+            this.vertices.Add(new SpriteVertex()
             {
                 Position = new Vector2(x + (dx * cos) - (dy * sin), y + (dx * sin) + (dy * cos)),
                 Color = vecColor,
@@ -159,7 +159,7 @@ namespace FinalEngine.Rendering
             });
 
             // Bottom left
-            this.vertices.Add(new Vertex()
+            this.vertices.Add(new SpriteVertex()
             {
                 Position = new Vector2(x + (dx * cos) - ((dy + h) * sin), y + (dx * sin) + ((dy + h) * cos)),
                 Color = vecColor,
@@ -168,7 +168,7 @@ namespace FinalEngine.Rendering
             });
 
             // Bottom right
-            this.vertices.Add(new Vertex()
+            this.vertices.Add(new SpriteVertex()
             {
                 Position = new Vector2(x + ((dx + w) * cos) - ((dy + h) * sin), y + ((dx + w) * sin) + ((dy + h) * cos)),
                 Color = vecColor,
@@ -206,7 +206,7 @@ namespace FinalEngine.Rendering
                 throw new ArgumentNullException(nameof(vertexBuffer), $"The specified {nameof(vertexBuffer)} parameter cannot be null.");
             }
 
-            this.inputAssembler.UpdateVertexBuffer(vertexBuffer, (IReadOnlyCollection<Vertex>)this.vertices, Vertex.SizeInBytes);
+            this.inputAssembler.UpdateVertexBuffer(vertexBuffer, (IReadOnlyCollection<SpriteVertex>)this.vertices, SpriteVertex.SizeInBytes);
         }
     }
 }

@@ -204,7 +204,7 @@ namespace FinalEngine.Tests.Rendering
             this.batcher.Update(this.vertexBuffer.Object);
 
             // Assert
-            this.inputAssembler.Verify(x => x.UpdateVertexBuffer(this.vertexBuffer.Object, It.IsAny<IReadOnlyCollection<Vertex>>(), Vertex.SizeInBytes));
+            this.inputAssembler.Verify(x => x.UpdateVertexBuffer(this.vertexBuffer.Object, It.IsAny<IReadOnlyCollection<SpriteVertex>>(), SpriteVertex.SizeInBytes));
         }
 
         [Test]

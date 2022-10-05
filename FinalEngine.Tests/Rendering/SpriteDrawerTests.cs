@@ -132,7 +132,7 @@ namespace FinalEngine.Tests.Rendering
         public void ConstructorShouldInvokeCreateInputLayoutWhenInvoked()
         {
             // Assert
-            this.factory.Verify(x => x.CreateInputLayout(Vertex.InputElements), Times.Once);
+            this.factory.Verify(x => x.CreateInputLayout(SpriteVertex.InputElements), Times.Once);
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace FinalEngine.Tests.Rendering
         public void ConstructorShouldInvokeCreateVertexBufferWhenInvoked()
         {
             // Assert
-            this.factory.Verify(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<Vertex[]>(), this.batcher.Object.MaxVertexCount * Vertex.SizeInBytes, Vertex.SizeInBytes), Times.Once);
+            this.factory.Verify(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes), Times.Once);
         }
 
         [Test]
@@ -320,7 +320,7 @@ namespace FinalEngine.Tests.Rendering
         public void EndShouldThrowObjectDisposedExceptionWhenVertexBufferIsNull()
         {
             // Arrange
-            this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<Vertex[]>(), this.batcher.Object.MaxVertexCount * Vertex.SizeInBytes, Vertex.SizeInBytes)).Returns(() => null);
+            this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes)).Returns(() => null);
             this.drawer = new SpriteDrawer(this.renderDevice.Object, this.batcher.Object, this.binder.Object, ProjectionWidth, ProjectionHeight);
 
             // Act and assert
@@ -372,8 +372,8 @@ namespace FinalEngine.Tests.Rendering
             this.factory.Setup(x => x.CreateShader(PipelineTarget.Vertex, It.IsAny<string>())).Returns(this.vertexShader.Object);
             this.factory.Setup(x => x.CreateShader(PipelineTarget.Fragment, It.IsAny<string>())).Returns(this.fragmentShader.Object);
             this.factory.Setup(x => x.CreateShaderProgram(new[] { this.vertexShader.Object, this.fragmentShader.Object })).Returns(this.shaderProgram.Object);
-            this.factory.Setup(x => x.CreateInputLayout(Vertex.InputElements)).Returns(this.inputLayout.Object);
-            this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<Vertex[]>(), this.batcher.Object.MaxVertexCount * Vertex.SizeInBytes, Vertex.SizeInBytes)).Returns(this.vertexBuffer.Object);
+            this.factory.Setup(x => x.CreateInputLayout(SpriteVertex.InputElements)).Returns(this.inputLayout.Object);
+            this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes)).Returns(this.vertexBuffer.Object);
             this.factory.Setup(x => x.CreateIndexBuffer(BufferUsageType.Static, It.IsAny<int[]>(), this.batcher.Object.MaxIndexCount * sizeof(int))).Returns(this.indexBuffer.Object);
 
             this.texture = new Mock<ITexture2D>();
