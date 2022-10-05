@@ -28,5 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+    <ProjectReference Include="..\FinalEngine.Maths\FinalEngine.Maths.csproj" />
   </ItemGroup>
 </Project>
