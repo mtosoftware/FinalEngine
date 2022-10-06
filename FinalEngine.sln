@@ -34,9 +34,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Rendering.OpenG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Utilities", "FinalEngine.Utilities\FinalEngine.Utilities.csproj", "{82A89B14-C583-4762-AAB1-F81E1C29E5D8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Launching", "Launching", "{B08DA1A9-E4B4-43A7-B464-D17FCDE63C35}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runtime", "Runtime", "{B08DA1A9-E4B4-43A7-B464-D17FCDE63C35}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Launching", "FinalEngine.Launching\FinalEngine.Launching.csproj", "{2C32F809-791A-47F0-988B-A7629930823C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Runtime", "FinalEngine.Launching\FinalEngine.Runtime.csproj", "{2C32F809-791A-47F0-988B-A7629930823C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.ECS", "FinalEngine.ECS\FinalEngine.ECS.csproj", "{976CD388-3DE5-4BA3-942F-C61C8D8F4C89}"
 EndProject
@@ -48,13 +48,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Extensions.Reso
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ECS", "ECS", "{015D5E9E-7510-446B-90A8-895B7FD6DFA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.ECS.Components", "FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj", "{F3E04812-A26D-4166-A217-18972D05F37C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.ECS.Components", "FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj", "{F3E04812-A26D-4166-A217-18972D05F37C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.ECS.Systems", "FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj", "{0AE758DD-27F9-4A80-B0E2-357D20D5270D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.ECS.Systems", "FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj", "{0AE758DD-27F9-4A80-B0E2-357D20D5270D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Maths", "FinalEngine.Maths\FinalEngine.Maths.csproj", "{74E1AF06-9309-4340-BC9D-464BE306425E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Maths", "FinalEngine.Maths\FinalEngine.Maths.csproj", "{74E1AF06-9309-4340-BC9D-464BE306425E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Tests.TestGame", "FinalEngine.Tests.TestGame\FinalEngine.Tests.TestGame.csproj", "{41AE5739-332B-494B-A537-5F34E1EBA311}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Runtime.Desktop", "FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj", "{0033A5B5-56A7-46C3-A035-BC61CDEA41DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,10 +122,10 @@ Global
 		{74E1AF06-9309-4340-BC9D-464BE306425E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74E1AF06-9309-4340-BC9D-464BE306425E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74E1AF06-9309-4340-BC9D-464BE306425E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41AE5739-332B-494B-A537-5F34E1EBA311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41AE5739-332B-494B-A537-5F34E1EBA311}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41AE5739-332B-494B-A537-5F34E1EBA311}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41AE5739-332B-494B-A537-5F34E1EBA311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0033A5B5-56A7-46C3-A035-BC61CDEA41DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0033A5B5-56A7-46C3-A035-BC61CDEA41DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0033A5B5-56A7-46C3-A035-BC61CDEA41DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0033A5B5-56A7-46C3-A035-BC61CDEA41DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,7 +146,7 @@ Global
 		{F3E04812-A26D-4166-A217-18972D05F37C} = {015D5E9E-7510-446B-90A8-895B7FD6DFA4}
 		{0AE758DD-27F9-4A80-B0E2-357D20D5270D} = {015D5E9E-7510-446B-90A8-895B7FD6DFA4}
 		{74E1AF06-9309-4340-BC9D-464BE306425E} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
-		{41AE5739-332B-494B-A537-5F34E1EBA311} = {E9320D29-CE2F-4A99-8F58-8E52E89E0147}
+		{0033A5B5-56A7-46C3-A035-BC61CDEA41DB} = {B08DA1A9-E4B4-43A7-B464-D17FCDE63C35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}

@@ -4,6 +4,7 @@
 
 namespace FinalEngine.ECS.Components.Cameras
 {
+    using System.Drawing;
     using System.Numerics;
     using FinalEngine.Maths;
 
@@ -16,17 +17,22 @@ namespace FinalEngine.ECS.Components.Cameras
             this.NearPlaneDistance = 0.1f;
             this.FarPlaneDistance = 1000.0f;
             this.FieldOfView = 70.0f;
+            this.IsEnabled = true;
         }
 
         public float FarPlaneDistance { get; set; }
 
         public float FieldOfView { get; set; }
 
+        public bool IsEnabled { get; set; }
+
         public float NearPlaneDistance { get; set; }
 
         public float ProjectionHeight { get; set; }
 
         public float ProjectionWidth { get; set; }
+
+        public Rectangle Viewport { get; set; }
 
         public Matrix4x4 CreateProjectionMatrix()
         {

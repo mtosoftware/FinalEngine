@@ -7,7 +7,6 @@ namespace FinalEngine.ECS
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
-    using FinalEngine.ECS.Components;
 
     /// <summary>
     ///   Provides a container for <see cref="IComponent"/> s that can be, added, removed or accessed during runtime through an <see cref="EntitySystemBase"/>.
@@ -27,43 +26,6 @@ namespace FinalEngine.ECS
         public Entity()
         {
             this.typeToComponentMap = new Dictionary<Type, IComponent>();
-            this.AddComponent<TagComponent>();
-        }
-
-        /// <summary>
-        ///   Gets or sets the tag for this <see cref="IReadOnlyEntity"/>.
-        /// </summary>
-        /// <value>
-        ///   The tag for this <see cref="IReadOnlyEntity"/>.
-        /// </value>
-        public string? Tag
-        {
-            get
-            {
-                if (!this.ContainsComponent<TagComponent>())
-                {
-                    return null;
-                }
-
-                return this.GetComponent<TagComponent>().Tag;
-            }
-
-            set
-            {
-                var hasTag = this.ContainsComponent<TagComponent>();
-
-                if (!hasTag)
-                {
-                    this.AddComponent(new TagComponent()
-                    {
-                        Tag = value,
-                    });
-
-                    return;
-                }
-
-                this.GetComponent<TagComponent>().Tag = value;
-            }
         }
 
         /// <summary>
@@ -168,12 +130,9 @@ namespace FinalEngine.ECS
                 throw new ArgumentNullException(nameof(type), $"The specified {nameof(type)} parameter cannot be null.");
             }
 
-            if (!typeof(IComponent).IsAssignableFrom(type))
-            {
-                throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IComponent)}.", nameof(type));
-            }
-
-            return this.typeToComponentMap.ContainsKey(type);
+            return !typeof(IComponent).IsAssignableFrom(type)
+                ? throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IComponent)}.", nameof(type))
+                : this.typeToComponentMap.ContainsKey(type);
         }
 
         /// <summary>
@@ -218,12 +177,9 @@ namespace FinalEngine.ECS
                 throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IComponent)}.", nameof(type));
             }
 
-            if (!this.ContainsComponent(type))
-            {
-                throw new ArgumentException($"The specified {nameof(type)} parameter is not a component type that has been added to this entity.", nameof(type));
-            }
-
-            return this.typeToComponentMap[type];
+            return !this.ContainsComponent(type)
+                ? throw new ArgumentException($"The specified {nameof(type)} parameter is not a component type that has been added to this entity.", nameof(type))
+                : this.typeToComponentMap[type];
         }
 
         /// <summary>
@@ -300,7 +256,7 @@ namespace FinalEngine.ECS
                 throw new ArgumentException($"The specified {nameof(type)} parameter is not a component type that has been added to this entity.", nameof(type));
             }
 
-            this.typeToComponentMap.Remove(type);
+            _ = this.typeToComponentMap.Remove(type);
             this.OnComponentsChanged?.Invoke(this, EventArgs.Empty);
         }
 

@@ -83,6 +83,7 @@ namespace FinalEngine.Extensions.Resources.Loaders
                 throw new FileNotFoundException($"The specified {nameof(filePath)} parameter cannot be located.", filePath);
             }
 
+            //// TODO: This is never disposed :(
             Stream stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read);
 
             using (Image<Rgba32> image = this.invoker.Load<Rgba32>(stream))

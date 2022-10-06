@@ -2,10 +2,10 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Launching
+namespace FinalEngine.Runtime
 {
     using System;
-    using FinalEngine.Launching.Invocation;
+    using FinalEngine.Runtime.Invocation;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IGameTime"/> using an <see cref="IStopwatchInvoker"/> to keep track of time.

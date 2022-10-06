@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Launching.Invocation
+namespace FinalEngine.Runtime.Invocation
 {
     using System;
     using System.Diagnostics;

@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering.Pipeline
 {
     using System;
+    using FinalEngine.Resources;
 
     /// <summary>
     ///   Enumerates the available entry point for a shader.
@@ -26,7 +27,7 @@ namespace FinalEngine.Rendering.Pipeline
     ///   Defines an interface that represents a shader.
     /// </summary>
     /// <seealso cref="IDisposable"/>
-    public interface IShader : IDisposable
+    public interface IShader : IResource
     {
         /// <summary>
         ///   Gets the entry point of this <see cref="IShader"/>.

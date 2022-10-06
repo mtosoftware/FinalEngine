@@ -7,7 +7,6 @@ namespace FinalEngine.Tests.Core.ECS
     using System;
     using System.Dynamic;
     using FinalEngine.ECS;
-    using FinalEngine.ECS.Components;
     using NUnit.Framework;
 
     public class EntityTests
@@ -38,7 +37,7 @@ namespace FinalEngine.Tests.Core.ECS
             this.entity.AddComponent(componentA);
 
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.AddComponent<MockComponentA>());
+            _ = Assert.Throws<ArgumentException>(() => this.entity.AddComponent<MockComponentA>());
         }
 
         [Test]
@@ -67,21 +66,14 @@ namespace FinalEngine.Tests.Core.ECS
             this.entity.AddComponent(componentA);
 
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.AddComponent(componentB));
+            _ = Assert.Throws<ArgumentException>(() => this.entity.AddComponent(componentB));
         }
 
         [Test]
         public void AddComponentShouldThrowArgumentNullExceptionWhenComponentIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.entity.AddComponent(null));
-        }
-
-        [Test]
-        public void ConstructorShouldAddTagComponentWhenInvoked()
-        {
-            // Assert
-            Assert.IsTrue(this.entity.ContainsComponent<TagComponent>());
+            _ = Assert.Throws<ArgumentNullException>(() => this.entity.AddComponent(null));
         }
 
         [Test]
@@ -144,7 +136,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void ContainsComponentInstanceShouldThrowArgumentNullExceptionWhenComponentIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.entity.ContainsComponent(component: null));
+            _ = Assert.Throws<ArgumentNullException>(() => this.entity.ContainsComponent(component: null));
         }
 
         [Test]
@@ -177,14 +169,14 @@ namespace FinalEngine.Tests.Core.ECS
         public void ContainsComponentTypeShouldThrowArgumentExceptionWhenTypeDoesNotImplementIComponent()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.ContainsComponent(this.GetType()));
+            _ = Assert.Throws<ArgumentException>(() => this.entity.ContainsComponent(this.GetType()));
         }
 
         [Test]
         public void ContainsComponentTypeShouldThrowArgumentNullExceptionWhenTypeIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.entity.ContainsComponent(type: null));
+            _ = Assert.Throws<ArgumentNullException>(() => this.entity.ContainsComponent(type: null));
         }
 
         [Test]
@@ -205,7 +197,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void GetComponentGenericShouldThrowArgumentExceptionWhenComponentTypeIsNotAdded()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.GetComponent<MockComponentA>());
+            _ = Assert.Throws<ArgumentException>(() => this.entity.GetComponent<MockComponentA>());
         }
 
         [Test]
@@ -226,21 +218,21 @@ namespace FinalEngine.Tests.Core.ECS
         public void GetComponentShouldThrowArgumentExceptionWhenComponentTypeIsNotAdded()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.GetComponent(typeof(MockComponentA)));
+            _ = Assert.Throws<ArgumentException>(() => this.entity.GetComponent(typeof(MockComponentA)));
         }
 
         [Test]
         public void GetComponentShouldThrowArgumentExceptionWhenTypeDoesNotImplementIComponent()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.GetComponent(typeof(EntityTests)));
+            _ = Assert.Throws<ArgumentException>(() => this.entity.GetComponent(typeof(EntityTests)));
         }
 
         [Test]
         public void GetComponentShouldThrowArgumentNullExceptionWhenTypeIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.entity.GetComponent(null));
+            _ = Assert.Throws<ArgumentNullException>(() => this.entity.GetComponent(null));
         }
 
         [Test]
@@ -260,7 +252,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void RemoveComponentGenericShouldThrowArgumentExceptionWhenComponentTypeIsNotAdded()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent<MockComponentA>());
+            _ = Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent<MockComponentA>());
         }
 
         [Test]
@@ -284,7 +276,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void RemoveComponentInstanceShouldThrowArgumentNullExceptionWhenComponentIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.entity.RemoveComponent(component: null));
+            _ = Assert.Throws<ArgumentNullException>(() => this.entity.RemoveComponent(component: null));
         }
 
         [Test]
@@ -305,7 +297,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void RemoveComponentShouldThrowArgumentExceptionWhenComponentNotAdded()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent(new MockComponentA()));
+            _ = Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent(new MockComponentA()));
         }
 
         [Test]
@@ -328,21 +320,21 @@ namespace FinalEngine.Tests.Core.ECS
         public void RemoveComponentTypeShouldThrowArgumentExceptionWhenComponenetTypeHasNotBeenAdded()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent(typeof(MockComponentA)));
+            _ = Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent(typeof(MockComponentA)));
         }
 
         [Test]
         public void RemoveComponentTypeShouldThrowArgumentExceptionWhenTypeDoesNotImplementIComponent()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent(typeof(EntityTests)));
+            _ = Assert.Throws<ArgumentException>(() => this.entity.RemoveComponent(typeof(EntityTests)));
         }
 
         [Test]
         public void RemoveComponentTypeShouldThrowArgumentNullExceptionWhenTypeIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.entity.RemoveComponent(type: null));
+            _ = Assert.Throws<ArgumentNullException>(() => this.entity.RemoveComponent(type: null));
         }
 
         [Test]
@@ -362,60 +354,6 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             this.entity = new Entity();
-        }
-
-        [Test]
-        public void TagSetShouldAddTagComponentIfNotExists()
-        {
-            // Arrange
-            this.entity.RemoveComponent<TagComponent>();
-
-            // Act
-            this.entity.Tag = "Test";
-
-            // Assert
-            Assert.IsTrue(this.entity.ContainsComponent<TagComponent>());
-        }
-
-        [Test]
-        public void TagSetShouldSetTagWhenInvoked()
-        {
-            // Arrange
-            const string Expected = "Cheese";
-            this.entity.Tag = Expected;
-
-            // Act
-            var actual = this.entity.Tag;
-
-            // Assert
-            Assert.AreEqual(Expected, actual);
-        }
-
-        [Test]
-        public void TagShouldReturnNullWhenNoTagComponent()
-        {
-            // Arrange
-            this.entity.RemoveComponent<TagComponent>();
-
-            // Act
-            string tag = this.entity.Tag;
-
-            // Assert
-            Assert.IsNull(tag);
-        }
-
-        [Test]
-        public void TagShouldReturnTagComponentTagWhenInvoked()
-        {
-            // Arrange
-            const string Expected = "Potato";
-            this.entity.GetComponent<TagComponent>().Tag = Expected;
-
-            // Act
-            var actual = this.entity.Tag;
-
-            // Assert
-            Assert.AreEqual(Expected, actual);
         }
 
         [Test]
@@ -487,7 +425,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void TryGetMemberShouldThrowArgumentNullExceptionWhenBinderIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.entity.TryGetMember(null, out _));
+            _ = Assert.Throws<ArgumentNullException>(() => this.entity.TryGetMember(null, out _));
         }
 
         private class GetMemberBinderMock : GetMemberBinder
