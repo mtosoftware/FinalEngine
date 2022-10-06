@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj" />
+    <ProjectReference Include="..\FinalEngine.Launching\FinalEngine.Runtime.csproj" />
+  </ItemGroup>
+
+</Project>

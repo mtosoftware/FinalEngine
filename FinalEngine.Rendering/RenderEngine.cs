@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering
 {
     using System;
+    using System.Drawing;
     using FinalEngine.ECS;
     using FinalEngine.Rendering.Pipeline;
 
@@ -23,8 +24,6 @@ namespace FinalEngine.Rendering
         public void Initialize()
         {
             //// TODO: Set raster, depth, blend and stencil states.
-            this.renderDevice.Initialize();
-
             this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram);
             this.renderDevice.Pipeline.SetUniform("u_material.diffuseTexture", 0);
         }
@@ -36,7 +35,9 @@ namespace FinalEngine.Rendering
                 throw new ArgumentNullException(nameof(processor));
             }
 
+            this.renderDevice.Clear(Color.Black);
             this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram);
+
             processor.ProcessAll(GameLoopType.Render);
         }
     }

@@ -12,7 +12,7 @@ namespace FinalEngine.ECS
     /// </summary>
     /// <seealso cref="IEntityWorld"/>
     /// <seealso cref="IEntitySystemsProcessor"/>
-    public class EntityWorld : IEntityWorld, IEntitySystemsProcessor
+    public class EntityWorld : IEntityWorld
     {
         /// <summary>
         ///   The entities contained within the world.
@@ -152,7 +152,7 @@ namespace FinalEngine.ECS
                 system.AddOrRemoveByAspect(entity, true);
             }
 
-            this.entities.Remove(entity);
+            _ = this.entities.Remove(entity);
         }
 
         /// <summary>

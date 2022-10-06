@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj" />
+    <ProjectReference Include="..\MyGame.Common\MyGame.Common.csproj" />
+  </ItemGroup>
+
+</Project>

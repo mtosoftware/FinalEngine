@@ -8,7 +8,6 @@ namespace FinalEngine.Rendering.OpenGL
     using System.Collections.Generic;
     using System.Drawing;
     using FinalEngine.Rendering.Buffers;
-    using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Rendering.Pipeline;
     using FinalEngine.Rendering.Textures;
@@ -40,19 +39,6 @@ namespace FinalEngine.Rendering.OpenGL
         ///   Used to map OpenGL enumerations to the rendering APIs equivalent.
         /// </remarks>
         private readonly IEnumMapper mapper;
-
-        /// <summary>
-        ///   Indicates whether this instance has been initialized.
-        /// </summary>
-        private bool isInitialized;
-
-        /// <summary>
-        ///   The global vertex array object.
-        /// </summary>
-        /// <remarks>
-        ///   A global vertex array object is required as the rendering API has no concept of VAOs.
-        /// </remarks>
-        private int vao;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="OpenGLRenderDevice"/> class.
@@ -146,14 +132,6 @@ namespace FinalEngine.Rendering.OpenGL
         }
 
         /// <summary>
-        ///   Finalizes an instance of the <see cref="OpenGLRenderDevice"/> class.
-        /// </summary>
-        ~OpenGLRenderDevice()
-        {
-            this.Dispose(false);
-        }
-
-        /// <summary>
         ///   Gets an <see cref="IGPUResourceFactory"/> that represents the factory used to create resources for this <see cref="IRenderDevice"/>.
         /// </summary>
         /// <value>
@@ -194,14 +172,6 @@ namespace FinalEngine.Rendering.OpenGL
         public IRasterizer Rasterizer { get; }
 
         /// <summary>
-        ///   Gets a value indicating whether this instance is disposed.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
-        /// </value>
-        protected bool IsDisposed { get; private set; }
-
-        /// <summary>
         ///   Clears the currently bound target to the specified <paramref name="color"/>, <paramref name="depth"/> and <paramref name="stencil"/> values.
         /// </summary>
         /// <param name="color">
@@ -222,15 +192,6 @@ namespace FinalEngine.Rendering.OpenGL
         }
 
         /// <summary>
-        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         ///   Draws indexed, non-instanced primitives, of the specified <paramref name="topology"/>, starting at the specified <paramref name="first"/> location and drawing a total number of <paramref name="count"/> primitives.
         /// </summary>
         /// <param name="topology">
@@ -245,50 +206,6 @@ namespace FinalEngine.Rendering.OpenGL
         public void DrawIndices(PrimitiveTopology topology, int first, int count)
         {
             this.invoker.DrawElements(this.mapper.Forward<PrimitiveType>(topology), count, DrawElementsType.UnsignedInt, first);
-        }
-
-        /// <summary>
-        ///   Initializes this instance (should be called before creating any resources).
-        /// </summary>
-        /// <exception cref="RenderDeviceInitializationException">
-        ///   The OpenGL render device has already been initialized.
-        /// </exception>
-        public void Initialize()
-        {
-            if (this.isInitialized)
-            {
-                throw new RenderDeviceInitializationException("The OpenGL Render Device has already been initialized.");
-            }
-
-            this.vao = this.invoker.GenVertexArray();
-            this.invoker.BindVertexArray(this.vao);
-
-            this.isInitialized = true;
-        }
-
-        /// <summary>
-        ///   Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing">
-        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (this.IsDisposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (this.vao != -1)
-                {
-                    this.invoker.DeleteVertexArray(this.vao);
-                    this.vao = -1;
-                }
-            }
-
-            this.IsDisposed = true;
         }
     }
 }

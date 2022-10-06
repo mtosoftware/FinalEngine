@@ -4,7 +4,6 @@
 
 namespace FinalEngine.Rendering
 {
-    using System;
     using System.Drawing;
 
     /// <summary>
@@ -37,7 +36,7 @@ namespace FinalEngine.Rendering
     /// <summary>
     ///   Defines an interface that represents a device, physical or hardware, that can provide low-level rendering functionality.
     /// </summary>
-    public interface IRenderDevice : IDisposable
+    public interface IRenderDevice
     {
         /// <summary>
         ///   Gets an <see cref="IGPUResourceFactory"/> that represents the factory used to create resources for this <see cref="IRenderDevice"/>.
@@ -106,10 +105,5 @@ namespace FinalEngine.Rendering
         ///   Specifies an <see cref="int"/> that represents the total number of indices to draw.
         /// </param>
         void DrawIndices(PrimitiveTopology topology, int first, int count);
-
-        /// <summary>
-        ///   Initializes this instance (should be called before creating any resources).
-        /// </summary>
-        void Initialize();
     }
 }
