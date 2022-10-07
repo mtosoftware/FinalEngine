@@ -1,4 +1,4 @@
-﻿// <copyright file="DesktopRuntimeFactory.cs" company="Software Antics">
+// <copyright file="DesktopRuntimeFactory.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -24,7 +24,7 @@ namespace FinalEngine.Runtime.Desktop
 
     public class DesktopRuntimeFactory : IRuntimeFactory
     {
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Invocation Class")]
+        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Objects returned are disposed.")]
         public void InitializeRuntime(
             int width,
             int height,

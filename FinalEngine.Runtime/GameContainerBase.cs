@@ -1,4 +1,4 @@
-﻿// <copyright file="GameContainerBase.cs" company="Software Antics">
+// <copyright file="GameContainerBase.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -39,11 +39,11 @@ namespace FinalEngine.Runtime
                 settings.WindowSettings.Title,
                 out this.window,
                 out this.eventsProcessor,
-                out IFileSystem fileSystem,
-                out IKeyboard keyboard,
-                out IMouse mouse,
+                out var fileSystem,
+                out var keyboard,
+                out var mouse,
                 out this.renderContext,
-                out IRenderDevice renderDevice);
+                out var renderDevice);
 
             this.FileSystem = fileSystem;
             this.Keyboard = keyboard;

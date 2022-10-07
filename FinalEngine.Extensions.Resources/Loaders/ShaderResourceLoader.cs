@@ -1,4 +1,4 @@
-﻿// <copyright file="ShaderResourceLoader.cs" company="Software Antics">
+// <copyright file="ShaderResourceLoader.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -35,9 +35,9 @@ namespace FinalEngine.Extensions.Resources.Loaders
                 throw new FileNotFoundException($"The specified {nameof(filePath)} parameter cannot be located.", filePath);
             }
 
-            PipelineTarget target = GetPipelineTarget(filePath);
+            var target = GetPipelineTarget(filePath);
 
-            using (Stream stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read))
+            using (var stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read))
             {
                 using (var reader = new StreamReader(stream))
                 {
@@ -48,18 +48,14 @@ namespace FinalEngine.Extensions.Resources.Loaders
 
         private static PipelineTarget GetPipelineTarget(string filePath)
         {
-            string extension = Path.GetExtension(filePath);
+            string? extension = Path.GetExtension(filePath);
 
-            switch (extension)
+            return extension switch
             {
-                case ".vert":
-                    return PipelineTarget.Vertex;
-
-                case ".frag":
-                    return PipelineTarget.Fragment;
-            }
-
-            throw new NotSupportedException($"The file extensison specified is not supported: '{extension}'");
+                ".vert" => PipelineTarget.Vertex,
+                ".frag" => PipelineTarget.Fragment,
+                _ => throw new NotSupportedException($"The file extensison specified is not supported: '{extension}'"),
+            };
         }
     }
 }

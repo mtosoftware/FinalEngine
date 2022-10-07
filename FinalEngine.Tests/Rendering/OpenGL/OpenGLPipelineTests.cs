@@ -24,9 +24,14 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         private OpenGLPipeline pipeline;
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull() =>
+        public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
+        {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLPipeline(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLPipeline(null);
+            });
+        }
 
         [Test]
         public void MaxTextureSlotsShouldInvokeGetIntegerWhenInvoked()
@@ -46,7 +51,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.invoker.Setup(x => x.GetInteger(GetPName.MaxTextureImageUnits)).Returns(Expected);
 
             // Act
-            var actual = this.pipeline.MaxTextureSlots;
+            int actual = this.pipeline.MaxTextureSlots;
 
             // Assert
             Assert.AreEqual(Expected, actual);
@@ -82,7 +87,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             var program = new Mock<IShaderProgram>();
 
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.pipeline.SetShaderProgram(program.Object));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.pipeline.SetShaderProgram(program.Object);
+            });
         }
 
         [Test]
@@ -109,9 +117,14 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetTextureShouldThrowArgumentExceptionWhenTextureIsNotIOpenGLTexture() =>
+        public void SetTextureShouldThrowArgumentExceptionWhenTextureIsNotIOpenGLTexture()
+        {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.pipeline.SetTexture(new Mock<ITexture>().Object));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.pipeline.SetTexture(new Mock<ITexture>().Object);
+            });
+        }
 
         [Test]
         public void SetUniformBoolShouldInvokeUniform1WithOneAsParameterWhenGetUniformLocationReturnsPositiveInteger()
@@ -159,19 +172,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, true));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, true);
+            });
+        }
 
         [Test]
-        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, true));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, true);
+            });
+        }
 
         [Test]
-        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", true));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", true);
+            });
+        }
 
         [Test]
         public void SetUniformBoolShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
@@ -183,7 +211,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", true));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", true);
+            });
         }
 
         [Test]
@@ -216,19 +247,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, 0.0d));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, 0.0d);
+            });
+        }
 
         [Test]
-        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, 0.0d));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, 0.0d);
+            });
+        }
 
         [Test]
-        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", 0.0d));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", 0.0d);
+            });
+        }
 
         [Test]
         public void SetUniformDoubleShouldThrowUniformNotLocatedExceptionWhenGetUniformLocatioReturnsNegativeOne()
@@ -240,7 +286,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", 0.0d));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", 0.0d);
+            });
         }
 
         [Test]
@@ -273,19 +322,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, 1.0f));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, 1.0f);
+            });
+        }
 
         [Test]
-        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, 1.0f));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, 1.0f);
+            });
+        }
 
         [Test]
-        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", 1.0f));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", 1.0f);
+            });
+        }
 
         [Test]
         public void SetUniformFloatShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
@@ -297,7 +361,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", 1.0f));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", 1.0f);
+            });
         }
 
         [Test]
@@ -330,19 +397,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, 0);
+            });
+        }
 
         [Test]
-        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, 0);
+            });
+        }
 
         [Test]
-        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", 0);
+            });
+        }
 
         [Test]
         public void SetUniformIntShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
@@ -354,7 +436,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", 0));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", 0);
+            });
         }
 
         [Test]
@@ -407,19 +492,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, Matrix4x4.Identity));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, Matrix4x4.Identity);
+            });
+        }
 
         [Test]
-        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, Matrix4x4.Identity));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, Matrix4x4.Identity);
+            });
+        }
 
         [Test]
-        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", Matrix4x4.Identity));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", Matrix4x4.Identity);
+            });
+        }
 
         [Test]
         public void SetUniformMatrix4x4ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
@@ -431,7 +531,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", Matrix4x4.Identity));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", Matrix4x4.Identity);
+            });
         }
 
         [Test]
@@ -464,19 +567,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, new Vector2(1.0f, 0.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, new Vector2(1.0f, 0.0f));
+            });
+        }
 
         [Test]
-        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, new Vector2(1.0f, 0.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, new Vector2(1.0f, 0.0f));
+            });
+        }
 
         [Test]
-        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", new Vector2(1.0f, 0.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", new Vector2(1.0f, 0.0f));
+            });
+        }
 
         [Test]
         public void SetUniformVector2ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
@@ -488,7 +606,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", new Vector2(1.0f, 0.0f)));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", new Vector2(1.0f, 0.0f));
+            });
         }
 
         [Test]
@@ -521,19 +642,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, new Vector3(1.0f, 0.0f, 1.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, new Vector3(1.0f, 0.0f, 1.0f));
+            });
+        }
 
         [Test]
-        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, new Vector3(1.0f, 0.0f, 1.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, new Vector3(1.0f, 0.0f, 1.0f));
+            });
+        }
 
         [Test]
-        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", new Vector3(1.0f, 0.0f, 1.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", new Vector3(1.0f, 0.0f, 1.0f));
+            });
+        }
 
         [Test]
         public void SetUniformVector3ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
@@ -545,7 +681,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", new Vector3(1.0f, 0.0f, 1.0f)));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", new Vector3(1.0f, 0.0f, 1.0f));
+            });
         }
 
         [Test]
@@ -578,19 +717,34 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsEmpty() =>
+        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(string.Empty, new Vector4(1.0f, 0.0f, 1.0f, 1.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(string.Empty, new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
+            });
+        }
 
         [Test]
-        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsNull() =>
+        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform(null, new Vector4(1.0f, 0.0f, 1.0f, 1.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform(null, new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
+            });
+        }
 
         [Test]
-        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsWhitespace() =>
+        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.pipeline.SetUniform("\t\r\n", new Vector4(1.0f, 0.0f, 1.0f, 1.0f)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetUniform("\t\r\n", new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
+            });
+        }
 
         [Test]
         public void SetUniformVector4ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
@@ -602,7 +756,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.pipeline.SetShaderProgram(program.Object);
 
             // Act and assert
-            Assert.Throws<UniformNotLocatedException>(() => this.pipeline.SetUniform("name", new Vector4(1.0f, 0.0f, 1.0f, 1.0f)));
+            Assert.Throws<UniformNotLocatedException>(() =>
+            {
+                this.pipeline.SetUniform("name", new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
+            });
         }
 
         [SetUp]

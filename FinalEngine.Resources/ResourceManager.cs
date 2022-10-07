@@ -1,4 +1,4 @@
-﻿// <copyright file="ResourceManager.cs" company="Software Antics">
+// <copyright file="ResourceManager.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -57,7 +57,10 @@ namespace FinalEngine.Resources
         /// </value>
         public static IResourceManager Instance
         {
-            get { return instance ??= new ResourceManager(); }
+            get
+            {
+                return instance ??= new ResourceManager();
+            }
         }
 
         /// <summary>
@@ -103,12 +106,12 @@ namespace FinalEngine.Resources
                 throw new ArgumentNullException(nameof(filePath), $"The specified {nameof(filePath)} parameter cannot be null.");
             }
 
-            if (!this.typeToLoaderMap.TryGetValue(typeof(T), out IResourceLoaderInternal? loader))
+            if (!this.typeToLoaderMap.TryGetValue(typeof(T), out var loader))
             {
                 throw new ResourceLoaderNotRegisteredException($"The specified {nameof(T)} parameter does not have an associated registered loader.");
             }
 
-            if (!this.pathToResourceDataMap.TryGetValue(filePath, out ResourceData? resourceData))
+            if (!this.pathToResourceDataMap.TryGetValue(filePath, out var resourceData))
             {
                 resourceData = new ResourceData(filePath, loader.LoadResource(filePath));
                 this.pathToResourceDataMap.Add(filePath, resourceData);
@@ -168,8 +171,8 @@ namespace FinalEngine.Resources
 
             for (int i = this.pathToResourceDataMap.Count - 1; i >= 0; i--)
             {
-                KeyValuePair<string, ResourceData> kvp = this.pathToResourceDataMap.ElementAt(i);
-                ResourceData resourceData = kvp.Value;
+                var kvp = this.pathToResourceDataMap.ElementAt(i);
+                var resourceData = kvp.Value;
 
                 resourceData.DecrementReferenceCount();
 
@@ -200,8 +203,8 @@ namespace FinalEngine.Resources
                 {
                     for (int i = this.pathToResourceDataMap.Count - 1; i >= 0; i--)
                     {
-                        KeyValuePair<string, ResourceData> kvp = this.pathToResourceDataMap.ElementAt(i);
-                        ResourceData resourceData = kvp.Value;
+                        var kvp = this.pathToResourceDataMap.ElementAt(i);
+                        var resourceData = kvp.Value;
 
                         resourceData.Reference.Dispose();
                         this.pathToResourceDataMap.Remove(resourceData.FilePath);

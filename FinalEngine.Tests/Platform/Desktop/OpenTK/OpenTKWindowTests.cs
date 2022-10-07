@@ -69,14 +69,18 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         }
 
         [Test]
-        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull() =>
+        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull()
+        {
             // Arrange, act and assert
             Assert.DoesNotThrow(() => new OpenTKWindow(new Mock<INativeWindowInvoker>().Object));
+        }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull() =>
+        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull()
+        {
             // Arrange, act and assert
             Assert.Throws<ArgumentNullException>(() => new OpenTKWindow(null));
+        }
 
         [Test]
         public void DisposeShouldInvokeNativeWindowDisposeWhenNotDisposed()
@@ -171,7 +175,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         }
 
         [TearDown]
-        public void TearDown() => this.window.Dispose();
+        public void TearDown()
+        {
+            this.window.Dispose();
+        }
 
         [Test]
         public void TitleGetShouldInvokeNativeWindowTitleWhenRead()

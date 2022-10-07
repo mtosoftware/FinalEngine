@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLShaderTests.cs" company="Software Antics">
+// <copyright file="OpenGLShaderTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -45,7 +45,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
             this.shader.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.shader.Attach(0));
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.shader.Attach(0);
+            });
         }
 
         [Test]
@@ -87,35 +90,50 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLShader(null, this.mapper.Object, ShaderType.VertexShader, this.sourceCode));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShader(null, this.mapper.Object, ShaderType.VertexShader, this.sourceCode);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLShader(this.invoker.Object, null, ShaderType.VertexShader, this.sourceCode));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShader(this.invoker.Object, null, ShaderType.VertexShader, this.sourceCode);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenSourceCodeIsEmpty()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, string.Empty);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenSourceCodeIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, null);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenSourceCodeIsWhitespace()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, "\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, "\t\r\n");
+            });
         }
 
         [Test]
@@ -125,7 +143,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
             this.invoker.Setup(x => x.GetShaderInfoLog(ID)).Returns("test");
 
             // Act and assert
-            Assert.Throws<ShaderCompilationErrorException>(() => new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, this.sourceCode));
+            Assert.Throws<ShaderCompilationErrorException>(() =>
+            {
+                new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, this.sourceCode);
+            });
         }
 
         [Test]
@@ -142,7 +163,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
         public void EntryPointShouldReturnVertexWhenInvoked()
         {
             // Act
-            PipelineTarget actual = this.shader.EntryPoint;
+            var actual = this.shader.EntryPoint;
 
             // Assert
             Assert.AreEqual(PipelineTarget.Vertex, actual);

@@ -23,7 +23,10 @@ namespace FinalEngine.ECS
         /// <summary>
         ///   Initializes a new instance of the <see cref="Entity"/> class.
         /// </summary>
-        public Entity() => this.typeToComponentMap = new Dictionary<Type, IComponent>();
+        public Entity()
+        {
+            this.typeToComponentMap = new Dictionary<Type, IComponent>();
+        }
 
         /// <summary>
         ///   Gets or sets the event that occurs when a component is added or removed from this <see cref="Entity"/>.
@@ -70,7 +73,10 @@ namespace FinalEngine.ECS
         ///   The type component to add to this <see cref="Entity"/>.
         /// </typeparam>
         public void AddComponent<TComponent>()
-            where TComponent : IComponent, new() => this.AddComponent(Activator.CreateInstance<TComponent>());
+            where TComponent : IComponent, new()
+        {
+            this.AddComponent(Activator.CreateInstance<TComponent>());
+        }
 
         /// <summary>
         ///   Determines whether the specified <paramref name="component"/> is contained within this <see cref="Entity"/>.
@@ -139,7 +145,10 @@ namespace FinalEngine.ECS
         ///   <c>true</c> if a component of the specified <typeparamref name="TComponent"/> is contained within this <see cref="Entity"/>; otherwise, <c>false</c>.
         /// </returns>
         public bool ContainsComponent<TComponent>()
-            where TComponent : IComponent => this.ContainsComponent(typeof(TComponent));
+            where TComponent : IComponent
+        {
+            return this.ContainsComponent(typeof(TComponent));
+        }
 
         /// <summary>
         ///   Gets a component of the specified <paramref name="type"/> from this <see cref="Entity"/>.
@@ -186,7 +195,10 @@ namespace FinalEngine.ECS
         ///   The specified <typeparamref name="TComponent"/> parameter is not a component type that has been added to this <see cref="Entity"/>.
         /// </exception>
         public TComponent GetComponent<TComponent>()
-            where TComponent : IComponent => (TComponent)this.GetComponent(typeof(TComponent));
+            where TComponent : IComponent
+        {
+            return (TComponent)this.GetComponent(typeof(TComponent));
+        }
 
         /// <summary>
         ///   Removes the specified <paramref name="component"/> from this <see cref="Entity"/>.
@@ -258,7 +270,10 @@ namespace FinalEngine.ECS
         ///   A component of the specified <typeparamref name="TComponent"/> parameter has not been added to this entity.
         /// </exception>
         public void RemoveComponent<TComponent>()
-            where TComponent : IComponent => this.RemoveComponent(typeof(TComponent));
+            where TComponent : IComponent
+        {
+            this.RemoveComponent(typeof(TComponent));
+        }
 
         /// <summary>
         ///   Attempts to retrieve a component by class name.
@@ -305,11 +320,11 @@ namespace FinalEngine.ECS
                 throw new ArgumentNullException(nameof(binder), $"The specified {nameof(binder)} parameter cannot be null.");
             }
 
-            var memberName = binder.Name;
+            string? memberName = binder.Name;
 
             foreach (var kvp in this.typeToComponentMap)
             {
-                var typeName = kvp.Key.Name;
+                string? typeName = kvp.Key.Name;
 
                 if (typeName.EndsWith("Component", StringComparison.CurrentCulture))
                 {

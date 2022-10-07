@@ -1,4 +1,4 @@
-﻿// <copyright file="EntitySystemBase.cs" company="Software Antics">
+// <copyright file="EntitySystemBase.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -25,7 +25,10 @@ namespace FinalEngine.ECS
         /// <summary>
         ///   Initializes a new instance of the <see cref="EntitySystemBase"/> class.
         /// </summary>
-        protected EntitySystemBase() => this.entities = new List<Entity>();
+        protected EntitySystemBase()
+        {
+            this.entities = new List<Entity>();
+        }
 
         /// <summary>
         ///   Gets the game loop type for this <see cref="EntitySystemBase"/>.
@@ -41,9 +44,11 @@ namespace FinalEngine.ECS
         /// <summary>
         ///   Calls the <see cref="Process(IEnumerable{Entity})"/> function, the frequency depends on the <see cref="LoopType"/>.
         /// </summary>
-        public void Process() =>
+        public void Process()
+        {
             // Copy the list so that the collection can be modified in a foreach loop.
             this.Process(this.entities.ToList());
+        }
 
         /// <summary>
         ///   Adds or removes the specified <paramref name="entity"/> from this <see cref="EntitySystemBase"/>.
@@ -67,8 +72,8 @@ namespace FinalEngine.ECS
                 throw new ArgumentNullException(nameof(entity), $"The specified {nameof(entity)} parameter cannot be null.");
             }
 
-            var isMatch = this.IsMatch(entity);
-            var isAdded = this.entities.Contains(entity);
+            bool isMatch = this.IsMatch(entity);
+            bool isAdded = this.entities.Contains(entity);
 
             if (forceRemove && isAdded)
             {

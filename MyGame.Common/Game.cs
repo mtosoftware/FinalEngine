@@ -1,4 +1,4 @@
-﻿// <copyright file="Game.cs" company="Software Antics">
+// <copyright file="Game.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -43,9 +43,9 @@ namespace MyGame.Common
             this.world.AddSystem(new FreeRotationEntitySystem(this.Keyboard, this.Mouse, this.RenderDevice.Rasterizer));
             this.world.AddSystem(new MeshRenderEntitySystem(this.RenderDevice));
 
-            IShader vertexShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\shader.vert");
-            IShader fragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\shader.frag");
-            IShaderProgram shaderProgram = this.RenderDevice.Factory.CreateShaderProgram(new[] { vertexShader, fragmentShader });
+            var vertexShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\shader.vert");
+            var fragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\shader.frag");
+            var shaderProgram = this.RenderDevice.Factory.CreateShaderProgram(new[] { vertexShader, fragmentShader });
 
             this.renderEngine = new RenderEngine(this.RenderDevice, shaderProgram);
 
