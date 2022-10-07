@@ -28,14 +28,6 @@ namespace FinalEngine.ECS
         void AddSystem(EntitySystemBase system);
 
         /// <summary>
-        ///   Processes all systems that match the specified loop <paramref name="type"/>.
-        /// </summary>
-        /// <param name="type">
-        ///   The loop type of systems to process.
-        /// </param>
-        void ProcessAll(GameLoopType type);
-
-        /// <summary>
         ///   Removes the specified <paramref name="entity"/> from this <see cref="IEntityWorld"/>.
         /// </summary>
         /// <param name="entity">

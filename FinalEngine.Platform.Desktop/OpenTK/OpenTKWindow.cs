@@ -158,7 +158,8 @@ namespace FinalEngine.Platform.Desktop.OpenTK
                 throw new ObjectDisposedException(nameof(this.nativeWindow), $"The underlying {nameof(this.nativeWindow)} has been disposed.");
             }
 
-            this.nativeWindow.ProcessEvents();
+            this.nativeWindow.ProcessWindowEvents(false);
+            this.nativeWindow.ProcessInputEvents();
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ namespace FinalEngine.Rendering
 {
     using System;
     using System.Numerics;
+    using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.Pipeline;
     using FinalEngine.Rendering.Textures;
 

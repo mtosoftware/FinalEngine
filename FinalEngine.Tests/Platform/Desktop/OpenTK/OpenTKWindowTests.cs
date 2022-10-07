@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenTKWindowTests.cs" company="Software Antics">
+// <copyright file="OpenTKWindowTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -39,7 +39,7 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.ClientSize).Returns(new Vector2i(expected.Width, expected.Height));
 
             // Act
-            Size actual = this.window.ClientSize;
+            var actual = this.window.ClientSize;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -69,18 +69,14 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         }
 
         [Test]
-        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull()
-        {
+        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull() =>
             // Arrange, act and assert
             Assert.DoesNotThrow(() => new OpenTKWindow(new Mock<INativeWindowInvoker>().Object));
-        }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull()
-        {
+        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull() =>
             // Arrange, act and assert
             Assert.Throws<ArgumentNullException>(() => new OpenTKWindow(null));
-        }
 
         [Test]
         public void DisposeShouldInvokeNativeWindowDisposeWhenNotDisposed()
@@ -112,23 +108,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.IsExiting).Returns(true);
 
             // Act
-            bool actual = this.window.IsExiting;
+            var actual = this.window.IsExiting;
 
             // Assert
             Assert.True(actual);
-        }
-
-        [Test]
-        public void ProcessEventsShouldInvokeNativeWindowProcessEventsWhenNativeWindowIsNotDisposed()
-        {
-            // Arrange
-            this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(false);
-
-            // Act
-            this.window.ProcessEvents();
-
-            // Assert
-            this.nativeWindow.Verify(x => x.ProcessEvents(), Times.Once);
         }
 
         [Test]
@@ -181,17 +164,14 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.Size).Returns(new Vector2i(expected.Width, expected.Height));
 
             // Act
-            Size actual = this.window.Size;
+            var actual = this.window.Size;
 
             // Assert
             Assert.AreEqual(expected, actual);
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            this.window.Dispose();
-        }
+        public void TearDown() => this.window.Dispose();
 
         [Test]
         public void TitleGetShouldInvokeNativeWindowTitleWhenRead()

@@ -1,12 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <AnalysisMode>All</AnalysisMode>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj" />
     <ProjectReference Include="..\FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj" />
-    <ProjectReference Include="..\FinalEngine.Launching\FinalEngine.Runtime.csproj" />
     <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
   </ItemGroup>
 

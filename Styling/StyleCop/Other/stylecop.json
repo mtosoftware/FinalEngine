@@ -4,7 +4,7 @@
     "documentationRules": {
       "companyName": "Software Antics",
       "documentPrivateElements": true,
-      "documentPrivateFields": true,
+      "documentPrivateFields": true
     }
   }
 }

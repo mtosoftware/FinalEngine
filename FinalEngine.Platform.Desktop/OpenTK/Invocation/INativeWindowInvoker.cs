@@ -72,7 +72,10 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         /// <inheritdoc cref="NativeWindow.Close"/>
         void Close();
 
-        /// <inheritdoc cref="NativeWindow.ProcessEvents"/>
-        void ProcessEvents();
+        /// <inheritdoc cref="NativeWindow.ProcessInputEvents"/>
+        void ProcessInputEvents();
+
+        /// <inheritdoc cref="NativeWindow.ProcessWindowEvents(bool)"/>
+        void ProcessWindowEvents(bool waitForEvents);
     }
 }

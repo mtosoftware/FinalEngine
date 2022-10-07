@@ -35,6 +35,12 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         }
 
         /// <inheritdoc/>
+        public new void ProcessWindowEvents(bool waitForEvents)
+        {
+            NativeWindow.ProcessWindowEvents(waitForEvents);
+        }
+
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

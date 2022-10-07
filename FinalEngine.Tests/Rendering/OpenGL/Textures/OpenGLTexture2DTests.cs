@@ -50,7 +50,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
             this.texture.Dispose();
 
             // Act and assert
-            _ = Assert.Throws<ObjectDisposedException>(() => this.texture.Bind(0));
+            Assert.Throws<ObjectDisposedException>(() => this.texture.Bind(0));
         }
 
         [Test]
@@ -106,14 +106,14 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            _ = Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(null, this.mapper.Object, default, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1)));
+            Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(null, this.mapper.Object, default, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1)));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            _ = Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(this.invoker.Object, null, default, PixelFormat.Depth, SizedFormat.R8, new IntPtr(1)));
+            Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(this.invoker.Object, null, default, PixelFormat.Depth, SizedFormat.R8, new IntPtr(1)));
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         {
             // Arrange
             this.invoker = new Mock<IOpenGLInvoker>();
-            _ = this.invoker.Setup(x => x.CreateTexture(TextureTarget.Texture2D)).Returns(ID);
+            this.invoker.Setup(x => x.CreateTexture(TextureTarget.Texture2D)).Returns(ID);
 
             this.mapper = new Mock<IEnumMapper>();
 

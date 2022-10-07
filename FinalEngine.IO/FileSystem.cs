@@ -1,4 +1,4 @@
-﻿// <copyright file="FileSystem.cs" company="Software Antics">
+// <copyright file="FileSystem.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -137,22 +137,13 @@ namespace FinalEngine.IO
                 throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
             }
 
-            FileAccess access = FileAccess.Read;
-
-            switch (mode)
+            var access = mode switch
             {
-                case FileAccessMode.Read:
-                    access = FileAccess.Read;
-                    break;
-
-                case FileAccessMode.Write:
-                    access = FileAccess.Write;
-                    break;
-
-                case FileAccessMode.ReadAndWrite:
-                    access = FileAccess.ReadWrite;
-                    break;
-            }
+                FileAccessMode.Read => FileAccess.Read,
+                FileAccessMode.Write => FileAccess.Write,
+                FileAccessMode.ReadAndWrite => FileAccess.ReadWrite,
+                _ => FileAccess.Read,
+            };
 
             return this.file.Open(path, FileMode.Open, access);
         }

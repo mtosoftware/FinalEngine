@@ -1,4 +1,8 @@
-﻿namespace MyGame.Common
+﻿// <copyright file="Game.cs" company="Software Antics">
+//     Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
+namespace MyGame.Common
 {
     using System.Drawing;
     using System.Numerics;
@@ -81,8 +85,8 @@
             entity.AddComponent<TransformComponent>();
             entity.AddComponent(new ModelComponent()
             {
-                Mesh = mesh,
-                Material = material,
+                Mesh = this.mesh,
+                Material = this.material,
             });
 
             this.world.AddEntity(entity);

@@ -25,10 +25,7 @@ namespace FinalEngine.ECS
         /// <summary>
         ///   Initializes a new instance of the <see cref="EntitySystemBase"/> class.
         /// </summary>
-        protected EntitySystemBase()
-        {
-            this.entities = new List<Entity>();
-        }
+        protected EntitySystemBase() => this.entities = new List<Entity>();
 
         /// <summary>
         ///   Gets the game loop type for this <see cref="EntitySystemBase"/>.
@@ -37,18 +34,16 @@ namespace FinalEngine.ECS
         ///   The game loop type for this <see cref="EntitySystemBase"/>.
         /// </value>
         /// <remarks>
-        ///   A game loop type determines when the <see cref="Process"/> function should be called.
+        ///   A game loop type determines when the <see cref="Process()"/> function should be called.
         /// </remarks>
         public abstract GameLoopType LoopType { get; }
 
         /// <summary>
         ///   Calls the <see cref="Process(IEnumerable{Entity})"/> function, the frequency depends on the <see cref="LoopType"/>.
         /// </summary>
-        public void Process()
-        {
+        public void Process() =>
             // Copy the list so that the collection can be modified in a foreach loop.
             this.Process(this.entities.ToList());
-        }
 
         /// <summary>
         ///   Adds or removes the specified <paramref name="entity"/> from this <see cref="EntitySystemBase"/>.
@@ -72,8 +67,8 @@ namespace FinalEngine.ECS
                 throw new ArgumentNullException(nameof(entity), $"The specified {nameof(entity)} parameter cannot be null.");
             }
 
-            bool isMatch = this.IsMatch(entity);
-            bool isAdded = this.entities.Contains(entity);
+            var isMatch = this.IsMatch(entity);
+            var isAdded = this.entities.Contains(entity);
 
             if (forceRemove && isAdded)
             {

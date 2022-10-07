@@ -1,19 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<LangVersion>9.0</LangVersion>
 		<IsPackable>false</IsPackable>
 		<AnalysisMode>All</AnalysisMode>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <NoWarn>1701;1702;SA0001;IDE0079</NoWarn>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<AdditionalFiles Include="..\Styling\StyleCop\Tests\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\dev\FinalEngine\FinalEngine.Tests\Core\ECS\Components\.editorconfig" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
@@ -36,19 +37,13 @@
 		<ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
 		<ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
 		<ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
-		<ProjectReference Include="..\FinalEngine.Launching\FinalEngine.Runtime.csproj" />
+		<ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
 		<ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
 		<ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
 		<ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Resources\Textures\default.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EditorConfigFiles Remove="C:\dev\FinalEngine\FinalEngine.Tests\Core\ECS\Components\.editorconfig" />
+	  <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
 	</ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenTKMouseDeviceTests.cs" company="Software Antics">
+// <copyright file="OpenTKMouseDeviceTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -28,46 +28,34 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         private Mock<INativeWindowInvoker> nativeWindow;
 
         [Test]
-        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull()
-        {
+        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull() =>
             // Arrange, act and assert
             Assert.DoesNotThrow(() => new OpenTKMouseDevice(new Mock<INativeWindowInvoker>().Object));
-        }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull()
-        {
+        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull() =>
             // Arrange, act and assert
             Assert.Throws<ArgumentNullException>(() => new OpenTKMouseDevice(null));
-        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseDownEventWhenNativeWindowIsNotNull()
-        {
+        public void ConstructorTestShouldHookOntoNativeWindowMouseDownEventWhenNativeWindowIsNotNull() =>
             // Assert
             this.nativeWindow.VerifyAdd(x => x.MouseDown += It.IsAny<Action<TKMouseButtonEventArgs>>(), Times.Once);
-        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseMoveEventWhenNativeWindowIsNotNull()
-        {
+        public void ConstructorTestShouldHookOntoNativeWindowMouseMoveEventWhenNativeWindowIsNotNull() =>
             // Assert
             this.nativeWindow.VerifyAdd(x => x.MouseMove += It.IsAny<Action<TKMouseMoveEventArgs>>(), Times.Once);
-        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseUpEventWhenNativeWindowIsNotNull()
-        {
+        public void ConstructorTestShouldHookOntoNativeWindowMouseUpEventWhenNativeWindowIsNotNull() =>
             // Assert
             this.nativeWindow.VerifyAdd(x => x.MouseUp += It.IsAny<Action<TKMouseButtonEventArgs>>(), Times.Once);
-        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseWheelEventWhenNativeWindowIsNotNull()
-        {
+        public void ConstructorTestShouldHookOntoNativeWindowMouseWheelEventWhenNativeWindowIsNotNull() =>
             // Assert
             this.nativeWindow.VerifyAdd(x => x.MouseWheel += It.IsAny<Action<TKMouseWheelEventArgs>>(), Times.Once);
-        }
 
         [Test]
         public void LocationDeltaShouldReturnDeltaWhenInvoked()
@@ -77,7 +65,7 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.mouseState.SetupGet(x => x.Delta).Returns(new Vector2(expected.X, expected.Y));
 
             // Act
-            PointF actual = this.mouseDevice.LocationDelta;
+            var actual = this.mouseDevice.LocationDelta;
 
             // Assert
             Assert.AreEqual(expected, actual);

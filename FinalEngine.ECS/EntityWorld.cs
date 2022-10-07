@@ -152,7 +152,7 @@ namespace FinalEngine.ECS
                 system.AddOrRemoveByAspect(entity, true);
             }
 
-            _ = this.entities.Remove(entity);
+            this.entities.Remove(entity);
         }
 
         /// <summary>

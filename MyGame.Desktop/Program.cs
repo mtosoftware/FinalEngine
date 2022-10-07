@@ -1,4 +1,8 @@
-﻿namespace MyGame.Desktop
+﻿// <copyright file="Program.cs" company="Software Antics">
+//     Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
+namespace MyGame.Desktop
 {
     using System.Drawing;
     using FinalEngine.Runtime.Desktop;

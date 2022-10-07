@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		CodeReview.md = CodeReview.md
 		Goal.txt = Goal.txt
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{8500D452-62BA-4DAE-BA1D-5A51632955EC}"
@@ -52,13 +53,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.ECS.Systems", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Maths", "FinalEngine.Maths\FinalEngine.Maths.csproj", "{74E1AF06-9309-4340-BC9D-464BE306425E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Runtime.Desktop", "FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj", "{0033A5B5-56A7-46C3-A035-BC61CDEA41DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Runtime.Desktop", "FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj", "{0033A5B5-56A7-46C3-A035-BC61CDEA41DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{BA078A6E-0B97-48BE-8AC2-50FF1D19826C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGame.Common", "MyGame.Common\MyGame.Common.csproj", "{664413D6-F636-4138-BB4D-83DB64AF2009}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGame.Common", "MyGame.Common\MyGame.Common.csproj", "{664413D6-F636-4138-BB4D-83DB64AF2009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGame.Desktop", "MyGame.Desktop\MyGame.Desktop.csproj", "{6C16FC31-18B7-4EBD-B4AB-898BDFE45E4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGame.Desktop", "MyGame.Desktop\MyGame.Desktop.csproj", "{6C16FC31-18B7-4EBD-B4AB-898BDFE45E4D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Runtime", "FinalEngine.Runtime\FinalEngine.Runtime.csproj", "{C80D0CB9-DB56-4039-8DB6-EABC624704DC}"
 EndProject

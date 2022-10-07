@@ -176,7 +176,7 @@ namespace FinalEngine.Resources
                 if (resourceData.ReferenceCount == 0)
                 {
                     resourceData.Reference.Dispose();
-                    _ = this.pathToResourceDataMap.Remove(resourceData.FilePath);
+                    this.pathToResourceDataMap.Remove(resourceData.FilePath);
                 }
             }
         }
@@ -204,7 +204,7 @@ namespace FinalEngine.Resources
                         ResourceData resourceData = kvp.Value;
 
                         resourceData.Reference.Dispose();
-                        _ = this.pathToResourceDataMap.Remove(resourceData.FilePath);
+                        this.pathToResourceDataMap.Remove(resourceData.FilePath);
                     }
                 }
 

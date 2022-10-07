@@ -42,7 +42,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void GetViewportShouldInvokeGetIntegerWhenInvoked()
         {
             // Act
-            _ = this.rasterizer.GetViewport();
+            this.rasterizer.GetViewport();
 
             // Assert
             this.invoker.Verify(x => x.GetInteger(GetIndexedPName.Viewport, 0, It.IsAny<int[]>()));

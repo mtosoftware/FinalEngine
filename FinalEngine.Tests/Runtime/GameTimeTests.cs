@@ -2,11 +2,11 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Launching
+namespace FinalEngine.Tests.Runtime
 {
     using System;
-    using FinalEngine.Launching;
-    using FinalEngine.Launching.Invocation;
+    using FinalEngine.Runtime;
+    using FinalEngine.Runtime.Invocation;
     using Moq;
     using NUnit.Framework;
 

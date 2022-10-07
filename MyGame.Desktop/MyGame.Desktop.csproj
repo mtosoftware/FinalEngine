@@ -1,9 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <AnalysisMode>All</AnalysisMode>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj" />
