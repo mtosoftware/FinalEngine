@@ -48,10 +48,10 @@ namespace FinalEngine.Rendering.OpenGL
         }
 
         /// <summary>
-        ///   Gets the viewport.
+        ///   Gets the view-port.
         /// </summary>
         /// <returns>
-        ///   The viewport.
+        ///   The view-port.
         /// </returns>
         public Rectangle GetViewport()
         {

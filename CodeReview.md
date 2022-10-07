@@ -42,7 +42,7 @@
 - [ ] Floating point numbers are not compared for equality, except in the case where a data structure requires it, such as vector comparison.
 - [ ] Loops have a set length and correct termination conditions.
 - [ ] Blocks of code inside loops are as small as possible.
-- [ ] Order/index of a collection is not modified when it is being looped over, unless _absoutely_ necessary.
+- [ ] Order/index of a collection is not modified when it is being looped over, unless _absolutely_ necessary.
 - [ ] No object exists longer than necessary
 - [ ] Law of Demeter is not violated
 - [ ] Do any of the changes assume anything about input? If so, is the assumption fairly accurate or should it be omitted?
@@ -63,11 +63,11 @@
 
 A great tip for below is to include [Roslynator 2019](https://marketplace.visualstudio.com/items?itemName=josefpihrt.Roslynator2019) in your project(s). 
 
-- [ ] Any new files have been named consistently and spelt correctly.
+- [ ] Any new files have been named consistently and spelled correctly.
 - [ ] Any and all members have been named simply and if possible, short and to the point (prefer `isMatch` over `isPatternMatched`).
 - [ ] There is _no_ commented out code.
 - [ ] All changes follow the styling and coding conventions of the repository, to ensure:
-	1. Run CodeMaid and Code Cleanup on all changed files (using the provided configs).
+	1. Run CodeMaid and Code Cleanup on all changed files (using the provided configuration files).
 	2. Run Code Analysis on solution and fix any warnings.
 	3. In terms of a new project, make sure it contains:
 		- StyleCop.Analysers

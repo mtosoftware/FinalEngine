@@ -54,7 +54,7 @@ namespace FinalEngine.Extensions.Resources.Loaders
             {
                 ".vert" => PipelineTarget.Vertex,
                 ".frag" => PipelineTarget.Fragment,
-                _ => throw new NotSupportedException($"The file extensison specified is not supported: '{extension}'"),
+                _ => throw new NotSupportedException($"The file extension specified is not supported: '{extension}'"),
             };
         }
     }

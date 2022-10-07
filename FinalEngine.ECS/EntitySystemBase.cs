@@ -46,7 +46,7 @@ namespace FinalEngine.ECS
         /// </summary>
         public void Process()
         {
-            // Copy the list so that the collection can be modified in a foreach loop.
+            // Copy the list so that the collection can be modified in a for-each loop.
             this.Process(this.entities.ToList());
         }
 
