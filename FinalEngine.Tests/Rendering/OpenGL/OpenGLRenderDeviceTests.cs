@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLRenderDeviceTests.cs" company="Software Antics">
+// <copyright file="OpenGLRenderDeviceTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -63,7 +63,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLRenderDevice(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLRenderDevice(null);
+            });
         }
 
         [Test]
@@ -80,7 +83,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void FactoryShouldReturnOpenGLGPUResourceFactoryWhenInvoked()
         {
             // Act
-            IGPUResourceFactory actual = this.renderDevice.Factory;
+            var actual = this.renderDevice.Factory;
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLGPUResourceFactory), actual);
@@ -90,7 +93,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void InputAssemblerShouldReturnOpenGLInputAssemblerWhenInvoked()
         {
             // Act
-            IInputAssembler actual = this.renderDevice.InputAssembler;
+            var actual = this.renderDevice.InputAssembler;
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLInputAssembler), actual);
@@ -100,7 +103,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void OutputMergerShouldReturnOpenGLOutputMergerWhenInvoked()
         {
             // Act
-            IOutputMerger actual = this.renderDevice.OutputMerger;
+            var actual = this.renderDevice.OutputMerger;
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLOutputMerger), actual);
@@ -110,7 +113,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void PipelineShouldReturnOpenGLPipelineWhenInvoked()
         {
             // Act
-            IPipeline actual = this.renderDevice.Pipeline;
+            var actual = this.renderDevice.Pipeline;
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLPipeline), actual);
@@ -120,7 +123,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void RasterizerShouldReturnOpenGLRasterizerWhenInvoked()
         {
             // Act
-            IRasterizer actual = this.renderDevice.Rasterizer;
+            var actual = this.renderDevice.Rasterizer;
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLRasterizer), actual);

@@ -1,4 +1,4 @@
-﻿// <copyright file="Texture2DDescriptionTests.cs" company="Software Antics">
+// <copyright file="Texture2DDescriptionTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -287,7 +287,7 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void MagFilterShouldReturnLinearWhenDefault()
         {
             // Act
-            TextureFilterMode actual = this.description.MagFilter;
+            var actual = this.description.MagFilter;
 
             // Assert
             Assert.AreEqual(TextureFilterMode.Linear, actual);
@@ -307,7 +307,7 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void MinFilterShouldReturnLinearWhenDefault()
         {
             // Act
-            TextureFilterMode actual = this.description.MinFilter;
+            var actual = this.description.MinFilter;
 
             // Assert
             Assert.AreEqual(TextureFilterMode.Linear, actual);
@@ -327,7 +327,7 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void PixelTypeShouldReturnByteWhenDefault()
         {
             // Act
-            PixelType actual = this.description.PixelType;
+            var actual = this.description.PixelType;
 
             // Assert
             Assert.AreEqual(PixelType.Byte, actual);
@@ -384,7 +384,7 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void WrapSShouldReturnRepeatWhenDefault()
         {
             // Act
-            TextureWrapMode actual = this.description.WrapS;
+            var actual = this.description.WrapS;
 
             // Assert
             Assert.AreEqual(TextureWrapMode.Repeat, actual);
@@ -404,7 +404,7 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void WrapTShouldReturnRepeatWhenDefault()
         {
             // Act
-            TextureWrapMode actual = this.description.WrapT;
+            var actual = this.description.WrapT;
 
             // Assert
             Assert.AreEqual(TextureWrapMode.Repeat, actual);

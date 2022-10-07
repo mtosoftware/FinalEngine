@@ -1,4 +1,4 @@
-﻿// <copyright file="EnumMapperTests.cs" company="Software Antics">
+// <copyright file="EnumMapperTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -37,14 +37,17 @@ namespace FinalEngine.Tests.Core.Utilities
         public void ConstructorShouldThrowArgumentNullExceptionWhenForwardToReverseMapIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new EnumMapper(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new EnumMapper(null);
+            });
         }
 
         [Test]
         public void ForwardShouldReturnCorrectMappedKeyWhenInvoked()
         {
             // Act
-            TestEnumerationB actual = this.mapper.Forward<TestEnumerationB>(TestEnumerationA.B);
+            var actual = this.mapper.Forward<TestEnumerationB>(TestEnumerationA.B);
 
             // Assert
             Assert.AreEqual(TestEnumerationB.E, actual);
@@ -54,21 +57,27 @@ namespace FinalEngine.Tests.Core.Utilities
         public void ForwardShouldThrowArgumentNullExceptionWhenEnumerationIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.mapper.Forward<Enum>(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.mapper.Forward<Enum>(null);
+            });
         }
 
         [Test]
         public void ForwardShouldThrowKeyNotFoundExceptionWhenEnumerationIsNotMapped()
         {
             // Act and assert
-            Assert.Throws<KeyNotFoundException>(() => this.mapper.Forward<TestEnumerationB>(TestEnumerationA.A));
+            Assert.Throws<KeyNotFoundException>(() =>
+            {
+                this.mapper.Forward<TestEnumerationB>(TestEnumerationA.A);
+            });
         }
 
         [Test]
         public void ReverseShouldReturnCorrectMappedKeyWhenInvoked()
         {
             // Act
-            TestEnumerationA actual = this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.E);
+            var actual = this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.E);
 
             // Assert
             Assert.AreEqual(TestEnumerationA.B, actual);
@@ -78,14 +87,20 @@ namespace FinalEngine.Tests.Core.Utilities
         public void ReverseShouldThrowArgumentNullExceptionWhenEnumerationIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.mapper.Reverse<Enum>(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.mapper.Reverse<Enum>(null);
+            });
         }
 
         [Test]
         public void ReverseShouldThrowKeyNotFoundExceptionWhenEnumerationIsNotMapped()
         {
             // Act and assert
-            Assert.Throws<KeyNotFoundException>(() => this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.D));
+            Assert.Throws<KeyNotFoundException>(() =>
+            {
+                this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.D);
+            });
         }
 
         [SetUp]

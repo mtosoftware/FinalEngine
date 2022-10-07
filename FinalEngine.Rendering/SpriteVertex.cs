@@ -1,4 +1,4 @@
-﻿// <copyright file="SpriteVertex.cs" company="Software Antics">
+// <copyright file="SpriteVertex.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -147,12 +147,12 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.Position.GetHashCode() * Accumulator) +
-                   (this.Color.GetHashCode() * Accumulator) +
-                   (this.TextureCoordinate.GetHashCode() * Accumulator) +
-                   (this.TextureSlotIndex.GetHashCode() * Accumulator);
+            return (this.Position.GetHashCode() * accumulator) +
+                   (this.Color.GetHashCode() * accumulator) +
+                   (this.TextureCoordinate.GetHashCode() * accumulator) +
+                   (this.TextureSlotIndex.GetHashCode() * accumulator);
         }
     }
 }

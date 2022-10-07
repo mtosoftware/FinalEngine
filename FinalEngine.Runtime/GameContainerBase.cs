@@ -6,7 +6,8 @@ namespace FinalEngine.Runtime
 {
     using System;
     using System.Diagnostics;
-    using FinalEngine.Input;
+    using FinalEngine.Input.Keyboards;
+    using FinalEngine.Input.Mouses;
     using FinalEngine.IO;
     using FinalEngine.Platform;
     using FinalEngine.Rendering;

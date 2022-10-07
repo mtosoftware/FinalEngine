@@ -1,4 +1,4 @@
-﻿// <copyright file="TextureBinderTests.cs" company="Software Antics">
+// <copyright file="TextureBinderTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -22,7 +22,10 @@ namespace FinalEngine.Tests.Rendering
         public void ConstructorShouldThrowArgumentNullExceptionWhenPipelienIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new TextureBinder(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new TextureBinder(null);
+            });
         }
 
         [Test]
@@ -49,7 +52,7 @@ namespace FinalEngine.Tests.Rendering
         public void GetTextureSlotIndexShouldReturnOneWhenTwoTexturesHaveBeenAddedAndTheSecondIsRetrieved()
         {
             // Arrange
-            const int Expected = 1;
+            const int expected = 1;
 
             var textureA = new Mock<ITexture>();
             var textureB = new Mock<ITexture>();
@@ -61,14 +64,14 @@ namespace FinalEngine.Tests.Rendering
             int actual = this.binder.GetTextureSlotIndex(textureB.Object);
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetTextureSlotIndexShouldReturnTwoWhenTwoTexturesHaveAlreadyBeenAdded()
         {
             // Arrange
-            const int Expected = 2;
+            const int expected = 2;
 
             var textureA = new Mock<ITexture>();
             var textureB = new Mock<ITexture>();
@@ -80,21 +83,24 @@ namespace FinalEngine.Tests.Rendering
             int actual = this.binder.GetTextureSlotIndex(this.texture.Object);
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetTextureSlotIndexShouldThrowArgumentNullExceptionWhenTextureIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.binder.GetTextureSlotIndex(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.binder.GetTextureSlotIndex(null);
+            });
         }
 
         [Test]
         public void ResetShouldCauseGetTextureSlotIndexToReturnZeroOnAlreadyAddedTexture()
         {
             // Arrange
-            const int Expected = 0;
+            const int expected = 0;
 
             var textureA = new Mock<ITexture>();
             var textureB = new Mock<ITexture>();
@@ -106,7 +112,7 @@ namespace FinalEngine.Tests.Rendering
             this.binder.Reset();
 
             // Assert
-            Assert.AreEqual(Expected, this.binder.GetTextureSlotIndex(textureB.Object));
+            Assert.AreEqual(expected, this.binder.GetTextureSlotIndex(textureB.Object));
         }
 
         [SetUp]

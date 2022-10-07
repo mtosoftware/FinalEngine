@@ -1,8 +1,8 @@
-﻿// <copyright file="IKeyboardDevice.cs" company="Software Antics">
+// <copyright file="IKeyboardDevice.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Input
+namespace FinalEngine.Input.Keyboards
 {
     using System;
 

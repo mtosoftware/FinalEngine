@@ -1,4 +1,4 @@
-﻿// <copyright file="RasterStateDescription.cs" company="Software Antics">
+// <copyright file="RasterStateDescription.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -201,13 +201,13 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.CullEnabled.GetHashCode() * Accumulator) +
-                   (this.CullMode.GetHashCode() * Accumulator) +
-                   (this.FillMode.GetHashCode() * Accumulator) +
-                   (this.ScissorEnabled.GetHashCode() * Accumulator) +
-                   (this.WindingDirection.GetHashCode() * Accumulator);
+            return (this.CullEnabled.GetHashCode() * accumulator) +
+                   (this.CullMode.GetHashCode() * accumulator) +
+                   (this.FillMode.GetHashCode() * accumulator) +
+                   (this.ScissorEnabled.GetHashCode() * accumulator) +
+                   (this.WindingDirection.GetHashCode() * accumulator);
         }
     }
 }

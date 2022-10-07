@@ -1,10 +1,10 @@
-﻿// <copyright file="KeyEventArgsTests.cs" company="Software Antics">
+// <copyright file="KeyEventArgsTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Core.Input.Keyboard
 {
-    using FinalEngine.Input;
+    using FinalEngine.Input.Keyboards;
     using NUnit.Framework;
 
     public class KeyEventArgsTests
@@ -61,32 +61,32 @@ namespace FinalEngine.Tests.Core.Input.Keyboard
         public void KeyShouldReturnSameAsInputWhenSet()
         {
             // Arrange
-            const Key Expected = Key.CapsLock;
+            const Key expected = Key.CapsLock;
 
             // Act
             var keyEventArgs = new KeyEventArgs()
             {
-                Key = Expected,
+                Key = expected,
             };
 
             // Assert
-            Assert.AreEqual(Expected, keyEventArgs.Key);
+            Assert.AreEqual(expected, keyEventArgs.Key);
         }
 
         [Test]
         public void ModifiersShouldReturnSameAsInputWhenSet()
         {
             // Arrange
-            const KeyModifiers Expected = KeyModifiers.CapsLock | KeyModifiers.Control;
+            const KeyModifiers expected = KeyModifiers.CapsLock | KeyModifiers.Control;
 
             // Act
             var keyEventArgs = new KeyEventArgs()
             {
-                Modifiers = Expected,
+                Modifiers = expected,
             };
 
             // Assert
-            Assert.AreEqual(Expected, keyEventArgs.Modifiers);
+            Assert.AreEqual(expected, keyEventArgs.Modifiers);
         }
 
         [Test]

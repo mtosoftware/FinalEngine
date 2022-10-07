@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
@@ -8,6 +8,10 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <NoWarn>SA0001;CS1591;SA1600;CA1001</NoWarn>
+	</PropertyGroup>
+  
 	<ItemGroup>
 		<AdditionalFiles Include="..\Styling\StyleCop\Tests\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>

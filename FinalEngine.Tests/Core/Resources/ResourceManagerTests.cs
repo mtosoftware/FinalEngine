@@ -1,17 +1,15 @@
-﻿// <copyright file="ResourceManagerTests.cs" company="Software Antics">
+// <copyright file="ResourceManagerTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Core.Resources
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Resources;
     using FinalEngine.Resources.Exceptions;
     using Moq;
     using NUnit.Framework;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class ResourceManagerTests
     {
         private const string FilePath = "path/to/file";
@@ -68,10 +66,10 @@ namespace FinalEngine.Tests.Core.Resources
         {
             // Arrange
             this.resourceManager.RegisterLoader(this.resourceLoader.Object);
-            IResource expected = this.resourceManager.LoadResource<IResource>(FilePath);
+            var expected = this.resourceManager.LoadResource<IResource>(FilePath);
 
             // Act
-            IResource actual = this.resourceManager.LoadResource<IResource>(FilePath);
+            var actual = this.resourceManager.LoadResource<IResource>(FilePath);
 
             // Assert
             Assert.AreSame(expected, actual);
@@ -81,28 +79,40 @@ namespace FinalEngine.Tests.Core.Resources
         public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.resourceManager.LoadResource<IResource>(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.resourceManager.LoadResource<IResource>(string.Empty);
+            });
         }
 
         [Test]
         public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.resourceManager.LoadResource<IResource>(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.resourceManager.LoadResource<IResource>(null);
+            });
         }
 
         [Test]
         public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.resourceManager.LoadResource<IResource>("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.resourceManager.LoadResource<IResource>("\t\r\n");
+            });
         }
 
         [Test]
         public void LoadResourceShouldThrowResourceLoaderNotRegisteredExceptionWhenGenericTypeNotRegisteredWithLoader()
         {
             // Act and assert
-            Assert.Throws<ResourceLoaderNotRegisteredException>(() => this.resourceManager.LoadResource<IResource>("path/to/file"));
+            Assert.Throws<ResourceLoaderNotRegisteredException>(() =>
+            {
+                this.resourceManager.LoadResource<IResource>("path/to/file");
+            });
         }
 
         [Test]
@@ -113,14 +123,20 @@ namespace FinalEngine.Tests.Core.Resources
             var resourceLoader = new Mock<ResourceLoaderBase<IResource>>();
 
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.resourceManager.RegisterLoader(resourceLoader.Object));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.resourceManager.RegisterLoader(resourceLoader.Object);
+            });
         }
 
         [Test]
         public void RegisterLoaderShouldThrowArgumentNullExceptionWhenLoaderIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.resourceManager.RegisterLoader<IResource>(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.resourceManager.RegisterLoader<IResource>(null);
+            });
         }
 
         [SetUp]
@@ -175,7 +191,10 @@ namespace FinalEngine.Tests.Core.Resources
         public void UnloadResourceShouldThrowArgumentNullExceptionWhenResourceIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.resourceManager.UnloadResource(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.resourceManager.UnloadResource(null);
+            });
         }
     }
 }

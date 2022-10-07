@@ -1,4 +1,4 @@
-﻿// <copyright file="EntityWorldTests.cs" company="Software Antics">
+// <copyright file="EntityWorldTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -36,7 +36,10 @@ namespace FinalEngine.Tests.Core.ECS
 
             var system = new MockEntitySystemA(GameLoopType.Update)
             {
-                IsMatchFunction = (_) => true,
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
                 ProcessFunction = (entities) =>
                 {
                     // Assert
@@ -59,14 +62,20 @@ namespace FinalEngine.Tests.Core.ECS
             this.world.AddEntity(entity);
 
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.world.AddEntity(entity));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.world.AddEntity(entity);
+            });
         }
 
         [Test]
         public void AddEntityShouldThrowArgumentNullExceptionWhenEntityIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.world.AddEntity(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.world.AddEntity(null);
+            });
         }
 
         [Test]
@@ -85,7 +94,10 @@ namespace FinalEngine.Tests.Core.ECS
 
             var system = new MockEntitySystemA(GameLoopType.Update)
             {
-                IsMatchFunction = (_) => true,
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
                 ProcessFunction = (collection) =>
                 {
                     // Assert
@@ -127,14 +139,20 @@ namespace FinalEngine.Tests.Core.ECS
             this.world.AddSystem(systemB);
 
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.world.AddSystem(systemC));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.world.AddSystem(systemC);
+            });
         }
 
         [Test]
         public void AddSystemShouldThrowArgumentNullExceptionWhenSystemIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.world.AddSystem(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.world.AddSystem(null);
+            });
         }
 
         [Test]
@@ -145,8 +163,14 @@ namespace FinalEngine.Tests.Core.ECS
 
             var systemA = new MockEntitySystemA(GameLoopType.Update)
             {
-                IsMatchFunction = (_) => true,
-                ProcessFunction = (entities) => Assert.AreSame(entity, entities.FirstOrDefault()),
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
+                ProcessFunction = (entities) =>
+                {
+                    Assert.AreSame(entity, entities.FirstOrDefault());
+                },
             };
 
             var systemB = new MockEntitySystemB(GameLoopType.Render);
@@ -168,7 +192,10 @@ namespace FinalEngine.Tests.Core.ECS
             this.world.AddEntity(entity);
 
             // Act
-            Assert.Throws<ArgumentException>(() => entity.OnComponentsChanged.Invoke(this, EventArgs.Empty));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                entity.OnComponentsChanged.Invoke(this, EventArgs.Empty);
+            });
         }
 
         [Test]
@@ -179,7 +206,10 @@ namespace FinalEngine.Tests.Core.ECS
             this.world.AddEntity(entity);
 
             // Act
-            Assert.Throws<ArgumentNullException>(() => entity.OnComponentsChanged.Invoke(null, EventArgs.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                entity.OnComponentsChanged.Invoke(null, EventArgs.Empty);
+            });
         }
 
         [Test]
@@ -189,7 +219,10 @@ namespace FinalEngine.Tests.Core.ECS
             var systemA = new MockEntitySystemA(GameLoopType.Update);
             var systemB = new MockEntitySystemB(GameLoopType.Render)
             {
-                IsMatchFunction = (_) => true,
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
                 ProcessFunction = (_) =>
                 {
                     // Assert
@@ -211,7 +244,10 @@ namespace FinalEngine.Tests.Core.ECS
             var systemA = new MockEntitySystemA(GameLoopType.Update);
             var systemB = new MockEntitySystemB(GameLoopType.Render)
             {
-                IsMatchFunction = (_) => true,
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
                 ProcessFunction = (entities) =>
                 {
                     // Assert
@@ -233,14 +269,20 @@ namespace FinalEngine.Tests.Core.ECS
         public void RemoveEntityShouldThrowArgumentExceptionWhenEntityIsNotAdded()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.world.RemoveEntity(new Entity()));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.world.RemoveEntity(new Entity());
+            });
         }
 
         [Test]
         public void RemoveEntityShouldThrowArgumentNulLExceptionWhenEntityIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.world.RemoveEntity(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.world.RemoveEntity(null);
+            });
         }
 
         [Test]
@@ -261,21 +303,30 @@ namespace FinalEngine.Tests.Core.ECS
         public void RemoveSystemShouldThrowArgumentExceptionWhenSystemHasNotBeenAddedToWorld()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.world.RemoveSystem(typeof(MockEntitySystemA)));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.world.RemoveSystem(typeof(MockEntitySystemA));
+            });
         }
 
         [Test]
         public void RemoveSystemShouldThrowArgumentExceptionWhenTypeDoesNotInheritFromEntitySYstemBase()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.world.RemoveSystem(typeof(EntityWorldTests)));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.world.RemoveSystem(typeof(EntityWorldTests));
+            });
         }
 
         [Test]
         public void RemoveSystemShouldThrowArgumentNullExceptionWhenSystemIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.world.RemoveSystem(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.world.RemoveSystem(null);
+            });
         }
 
         [SetUp]

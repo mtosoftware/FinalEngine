@@ -1,4 +1,4 @@
-﻿// <copyright file="EntitySystemBaseTests.cs" company="Software Antics">
+// <copyright file="EntitySystemBaseTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -19,7 +19,10 @@ namespace FinalEngine.Tests.Core.ECS
             var expected = new Entity();
             var system = new MockEntitySystemA(GameLoopType.Update)
             {
-                IsMatchFunction = (_) => true,
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
                 ProcessFunction = (entities) =>
                 {
                     // Assert
@@ -39,12 +42,18 @@ namespace FinalEngine.Tests.Core.ECS
             var entity = new Entity();
             var system = new MockEntitySystemA(GameLoopType.Update)
             {
-                IsMatchFunction = (_) => true,
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
             };
 
             system.AddOrRemoveByAspect(entity);
 
-            system.IsMatchFunction = (_) => false;
+            system.IsMatchFunction = (_) =>
+            {
+                return false;
+            };
             system.ProcessFunction = (entities) =>
             {
                 // Assert
@@ -62,12 +71,18 @@ namespace FinalEngine.Tests.Core.ECS
             var entity = new Entity();
             var system = new MockEntitySystemA(GameLoopType.Update)
             {
-                IsMatchFunction = (_) => true,
+                IsMatchFunction = (_) =>
+                {
+                    return true;
+                },
             };
 
             system.AddOrRemoveByAspect(entity);
 
-            system.IsMatchFunction = (_) => false;
+            system.IsMatchFunction = (_) =>
+            {
+                return false;
+            };
             system.ProcessFunction = (entities) =>
             {
                 // Assert
@@ -85,21 +100,24 @@ namespace FinalEngine.Tests.Core.ECS
             var system = new MockEntitySystemA(GameLoopType.Update);
 
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => system.AddOrRemoveByAspect(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                system.AddOrRemoveByAspect(null);
+            });
         }
 
         [Test]
         public void LoopTypeShouldReturnSameAsConstructorWhenInvoked()
         {
             // Arrange
-            const GameLoopType Expected = GameLoopType.Update;
-            var system = new MockEntitySystemA(Expected);
+            const GameLoopType expected = GameLoopType.Update;
+            var system = new MockEntitySystemA(expected);
 
             // Act
-            GameLoopType actual = system.LoopType;
+            var actual = system.LoopType;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

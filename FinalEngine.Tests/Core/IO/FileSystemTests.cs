@@ -1,4 +1,4 @@
-﻿// <copyright file="FileSystemTests.cs" company="Software Antics">
+// <copyright file="FileSystemTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -25,21 +25,30 @@ namespace FinalEngine.Tests.Core.IO
         public void ConstructorShouldNotThrowExceptionWhenParametersArentNull()
         {
             // Arrange, act and assert
-            Assert.DoesNotThrow(() => new FileSystem(new Mock<IFileInvoker>().Object, new Mock<IDirectoryInvoker>().Object));
+            Assert.DoesNotThrow(() =>
+            {
+                new FileSystem(new Mock<IFileInvoker>().Object, new Mock<IDirectoryInvoker>().Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenDirectoryIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new FileSystem(new Mock<IFileInvoker>().Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new FileSystem(new Mock<IFileInvoker>().Object, null);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenFileIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new FileSystem(null, new Mock<IDirectoryInvoker>().Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new FileSystem(null, new Mock<IDirectoryInvoker>().Object);
+            });
         }
 
         [Test]
@@ -56,21 +65,30 @@ namespace FinalEngine.Tests.Core.IO
         public void CreateDirectoryShouldThrowArgumentNullExceptionWhenPathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.CreateDirectory(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.CreateDirectory(string.Empty);
+            });
         }
 
         [Test]
         public void CreateDirectoryShouldThrowArgumentNullExceptionWhenPathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.CreateDirectory(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.CreateDirectory(null);
+            });
         }
 
         [Test]
         public void CreateDirectoryShouldThrowArgumentNullExceptionWhenPathIsWhiteSpace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.CreateDirectory("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.CreateDirectory("\t\r\n");
+            });
         }
 
         [Test]
@@ -92,7 +110,7 @@ namespace FinalEngine.Tests.Core.IO
             this.file.Setup(x => x.Create(Path)).Returns(expected);
 
             // Act
-            Stream actual = this.fileSystem.CreateFile(Path);
+            var actual = this.fileSystem.CreateFile(Path);
 
             // Assert
             Assert.AreSame(expected, actual);
@@ -102,21 +120,30 @@ namespace FinalEngine.Tests.Core.IO
         public void CreateFileShouldThrowArgumentNullExceptionWhenPathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.CreateFile(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.CreateFile(string.Empty);
+            });
         }
 
         [Test]
         public void CreateFileShouldThrowArgumentNullExceptionWhenPathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.CreateFile(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.CreateFile(null);
+            });
         }
 
         [Test]
         public void CreateFileShouldThrowArgumentNullExceptionWhenPathIsWhiteSpace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.CreateFile("\t\n\r"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.CreateFile("\t\n\r");
+            });
         }
 
         [Test]
@@ -133,21 +160,30 @@ namespace FinalEngine.Tests.Core.IO
         public void DeleteDirectoryShouldThrowArgumentNullExceptionWhenPathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DeleteDirectory(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DeleteDirectory(string.Empty);
+            });
         }
 
         [Test]
         public void DeleteDirectoryShouldThrowArgumentNullExceptionWhenPathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DeleteDirectory(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DeleteDirectory(null);
+            });
         }
 
         [Test]
         public void DeleteDirectoryShouldThrowArgumentNullExceptionWhenPathIsWhiteSpace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DeleteDirectory("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DeleteDirectory("\t\r\n");
+            });
         }
 
         [Test]
@@ -164,21 +200,30 @@ namespace FinalEngine.Tests.Core.IO
         public void DeleteFileShouldThrowArgumentNullExceptionWhenPathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DeleteFile(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DeleteFile(string.Empty);
+            });
         }
 
         [Test]
         public void DeleteFileShouldThrowArgumentNullExceptionWhenPathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DeleteFile(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DeleteFile(null);
+            });
         }
 
         [Test]
         public void DeleteFileShouldThrowArgumentNullExceptionWhenPathIsWhiteSpace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DeleteFile("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DeleteFile("\t\r\n");
+            });
         }
 
         [Test]
@@ -195,36 +240,45 @@ namespace FinalEngine.Tests.Core.IO
         public void DirectoryExistsShouldReturnSameAsDirectoryExistsWhenPathisNotNull()
         {
             // Arrange
-            const bool Expected = true;
+            const bool expected = true;
 
-            this.directory.Setup(x => x.Exists(Path)).Returns(Expected);
+            this.directory.Setup(x => x.Exists(Path)).Returns(expected);
 
             // Act
             bool actual = this.fileSystem.DirectoryExists(Path);
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void DirectoryExistsShouldThrowArgumentNullExceptionWhenPathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DirectoryExists(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DirectoryExists(string.Empty);
+            });
         }
 
         [Test]
         public void DirectoryExistsShouldThrowArgumentNullExceptionWhenPathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DirectoryExists(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DirectoryExists(null);
+            });
         }
 
         [Test]
         public void DirectoryExistsShouldThrowArgumentNullExceptionWhenPathIsWhiteSpace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.DirectoryExists("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.DirectoryExists("\t\r\n");
+            });
         }
 
         [Test]
@@ -241,36 +295,45 @@ namespace FinalEngine.Tests.Core.IO
         public void FileExistsShouldReturnSameAsFileExistsWhenPathIsNotNull()
         {
             // Arrange
-            const bool Expected = true;
+            const bool expected = true;
 
-            this.file.Setup(x => x.Exists(Path)).Returns(Expected);
+            this.file.Setup(x => x.Exists(Path)).Returns(expected);
 
             // Act
             bool actual = this.fileSystem.FileExists(Path);
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void FileExistsShouldThrowArgumentNullExceptionWhenPathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.FileExists(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.FileExists(string.Empty);
+            });
         }
 
         [Test]
         public void FileExistsShouldThrowArgumentNullExceptionWhenPathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.FileExists(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.FileExists(null);
+            });
         }
 
         [Test]
         public void FileExistsShouldThrowArgumentNullExceptionWhenPathIsWhiteSpace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.FileExists("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.FileExists("\t\r\n");
+            });
         }
 
         [Test]
@@ -312,7 +375,7 @@ namespace FinalEngine.Tests.Core.IO
             this.file.Setup(x => x.Open(Path, FileMode.Open, FileAccess.Read)).Returns(expected);
 
             // Act
-            Stream actual = this.fileSystem.OpenFile(Path, FileAccessMode.Read);
+            var actual = this.fileSystem.OpenFile(Path, FileAccessMode.Read);
 
             // Assert
             Assert.AreSame(expected, actual);
@@ -322,21 +385,30 @@ namespace FinalEngine.Tests.Core.IO
         public void OpenFileShouldThrowArgumentNullExceptionWhenPathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.OpenFile(string.Empty, FileAccessMode.Read));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.OpenFile(string.Empty, FileAccessMode.Read);
+            });
         }
 
         [Test]
         public void OpenFileShouldThrowArgumentNullExceptionWhenPathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.OpenFile(null, FileAccessMode.Read));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.OpenFile(null, FileAccessMode.Read);
+            });
         }
 
         [Test]
         public void OpenFileShouldThrowArgumentNullExceptionWhenPathIsWhiteSpace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.fileSystem.OpenFile("\r\t\n", FileAccessMode.Read));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.fileSystem.OpenFile("\r\t\n", FileAccessMode.Read);
+            });
         }
 
         [SetUp]

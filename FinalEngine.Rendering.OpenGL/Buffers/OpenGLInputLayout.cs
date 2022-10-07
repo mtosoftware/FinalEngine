@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLInputLayout.cs" company="Software Antics">
+// <copyright file="OpenGLInputLayout.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -65,7 +65,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
         /// </summary>
         public void Bind()
         {
-            foreach (InputElement element in this.Elements)
+            foreach (var element in this.Elements)
             {
                 this.invoker.VertexAttribFormat(element.Index, element.Size, this.mapper.Forward<VertexAttribType>(element.Type), false, element.RelativeOffset);
                 this.invoker.VertexAttribBinding(element.Index, 0);
@@ -78,7 +78,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
         /// </summary>
         public void Unbind()
         {
-            foreach (InputElement element in this.Elements)
+            foreach (var element in this.Elements)
             {
                 this.invoker.DisableVertexAttribArray(element.Index);
             }

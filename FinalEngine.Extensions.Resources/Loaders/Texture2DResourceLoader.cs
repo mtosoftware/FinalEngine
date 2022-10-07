@@ -1,4 +1,4 @@
-﻿// <copyright file="Texture2DResourceLoader.cs" company="Software Antics">
+// <copyright file="Texture2DResourceLoader.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -84,9 +84,9 @@ namespace FinalEngine.Extensions.Resources.Loaders
             }
 
             //// TODO: This is never disposed :(
-            Stream stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read);
+            var stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read);
 
-            using (Image<Rgba32> image = this.invoker.Load<Rgba32>(stream))
+            using (var image = this.invoker.Load<Rgba32>(stream))
             {
                 int width = image.Width;
                 int height = image.Height;
@@ -98,7 +98,7 @@ namespace FinalEngine.Extensions.Resources.Loaders
                 {
                     for (int y = 0; y < height; y++)
                     {
-                        Rgba32 color = image[x, y];
+                        var color = image[x, y];
                         data[(y * width) + x] = (color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0);
                     }
                 }

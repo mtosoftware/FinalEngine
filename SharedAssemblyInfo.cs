@@ -6,8 +6,8 @@ using System.Reflection;
 
 [assembly: AssemblyProduct("Final Engine")]
 [assembly: AssemblyCompany("Software Antics")]
-[assembly: AssemblyCopyright("© 2022 Software Antics")]
-[assembly: AssemblyTrademark("Software Antics™")]
+[assembly: AssemblyCopyright("Â© 2022 Software Antics")]
+[assembly: AssemblyTrademark("Software Anticsâ„¢")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("2022.4.0.0")]
 [assembly: AssemblyFileVersion("2022.4.0.0")]

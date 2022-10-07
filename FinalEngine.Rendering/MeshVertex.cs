@@ -137,11 +137,11 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.Position.GetHashCode() * Accumulator) +
-                   (this.Color.GetHashCode() * Accumulator) +
-                   (this.TextureCoordinate.GetHashCode() * Accumulator);
+            return (this.Position.GetHashCode() * accumulator) +
+                   (this.Color.GetHashCode() * accumulator) +
+                   (this.TextureCoordinate.GetHashCode() * accumulator);
         }
     }
 }

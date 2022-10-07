@@ -1,4 +1,4 @@
-﻿// <copyright file="EntityWorld.cs" company="Software Antics">
+// <copyright file="EntityWorld.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -59,7 +59,7 @@ namespace FinalEngine.ECS
 
             entity.OnComponentsChanged += this.Entity_OnComponentsChanged;
 
-            foreach (EntitySystemBase system in this.systems)
+            foreach (var system in this.systems)
             {
                 system.AddOrRemoveByAspect(entity);
             }
@@ -86,7 +86,7 @@ namespace FinalEngine.ECS
                 throw new ArgumentNullException(nameof(system), $"The specified {nameof(system)} parameter cannot be null.");
             }
 
-            foreach (EntitySystemBase other in this.systems)
+            foreach (var other in this.systems)
             {
                 if (other.GetType() == system.GetType())
                 {
@@ -94,7 +94,7 @@ namespace FinalEngine.ECS
                 }
             }
 
-            foreach (Entity entity in this.entities)
+            foreach (var entity in this.entities)
             {
                 system.AddOrRemoveByAspect(entity);
             }
@@ -110,7 +110,7 @@ namespace FinalEngine.ECS
         /// </param>
         public void ProcessAll(GameLoopType type)
         {
-            foreach (EntitySystemBase system in this.systems)
+            foreach (var system in this.systems)
             {
                 if (system.LoopType != type)
                 {
@@ -147,7 +147,7 @@ namespace FinalEngine.ECS
 
             entity.OnComponentsChanged -= this.Entity_OnComponentsChanged;
 
-            foreach (EntitySystemBase system in this.systems)
+            foreach (var system in this.systems)
             {
                 system.AddOrRemoveByAspect(entity, true);
             }
@@ -222,7 +222,7 @@ namespace FinalEngine.ECS
                 throw new ArgumentException($"The specified {nameof(sender)} parameter is not of type {nameof(Entity)}.", nameof(sender));
             }
 
-            foreach (EntitySystemBase system in this.systems)
+            foreach (var system in this.systems)
             {
                 system.AddOrRemoveByAspect(entity);
             }

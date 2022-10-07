@@ -1,4 +1,4 @@
-﻿// <copyright file="Texture2DLoaderTests.cs" company="Software Antics">
+// <copyright file="Texture2DLoaderTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -17,7 +17,6 @@ namespace FinalEngine.Tests.Rendering.Textures
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.PixelFormats;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class Texture2DLoaderTests
     {
         private Mock<IGPUResourceFactory> factory;
@@ -38,21 +37,30 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void ConstructorShouldThrowArgumentNullExceptionWhenFactoryIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem.Object, null, this.invoker.Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new Texture2DResourceLoader(this.fileSystem.Object, null, this.invoker.Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenFileSystemIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(null, this.factory.Object, this.invoker.Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new Texture2DResourceLoader(null, this.factory.Object, this.invoker.Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, null);
+            });
         }
 
         [Test]
@@ -93,7 +101,7 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void LoadResourceShouldReturnTextureWhenLoaded()
         {
             // Act
-            ITexture2D texture = this.loader.LoadResource("texture");
+            var texture = this.loader.LoadResource("texture");
 
             // Assert
             Assert.AreSame(this.texture.Object, texture);
@@ -103,21 +111,30 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.loader.LoadResource(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.loader.LoadResource(string.Empty);
+            });
         }
 
         [Test]
         public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.loader.LoadResource(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.loader.LoadResource(null);
+            });
         }
 
         [Test]
         public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.loader.LoadResource("\t\n\r"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.loader.LoadResource("\t\n\r");
+            });
         }
 
         [Test]
@@ -127,7 +144,10 @@ namespace FinalEngine.Tests.Rendering.Textures
             this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(false);
 
             // Act and assert
-            Assert.Throws<FileNotFoundException>(() => this.loader.LoadResource("texture"));
+            Assert.Throws<FileNotFoundException>(() =>
+            {
+                this.loader.LoadResource("texture");
+            });
         }
 
         [SetUp]

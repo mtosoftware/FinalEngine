@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLVertexBuffer.cs" company="Software Antics">
+// <copyright file="OpenGLVertexBuffer.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 

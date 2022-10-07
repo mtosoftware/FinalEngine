@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLRenderContextTests.cs" company="Software Antics">
+// <copyright file="OpenGLRenderContextTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -43,21 +43,43 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void ConstructorShouldThrowArgumentNullExceptionWhenBindingsIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLRenderContext(this.invoker.Object, null, this.graphicsContext.Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLRenderContext(this.invoker.Object, null, this.graphicsContext.Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenContextIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLRenderContext(this.invoker.Object, this.bindingsContext.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLRenderContext(this.invoker.Object, this.bindingsContext.Object, null);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLRenderContext(null, this.bindingsContext.Object, this.graphicsContext.Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLRenderContext(null, this.bindingsContext.Object, this.graphicsContext.Object);
+            });
+        }
+
+        [Test]
+        public void DisposeShouldNotExecuteWhenAlreadyDisposed()
+        {
+            // Arrange
+            this.renderContext.Dispose();
+
+            // Act
+            this.renderContext.Dispose();
+
+            // Assert
+            this.invoker.Verify(x => x.DeleteVertexArray(0), Times.Once);
         }
 
         [SetUp]
@@ -94,7 +116,16 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.graphicsContext.SetupGet(x => x.IsCurrent).Returns(false);
 
             // Act and assert
-            Assert.Throws<RenderContextException>(() => this.renderContext.SwapBuffers());
+            Assert.Throws<RenderContextException>(() =>
+            {
+                this.renderContext.SwapBuffers();
+            });
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            this.renderContext.Dispose();
         }
     }
 }

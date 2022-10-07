@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLGPUResourceFactoryTests.cs" company="Software Antics">
+// <copyright file="OpenGLGPUResourceFactoryTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -13,7 +13,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using FinalEngine.Rendering.OpenGL.Pipeline;
     using FinalEngine.Rendering.OpenGL.Textures;
     using FinalEngine.Rendering.Pipeline;
-    using FinalEngine.Rendering.Textures;
     using FinalEngine.Utilities;
     using Moq;
     using NUnit.Framework;
@@ -31,21 +30,27 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLGPUResourceFactory(null, this.mapper.Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLGPUResourceFactory(null, this.mapper.Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLGPUResourceFactory(this.invoker.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLGPUResourceFactory(this.invoker.Object, null);
+            });
         }
 
         [Test]
         public void CreateIndexBufferShouldReturnOpenGLIndexBufferWhenInvoked()
         {
             // Act
-            IIndexBuffer actual = this.factory.CreateIndexBuffer(BufferUsageType.Static, Array.Empty<int>(), 0);
+            var actual = this.factory.CreateIndexBuffer(BufferUsageType.Static, Array.Empty<int>(), 0);
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLIndexBuffer<int>), actual);
@@ -55,7 +60,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateIndexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.factory.CreateIndexBuffer<int>(BufferUsageType.Dynamic, null, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.factory.CreateIndexBuffer<int>(BufferUsageType.Dynamic, null, 0);
+            });
         }
 
         [Test]
@@ -63,7 +71,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         {
             // Act
             IReadOnlyCollection<InputElement> elements = new List<InputElement>();
-            IInputLayout actual = this.factory.CreateInputLayout(elements);
+            var actual = this.factory.CreateInputLayout(elements);
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLInputLayout), actual);
@@ -73,7 +81,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateInputLayoutShouldThrowArgumentNullExceptionWhenElementsIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.factory.CreateInputLayout(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.factory.CreateInputLayout(null);
+            });
         }
 
         [Test]
@@ -81,7 +92,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         {
             // Act
             IReadOnlyCollection<IOpenGLShader> shaders = new List<IOpenGLShader>();
-            IShaderProgram actual = this.factory.CreateShaderProgram(shaders);
+            var actual = this.factory.CreateShaderProgram(shaders);
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLShaderProgram), actual);
@@ -91,7 +102,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateShaderProgramShouldThrowArgumentNullExceptionWhenShadersIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.factory.CreateShaderProgram(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.factory.CreateShaderProgram(null);
+            });
         }
 
         [Test]
@@ -105,14 +119,17 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             };
 
             // Act and assert
-            Assert.Throws<InvalidCastException>(() => this.factory.CreateShaderProgram(shaders));
+            Assert.Throws<InvalidCastException>(() =>
+            {
+                this.factory.CreateShaderProgram(shaders);
+            });
         }
 
         [Test]
         public void CreateShaderShouldReturnOpenGLShaderWhenInvoked()
         {
             // Act
-            IShader actual = this.factory.CreateShader(PipelineTarget.Vertex, "test");
+            var actual = this.factory.CreateShader(PipelineTarget.Vertex, "test");
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLShader), actual);
@@ -122,35 +139,47 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateShaderShouldThrowArgumentNullExceptionWhenSourceCodeIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.factory.CreateShader(PipelineTarget.Vertex, string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.factory.CreateShader(PipelineTarget.Vertex, string.Empty);
+            });
         }
 
         [Test]
         public void CreateShaderShouldThrowArgumentNullExceptionWhenSourceCodeIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.factory.CreateShader(PipelineTarget.Vertex, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.factory.CreateShader(PipelineTarget.Vertex, null);
+            });
         }
 
         [Test]
         public void CreateShaderShouldThrowArgumentNullExceptionWhenSourceCodeIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.factory.CreateShader(PipelineTarget.Vertex, "\r\n\t"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.factory.CreateShader(PipelineTarget.Vertex, "\r\n\t");
+            });
         }
 
         [Test]
         public void CreateTexture2DShouldNotThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Act and assert
-            Assert.DoesNotThrow(() => this.factory.CreateTexture2D<int>(default, null));
+            Assert.DoesNotThrow(() =>
+            {
+                this.factory.CreateTexture2D<int>(default, null);
+            });
         }
 
         [Test]
         public void CreateTexture2DShouldReturnOpenGLTexture2DWhenInvoked()
         {
             // Act
-            ITexture2D actual = this.factory.CreateTexture2D(default, Array.Empty<int>());
+            var actual = this.factory.CreateTexture2D(default, Array.Empty<int>());
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLTexture2D), actual);
@@ -160,7 +189,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateVertexBufferShouldReturnOpenGLVertexBufferWhenInvoked()
         {
             // Act
-            IVertexBuffer actual = this.factory.CreateVertexBuffer(BufferUsageType.Dynamic, Array.Empty<int>(), 0, 0);
+            var actual = this.factory.CreateVertexBuffer(BufferUsageType.Dynamic, Array.Empty<int>(), 0, 0);
 
             // Assert
             Assert.IsInstanceOf(typeof(OpenGLVertexBuffer<int>), actual);
@@ -170,7 +199,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void CreateVertexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.factory.CreateVertexBuffer<int>(BufferUsageType.Static, null, 0, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.factory.CreateVertexBuffer<int>(BufferUsageType.Static, null, 0, 0);
+            });
         }
 
         [SetUp]

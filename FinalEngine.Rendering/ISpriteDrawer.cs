@@ -1,4 +1,4 @@
-﻿// <copyright file="ISpriteDrawer.cs" company="Software Antics">
+// <copyright file="ISpriteDrawer.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -36,7 +36,7 @@ namespace FinalEngine.Rendering
         void Begin();
 
         /// <summary>
-        ///   Draws the specified texture, blended with the specified <paramref name="color"/>, with the specified <paramref name="origin"/>, at the specified <paramref name="position"/>, <paramref name="rotation"/> and <paramref name="scale"/>.
+        ///   Draws the specified texture, blended with the specified <paramref name="color"/>, with the specified <paramref name="origin"/>, at the specified <paramref name="position"/>, <paramref name="rotation"/> and <paramref name="size"/>.
         /// </summary>
         /// <param name="texture">
         ///   The texture to draw.

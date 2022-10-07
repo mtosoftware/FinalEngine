@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLVertexBufferTests.cs" company="Software Antics">
+// <copyright file="OpenGLVertexBufferTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -15,7 +15,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLVertexBufferTests
     {
         private const int ID = 42;
@@ -47,7 +46,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
             this.vertexBuffer.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.vertexBuffer.Bind());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.vertexBuffer.Bind();
+            });
         }
 
         [Test]
@@ -68,21 +70,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
         public void ConstructorShouldThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLVertexBuffer<int>(this.invoker.Object, this.mapper.Object, BufferUsageHint.DynamicRead, null, this.data.Length * sizeof(int), 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLVertexBuffer<int>(this.invoker.Object, this.mapper.Object, BufferUsageHint.DynamicRead, null, this.data.Length * sizeof(int), 0);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLVertexBuffer<int>(null, this.mapper.Object, BufferUsageHint.DynamicCopy, this.data, this.data.Length * sizeof(int), Stride));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLVertexBuffer<int>(null, this.mapper.Object, BufferUsageHint.DynamicCopy, this.data, this.data.Length * sizeof(int), Stride);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLVertexBuffer<int>(this.invoker.Object, null, BufferUsageHint.StreamDraw, this.data, this.data.Length * sizeof(int), Stride));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLVertexBuffer<int>(this.invoker.Object, null, BufferUsageHint.StreamDraw, this.data, this.data.Length * sizeof(int), Stride);
+            });
         }
 
         [Test]
@@ -125,20 +136,23 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
         public void TypeShouldReturnStaticWhenInvoked()
         {
             // Arrange
-            const BufferUsageType Expected = BufferUsageType.Static;
+            const BufferUsageType expected = BufferUsageType.Static;
 
             // Act
-            BufferUsageType actual = this.vertexBuffer.Type;
+            var actual = this.vertexBuffer.Type;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void UpdateSholdThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.vertexBuffer.Update<int>(null, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.vertexBuffer.Update<int>(null, 0);
+            });
         }
 
         [Test]
@@ -158,13 +172,13 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
         public void UpdateShouldSetStridePropertyToSevenWhenInvoked()
         {
             // Arrange
-            const int Expected = 7;
+            const int expected = 7;
 
             // Act
-            this.vertexBuffer.Update(Array.Empty<int>(), Expected);
+            this.vertexBuffer.Update(Array.Empty<int>(), expected);
 
             // Assert
-            Assert.AreEqual(Expected, this.vertexBuffer.Stride);
+            Assert.AreEqual(expected, this.vertexBuffer.Stride);
         }
 
         [Test]
@@ -174,7 +188,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
             this.vertexBuffer.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.vertexBuffer.Update(Array.Empty<int>(), 0));
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.vertexBuffer.Update(Array.Empty<int>(), 0);
+            });
         }
     }
 }

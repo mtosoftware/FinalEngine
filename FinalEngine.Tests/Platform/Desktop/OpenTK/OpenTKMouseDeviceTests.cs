@@ -6,7 +6,7 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
 {
     using System;
     using System.Drawing;
-    using FinalEngine.Input;
+    using FinalEngine.Input.Mouses;
     using FinalEngine.Platform.Desktop.OpenTK;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
     using global::OpenTK.Mathematics;
@@ -28,34 +28,68 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         private Mock<INativeWindowInvoker> nativeWindow;
 
         [Test]
-        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull() =>
+        public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull()
+        {
             // Arrange, act and assert
-            Assert.DoesNotThrow(() => new OpenTKMouseDevice(new Mock<INativeWindowInvoker>().Object));
+            Assert.DoesNotThrow(() =>
+            {
+                new OpenTKMouseDevice(new Mock<INativeWindowInvoker>().Object);
+            });
+        }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull() =>
+        public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull()
+        {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenTKMouseDevice(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenTKMouseDevice(null);
+            });
+        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseDownEventWhenNativeWindowIsNotNull() =>
+        public void ConstructorTestShouldHookOntoNativeWindowMouseDownEventWhenNativeWindowIsNotNull()
+        {
             // Assert
-            this.nativeWindow.VerifyAdd(x => x.MouseDown += It.IsAny<Action<TKMouseButtonEventArgs>>(), Times.Once);
+            this.nativeWindow.VerifyAdd(
+                x =>
+            {
+                x.MouseDown += It.IsAny<Action<TKMouseButtonEventArgs>>();
+            }, Times.Once);
+        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseMoveEventWhenNativeWindowIsNotNull() =>
+        public void ConstructorTestShouldHookOntoNativeWindowMouseMoveEventWhenNativeWindowIsNotNull()
+        {
             // Assert
-            this.nativeWindow.VerifyAdd(x => x.MouseMove += It.IsAny<Action<TKMouseMoveEventArgs>>(), Times.Once);
+            this.nativeWindow.VerifyAdd(
+                x =>
+            {
+                x.MouseMove += It.IsAny<Action<TKMouseMoveEventArgs>>();
+            }, Times.Once);
+        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseUpEventWhenNativeWindowIsNotNull() =>
+        public void ConstructorTestShouldHookOntoNativeWindowMouseUpEventWhenNativeWindowIsNotNull()
+        {
             // Assert
-            this.nativeWindow.VerifyAdd(x => x.MouseUp += It.IsAny<Action<TKMouseButtonEventArgs>>(), Times.Once);
+            this.nativeWindow.VerifyAdd(
+                x =>
+            {
+                x.MouseUp += It.IsAny<Action<TKMouseButtonEventArgs>>();
+            }, Times.Once);
+        }
 
         [Test]
-        public void ConstructorTestShouldHookOntoNativeWindowMouseWheelEventWhenNativeWindowIsNotNull() =>
+        public void ConstructorTestShouldHookOntoNativeWindowMouseWheelEventWhenNativeWindowIsNotNull()
+        {
             // Assert
-            this.nativeWindow.VerifyAdd(x => x.MouseWheel += It.IsAny<Action<TKMouseWheelEventArgs>>(), Times.Once);
+            this.nativeWindow.VerifyAdd(
+                x =>
+            {
+                x.MouseWheel += It.IsAny<Action<TKMouseWheelEventArgs>>();
+            }, Times.Once);
+        }
 
         [Test]
         public void LocationDeltaShouldReturnDeltaWhenInvoked()
@@ -85,7 +119,11 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         public void NativeWindowMouseDownEventShouldNotRaiseButtonDownWhenRaisedAndNoSubscribers()
         {
             // Act
-            this.nativeWindow.Raise(x => x.MouseDown += null, default(TKMouseButtonEventArgs));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseDown += null;
+            }, default(TKMouseButtonEventArgs));
 
             // Assert
             Assert.Pass();
@@ -102,14 +140,22 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             };
 
             // Act
-            this.nativeWindow.Raise(x => x.MouseDown += null, new TKMouseButtonEventArgs(TKMouseButton.Button4, TKInputAction.Press, TKKeyModifiers.CapsLock));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseDown += null;
+            }, new TKMouseButtonEventArgs(TKMouseButton.Button4, TKInputAction.Press, TKKeyModifiers.CapsLock));
         }
 
         [Test]
         public void NativeWindowMouseMoveEventShouldNotRaiseMoveWhenRaisedAndNoSubscribers()
         {
             // Act
-            this.nativeWindow.Raise(x => x.MouseMove += null, default(TKMouseMoveEventArgs));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseMove += null;
+            }, default(TKMouseMoveEventArgs));
 
             // Assert
             Assert.Pass();
@@ -126,14 +172,22 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             };
 
             // Act
-            this.nativeWindow.Raise(x => x.MouseMove += null, new TKMouseMoveEventArgs(10, 20, 0, 0));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseMove += null;
+            }, new TKMouseMoveEventArgs(10, 20, 0, 0));
         }
 
         [Test]
         public void NativeWindowMouseUpEventShouldNotRaiseButtonUpWhenRaisedAndNoSubscribers()
         {
             // Act
-            this.nativeWindow.Raise(x => x.MouseUp += null, default(TKMouseButtonEventArgs));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseUp += null;
+            }, default(TKMouseButtonEventArgs));
 
             // Assert
             Assert.Pass();
@@ -150,14 +204,22 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             };
 
             // Act
-            this.nativeWindow.Raise(x => x.MouseUp += null, new TKMouseButtonEventArgs(TKMouseButton.Button6, TKInputAction.Press, TKKeyModifiers.CapsLock));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseUp += null;
+            }, new TKMouseButtonEventArgs(TKMouseButton.Button6, TKInputAction.Press, TKKeyModifiers.CapsLock));
         }
 
         [Test]
         public void NativeWindowMouseWheelEventShouldNotRaiseWheelWhenRaisedAndNoSubscribers()
         {
             // Act
-            this.nativeWindow.Raise(x => x.MouseWheel += null, default(TKMouseWheelEventArgs));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseWheel += null;
+            }, default(TKMouseWheelEventArgs));
 
             // Assert
             Assert.Pass();
@@ -174,7 +236,11 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             };
 
             // Act
-            this.nativeWindow.Raise(x => x.MouseWheel += null, new TKMouseWheelEventArgs(0, 10));
+            this.nativeWindow.Raise(
+                x =>
+            {
+                x.MouseWheel += null;
+            }, new TKMouseWheelEventArgs(0, 10));
         }
 
         [Test]
@@ -184,7 +250,11 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.mouseDevice.SetCursorLocation(new PointF(100, 3400));
 
             // Assert
-            this.nativeWindow.VerifySet(x => x.MousePosition = new Vector2(100, 3400), Times.Once);
+            this.nativeWindow.VerifySet(
+                x =>
+            {
+                x.MousePosition = new Vector2(100, 3400);
+            }, Times.Once);
         }
 
         [SetUp]

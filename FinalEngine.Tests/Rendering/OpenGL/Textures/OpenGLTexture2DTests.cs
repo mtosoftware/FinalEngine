@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLTexture2DTests.cs" company="Software Antics">
+// <copyright file="OpenGLTexture2DTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -20,7 +20,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
     using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
     using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLTexture2DTests
     {
         private const int ID = 104;
@@ -50,7 +49,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
             this.texture.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.texture.Bind(0));
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.texture.Bind(0);
+            });
         }
 
         [Test]
@@ -106,21 +108,27 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(null, this.mapper.Object, default, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLTexture2D(null, this.mapper.Object, default, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1));
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLTexture2D(this.invoker.Object, null, default, PixelFormat.Depth, SizedFormat.R8, new IntPtr(1)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLTexture2D(this.invoker.Object, null, default, PixelFormat.Depth, SizedFormat.R8, new IntPtr(1));
+            });
         }
 
         [Test]
         public void DescriptionShouldReturnSameAsConstructorWhenInvoked()
         {
             // Act
-            Texture2DDescription actual = this.texture.Description;
+            var actual = this.texture.Description;
 
             // Assert
             Assert.AreEqual(this.description, actual);
@@ -130,7 +138,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         public void FormatShouldReturnRgbaWhenInvoked()
         {
             // Act
-            PixelFormat actual = this.texture.Format;
+            var actual = this.texture.Format;
 
             // Assert
             Assert.AreEqual(PixelFormat.Rgba, actual);
@@ -140,7 +148,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         public void InternalFormatShouldReturnRgWhenInvoked()
         {
             // Act
-            SizedFormat actual = this.texture.InternalFormat;
+            var actual = this.texture.InternalFormat;
 
             // Assert
             Assert.AreEqual(SizedFormat.R8, actual);

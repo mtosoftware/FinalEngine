@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLShaderProgramTests.cs" company="Software Antics">
+// <copyright file="OpenGLShaderProgramTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -13,7 +13,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
     using Moq;
     using NUnit.Framework;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLShaderProgramTests
     {
         private const int ID = 567;
@@ -43,7 +42,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
             this.program.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.program.Bind());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.program.Bind();
+            });
         }
 
         [Test]
@@ -85,14 +87,20 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLShaderProgram(null, this.shaders));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShaderProgram(null, this.shaders);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenShadersIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLShaderProgram(this.invoker.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShaderProgram(this.invoker.Object, null);
+            });
         }
 
         [Test]
@@ -102,7 +110,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
             this.invoker.Setup(x => x.GetProgramInfoLog(ID)).Returns("test");
 
             // Act and assert
-            Assert.Throws<ProgramLinkingErrorException>(() => new OpenGLShaderProgram(this.invoker.Object, this.shaders));
+            Assert.Throws<ProgramLinkingErrorException>(() =>
+            {
+                new OpenGLShaderProgram(this.invoker.Object, this.shaders);
+            });
         }
 
         [Test]
@@ -129,21 +140,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
         public void GetUniformLocationShouldThrowArgumentNullExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.program.GetUniformLocation(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.program.GetUniformLocation(string.Empty);
+            });
         }
 
         [Test]
         public void GetUniformLocationShouldThrowArgumentNullExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.program.GetUniformLocation(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.program.GetUniformLocation(null);
+            });
         }
 
         [Test]
         public void GetUniformLocationShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.program.GetUniformLocation("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.program.GetUniformLocation("\t\r\n");
+            });
         }
 
         [Test]
@@ -153,7 +173,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
             this.program.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.program.GetUniformLocation(null));
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.program.GetUniformLocation(null);
+            });
         }
 
         [SetUp]

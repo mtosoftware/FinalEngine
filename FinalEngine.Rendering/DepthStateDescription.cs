@@ -1,4 +1,4 @@
-﻿// <copyright file="DepthStateDescription.cs" company="Software Antics">
+// <copyright file="DepthStateDescription.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -126,11 +126,11 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.ComparisonMode.GetHashCode() * Accumulator) +
-                   (this.ReadEnabled.GetHashCode() * Accumulator) +
-                   (this.WriteEnabled.GetHashCode() * Accumulator);
+            return (this.ComparisonMode.GetHashCode() * accumulator) +
+                   (this.ReadEnabled.GetHashCode() * accumulator) +
+                   (this.WriteEnabled.GetHashCode() * accumulator);
         }
     }
 }

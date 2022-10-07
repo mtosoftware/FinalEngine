@@ -1,4 +1,4 @@
-﻿// <copyright file="InputElementTests.cs" company="Software Antics">
+// <copyright file="InputElementTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -53,7 +53,7 @@ namespace FinalEngine.Tests.Rendering.Buffers
         public void ConstructorShouldSetTypeToParameterWhenInvoked()
         {
             // Act
-            InputElementType actual = this.element.Type;
+            var actual = this.element.Type;
 
             // Assert
             Assert.AreEqual(Type, actual);

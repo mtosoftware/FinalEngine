@@ -1,4 +1,4 @@
-﻿// <copyright file="VertexTests.cs" company="Software Antics">
+// <copyright file="SpriteVertexTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -10,17 +10,17 @@ namespace FinalEngine.Tests.Rendering
     using FinalEngine.Rendering.Buffers;
     using NUnit.Framework;
 
-    public class VertexTests
+    public class SpriteVertexTests
     {
         [Test]
         public void ColorShouldReturnZeroWhenInvoked()
         {
             // Arrange
-            Vector4 expected = Vector4.Zero;
+            var expected = Vector4.Zero;
             var vertex = default(SpriteVertex);
 
             // Act
-            Vector4 actual = vertex.Color;
+            var actual = vertex.Color;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -30,7 +30,7 @@ namespace FinalEngine.Tests.Rendering
         public void ColoShouldReturnUnitWWhenSet()
         {
             // Arrange
-            Vector4 expected = Vector4.UnitW;
+            var expected = Vector4.UnitW;
             var vertex = default(SpriteVertex);
 
             // Act
@@ -99,7 +99,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             var left = default(SpriteVertex);
-            object right = new object();
+            object right = default(SpriteVertex);
 
             // Act
             bool actual = left.Equals(right);
@@ -301,7 +301,7 @@ namespace FinalEngine.Tests.Rendering
             };
 
             // Act
-            IReadOnlyCollection<InputElement> actual = SpriteVertex.InputElements;
+            var actual = SpriteVertex.InputElements;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -311,7 +311,7 @@ namespace FinalEngine.Tests.Rendering
         public void PositionShouldReturnUnitXWhenSet()
         {
             // Arrange
-            Vector2 expected = Vector2.UnitX;
+            var expected = Vector2.UnitX;
             var vertex = default(SpriteVertex);
 
             // Act
@@ -325,11 +325,11 @@ namespace FinalEngine.Tests.Rendering
         public void PositionShouldReturnZeroWhenInvoked()
         {
             // Arrange
-            Vector2 expected = Vector2.Zero;
+            var expected = Vector2.Zero;
             var vertex = default(SpriteVertex);
 
             // Act
-            Vector2 actual = vertex.Position;
+            var actual = vertex.Position;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -339,24 +339,24 @@ namespace FinalEngine.Tests.Rendering
         public void SizeInBytesShouldReturnThirtySixWhenInvoked()
         {
             // Arrange
-            const int Expected = 36;
+            const int expected = 36;
 
             // Act
             int actual = SpriteVertex.SizeInBytes;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void TextureCoordianteShouldReturnZeroWhenInvoked()
         {
             // Arrange
-            Vector2 expected = Vector2.Zero;
+            var expected = Vector2.Zero;
             var vertex = default(SpriteVertex);
 
             // Act
-            Vector2 actual = vertex.TextureCoordinate;
+            var actual = vertex.TextureCoordinate;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -366,7 +366,7 @@ namespace FinalEngine.Tests.Rendering
         public void TextureCoordinateShouldReturnUnitYWhenSet()
         {
             // Arrange
-            Vector2 expected = Vector2.UnitY;
+            var expected = Vector2.UnitY;
             var vertex = default(SpriteVertex);
 
             // Act
@@ -380,28 +380,28 @@ namespace FinalEngine.Tests.Rendering
         public void TextureSlotIndexShouldReturnSevenWhenSet()
         {
             // Arrange
-            const float Expected = 7.0f;
+            const float expected = 7.0f;
             var vertex = default(SpriteVertex);
 
             // Act
-            vertex.TextureSlotIndex = Expected;
+            vertex.TextureSlotIndex = expected;
 
             // Assert
-            Assert.AreEqual(Expected, vertex.TextureSlotIndex);
+            Assert.AreEqual(expected, vertex.TextureSlotIndex);
         }
 
         [Test]
         public void TextureSlotIndexShouldReturnZeroWhenInvoked()
         {
             // Arrange
-            const float Expected = 0.0f;
+            const float expected = 0.0f;
             var vertex = default(SpriteVertex);
 
             // Act
             float actual = vertex.TextureSlotIndex;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLInputAssemblerTests.cs" company="Software Antics">
+// <copyright file="OpenGLInputAssemblerTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -27,7 +27,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLInputAssembler(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLInputAssembler(null);
+            });
         }
 
         [Test]
@@ -57,7 +60,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void SetIndexBufferShouldThrowArgumentExceptionWhenBufferIsNotIOpenGLIndexBuffer()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.inputAssembler.SetIndexBuffer(Mock.Of<IIndexBuffer>()));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.inputAssembler.SetIndexBuffer(Mock.Of<IIndexBuffer>());
+            });
         }
 
         [Test]
@@ -121,7 +127,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void SetInputLayoutShouldThrowArgumentExceptionWhenLayoutIsNotIOpenGLInputLayout()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.inputAssembler.SetInputLayout(Mock.Of<IInputLayout>()));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.inputAssembler.SetInputLayout(Mock.Of<IInputLayout>());
+            });
         }
 
         [SetUp]
@@ -162,7 +171,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void SetVertexBufferShouldThrowArgumentExceptionWhenBufferIsNotIOpenGLVertexBuffer()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.inputAssembler.SetVertexBuffer(Mock.Of<IVertexBuffer>()));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.inputAssembler.SetVertexBuffer(Mock.Of<IVertexBuffer>());
+            });
         }
 
         [Test]
@@ -179,21 +191,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void UpdateIndexBufferShouldThrowArgumentExceptionWhenBufferIsNotOpenGLIndexBuffer()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.inputAssembler.UpdateIndexBuffer(Mock.Of<IIndexBuffer>(), Array.Empty<int>()));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.inputAssembler.UpdateIndexBuffer(Mock.Of<IIndexBuffer>(), Array.Empty<int>());
+            });
         }
 
         [Test]
         public void UpdateIndexBufferShouldThrowArgumentNullExceptionWhenBufferIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.inputAssembler.UpdateIndexBuffer(null, Array.Empty<int>()));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.inputAssembler.UpdateIndexBuffer(null, Array.Empty<int>());
+            });
         }
 
         [Test]
         public void UpdateIndexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.inputAssembler.UpdateIndexBuffer<int>(this.indexBuffer.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.inputAssembler.UpdateIndexBuffer<int>(this.indexBuffer.Object, null);
+            });
         }
 
         [Test]
@@ -210,21 +231,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void UpdateVertexBufferShouldThrowArgumentExceptionWhenBufferIsNotOpenGLVertexBuffer()
         {
             // Act and assert
-            Assert.Throws<ArgumentException>(() => this.inputAssembler.UpdateVertexBuffer(Mock.Of<IVertexBuffer>(), Array.Empty<int>(), 0));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                this.inputAssembler.UpdateVertexBuffer(Mock.Of<IVertexBuffer>(), Array.Empty<int>(), 0);
+            });
         }
 
         [Test]
         public void UpdateVertexBufferShouldThrowArgumentNullExceptionWhenBufferIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.inputAssembler.UpdateVertexBuffer(null, Array.Empty<int>(), 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.inputAssembler.UpdateVertexBuffer(null, Array.Empty<int>(), 0);
+            });
         }
 
         [Test]
         public void UpdateVertexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.inputAssembler.UpdateVertexBuffer<int>(this.vertexBuffer.Object, null, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.inputAssembler.UpdateVertexBuffer<int>(this.vertexBuffer.Object, null, 0);
+            });
         }
     }
 }

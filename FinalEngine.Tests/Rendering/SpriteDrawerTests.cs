@@ -1,4 +1,4 @@
-﻿// <copyright file="SpriteDrawerTests.cs" company="Software Antics">
+// <copyright file="SpriteDrawerTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -15,7 +15,6 @@ namespace FinalEngine.Tests.Rendering
     using Moq;
     using NUnit.Framework;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class SpriteDrawerTests
     {
         private const int ProjectionHeight = 720;
@@ -111,7 +110,10 @@ namespace FinalEngine.Tests.Rendering
             this.drawer.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.drawer.Begin());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.drawer.Begin();
+            });
         }
 
         [Test]
@@ -163,7 +165,7 @@ namespace FinalEngine.Tests.Rendering
             var expected = Matrix4x4.CreateOrthographicOffCenter(0, ProjectionWidth, ProjectionHeight, 0, -1, 1);
 
             // Act
-            Matrix4x4 actual = this.drawer.Projection;
+            var actual = this.drawer.Projection;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -176,7 +178,7 @@ namespace FinalEngine.Tests.Rendering
             var expected = Matrix4x4.CreateTranslation(Vector3.Zero);
 
             // Act
-            Matrix4x4 actual = this.drawer.Transform;
+            var actual = this.drawer.Transform;
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -186,21 +188,30 @@ namespace FinalEngine.Tests.Rendering
         public void ConstructorShouldThrowArgumentNullExceptionWhenBatcherIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new SpriteDrawer(this.renderDevice.Object, null, this.binder.Object, ProjectionWidth, ProjectionHeight));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new SpriteDrawer(this.renderDevice.Object, null, this.binder.Object, ProjectionWidth, ProjectionHeight);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenBinderIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new SpriteDrawer(this.renderDevice.Object, this.batcher.Object, null, ProjectionWidth, ProjectionHeight));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new SpriteDrawer(this.renderDevice.Object, this.batcher.Object, null, ProjectionWidth, ProjectionHeight);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenRenderDeviceIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new SpriteDrawer(null, this.batcher.Object, this.binder.Object, ProjectionWidth, ProjectionHeight));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new SpriteDrawer(null, this.batcher.Object, this.binder.Object, ProjectionWidth, ProjectionHeight);
+            });
         }
 
         [Test]
@@ -243,7 +254,10 @@ namespace FinalEngine.Tests.Rendering
         public void DrawShouldThrowArgumentNullExceptionWhenTextureIsNullAndNotDisposed()
         {
             // Act
-            Assert.Throws<ArgumentNullException>(() => this.drawer.Draw(null, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.drawer.Draw(null, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            });
         }
 
         [Test]
@@ -253,7 +267,10 @@ namespace FinalEngine.Tests.Rendering
             this.drawer.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.drawer.Draw(null, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero));
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.drawer.Draw(null, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            });
         }
 
         [Test]
@@ -313,25 +330,34 @@ namespace FinalEngine.Tests.Rendering
             this.drawer.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.drawer.End());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.drawer.End();
+            });
         }
 
         [Test]
         public void EndShouldThrowObjectDisposedExceptionWhenVertexBufferIsNull()
         {
             // Arrange
-            this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes)).Returns(() => null);
+            this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes)).Returns(() =>
+            {
+                return null;
+            });
             this.drawer = new SpriteDrawer(this.renderDevice.Object, this.batcher.Object, this.binder.Object, ProjectionWidth, ProjectionHeight);
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.drawer.End());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.drawer.End();
+            });
         }
 
         [Test]
         public void ProjectionSetShouldSetProjectionWhenInvoked()
         {
             // Arrange
-            Matrix4x4 expected = Matrix4x4.Identity;
+            var expected = Matrix4x4.Identity;
 
             // Act
             this.drawer.Projection = expected;

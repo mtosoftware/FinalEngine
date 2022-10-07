@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLShaderProgram.cs" company="Software Antics">
+// <copyright file="OpenGLShaderProgram.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -51,7 +51,7 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
 
             this.rendererID = this.invoker.CreateProgram();
 
-            foreach (IOpenGLShader? shader in shaders)
+            foreach (var shader in shaders)
             {
                 if (shader == null)
                 {

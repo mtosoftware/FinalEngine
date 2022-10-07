@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Rendering.OpenGL.Pipeline;
@@ -15,7 +14,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLShaderTests
     {
         private const int ID = 34;

@@ -1,4 +1,4 @@
-﻿// <copyright file="InputElement.cs" company="Software Antics">
+// <copyright file="InputElement.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -176,12 +176,12 @@ namespace FinalEngine.Rendering.Buffers
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.Index.GetHashCode() * Accumulator) +
-                   (this.RelativeOffset.GetHashCode() * Accumulator) +
-                   (this.Size.GetHashCode() * Accumulator) +
-                   (this.Type.GetHashCode() * Accumulator);
+            return (this.Index.GetHashCode() * accumulator) +
+                   (this.RelativeOffset.GetHashCode() * accumulator) +
+                   (this.Size.GetHashCode() * accumulator) +
+                   (this.Type.GetHashCode() * accumulator);
         }
     }
 }

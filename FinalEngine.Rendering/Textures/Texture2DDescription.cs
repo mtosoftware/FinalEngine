@@ -1,4 +1,4 @@
-﻿// <copyright file="Texture2DDescription.cs" company="Software Antics">
+// <copyright file="Texture2DDescription.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -189,15 +189,15 @@ namespace FinalEngine.Rendering.Textures
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.MinFilter.GetHashCode() * Accumulator) +
-                   (this.MagFilter.GetHashCode() * Accumulator) +
-                   (this.WrapS.GetHashCode() * Accumulator) +
-                   (this.WrapT.GetHashCode() * Accumulator) +
-                   (this.PixelType.GetHashCode() * Accumulator) +
-                   (this.Width.GetHashCode() * Accumulator) +
-                   (this.Height.GetHashCode() * Accumulator);
+            return (this.MinFilter.GetHashCode() * accumulator) +
+                   (this.MagFilter.GetHashCode() * accumulator) +
+                   (this.WrapS.GetHashCode() * accumulator) +
+                   (this.WrapT.GetHashCode() * accumulator) +
+                   (this.PixelType.GetHashCode() * accumulator) +
+                   (this.Width.GetHashCode() * accumulator) +
+                   (this.Height.GetHashCode() * accumulator);
         }
     }
 }

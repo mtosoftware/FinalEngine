@@ -1,4 +1,4 @@
-﻿// <copyright file="BlendStateDescription.cs" company="Software Antics">
+// <copyright file="BlendStateDescription.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -250,13 +250,13 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.Color.GetHashCode() * Accumulator) +
-                   (this.DestinationMode.GetHashCode() * Accumulator) +
-                   (this.Enabled.GetHashCode() * Accumulator) +
-                   (this.EquationMode.GetHashCode() * Accumulator) +
-                   (this.SourceMode.GetHashCode() * Accumulator);
+            return (this.Color.GetHashCode() * accumulator) +
+                   (this.DestinationMode.GetHashCode() * accumulator) +
+                   (this.Enabled.GetHashCode() * accumulator) +
+                   (this.EquationMode.GetHashCode() * accumulator) +
+                   (this.SourceMode.GetHashCode() * accumulator);
         }
     }
 }

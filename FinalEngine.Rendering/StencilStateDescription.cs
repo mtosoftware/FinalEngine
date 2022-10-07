@@ -1,4 +1,4 @@
-﻿// <copyright file="StencilStateDescription.cs" company="Software Antics">
+// <copyright file="StencilStateDescription.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -253,16 +253,16 @@ namespace FinalEngine.Rendering
         /// </returns>
         public override int GetHashCode()
         {
-            const int Accumulator = 17;
+            const int accumulator = 17;
 
-            return (this.ComparisonMode.GetHashCode() * Accumulator) +
-                   (this.DepthFail.GetHashCode() * Accumulator) +
-                   (this.Enabled.GetHashCode() * Accumulator) +
-                   (this.Pass.GetHashCode() * Accumulator) +
-                   (this.ReadMask.GetHashCode() * Accumulator) +
-                   (this.ReferenceValue.GetHashCode() * Accumulator) +
-                   (this.StencilFail.GetHashCode() * Accumulator) +
-                   (this.WriteMask.GetHashCode() * Accumulator);
+            return (this.ComparisonMode.GetHashCode() * accumulator) +
+                   (this.DepthFail.GetHashCode() * accumulator) +
+                   (this.Enabled.GetHashCode() * accumulator) +
+                   (this.Pass.GetHashCode() * accumulator) +
+                   (this.ReadMask.GetHashCode() * accumulator) +
+                   (this.ReferenceValue.GetHashCode() * accumulator) +
+                   (this.StencilFail.GetHashCode() * accumulator) +
+                   (this.WriteMask.GetHashCode() * accumulator);
         }
     }
 }

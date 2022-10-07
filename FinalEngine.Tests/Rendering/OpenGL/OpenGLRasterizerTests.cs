@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLRasterizerTests.cs" company="Software Antics">
+// <copyright file="OpenGLRasterizerTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -28,14 +28,20 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLRasterizer(null, this.mapper.Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLRasterizer(null, this.mapper.Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLRasterizer(this.invoker.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLRasterizer(this.invoker.Object, null);
+            });
         }
 
         [Test]
@@ -188,14 +194,14 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void SetViewportShouldInvokeDepthRangeWhenInvoked()
         {
             // Arrange
-            const float Near = 403.0f;
-            const float Far = 159.0f;
+            const float near = 403.0f;
+            const float far = 159.0f;
 
             // Act
-            this.rasterizer.SetViewport(Rectangle.Empty, Near, Far);
+            this.rasterizer.SetViewport(Rectangle.Empty, near, far);
 
             // Assert
-            this.invoker.Verify(x => x.DepthRange(Near, Far), Times.Once);
+            this.invoker.Verify(x => x.DepthRange(near, far), Times.Once);
         }
 
         [Test]

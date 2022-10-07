@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLInputLayoutTests.cs" company="Software Antics">
+// <copyright file="OpenGLInputLayoutTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -65,21 +65,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
         public void ConstructorShouldThrowArgumentNullExceptionWhenElementsIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLInputLayout(this.invoker.Object, this.mapper.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLInputLayout(this.invoker.Object, this.mapper.Object, null);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLInputLayout(null, this.mapper.Object, this.elements));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLInputLayout(null, this.mapper.Object, this.elements);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLInputLayout(this.invoker.Object, null, this.elements));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLInputLayout(this.invoker.Object, null, this.elements);
+            });
         }
 
         [Test]

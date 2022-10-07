@@ -1,4 +1,4 @@
-﻿// <copyright file="GameTimeTests.cs" company="Software Antics">
+// <copyright file="GameTimeTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -45,21 +45,30 @@ namespace FinalEngine.Tests.Runtime
         public void ConstructorShouldThrowArgumentNullExceptionWhenWatchIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new GameTime(null, FrameCap));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new GameTime(null, FrameCap);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowDivideByZeroExceptionWhenFrameCapIsEqualToZero()
         {
             // Arrange, act and assert
-            Assert.Throws<DivideByZeroException>(() => new GameTime(this.watch.Object, 0.0d));
+            Assert.Throws<DivideByZeroException>(() =>
+            {
+                new GameTime(this.watch.Object, 0.0d);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowDivideByZeroExceptionWhenFrameCapIsLessThanZero()
         {
             // Arrange, act and assert
-            Assert.Throws<DivideByZeroException>(() => new GameTime(this.watch.Object, -0.1d));
+            Assert.Throws<DivideByZeroException>(() =>
+            {
+                new GameTime(this.watch.Object, -0.1d);
+            });
         }
 
         [SetUp]

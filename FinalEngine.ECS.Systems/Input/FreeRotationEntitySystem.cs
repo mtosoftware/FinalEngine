@@ -1,4 +1,4 @@
-﻿// <copyright file="FreeRotationEntitySystem.cs" company="Software Antics">
+// <copyright file="FreeRotationEntitySystem.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,8 @@ namespace FinalEngine.ECS.Systems.Input
     using System.Drawing;
     using System.Numerics;
     using FinalEngine.ECS.Components.Core;
-    using FinalEngine.Input;
+    using FinalEngine.Input.Keyboards;
+    using FinalEngine.Input.Mouses;
     using FinalEngine.Maths;
     using FinalEngine.Rendering;
 
@@ -43,7 +44,7 @@ namespace FinalEngine.ECS.Systems.Input
 
         protected override void Process([NotNull] IEnumerable<Entity> entities)
         {
-            Rectangle viewport = this.rasterizer.GetViewport();
+            var viewport = this.rasterizer.GetViewport();
 
             foreach (dynamic entity in entities)
             {

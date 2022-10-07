@@ -1,4 +1,4 @@
-﻿// <copyright file="RasterStateDescriptionTests.cs" company="Software Antics">
+// <copyright file="RasterStateDescriptionTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -35,26 +35,26 @@ namespace FinalEngine.Tests.Rendering
         public void CullModeShouldReturnBackWhenDefault()
         {
             // Arrange
-            const FaceCullMode Expected = FaceCullMode.Back;
+            const FaceCullMode expected = FaceCullMode.Back;
 
             // Act
-            FaceCullMode actual = this.description.CullMode;
+            var actual = this.description.CullMode;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void CullModeShouldReturnFrontWhenSetToFront()
         {
             // Arrange
-            const FaceCullMode Expected = FaceCullMode.Front;
+            const FaceCullMode expected = FaceCullMode.Front;
 
             // Act
-            this.description.CullMode = Expected;
+            this.description.CullMode = expected;
 
             // Assert
-            Assert.AreEqual(Expected, this.description.CullMode);
+            Assert.AreEqual(expected, this.description.CullMode);
         }
 
         [Test]
@@ -197,26 +197,26 @@ namespace FinalEngine.Tests.Rendering
         public void FillModeShouldReturnSolidWhenDefault()
         {
             // Arrange
-            const RasterMode Expected = RasterMode.Solid;
+            const RasterMode expected = RasterMode.Solid;
 
             // Act
-            RasterMode actual = this.description.FillMode;
+            var actual = this.description.FillMode;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void FillModeShouldReturnWireframeWhenSetToWireframe()
         {
             // Arrange
-            const RasterMode Expected = RasterMode.Wireframe;
+            const RasterMode expected = RasterMode.Wireframe;
 
             // Act
             this.description.FillMode = RasterMode.Wireframe;
 
             // Assert
-            Assert.AreEqual(Expected, this.description.FillMode);
+            Assert.AreEqual(expected, this.description.FillMode);
         }
 
         [Test]
@@ -338,26 +338,26 @@ namespace FinalEngine.Tests.Rendering
         public void WindingDirectionShouldReturnClockwiseWhenSetToClockwise()
         {
             // Arrange
-            const WindingDirection Expected = WindingDirection.Clockwise;
+            const WindingDirection expected = WindingDirection.Clockwise;
 
             // Act
-            this.description.WindingDirection = Expected;
+            this.description.WindingDirection = expected;
 
             // Assert
-            Assert.AreEqual(Expected, this.description.WindingDirection);
+            Assert.AreEqual(expected, this.description.WindingDirection);
         }
 
         [Test]
         public void WindingDirectionShouldReturnCounterClockwiseWhenDefault()
         {
             // Arrange
-            const WindingDirection Expected = WindingDirection.CounterClockwise;
+            const WindingDirection expected = WindingDirection.CounterClockwise;
 
             // Act
-            WindingDirection actual = this.description.WindingDirection;
+            var actual = this.description.WindingDirection;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

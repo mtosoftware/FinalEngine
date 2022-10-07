@@ -8,7 +8,8 @@ namespace FinalEngine.Runtime.Desktop
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Extensions.Resources.Invocation;
     using FinalEngine.Extensions.Resources.Loaders;
-    using FinalEngine.Input;
+    using FinalEngine.Input.Keyboards;
+    using FinalEngine.Input.Mouses;
     using FinalEngine.IO;
     using FinalEngine.IO.Invocation;
     using FinalEngine.Platform;

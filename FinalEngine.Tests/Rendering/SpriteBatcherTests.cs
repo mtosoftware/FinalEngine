@@ -1,4 +1,4 @@
-﻿// <copyright file="SpriteBatcherTests.cs" company="Software Antics">
+// <copyright file="SpriteBatcherTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -27,73 +27,82 @@ namespace FinalEngine.Tests.Rendering
         public void BatchShouldIncrementCurrentIndexCountBySixWhenInvoked()
         {
             // Arrange
-            const int Incrementer = 10;
+            const int incrementer = 10;
 
             // Act
-            for (int i = 0; i < Incrementer; i++)
+            for (int i = 0; i < incrementer; i++)
             {
                 this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
             }
 
             // Assert
-            Assert.AreEqual(this.batcher.CurrentIndexCount, Incrementer * 6);
+            Assert.AreEqual(this.batcher.CurrentIndexCount, incrementer * 6);
         }
 
         [Test]
         public void BatchShouldIncrementCurrentVertexCountByFourWhenInvoked()
         {
             // Arrange
-            const int Incrementer = 10;
+            const int incrementer = 10;
 
             // Act
-            for (int i = 0; i < Incrementer; i++)
+            for (int i = 0; i < incrementer; i++)
             {
                 this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
             }
 
             // Assert
-            Assert.AreEqual(this.batcher.CurrentVertexCount, Incrementer * 4);
+            Assert.AreEqual(this.batcher.CurrentVertexCount, incrementer * 4);
         }
 
         [Test]
         public void ConstructorShouldSetMaxIndexCountToSixThousandWhenInvoked()
         {
             // Arrange
-            const int Expected = MaxCapacity * 6;
+            const int expected = MaxCapacity * 6;
 
             // Assert
-            Assert.AreEqual(Expected, this.batcher.MaxIndexCount);
+            Assert.AreEqual(expected, this.batcher.MaxIndexCount);
         }
 
         [Test]
         public void ConstructorShouldSetMaxVertexCountToFourThousandWhenInvoked()
         {
             // Arrange
-            const int Expected = MaxCapacity * 4;
+            const int expected = MaxCapacity * 4;
 
             // Assert
-            Assert.AreEqual(Expected, this.batcher.MaxVertexCount);
+            Assert.AreEqual(expected, this.batcher.MaxVertexCount);
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInputAssemblerIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => new SpriteBatcher(null, MaxCapacity));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new SpriteBatcher(null, MaxCapacity);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentOutOfRangeExceptionWhenMaxCapacityIsEqualToZero()
         {
             // Act and assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SpriteBatcher(this.inputAssembler.Object, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                new SpriteBatcher(this.inputAssembler.Object, 0);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentOutOfRangeExceptionWhenMaxCapacityIsLessThanZero()
         {
             // Act and assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SpriteBatcher(this.inputAssembler.Object, -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                new SpriteBatcher(this.inputAssembler.Object, -1);
+            });
         }
 
         [Test]
@@ -211,7 +220,10 @@ namespace FinalEngine.Tests.Rendering
         public void UpdateShouldThrowArgumentNullExceptionWhenVertexBufferIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.batcher.Update(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.batcher.Update(null);
+            });
         }
     }
 }

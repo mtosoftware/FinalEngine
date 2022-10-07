@@ -1,11 +1,10 @@
-﻿// <copyright file="OpenGLIndexBufferTests.cs" company="Software Antics">
+// <copyright file="OpenGLIndexBufferTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.OpenGL.Buffers;
@@ -15,7 +14,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
     using NUnit.Framework;
     using OpenTK.Graphics.OpenGL4;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenGLIndexBufferTests
     {
         private const int ID = 10;
@@ -48,7 +46,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
             this.indexBuffer.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.indexBuffer.Bind());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.indexBuffer.Bind();
+            });
         }
 
         [Test]
@@ -69,21 +70,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
         public void ConstructorShouldThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLIndexBuffer<int>(this.invoker.Object, this.mapper.Object, BufferUsageHint.DynamicCopy, null, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLIndexBuffer<int>(this.invoker.Object, this.mapper.Object, BufferUsageHint.DynamicCopy, null, 0);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLIndexBuffer<int>(null, this.mapper.Object, BufferUsageHint.StreamDraw, this.data, 0));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLIndexBuffer<int>(null, this.mapper.Object, BufferUsageHint.StreamDraw, this.data, 0);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLIndexBuffer<int>(this.invoker.Object, null, BufferUsageHint.StaticRead, this.data, this.data.Length * sizeof(int)));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLIndexBuffer<int>(this.invoker.Object, null, BufferUsageHint.StaticRead, this.data, this.data.Length * sizeof(int));
+            });
         }
 
         [Test]
@@ -126,13 +136,13 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
         public void TypeShouldReturnDynamicWhenInvoked()
         {
             // Arrange
-            const BufferUsageType Expected = BufferUsageType.Dynamic;
+            const BufferUsageType expected = BufferUsageType.Dynamic;
 
             // Act
-            BufferUsageType actual = this.indexBuffer.Type;
+            var actual = this.indexBuffer.Type;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -152,21 +162,24 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
         public void UpdateShouldSetLengthPropertyToTwelveWhenInvoked()
         {
             // Arrange
-            const int Expected = 12;
+            const int expected = 12;
             int[] array = new int[12];
 
             // Act
             this.indexBuffer.Update(array);
 
             // Assert
-            Assert.AreEqual(Expected, this.indexBuffer.Length);
+            Assert.AreEqual(expected, this.indexBuffer.Length);
         }
 
         [Test]
         public void UpdateShouldThrowArgumentNullExceptionWhenDataIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => this.indexBuffer.Update<int>(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.indexBuffer.Update<int>(null);
+            });
         }
 
         [Test]
@@ -176,7 +189,10 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
             this.indexBuffer.Dispose();
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.indexBuffer.Update(Array.Empty<int>()));
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.indexBuffer.Update(Array.Empty<int>());
+            });
         }
     }
 }

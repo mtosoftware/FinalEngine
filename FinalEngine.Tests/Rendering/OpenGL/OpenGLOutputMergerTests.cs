@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenGLOutputMergerTests.cs" company="Software Antics">
+// <copyright file="OpenGLOutputMergerTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -34,14 +34,20 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLOutputMerger(null, this.mapper.Object));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLOutputMerger(null, this.mapper.Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenGLOutputMerger(this.invoker.Object, null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLOutputMerger(this.invoker.Object, null);
+            });
         }
 
         [Test]

@@ -1,4 +1,4 @@
-﻿// <copyright file="ResourceLoaderBaseTests.cs" company="Software Antics">
+// <copyright file="ResourceLoaderBaseTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -29,21 +29,30 @@ namespace FinalEngine.Tests.Core.Resources
         public void LoadResourceInternalShouldThrowArgumentNullExceptionWhenFilePathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null);
+            });
         }
 
         [Test]
         public void LoadResourceInternalShouldThrowArgumentNullExceptionWhenFilePathIsStringEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(string.Empty);
+            });
         }
 
         [Test]
         public void LoadResourceInternalShouldThrowArgumentNullExceptionWhenFilePathIsWhitespaceCharacters()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() => (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource("\t\r\n"));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource("\t\r\n");
+            });
         }
 
         [SetUp]

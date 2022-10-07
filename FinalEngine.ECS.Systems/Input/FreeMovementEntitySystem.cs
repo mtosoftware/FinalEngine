@@ -8,7 +8,7 @@ namespace FinalEngine.ECS.Systems.Input
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using FinalEngine.ECS.Components.Core;
-    using FinalEngine.Input;
+    using FinalEngine.Input.Keyboards;
 
     public class FreeMovementEntitySystem : EntitySystemBase
     {

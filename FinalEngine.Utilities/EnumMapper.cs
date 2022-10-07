@@ -1,4 +1,4 @@
-﻿// <copyright file="EnumMapper.cs" company="Software Antics">
+// <copyright file="EnumMapper.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -18,7 +18,7 @@ namespace FinalEngine.Utilities
             this.forwardToReverseMap = forwardToReverseMap ?? throw new ArgumentNullException(nameof(forwardToReverseMap), $"The specified {nameof(forwardToReverseMap)} parameter cannot be null.");
             this.reverseToForwardMap = new Dictionary<Enum, Enum>();
 
-            foreach (Enum key in forwardToReverseMap.Keys)
+            foreach (var key in forwardToReverseMap.Keys)
             {
                 ((IDictionary<Enum, Enum>)this.reverseToForwardMap).Add(forwardToReverseMap[key], key);
             }

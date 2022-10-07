@@ -47,14 +47,14 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void MaxTextureSlotsShouldReturnSameAsGetIntegerWhenInvoked()
         {
             // Arrange
-            const int Expected = 10;
-            this.invoker.Setup(x => x.GetInteger(GetPName.MaxTextureImageUnits)).Returns(Expected);
+            const int expected = 10;
+            this.invoker.Setup(x => x.GetInteger(GetPName.MaxTextureImageUnits)).Returns(expected);
 
             // Act
             int actual = this.pipeline.MaxTextureSlots;
 
             // Assert
-            Assert.AreEqual(Expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

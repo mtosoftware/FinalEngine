@@ -1,10 +1,11 @@
-﻿// <copyright file="MouseButtonEventArgsTests.cs" company="Software Antics">
+// <copyright file="MouseButtonEventArgsTests.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Core.Input.Mouse
 {
     using FinalEngine.Input;
+    using FinalEngine.Input.Mouses;
     using NUnit.Framework;
 
     public class MouseButtonEventArgsTests
@@ -13,16 +14,16 @@ namespace FinalEngine.Tests.Core.Input.Mouse
         public void ButtonShouldReturnSameAsInputWhenSet()
         {
             // Arrange
-            const MouseButton Expected = MouseButton.Button6;
+            const MouseButton expected = MouseButton.Button6;
 
             // Act
             var eventArgs = new MouseButtonEventArgs()
             {
-                Button = Expected,
+                Button = expected,
             };
 
             // Assert
-            Assert.AreEqual(Expected, eventArgs.Button);
+            Assert.AreEqual(expected, eventArgs.Button);
         }
     }
 }

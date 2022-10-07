@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Platform.Desktop.OpenTK
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using FinalEngine.Platform.Desktop.OpenTK;
     using FinalEngine.Platform.Desktop.OpenTK.Invocation;
@@ -13,7 +12,6 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
     using Moq;
     using NUnit.Framework;
 
-    [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "This is done in TearDown.")]
     public class OpenTKWindowTests
     {
         private Mock<INativeWindowInvoker> nativeWindow;
@@ -65,21 +63,30 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.window.Close());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.window.Close();
+            });
         }
 
         [Test]
         public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull()
         {
             // Arrange, act and assert
-            Assert.DoesNotThrow(() => new OpenTKWindow(new Mock<INativeWindowInvoker>().Object));
+            Assert.DoesNotThrow(() =>
+            {
+                new OpenTKWindow(new Mock<INativeWindowInvoker>().Object);
+            });
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenNativeWindowIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new OpenTKWindow(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenTKWindow(null);
+            });
         }
 
         [Test]
@@ -112,7 +119,7 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.IsExiting).Returns(true);
 
             // Act
-            var actual = this.window.IsExiting;
+            bool actual = this.window.IsExiting;
 
             // Assert
             Assert.True(actual);
@@ -125,7 +132,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.window.ProcessEvents());
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.window.ProcessEvents();
+            });
         }
 
         [SetUp]
@@ -156,7 +166,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.window.Size = expected;
 
             // Assert
-            this.nativeWindow.VerifySet((x) => x.Size = new Vector2i(expected.Width, expected.Height));
+            this.nativeWindow.VerifySet((x) =>
+            {
+                x.Size = new Vector2i(expected.Width, expected.Height);
+            });
         }
 
         [Test]
@@ -194,14 +207,18 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         public void TitleSetShouldSetNativeWindowTitleWhenNativeWindowIsNotDisposed()
         {
             // Arrange
-            const string Expected = "Testing";
+            const string expected = "Testing";
             this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(false);
 
             // Act
-            this.window.Title = Expected;
+            this.window.Title = expected;
 
             // Assert
-            this.nativeWindow.VerifySet(x => x.Title = Expected, Times.Once);
+            this.nativeWindow.VerifySet(
+                x =>
+            {
+                x.Title = expected;
+            }, Times.Once);
         }
 
         [Test]
@@ -211,7 +228,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.window.Title = null);
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.window.Title = null;
+            });
         }
 
         [Test]
@@ -228,14 +248,18 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         public void VisibleSetShouldSetNativeWindowIsVisibleWhenNativeWindowIsNotDisposed()
         {
             // Arrange
-            const bool Expected = true;
+            const bool expected = true;
             this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(false);
 
             // Act
-            this.window.Visible = Expected;
+            this.window.Visible = expected;
 
             // Assert
-            this.nativeWindow.VerifySet(x => x.IsVisible = Expected, Times.Once);
+            this.nativeWindow.VerifySet(
+                x =>
+            {
+                x.IsVisible = expected;
+            }, Times.Once);
         }
 
         [Test]
@@ -245,7 +269,10 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
             this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
 
             // Act and assert
-            Assert.Throws<ObjectDisposedException>(() => this.window.Visible = false);
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.window.Visible = false;
+            });
         }
     }
 }
