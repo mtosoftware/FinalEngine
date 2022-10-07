@@ -71,16 +71,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetShaderProgramShouldInvokeUserProgramZeroWhenProgramIsNull()
-        {
-            // Act
-            this.pipeline.SetShaderProgram(null);
-
-            // Assert
-            this.invoker.Verify(x => x.UseProgram(0), Times.Once);
-        }
-
-        [Test]
         public void SetShaderProgramShouldThrowArgumentNullExceptionWhenProgramIsNotOpenGLShaderProgram()
         {
             // Arrange
@@ -104,16 +94,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
 
             // Assert
             texture.Verify(x => x.Bind(0), Times.Once);
-        }
-
-        [Test]
-        public void SetTextureShouldNotInvokeUnbindWhenTextureIsNullAndHasNotBeenPreviouslyBound()
-        {
-            // Act
-            this.pipeline.SetTexture(null);
-
-            // Assert
-            Assert.Pass();
         }
 
         [Test]
@@ -161,9 +141,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         [Test]
         public void SetUniformBoolShouldNotInvokeUniform1WhenBoundProgramIsNull()
         {
-            // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             // Act
             this.pipeline.SetUniform("name", true);
 
@@ -236,9 +213,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         [Test]
         public void SetUniformDoubleShouldNotInvokeUniform1WhenBoundProgramIsNull()
         {
-            // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             // Act
             this.pipeline.SetUniform("name", 0.0d);
 
@@ -311,9 +285,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         [Test]
         public void SetUniformFloatShouldNotInvokeUniform1WhenBoundProgramIsNull()
         {
-            // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             // Act
             this.pipeline.SetUniform("name", 1.0f);
 
@@ -386,9 +357,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         [Test]
         public void SetUniformIntShouldNotInvokeUniform1WhenBoundProgramIsNull()
         {
-            // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             // Act
             this.pipeline.SetUniform("name", 0);
 
@@ -472,8 +440,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         public void SetUniformMatrix4x4ShouldNotInvokeUniformMatrix4WhenBoundProgramIsNull()
         {
             // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             var value = Matrix4x4.Identity;
 
             float[] values =
@@ -556,9 +522,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         [Test]
         public void SetUniformVector2ShouldNotInvokeUniform2WhenBoundProgramIsNull()
         {
-            // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             // Act
             this.pipeline.SetUniform("name", new Vector2(1.0f, 0.0f));
 
@@ -631,9 +594,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         [Test]
         public void SetUniformVector3ShouldNotInvokeUniform3WhenBoundProgramIsNull()
         {
-            // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             // Act
             this.pipeline.SetUniform("name", new Vector3(1.0f, 0.0f, 1.0f));
 
@@ -706,9 +666,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         [Test]
         public void SetUniformVector4ShouldNotInvokeUniform4WhenBoundProgramIsNull()
         {
-            // Arrange
-            this.pipeline.SetShaderProgram(null);
-
             // Act
             this.pipeline.SetUniform("name", new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
 

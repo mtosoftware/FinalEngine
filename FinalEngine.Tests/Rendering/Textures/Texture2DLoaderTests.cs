@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.Textures
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using FinalEngine.Extensions.Resources.Invocation;
     using FinalEngine.Extensions.Resources.Loaders;

@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Core.Input.Mouse
 {
     using System;
     using System.Drawing;
-    using FinalEngine.Input;
     using FinalEngine.Input.Mouses;
     using Moq;
     using NUnit.Framework;

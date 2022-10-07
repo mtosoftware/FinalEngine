@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL.Buffers
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using FinalEngine.Rendering.Buffers;
     using FinalEngine.Rendering.OpenGL.Buffers;

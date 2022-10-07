@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Numerics;
     using FinalEngine.Rendering;
@@ -328,23 +327,6 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             this.drawer.Dispose();
-
-            // Act and assert
-            Assert.Throws<ObjectDisposedException>(() =>
-            {
-                this.drawer.End();
-            });
-        }
-
-        [Test]
-        public void EndShouldThrowObjectDisposedExceptionWhenVertexBufferIsNull()
-        {
-            // Arrange
-            this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes)).Returns(() =>
-            {
-                return null;
-            });
-            this.drawer = new SpriteDrawer(this.renderDevice.Object, this.batcher.Object, this.binder.Object, ProjectionWidth, ProjectionHeight);
 
             // Act and assert
             Assert.Throws<ObjectDisposedException>(() =>

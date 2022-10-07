@@ -99,7 +99,7 @@ namespace FinalEngine.Tests.Rendering
         {
             // Arrange
             var left = default(SpriteVertex);
-            object right = default(SpriteVertex);
+            object right = new SpriteVertexTests();
 
             // Act
             bool actual = left.Equals(right);

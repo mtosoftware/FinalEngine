@@ -79,7 +79,7 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.renderContext.Dispose();
 
             // Assert
-            this.invoker.Verify(x => x.DeleteVertexArray(0), Times.Once);
+            this.invoker.Verify(x => x.DeleteVertexArray(VertexArrayID), Times.Once);
         }
 
         [SetUp]

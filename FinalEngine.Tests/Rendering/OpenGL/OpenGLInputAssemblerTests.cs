@@ -11,7 +11,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
     using FinalEngine.Rendering.OpenGL.Invocation;
     using Moq;
     using NUnit.Framework;
-    using OpenTK.Graphics.OpenGL4;
 
     public class OpenGLInputAssemblerTests
     {
@@ -31,16 +30,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             {
                 new OpenGLInputAssembler(null);
             });
-        }
-
-        [Test]
-        public void SetIndexBufferShouldInvokeBindBufferZeroWhenBufferIsNull()
-        {
-            // Act
-            this.inputAssembler.SetIndexBuffer(null);
-
-            // Assert
-            this.invoker.Verify(x => x.BindBuffer(BufferTarget.ElementArrayBuffer, 0), Times.Once);
         }
 
         [Test]
@@ -142,16 +131,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             this.indexBuffer = new Mock<IOpenGLIndexBuffer>();
 
             this.inputAssembler = new OpenGLInputAssembler(this.invoker.Object);
-        }
-
-        [Test]
-        public void SetVertexBufferShouldInvokeBindVertexBuffersWhenBufferIsNull()
-        {
-            // Act
-            this.inputAssembler.SetVertexBuffer(null);
-
-            // Assert
-            this.invoker.Verify(x => x.BindVertexBuffers(0, 1, new int[] { 0 }, new IntPtr[] { IntPtr.Zero }, new int[] { 0 }), Times.Once);
         }
 
         [Test]

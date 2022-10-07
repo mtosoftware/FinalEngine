@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Rendering.OpenGL.Textures
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Rendering.OpenGL.Textures;
     using FinalEngine.Rendering.Textures;

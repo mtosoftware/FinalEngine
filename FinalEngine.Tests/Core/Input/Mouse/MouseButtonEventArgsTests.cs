@@ -4,7 +4,6 @@
 
 namespace FinalEngine.Tests.Core.Input.Mouse
 {
-    using FinalEngine.Input;
     using FinalEngine.Input.Mouses;
     using NUnit.Framework;
 
