@@ -15,8 +15,13 @@ namespace FinalEngine.ECS
         Update,
 
         /// <summary>
-        ///   The process will be handled per render.
+        ///   The process will be handled right before all scene drawing processes.
         /// </summary>
         Render,
+
+        /// <summary>
+        ///   The process will be handled per render.
+        /// </summary>
+        DrawScene,
     }
 }

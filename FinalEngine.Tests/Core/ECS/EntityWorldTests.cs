@@ -118,13 +118,13 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             this.world.AddSystem(new MockEntitySystemA(GameLoopType.Update));
-            this.world.AddSystem(new MockEntitySystemB(GameLoopType.Render));
+            this.world.AddSystem(new MockEntitySystemB(GameLoopType.DrawScene));
 
             // Act
             this.world.RemoveSystem(typeof(MockEntitySystemA));
 
             // Assert
-            this.world.AddSystem(new MockEntitySystemA(GameLoopType.Render));
+            this.world.AddSystem(new MockEntitySystemA(GameLoopType.DrawScene));
         }
 
         [Test]
@@ -132,8 +132,8 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var systemA = new MockEntitySystemA(GameLoopType.Update);
-            var systemB = new MockEntitySystemB(GameLoopType.Render);
-            var systemC = new MockEntitySystemA(GameLoopType.Render);
+            var systemB = new MockEntitySystemB(GameLoopType.DrawScene);
+            var systemC = new MockEntitySystemA(GameLoopType.DrawScene);
 
             this.world.AddSystem(systemA);
             this.world.AddSystem(systemB);
@@ -173,7 +173,7 @@ namespace FinalEngine.Tests.Core.ECS
                 },
             };
 
-            var systemB = new MockEntitySystemB(GameLoopType.Render);
+            var systemB = new MockEntitySystemB(GameLoopType.DrawScene);
 
             this.world.AddSystem(systemA);
             this.world.AddSystem(systemB);
@@ -217,7 +217,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var systemA = new MockEntitySystemA(GameLoopType.Update);
-            var systemB = new MockEntitySystemB(GameLoopType.Render)
+            var systemB = new MockEntitySystemB(GameLoopType.DrawScene)
             {
                 IsMatchFunction = (_) =>
                 {
@@ -242,7 +242,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var systemA = new MockEntitySystemA(GameLoopType.Update);
-            var systemB = new MockEntitySystemB(GameLoopType.Render)
+            var systemB = new MockEntitySystemB(GameLoopType.DrawScene)
             {
                 IsMatchFunction = (_) =>
                 {
