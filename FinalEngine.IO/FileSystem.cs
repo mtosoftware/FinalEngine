@@ -42,6 +42,14 @@ namespace FinalEngine.IO
             this.directory = directory ?? throw new ArgumentNullException(nameof(directory), $"The specified {nameof(directory)} parameter cannot be null.");
         }
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FileSystem"/> class.
+        /// </summary>
+        public FileSystem()
+            : this(new FileInvoker(), new DirectoryInvoker())
+        {
+        }
+
         /// <inheritdoc/>
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="path"/> parameter is null, empty of contains only whitespace characters.

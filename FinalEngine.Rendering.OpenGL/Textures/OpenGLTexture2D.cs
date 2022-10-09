@@ -55,7 +55,13 @@ namespace FinalEngine.Rendering.OpenGL.Textures
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="invoker"/> or <paramref name="mapper"/> parameter is null.
         /// </exception>
-        public OpenGLTexture2D(IOpenGLInvoker invoker, IEnumMapper mapper, Texture2DDescription description, PixelFormat format, SizedFormat internalFormat, IntPtr data)
+        public OpenGLTexture2D(
+            IOpenGLInvoker invoker,
+            IEnumMapper mapper,
+            Texture2DDescription description,
+            PixelFormat format,
+            SizedFormat internalFormat,
+            IntPtr data)
         {
             this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
 

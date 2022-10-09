@@ -57,6 +57,23 @@ namespace FinalEngine.Extensions.Resources.Loaders
         }
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="Texture2DResourceLoader"/> class.
+        /// </summary>
+        /// <param name="fileSystem">
+        ///   The file system used to open textures to load.
+        /// </param>
+        /// <param name="factory">
+        ///   The GPU resource factory used to create a texture once it's been loaded.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///   The specified <paramref name="fileSystem"/> or <paramref name="factory"/> &gt; parameter is null.
+        /// </exception>
+        public Texture2DResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory)
+            : this(fileSystem, factory, new ImageInvoker())
+        {
+        }
+
+        /// <summary>
         ///   Loads the texture from the specified <paramref name="filePath"/>.
         /// </summary>
         /// <param name="filePath">
