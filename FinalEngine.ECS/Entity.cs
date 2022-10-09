@@ -16,6 +16,11 @@ namespace FinalEngine.ECS
     public class Entity : DynamicObject, IReadOnlyEntity
     {
         /// <summary>
+        /// The tag for this entity.
+        /// </summary>
+        private string tag;
+
+        /// <summary>
         ///   Represents a type to <see cref="IComponent"/> map.
         /// </summary>
         private readonly IDictionary<Type, IComponent> typeToComponentMap;
@@ -25,7 +30,20 @@ namespace FinalEngine.ECS
         /// </summary>
         public Entity()
         {
+            this.Tag = "Entity";
             this.typeToComponentMap = new Dictionary<Type, IComponent>();
+        }
+
+        /// <summary>
+        ///   Gets or sets the tag for this <see cref="Entity"/>.
+        /// </summary>
+        /// <value>
+        ///   The tag for this <see cref="Entity"/>.
+        /// </value>
+        public string Tag
+        {
+            get { return this.tag ?? string.Empty; }
+            set { this.tag = value; }
         }
 
         /// <summary>

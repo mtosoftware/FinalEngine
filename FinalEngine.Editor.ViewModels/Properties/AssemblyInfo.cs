@@ -8,6 +8,6 @@ using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("FinalEngine.Editor.Presenters")]
-[assembly: AssemblyDescription("A library consisting of MVP presenters for Final Engine.")]
-[assembly: Guid("660CD01D-61D2-4334-97FF-0634F2B08E5F")]
+[assembly: AssemblyTitle("FinalEngine.Editor.ViewModels")]
+[assembly: AssemblyDescription("A library consisting of view models for use with an editor for Final Engine.")]
+[assembly: Guid("229972AD-C881-4D7D-90A5-C036DE2AC823")]

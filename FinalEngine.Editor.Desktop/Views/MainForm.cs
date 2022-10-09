@@ -10,13 +10,12 @@ namespace FinalEngine.Editor.Desktop.Views
     using FinalEngine.Editor.Desktop;
     using FinalEngine.Editor.Desktop.Views.Documents;
     using FinalEngine.Editor.Desktop.Views.Tools;
-    using FinalEngine.Editor.Presenters;
+    using FinalEngine.Editor.ViewModels;
     using FinalEngine.Editor.Views;
-    using FinalEngine.Editor.Views.Events;
 
     public partial class MainForm : DarkForm, IMainView, IApplicationStarter
     {
-        private readonly IPresenterFactory presenterFactory;
+        private readonly ViewModelFactory factory;
 
         private ConsoleToolWindow? consoleToolWindow;
 
@@ -28,23 +27,17 @@ namespace FinalEngine.Editor.Desktop.Views
 
         private SceneViewDocument? sceneViewDocument;
 
-        public MainForm(IPresenterFactory presenterFactory)
+        public MainForm(ViewModelFactory factory)
         {
-            this.presenterFactory = presenterFactory ?? throw new ArgumentNullException(nameof(presenterFactory));
-            this.InitializeComponent();
-        }
+            this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
 
-        public event EventHandler<ContentToggledEventArgs>? OnContentToggled;
+            this.InitializeComponent();
+            this.bindingSource.DataSource = factory.Create(this);
+        }
 
         public event EventHandler<EventArgs>? OnExiting;
 
         public event EventHandler<EventArgs>? OnLoaded;
-
-        public string StatusText
-        {
-            get { return this.statusLabel.Text; }
-            set { this.statusLabel.Text = value; }
-        }
 
         public void StartApplication()
         {
@@ -53,35 +46,17 @@ namespace FinalEngine.Editor.Desktop.Views
 
         private void AddDocuments()
         {
-            this.sceneViewDocument = new SceneViewDocument(this.presenterFactory)
-            {
-                Tag = this.viewDocumentsSceneViewToolStripMenuItem,
-            };
+            this.sceneViewDocument = new SceneViewDocument(this.factory);
 
             this.dockPanel.AddContent(this.sceneViewDocument);
         }
 
         private void AddToolWindows()
         {
-            this.sceneHierachyToolWindow = new SceneHierarchyToolWindow(this.presenterFactory)
-            {
-                Tag = this.viewToolWindowsSceneHierarchyToolStripMenuItem,
-            };
-
-            this.entityInspectorToolWindow = new EntityInspectorToolWindow(this.presenterFactory)
-            {
-                Tag = this.viewToolWindowsEntityInspectorToolStripMenuItem,
-            };
-
-            this.entitySystemsToolWindow = new EntitySystemsToolWindow(this.presenterFactory)
-            {
-                Tag = this.viewToolWindowsEntitySystemsToolStripMenuItem,
-            };
-
-            this.consoleToolWindow = new ConsoleToolWindow(this.presenterFactory)
-            {
-                Tag = this.viewToolWindowsConsoleToolStripMenuItem,
-            };
+            this.sceneHierachyToolWindow = new SceneHierarchyToolWindow(this.factory);
+            this.entityInspectorToolWindow = new EntityInspectorToolWindow();
+            this.entitySystemsToolWindow = new EntitySystemsToolWindow();
+            this.consoleToolWindow = new ConsoleToolWindow();
 
             this.dockPanel.AddContent(this.sceneHierachyToolWindow);
             this.dockPanel.AddContent(this.entityInspectorToolWindow);
@@ -142,65 +117,13 @@ namespace FinalEngine.Editor.Desktop.Views
             Application.AddMessageFilter(this.dockPanel.DockContentDragFilter);
             Application.AddMessageFilter(this.dockPanel.DockResizeFilter);
 
-            this.Tag = this.presenterFactory.CreateMainPresenter(this);
             this.Disposed += this.MainForm_Disposed;
 
             this.AddToolWindows();
             this.AddDocuments();
 
             this.Text = $"{Application.ProductName} - {Application.ProductVersion}";
-
             this.OnLoaded?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void ViewDocumentsSceneViewToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.sceneViewDocument == null)
-            {
-                return;
-            }
-
-            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.sceneViewDocument));
-        }
-
-        private void viewToolWindowsConsoleToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.consoleToolWindow == null)
-            {
-                return;
-            }
-
-            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.consoleToolWindow));
-        }
-
-        private void ViewToolWindowsEntityInspectorToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.entityInspectorToolWindow == null)
-            {
-                return;
-            }
-
-            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.entityInspectorToolWindow));
-        }
-
-        private void viewToolWindowsEntitySystemsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.entitySystemsToolWindow == null)
-            {
-                return;
-            }
-
-            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.entitySystemsToolWindow));
-        }
-
-        private void ViewToolWindowsSceneHierarchyToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.sceneHierachyToolWindow == null)
-            {
-                return;
-            }
-
-            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.sceneHierachyToolWindow));
         }
     }
 }

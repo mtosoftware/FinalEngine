@@ -7,13 +7,12 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using FinalEngine.Editor.Desktop.Controls;
-    using FinalEngine.Editor.Presenters;
+    using DarkUI.Docking;
+    using FinalEngine.Editor.ViewModels;
     using FinalEngine.Editor.Views.Documents;
     using FinalEngine.Editor.Views.Events;
     using FinalEngine.Runtime;
@@ -22,17 +21,19 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
     using OpenTK.Windowing.Common;
     using OpenTK.WinForms;
 
-    public partial class SceneViewDocument : TogglableDocument, ISceneViewDocumentView, ISynchronizeInvoke
+    public partial class SceneViewDocument : DarkDocument, ISceneViewDocumentView, ISynchronizeInvoke
     {
-        private readonly IPresenterFactory presenterFactory;
-
-        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "This occurs in SceneViewDocument_Disposed")]
         private GLControl? glControl;
 
-        public SceneViewDocument(IPresenterFactory presenterFactory)
+        public SceneViewDocument(ViewModelFactory factory)
         {
-            this.presenterFactory = presenterFactory ?? throw new ArgumentNullException(nameof(presenterFactory));
+            if (factory == null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
+
             this.InitializeComponent();
+            this.bindingSource.DataSource = factory.Create(this);
         }
 
         public event EventHandler<EventArgs>? OnLoaded;
@@ -132,7 +133,6 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
 
         private void SceneViewDocument_Load(object sender, EventArgs e)
         {
-            this.Tag = this.presenterFactory.CreateSceneViewDocumentPresenter(this);
             this.Disposed += this.SceneViewDocument_Disposed;
 
             this.AddOpenGLControl();

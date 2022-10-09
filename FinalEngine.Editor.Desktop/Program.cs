@@ -9,8 +9,8 @@ namespace FinalEngine.Editor.Desktop
     using DarkUI.Win32;
     using FinalEngine.ECS;
     using FinalEngine.Editor.Desktop.Views;
-    using FinalEngine.Editor.Presenters;
     using FinalEngine.Editor.Services.Resources;
+    using FinalEngine.Editor.ViewModels;
     using FinalEngine.Editor.Views;
     using FinalEngine.Editor.Views.Interactions;
     using FinalEngine.IO;
@@ -34,8 +34,8 @@ namespace FinalEngine.Editor.Desktop
             services.AddSingleton<IResourceLoaderRegistrar, ResourceLoaderRegistrar>();
             services.AddSingleton<IEntityWorld, EntityWorld>();
             services.AddSingleton<IApplicationContext, ApplicationContext>();
+            services.AddSingleton<ViewModelFactory>();
             services.AddSingleton<IApplicationStarter, MainForm>();
-            services.AddSingleton<IPresenterFactory, PresenterFactory>();
             services.AddSingleton<IMainView, MainForm>();
 
             return services.BuildServiceProvider();

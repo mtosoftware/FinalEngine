@@ -31,4 +31,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+  </ItemGroup>
 </Project>

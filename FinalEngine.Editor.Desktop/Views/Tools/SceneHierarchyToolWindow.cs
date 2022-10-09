@@ -5,24 +5,36 @@
 namespace FinalEngine.Editor.Desktop.Views.Tools
 {
     using System;
-    using FinalEngine.Editor.Desktop.Controls;
-    using FinalEngine.Editor.Presenters;
+    using System.ComponentModel;
+    using DarkUI.Docking;
+    using FinalEngine.Editor.ViewModels;
+    using FinalEngine.Editor.Views.Tools;
 
-    public partial class SceneHierarchyToolWindow : TogglableToolWindow
+    public partial class SceneHierarchyToolWindow : DarkToolWindow, ISceneHierarchyToolWindowView
     {
-        public SceneHierarchyToolWindow(IPresenterFactory presenterFactory)
+        public SceneHierarchyToolWindow(ViewModelFactory factory)
         {
-            if (presenterFactory == null)
+            if (factory == null)
             {
-                throw new ArgumentNullException(nameof(presenterFactory));
+                throw new ArgumentNullException(nameof(factory));
             }
 
             this.InitializeComponent();
+            this.bindingSource.DataSource = factory.Create(this);
         }
 
-        private void SceneHierarchyToolWindow_Load(object sender, EventArgs e)
-        {
+        public event EventHandler OnClick;
 
+        public event EventHandler<CancelEventArgs> OnContextMenuOpening;
+
+        private void ContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            this.OnContextMenuOpening?.Invoke(this, e);
+        }
+
+        private void ListBox_Click(object sender, EventArgs e)
+        {
+            this.OnClick?.Invoke(this, EventArgs.Empty);
         }
     }
 }

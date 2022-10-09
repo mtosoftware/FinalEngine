@@ -12,7 +12,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <AdditionalFiles Include="..\Styling\StyleCop\Tests\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
@@ -35,6 +35,5 @@
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Editor.Services\FinalEngine.Editor.Services.csproj" />
     <ProjectReference Include="..\FinalEngine.Editor.Views\FinalEngine.Editor.Views.csproj" />
-    <ProjectReference Include="..\FinalEngine.Maths\FinalEngine.Maths.csproj" />
   </ItemGroup>
 </Project>

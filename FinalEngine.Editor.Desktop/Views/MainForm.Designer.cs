@@ -28,33 +28,17 @@ namespace FinalEngine.Editor.Desktop.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.statusStrip = new DarkUI.Controls.DarkStatusStrip();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusLabel = new FinalEngine.Editor.Desktop.Controls.ToolStripDataLabel();
+            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip = new DarkUI.Controls.DarkMenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolWindowsEntityInspectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolWindowsEntitySystemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolWindowsConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.documentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewDocumentsSceneViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.worldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createEmptyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new DarkUI.Docking.DarkDockPanel();
             this.darkSeparator2 = new DarkUI.Controls.DarkSeparator();
             this.statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,18 +58,20 @@ namespace FinalEngine.Editor.Desktop.Views
             // 
             // statusLabel
             // 
+            this.statusLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Status", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(0, 0);
+            // 
+            // bindingSource
+            // 
+            this.bindingSource.DataSource = typeof(FinalEngine.Editor.ViewModels.MainViewModel);
             // 
             // menuStrip
             // 
             this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.menuStrip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.worldToolStripMenuItem});
+            this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(3, 2, 0, 2);
@@ -108,202 +94,9 @@ namespace FinalEngine.Editor.Desktop.Views
             this.fileExitToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.fileExitToolStripMenuItem.Name = "fileExitToolStripMenuItem";
             this.fileExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.fileExitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.fileExitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fileExitToolStripMenuItem.Text = "&Exit";
             this.fileExitToolStripMenuItem.Click += new System.EventHandler(this.FileExitToolStripMenuItem_Click);
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cutToolStripMenuItem,
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.deleteToolStripMenuItem,
-            this.duplicateToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.renameToolStripMenuItem});
-            this.editToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "&Edit";
-            // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.cutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.cutToolStripMenuItem.Text = "C&ut";
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.copyToolStripMenuItem.Text = "&Copy";
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.pasteToolStripMenuItem.Text = "&Paste";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripMenuItem1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(121, 6);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.deleteToolStripMenuItem.Text = "&Delete";
-            // 
-            // duplicateToolStripMenuItem
-            // 
-            this.duplicateToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.duplicateToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.duplicateToolStripMenuItem.Text = "Du&plicate";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.toolStripMenuItem2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripMenuItem2.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(121, 6);
-            // 
-            // renameToolStripMenuItem
-            // 
-            this.renameToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.renameToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.renameToolStripMenuItem.Text = "&Rename";
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewToolWindowsToolStripMenuItem,
-            this.documentsToolStripMenuItem});
-            this.viewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // viewToolWindowsToolStripMenuItem
-            // 
-            this.viewToolWindowsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.viewToolWindowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem,
-            this.viewToolWindowsEntityInspectorToolStripMenuItem,
-            this.viewToolWindowsEntitySystemsToolStripMenuItem,
-            this.viewToolWindowsConsoleToolStripMenuItem});
-            this.viewToolWindowsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.viewToolWindowsToolStripMenuItem.Name = "viewToolWindowsToolStripMenuItem";
-            this.viewToolWindowsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.viewToolWindowsToolStripMenuItem.Text = "&Tool Windows";
-            // 
-            // viewToolWindowsSceneHierarchyToolStripMenuItem
-            // 
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.Checked = true;
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.CheckOnClick = true;
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.Name = "viewToolWindowsSceneHierarchyToolStripMenuItem";
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.Text = "&Scene Hierarchy";
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ViewToolWindowsSceneHierarchyToolStripMenuItem_CheckedChanged);
-            // 
-            // viewToolWindowsEntityInspectorToolStripMenuItem
-            // 
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.Checked = true;
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.CheckOnClick = true;
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.Name = "viewToolWindowsEntityInspectorToolStripMenuItem";
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.Text = "&Entity Inspector";
-            this.viewToolWindowsEntityInspectorToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ViewToolWindowsEntityInspectorToolStripMenuItem_CheckedChanged);
-            // 
-            // viewToolWindowsEntitySystemsToolStripMenuItem
-            // 
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.Checked = true;
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.CheckOnClick = true;
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.Name = "viewToolWindowsEntitySystemsToolStripMenuItem";
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.Text = "Entity S&ystems";
-            this.viewToolWindowsEntitySystemsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.viewToolWindowsEntitySystemsToolStripMenuItem_CheckedChanged);
-            // 
-            // viewToolWindowsConsoleToolStripMenuItem
-            // 
-            this.viewToolWindowsConsoleToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.viewToolWindowsConsoleToolStripMenuItem.Checked = true;
-            this.viewToolWindowsConsoleToolStripMenuItem.CheckOnClick = true;
-            this.viewToolWindowsConsoleToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.viewToolWindowsConsoleToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.viewToolWindowsConsoleToolStripMenuItem.Name = "viewToolWindowsConsoleToolStripMenuItem";
-            this.viewToolWindowsConsoleToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.viewToolWindowsConsoleToolStripMenuItem.Text = "&Console";
-            this.viewToolWindowsConsoleToolStripMenuItem.CheckedChanged += new System.EventHandler(this.viewToolWindowsConsoleToolStripMenuItem_CheckedChanged);
-            // 
-            // documentsToolStripMenuItem
-            // 
-            this.documentsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.documentsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewDocumentsSceneViewToolStripMenuItem});
-            this.documentsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.documentsToolStripMenuItem.Name = "documentsToolStripMenuItem";
-            this.documentsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.documentsToolStripMenuItem.Text = "&Documents";
-            // 
-            // viewDocumentsSceneViewToolStripMenuItem
-            // 
-            this.viewDocumentsSceneViewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.viewDocumentsSceneViewToolStripMenuItem.Checked = true;
-            this.viewDocumentsSceneViewToolStripMenuItem.CheckOnClick = true;
-            this.viewDocumentsSceneViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.viewDocumentsSceneViewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.viewDocumentsSceneViewToolStripMenuItem.Name = "viewDocumentsSceneViewToolStripMenuItem";
-            this.viewDocumentsSceneViewToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.viewDocumentsSceneViewToolStripMenuItem.Text = "&Scene View";
-            this.viewDocumentsSceneViewToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ViewDocumentsSceneViewToolStripMenuItem_CheckedChanged);
-            // 
-            // worldToolStripMenuItem
-            // 
-            this.worldToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.worldToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createEmptyToolStripMenuItem});
-            this.worldToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.worldToolStripMenuItem.Name = "worldToolStripMenuItem";
-            this.worldToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.worldToolStripMenuItem.Text = "&World";
-            // 
-            // createEmptyToolStripMenuItem
-            // 
-            this.createEmptyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.createEmptyToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.createEmptyToolStripMenuItem.Name = "createEmptyToolStripMenuItem";
-            this.createEmptyToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.createEmptyToolStripMenuItem.Text = "Create &Empty";
             // 
             // dockPanel
             // 
@@ -341,6 +134,7 @@ namespace FinalEngine.Editor.Desktop.Views
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -355,26 +149,8 @@ namespace FinalEngine.Editor.Desktop.Views
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileExitToolStripMenuItem;
         private DarkUI.Docking.DarkDockPanel dockPanel;
-        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsSceneHierarchyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsEntityInspectorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsEntitySystemsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsConsoleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem documentsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewDocumentsSceneViewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem worldToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createEmptyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private DarkUI.Controls.DarkSeparator darkSeparator2;
+        private Controls.ToolStripDataLabel statusLabel;
+        private System.Windows.Forms.BindingSource bindingSource;
     }
 }

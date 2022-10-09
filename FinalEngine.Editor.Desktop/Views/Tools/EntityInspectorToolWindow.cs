@@ -4,19 +4,12 @@
 
 namespace FinalEngine.Editor.Desktop.Views.Tools
 {
-    using System;
-    using FinalEngine.Editor.Desktop.Controls;
-    using FinalEngine.Editor.Presenters;
+    using DarkUI.Docking;
 
-    public partial class EntityInspectorToolWindow : TogglableToolWindow
+    public partial class EntityInspectorToolWindow : DarkToolWindow
     {
-        public EntityInspectorToolWindow(IPresenterFactory presenterFactory)
+        public EntityInspectorToolWindow()
         {
-            if (presenterFactory == null)
-            {
-                throw new ArgumentNullException(nameof(presenterFactory));
-            }
-
             this.InitializeComponent();
         }
     }
