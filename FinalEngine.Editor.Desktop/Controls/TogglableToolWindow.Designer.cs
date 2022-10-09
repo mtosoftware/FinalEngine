@@ -1,6 +1,6 @@
-namespace FinalEngine.Editor.Desktop.Views.Documents
+﻿namespace FinalEngine.Editor.Desktop.Controls
 {
-    partial class SceneViewDocument
+    partial class TogglableToolWindow
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,19 +28,8 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // SceneViewDocument
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.DockText = "Scene View";
-            this.Name = "SceneViewDocument";
-            this.Size = new System.Drawing.Size(640, 480);
-            this.Load += new System.EventHandler(this.SceneViewDocument_Load);
-            this.Resize += new System.EventHandler(this.SceneViewDocument_Resize);
-            this.ResumeLayout(false);
-
         }
 
         #endregion

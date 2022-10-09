@@ -65,7 +65,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Presente
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Desktop", "FinalEngine.Editor.Desktop\FinalEngine.Editor.Desktop.csproj", "{586EA225-BF9D-4F14-BBAF-F9ECD3281563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Editor.Views", "FinalEngine.Editor.Views\FinalEngine.Editor.Views.csproj", "{02587EBB-48EC-4C4A-BF35-DBB5173C09B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Views", "FinalEngine.Editor.Views\FinalEngine.Editor.Views.csproj", "{02587EBB-48EC-4C4A-BF35-DBB5173C09B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,26 +5,16 @@
 namespace FinalEngine.Editor.Views
 {
     using System;
+    using FinalEngine.Editor.Views.Events;
 
-    /// <summary>
-    ///   Defines an interface that represents the main application view.
-    /// </summary>
     public interface IMainView
     {
-        /// <summary>
-        ///   Gets or sets the action to perform when the application is exiting.
-        /// </summary>
-        /// <value>
-        ///   The action to perform when the application is exiting.
-        /// </value>
-        Action? OnExit { get; set; }
+        event EventHandler<ContentToggledEventArgs>? OnContentToggled;
 
-        /// <summary>
-        ///   Gets or sets the action to perform when the application has loaded.
-        /// </summary>
-        /// <value>
-        ///   The action to perform when the application has loaded.
-        /// </value>
-        Action? OnLoad { get; set; }
+        event EventHandler<EventArgs>? OnExiting;
+
+        event EventHandler<EventArgs>? OnLoaded;
+
+        string StatusText { get; set; }
     }
 }

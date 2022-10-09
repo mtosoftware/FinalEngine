@@ -26,6 +26,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="OpenTK.Core" Version="4.7.5" />
+    <PackageReference Include="OpenTK.Mathematics" Version="4.7.5" />
+    <PackageReference Include="OpenTK.Windowing.Common" Version="4.7.5" />
+    <PackageReference Include="OpenTK.Windowing.Desktop" Version="4.7.5" />
+    <PackageReference Include="OpenTK.WinForms" Version="4.0.0-pre.6" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -37,6 +42,7 @@
     <ProjectReference Include="..\FinalEngine.Editor.Views\FinalEngine.Editor.Views.csproj" />
     <ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
+    <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
   </ItemGroup>
 
   <ItemGroup>

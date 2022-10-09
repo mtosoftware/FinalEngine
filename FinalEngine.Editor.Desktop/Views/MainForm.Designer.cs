@@ -36,7 +36,12 @@ namespace FinalEngine.Editor.Desktop.Views
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolWindowsSceneHierarchyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolWindowsEntityInspectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolWindowsEntitySystemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolWindowsConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new DarkUI.Docking.DarkDockPanel();
+            this.documentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewDocumentsSceneViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -97,7 +102,8 @@ namespace FinalEngine.Editor.Desktop.Views
             // 
             this.viewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewToolWindowsToolStripMenuItem});
+            this.viewToolWindowsToolStripMenuItem,
+            this.documentsToolStripMenuItem});
             this.viewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -107,7 +113,10 @@ namespace FinalEngine.Editor.Desktop.Views
             // 
             this.viewToolWindowsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.viewToolWindowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem});
+            this.viewToolWindowsSceneHierarchyToolStripMenuItem,
+            this.viewToolWindowsEntityInspectorToolStripMenuItem,
+            this.viewToolWindowsEntitySystemsToolStripMenuItem,
+            this.viewToolWindowsConsoleToolStripMenuItem});
             this.viewToolWindowsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.viewToolWindowsToolStripMenuItem.Name = "viewToolWindowsToolStripMenuItem";
             this.viewToolWindowsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
@@ -116,11 +125,50 @@ namespace FinalEngine.Editor.Desktop.Views
             // viewToolWindowsSceneHierarchyToolStripMenuItem
             // 
             this.viewToolWindowsSceneHierarchyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.viewToolWindowsSceneHierarchyToolStripMenuItem.Checked = true;
+            this.viewToolWindowsSceneHierarchyToolStripMenuItem.CheckOnClick = true;
+            this.viewToolWindowsSceneHierarchyToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.viewToolWindowsSceneHierarchyToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.viewToolWindowsSceneHierarchyToolStripMenuItem.Name = "viewToolWindowsSceneHierarchyToolStripMenuItem";
             this.viewToolWindowsSceneHierarchyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.viewToolWindowsSceneHierarchyToolStripMenuItem.Text = "&Scene Hierarchy";
-            this.viewToolWindowsSceneHierarchyToolStripMenuItem.Click += new System.EventHandler(this.ViewToolWindowsSceneHierarchyToolStripMenuItem_Click);
+            this.viewToolWindowsSceneHierarchyToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ViewToolWindowsSceneHierarchyToolStripMenuItem_CheckedChanged);
+            // 
+            // viewToolWindowsEntityInspectorToolStripMenuItem
+            // 
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.Checked = true;
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.CheckOnClick = true;
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.Name = "viewToolWindowsEntityInspectorToolStripMenuItem";
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.Text = "&Entity Inspector";
+            this.viewToolWindowsEntityInspectorToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ViewToolWindowsEntityInspectorToolStripMenuItem_CheckedChanged);
+            // 
+            // viewToolWindowsEntitySystemsToolStripMenuItem
+            // 
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.Checked = true;
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.CheckOnClick = true;
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.Name = "viewToolWindowsEntitySystemsToolStripMenuItem";
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.Text = "Entity S&ystems";
+            this.viewToolWindowsEntitySystemsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.viewToolWindowsEntitySystemsToolStripMenuItem_CheckedChanged);
+            // 
+            // viewToolWindowsConsoleToolStripMenuItem
+            // 
+            this.viewToolWindowsConsoleToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.viewToolWindowsConsoleToolStripMenuItem.Checked = true;
+            this.viewToolWindowsConsoleToolStripMenuItem.CheckOnClick = true;
+            this.viewToolWindowsConsoleToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.viewToolWindowsConsoleToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.viewToolWindowsConsoleToolStripMenuItem.Name = "viewToolWindowsConsoleToolStripMenuItem";
+            this.viewToolWindowsConsoleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewToolWindowsConsoleToolStripMenuItem.Text = "&Console";
+            this.viewToolWindowsConsoleToolStripMenuItem.CheckedChanged += new System.EventHandler(this.viewToolWindowsConsoleToolStripMenuItem_CheckedChanged);
             // 
             // dockPanel
             // 
@@ -130,6 +178,28 @@ namespace FinalEngine.Editor.Desktop.Views
             this.dockPanel.Name = "dockPanel";
             this.dockPanel.Size = new System.Drawing.Size(1264, 627);
             this.dockPanel.TabIndex = 2;
+            // 
+            // documentsToolStripMenuItem
+            // 
+            this.documentsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.documentsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewDocumentsSceneViewToolStripMenuItem});
+            this.documentsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.documentsToolStripMenuItem.Name = "documentsToolStripMenuItem";
+            this.documentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.documentsToolStripMenuItem.Text = "&Documents";
+            // 
+            // viewDocumentsSceneViewToolStripMenuItem
+            // 
+            this.viewDocumentsSceneViewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.viewDocumentsSceneViewToolStripMenuItem.Checked = true;
+            this.viewDocumentsSceneViewToolStripMenuItem.CheckOnClick = true;
+            this.viewDocumentsSceneViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.viewDocumentsSceneViewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.viewDocumentsSceneViewToolStripMenuItem.Name = "viewDocumentsSceneViewToolStripMenuItem";
+            this.viewDocumentsSceneViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewDocumentsSceneViewToolStripMenuItem.Text = "&Scene View";
+            this.viewDocumentsSceneViewToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ViewDocumentsSceneViewToolStripMenuItem_CheckedChanged);
             // 
             // MainForm
             // 
@@ -144,7 +214,6 @@ namespace FinalEngine.Editor.Desktop.Views
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Final Engine Editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -166,5 +235,10 @@ namespace FinalEngine.Editor.Desktop.Views
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolWindowsSceneHierarchyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsEntityInspectorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsEntitySystemsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolWindowsConsoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem documentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewDocumentsSceneViewToolStripMenuItem;
     }
 }

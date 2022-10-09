@@ -5,89 +5,47 @@
 namespace FinalEngine.Editor.Desktop.Views
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Windows.Forms;
-    using DarkUI.Docking;
     using DarkUI.Forms;
     using FinalEngine.Editor.Desktop;
     using FinalEngine.Editor.Desktop.Views.Documents;
     using FinalEngine.Editor.Desktop.Views.Tools;
     using FinalEngine.Editor.Presenters;
     using FinalEngine.Editor.Views;
+    using FinalEngine.Editor.Views.Events;
 
-    /// <summary>
-    ///   Provides the main application form; this is currently the starting form of the application.
-    /// </summary>
-    /// <seealso cref="DarkForm"/>
-    /// <seealso cref="IMainView"/>
-    /// <seealso cref="IApplicationStarter"/>
-    [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Tool Windows and Documents are disposed via the main dock panel.")]
     public partial class MainForm : DarkForm, IMainView, IApplicationStarter
     {
-        /// <summary>
-        ///   The presenter factory.
-        /// </summary>
         private readonly IPresenterFactory presenterFactory;
 
-        /// <summary>
-        ///   The console tool window.
-        /// </summary>
         private ConsoleToolWindow? consoleToolWindow;
 
-        /// <summary>
-        ///   The entity inspector tool window.
-        /// </summary>
         private EntityInspectorToolWindow? entityInspectorToolWindow;
 
-        /// <summary>
-        ///   The entity systems tool window.
-        /// </summary>
         private EntitySystemsToolWindow? entitySystemsToolWindow;
 
-        /// <summary>
-        ///   The scene hierachy tool window.
-        /// </summary>
         private SceneHierarchyToolWindow? sceneHierachyToolWindow;
 
-        /// <summary>
-        ///   The scene view document.
-        /// </summary>
         private SceneViewDocument? sceneViewDocument;
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="MainForm"/> class.
-        /// </summary>
-        /// <param name="presenterFactory">
-        ///   The presenter factory.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   The specified <paramref name="presenterFactory"/> parameter cannot be null.
-        /// </exception>
         public MainForm(IPresenterFactory presenterFactory)
         {
             this.presenterFactory = presenterFactory ?? throw new ArgumentNullException(nameof(presenterFactory));
             this.InitializeComponent();
         }
 
-        /// <summary>
-        ///   Gets or sets the action to perform when the application is exiting.
-        /// </summary>
-        /// <value>
-        ///   The action to perform when the application is exiting.
-        /// </value>
-        public Action? OnExit { get; set; }
+        public event EventHandler<ContentToggledEventArgs>? OnContentToggled;
 
-        /// <summary>
-        ///   Gets or sets the action to perform when the application has loaded.
-        /// </summary>
-        /// <value>
-        ///   The action to perform when the application has loaded.
-        /// </value>
-        public new Action? OnLoad { get; set; }
+        public event EventHandler<EventArgs>? OnExiting;
 
-        /// <summary>
-        ///   Starts the main application.
-        /// </summary>
+        public event EventHandler<EventArgs>? OnLoaded;
+
+        public string StatusText
+        {
+            get { return this.statusLabel.Text; }
+            set { this.statusLabel.Text = value; }
+        }
+
         public void StartApplication()
         {
             Application.Run(this);
@@ -95,20 +53,35 @@ namespace FinalEngine.Editor.Desktop.Views
 
         private void AddDocuments()
         {
-            this.sceneViewDocument = new SceneViewDocument(this.presenterFactory);
+            this.sceneViewDocument = new SceneViewDocument(this.presenterFactory)
+            {
+                Tag = this.viewDocumentsSceneViewToolStripMenuItem,
+            };
 
             this.dockPanel.AddContent(this.sceneViewDocument);
         }
 
-        /// <summary>
-        ///   Adds the tool windows to the main dock panel.
-        /// </summary>
         private void AddToolWindows()
         {
-            this.sceneHierachyToolWindow = new SceneHierarchyToolWindow(this.presenterFactory);
-            this.entityInspectorToolWindow = new EntityInspectorToolWindow(this.presenterFactory);
-            this.entitySystemsToolWindow = new EntitySystemsToolWindow(this.presenterFactory);
-            this.consoleToolWindow = new ConsoleToolWindow(this.presenterFactory);
+            this.sceneHierachyToolWindow = new SceneHierarchyToolWindow(this.presenterFactory)
+            {
+                Tag = this.viewToolWindowsSceneHierarchyToolStripMenuItem,
+            };
+
+            this.entityInspectorToolWindow = new EntityInspectorToolWindow(this.presenterFactory)
+            {
+                Tag = this.viewToolWindowsEntityInspectorToolStripMenuItem,
+            };
+
+            this.entitySystemsToolWindow = new EntitySystemsToolWindow(this.presenterFactory)
+            {
+                Tag = this.viewToolWindowsEntitySystemsToolStripMenuItem,
+            };
+
+            this.consoleToolWindow = new ConsoleToolWindow(this.presenterFactory)
+            {
+                Tag = this.viewToolWindowsConsoleToolStripMenuItem,
+            };
 
             this.dockPanel.AddContent(this.sceneHierachyToolWindow);
             this.dockPanel.AddContent(this.entityInspectorToolWindow);
@@ -116,30 +89,12 @@ namespace FinalEngine.Editor.Desktop.Views
             this.dockPanel.AddContent(this.consoleToolWindow);
         }
 
-        /// <summary>
-        ///   Handles the Click event of the <see cref="fileToolStripMenuItem"/> control.
-        /// </summary>
-        /// <param name="sender">
-        ///   The source of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <see cref="EventArgs"/> instance containing the event data.
-        /// </param>
         private void FileExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.OnExit?.Invoke();
+            this.OnExiting?.Invoke(this, EventArgs.Empty);
         }
 
-        /// <summary>
-        ///   Handles the FormClosing event of the <see cref="MainForm"/> control.
-        /// </summary>
-        /// <param name="sender">
-        ///   The source of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <see cref="FormClosingEventArgs"/> instance containing the event data.
-        /// </param>
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_Disposed(object? sender, EventArgs e)
         {
             if (this.IsDisposed)
             {
@@ -177,62 +132,70 @@ namespace FinalEngine.Editor.Desktop.Views
             }
         }
 
-        /// <summary>
-        ///   Handles the Load event of the <see cref="MainForm"/> control.
-        /// </summary>
-        /// <param name="sender">
-        ///   The source of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <see cref="EventArgs"/> instance containing the event data.
-        /// </param>
         private void MainForm_Load(object sender, EventArgs e)
         {
             Application.AddMessageFilter(this.dockPanel.DockContentDragFilter);
             Application.AddMessageFilter(this.dockPanel.DockResizeFilter);
 
             this.Tag = this.presenterFactory.CreateMainPresenter(this);
+            this.Disposed += this.MainForm_Disposed;
 
             this.AddToolWindows();
             this.AddDocuments();
 
-            this.OnLoad?.Invoke();
+            this.Text = $"{Application.ProductName} - {Application.ProductVersion}";
+
+            this.OnLoaded?.Invoke(this, EventArgs.Empty);
         }
 
-        /// <summary>
-        ///   Toggles the visiblity of the specified <paramref name="content"/>.
-        /// </summary>
-        /// <param name="content">
-        ///   The content (tool window or otherwise).
-        /// </param>
-        private void ToggleContentVisibility(DarkDockContent? content)
+        private void ViewDocumentsSceneViewToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            if (content == null)
+            if (this.sceneViewDocument == null)
             {
                 return;
             }
 
-            if (this.dockPanel.ContainsContent(content))
+            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.sceneViewDocument));
+        }
+
+        private void viewToolWindowsConsoleToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.consoleToolWindow == null)
             {
-                this.dockPanel.RemoveContent(content);
                 return;
             }
 
-            this.dockPanel.AddContent(content);
+            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.consoleToolWindow));
         }
 
-        /// <summary>
-        ///   Handles the Click event of the <see cref="viewToolWindowsSceneHierarchyToolStripMenuItem"/> control.
-        /// </summary>
-        /// <param name="sender">
-        ///   The source of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <see cref="EventArgs"/> instance containing the event data.
-        /// </param>
-        private void ViewToolWindowsSceneHierarchyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ViewToolWindowsEntityInspectorToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            this.ToggleContentVisibility(this.sceneHierachyToolWindow);
+            if (this.entityInspectorToolWindow == null)
+            {
+                return;
+            }
+
+            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.entityInspectorToolWindow));
+        }
+
+        private void viewToolWindowsEntitySystemsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.entitySystemsToolWindow == null)
+            {
+                return;
+            }
+
+            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.entitySystemsToolWindow));
+        }
+
+        private void ViewToolWindowsSceneHierarchyToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.sceneHierachyToolWindow == null)
+            {
+                return;
+            }
+
+            this.OnContentToggled?.Invoke(this, new ContentToggledEventArgs(this.sceneHierachyToolWindow));
         }
     }
 }

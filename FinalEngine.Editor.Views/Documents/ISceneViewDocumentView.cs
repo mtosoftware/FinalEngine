@@ -5,26 +5,14 @@
 namespace FinalEngine.Editor.Views.Documents
 {
     using System;
+    using FinalEngine.Editor.Views.Events;
 
-    /// <summary>
-    ///   Defines an interface that represents a scene view document.
-    /// </summary>
     public interface ISceneViewDocumentView
     {
-        /// <summary>
-        ///   Gets or sets the action to perform when the scene view is rendered.
-        /// </summary>
-        /// <value>
-        ///   The action to perform when the scene view is rendered.
-        /// </value>
-        Action? OnRender { get; set; }
+        event EventHandler<EventArgs>? OnLoaded;
 
-        /// <summary>
-        ///   Gets or sets the action to perform when the scene view has been resized.
-        /// </summary>
-        /// <value>
-        ///   The action to perform when the scene view has been resized.
-        /// </value>
-        Action? OnResize { get; set; }
+        event EventHandler<EventArgs>? OnRender;
+
+        event EventHandler<SizeChangedEventArgs>? OnResized;
     }
 }

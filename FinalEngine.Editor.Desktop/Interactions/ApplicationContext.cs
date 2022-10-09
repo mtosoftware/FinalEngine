@@ -5,17 +5,10 @@
 namespace FinalEngine.Editor.Desktop.Interactions
 {
     using System.Windows.Forms;
-    using FinalEngine.Editor.Presenters.Interactions;
+    using FinalEngine.Editor.Views.Interactions;
 
-    /// <summary>
-    ///   Provides a Windows Forms implemenation of an <see cref="IApplicationContext"/>.
-    /// </summary>
-    /// <seealso cref="IApplicationContext"/>
     public class ApplicationContext : IApplicationContext
     {
-        /// <summary>
-        ///   Exits the main application.
-        /// </summary>
         public void ExitApplication()
         {
             Application.Exit();

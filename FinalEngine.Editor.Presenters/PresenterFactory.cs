@@ -5,74 +5,54 @@
 namespace FinalEngine.Editor.Presenters
 {
     using System;
-    using FinalEngine.Editor.Presenters.Interactions;
+    using FinalEngine.ECS;
+    using FinalEngine.Editor.Presenters.Documents;
     using FinalEngine.Editor.Services.Resources;
     using FinalEngine.Editor.Views;
+    using FinalEngine.Editor.Views.Documents;
+    using FinalEngine.Editor.Views.Interactions;
     using FinalEngine.Rendering;
 
-    /// <summary>
-    ///   Provides a standard implementation of an <see cref="IPresenterFactory"/>.
-    /// </summary>
-    /// <seealso cref="IPresenterFactory"/>
     public class PresenterFactory : IPresenterFactory
     {
-        /// <summary>
-        ///   The application context.
-        /// </summary>
         private readonly IApplicationContext applicationContext;
 
-        /// <summary>
-        ///   The render device.
-        /// </summary>
+        private readonly IEntityWorld entityWorld;
+
         private readonly IRenderDevice renderDevice;
 
-        /// <summary>
-        ///   The resource loader registrar.
-        /// </summary>
         private readonly IResourceLoaderRegistrar resourceLoaderRegistrar;
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PresenterFactory"/> class.
-        /// </summary>
-        /// <param name="applicationContext">
-        ///   The application context.
-        /// </param>
-        /// <param name="renderDevice">
-        ///   The render device.
-        /// </param>
-        /// <param name="resourceLoaderRegistrar">
-        ///   The resource loader registrar.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   The specified <paramref name="applicationContext"/>, <paramref name="renderDevice"/> or <paramref name="resourceLoaderRegistrar"/> parameter cannot be null.
-        /// </exception>
-        public PresenterFactory(IApplicationContext applicationContext, IRenderDevice renderDevice, IResourceLoaderRegistrar resourceLoaderRegistrar)
+        public PresenterFactory(
+            IApplicationContext applicationContext,
+            IRenderDevice renderDevice,
+            IResourceLoaderRegistrar resourceLoaderRegistrar,
+            IEntityWorld entityWorld)
         {
             this.applicationContext = applicationContext ?? throw new ArgumentNullException(nameof(applicationContext));
             this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
             this.resourceLoaderRegistrar = resourceLoaderRegistrar ?? throw new ArgumentNullException(nameof(resourceLoaderRegistrar));
+            this.entityWorld = entityWorld ?? throw new ArgumentNullException(nameof(entityWorld));
         }
 
-        /// <summary>
-        ///   Creates a <see cref="MainPresenter"/> from the specified <paramref name="view"/>.
-        /// </summary>
-        /// <param name="view">
-        ///   The view used to create the presetner.
-        /// </param>
-        /// <returns>
-        ///   The newly created <see cref="MainPresenter"/>.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///   The specified <paramref name="view"/> parameter cannot be null.
-        /// </exception>
-        public MainPresenter CreateMainPresenter(IMainView view)
+        public MainPresenter CreateMainPresenter(IMainView mainView)
         {
-            if (view == null)
+            if (mainView == null)
             {
-                throw new ArgumentNullException(nameof(view));
+                throw new ArgumentNullException(nameof(mainView));
             }
 
-            return new MainPresenter(view, this.applicationContext, this.resourceLoaderRegistrar);
+            return new MainPresenter(mainView, this.applicationContext, this.resourceLoaderRegistrar);
+        }
+
+        public SceneViewDocumentPresenter CreateSceneViewDocumentPresenter(ISceneViewDocumentView sceneViewDocumentView)
+        {
+            if (sceneViewDocumentView == null)
+            {
+                throw new ArgumentNullException(nameof(sceneViewDocumentView));
+            }
+
+            return new SceneViewDocumentPresenter(sceneViewDocumentView, this.entityWorld, this.renderDevice);
         }
     }
 }
