@@ -132,6 +132,11 @@ namespace FinalEngine.Editor.Desktop.Views
             }
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.OnExiting?.Invoke(this, EventArgs.Empty);
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             Application.AddMessageFilter(this.dockPanel.DockContentDragFilter);

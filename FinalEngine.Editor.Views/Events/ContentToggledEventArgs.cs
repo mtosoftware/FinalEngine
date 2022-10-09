@@ -7,7 +7,7 @@ namespace FinalEngine.Editor.Views.Events
     using System;
     using FinalEngine.Editor.Views.Interactions;
 
-    public class ContentToggledEventArgs
+    public class ContentToggledEventArgs : EventArgs
     {
         public ContentToggledEventArgs(ITogglable togglable)
         {

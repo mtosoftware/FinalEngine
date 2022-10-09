@@ -19,5 +19,10 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
 
             this.InitializeComponent();
         }
+
+        private void SceneHierarchyToolWindow_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

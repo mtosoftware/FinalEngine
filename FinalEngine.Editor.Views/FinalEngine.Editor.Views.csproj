@@ -9,8 +9,12 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
-    <AdditionalFiles Include="..\Styling\StyleCop\Other\stylecop.json" Link="stylecop.json" />
+    <AdditionalFiles Include="..\Styling\StyleCop\Tests\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
