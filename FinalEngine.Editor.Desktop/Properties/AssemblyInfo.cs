@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTitle("FinalEngine.Editor.Desktop")]
 [assembly: AssemblyDescription("A Windows Forms editor for Final Engine.")]

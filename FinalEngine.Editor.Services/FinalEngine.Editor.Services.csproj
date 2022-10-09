@@ -27,4 +27,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
+    <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
+  </ItemGroup>
 </Project>
