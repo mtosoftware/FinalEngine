@@ -28,17 +28,14 @@ namespace FinalEngine.Editor.Desktop.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.statusStrip = new DarkUI.Controls.DarkStatusStrip();
             this.statusLabel = new FinalEngine.Editor.Desktop.Controls.ToolStripDataLabel();
-            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip = new DarkUI.Controls.DarkMenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new DarkUI.Docking.DarkDockPanel();
             this.darkSeparator2 = new DarkUI.Controls.DarkSeparator();
             this.statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,13 +55,8 @@ namespace FinalEngine.Editor.Desktop.Views
             // 
             // statusLabel
             // 
-            this.statusLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Status", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(0, 0);
-            // 
-            // bindingSource
-            // 
-            this.bindingSource.DataSource = typeof(FinalEngine.Editor.ViewModels.MainViewModel);
             // 
             // menuStrip
             // 
@@ -94,9 +86,8 @@ namespace FinalEngine.Editor.Desktop.Views
             this.fileExitToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.fileExitToolStripMenuItem.Name = "fileExitToolStripMenuItem";
             this.fileExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.fileExitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fileExitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.fileExitToolStripMenuItem.Text = "&Exit";
-            this.fileExitToolStripMenuItem.Click += new System.EventHandler(this.FileExitToolStripMenuItem_Click);
             // 
             // dockPanel
             // 
@@ -130,11 +121,9 @@ namespace FinalEngine.Editor.Desktop.Views
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Final Engine Editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);

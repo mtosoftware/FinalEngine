@@ -9,17 +9,12 @@ namespace FinalEngine.Editor.Desktop
     using DarkUI.Win32;
     using FinalEngine.ECS;
     using FinalEngine.Editor.Desktop.Views;
-    using FinalEngine.Editor.Services.Resources;
-    using FinalEngine.Editor.ViewModels;
-    using FinalEngine.Editor.Views;
-    using FinalEngine.Editor.Views.Interactions;
     using FinalEngine.IO;
     using FinalEngine.Rendering;
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Resources;
     using Microsoft.Extensions.DependencyInjection;
-    using ApplicationContext = FinalEngine.Editor.Desktop.Interactions.ApplicationContext;
 
     internal static class Program
     {
@@ -31,12 +26,8 @@ namespace FinalEngine.Editor.Desktop
             services.AddSingleton<IOpenGLInvoker, OpenGLInvoker>();
             services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
             services.AddSingleton<IResourceManager>(ResourceManager.Instance);
-            services.AddSingleton<IResourceLoaderRegistrar, ResourceLoaderRegistrar>();
             services.AddSingleton<IEntityWorld, EntityWorld>();
-            services.AddSingleton<IApplicationContext, ApplicationContext>();
-            services.AddSingleton<ViewModelFactory>();
-            services.AddSingleton<IApplicationStarter, MainForm>();
-            services.AddSingleton<IMainView, MainForm>();
+            services.AddSingleton<MainForm>();
 
             return services.BuildServiceProvider();
         }
@@ -49,7 +40,7 @@ namespace FinalEngine.Editor.Desktop
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            ConfigureServices().GetRequiredService<IApplicationStarter>().StartApplication();
+            ConfigureServices().GetRequiredService<MainForm>().StartApplication();
         }
     }
 }

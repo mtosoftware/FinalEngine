@@ -6,35 +6,42 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
 {
     using System;
     using System.ComponentModel;
+    using System.Windows.Forms;
     using DarkUI.Docking;
-    using FinalEngine.Editor.ViewModels;
-    using FinalEngine.Editor.Views.Tools;
+    using FinalEngine.ECS;
+    using FinalEngine.Editor.Desktop.Views.Dialogs;
 
-    public partial class SceneHierarchyToolWindow : DarkToolWindow, ISceneHierarchyToolWindowView
+    public partial class SceneHierarchyToolWindow : DarkToolWindow
     {
-        public SceneHierarchyToolWindow(ViewModelFactory factory)
+        public SceneHierarchyToolWindow()
         {
-            if (factory == null)
-            {
-                throw new ArgumentNullException(nameof(factory));
-            }
-
             this.InitializeComponent();
-            this.bindingSource.DataSource = factory.Create(this);
+            this.Entities = new BindingList<Entity>();
         }
 
-        public event EventHandler OnClick;
+        public BindingList<Entity> Entities { get; private set; }
 
-        public event EventHandler<CancelEventArgs> OnContextMenuOpening;
-
-        private void ContextMenu_Opening(object sender, CancelEventArgs e)
+        private void CreateEntityToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.OnContextMenuOpening?.Invoke(this, e);
+            using (var dialog = new CreateEntityDialog())
+            {
+                if (dialog.ShowDialog() == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                this.Entities.Add(dialog.Result);
+            }
         }
 
-        private void ListBox_Click(object sender, EventArgs e)
+        private void InitializeBindings()
         {
-            this.OnClick?.Invoke(this, EventArgs.Empty);
+            this.bindingSource.DataSource = this;
+        }
+
+        private void SceneHierarchyToolWindow_Load(object sender, EventArgs e)
+        {
+            this.InitializeBindings();
         }
     }
 }

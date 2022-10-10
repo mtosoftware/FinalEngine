@@ -28,9 +28,6 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // SceneViewDocument
@@ -42,13 +39,10 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
             this.Size = new System.Drawing.Size(640, 480);
             this.Load += new System.EventHandler(this.SceneViewDocument_Load);
             this.Resize += new System.EventHandler(this.SceneViewDocument_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.BindingSource bindingSource;
     }
 }

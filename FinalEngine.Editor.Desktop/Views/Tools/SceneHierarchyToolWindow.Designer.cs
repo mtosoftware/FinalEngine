@@ -32,20 +32,18 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             this.listBox = new System.Windows.Forms.ListBox();
             this.contextMenu = new DarkUI.Controls.DarkContextMenu();
             this.cutToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
-            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.copyToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
             this.pasteToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.duplicateToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
             this.deleteToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
+            this.duplicateToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.createEntityToolStripMenuItem = new FinalEngine.Editor.Desktop.Controls.ToolStripDataMenuItem();
-            this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.contextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.entitiesBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox
@@ -53,8 +51,7 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             this.listBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.listBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listBox.ContextMenuStrip = this.contextMenu;
-            this.listBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedIndex", this.bindingSource, "SelectedIndex", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.listBox.DataSource = this.entitiesBindingSource;
+            this.listBox.DataSource = this.bindingSource;
             this.listBox.DisplayMember = "Tag";
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox.ForeColor = System.Drawing.Color.Gainsboro;
@@ -64,7 +61,6 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(200, 375);
             this.listBox.TabIndex = 0;
-            this.listBox.Click += new System.EventHandler(this.ListBox_Click);
             // 
             // contextMenu
             // 
@@ -75,34 +71,27 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.toolStripSeparator1,
-            this.duplicateToolStripMenuItem,
             this.deleteToolStripMenuItem,
+            this.duplicateToolStripMenuItem,
             this.toolStripSeparator2,
             this.renameToolStripMenuItem,
             this.toolStripSeparator3,
             this.createEntityToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(214, 201);
-            this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
+            this.contextMenu.Size = new System.Drawing.Size(214, 179);
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.cutToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource, "CanPerformEditCommands", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.cutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.cutToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.cutToolStripMenuItem.Text = "C&ut";
             // 
-            // bindingSource
-            // 
-            this.bindingSource.DataSource = typeof(FinalEngine.Editor.ViewModels.Tools.SceneHierarchyToolWindowViewModel);
-            // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.copyToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource, "CanPerformEditCommands", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
@@ -112,7 +101,6 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.pasteToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource, "CanPerformEditCommands", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
@@ -127,25 +115,23 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(210, 6);
             // 
-            // duplicateToolStripMenuItem
-            // 
-            this.duplicateToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.duplicateToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource, "CanPerformEditCommands", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.duplicateToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.duplicateToolStripMenuItem.Text = "&Delete";
-            // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.deleteToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource, "CanPerformEditCommands", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.deleteToolStripMenuItem.Text = "Dup&licate";
+            this.deleteToolStripMenuItem.Text = "&Delete";
+            // 
+            // duplicateToolStripMenuItem
+            // 
+            this.duplicateToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.duplicateToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
+            this.duplicateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.duplicateToolStripMenuItem.Text = "Dup&licate";
             // 
             // toolStripSeparator2
             // 
@@ -158,7 +144,6 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.renameToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource, "CanPerformEditCommands", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.renameToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
@@ -182,11 +167,11 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             | System.Windows.Forms.Keys.E)));
             this.createEntityToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.createEntityToolStripMenuItem.Text = "Create &Entity";
+            this.createEntityToolStripMenuItem.Click += new System.EventHandler(this.CreateEntityToolStripMenuItem_Click);
             // 
-            // entitiesBindingSource
+            // bindingSource
             // 
-            this.entitiesBindingSource.DataMember = "Entities";
-            this.entitiesBindingSource.DataSource = this.bindingSource;
+            this.bindingSource.DataMember = "Entities";
             // 
             // SceneHierarchyToolWindow
             // 
@@ -197,9 +182,9 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
             this.DockText = "Scene Hierarchy";
             this.Name = "SceneHierarchyToolWindow";
             this.Size = new System.Drawing.Size(200, 400);
+            this.Load += new System.EventHandler(this.SceneHierarchyToolWindow_Load);
             this.contextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.entitiesBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -208,17 +193,16 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
 
         private System.Windows.Forms.ListBox listBox;
         private DarkUI.Controls.DarkContextMenu contextMenu;
-        private System.Windows.Forms.BindingSource bindingSource;
         private Controls.ToolStripDataMenuItem cutToolStripMenuItem;
         private Controls.ToolStripDataMenuItem copyToolStripMenuItem;
         private Controls.ToolStripDataMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private Controls.ToolStripDataMenuItem duplicateToolStripMenuItem;
         private Controls.ToolStripDataMenuItem deleteToolStripMenuItem;
+        private Controls.ToolStripDataMenuItem duplicateToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private Controls.ToolStripDataMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private Controls.ToolStripDataMenuItem createEntityToolStripMenuItem;
-        private System.Windows.Forms.BindingSource entitiesBindingSource;
+        private System.Windows.Forms.BindingSource bindingSource;
     }
 }

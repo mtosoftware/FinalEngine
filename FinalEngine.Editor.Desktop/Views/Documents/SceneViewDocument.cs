@@ -7,40 +7,24 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
-    using System.Drawing;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using DarkUI.Docking;
-    using FinalEngine.Editor.ViewModels;
-    using FinalEngine.Editor.Views.Documents;
-    using FinalEngine.Editor.Views.Events;
     using FinalEngine.Runtime;
     using FinalEngine.Runtime.Invocation;
     using OpenTK.Graphics.OpenGL4;
     using OpenTK.Windowing.Common;
     using OpenTK.WinForms;
 
-    public partial class SceneViewDocument : DarkDocument, ISceneViewDocumentView, ISynchronizeInvoke
+    public partial class SceneViewDocument : DarkDocument, ISynchronizeInvoke
     {
         private GLControl? glControl;
 
-        public SceneViewDocument(ViewModelFactory factory)
+        public SceneViewDocument()
         {
-            if (factory == null)
-            {
-                throw new ArgumentNullException(nameof(factory));
-            }
-
             this.InitializeComponent();
-            this.bindingSource.DataSource = factory.Create(this);
         }
-
-        public event EventHandler<EventArgs>? OnLoaded;
-
-        public event EventHandler<EventArgs>? OnRender;
-
-        public event EventHandler<SizeChangedEventArgs>? OnResized;
 
         private void AddOpenGLControl()
         {
@@ -78,7 +62,7 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
             this.glControl.Paint += (s, e) =>
             {
                 this.glControl.MakeCurrent();
-                this.OnRender?.Invoke(this, EventArgs.Empty);
+                //// TODO: Render here.
                 this.glControl.SwapBuffers();
             };
 
@@ -142,14 +126,11 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
                 CancellationToken.None,
                 TaskCreationOptions.RunContinuationsAsynchronously,
                 TaskScheduler.Current);
-
-            this.OnLoaded?.Invoke(this, EventArgs.Empty);
         }
 
         private void SceneViewDocument_Resize(object sender, EventArgs e)
         {
             this.glControl?.MakeCurrent();
-            this.OnResized?.Invoke(this, new SizeChangedEventArgs(this.glControl?.ClientRectangle ?? Rectangle.Empty));
         }
     }
 }
