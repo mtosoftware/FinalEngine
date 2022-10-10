@@ -16,11 +16,6 @@ namespace FinalEngine.ECS
     public class Entity : DynamicObject, IReadOnlyEntity
     {
         /// <summary>
-        /// The tag for this entity.
-        /// </summary>
-        private string tag;
-
-        /// <summary>
         ///   Represents a type to <see cref="IComponent"/> map.
         /// </summary>
         private readonly IDictionary<Type, IComponent> typeToComponentMap;
@@ -28,23 +23,30 @@ namespace FinalEngine.ECS
         /// <summary>
         ///   Initializes a new instance of the <see cref="Entity"/> class.
         /// </summary>
-        public Entity()
+        /// <param name="identifier">
+        ///   The globally unique identifier for this <see cref="Entity"/>.
+        /// </param>
+        public Entity(Guid identifier = default)
         {
-            this.Tag = "Entity";
+            this.Identifier = identifier == default ? Guid.NewGuid() : default;
             this.typeToComponentMap = new Dictionary<Type, IComponent>();
         }
 
         /// <summary>
-        ///   Gets or sets the tag for this <see cref="Entity"/>.
+        ///   Gets the identifier.
         /// </summary>
         /// <value>
-        ///   The tag for this <see cref="Entity"/>.
+        ///   The identifier.
         /// </value>
-        public string Tag
-        {
-            get { return this.tag ?? string.Empty; }
-            set { this.tag = value; }
-        }
+        public Guid Identifier { get; }
+
+        /// <summary>
+        ///   Gets or sets the tag.
+        /// </summary>
+        /// <value>
+        ///   The tag.
+        /// </value>
+        public string? Tag { get; set; }
 
         /// <summary>
         ///   Gets or sets the event that occurs when a component is added or removed from this <see cref="Entity"/>.
@@ -291,6 +293,17 @@ namespace FinalEngine.ECS
             where TComponent : IComponent
         {
             this.RemoveComponent(typeof(TComponent));
+        }
+
+        /// <summary>
+        ///   Converts to string.
+        /// </summary>
+        /// <returns>
+        ///   A <see cref="string" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return this.Tag ?? string.Empty;
         }
 
         /// <summary>
