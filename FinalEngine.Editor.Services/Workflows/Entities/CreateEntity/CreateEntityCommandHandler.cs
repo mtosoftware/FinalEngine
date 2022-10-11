@@ -37,7 +37,7 @@ namespace FinalEngine.Editor.Services.Workflows.Entities.CreateEntity
 
         protected override void Handle(CreateEntityCommand request)
         {
-            this.logger.LogInformation($"Creating entity with tag: '{request.Tag}' and ID: '{request.Identifier}'");
+            this.logger.LogInformation($"Creating entity with tag: '{request.Tag}' and ID: '{request.Identifier}'...");
 
             if (request == null)
             {

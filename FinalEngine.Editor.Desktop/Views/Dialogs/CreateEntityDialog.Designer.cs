@@ -35,8 +35,10 @@ namespace FinalEngine.Editor.Desktop.Views.Dialogs
             this.darkTreeView1 = new DarkUI.Controls.DarkTreeView();
             this.darkSeparator1 = new DarkUI.Controls.DarkSeparator();
             this.darkToolStrip1 = new DarkUI.Controls.DarkToolStrip();
-            this.addComponentToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.removeComponentToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.addComponentButton = new FinalEngine.Editor.Desktop.Controls.ToolStripDataButton();
+            this.componentsContextMenu = new DarkUI.Controls.DarkContextMenu();
+            this.removeComponentButton = new FinalEngine.Editor.Desktop.Controls.ToolStripDataButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel2 = new System.Windows.Forms.Panel();
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -150,8 +152,9 @@ namespace FinalEngine.Editor.Desktop.Views.Dialogs
             this.darkToolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.darkToolStrip1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.darkToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addComponentToolStripButton,
-            this.removeComponentToolStripButton});
+            this.addComponentButton,
+            this.removeComponentButton,
+            this.toolStripSeparator1});
             this.darkToolStrip1.Location = new System.Drawing.Point(1, 188);
             this.darkToolStrip1.Name = "darkToolStrip1";
             this.darkToolStrip1.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
@@ -159,31 +162,46 @@ namespace FinalEngine.Editor.Desktop.Views.Dialogs
             this.darkToolStrip1.TabIndex = 1;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
-            // addComponentToolStripButton
+            // addComponentButton
             // 
-            this.addComponentToolStripButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.addComponentToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.addComponentToolStripButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.addComponentToolStripButton.Image = global::FinalEngine.Editor.Desktop.Properties.Resources.Add_16x;
-            this.addComponentToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.addComponentToolStripButton.Name = "addComponentToolStripButton";
-            this.addComponentToolStripButton.Size = new System.Drawing.Size(23, 25);
-            this.addComponentToolStripButton.Text = "Add Component";
-            this.addComponentToolStripButton.ToolTipText = "Add Component.";
-            this.addComponentToolStripButton.Click += new System.EventHandler(this.AddComponentToolStripButton_Click);
+            this.addComponentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.addComponentButton.ContextMenuStrip = this.componentsContextMenu;
+            this.addComponentButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addComponentButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.addComponentButton.Image = global::FinalEngine.Editor.Desktop.Properties.Resources.Add_16x;
+            this.addComponentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addComponentButton.Name = "addComponentButton";
+            this.addComponentButton.Size = new System.Drawing.Size(23, 25);
+            this.addComponentButton.Text = "toolStripDataButton1";
             // 
-            // removeComponentToolStripButton
+            // componentsContextMenu
             // 
-            this.removeComponentToolStripButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.removeComponentToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.removeComponentToolStripButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.removeComponentToolStripButton.Image = global::FinalEngine.Editor.Desktop.Properties.Resources.Remove_16x;
-            this.removeComponentToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeComponentToolStripButton.Name = "removeComponentToolStripButton";
-            this.removeComponentToolStripButton.Size = new System.Drawing.Size(23, 25);
-            this.removeComponentToolStripButton.Text = "Remove Component";
-            this.removeComponentToolStripButton.ToolTipText = "Remove Component.";
-            this.removeComponentToolStripButton.Click += new System.EventHandler(this.RemoveComponentToolStripButton_Click);
+            this.componentsContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.componentsContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.componentsContextMenu.Name = "componentsContextMenu";
+            this.componentsContextMenu.Size = new System.Drawing.Size(181, 26);
+            this.componentsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ComponentsContextMenu_Opening);
+            // 
+            // removeComponentButton
+            // 
+            this.removeComponentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.removeComponentButton.ContextMenuStrip = null;
+            this.removeComponentButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.removeComponentButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.removeComponentButton.Image = global::FinalEngine.Editor.Desktop.Properties.Resources.Remove_16x;
+            this.removeComponentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeComponentButton.Name = "removeComponentButton";
+            this.removeComponentButton.Size = new System.Drawing.Size(23, 25);
+            this.removeComponentButton.Text = "toolStripDataButton1";
+            this.removeComponentButton.Click += new System.EventHandler(this.removeComponentButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.toolStripSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
             // 
             // panel2
             // 
@@ -353,11 +371,13 @@ namespace FinalEngine.Editor.Desktop.Views.Dialogs
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel2;
         private DarkUI.Controls.DarkSeparator darkSeparator1;
         private DarkUI.Controls.DarkToolStrip darkToolStrip1;
-        private System.Windows.Forms.ToolStripButton addComponentToolStripButton;
-        private System.Windows.Forms.ToolStripButton removeComponentToolStripButton;
         private DarkUI.Controls.DarkToolStrip miniToolStrip;
         private DarkUI.Controls.DarkTreeView darkTreeView1;
         private System.Windows.Forms.BindingSource bindingSource;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private Controls.ToolStripDataButton addComponentButton;
+        private Controls.ToolStripDataButton removeComponentButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private DarkUI.Controls.DarkContextMenu componentsContextMenu;
     }
 }

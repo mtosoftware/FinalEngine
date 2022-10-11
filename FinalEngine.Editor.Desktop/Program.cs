@@ -28,6 +28,7 @@ namespace FinalEngine.Editor.Desktop
             services.AddLogging(x =>
             {
                 x.AddConsole();
+                x.SetMinimumLevel(LogLevel.Trace);
             });
 
             services.AddServices();

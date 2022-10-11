@@ -4,6 +4,7 @@ namespace FinalEngine.Editor.Services.Workflows.Entities.DeleteEntity
     using FinalEngine.ECS;
     using FinalEngine.Editor.Services.Instructions;
     using FinalEngine.Editor.Services.Instructions.Entities;
+    using FluentValidation;
     using MediatR;
     using Micky5991.EventAggregator.Interfaces;
     using Microsoft.Extensions.Logging;
@@ -16,15 +17,19 @@ namespace FinalEngine.Editor.Services.Workflows.Entities.DeleteEntity
 
         private readonly ILogger<DeleteEntityCommandHandler> logger;
 
+        private readonly IValidator<DeleteEntityCommand> validator;
+
         private readonly IEntityWorld world;
 
         public DeleteEntityCommandHandler(
             ILogger<DeleteEntityCommandHandler> logger,
+            IValidator<DeleteEntityCommand> validator,
             IEventAggregator eventAggregator,
             IInstructionsManager instructionsManager,
             IEntityWorld world)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.instructionsManager = instructionsManager ?? throw new ArgumentNullException(nameof(instructionsManager));
             this.world = world ?? throw new ArgumentNullException(nameof(world));
@@ -32,22 +37,21 @@ namespace FinalEngine.Editor.Services.Workflows.Entities.DeleteEntity
 
         protected override void Handle(DeleteEntityCommand request)
         {
+            this.logger.LogInformation($"Deleting entity with tag: '{request.Entity.Tag}' and ID: '{request.Entity.Identifier}'...");
+
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            this.logger.LogInformation($"Deleting entity with tag: '{request.Entity.Tag}' and ID: '{request.Entity.Identifier}'");
-
-            var entity = request.Entity;
+            this.validator.ValidateAndThrow(request);
 
             var instruction = new RemoveEntityInstruction(
                 this.eventAggregator,
                 this.world,
-                entity);
+                request.Entity);
 
             this.instructionsManager.PerformInstruction(instruction);
-
             this.logger.LogInformation("Entity removed from world.");
         }
     }

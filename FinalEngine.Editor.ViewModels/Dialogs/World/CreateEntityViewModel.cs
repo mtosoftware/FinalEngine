@@ -50,7 +50,6 @@ namespace FinalEngine.Editor.ViewModels.Dialogs.World
 
         private void View_OnAddComponent(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private async void View_OnOk(object? sender, EventArgs e)

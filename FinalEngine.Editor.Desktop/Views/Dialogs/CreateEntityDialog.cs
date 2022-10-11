@@ -5,7 +5,12 @@
 namespace FinalEngine.Editor.Desktop.Views.Dialogs
 {
     using System;
+    using System.ComponentModel;
+    using System.Reflection;
+    using System.Text.RegularExpressions;
     using DarkUI.Forms;
+    using FinalEngine.ECS.Components.Core;
+    using FinalEngine.Editor.Services.Components;
     using FinalEngine.Editor.ViewModels;
     using FinalEngine.Editor.ViewModels.Views.Dialogs;
 
@@ -30,7 +35,21 @@ namespace FinalEngine.Editor.Desktop.Views.Dialogs
 
         private void AddComponentToolStripButton_Click(object sender, EventArgs e)
         {
-            this.OnAddComponent?.Invoke(this, e);
+        }
+
+        private void AddContextMenuItem(string name)
+        {
+            var item = this.addComponentButton.ContextMenuStrip?.Items.Add(name);
+
+            if (item == null)
+            {
+                return;
+            }
+
+            item.Click += (s, e) =>
+            {
+                this.OnAddComponent?.Invoke(s, e);
+            };
         }
 
         private void ButtonOk_OnClick(object sender, EventArgs e)
@@ -38,20 +57,38 @@ namespace FinalEngine.Editor.Desktop.Views.Dialogs
             this.OnOk?.Invoke(this, e);
         }
 
+        private void ComponentsContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            this.OnAddComponent?.Invoke(sender, e);
+        }
+
         private void CreateEntityDialog_Load(object sender, EventArgs e)
         {
+            this.InitializeContextMenu();
             this.InitializeDefaultState();
+        }
+
+        private void InitializeContextMenu()
+        {
+            //// TODO: Move this code into the view model and just make the AddContextMenuItem function public for the view model.
+            var types = ComponentTypesFetcher.Instance.FetchComponentTypes(Assembly.GetAssembly(typeof(TagComponent)));
+
+            foreach (var type in types)
+            {
+                string name = Regex.Replace(type.Name, "([A-Z])", " $1").Trim();
+                this.AddContextMenuItem(name);
+            }
         }
 
         private void InitializeDefaultState()
         {
-            this.entityTagTextbox.Select();
             this.entityTagTextbox.SelectAll();
+            this.entityTagTextbox.Select();
         }
 
-        private void RemoveComponentToolStripButton_Click(object sender, EventArgs e)
+        private void removeComponentButton_Click(object sender, EventArgs e)
         {
-            this.OnRemoveComponent?.Invoke(this, e);
+            this.OnRemoveComponent?.Invoke(sender, e);
         }
     }
 }
