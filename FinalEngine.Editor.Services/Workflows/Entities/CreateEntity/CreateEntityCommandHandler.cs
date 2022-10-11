@@ -56,9 +56,7 @@ namespace FinalEngine.Editor.Services.Workflows.Entities.CreateEntity
                 this.world,
                 entity);
 
-            instruction.Execute();
-
-            this.instructionsManager.AddInstruction(instruction);
+            this.instructionsManager.PerformInstruction(instruction);
             this.logger.LogInformation("Entity added to world.");
         }
     }

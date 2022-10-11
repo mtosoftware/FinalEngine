@@ -10,7 +10,7 @@ namespace FinalEngine.Editor.Services.Instructions
 
         bool CanUndo { get; }
 
-        void AddInstruction(IInstruction instruction);
+        void PerformInstruction(IInstruction instruction);
 
         void Redo();
 

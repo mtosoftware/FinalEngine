@@ -46,9 +46,7 @@ namespace FinalEngine.Editor.Services.Workflows.Entities.DeleteEntity
                 this.world,
                 entity);
 
-            instruction.Execute();
-
-            this.instructionsManager.AddInstruction(instruction);
+            this.instructionsManager.PerformInstruction(instruction);
 
             this.logger.LogInformation("Entity removed from world.");
         }

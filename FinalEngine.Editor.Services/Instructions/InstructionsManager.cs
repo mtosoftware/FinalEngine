@@ -2,15 +2,20 @@ namespace FinalEngine.Editor.Services.Instructions
 {
     using System;
     using System.Collections.Generic;
+    using Microsoft.Extensions.Logging;
 
     public class InstructionsManager : IInstructionsManager
     {
+        private readonly ILogger<InstructionsManager> logger;
+
         private readonly Stack<IInstruction> redoInstructions;
 
         private readonly Stack<IInstruction> undoInstructions;
 
-        public InstructionsManager()
+        public InstructionsManager(ILogger<InstructionsManager> logger)
         {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             this.undoInstructions = new Stack<IInstruction>();
             this.redoInstructions = new Stack<IInstruction>();
         }
@@ -27,10 +32,14 @@ namespace FinalEngine.Editor.Services.Instructions
             get { return this.undoInstructions.Count > 0; }
         }
 
-        public void AddInstruction(IInstruction instruction)
+        public void PerformInstruction(IInstruction instruction)
         {
             this.undoInstructions.Push(instruction);
             this.redoInstructions.Clear();
+
+            this.logger.LogInformation($"Performing {instruction.GetType().Name} instruction...");
+
+            instruction.Execute();
 
             this.InstructionsModified?.Invoke(this, EventArgs.Empty);
         }
@@ -45,6 +54,8 @@ namespace FinalEngine.Editor.Services.Instructions
             this.undoInstructions.Push(instruction);
             this.InstructionsModified?.Invoke(this, EventArgs.Empty);
 
+            this.logger.LogInformation($"Redoing {instruction.GetType().Name} instruction...");
+
             instruction.Execute();
         }
 
@@ -57,6 +68,8 @@ namespace FinalEngine.Editor.Services.Instructions
 
             this.redoInstructions.Push(instruction);
             this.InstructionsModified?.Invoke(this, EventArgs.Empty);
+
+            this.logger.LogInformation($"Undoing {instruction.GetType().Name} instruction...");
 
             instruction.UnExecute();
         }
