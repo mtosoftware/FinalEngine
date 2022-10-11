@@ -11,20 +11,33 @@ namespace FinalEngine.Editor.Desktop.Views.Documents
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using DarkUI.Docking;
+    using FinalEngine.Editor.ViewModels;
+    using FinalEngine.Editor.ViewModels.Documents;
+    using FinalEngine.Editor.ViewModels.Views.Documents;
     using FinalEngine.Runtime;
     using FinalEngine.Runtime.Invocation;
     using OpenTK.Graphics.OpenGL4;
     using OpenTK.Windowing.Common;
     using OpenTK.WinForms;
 
-    public partial class SceneViewDocument : DarkDocument, ISynchronizeInvoke
+    public partial class SceneViewDocument : DarkDocument, ISceneView, ISynchronizeInvoke
     {
         private GLControl? glControl;
 
-        public SceneViewDocument()
+        public SceneViewDocument(ViewModelFactory factory)
         {
+            if (factory == null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
+
             this.InitializeComponent();
+
+            this.ViewModel = factory.Create(this);
+            this.bindingSource.DataSource = this.ViewModel;
         }
+
+        public SceneViewModel ViewModel { get; }
 
         private void AddOpenGLControl()
         {

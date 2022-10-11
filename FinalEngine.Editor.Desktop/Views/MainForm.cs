@@ -6,15 +6,18 @@ namespace FinalEngine.Editor.Desktop.Views
 {
     using System;
     using System.Windows.Forms;
-    using DarkUI.Docking;
     using DarkUI.Forms;
-    using FinalEngine.ECS;
+    using FinalEngine.Editor.Desktop.Views.Dialogs;
     using FinalEngine.Editor.Desktop.Views.Documents;
     using FinalEngine.Editor.Desktop.Views.Tools;
+    using FinalEngine.Editor.ViewModels;
+    using FinalEngine.Editor.ViewModels.Documents;
+    using FinalEngine.Editor.ViewModels.Tools;
+    using FinalEngine.Editor.ViewModels.Views;
 
-    public partial class MainForm : DarkForm
+    public partial class MainForm : DarkForm, IMainView
     {
-        private readonly IEntityWorld world;
+        private readonly ViewModelFactory factory;
 
         private ConsoleToolWindow consoleToolWindow;
 
@@ -26,16 +29,47 @@ namespace FinalEngine.Editor.Desktop.Views
 
         private SceneViewDocument sceneViewDocument;
 
-        public MainForm(IEntityWorld world)
+        public MainForm(ViewModelFactory factory)
         {
-            this.world = world ?? throw new ArgumentNullException(nameof(world));
+            this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+
             this.InitializeComponent();
+            this.InitializeDefaultState();
         }
 
-        private string Status
+        public event EventHandler? OnEditMenuOpening;
+
+        public event EventHandler? OnEditRedo;
+
+        public event EventHandler? OnEditUndo;
+
+        public event EventHandler? OnLoaded;
+
+        public event EventHandler? OnMenuEditDelete;
+
+        public ConsoleViewModel Console
         {
-            get { return this.statusLabel.Text; }
-            set { this.statusLabel.Text = value; }
+            get { return this.consoleToolWindow.ViewModel; }
+        }
+
+        public EntityInspectorViewModel EntityInspector
+        {
+            get { return this.entityInspectorToolWindow.ViewModel; }
+        }
+
+        public EntitySystemsViewModel EntitySystems
+        {
+            get { return this.entitySystemsToolWindow.ViewModel; }
+        }
+
+        public SceneViewModel Scene
+        {
+            get { return this.sceneViewDocument.ViewModel; }
+        }
+
+        public SceneHierarchyViewModel SceneHierarchy
+        {
+            get { return this.sceneHierarchyToolWindow.ViewModel; }
         }
 
         public void StartApplication()
@@ -43,23 +77,50 @@ namespace FinalEngine.Editor.Desktop.Views
             Application.Run(this);
         }
 
-        private void AddDocuments()
+        private void EditDeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.sceneViewDocument = new SceneViewDocument();
-            this.dockPanel.AddContent(this.sceneViewDocument);
+            this.OnMenuEditDelete?.Invoke(sender, e);
         }
 
-        private void AddToolWindows()
+        private void EditRedoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.sceneHierarchyToolWindow = new SceneHierarchyToolWindow();
-            this.consoleToolWindow = new ConsoleToolWindow();
-            this.entityInspectorToolWindow = new EntityInspectorToolWindow();
-            this.entitySystemsToolWindow = new EntitySystemsToolWindow();
+            this.OnEditRedo?.Invoke(sender, e);
+        }
+
+        private void EditToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            this.OnEditMenuOpening?.Invoke(sender, e);
+        }
+
+        private void EditUndoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.OnEditUndo?.Invoke(sender, e);
+        }
+
+        private void InitializeDefaultState()
+        {
+            this.bindingSource.DataSource = this.factory.Create(this);
+
+            this.sceneHierarchyToolWindow = new SceneHierarchyToolWindow(this.factory);
+            this.consoleToolWindow = new ConsoleToolWindow(this.factory);
+            this.entityInspectorToolWindow = new EntityInspectorToolWindow(this.factory);
+            this.entitySystemsToolWindow = new EntitySystemsToolWindow(this.factory);
+            this.sceneViewDocument = new SceneViewDocument(this.factory);
 
             this.dockPanel.AddContent(this.sceneHierarchyToolWindow);
             this.dockPanel.AddContent(this.consoleToolWindow);
             this.dockPanel.AddContent(this.entityInspectorToolWindow);
             this.dockPanel.AddContent(this.entitySystemsToolWindow);
+            this.dockPanel.AddContent(this.sceneViewDocument);
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            //// Winforms doesn't support shortcuts with a singular key.
+            if (e.KeyCode == Keys.Delete)
+            {
+                this.OnMenuEditDelete?.Invoke(sender, e);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -67,23 +128,18 @@ namespace FinalEngine.Editor.Desktop.Views
             Application.AddMessageFilter(this.dockPanel.DockContentDragFilter);
             Application.AddMessageFilter(this.dockPanel.DockResizeFilter);
 
-            this.Text = $"{Application.ProductName} - {Application.ProductVersion}";
-
-            this.AddToolWindows();
-            this.AddDocuments();
-
-            this.Status = "Ready!";
+            this.OnLoaded?.Invoke(sender, e);
         }
 
-        private void ToggleContent(DarkDockContent content)
+        private void WorldCreateEntityToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.dockPanel.ContainsContent(content))
+            using (var dialog = new CreateEntityDialog(this.factory))
             {
-                this.dockPanel.RemoveContent(content);
-                return;
+                if (dialog.ShowDialog() == DialogResult.Cancel)
+                {
+                    return;
+                }
             }
-
-            this.dockPanel.AddContent(content);
         }
     }
 }

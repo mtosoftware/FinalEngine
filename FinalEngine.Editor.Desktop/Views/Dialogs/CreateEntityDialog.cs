@@ -5,47 +5,53 @@
 namespace FinalEngine.Editor.Desktop.Views.Dialogs
 {
     using System;
-    using System.ComponentModel;
-    using FinalEngine.ECS;
+    using DarkUI.Forms;
+    using FinalEngine.Editor.ViewModels;
+    using FinalEngine.Editor.ViewModels.Views.Dialogs;
 
-    public partial class CreateEntityDialog : DarkDialogError
+    public partial class CreateEntityDialog : DarkDialog, ICreateEntityView
     {
-        public CreateEntityDialog()
+        public CreateEntityDialog(ViewModelFactory factory)
         {
+            if (factory == null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
+
             this.InitializeComponent();
-            this.Result = new Entity();
+            this.bindingSource.DataSource = factory.Create(this);
         }
 
-        public string? EntityName { get; private set; }
+        public event EventHandler? OnAddComponent;
 
-        [TypeConverter(typeof(GuidConverter))]
-        public Guid Identifier { get; private set; }
+        public event EventHandler? OnOk;
 
-        public Entity Result { get; private set; }
+        public event EventHandler? OnRemoveComponent;
+
+        private void AddComponentToolStripButton_Click(object sender, EventArgs e)
+        {
+            this.OnAddComponent?.Invoke(this, e);
+        }
 
         private void ButtonOk_OnClick(object sender, EventArgs e)
         {
-            this.Result.Tag = this.EntityName;
+            this.OnOk?.Invoke(this, e);
         }
 
         private void CreateEntityDialog_Load(object sender, EventArgs e)
         {
-            this.InitializeBindings();
             this.InitializeDefaultState();
-        }
-
-        private void InitializeBindings()
-        {
-            this.bindingSource.DataSource = this;
         }
 
         private void InitializeDefaultState()
         {
-            this.EntityName = "New Entity";
-            this.Identifier = Guid.NewGuid();
-
             this.entityTagTextbox.Select();
             this.entityTagTextbox.SelectAll();
+        }
+
+        private void RemoveComponentToolStripButton_Click(object sender, EventArgs e)
+        {
+            this.OnRemoveComponent?.Invoke(this, e);
         }
     }
 }

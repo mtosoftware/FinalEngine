@@ -27,6 +27,8 @@ namespace FinalEngine.ECS
         /// </param>
         void AddSystem(EntitySystemBase system);
 
+        bool ContainsEntity(Entity entity);
+
         /// <summary>
         ///   Removes the specified <paramref name="entity"/> from this <see cref="IEntityWorld"/>.
         /// </summary>

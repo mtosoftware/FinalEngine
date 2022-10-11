@@ -102,6 +102,16 @@ namespace FinalEngine.ECS
             this.systems.Add(system);
         }
 
+        public bool ContainsEntity(Entity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            return this.entities.Contains(entity);
+        }
+
         /// <summary>
         ///   Processes all systems that match the specified loop <paramref name="type"/>.
         /// </summary>

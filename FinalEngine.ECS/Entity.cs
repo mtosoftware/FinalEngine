@@ -28,7 +28,7 @@ namespace FinalEngine.ECS
         /// </param>
         public Entity(Guid identifier = default)
         {
-            this.Identifier = identifier == default ? Guid.NewGuid() : default;
+            this.Identifier = identifier == default ? Guid.NewGuid() : identifier;
             this.typeToComponentMap = new Dictionary<Type, IComponent>();
         }
 

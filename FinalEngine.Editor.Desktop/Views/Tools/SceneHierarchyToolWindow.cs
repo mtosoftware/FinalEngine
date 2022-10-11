@@ -6,42 +6,59 @@ namespace FinalEngine.Editor.Desktop.Views.Tools
 {
     using System;
     using System.ComponentModel;
-    using System.Windows.Forms;
     using DarkUI.Docking;
-    using FinalEngine.ECS;
     using FinalEngine.Editor.Desktop.Views.Dialogs;
+    using FinalEngine.Editor.ViewModels;
+    using FinalEngine.Editor.ViewModels.Tools;
+    using FinalEngine.Editor.ViewModels.Views.Tools;
 
-    public partial class SceneHierarchyToolWindow : DarkToolWindow
+    public partial class SceneHierarchyToolWindow : DarkToolWindow, ISceneHierarchyView
     {
-        public SceneHierarchyToolWindow()
+        private readonly ViewModelFactory factory;
+
+        public SceneHierarchyToolWindow(ViewModelFactory factory)
         {
             this.InitializeComponent();
-            this.Entities = new BindingList<Entity>();
+
+            this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+
+            this.ViewModel = factory.Create(this);
+            this.bindingSource.DataSource = this.ViewModel;
+
+            this.ViewModel.Entities.ListChanged += (s, e) =>
+            {
+                this.Validate();
+            };
         }
 
-        public BindingList<Entity> Entities { get; private set; }
+        public event EventHandler OnContextDelete;
 
-        private void CreateEntityToolStripMenuItem_Click(object sender, EventArgs e)
+        public event EventHandler OnContextOpening;
+
+        public SceneHierarchyViewModel ViewModel { get; }
+
+        private void ContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            using (var dialog = new CreateEntityDialog())
-            {
-                if (dialog.ShowDialog() == DialogResult.Cancel)
-                {
-                    return;
-                }
+            this.OnContextOpening?.Invoke(this, e);
+        }
 
-                this.Entities.Add(dialog.Result);
+        private void CreateEntityToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            using (var dialog = new CreateEntityDialog(this.factory))
+            {
+                dialog.ShowDialog(this);
             }
         }
 
-        private void InitializeBindings()
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.bindingSource.DataSource = this;
+            this.OnContextDelete?.Invoke(this, e);
         }
 
-        private void SceneHierarchyToolWindow_Load(object sender, EventArgs e)
+        private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.InitializeBindings();
+            //// This is a workaround for a bug with winforms.
+            this.Validate();
         }
     }
 }
