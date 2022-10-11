@@ -128,7 +128,7 @@ namespace FinalEngine.Editor.Desktop.Views
             this.editUndoToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.editUndoToolStripMenuItem.Name = "editUndoToolStripMenuItem";
             this.editUndoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.editUndoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editUndoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.editUndoToolStripMenuItem.Text = "&Undo";
             this.editUndoToolStripMenuItem.Click += new System.EventHandler(this.EditUndoToolStripMenuItem_Click);
             // 
@@ -139,7 +139,7 @@ namespace FinalEngine.Editor.Desktop.Views
             this.editRedoToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.editRedoToolStripMenuItem.Name = "editRedoToolStripMenuItem";
             this.editRedoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.editRedoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editRedoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.editRedoToolStripMenuItem.Text = "&Redo";
             this.editRedoToolStripMenuItem.Click += new System.EventHandler(this.EditRedoToolStripMenuItem_Click);
             // 
@@ -149,7 +149,7 @@ namespace FinalEngine.Editor.Desktop.Views
             this.toolStripSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // editDeleteToolStripMenuItem
             // 
@@ -158,7 +158,7 @@ namespace FinalEngine.Editor.Desktop.Views
             this.editDeleteToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.editDeleteToolStripMenuItem.Name = "editDeleteToolStripMenuItem";
             this.editDeleteToolStripMenuItem.ShortcutKeyDisplayString = "Del";
-            this.editDeleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editDeleteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.editDeleteToolStripMenuItem.Text = "Delete";
             this.editDeleteToolStripMenuItem.Click += new System.EventHandler(this.EditDeleteToolStripMenuItem_Click);
             // 
@@ -209,6 +209,7 @@ namespace FinalEngine.Editor.Desktop.Views
             this.Controls.Add(this.darkSeparator2);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Title", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
