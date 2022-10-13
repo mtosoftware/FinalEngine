@@ -53,6 +53,8 @@ namespace FinalEngine.Rendering
         /// </returns>
         IInputLayout CreateInputLayout(IReadOnlyCollection<InputElement> elements);
 
+        IRenderTarget2D CreateRenderTarget2D();
+
         /// <summary>
         ///   Creates an <see cref="IShader"/> targeting the specified <paramref name="target"/>, containing the specified <paramref name="sourceCode"/>.
         /// </summary>

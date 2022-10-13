@@ -84,16 +84,19 @@ namespace FinalEngine.Rendering.OpenGL.Textures
             invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapS, (int)mapper.Forward<TKTextureWrapMode>(description.WrapS));
             invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapT, (int)mapper.Forward<TKTextureWrapMode>(description.WrapT));
 
-            invoker.TextureSubImage2D(
-                texture: this.rendererID,
-                level: 0,
-                xoffset: 0,
-                yoffset: 0,
-                width: description.Width,
-                height: description.Height,
-                format: mapper.Forward<TKPixelForamt>(this.Format),
-                type: mapper.Forward<TKPixelType>(description.PixelType),
-                pixels: data);
+            if (data != IntPtr.Zero)
+            {
+                invoker.TextureSubImage2D(
+                    texture: this.rendererID,
+                    level: 0,
+                    xoffset: 0,
+                    yoffset: 0,
+                    width: description.Width,
+                    height: description.Height,
+                    format: mapper.Forward<TKPixelForamt>(this.Format),
+                    type: mapper.Forward<TKPixelType>(description.PixelType),
+                    pixels: data);
+            }
         }
 
         /// <summary>
@@ -135,6 +138,11 @@ namespace FinalEngine.Rendering.OpenGL.Textures
         ///   <c>true</c> if this <see cref="OpenGLTexture2D"/> is disposed; otherwise, <c>false</c>.
         /// </value>
         protected bool IsDisposed { get; private set; }
+
+        public void Attach(FramebufferAttachment type, int framebuffer)
+        {
+            this.invoker.NamedFramebufferTexture(framebuffer, type, this.rendererID, 0);
+        }
 
         /// <summary>
         ///   Binds this <see cref="IOpenGLTexture"/> to the graphics processing unit.

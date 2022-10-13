@@ -21,6 +21,9 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         /// <inheritdoc cref="GL.BindBuffer(BufferTarget, int)"/>
         void BindBuffer(BufferTarget target, int buffer);
 
+        /// <inheritdoc cref="GL.BindFramebuffer(FramebufferTarget, int)"/>
+        void Bindframebuffer(FramebufferTarget target, int framebuffers);
+
         /// <inheritdoc cref="GL.BindTexture(TextureTarget, int)"/>
         void BindTexture(TextureTarget target, int texture);
 
@@ -56,6 +59,9 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         /// </param>
         void Cap(EnableCap cap, bool value);
 
+        /// <inheritdoc cref="GL.CheckNamedFramebufferStatus(int, FramebufferTarget)"/>
+        FramebufferStatus CheckNamedFramebufferStatus(int framebuffer, FramebufferTarget target);
+
         /// <inheritdoc cref="GL.Clear(ClearBufferMask)"/>
         void Clear(ClearBufferMask mask);
 
@@ -74,6 +80,9 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         /// <inheritdoc cref="GL.CreateBuffers(int, out int)"/>
         int CreateBuffer();
 
+        /// <inheritdoc cref="GL.CreateFramebuffers(int, int*)"/>
+        int CreateFramebuffer();
+
         /// <inheritdoc cref="GL.CreateProgram"/>
         int CreateProgram();
 
@@ -88,6 +97,9 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
 
         /// <inheritdoc cref="GL.DeleteBuffer(int)"/>
         void DeleteBuffer(int buffers);
+
+        /// <inheritdoc cref="GL.DeleteFramebuffer(int)"/>
+        void DeleteFramebuffer(int framebuffers);
 
         /// <inheritdoc cref="GL.DeleteProgram(int)"/>
         void DeleteProgram(int program);
@@ -159,6 +171,9 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         /// <inheritdoc cref="GL.NamedBufferSubData{T3}(int, IntPtr, int, T3[])"/>
         void NamedBufferSubData<T3>(int buffer, IntPtr offset, int size, T3[] data)
             where T3 : struct;
+
+        /// <inheritdoc cref="GL.NamedFramebufferTexture(int, FramebufferAttachment, int, int)"/>
+        void NamedFramebufferTexture(int framebuffer, FramebufferAttachment attachment, int texture, int level);
 
         /// <inheritdoc cref="GL.PolygonMode(MaterialFace, PolygonMode)"/>
         void PolygonMode(MaterialFace face, PolygonMode mode);

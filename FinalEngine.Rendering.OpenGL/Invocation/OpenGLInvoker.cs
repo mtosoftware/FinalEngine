@@ -503,5 +503,31 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
                 throw new RenderContextException($"{severity} {type} | {messageString}");
             }
         }
+
+        public void Bindframebuffer(FramebufferTarget target, int framebuffers)
+        {
+            GL.BindFramebuffer(target, framebuffers);
+        }
+
+        public FramebufferStatus CheckNamedFramebufferStatus(int framebuffer, FramebufferTarget target)
+        {
+            return GL.CheckNamedFramebufferStatus(framebuffer, target);
+        }
+
+        public int CreateFramebuffer()
+        {
+            GL.CreateFramebuffers(1, out int framebuffers);
+            return framebuffers;
+        }
+
+        public void DeleteFramebuffer(int framebuffers)
+        {
+            GL.DeleteFramebuffer(framebuffers);
+        }
+
+        public void NamedFramebufferTexture(int framebuffer, FramebufferAttachment attachment, int texture, int level)
+        {
+            GL.NamedFramebufferTexture(framebuffer, attachment, texture, level);
+        }
     }
 }
