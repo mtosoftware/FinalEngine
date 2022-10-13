@@ -23,30 +23,10 @@ namespace FinalEngine.ECS
         /// <summary>
         ///   Initializes a new instance of the <see cref="Entity"/> class.
         /// </summary>
-        /// <param name="identifier">
-        ///   The globally unique identifier for this <see cref="Entity"/>.
-        /// </param>
-        public Entity(Guid identifier = default)
+        public Entity()
         {
-            this.Identifier = identifier == default ? Guid.NewGuid() : identifier;
             this.typeToComponentMap = new Dictionary<Type, IComponent>();
         }
-
-        /// <summary>
-        ///   Gets the identifier.
-        /// </summary>
-        /// <value>
-        ///   The identifier.
-        /// </value>
-        public Guid Identifier { get; }
-
-        /// <summary>
-        ///   Gets or sets the tag.
-        /// </summary>
-        /// <value>
-        ///   The tag.
-        /// </value>
-        public string? Tag { get; set; }
 
         /// <summary>
         ///   Gets or sets the event that occurs when a component is added or removed from this <see cref="Entity"/>.
@@ -293,17 +273,6 @@ namespace FinalEngine.ECS
             where TComponent : IComponent
         {
             this.RemoveComponent(typeof(TComponent));
-        }
-
-        /// <summary>
-        ///   Converts to string.
-        /// </summary>
-        /// <returns>
-        ///   A <see cref="string" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            return this.Tag ?? string.Empty;
         }
 
         /// <summary>

@@ -37,6 +37,7 @@ namespace FinalEngine.Rendering
                     new InputElement(0, 3, InputElementType.Float, 0),
                     new InputElement(1, 4, InputElementType.Float, 3 * sizeof(float)),
                     new InputElement(2, 2, InputElementType.Float, 7 * sizeof(float)),
+                    new InputElement(3, 3, InputElementType.Float, 9 * sizeof(float)),
                 };
             }
         }
@@ -64,6 +65,14 @@ namespace FinalEngine.Rendering
         ///   The texture coordinate.
         /// </value>
         public Vector2 TextureCoordinate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the normal.
+        /// </summary>
+        /// <value>
+        /// The normal.
+        /// </value>
+        public Vector3 Normal { get; set; }
 
         /// <summary>
         ///   Implements the operator ==.
@@ -112,7 +121,8 @@ namespace FinalEngine.Rendering
         {
             return this.Position == other.Position &&
                    this.Color == other.Color &&
-                   this.TextureCoordinate == other.TextureCoordinate;
+                   this.TextureCoordinate == other.TextureCoordinate &&
+                   this.Normal == other.Normal;
         }
 
         /// <summary>
@@ -141,7 +151,8 @@ namespace FinalEngine.Rendering
 
             return (this.Position.GetHashCode() * accumulator) +
                    (this.Color.GetHashCode() * accumulator) +
-                   (this.TextureCoordinate.GetHashCode() * accumulator);
+                   (this.TextureCoordinate.GetHashCode() * accumulator) +
+                   (this.Normal.GetHashCode() * accumulator);
         }
     }
 }
