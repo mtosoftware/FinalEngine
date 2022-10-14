@@ -9,12 +9,25 @@
     - Output Merger :)
     - Resource Factory :)
       - Texture 2D :)
+      - Texture Cube
       - Vertex Buffer :)
       - Input Layout :)
       - Shader :)
       - Shader Program :)
+      - 2D Render Targets :)
   - Texture Loader :)
   - Sprite Batching :)
+  - Meshes :)
+  - Materials
+  - Lighting
+    - Directional
+    - Point
+    - Spot
+    - Volumetric
+  - Deferred Rendering Engine
+    - This will likely be an Entity System
+      - Probably inherited from some RenderSystemBase
+        - The base system will update camera stuff.
 - Audio
 - Physics
 - Scene & Entity Management
