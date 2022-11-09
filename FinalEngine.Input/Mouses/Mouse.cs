@@ -6,13 +6,14 @@ namespace FinalEngine.Input.Mouses
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IMouse"/>, that interfaces with an <see cref="IMouseDevice"/>.
     /// </summary>
     /// <seealso cref="IMouse"/>
-    public class Mouse : IMouse
+    public class Mouse : IMouse, IDisposable
     {
         /// <summary>
         ///   The initial size capacity of the <see cref="buttonsDown"/> and <see cref="buttonsDownLast"/> collections.
@@ -61,6 +62,12 @@ namespace FinalEngine.Input.Mouses
             }
         }
 
+        [ExcludeFromCodeCoverage]
+        ~Mouse()
+        {
+            this.Dispose(false);
+        }
+
         /// <inheritdoc/>
         public PointF Delta
         {
@@ -92,6 +99,14 @@ namespace FinalEngine.Input.Mouses
         /// <inheritdoc/>
         public double WheelOffset { get; private set; }
 
+        protected bool IsDisposed { get; private set; }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         /// <inheritdoc/>
         public bool IsButtonDown(MouseButton button)
         {
@@ -119,6 +134,24 @@ namespace FinalEngine.Input.Mouses
             this.buttonsDownLast = new List<MouseButton>(this.buttonsDown);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            if (this.device != null)
+            {
+                this.device.ButtonDown -= this.Device_ButtonDown;
+                this.device.ButtonUp -= this.Device_ButtonUp;
+                this.device.Move -= this.Device_Move;
+                this.device.Scroll -= this.Device_Scroll;
+            }
+
+            this.IsDisposed = true;
+        }
+
         /// <summary>
         ///   Handles the <see cref="IMouseDevice.ButtonDown"/> event.
         /// </summary>
@@ -135,7 +168,7 @@ namespace FinalEngine.Input.Mouses
         {
             if (e == null)
             {
-                throw new ArgumentNullException(nameof(e), $"The specified {nameof(e)} parameter cannot be null");
+                throw new ArgumentNullException(nameof(e));
             }
 
             this.buttonsDown.Add(e.Button);
@@ -157,7 +190,7 @@ namespace FinalEngine.Input.Mouses
         {
             if (e == null)
             {
-                throw new ArgumentNullException(nameof(e), $"The specified {nameof(e)} parameter cannot be null");
+                throw new ArgumentNullException(nameof(e));
             }
 
             while (this.buttonsDown.Contains(e.Button))
@@ -182,7 +215,7 @@ namespace FinalEngine.Input.Mouses
         {
             if (e == null)
             {
-                throw new ArgumentNullException(nameof(e), $"The specified {nameof(e)} parameter cannot be null");
+                throw new ArgumentNullException(nameof(e));
             }
 
             this.location = e.Location;
@@ -204,7 +237,7 @@ namespace FinalEngine.Input.Mouses
         {
             if (e == null)
             {
-                throw new ArgumentNullException(nameof(e), $"The specified {nameof(e)} parameter cannot be null");
+                throw new ArgumentNullException(nameof(e));
             }
 
             this.WheelOffset = e.Offset;

@@ -63,11 +63,11 @@ namespace FinalEngine.Rendering.OpenGL.Textures
             SizedFormat internalFormat,
             IntPtr data)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
             if (mapper == null)
             {
-                throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(mapper));
             }
 
             this.rendererID = invoker.CreateTexture(TextureTarget.Texture2D);

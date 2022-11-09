@@ -16,6 +16,28 @@ namespace FinalEngine.Tests.Core.Input.Keyboard
         private Mock<IKeyboardDevice> keyboardDevice;
 
         [Test]
+        public void ConstructorShouldHookOntoKeyDownEventWhenKeyboardDeviceIsNotNull()
+        {
+            // Assert
+            this.keyboardDevice.VerifyAdd(
+                x =>
+            {
+                x.KeyDown += It.IsAny<EventHandler<KeyEventArgs>>();
+            }, Times.Once);
+        }
+
+        [Test]
+        public void ConstructorShouldHookOntoKeyUpEventWhenKeyboardDeviceIsNotNull()
+        {
+            // Assert
+            this.keyboardDevice.VerifyAdd(
+                x =>
+                {
+                    x.KeyUp += It.IsAny<EventHandler<KeyEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
         public void DeviceKeyDownShouldSetIsCapsLockedToFalseWhenCapsLockIsFalse()
         {
             // Arrange
@@ -121,6 +143,34 @@ namespace FinalEngine.Tests.Core.Input.Keyboard
                     x.KeyUp += null;
                 }, new object[] { new object(), null });
             });
+        }
+
+        [Test]
+        public void DisposeShouldDeregisterKeyDownEventWhenInvoked()
+        {
+            // Act
+            this.keyboard.Dispose();
+
+            // Assert
+            this.keyboardDevice.VerifyRemove(
+                x =>
+                {
+                    x.KeyDown -= It.IsAny<EventHandler<KeyEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
+        public void DisposeShouldDeregisterKeyUpEventWhenInvoked()
+        {
+            // Act
+            this.keyboard.Dispose();
+
+            // Assert
+            this.keyboardDevice.VerifyRemove(
+                x =>
+            {
+                x.KeyUp -= It.IsAny<EventHandler<KeyEventArgs>>();
+            }, Times.Once);
         }
 
         [Test]
@@ -424,6 +474,12 @@ namespace FinalEngine.Tests.Core.Input.Keyboard
             // Arrange
             this.keyboardDevice = new Mock<IKeyboardDevice>();
             this.keyboard = new Keyboard(this.keyboardDevice.Object);
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            this.keyboard.Dispose();
         }
     }
 }

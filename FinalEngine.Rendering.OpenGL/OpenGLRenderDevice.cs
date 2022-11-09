@@ -51,7 +51,7 @@ namespace FinalEngine.Rendering.OpenGL
         /// </exception>
         public OpenGLRenderDevice(IOpenGLInvoker invoker)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
             var map = new Dictionary<Enum, Enum>()
             {

@@ -31,7 +31,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK
         /// </exception>
         public OpenTKKeyboardDevice(INativeWindowInvoker nativeWindow)
         {
-            this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow), $"The specified {nameof(nativeWindow)} parameter cannot be null.");
+            this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow));
 
             this.nativeWindow.KeyUp += this.NativeWindow_KeyUp;
             this.nativeWindow.KeyDown += this.NativeWindow_KeyDown;

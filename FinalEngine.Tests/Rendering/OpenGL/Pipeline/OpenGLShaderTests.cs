@@ -105,30 +105,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
         }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenSourceCodeIsEmpty()
+        public void ConstructorShouldThrowArgumentExceptionWhenSourceCodeIsEmpty()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, string.Empty);
             });
         }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenSourceCodeIsNull()
+        public void ConstructorShouldThrowArgumentExceptionWhenSourceCodeIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, null);
             });
         }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenSourceCodeIsWhitespace()
+        public void ConstructorShouldThrowArgumentExceptionWhenSourceCodeIsWhitespace()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, "\t\r\n");
             });

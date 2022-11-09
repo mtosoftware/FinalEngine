@@ -26,30 +26,30 @@ namespace FinalEngine.Tests.Core.Resources
         }
 
         [Test]
-        public void LoadResourceInternalShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+        public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null);
             });
         }
 
         [Test]
-        public void LoadResourceInternalShouldThrowArgumentNullExceptionWhenFilePathIsStringEmpty()
+        public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsStringEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(string.Empty);
             });
         }
 
         [Test]
-        public void LoadResourceInternalShouldThrowArgumentNullExceptionWhenFilePathIsWhitespaceCharacters()
+        public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsWhitespaceCharacters()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource("\t\r\n");
             });

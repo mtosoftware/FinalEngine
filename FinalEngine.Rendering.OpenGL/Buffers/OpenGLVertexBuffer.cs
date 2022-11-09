@@ -59,16 +59,16 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
         /// </exception>
         public OpenGLVertexBuffer(IOpenGLInvoker invoker, IEnumMapper mapper, BufferUsageHint usage, IReadOnlyCollection<T> data, int sizeInBytes, int stride)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
             if (mapper == null)
             {
-                throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(mapper));
             }
 
             if (data == null)
             {
-                throw new ArgumentNullException(nameof(data), $"The specified {nameof(data)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(data));
             }
 
             this.Type = mapper.Reverse<BufferUsageType>(usage);
@@ -163,7 +163,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
 
             if (data == null)
             {
-                throw new ArgumentNullException(nameof(data), $"The specified {nameof(data)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(data));
             }
 
             this.Stride = stride;

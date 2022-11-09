@@ -136,30 +136,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void CreateShaderShouldThrowArgumentNullExceptionWhenSourceCodeIsEmpty()
+        public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.factory.CreateShader(PipelineTarget.Vertex, string.Empty);
             });
         }
 
         [Test]
-        public void CreateShaderShouldThrowArgumentNullExceptionWhenSourceCodeIsNull()
+        public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.factory.CreateShader(PipelineTarget.Vertex, null);
             });
         }
 
         [Test]
-        public void CreateShaderShouldThrowArgumentNullExceptionWhenSourceCodeIsWhitespace()
+        public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.factory.CreateShader(PipelineTarget.Vertex, "\r\n\t");
             });

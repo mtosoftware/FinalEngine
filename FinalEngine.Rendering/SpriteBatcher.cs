@@ -43,7 +43,7 @@ namespace FinalEngine.Rendering
         /// </exception>
         public SpriteBatcher(IInputAssembler inputAssembler, int maxCapacity = 10000)
         {
-            this.inputAssembler = inputAssembler ?? throw new ArgumentNullException(nameof(inputAssembler), $"The specified {nameof(inputAssembler)} parameter cannot be null.");
+            this.inputAssembler = inputAssembler ?? throw new ArgumentNullException(nameof(inputAssembler));
 
             if (maxCapacity <= 0)
             {
@@ -203,7 +203,7 @@ namespace FinalEngine.Rendering
         {
             if (vertexBuffer == null)
             {
-                throw new ArgumentNullException(nameof(vertexBuffer), $"The specified {nameof(vertexBuffer)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(vertexBuffer));
             }
 
             this.inputAssembler.UpdateVertexBuffer(vertexBuffer, (IReadOnlyCollection<SpriteVertex>)this.vertices, SpriteVertex.SizeInBytes);

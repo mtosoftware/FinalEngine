@@ -69,7 +69,7 @@ namespace FinalEngine.ECS
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity), $"The specified {nameof(entity)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(entity));
             }
 
             bool isMatch = this.IsMatch(entity);

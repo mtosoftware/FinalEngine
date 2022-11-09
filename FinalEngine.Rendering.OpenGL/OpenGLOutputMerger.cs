@@ -42,8 +42,8 @@ namespace FinalEngine.Rendering.OpenGL
         /// </exception>
         public OpenGLOutputMerger(IOpenGLInvoker invoker, IEnumMapper mapper)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /// <summary>

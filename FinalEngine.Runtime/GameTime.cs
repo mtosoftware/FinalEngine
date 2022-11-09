@@ -50,7 +50,7 @@ namespace FinalEngine.Runtime
         /// </exception>
         public GameTime(IStopwatchInvoker watch, double frameCap)
         {
-            this.watch = watch ?? throw new ArgumentNullException(nameof(watch), $"The specified {nameof(watch)} parameter cannot be null.");
+            this.watch = watch ?? throw new ArgumentNullException(nameof(watch));
 
             if (frameCap <= 0.0d)
             {

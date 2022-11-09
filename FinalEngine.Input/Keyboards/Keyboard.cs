@@ -6,12 +6,13 @@ namespace FinalEngine.Input.Keyboards
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IKeyboard"/>, that interfaces with an <see cref="IKeyboardDevice"/>.
     /// </summary>
     /// <seealso cref="IKeyboard"/>
-    public class Keyboard : IKeyboard
+    public class Keyboard : IKeyboard, IDisposable
     {
         /// <summary>
         ///   The initial size capacity of the <see cref="keysDown"/> and <see cref="keysDownLast"/> collections.
@@ -56,6 +57,12 @@ namespace FinalEngine.Input.Keyboards
             }
         }
 
+        [ExcludeFromCodeCoverage]
+        ~Keyboard()
+        {
+            this.Dispose(false);
+        }
+
         /// <inheritdoc/>
         public bool IsAltDown
         {
@@ -78,6 +85,14 @@ namespace FinalEngine.Input.Keyboards
         public bool IsShiftDown
         {
             get { return this.keysDown.Contains(Key.LeftShift) || this.keysDown.Contains(Key.RightShift); }
+        }
+
+        protected bool IsDisposed { get; private set; }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <inheritdoc/>
@@ -107,6 +122,22 @@ namespace FinalEngine.Input.Keyboards
             this.keysDownLast = new List<Key>(this.keysDown);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            if (this.device != null)
+            {
+                this.device.KeyDown -= this.Device_KeyDown;
+                this.device.KeyUp -= this.Device_KeyUp;
+            }
+
+            this.IsDisposed = true;
+        }
+
         /// <summary>
         ///   Handles the <see cref="IKeyboardDevice.KeyDown"/> event.
         /// </summary>
@@ -123,7 +154,7 @@ namespace FinalEngine.Input.Keyboards
         {
             if (e == null)
             {
-                throw new ArgumentNullException(nameof(e), $"The specified {nameof(e)} parameter cannot be null");
+                throw new ArgumentNullException(nameof(e));
             }
 
             this.IsCapsLocked = e.CapsLock;
@@ -148,7 +179,7 @@ namespace FinalEngine.Input.Keyboards
         {
             if (e == null)
             {
-                throw new ArgumentNullException(nameof(e), $"The specified {nameof(e)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(e));
             }
 
             while (this.keysDown.Contains(e.Key))

@@ -31,7 +31,7 @@ namespace FinalEngine.Runtime.Invocation
         /// </exception>
         public StopwatchInvoker(Stopwatch watch)
         {
-            this.watch = watch ?? throw new ArgumentNullException(nameof(watch), $"The specified {nameof(watch)} parameter cannot be null.");
+            this.watch = watch ?? throw new ArgumentNullException(nameof(watch));
         }
 
         /// <inheritdoc/>

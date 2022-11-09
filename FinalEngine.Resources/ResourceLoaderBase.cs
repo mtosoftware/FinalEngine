@@ -43,7 +43,7 @@ namespace FinalEngine.Resources
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                throw new ArgumentNullException(nameof(filePath), $"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.");
+                throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
             }
 
             return this.LoadResource(filePath);

@@ -103,7 +103,7 @@ namespace FinalEngine.Resources
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                throw new ArgumentNullException(nameof(filePath), $"The specified {nameof(filePath)} parameter cannot be null.");
+                throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
             }
 
             if (!this.typeToLoaderMap.TryGetValue(typeof(T), out var loader))
@@ -142,7 +142,7 @@ namespace FinalEngine.Resources
         {
             if (loader == null)
             {
-                throw new ArgumentNullException(nameof(loader), $"The specified {nameof(loader)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(loader));
             }
 
             if (this.typeToLoaderMap.ContainsKey(typeof(T)))
@@ -166,7 +166,7 @@ namespace FinalEngine.Resources
         {
             if (resource == null)
             {
-                throw new ArgumentNullException(nameof(resource), $"The specified {nameof(resource)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(resource));
             }
 
             for (int i = this.pathToResourceDataMap.Count - 1; i >= 0; i--)

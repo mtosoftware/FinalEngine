@@ -52,8 +52,8 @@ namespace FinalEngine.Rendering.OpenGL
         /// </exception>
         public OpenGLGPUResourceFactory(IOpenGLInvoker invoker, IEnumMapper mapper)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (data == null)
             {
-                throw new ArgumentNullException(nameof(data), $"The specified {nameof(data)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(data));
             }
 
             return new OpenGLIndexBuffer<T>(this.invoker, this.mapper, this.mapper.Forward<BufferUsageHint>(type), data, sizeInBytes);
@@ -104,7 +104,7 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (elements == null)
             {
-                throw new ArgumentNullException(nameof(elements), $"The specified {nameof(elements)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(elements));
             }
 
             return new OpenGLInputLayout(this.invoker, this.mapper, elements);
@@ -129,7 +129,7 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (string.IsNullOrWhiteSpace(sourceCode))
             {
-                throw new ArgumentNullException(nameof(sourceCode), $"The specified {nameof(sourceCode)} parameter cannot be null, empty or contain only whitespace");
+                throw new ArgumentException($"The specified {nameof(sourceCode)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(sourceCode));
             }
 
             return new OpenGLShader(this.invoker, this.mapper, this.mapper.Forward<ShaderType>(target), sourceCode);
@@ -151,7 +151,7 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (shaders == null)
             {
-                throw new ArgumentNullException(nameof(shaders), $"The specified {nameof(shaders)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(shaders));
             }
 
             return new OpenGLShaderProgram(this.invoker, shaders.Cast<IOpenGLShader>().ToList().AsReadOnly());
@@ -219,7 +219,7 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (data == null)
             {
-                throw new ArgumentNullException(nameof(data), $"The specified {nameof(data)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(data));
             }
 
             return new OpenGLVertexBuffer<T>(this.invoker, this.mapper, this.mapper.Forward<BufferUsageHint>(type), data, sizeInBytes, stride);

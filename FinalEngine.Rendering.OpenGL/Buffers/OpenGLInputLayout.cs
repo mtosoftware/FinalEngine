@@ -47,9 +47,9 @@ namespace FinalEngine.Rendering.OpenGL.Buffers
         /// </exception>
         public OpenGLInputLayout(IOpenGLInvoker invoker, IEnumMapper mapper, IReadOnlyCollection<InputElement> elements)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
-            this.Elements = elements ?? throw new ArgumentNullException(nameof(elements), $"The specified {nameof(elements)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.Elements = elements ?? throw new ArgumentNullException(nameof(elements));
         }
 
         /// <summary>

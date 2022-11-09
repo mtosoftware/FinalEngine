@@ -169,30 +169,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformBoolShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, true);
             });
         }
 
         [Test]
-        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformBoolShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, true);
             });
         }
 
         [Test]
-        public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformBoolShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", true);
             });
@@ -241,30 +241,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformDoubleShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, 0.0d);
             });
         }
 
         [Test]
-        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformDoubleShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, 0.0d);
             });
         }
 
         [Test]
-        public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformDoubleShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", 0.0d);
             });
@@ -313,30 +313,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformFloatShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, 1.0f);
             });
         }
 
         [Test]
-        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformFloatShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, 1.0f);
             });
         }
 
         [Test]
-        public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformFloatShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", 1.0f);
             });
@@ -385,30 +385,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformIntShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, 0);
             });
         }
 
         [Test]
-        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformIntShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, 0);
             });
         }
 
         [Test]
-        public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformIntShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", 0);
             });
@@ -478,30 +478,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformMatrix4x4ShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, Matrix4x4.Identity);
             });
         }
 
         [Test]
-        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformMatrix4x4ShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, Matrix4x4.Identity);
             });
         }
 
         [Test]
-        public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformMatrix4x4ShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", Matrix4x4.Identity);
             });
@@ -550,30 +550,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformVector2ShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, new Vector2(1.0f, 0.0f));
             });
         }
 
         [Test]
-        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformVector2ShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, new Vector2(1.0f, 0.0f));
             });
         }
 
         [Test]
-        public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformVector2ShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", new Vector2(1.0f, 0.0f));
             });
@@ -622,30 +622,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformVector3ShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, new Vector3(1.0f, 0.0f, 1.0f));
             });
         }
 
         [Test]
-        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformVector3ShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, new Vector3(1.0f, 0.0f, 1.0f));
             });
         }
 
         [Test]
-        public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformVector3ShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", new Vector3(1.0f, 0.0f, 1.0f));
             });
@@ -694,30 +694,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
-        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void SetUniformVector4ShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(string.Empty, new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
             });
         }
 
         [Test]
-        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void SetUniformVector4ShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform(null, new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
             });
         }
 
         [Test]
-        public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void SetUniformVector4ShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetUniform("\t\r\n", new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
             });

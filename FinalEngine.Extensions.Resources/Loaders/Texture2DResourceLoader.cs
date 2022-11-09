@@ -51,9 +51,9 @@ namespace FinalEngine.Extensions.Resources.Loaders
         /// </exception>
         public Texture2DResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory, IImageInvoker invoker)
         {
-            this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem), $"The specified {nameof(fileSystem)} parameter cannot be null.");
-            this.factory = factory ?? throw new ArgumentNullException(nameof(factory), $"The specified {nameof(factory)} parameter cannot be null.");
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
+            this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+            this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace FinalEngine.Extensions.Resources.Loaders
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                throw new ArgumentNullException(nameof(filePath), $"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.");
+                throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
             }
 
             if (!this.fileSystem.FileExists(filePath))

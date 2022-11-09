@@ -32,7 +32,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
         /// </exception>
         public MouseStateInvoker(MouseState state)
         {
-            this.state = state ?? throw new ArgumentNullException(nameof(state), $"The specified {nameof(state)} parameter cannot be null.");
+            this.state = state ?? throw new ArgumentNullException(nameof(state));
         }
 
         /// <inheritdoc/>

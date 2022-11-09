@@ -38,8 +38,8 @@ namespace FinalEngine.IO
         /// </exception>
         public FileSystem(IFileInvoker file, IDirectoryInvoker directory)
         {
-            this.file = file ?? throw new ArgumentNullException(nameof(file), $"The specified {nameof(file)} parameter cannot be null.");
-            this.directory = directory ?? throw new ArgumentNullException(nameof(directory), $"The specified {nameof(directory)} parameter cannot be null.");
+            this.file = file ?? throw new ArgumentNullException(nameof(file));
+            this.directory = directory ?? throw new ArgumentNullException(nameof(directory));
         }
 
         /// <inheritdoc/>
@@ -50,7 +50,7 @@ namespace FinalEngine.IO
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
+                throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
             }
 
             this.directory.CreateDirectory(path);
@@ -64,7 +64,7 @@ namespace FinalEngine.IO
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
+                throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
             }
 
             return this.file.Create(path);
@@ -78,7 +78,7 @@ namespace FinalEngine.IO
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
+                throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
             }
 
             this.directory.Delete(path, true);
@@ -92,7 +92,7 @@ namespace FinalEngine.IO
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
+                throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
             }
 
             this.file.Delete(path);
@@ -106,7 +106,7 @@ namespace FinalEngine.IO
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
+                throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
             }
 
             return this.directory.Exists(path);
@@ -120,7 +120,7 @@ namespace FinalEngine.IO
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
+                throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
             }
 
             return this.file.Exists(path);
@@ -134,7 +134,7 @@ namespace FinalEngine.IO
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException(nameof(path), $"The specified {nameof(path)} parameter cannot be null, empty or contain only whitespace characters");
+                throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
             }
 
             var access = mode switch

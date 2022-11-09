@@ -107,30 +107,30 @@ namespace FinalEngine.Tests.Rendering.Textures
         }
 
         [Test]
-        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsEmpty()
+        public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.loader.LoadResource(string.Empty);
             });
         }
 
         [Test]
-        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+        public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.loader.LoadResource(null);
             });
         }
 
         [Test]
-        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsWhitespace()
+        public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.loader.LoadResource("\t\n\r");
             });

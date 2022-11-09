@@ -35,7 +35,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK
         /// </exception>
         public OpenTKMouseDevice(INativeWindowInvoker nativeWindow)
         {
-            this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow), $"The specified {nameof(nativeWindow)} parameter cannot be null");
+            this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow));
 
             this.nativeWindow.MouseUp += this.NativeWindow_MouseUp;
             this.nativeWindow.MouseDown += this.NativeWindow_MouseDown;

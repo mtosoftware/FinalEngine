@@ -136,30 +136,30 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
         }
 
         [Test]
-        public void GetUniformLocationShouldThrowArgumentNullExceptionWhenNameIsEmpty()
+        public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.program.GetUniformLocation(string.Empty);
             });
         }
 
         [Test]
-        public void GetUniformLocationShouldThrowArgumentNullExceptionWhenNameIsNull()
+        public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.program.GetUniformLocation(null);
             });
         }
 
         [Test]
-        public void GetUniformLocationShouldThrowArgumentNullExceptionWhenNameIsWhitespace()
+        public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.program.GetUniformLocation("\t\r\n");
             });

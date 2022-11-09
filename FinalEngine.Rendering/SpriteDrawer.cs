@@ -180,9 +180,9 @@ namespace FinalEngine.Rendering
         /// </exception>
         public SpriteDrawer(IRenderDevice renderDevice, ISpriteBatcher batcher, ITextureBinder binder, int projectionWidth, int projectionHeight)
         {
-            this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice), $"The specified {nameof(renderDevice)} parameter cannot be null.");
-            this.batcher = batcher ?? throw new ArgumentNullException(nameof(batcher), $"The specified {nameof(batcher)} parameter cannot be null.");
-            this.binder = binder ?? throw new ArgumentNullException(nameof(binder), $"The specified {nameof(binder)} parameter cannot be null.");
+            this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
+            this.batcher = batcher ?? throw new ArgumentNullException(nameof(batcher));
+            this.binder = binder ?? throw new ArgumentNullException(nameof(binder));
 
             this.vertexShader = renderDevice.Factory.CreateShader(PipelineTarget.Vertex, this.vertexShaderSource);
             this.fragmentShader = renderDevice.Factory.CreateShader(PipelineTarget.Fragment, this.fragmentShaderSource);
@@ -332,7 +332,7 @@ namespace FinalEngine.Rendering
 
             if (texture == null)
             {
-                throw new ArgumentNullException(nameof(texture), $"The specified {nameof(texture)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(texture));
             }
 
             if (this.batcher.ShouldReset || this.binder.ShouldReset)

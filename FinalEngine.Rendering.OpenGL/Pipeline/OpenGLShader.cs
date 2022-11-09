@@ -50,16 +50,16 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
         /// </exception>
         public OpenGLShader(IOpenGLInvoker invoker, IEnumMapper mapper, ShaderType type, string sourceCode)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
             if (mapper == null)
             {
-                throw new ArgumentNullException(nameof(mapper), $"The specified {nameof(mapper)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(mapper));
             }
 
             if (string.IsNullOrWhiteSpace(sourceCode))
             {
-                throw new ArgumentNullException(nameof(sourceCode), $"The specified {nameof(sourceCode)} parameter cannot be null, empty or contain only whitespace.");
+                throw new ArgumentException($"The specified {nameof(sourceCode)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(sourceCode));
             }
 
             this.EntryPoint = mapper.Reverse<PipelineTarget>(type);

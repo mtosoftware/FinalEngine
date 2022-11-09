@@ -33,7 +33,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK
         /// </exception>
         public OpenTKWindow(INativeWindowInvoker nativeWindow)
         {
-            this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow), $"The specified {nameof(nativeWindow)} parameter cannot be null.");
+            this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow));
 
             this.nativeWindow.VSync = VSyncMode.Off;
         }

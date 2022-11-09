@@ -89,30 +89,30 @@ namespace FinalEngine.Tests.Core.Resources
         }
 
         [Test]
-        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsEmpty()
+        public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsEmpty()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.resourceManager.LoadResource<IResource>(string.Empty);
             });
         }
 
         [Test]
-        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+        public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsNull()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.resourceManager.LoadResource<IResource>(null);
             });
         }
 
         [Test]
-        public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsWhitespace()
+        public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsWhitespace()
         {
             // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 this.resourceManager.LoadResource<IResource>("\t\r\n");
             });

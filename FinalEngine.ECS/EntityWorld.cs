@@ -49,7 +49,7 @@ namespace FinalEngine.ECS
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity), $"The specified {nameof(entity)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(entity));
             }
 
             if (this.entities.Contains(entity))
@@ -83,7 +83,7 @@ namespace FinalEngine.ECS
         {
             if (system == null)
             {
-                throw new ArgumentNullException(nameof(system), $"The specified {nameof(system)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(system));
             }
 
             foreach (var other in this.systems)
@@ -137,7 +137,7 @@ namespace FinalEngine.ECS
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity), $"The specified {nameof(entity)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(entity));
             }
 
             if (!this.entities.Contains(entity))
@@ -174,7 +174,7 @@ namespace FinalEngine.ECS
         {
             if (type == null)
             {
-                throw new ArgumentNullException(nameof(type), $"The specified {nameof(type)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(type));
             }
 
             if (!typeof(EntitySystemBase).IsAssignableFrom(type))
@@ -214,7 +214,7 @@ namespace FinalEngine.ECS
         {
             if (sender == null)
             {
-                throw new ArgumentNullException(nameof(sender), $"The specified {nameof(sender)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(sender));
             }
 
             if (sender is not Entity entity)

@@ -17,6 +17,50 @@ namespace FinalEngine.Tests.Core.Input.Mouse
         private Mock<IMouseDevice> mouseDevice;
 
         [Test]
+        public void ConstructorShouldHookOntoButtonDownEventWhenNouseDeviceIsNotNull()
+        {
+            // Assert
+            this.mouseDevice.VerifyAdd(
+                x =>
+                {
+                    x.ButtonDown += It.IsAny<EventHandler<MouseButtonEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
+        public void ConstructorShouldHookOntoButtonUpEventWhenNouseDeviceIsNotNull()
+        {
+            // Assert
+            this.mouseDevice.VerifyAdd(
+                x =>
+                {
+                    x.ButtonUp += It.IsAny<EventHandler<MouseButtonEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
+        public void ConstructorShouldHookOntoMoveEventWhenNouseDeviceIsNotNull()
+        {
+            // Assert
+            this.mouseDevice.VerifyAdd(
+                x =>
+                {
+                    x.Move += It.IsAny<EventHandler<MouseMoveEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
+        public void ConstructorShouldHookOntoScrollEventWhenNouseDeviceIsNotNull()
+        {
+            // Assert
+            this.mouseDevice.VerifyAdd(
+                x =>
+                {
+                    x.Scroll += It.IsAny<EventHandler<MouseScrollEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
         public void DeltaShouldReturnDeviceLocationDeltaWhenDeviceIsNotNull()
         {
             // Act
@@ -35,6 +79,7 @@ namespace FinalEngine.Tests.Core.Input.Mouse
 
             // Act
             var actual = mouse.Delta;
+            mouse.Dispose();
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -138,6 +183,62 @@ namespace FinalEngine.Tests.Core.Input.Mouse
                     x.Scroll += null;
                 }, new object[] { new object(), null });
             });
+        }
+
+        [Test]
+        public void DisposeShouldDeregisterButtonDownEventWhenInvoked()
+        {
+            // Act
+            this.mouse.Dispose();
+
+            // Assert
+            this.mouseDevice.VerifyRemove(
+                x =>
+                {
+                    x.ButtonDown -= It.IsAny<EventHandler<MouseButtonEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
+        public void DisposeShouldDeregisterButtonUpEventWhenInvoked()
+        {
+            // Act
+            this.mouse.Dispose();
+
+            // Assert
+            this.mouseDevice.VerifyRemove(
+                x =>
+                {
+                    x.ButtonUp -= It.IsAny<EventHandler<MouseButtonEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
+        public void DisposeShouldDeregisterMoveEventWhenInvoked()
+        {
+            // Act
+            this.mouse.Dispose();
+
+            // Assert
+            this.mouseDevice.VerifyRemove(
+                x =>
+                {
+                    x.Move -= It.IsAny<EventHandler<MouseMoveEventArgs>>();
+                }, Times.Once);
+        }
+
+        [Test]
+        public void DisposeShouldDeregisterScrollEventWhenInvoked()
+        {
+            // Act
+            this.mouse.Dispose();
+
+            // Assert
+            this.mouseDevice.VerifyRemove(
+                x =>
+                {
+                    x.Scroll -= It.IsAny<EventHandler<MouseScrollEventArgs>>();
+                }, Times.Once);
         }
 
         [Test]
@@ -321,6 +422,12 @@ namespace FinalEngine.Tests.Core.Input.Mouse
             // Arrange
             this.mouseDevice = new Mock<IMouseDevice>();
             this.mouse = new Mouse(this.mouseDevice.Object);
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            this.mouse.Dispose();
         }
 
         [Test]

@@ -40,7 +40,7 @@ namespace FinalEngine.Rendering.OpenGL
         /// </exception>
         public OpenGLInputAssembler(IOpenGLInvoker invoker)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         }
 
         /// <summary>
@@ -151,12 +151,12 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException(nameof(buffer), $"The specified {nameof(buffer)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (data == null)
             {
-                throw new ArgumentNullException(nameof(data), $"The specified {nameof(data)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(data));
             }
 
             if (buffer is not IOpenGLIndexBuffer glIndexBuffer)
@@ -193,12 +193,12 @@ namespace FinalEngine.Rendering.OpenGL
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException(nameof(buffer), $"The specified {nameof(buffer)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (data == null)
             {
-                throw new ArgumentNullException(nameof(data), $"The specified {nameof(data)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(data));
             }
 
             if (buffer is not IOpenGLVertexBuffer glVertexBuffer)

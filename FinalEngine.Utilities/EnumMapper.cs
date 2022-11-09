@@ -15,7 +15,7 @@ namespace FinalEngine.Utilities
 
         public EnumMapper(IReadOnlyDictionary<Enum, Enum> forwardToReverseMap)
         {
-            this.forwardToReverseMap = forwardToReverseMap ?? throw new ArgumentNullException(nameof(forwardToReverseMap), $"The specified {nameof(forwardToReverseMap)} parameter cannot be null.");
+            this.forwardToReverseMap = forwardToReverseMap ?? throw new ArgumentNullException(nameof(forwardToReverseMap));
             this.reverseToForwardMap = new Dictionary<Enum, Enum>();
 
             foreach (var key in forwardToReverseMap.Keys)
@@ -41,7 +41,7 @@ namespace FinalEngine.Utilities
         {
             if (enumeration == null)
             {
-                throw new ArgumentNullException(nameof(enumeration), $"The specified {nameof(enumeration)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(enumeration));
             }
 
             try

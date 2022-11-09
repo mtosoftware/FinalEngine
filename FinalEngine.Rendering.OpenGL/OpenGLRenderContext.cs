@@ -51,14 +51,14 @@ namespace FinalEngine.Rendering.OpenGL
         /// </exception>
         public OpenGLRenderContext(IOpenGLInvoker invoker, IBindingsContext bindings, IGraphicsContext context)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker), $"The specified {nameof(invoker)} parameter cannot be null.");
+            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
             if (bindings == null)
             {
-                throw new ArgumentNullException(nameof(bindings), $"The specified {nameof(bindings)} parameter cannot be null.");
+                throw new ArgumentNullException(nameof(bindings));
             }
 
-            this.context = context ?? throw new ArgumentNullException(nameof(context), $"The specified {nameof(context)} parameter cannot be null.");
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
 
             context.MakeCurrent();
             invoker.LoadBindings(bindings);
