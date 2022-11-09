@@ -67,8 +67,8 @@ namespace FinalEngine.Rendering
             }
 
             inputAssembler.SetInputLayout(this.inputLayout);
-            inputAssembler.SetVertexBuffer(this.vertexBuffer!);
             inputAssembler.SetIndexBuffer(this.indexBuffer!);
+            inputAssembler.SetVertexBuffer(this.vertexBuffer!);
         }
 
         public void Dispose()
