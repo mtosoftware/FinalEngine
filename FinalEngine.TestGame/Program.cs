@@ -1,8 +1,10 @@
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.ECS.Components.Rendering;
+using FinalEngine.ECS.Systems.Input;
 using FinalEngine.ECS.Systems.Rendering;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders;
@@ -105,7 +107,37 @@ var material = new Material();
 
 var world = new EntityWorld();
 
-world.AddSystem(new SceneRenderEntitySystem(renderDevice));
+var camera = new Entity();
+
+camera.AddComponent<TransformComponent>();
+
+camera.AddComponent(new PerspectiveComponent()
+{
+    AspectRatio = 1280.0f / 720.0f,
+    FarPlaneDistance = 1000.0f,
+    NearPlaneDistance = 0.1f,
+    FieldOfView = 70.0f,
+});
+
+camera.AddComponent(new CameraComponent()
+{
+    IsEnabled = true,
+    IsLocked = false,
+    Viewport = new Rectangle(0, 0, 1280, 720),
+});
+
+camera.AddComponent(new VelocityComponent()
+{
+    Speed = 0.1f,
+});
+
+world.AddEntity(camera);
+
+world.AddSystem(new CameraUpdateEntitySystem(keyboard, mouse));
+world.AddSystem(new SceneRenderEntitySystem(renderDevice)
+{
+    Camera = camera,
+});
 
 var entity = new Entity();
 
