@@ -67,10 +67,10 @@ namespace FinalEngine.Rendering
         public Vector2 TextureCoordinate { get; set; }
 
         /// <summary>
-        /// Gets or sets the normal.
+        ///   Gets or sets the normal.
         /// </summary>
         /// <value>
-        /// The normal.
+        ///   The normal.
         /// </value>
         public Vector3 Normal { get; set; }
 

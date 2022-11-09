@@ -15,110 +15,49 @@
 //    using FinalEngine.Input.Mouses;
 //    using FinalEngine.Maths;
 
-//    public class CameraUpdateEntitySystem : EntitySystemBase
-//    {
-//        public override GameLoopType LoopType { get; }
+// public class CameraUpdateEntitySystem : EntitySystemBase { public override GameLoopType LoopType { get; }
 
-//        private readonly IKeyboard keyboard;
+// private readonly IKeyboard keyboard;
 
-//        private readonly IMouse mouse;
+// private readonly IMouse mouse;
 
-//        public CameraUpdateEntitySystem(IKeyboard keyboard, IMouse mouse)
-//        {
-//            this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
-//            this.mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
-//        }
+// public CameraUpdateEntitySystem(IKeyboard keyboard, IMouse mouse) { this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard)); this.mouse = mouse ?? throw new ArgumentNullException(nameof(mouse)); }
 
-//        protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
-//        {
-//            return entity.ContainsComponent<TransformComponent>() &&
-//                   entity.ContainsComponent<VelocityComponent>() &&
-//                   entity.ContainsComponent<PerspectiveCameraComponent>();
-//        }
+// protected override bool IsMatch([NotNull] IReadOnlyEntity entity) { return entity.ContainsComponent<TransformComponent>() && entity.ContainsComponent<VelocityComponent>() && entity.ContainsComponent<PerspectiveCameraComponent>(); }
 
-//        protected override void Process([NotNull] IEnumerable<Entity> entities)
-//        {
-//            foreach (dynamic entity in entities)
-//            {
-//                TransformComponent transform = entity.Transform;
-//                VelocityComponent velocity = entity.Velocity;
-//                PerspectiveCameraComponent camera = entity.PerspectiveCamera;
+// protected override void Process([NotNull] IEnumerable<Entity> entities) { foreach (dynamic entity in entities) { TransformComponent transform = entity.Transform; VelocityComponent velocity = entity.Velocity; PerspectiveCameraComponent camera = entity.PerspectiveCamera;
 
-//                if (!camera.IsEnabled)
-//                {
-//                    continue;
-//                }
+// if (!camera.IsEnabled) { continue; }
 
-//                this.HandleKeyboard(transform, velocity);
-//                this.HandleMouse(transform, velocity, camera);
-//            }
-//        }
+// this.HandleKeyboard(transform, velocity); this.HandleMouse(transform, velocity, camera); } }
 
-//        private void HandleKeyboard(TransformComponent transform, VelocityComponent velocity)
-//        {
-//            float moveAmount = velocity.Speed;
+// private void HandleKeyboard(TransformComponent transform, VelocityComponent velocity) { float moveAmount = velocity.Speed;
 
-//            if (this.keyboard.IsKeyDown(Key.W))
-//            {
-//                transform.Translate(transform.Forward, moveAmount);
-//            }
+// if (this.keyboard.IsKeyDown(Key.W)) { transform.Translate(transform.Forward, moveAmount); }
 
-//            if (this.keyboard.IsKeyDown(Key.S))
-//            {
-//                transform.Translate(transform.Forward, -moveAmount);
-//            }
+// if (this.keyboard.IsKeyDown(Key.S)) { transform.Translate(transform.Forward, -moveAmount); }
 
-//            if (this.keyboard.IsKeyDown(Key.A))
-//            {
-//                transform.Translate(transform.Left, -moveAmount);
-//            }
+// if (this.keyboard.IsKeyDown(Key.A)) { transform.Translate(transform.Left, -moveAmount); }
 
-//            if (this.keyboard.IsKeyDown(Key.D))
-//            {
-//                transform.Translate(transform.Left, moveAmount);
-//            }
-//        }
+// if (this.keyboard.IsKeyDown(Key.D)) { transform.Translate(transform.Left, moveAmount); } }
 
-//        private void HandleMouse(TransformComponent transform, VelocityComponent velocity, PerspectiveCameraComponent camera)
-//        {
-//            var viewport = camera.Viewport;
+// private void HandleMouse(TransformComponent transform, VelocityComponent velocity, PerspectiveCameraComponent camera) { var viewport = camera.Viewport;
 
-//            var centerPosition = new Vector2(
-//                viewport.X + (viewport.Width / 2),
-//                viewport.Y - (viewport.Height / 2));
+// var centerPosition = new Vector2( viewport.X + (viewport.Width / 2), viewport.Y - (viewport.Height / 2));
 
-//            if (this.keyboard.IsKeyReleased(Key.Escape))
-//            {
-//                camera.IsLocked = false;
-//            }
+// if (this.keyboard.IsKeyReleased(Key.Escape)) { camera.IsLocked = false; }
 
-//            if (this.mouse.IsButtonReleased(MouseButton.Left))
-//            {
-//                this.mouse.Location = new PointF(
-//                    centerPosition.X,
-//                    centerPosition.Y);
+// if (this.mouse.IsButtonReleased(MouseButton.Left)) { this.mouse.Location = new PointF( centerPosition.X, centerPosition.Y);
 
-//                camera.IsLocked = true;
-//            }
+// camera.IsLocked = true; }
 
-//            if (camera.IsLocked)
-//            {
-//                var deltaPosition = new Vector2(
-//                    this.mouse.Location.X - centerPosition.X,
-//                    this.mouse.Location.Y - centerPosition.Y);
+// if (camera.IsLocked) { var deltaPosition = new Vector2( this.mouse.Location.X - centerPosition.X, this.mouse.Location.Y - centerPosition.Y);
 
-//                bool canRotateX = deltaPosition.X != 0;
-//                bool canRotateY = deltaPosition.Y != 0;
+// bool canRotateX = deltaPosition.X != 0; bool canRotateY = deltaPosition.Y != 0;
 
-//                if (canRotateX)
-//                {
-//                    transform.Rotate(transform.Left, -MathHelper.DegreesToRadians(deltaPosition.Y * velocity.Speed));
-//                }
+// if (canRotateX) { transform.Rotate(transform.Left, -MathHelper.DegreesToRadians(deltaPosition.Y * velocity.Speed)); }
 
-//                if (canRotateY)
-//                {
-//                    transform.Rotate(Vector3.UnitY, -MathHelper.DegreesToRadians(deltaPosition.X * velocity.Speed));
-//                }
+// if (canRotateY) { transform.Rotate(Vector3.UnitY, -MathHelper.DegreesToRadians(deltaPosition.X * velocity.Speed)); }
 
 //                if (canRotateX || canRotateY)
 //                {

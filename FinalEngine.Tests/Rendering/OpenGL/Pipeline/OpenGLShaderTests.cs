@@ -85,26 +85,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
         }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
-        {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new OpenGLShader(null, this.mapper.Object, ShaderType.VertexShader, this.sourceCode);
-            });
-        }
-
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
-        {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new OpenGLShader(this.invoker.Object, null, ShaderType.VertexShader, this.sourceCode);
-            });
-        }
-
-        [Test]
         public void ConstructorShouldThrowArgumentExceptionWhenSourceCodeIsEmpty()
         {
             // Arrange, act and assert
@@ -131,6 +111,26 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
             Assert.Throws<ArgumentException>(() =>
             {
                 new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, "\t\r\n");
+            });
+        }
+
+        [Test]
+        public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
+        {
+            // Arrange, act and assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShader(null, this.mapper.Object, ShaderType.VertexShader, this.sourceCode);
+            });
+        }
+
+        [Test]
+        public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
+        {
+            // Arrange, act and assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new OpenGLShader(this.invoker.Object, null, ShaderType.VertexShader, this.sourceCode);
             });
         }
 

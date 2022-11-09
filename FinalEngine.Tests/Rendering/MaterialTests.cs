@@ -18,19 +18,6 @@ namespace FinalEngine.Tests.Rendering
         private Mock<IPipeline> pipeline;
 
         [Test]
-        public void BindShouldInvokePipelineSetUniformIntegerWhenInvoked()
-        {
-            // Arrange
-            this.material.DiffuseTexture = Mock.Of<ITexture2D>();
-
-            // Act
-            this.material.Bind(this.pipeline.Object);
-
-            // Assert
-            this.pipeline.Verify(x => x.SetUniform("u_material.diffuseTexture", 0), Times.Once);
-        }
-
-        [Test]
         public void BindShouldInvokePipelineSetTextureWhenInvoked()
         {
             // Arrange
@@ -41,6 +28,19 @@ namespace FinalEngine.Tests.Rendering
 
             // Assert
             this.pipeline.Verify(x => x.SetTexture(this.material.DiffuseTexture, 0), Times.Once);
+        }
+
+        [Test]
+        public void BindShouldInvokePipelineSetUniformIntegerWhenInvoked()
+        {
+            // Arrange
+            this.material.DiffuseTexture = Mock.Of<ITexture2D>();
+
+            // Act
+            this.material.Bind(this.pipeline.Object);
+
+            // Assert
+            this.pipeline.Verify(x => x.SetUniform("u_material.diffuseTexture", 0), Times.Once);
         }
 
         [Test]
