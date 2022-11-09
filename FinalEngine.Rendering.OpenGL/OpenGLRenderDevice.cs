@@ -120,12 +120,6 @@ namespace FinalEngine.Rendering.OpenGL
                 { SizedFormat.Rgba8, SizedInternalFormat.Rgba8 },
                 { BufferUsageType.Static, BufferUsageHint.StaticDraw },
                 { BufferUsageType.Dynamic, BufferUsageHint.DynamicDraw },
-                { RenderTargetBindType.Draw, FramebufferTarget.DrawFramebuffer },
-                { RenderTargetBindType.Read, FramebufferTarget.ReadFramebuffer },
-                { RenderTargetBindType.Both, FramebufferTarget.Framebuffer },
-                { RenderTargetAttachmentType.Color, FramebufferAttachment.ColorAttachment0 },
-                { RenderTargetAttachmentType.Depth, FramebufferAttachment.DepthAttachment },
-                { RenderTargetAttachmentType.Stencil, FramebufferAttachment.StencilAttachment },
             };
 
             this.mapper = new EnumMapper(map);

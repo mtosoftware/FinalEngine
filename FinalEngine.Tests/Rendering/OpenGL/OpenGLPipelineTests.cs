@@ -84,6 +84,16 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         }
 
         [Test]
+        public void SetShaderProgramShouldThrowArgumentNullExceptionWhenProgramIsNull()
+        {
+            // Act and assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetShaderProgram(null);
+            });
+        }
+
+        [Test]
         public void SetTextureShouldInvokeBindWhenInvoked()
         {
             // Arrange
@@ -103,6 +113,16 @@ namespace FinalEngine.Tests.Rendering.OpenGL
             Assert.Throws<ArgumentException>(() =>
             {
                 this.pipeline.SetTexture(new Mock<ITexture>().Object);
+            });
+        }
+
+        [Test]
+        public void SetTextureShouldThrowArgumentNullExceptionWhenTextureIsNull()
+        {
+            // Act and assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.pipeline.SetTexture(null);
             });
         }
 

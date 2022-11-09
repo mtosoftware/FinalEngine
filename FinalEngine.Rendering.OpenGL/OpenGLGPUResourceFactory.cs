@@ -110,11 +110,6 @@ namespace FinalEngine.Rendering.OpenGL
             return new OpenGLInputLayout(this.invoker, this.mapper, elements);
         }
 
-        public IRenderTarget2D CreateRenderTarget2D()
-        {
-            return new OpenGLRenderTarget2D(this.invoker, this.mapper);
-        }
-
         /// <summary>
         ///   Creates an <see cref="IShader"/> targeting the specified <paramref name="target"/>, containing the specified <paramref name="sourceCode"/>.
         /// </summary>

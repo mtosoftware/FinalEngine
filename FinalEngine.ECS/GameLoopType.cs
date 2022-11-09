@@ -9,22 +9,14 @@ namespace FinalEngine.ECS
     /// </summary>
     public enum GameLoopType
     {
-        PreUpdate,
-
         /// <summary>
         ///   The process will be handled per update.
         /// </summary>
         Update,
 
-        PostUpdate,
-
-        PreRender,
-
         /// <summary>
         /// The process will be handled per render.
         /// </summary>
         Render,
-
-        PostRender,
     }
 }

@@ -23,6 +23,26 @@ namespace FinalEngine.Tests.Rendering.OpenGL
         private Mock<IOpenGLVertexBuffer> vertexBuffer;
 
         [Test]
+        public void SetIndexBufferShouldThrowArgumentNullExceptionWhenBufferIsNull()
+        {
+            // Act and assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.inputAssembler.SetIndexBuffer(null);
+            });
+        }
+
+        [Test]
+        public void SetVertexBufferShouldThrowArgumentNullExceptionWhenBufferIsNull()
+        {
+            // Act and assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                this.inputAssembler.SetVertexBuffer(null);
+            });
+        }
+
+        [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert

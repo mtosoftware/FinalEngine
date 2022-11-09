@@ -4,8 +4,6 @@
 
 namespace FinalEngine.Rendering
 {
-    using FinalEngine.Rendering.Buffers;
-
     /// <summary>
     ///   Defines an interface that represents the output-merging stage of a graphics pipeline.
     /// </summary>
@@ -26,8 +24,6 @@ namespace FinalEngine.Rendering
         ///   Specifies a <see cref="DepthStateDescription"/> that represents the description that defines the depth state.
         /// </param>
         void SetDepthState(DepthStateDescription description);
-
-        void SetRenderTarget(RenderTargetBindType type, IRenderTarget? renderTarget);
 
         /// <summary>
         ///   Sets the stencil state of the output merger to the specified <paramref name="description"/>.

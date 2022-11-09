@@ -113,7 +113,7 @@ namespace FinalEngine.Rendering.OpenGL
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="buffer"/> is not the correct implementation. If this exception occurs, you're attempting to bind an vertex buffer that does not implement <see cref="IOpenGLVertexBuffer"/>.
         /// </exception>
-        public void SetVertexBuffer(IVertexBuffer? buffer)
+        public void SetVertexBuffer(IVertexBuffer buffer)
         {
             if (buffer == null)
             {

@@ -337,6 +337,19 @@ namespace FinalEngine.Tests.Core.IO
         }
 
         [Test]
+        public void OpenFileShouldInvokeFileOpenReadAccessWhenModeIsNotFound()
+        {
+            // Arrange
+            Assert.IsFalse(Enum.IsDefined(typeof(FileAccessMode), int.MaxValue));
+
+            // Act
+            this.fileSystem.OpenFile(Path, (FileAccessMode)int.MaxValue);
+
+            // Assert
+            this.file.Verify(x => x.Open(Path, FileMode.Open, FileAccess.Read));
+        }
+
+        [Test]
         public void OpenFileShouldInvokeFileOpenReadAccessWhenPathIsNotNull()
         {
             // Act

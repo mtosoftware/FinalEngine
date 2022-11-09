@@ -30,10 +30,7 @@ namespace FinalEngine.Rendering
                 throw new ArgumentNullException(nameof(pipeline));
             }
 
-            if (this.DiffuseTexture == null)
-            {
-                this.DiffuseTexture = DefaultDiffuseTexture;
-            }
+            this.DiffuseTexture ??= DefaultDiffuseTexture;
 
             pipeline.SetUniform("u_material.diffuseTexture", DiffuseTextureSlot);
             pipeline.SetTexture(this.DiffuseTexture, DiffuseTextureSlot);

@@ -82,7 +82,7 @@ namespace FinalEngine.Rendering.OpenGL
         /// <exception cref="ArgumentException">
         ///   The specified <paramref name="program"/> is not the correct implementation. If this exception occurs, you're attempting to bind an shader program that does not implement <see cref="IOpenGLShaderProgram"/>.
         /// </exception>
-        public void SetShaderProgram(IShaderProgram? program)
+        public void SetShaderProgram(IShaderProgram program)
         {
             if (program == null)
             {

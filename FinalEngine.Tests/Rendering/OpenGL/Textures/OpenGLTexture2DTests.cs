@@ -32,6 +32,29 @@ namespace FinalEngine.Tests.Rendering.OpenGL.Textures
         private OpenGLTexture2D texture;
 
         [Test]
+        public void AttachShouldInvokeNamedFramebufferTextureWhenInvoked()
+        {
+            // Act
+            this.texture.Attach(FramebufferAttachment.Aux0, 2);
+
+            // Assert
+            this.invoker.Verify(x => x.NamedFramebufferTexture(2, FramebufferAttachment.Aux0, ID, 0));
+        }
+
+        [Test]
+        public void AttachShouldThrowObjectDisposedExceptionWhenDisposed()
+        {
+            // Arrange
+            this.texture.Dispose();
+
+            // Act and assert
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                this.texture.Attach(FramebufferAttachment.Aux0, 2);
+            });
+        }
+
+        [Test]
         public void BindShouldInvokeBindTextureUnitWhenTextureIsNotDisposed()
         {
             // Act

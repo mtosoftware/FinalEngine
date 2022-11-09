@@ -21,6 +21,19 @@ namespace FinalEngine.Tests.Core.Resources
         private ResourceManager resourceManager;
 
         [Test]
+        public void InstanceShouldReturnResourceManagerWhenInvoked()
+        {
+            // Arrange
+            var expected = ResourceManager.Instance;
+
+            // Act
+            var actual = ResourceManager.Instance;
+
+            // Assert
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
         public void DisposeShouldInvokeResourceDisposeWhenInvoked()
         {
             // Arrange

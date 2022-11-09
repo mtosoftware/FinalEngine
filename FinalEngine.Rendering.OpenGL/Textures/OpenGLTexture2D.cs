@@ -141,6 +141,11 @@ namespace FinalEngine.Rendering.OpenGL.Textures
 
         public void Attach(FramebufferAttachment type, int framebuffer)
         {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenGLTexture2D));
+            }
+
             this.invoker.NamedFramebufferTexture(framebuffer, type, this.rendererID, 0);
         }
 

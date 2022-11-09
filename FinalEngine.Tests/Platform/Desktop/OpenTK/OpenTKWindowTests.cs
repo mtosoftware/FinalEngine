@@ -126,6 +126,52 @@ namespace FinalEngine.Tests.Platform.Desktop.OpenTK
         }
 
         [Test]
+        public void IsFocusedShouldReturnFalseWhenNativeWindowIsFocusedSetToFalse()
+        {
+            // Arrange
+            this.nativeWindow.SetupGet(x => x.IsFocused).Returns(false);
+
+            // Act
+            bool actual = this.window.IsFocused;
+
+            // Assert
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void IsFocusedShouldReturnTrueWhenNativeWindowIsFocusedSetToTrue()
+        {
+            // Arrange
+            this.nativeWindow.SetupGet(x => x.IsFocused).Returns(true);
+
+            // Act
+            bool actual = this.window.IsFocused;
+
+            // Assert
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void ProcessEventsShouldInvokeProcessInputEventsWhenInvoked()
+        {
+            // Act
+            this.window.ProcessEvents();
+
+            // Assert
+            this.nativeWindow.Verify(x => x.ProcessInputEvents(), Times.Once);
+        }
+
+        [Test]
+        public void ProcessEventsShouldInvokeProcessWindowEventsWhenInvoked()
+        {
+            // Act
+            this.window.ProcessEvents();
+
+            // Assert
+            this.nativeWindow.Verify(x => x.ProcessWindowEvents(false), Times.Once);
+        }
+
+        [Test]
         public void ProcessEventsShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
         {
             // Arrange

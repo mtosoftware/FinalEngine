@@ -5,8 +5,6 @@
 namespace FinalEngine.Rendering.OpenGL
 {
     using System;
-    using FinalEngine.Rendering.Buffers;
-    using FinalEngine.Rendering.OpenGL.Buffers;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Utilities;
     using OpenTK.Graphics.OpenGL4;
@@ -73,24 +71,6 @@ namespace FinalEngine.Rendering.OpenGL
             this.invoker.Cap(EnableCap.DepthTest, description.ReadEnabled);
             this.invoker.DepthMask(description.WriteEnabled);
             this.invoker.DepthFunc(this.mapper.Forward<DepthFunction>(description.ComparisonMode));
-        }
-
-        public void SetRenderTarget(RenderTargetBindType type, IRenderTarget? renderTarget)
-        {
-            var target = this.mapper.Forward<FramebufferTarget>(type);
-
-            if (renderTarget == null)
-            {
-                this.invoker.Bindframebuffer(target, 0);
-                return;
-            }
-
-            if (renderTarget is not IOpenGLRenderTarget glRenderTarget)
-            {
-                throw new ArgumentException($"The specified {nameof(renderTarget)} parameter is not of type {nameof(IOpenGLRenderTarget)}.", nameof(renderTarget));
-            }
-
-            glRenderTarget.Bind(target);
         }
 
         /// <summary>
