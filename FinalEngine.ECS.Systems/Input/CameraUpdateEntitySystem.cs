@@ -25,11 +25,7 @@ namespace FinalEngine.ECS.Systems.Input
         {
             this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
             this.mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
-
-            this.LoopType = GameLoopType.Update;
         }
-
-        public override GameLoopType LoopType { get; }
 
         protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
         {

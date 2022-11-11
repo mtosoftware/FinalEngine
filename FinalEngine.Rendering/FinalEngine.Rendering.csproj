@@ -30,14 +30,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+    <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
     <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Shaders\shader.frag">
+    <None Update="Resources\Shaders\Forward\forward-geometry.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\shader.vert">
+    <None Update="Resources\Shaders\Forward\forward-geometry.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Includes\material.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Textures\default_diffuse.png">

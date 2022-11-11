@@ -34,7 +34,7 @@ namespace FinalEngine.Tests.Core.ECS
             // Arrange
             var entity = new Entity();
 
-            var system = new MockEntitySystemA(GameLoopType.Update)
+            var system = new MockEntitySystemA()
             {
                 IsMatchFunction = (_) =>
                 {
@@ -92,7 +92,7 @@ namespace FinalEngine.Tests.Core.ECS
                 entities.Add(entity);
             }
 
-            var system = new MockEntitySystemA(GameLoopType.Update)
+            var system = new MockEntitySystemA()
             {
                 IsMatchFunction = (_) =>
                 {
@@ -117,23 +117,23 @@ namespace FinalEngine.Tests.Core.ECS
         public void AddSystemShouldNotThrowExceptionWhenSystemOfSameTypeHasPreviouslyBeenRemoved()
         {
             // Arrange
-            this.world.AddSystem(new MockEntitySystemA(GameLoopType.Update));
-            this.world.AddSystem(new MockEntitySystemB(GameLoopType.Render));
+            this.world.AddSystem(new MockEntitySystemA());
+            this.world.AddSystem(new MockEntitySystemB());
 
             // Act
             this.world.RemoveSystem(typeof(MockEntitySystemA));
 
             // Assert
-            this.world.AddSystem(new MockEntitySystemA(GameLoopType.Render));
+            this.world.AddSystem(new MockEntitySystemA());
         }
 
         [Test]
         public void AddSystemShouldThrowArgumentExceptionWhenSystemOfSameTypeIsAlreadyAdded()
         {
             // Arrange
-            var systemA = new MockEntitySystemA(GameLoopType.Update);
-            var systemB = new MockEntitySystemB(GameLoopType.Render);
-            var systemC = new MockEntitySystemA(GameLoopType.Render);
+            var systemA = new MockEntitySystemA();
+            var systemB = new MockEntitySystemB();
+            var systemC = new MockEntitySystemA();
 
             this.world.AddSystem(systemA);
             this.world.AddSystem(systemB);
@@ -161,7 +161,7 @@ namespace FinalEngine.Tests.Core.ECS
             // Arrange
             var entity = new Entity();
 
-            var systemA = new MockEntitySystemA(GameLoopType.Update)
+            var systemA = new MockEntitySystemA()
             {
                 IsMatchFunction = (_) =>
                 {
@@ -173,7 +173,7 @@ namespace FinalEngine.Tests.Core.ECS
                 },
             };
 
-            var systemB = new MockEntitySystemB(GameLoopType.Render);
+            var systemB = new MockEntitySystemB();
 
             this.world.AddSystem(systemA);
             this.world.AddSystem(systemB);
@@ -213,36 +213,11 @@ namespace FinalEngine.Tests.Core.ECS
         }
 
         [Test]
-        public void ProcessAllShouldInvokeSystemProcessWhenSystemLoopTypeIsUpdateWhenInvoked()
-        {
-            // Arrange
-            var systemA = new MockEntitySystemA(GameLoopType.Update);
-            var systemB = new MockEntitySystemB(GameLoopType.Render)
-            {
-                IsMatchFunction = (_) =>
-                {
-                    return true;
-                },
-                ProcessFunction = (_) =>
-                {
-                    // Assert
-                    Assert.Fail();
-                },
-            };
-
-            this.world.AddSystem(systemA);
-            this.world.AddSystem(systemB);
-
-            // Act
-            this.world.ProcessAll(GameLoopType.Update);
-        }
-
-        [Test]
         public void RemoveEntityShouldInvokeSystemAddOrRemoveByAspectWhenInvoked()
         {
             // Arrange
-            var systemA = new MockEntitySystemA(GameLoopType.Update);
-            var systemB = new MockEntitySystemB(GameLoopType.Render)
+            var systemA = new MockEntitySystemA();
+            var systemB = new MockEntitySystemB()
             {
                 IsMatchFunction = (_) =>
                 {

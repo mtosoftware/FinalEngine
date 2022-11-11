@@ -11,14 +11,7 @@ namespace FinalEngine.Tests.Core.ECS.Mocks
 
     public class MockEntitySystemB : EntitySystemBase
     {
-        public MockEntitySystemB(GameLoopType type)
-        {
-            this.LoopType = type;
-        }
-
         public Predicate<IReadOnlyEntity> IsMatchFunction { get; set; }
-
-        public override GameLoopType LoopType { get; }
 
         public Action<IEnumerable<Entity>> ProcessFunction { get; set; }
 

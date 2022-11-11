@@ -103,25 +103,6 @@ namespace FinalEngine.ECS
         }
 
         /// <summary>
-        ///   Processes all systems that match the specified loop <paramref name="type"/>.
-        /// </summary>
-        /// <param name="type">
-        ///   The loop type of systems to process.
-        /// </param>
-        public void ProcessAll(GameLoopType type)
-        {
-            foreach (var system in this.systems)
-            {
-                if (system.LoopType != type)
-                {
-                    continue;
-                }
-
-                system.Process();
-            }
-        }
-
-        /// <summary>
         ///   Removes the specified <paramref name="entity"/> from this <see cref="IEntityWorld"/>.
         /// </summary>
         /// <param name="entity">

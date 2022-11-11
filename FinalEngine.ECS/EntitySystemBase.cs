@@ -31,17 +31,6 @@ namespace FinalEngine.ECS
         }
 
         /// <summary>
-        ///   Gets the game loop type for this <see cref="EntitySystemBase"/>.
-        /// </summary>
-        /// <value>
-        ///   The game loop type for this <see cref="EntitySystemBase"/>.
-        /// </value>
-        /// <remarks>
-        ///   A game loop type determines when the <see cref="Process()"/> function should be called.
-        /// </remarks>
-        public abstract GameLoopType LoopType { get; }
-
-        /// <summary>
         ///   Calls the <see cref="Process(IEnumerable{Entity})"/> function, the frequency depends on the <see cref="LoopType"/>.
         /// </summary>
         public void Process()

@@ -7,30 +7,28 @@ namespace FinalEngine.ECS.Systems.Rendering
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Drawing;
     using System.Numerics;
     using FinalEngine.ECS.Components.Core;
     using FinalEngine.ECS.Components.Rendering;
     using FinalEngine.Rendering;
-    using FinalEngine.Rendering.Pipeline;
-    using FinalEngine.Resources;
 
     public class SceneRenderEntitySystem : EntitySystemBase
     {
-        private static readonly IShaderProgram ShaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Programs\\Default");
-
         private readonly IRenderDevice renderDevice;
 
-        public SceneRenderEntitySystem(IRenderDevice renderDevice)
+        public SceneRenderEntitySystem(IRenderDevice renderDevice, IRenderingEngine renderingEngine)
         {
             this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
 
-            this.LoopType = GameLoopType.Render;
+            if (renderingEngine == null)
+            {
+                throw new ArgumentNullException(nameof(renderingEngine));
+            }
+
+            renderingEngine.AddRenderAction(RenderStage.Geometry, this.Process);
         }
 
         public Entity? Camera { get; set; }
-
-        public override GameLoopType LoopType { get; }
 
         protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
         {
@@ -46,9 +44,6 @@ namespace FinalEngine.ECS.Systems.Rendering
             }
 
             this.SetupCamera();
-
-            this.renderDevice.Clear(Color.CornflowerBlue);
-            this.renderDevice.Pipeline.SetShaderProgram(ShaderProgram);
 
             foreach (var entity in entities)
             {

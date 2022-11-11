@@ -67,7 +67,8 @@ var renderDevice = new OpenGLRenderDevice(opengl);
 
 ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
 ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
-ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(renderDevice.Factory, fileSystem));
+
+var renderingEngine = new RenderingEngine(renderDevice, fileSystem);
 
 var watch = new Stopwatch();
 var watchInvoker = new StopwatchInvoker(watch);
@@ -133,8 +134,10 @@ camera.AddComponent(new VelocityComponent()
 
 world.AddEntity(camera);
 
-world.AddSystem(new CameraUpdateEntitySystem(keyboard, mouse));
-world.AddSystem(new SceneRenderEntitySystem(renderDevice)
+var cameraSystem = new CameraUpdateEntitySystem(keyboard, mouse);
+
+world.AddSystem(cameraSystem);
+world.AddSystem(new SceneRenderEntitySystem(renderDevice, renderingEngine)
 {
     Camera = camera,
 });
@@ -159,12 +162,12 @@ while (isRunning)
         continue;
     }
 
-    world.ProcessAll(GameLoopType.Update);
+    cameraSystem.Process();
 
     keyboard.Update();
     mouse.Update();
 
-    world.ProcessAll(GameLoopType.Render);
+    renderingEngine.Render();
 
     renderContext.SwapBuffers();
     window.ProcessEvents();

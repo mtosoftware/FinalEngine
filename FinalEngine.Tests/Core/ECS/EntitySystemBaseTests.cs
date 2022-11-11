@@ -17,7 +17,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var expected = new Entity();
-            var system = new MockEntitySystemA(GameLoopType.Update)
+            var system = new MockEntitySystemA()
             {
                 IsMatchFunction = (_) =>
                 {
@@ -40,7 +40,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var entity = new Entity();
-            var system = new MockEntitySystemA(GameLoopType.Update)
+            var system = new MockEntitySystemA()
             {
                 IsMatchFunction = (_) =>
                 {
@@ -69,7 +69,7 @@ namespace FinalEngine.Tests.Core.ECS
         {
             // Arrange
             var entity = new Entity();
-            var system = new MockEntitySystemA(GameLoopType.Update)
+            var system = new MockEntitySystemA()
             {
                 IsMatchFunction = (_) =>
                 {
@@ -97,7 +97,7 @@ namespace FinalEngine.Tests.Core.ECS
         public void AddOrRemoveByAspectShouldThrowArgumentNullExceptionWhenEntityIsNull()
         {
             // Arrange
-            var system = new MockEntitySystemA(GameLoopType.Update);
+            var system = new MockEntitySystemA();
 
             // Act and assert
             Assert.Throws<ArgumentNullException>(() =>
@@ -107,24 +107,10 @@ namespace FinalEngine.Tests.Core.ECS
         }
 
         [Test]
-        public void LoopTypeShouldReturnSameAsConstructorWhenInvoked()
-        {
-            // Arrange
-            const GameLoopType expected = GameLoopType.Update;
-            var system = new MockEntitySystemA(expected);
-
-            // Act
-            var actual = system.LoopType;
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void ProcessShouldInvokeProtectedProcessWhenInvoked()
         {
             // Arrange
-            var system = new MockEntitySystemA(GameLoopType.Update)
+            var system = new MockEntitySystemA()
             {
                 ProcessFunction = (_) =>
                 {
