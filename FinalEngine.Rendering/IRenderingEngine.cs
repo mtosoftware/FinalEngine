@@ -5,18 +5,14 @@
 namespace FinalEngine.Rendering
 {
     using System;
-
-    public enum RenderStage
-    {
-        Geometry,
-    }
+    using FinalEngine.Rendering.Lighting;
 
     public interface IRenderingEngine : IDisposable
     {
-        void AddRenderAction(RenderStage stage, Action render);
+        void Enqueue(LightBase light);
 
-        void RemoveRenderAction(RenderStage stage);
+        void Enqueue(GeometryData data);
 
-        void Render();
+        void Render(CameraData camera);
     }
 }

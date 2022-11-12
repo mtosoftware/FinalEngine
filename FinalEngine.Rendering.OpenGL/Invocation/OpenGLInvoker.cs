@@ -504,30 +504,47 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
             }
         }
 
+        /// <inheritdoc/>
         public void Bindframebuffer(FramebufferTarget target, int framebuffers)
         {
             GL.BindFramebuffer(target, framebuffers);
         }
 
+        /// <inheritdoc/>
         public FramebufferStatus CheckNamedFramebufferStatus(int framebuffer, FramebufferTarget target)
         {
             return GL.CheckNamedFramebufferStatus(framebuffer, target);
         }
 
+        /// <inheritdoc/>
         public int CreateFramebuffer()
         {
             GL.CreateFramebuffers(1, out int framebuffers);
             return framebuffers;
         }
 
+        /// <inheritdoc/>
         public void DeleteFramebuffer(int framebuffers)
         {
             GL.DeleteFramebuffer(framebuffers);
         }
 
+        /// <inheritdoc/>
         public void NamedFramebufferTexture(int framebuffer, FramebufferAttachment attachment, int texture, int level)
         {
             GL.NamedFramebufferTexture(framebuffer, attachment, texture, level);
+        }
+
+        /// <inheritdoc/>
+        public void GetActiveUniform(int program, int index, int bufSize, out int length, out int size, out ActiveUniformType type, out string name)
+        {
+            GL.GetActiveUniform(program, index, bufSize, out length, out size, out type, out name);
+        }
+
+        /// <inheritdoc/>
+        public void GetProgram(int program, GetProgramParameterName pname, out int @params)
+        {
+            GL.GetProgram(program, pname, out @params);
         }
     }
 }

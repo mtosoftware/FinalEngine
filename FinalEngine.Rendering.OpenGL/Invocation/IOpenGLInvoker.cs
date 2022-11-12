@@ -143,11 +143,18 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         /// <inheritdoc cref="GL.GenVertexArray"/>
         int GenVertexArray();
 
+        /// <inheritdoc cref="GL.GetActiveUniform(int, int, int, out int, out int, out ActiveUniformType, out string)"/>
+        void GetActiveUniform(int program, int index, int bufSize, out int length, out int size, out ActiveUniformType type, out string name);
+
         /// <inheritdoc cref="GL.GetInteger(GetIndexedPName, uint, out int)"/>
         void GetInteger(GetIndexedPName target, int index, int[] data);
 
         /// <inheritdoc cref="GL.GetInteger(GetPName)"/>
         int GetInteger(GetPName pname);
+
+        /// <inheritdoc cref="GL.GetProgram(int, GetProgramParameterName, out int)"/>
+        [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Must Match API")]
+        void GetProgram(int program, GetProgramParameterName pname, out int @params);
 
         /// <inheritdoc cref="GL.GetProgramInfoLog(int)"/>
         string GetProgramInfoLog(int program);

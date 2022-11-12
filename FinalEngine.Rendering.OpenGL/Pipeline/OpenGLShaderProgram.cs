@@ -8,6 +8,8 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
     using System.Collections.Generic;
     using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.OpenGL.Invocation;
+    using FinalEngine.Rendering.Pipeline;
+    using OpenTK.Graphics.OpenGL4;
 
     /// <summary>
     ///   Provides an OpenGL implementation of an <see cref="IOpenGLShaderProgram"/>.
@@ -111,6 +113,25 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public IEnumerable<ShaderUniform> GetShaderUniforms()
+        {
+            var result = new List<ShaderUniform>();
+
+            this.invoker.GetProgram(this.rendererID, GetProgramParameterName.ActiveUniforms, out int activeUniformsCount);
+
+            for (int i = 0; i < activeUniformsCount; i++)
+            {
+                this.invoker.GetActiveUniform(this.rendererID, i, 128, out _, out _, out _, out string name);
+
+                result.Add(new ShaderUniform()
+                {
+                    Name = name,
+                });
+            }
+
+            return result;
         }
 
         /// <summary>

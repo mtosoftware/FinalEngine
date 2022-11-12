@@ -5,7 +5,7 @@
 namespace FinalEngine.Rendering
 {
     using System;
-    using System.Collections.Generic;
+    using System.Numerics;
     using FinalEngine.Rendering.Buffers;
 
     public class Mesh : IMesh
@@ -16,7 +16,7 @@ namespace FinalEngine.Rendering
 
         private IVertexBuffer? vertexBuffer;
 
-        public Mesh(IGPUResourceFactory factory, IReadOnlyCollection<MeshVertex> vertices, IReadOnlyCollection<int> indices)
+        public Mesh(IGPUResourceFactory factory, MeshVertex[] vertices, int[] indices)
         {
             if (factory == null)
             {
@@ -33,16 +33,18 @@ namespace FinalEngine.Rendering
                 throw new ArgumentNullException(nameof(indices));
             }
 
+            this.CalculateNormals(vertices, indices);
+
             this.vertexBuffer = factory.CreateVertexBuffer(
                 BufferUsageType.Static,
                 vertices,
-                vertices.Count * MeshVertex.SizeInBytes,
+                vertices.Length * MeshVertex.SizeInBytes,
                 MeshVertex.SizeInBytes);
 
             this.indexBuffer = factory.CreateIndexBuffer(
                 BufferUsageType.Static,
                 indices,
-                indices.Count * sizeof(int));
+                indices.Length * sizeof(int));
 
             this.inputLayout = factory.CreateInputLayout(MeshVertex.InputElements);
         }
@@ -115,6 +117,30 @@ namespace FinalEngine.Rendering
             }
 
             this.IsDisposed = true;
+        }
+
+        private void CalculateNormals(MeshVertex[] vertices, int[] indices)
+        {
+            for (int i = 0; i < indices.Length; i += 3)
+            {
+                int i0 = indices[i];
+                int i1 = indices[i + 1];
+                int i2 = indices[i + 2];
+
+                var v1 = vertices[i1].Position - vertices[i0].Position;
+                var v2 = vertices[i2].Position - vertices[i0].Position;
+
+                var normal = Vector3.Normalize(Vector3.Cross(v1, v2));
+
+                vertices[i0].Normal = normal;
+                vertices[i1].Normal = normal;
+                vertices[i2].Normal = normal;
+            }
+
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i].Normal = Vector3.Normalize(vertices[i].Normal);
+            }
         }
     }
 }

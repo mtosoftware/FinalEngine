@@ -25,10 +25,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Programs\Default\shader.frag">
+    <None Update="Resources\Textures\container.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Programs\Default\shader.vert">
+    <None Update="Resources\Textures\container_specular.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\stone_floor_diffuse.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\stone_floor_specular.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

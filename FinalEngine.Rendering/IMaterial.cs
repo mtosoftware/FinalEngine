@@ -8,8 +8,10 @@ namespace FinalEngine.Rendering
 
     public interface IMaterial
     {
-        ITexture2D? DiffuseTexture { get; set; }
+        ITexture2D DiffuseTexture { get; set; }
 
-        void Bind(IPipeline pipeline);
+        float Shininess { get; set; }
+
+        ITexture2D SpecularTexture { get; set; }
     }
 }

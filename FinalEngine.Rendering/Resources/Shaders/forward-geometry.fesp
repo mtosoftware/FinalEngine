@@ -1,0 +1,4 @@
+{
+    "VertexFilePath": "forward-geometry.vert",
+    "FragmentFilePath": "forward-geometry.frag"
+}

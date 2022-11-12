@@ -112,8 +112,8 @@ namespace FinalEngine.Extensions.Resources.Loaders
                         MinFilter = TextureFilterMode.Nearest,
                         MagFilter = TextureFilterMode.Linear,
 
-                        WrapS = TextureWrapMode.Repeat,
-                        WrapT = TextureWrapMode.Repeat,
+                        WrapS = TextureWrapMode.Clamp,
+                        WrapT = TextureWrapMode.Clamp,
 
                         PixelType = PixelType.Byte,
                     },

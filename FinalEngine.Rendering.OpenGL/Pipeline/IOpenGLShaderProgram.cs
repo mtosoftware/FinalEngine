@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering.OpenGL.Pipeline
 {
     using System;
+    using System.Collections.Generic;
     using FinalEngine.Rendering.Pipeline;
 
     /// <summary>
@@ -20,6 +21,7 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline
         ///   The <see cref="IOpenGLShaderProgram"/> has been disposed.
         /// </exception>
         void Bind();
+        IEnumerable<ShaderUniform> GetShaderUniforms();
 
         /// <summary>
         ///   Gets the uniform location of the specified uniform, <paramref name="name"/>.

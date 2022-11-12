@@ -70,6 +70,8 @@ namespace FinalEngine.Rendering.OpenGL
             get { return this.invoker.GetInteger(GetPName.MaxTextureImageUnits); }
         }
 
+        public IEnumerable<ShaderUniform> ShaderUniforms { get; private set; }
+
         /// <summary>
         ///   Sets the specified <paramref name="program"/>, binding it to the GPU.
         /// </summary>
@@ -93,6 +95,9 @@ namespace FinalEngine.Rendering.OpenGL
             {
                 throw new ArgumentException($"The specified {nameof(program)} parameter is not of type {nameof(IOpenGLShaderProgram)}.", nameof(program));
             }
+
+            this.uniformLocations.Clear();
+            this.ShaderUniforms = glProgram.GetShaderUniforms();
 
             this.boundProgram = glProgram;
             this.boundProgram.Bind();

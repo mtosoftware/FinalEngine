@@ -174,12 +174,15 @@ namespace FinalEngine.Resources
                 var kvp = this.pathToResourceDataMap.ElementAt(i);
                 var resourceData = kvp.Value;
 
-                resourceData.DecrementReferenceCount();
-
-                if (resourceData.ReferenceCount == 0)
+                if (ReferenceEquals(resourceData.Reference, resource))
                 {
-                    resourceData.Reference.Dispose();
-                    this.pathToResourceDataMap.Remove(resourceData.FilePath);
+                    resourceData.DecrementReferenceCount();
+
+                    if (resourceData.ReferenceCount == 0)
+                    {
+                        resourceData.Reference.Dispose();
+                        this.pathToResourceDataMap.Remove(resourceData.FilePath);
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering
 {
     using System;
+    using System.Collections.Generic;
     using System.Numerics;
     using FinalEngine.Rendering.Exceptions;
     using FinalEngine.Rendering.Pipeline;
@@ -22,6 +23,8 @@ namespace FinalEngine.Rendering
         ///   The maximum texture slots that can be utilized by the GPU.
         /// </value>
         int MaxTextureSlots { get; }
+
+        IEnumerable<ShaderUniform> ShaderUniforms { get; }
 
         /// <summary>
         ///   Sets the specified <paramref name="program"/>, binding it to the GPU.

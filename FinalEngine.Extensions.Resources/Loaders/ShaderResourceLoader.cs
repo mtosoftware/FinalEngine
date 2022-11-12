@@ -64,31 +64,44 @@ namespace FinalEngine.Extensions.Resources.Loaders
                 throw new FileNotFoundException($"The specified {nameof(filePath)} parameter cannot be located.", filePath);
             }
 
-            var sb = new StringBuilder();
-
             using (var stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read))
             {
                 using (var reader = new StreamReader(stream))
                 {
-                    while (!reader.EndOfStream)
+                    return this.ParseShaderSource(reader.ReadToEnd());
+                }
+            }
+        }
+
+        private string ParseShaderSource(string shaderSource)
+        {
+            if (string.IsNullOrWhiteSpace(shaderSource))
+            {
+                throw new ArgumentException($"The specified {nameof(shaderSource)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(shaderSource));
+            }
+
+            var sb = new StringBuilder();
+
+            using (var reader = new StringReader(shaderSource))
+            {
+                string? line = null;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line!.Trim().StartsWith("#include", StringComparison.CurrentCulture))
                     {
-                        string? line = reader.ReadLine();
+                        string includePath = line
+                            .Replace("#include", string.Empty, StringComparison.CurrentCulture)
+                            .Replace("<", string.Empty, StringComparison.CurrentCulture)
+                            .Replace(">", string.Empty, StringComparison.CurrentCulture)
+                            .Replace("\"", string.Empty, StringComparison.CurrentCulture)
+                            .Trim();
 
-                        if (line!.Trim().StartsWith("#include", StringComparison.CurrentCulture))
-                        {
-                            string includePath = line
-                                .Replace("#include", string.Empty, StringComparison.CurrentCulture)
-                                .Replace("<", string.Empty, StringComparison.CurrentCulture)
-                                .Replace(">", string.Empty, StringComparison.CurrentCulture)
-                                .Replace("\"", string.Empty, StringComparison.CurrentCulture)
-                                .Trim();
-
-                            sb.AppendLine(this.fileSystem.GetVirtualTextFile(includePath));
-                        }
-                        else
-                        {
-                            sb.AppendLine(line);
-                        }
+                        sb.AppendLine(this.ParseShaderSource(this.fileSystem.GetVirtualTextFile(includePath)));
+                    }
+                    else
+                    {
+                        sb.AppendLine(line);
                     }
                 }
             }

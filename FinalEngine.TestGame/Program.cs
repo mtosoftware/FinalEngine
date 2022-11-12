@@ -1,11 +1,11 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Numerics;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.ECS.Components.Rendering;
 using FinalEngine.ECS.Systems.Input;
-using FinalEngine.ECS.Systems.Rendering;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders;
 using FinalEngine.Input.Keyboards;
@@ -15,8 +15,10 @@ using FinalEngine.IO.Invocation;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
+using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -67,6 +69,7 @@ var renderDevice = new OpenGLRenderDevice(opengl);
 
 ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
 ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
+ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(renderDevice.Factory, fileSystem));
 
 var renderingEngine = new RenderingEngine(renderDevice, fileSystem);
 
@@ -74,37 +77,52 @@ var watch = new Stopwatch();
 var watchInvoker = new StopwatchInvoker(watch);
 var gameTime = new GameTime(watchInvoker, 120.0d);
 
+float fieldDepth = 10.0f;
+float fieldWidth = 10.0f;
+
 MeshVertex[] vertices =
 {
     new MeshVertex()
     {
-        Position = new System.Numerics.Vector3(-1, -1, 0),
-        Color = new System.Numerics.Vector4(1, 0, 0, 1),
-        TextureCoordinate = new System.Numerics.Vector2(0, 0),
+        Position = new Vector3(-fieldWidth, 0.0f, -fieldDepth),
+        Color = Vector4.One,
+        TextureCoordinate = new Vector2(0, 0),
     },
 
     new MeshVertex()
     {
-        Position = new System.Numerics.Vector3(1, -1, 0),
-        Color = new System.Numerics.Vector4(0, 1, 0, 1),
-        TextureCoordinate = new System.Numerics.Vector2(1, 0),
+        Position = new Vector3(-fieldWidth, 0.0f, fieldDepth * 3),
+        Color = Vector4.One,
+        TextureCoordinate = new Vector2(0, 1),
     },
 
     new MeshVertex()
     {
-        Position = new System.Numerics.Vector3(0, 1, 0),
-        Color = new System.Numerics.Vector4(0, 0, 1, 1),
-        TextureCoordinate = new System.Numerics.Vector2(0.5f, 1),
+        Position = new Vector3(fieldWidth * 3, 0.0f, -fieldDepth),
+        Color = Vector4.One,
+        TextureCoordinate = new Vector2(1, 0),
+    },
+
+    new MeshVertex()
+    {
+        Position = new Vector3(fieldWidth * 3, 0.0f, fieldDepth * 3),
+        Color = Vector4.One,
+        TextureCoordinate = new Vector2(1, 1),
     },
 };
 
 int[] indices =
 {
-    0, 1, 2,
+    0, 1, 2, 2, 1, 3,
 };
 
 var mesh = new Mesh(renderDevice.Factory, vertices, indices);
-var material = new Material();
+var material = new Material()
+{
+    DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\container.png"),
+    SpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\container_specular.png"),
+    Shininess = 64.0f,
+};
 
 var world = new EntityWorld();
 
@@ -137,10 +155,6 @@ world.AddEntity(camera);
 var cameraSystem = new CameraUpdateEntitySystem(keyboard, mouse);
 
 world.AddSystem(cameraSystem);
-world.AddSystem(new SceneRenderEntitySystem(renderDevice, renderingEngine)
-{
-    Camera = camera,
-});
 
 var entity = new Entity();
 
@@ -162,12 +176,30 @@ while (isRunning)
         continue;
     }
 
+    window.Title = $"{GameTime.FrameRate}";
+
     cameraSystem.Process();
 
     keyboard.Update();
     mouse.Update();
 
-    renderingEngine.Render();
+    renderingEngine.Enqueue(new GeometryData(material, mesh, Matrix4x4.CreateTranslation(Vector3.Zero)));
+    renderingEngine.Enqueue(new DirectionalLight()
+    {
+        AmbientColor = new Vector3(0.1f),
+        DiffuseColor = new Vector3(0.3f),
+        SpecularColor = new Vector3(1f, 1f, 1f),
+        Direction = new Vector3(-1, -1, -1),
+    });
+
+    var cameraData = new CameraData()
+    {
+        Projection = camera.GetComponent<PerspectiveComponent>().CreateProjectionMatrix(),
+        View = camera.GetComponent<TransformComponent>().CreateViewMatrix(Vector3.UnitY),
+        ViewPostiion = camera.GetComponent<TransformComponent>().Position,
+    };
+
+    renderingEngine.Render(cameraData);
 
     renderContext.SwapBuffers();
     window.ProcessEvents();

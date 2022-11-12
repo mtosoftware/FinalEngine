@@ -4,36 +4,36 @@
 
 namespace FinalEngine.Rendering
 {
-    using System;
     using FinalEngine.Rendering.Textures;
     using FinalEngine.Resources;
 
     public class Material : IMaterial
     {
-        private const int DiffuseTextureSlot = 0;
-
         private static readonly ITexture2D DefaultDiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_diffuse.png");
 
-        private static IMaterial? @default;
+        private static readonly ITexture2D DefaultSpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_specular.png");
 
-        public static IMaterial Default
+        private ITexture2D? diffuseTexture;
+
+        private ITexture2D specularTexture;
+
+        public Material()
         {
-            get { return @default ??= new Material(); }
+            this.Shininess = 32.0f;
         }
 
-        public ITexture2D? DiffuseTexture { get; set; }
-
-        public void Bind(IPipeline pipeline)
+        public ITexture2D DiffuseTexture
         {
-            if (pipeline == null)
-            {
-                throw new ArgumentNullException(nameof(pipeline));
-            }
+            get { return this.diffuseTexture ??= DefaultDiffuseTexture; }
+            set { this.diffuseTexture = value; }
+        }
 
-            this.DiffuseTexture ??= DefaultDiffuseTexture;
+        public float Shininess { get; set; }
 
-            pipeline.SetUniform("u_material.diffuseTexture", DiffuseTextureSlot);
-            pipeline.SetTexture(this.DiffuseTexture, DiffuseTextureSlot);
+        public ITexture2D SpecularTexture
+        {
+            get { return this.specularTexture ??= DefaultSpecularTexture; }
+            set { this.specularTexture = value; }
         }
     }
 }
