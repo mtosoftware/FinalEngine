@@ -15,13 +15,13 @@ namespace FinalEngine.Rendering
 
     public class RenderingEngine : IRenderingEngine
     {
+        private readonly LightBase? activeLight;
+
         private readonly IList<GeometryData> geometryDatas;
 
         private readonly Queue<LightBase> lights;
 
         private readonly IRenderDevice renderDevice;
-
-        private LightBase? activeLight;
 
         private RenderQualitySettings settings;
 
@@ -103,38 +103,38 @@ namespace FinalEngine.Rendering
 
             this.RenderGeometryData(this.shaderProgram!, camera);
 
-            this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
-            {
-                Enabled = true,
-                SourceMode = BlendMode.One,
-                DestinationMode = BlendMode.Zero,
-                EquationMode = BlendEquationMode.Add,
-            });
+            //this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
+            //{
+            //    Enabled = true,
+            //    SourceMode = BlendMode.One,
+            //    DestinationMode = BlendMode.Zero,
+            //    EquationMode = BlendEquationMode.Add,
+            //});
 
-            this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-            {
-                ReadEnabled = true,
-                WriteEnabled = false,
-                ComparisonMode = ComparisonMode.Equal,
-            });
+            //this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
+            //{
+            //    ReadEnabled = true,
+            //    WriteEnabled = false,
+            //    ComparisonMode = ComparisonMode.Equal,
+            //});
 
-            while (this.lights.Count > 0)
-            {
-                this.activeLight = this.lights.Dequeue();
-                this.RenderGeometryData(this.activeLight.ShaderProgram, camera);
-            }
+            //while (this.lights.Count > 0)
+            //{
+            //    this.activeLight = this.lights.Dequeue();
+            //    this.RenderGeometryData(this.activeLight.ShaderProgram, camera);
+            //}
 
-            this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-            {
-                ReadEnabled = true,
-                WriteEnabled = true,
-                ComparisonMode = ComparisonMode.Less,
-            });
+            //this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
+            //{
+            //    ReadEnabled = true,
+            //    WriteEnabled = true,
+            //    ComparisonMode = ComparisonMode.Less,
+            //});
 
-            this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
-            {
-                Enabled = false,
-            });
+            //this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
+            //{
+            //    Enabled = false,
+            //});
 
             this.geometryDatas.Clear();
             this.lights.Clear();

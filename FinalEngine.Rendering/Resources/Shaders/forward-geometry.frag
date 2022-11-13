@@ -11,5 +11,5 @@ uniform Material u_material;
 
 void main()
 {
-	out_color = texture(u_material.diffuseTexture, in_texCoord);
+	out_color = texture(u_material.diffuseTexture, in_texCoord) * in_color;
 }

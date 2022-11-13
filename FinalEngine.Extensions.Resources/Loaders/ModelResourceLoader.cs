@@ -133,6 +133,10 @@ namespace FinalEngine.Extensions.Resources.Loaders
                             mesh.VertexColorChannels[0][i].B,
                             mesh.VertexColorChannels[0][i].A);
                     }
+                    else
+                    {
+                        vertex.Color = Vector4.One;
+                    }
 
                     if (mesh.HasTextureCoords(0))
                     {
