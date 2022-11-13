@@ -6,13 +6,14 @@ namespace FinalEngine.ECS
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
 
     /// <summary>
     ///   Provides a standard implementation of an <see cref="IEntityWorld"/> and <see cref="IEntitySystemsProcessor"/>.
     /// </summary>
     /// <seealso cref="IEntityWorld"/>
     /// <seealso cref="IEntitySystemsProcessor"/>
-    public class EntityWorld : IEntityWorld
+    public class EntityWorld : IEntityWorld, IEntitySystemsProcessor
     {
         /// <summary>
         ///   The entities contained within the world.
@@ -100,6 +101,33 @@ namespace FinalEngine.ECS
             }
 
             this.systems.Add(system);
+        }
+
+        /// <summary>
+        ///   Processes all entity systems that match the given execution <paramref name="type"/>.
+        /// </summary>
+        /// <param name="type">
+        ///   The execution type.
+        /// </param>
+        public void ProcessAll(GameLoopType type)
+        {
+            foreach (var system in this.systems)
+            {
+                var loopType = GameLoopType.Update;
+                var attribute = system.GetType().GetCustomAttribute<EntitySystemProcessAttribute>();
+
+                if (attribute != null)
+                {
+                    loopType = attribute.ExecutionType;
+                }
+
+                if (loopType != type)
+                {
+                    continue;
+                }
+
+                system.Process();
+            }
         }
 
         /// <summary>

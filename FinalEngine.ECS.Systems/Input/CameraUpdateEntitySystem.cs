@@ -15,6 +15,7 @@ namespace FinalEngine.ECS.Systems.Input
     using FinalEngine.Input.Mouses;
     using FinalEngine.Maths;
 
+    [EntitySystemProcess(ExecutionType = GameLoopType.Update)]
     public class CameraUpdateEntitySystem : EntitySystemBase
     {
         private readonly IKeyboard keyboard;
