@@ -23,11 +23,14 @@ namespace FinalEngine.Rendering
 
         private LightBase? activeLight;
 
+        private RenderQualitySettings settings;
+
         private IShaderProgram? shaderProgram;
 
-        public RenderingEngine(IRenderDevice renderDevice, IFileSystem fileSystem)
+        public RenderingEngine(IRenderDevice renderDevice, IFileSystem fileSystem, RenderQualitySettings settings)
         {
             this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
+            this.settings = settings;
 
             if (fileSystem == null)
             {
@@ -84,6 +87,14 @@ namespace FinalEngine.Rendering
             }
 
             this.renderDevice.Clear(Color.Black);
+
+            this.renderDevice.Rasterizer.SetRasterState(new RasterStateDescription()
+            {
+                CullEnabled = true,
+                CullMode = FaceCullMode.Back,
+                WindingDirection = WindingDirection.CounterClockwise,
+                MultiSamplingEnabled = this.settings.MultiSamplingEnabled,
+            });
 
             this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
             {

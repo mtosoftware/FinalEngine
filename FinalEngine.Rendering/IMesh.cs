@@ -4,9 +4,9 @@
 
 namespace FinalEngine.Rendering
 {
-    using System;
+    using FinalEngine.Resources;
 
-    public interface IMesh : IDisposable
+    public interface IMesh : IResource
     {
         void Bind(IInputAssembler inputAssembler);
 

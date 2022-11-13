@@ -107,6 +107,8 @@ namespace FinalEngine.Rendering
             set { this.fillMode = value; }
         }
 
+        public bool MultiSamplingEnabled { get; set; }
+
         /// <summary>
         ///   Gets or sets a value indicating whether scissoring is enabled.
         /// </summary>

@@ -109,13 +109,15 @@ namespace FinalEngine.Extensions.Resources.Loaders
                         Width = width,
                         Height = height,
 
-                        MinFilter = TextureFilterMode.Nearest,
+                        MinFilter = TextureFilterMode.Linear,
                         MagFilter = TextureFilterMode.Linear,
 
-                        WrapS = TextureWrapMode.Clamp,
-                        WrapT = TextureWrapMode.Clamp,
+                        WrapS = TextureWrapMode.Repeat,
+                        WrapT = TextureWrapMode.Repeat,
 
                         PixelType = PixelType.Byte,
+
+                        GenerateMipmaps = true,
                     },
                     data);
             }

@@ -18,13 +18,18 @@ using FinalEngine.Rendering;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
-using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+
+var renderQualitySettings = new RenderQualitySettings()
+{
+    AntiAliasing = AntiAliasing.FourTimesMultiSampling,
+    MultiSamplingEnabled = true,
+};
 
 var settings = new NativeWindowSettings()
 {
@@ -42,6 +47,8 @@ var settings = new NativeWindowSettings()
     Size = new OpenTK.Mathematics.Vector2i(1280, 720),
 
     StartVisible = true,
+
+    NumberOfSamples = renderQualitySettings.AntiAliasingSamples,
 };
 
 var nativeWindow = new NativeWindowInvoker(settings);
@@ -63,66 +70,21 @@ var fileSystem = new FileSystem(file, directory);
 
 var opengl = new OpenGLInvoker();
 var bindings = new GLFWBindingsContext();
-
 var renderContext = new OpenGLRenderContext(opengl, bindings, nativeWindow.Context);
 var renderDevice = new OpenGLRenderDevice(opengl);
 
 ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
 ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
 ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(renderDevice.Factory, fileSystem));
+ResourceManager.Instance.RegisterLoader(new ModelResourceLoader(renderDevice, fileSystem));
 
-var renderingEngine = new RenderingEngine(renderDevice, fileSystem);
+var renderingEngine = new RenderingEngine(renderDevice, fileSystem, renderQualitySettings);
+
+var model = ResourceManager.Instance.LoadResource<Model>("Resources\\Models\\Sponza\\sponza.obj");
 
 var watch = new Stopwatch();
 var watchInvoker = new StopwatchInvoker(watch);
 var gameTime = new GameTime(watchInvoker, 120.0d);
-
-float fieldDepth = 10.0f;
-float fieldWidth = 10.0f;
-
-MeshVertex[] vertices =
-{
-    new MeshVertex()
-    {
-        Position = new Vector3(-fieldWidth, 0.0f, -fieldDepth),
-        Color = Vector4.One,
-        TextureCoordinate = new Vector2(0, 0),
-    },
-
-    new MeshVertex()
-    {
-        Position = new Vector3(-fieldWidth, 0.0f, fieldDepth * 3),
-        Color = Vector4.One,
-        TextureCoordinate = new Vector2(0, 1),
-    },
-
-    new MeshVertex()
-    {
-        Position = new Vector3(fieldWidth * 3, 0.0f, -fieldDepth),
-        Color = Vector4.One,
-        TextureCoordinate = new Vector2(1, 0),
-    },
-
-    new MeshVertex()
-    {
-        Position = new Vector3(fieldWidth * 3, 0.0f, fieldDepth * 3),
-        Color = Vector4.One,
-        TextureCoordinate = new Vector2(1, 1),
-    },
-};
-
-int[] indices =
-{
-    0, 1, 2, 2, 1, 3,
-};
-
-var mesh = new Mesh(renderDevice.Factory, vertices, indices);
-var material = new Material()
-{
-    DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\container.png"),
-    SpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\container_specular.png"),
-    Shininess = 64.0f,
-};
 
 var world = new EntityWorld();
 
@@ -153,19 +115,7 @@ camera.AddComponent(new VelocityComponent()
 world.AddEntity(camera);
 
 var cameraSystem = new CameraUpdateEntitySystem(keyboard, mouse);
-
 world.AddSystem(cameraSystem);
-
-var entity = new Entity();
-
-entity.AddComponent<TransformComponent>();
-entity.AddComponent(new ModelComponent()
-{
-    Material = material,
-    Mesh = mesh,
-});
-
-world.AddEntity(entity);
 
 bool isRunning = true;
 
@@ -183,14 +133,18 @@ while (isRunning)
     keyboard.Update();
     mouse.Update();
 
-    renderingEngine.Enqueue(new GeometryData(material, mesh, Matrix4x4.CreateTranslation(Vector3.Zero)));
     renderingEngine.Enqueue(new DirectionalLight()
     {
-        AmbientColor = new Vector3(0.1f),
+        AmbientColor = new Vector3(0.2f),
         DiffuseColor = new Vector3(0.3f),
-        SpecularColor = new Vector3(1f, 1f, 1f),
+        SpecularColor = new Vector3(0.4f),
         Direction = new Vector3(-1, -1, -1),
     });
+
+    for (int i = 0; i < model.ModelDatas.Count; i++)
+    {
+        renderingEngine.Enqueue(new GeometryData(model.ModelDatas[i].Material, model.ModelDatas[i].Mesh, Matrix4x4.CreateScale(0.4f)));
+    }
 
     var cameraData = new CameraData()
     {

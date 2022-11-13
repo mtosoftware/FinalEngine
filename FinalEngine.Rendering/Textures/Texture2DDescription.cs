@@ -37,6 +37,8 @@ namespace FinalEngine.Rendering.Textures
         /// </summary>
         private TextureWrapMode? wrapT;
 
+        public bool GenerateMipmaps { get; set; }
+
         /// <summary>
         ///   Gets or sets the height of the texture.
         /// </summary>

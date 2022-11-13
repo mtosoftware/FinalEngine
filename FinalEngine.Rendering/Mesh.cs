@@ -33,7 +33,7 @@ namespace FinalEngine.Rendering
                 throw new ArgumentNullException(nameof(indices));
             }
 
-            this.CalculateNormals(vertices, indices);
+            //this.CalculateNormals(vertices, indices);
 
             this.vertexBuffer = factory.CreateVertexBuffer(
                 BufferUsageType.Static,
