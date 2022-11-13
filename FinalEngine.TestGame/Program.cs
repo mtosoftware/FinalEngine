@@ -15,21 +15,16 @@ using FinalEngine.IO.Invocation;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
-using FinalEngine.Rendering.Lighting;
+using FinalEngine.Rendering.Data;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.Renderers;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-
-var renderQualitySettings = new RenderQualitySettings()
-{
-    AntiAliasing = AntiAliasing.FourTimesMultiSampling,
-    MultiSamplingEnabled = true,
-};
 
 var settings = new NativeWindowSettings()
 {
@@ -48,7 +43,8 @@ var settings = new NativeWindowSettings()
 
     StartVisible = true,
 
-    NumberOfSamples = renderQualitySettings.AntiAliasingSamples,
+    //// TODO: Issue #159
+    NumberOfSamples = 8,
 };
 
 var nativeWindow = new NativeWindowInvoker(settings);
@@ -70,15 +66,19 @@ var fileSystem = new FileSystem(file, directory);
 
 var opengl = new OpenGLInvoker();
 var bindings = new GLFWBindingsContext();
+
 var renderContext = new OpenGLRenderContext(opengl, bindings, nativeWindow.Context);
 var renderDevice = new OpenGLRenderDevice(opengl);
 
-ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
+var geometryRenderer = new GeometryRenderer(renderDevice);
+var renderingEngine = new RenderingEngine(renderDevice, fileSystem, geometryRenderer);
+
 ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
 ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(renderDevice.Factory, fileSystem));
+ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker(), renderingEngine));
 ResourceManager.Instance.RegisterLoader(new ModelResourceLoader(renderDevice, fileSystem));
 
-var renderingEngine = new RenderingEngine(renderDevice, fileSystem, renderQualitySettings);
+renderingEngine.Initialize();
 
 var model = ResourceManager.Instance.LoadResource<Model>("Resources\\Models\\Sponza\\sponza.obj");
 
@@ -133,17 +133,9 @@ while (isRunning)
     keyboard.Update();
     mouse.Update();
 
-    renderingEngine.Enqueue(new DirectionalLight()
-    {
-        AmbientColor = new Vector3(0.2f),
-        DiffuseColor = new Vector3(0.3f),
-        SpecularColor = new Vector3(0.4f),
-        Direction = new Vector3(-1, -1, -1),
-    });
-
     for (int i = 0; i < model.ModelDatas.Count; i++)
     {
-        renderingEngine.Enqueue(new GeometryData(model.ModelDatas[i].Material, model.ModelDatas[i].Mesh, Matrix4x4.CreateScale(0.4f)));
+        geometryRenderer.AddGeometry(new GeometryData(model.ModelDatas[i].Material, model.ModelDatas[i].Mesh, Matrix4x4.CreateScale(0.4f)));
     }
 
     var cameraData = new CameraData()
@@ -158,6 +150,8 @@ while (isRunning)
     renderContext.SwapBuffers();
     window.ProcessEvents();
 }
+
+renderingEngine.Dispose();
 
 ResourceManager.Instance.Dispose();
 

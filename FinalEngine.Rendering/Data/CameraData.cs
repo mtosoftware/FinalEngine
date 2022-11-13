@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering
+namespace FinalEngine.Rendering.Data
 {
     using System.Numerics;
 

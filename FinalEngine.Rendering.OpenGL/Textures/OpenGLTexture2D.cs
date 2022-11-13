@@ -79,52 +79,31 @@ namespace FinalEngine.Rendering.OpenGL.Textures
 
             int mipmap = (int)Math.Ceiling(Math.Max(Math.Log2(description.Width + 1), Math.Log2(description.Height + 1)));
 
-            GL.TextureStorage2D(this.rendererID, mipmap, SizedInternalFormat.Rgba8, description.Width, description.Height);
+            invoker.TextureStorage2D(this.rendererID, mipmap, mapper.Forward<SizedInternalFormat>(this.InternalFormat), description.Width, description.Height);
 
-            GL.TextureParameter(this.rendererID, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
-            GL.TextureParameter(this.rendererID, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-            GL.TextureParameter(this.rendererID, TextureParameterName.TextureWrapS, (int)TKTextureWrapMode.Repeat);
-            GL.TextureParameter(this.rendererID, TextureParameterName.TextureWrapT, (int)TKTextureWrapMode.Repeat);
+            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMinFilter, (int)mapper.Forward<TextureMinFilter>(description.MinFilter));
+            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMagFilter, (int)mapper.Forward<TextureMagFilter>(description.MagFilter));
+            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapS, (int)mapper.Forward<TKTextureWrapMode>(description.WrapS));
+            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapT, (int)mapper.Forward<TKTextureWrapMode>(description.WrapT));
 
             if (data != IntPtr.Zero)
             {
-                GL.TextureSubImage2D(
+                invoker.TextureSubImage2D(
                     texture: this.rendererID,
                     level: 0,
                     xoffset: 0,
                     yoffset: 0,
                     width: description.Width,
                     height: description.Height,
-                    format: TKPixelForamt.Rgba,
-                    type: TKPixelType.UnsignedByte,
+                    format: mapper.Forward<TKPixelForamt>(this.Format),
+                    type: mapper.Forward<TKPixelType>(description.PixelType),
                     pixels: data);
 
                 if (description.GenerateMipmaps)
                 {
-                    GL.GenerateTextureMipmap(this.rendererID);
+                    invoker.GenerateTextureMipmap(this.rendererID);
                 }
             }
-
-            //invoker.TextureStorage2D(this.rendererID, 1, mapper.Forward<SizedInternalFormat>(this.InternalFormat), description.Width, description.Height);
-
-            //invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMinFilter, (int)mapper.Forward<TextureMinFilter>(description.MinFilter));
-            //invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMagFilter, (int)mapper.Forward<TextureMagFilter>(description.MagFilter));
-            //invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapS, (int)mapper.Forward<TKTextureWrapMode>(description.WrapS));
-            //invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapT, (int)mapper.Forward<TKTextureWrapMode>(description.WrapT));
-
-            //if (data != IntPtr.Zero)
-            //{
-            //    invoker.TextureSubImage2D(
-            //        texture: this.rendererID,
-            //        level: 0,
-            //        xoffset: 0,
-            //        yoffset: 0,
-            //        width: description.Width,
-            //        height: description.Height,
-            //        format: mapper.Forward<TKPixelForamt>(this.Format),
-            //        type: mapper.Forward<TKPixelType>(description.PixelType),
-            //        pixels: data);
-            //}
         }
 
         /// <summary>

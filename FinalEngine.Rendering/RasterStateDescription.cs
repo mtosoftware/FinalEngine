@@ -178,7 +178,8 @@ namespace FinalEngine.Rendering
                    this.CullMode == other.CullMode &&
                    this.FillMode == other.FillMode &&
                    this.ScissorEnabled == other.ScissorEnabled &&
-                   this.WindingDirection == other.WindingDirection;
+                   this.WindingDirection == other.WindingDirection &&
+                   this.MultiSamplingEnabled == other.MultiSamplingEnabled;
         }
 
         /// <summary>
@@ -209,7 +210,8 @@ namespace FinalEngine.Rendering
                    (this.CullMode.GetHashCode() * accumulator) +
                    (this.FillMode.GetHashCode() * accumulator) +
                    (this.ScissorEnabled.GetHashCode() * accumulator) +
-                   (this.WindingDirection.GetHashCode() * accumulator);
+                   (this.WindingDirection.GetHashCode() * accumulator) +
+                   (this.MultiSamplingEnabled.GetHashCode() * accumulator);
         }
     }
 }

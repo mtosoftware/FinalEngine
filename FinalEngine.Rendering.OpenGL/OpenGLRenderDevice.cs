@@ -103,6 +103,7 @@ namespace FinalEngine.Rendering.OpenGL
                 { StencilOperation.Zero, StencilOp.Zero },
                 { TextureFilterMode.Linear, All.Linear },
                 { TextureFilterMode.Nearest, All.Nearest },
+                { TextureFilterMode.LinearMipmapLinear, All.LinearMipmapLinear },
                 { TextureWrapMode.Clamp, All.ClampToEdge },
                 { TextureWrapMode.Repeat, All.Repeat },
                 { PixelType.Byte,  TKPixelType.UnsignedByte },

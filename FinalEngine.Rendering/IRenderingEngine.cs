@@ -5,13 +5,16 @@
 namespace FinalEngine.Rendering
 {
     using System;
-    using FinalEngine.Rendering.Lighting;
+    using FinalEngine.Rendering.Data;
+    using FinalEngine.Rendering.Settings;
 
     public interface IRenderingEngine : IDisposable
     {
-        void Enqueue(LightBase light);
+        RenderQualitySettings RenderQualitySettings { get; }
 
-        void Enqueue(GeometryData data);
+        TextureQualitySettings TextureQualitySettings { get; }
+
+        void Initialize();
 
         void Render(CameraData camera);
     }

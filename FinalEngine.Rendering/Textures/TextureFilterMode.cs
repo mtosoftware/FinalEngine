@@ -18,5 +18,7 @@ namespace FinalEngine.Rendering.Textures
         ///   Specifies nearest-neighbor interpolation.
         /// </summary>
         Nearest,
+
+        LinearMipmapLinear,
     }
 }

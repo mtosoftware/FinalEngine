@@ -140,6 +140,9 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         /// <inheritdoc cref="GL.FrontFace(FrontFaceDirection)"/>
         void FrontFace(FrontFaceDirection mode);
 
+        /// <inheritdoc cref="GL.GenerateTextureMipmap(int)"/>
+        void GenerateTextureMipmap(int texture);
+
         /// <inheritdoc cref="GL.GenVertexArray"/>
         int GenVertexArray();
 

@@ -178,7 +178,11 @@ namespace FinalEngine.Rendering.OpenGL
         /// <returns>
         ///   The newly created <see cref="ITexture2D"/>.
         /// </returns>
-        public ITexture2D CreateTexture2D<T>(Texture2DDescription description, IReadOnlyCollection<T>? data, PixelFormat format = PixelFormat.Rgba, SizedFormat internalFormat = SizedFormat.Rgba8)
+        public ITexture2D CreateTexture2D<T>(
+            Texture2DDescription description,
+            IReadOnlyCollection<T>? data,
+            PixelFormat format = PixelFormat.Rgba,
+            SizedFormat internalFormat = SizedFormat.Rgba8)
         {
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
             var ptr = data == null ? IntPtr.Zero : handle.AddrOfPinnedObject();

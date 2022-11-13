@@ -5,51 +5,42 @@
 namespace FinalEngine.Rendering
 {
     using System;
-    using System.Collections.Generic;
     using System.Drawing;
-    using System.Numerics;
     using FinalEngine.IO;
-    using FinalEngine.Rendering.Lighting;
+    using FinalEngine.Rendering.Data;
     using FinalEngine.Rendering.Pipeline;
+    using FinalEngine.Rendering.Renderers;
+    using FinalEngine.Rendering.Settings;
     using FinalEngine.Resources;
 
     public class RenderingEngine : IRenderingEngine
     {
-        private readonly LightBase? activeLight;
+        private readonly IFileSystem fileSystem;
 
-        private readonly IList<GeometryData> geometryDatas;
-
-        private readonly Queue<LightBase> lights;
+        private readonly IGeometryRenderer geometryRenderer;
 
         private readonly IRenderDevice renderDevice;
 
-        private RenderQualitySettings settings;
+        private IShaderProgram shaderProgram;
 
-        private IShaderProgram? shaderProgram;
-
-        public RenderingEngine(IRenderDevice renderDevice, IFileSystem fileSystem, RenderQualitySettings settings)
+        public RenderingEngine(
+            IRenderDevice renderDevice,
+            IFileSystem fileSystem,
+            IGeometryRenderer geometryRenderer)
         {
             this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
-            this.settings = settings;
-
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-
-            fileSystem.AddVirtualTextFile("material", "Resources\\Shaders\\Includes\\material.glsl");
-            fileSystem.AddVirtualTextFile("lighting", "Resources\\Shaders\\Includes\\lighting.glsl");
-
-            this.geometryDatas = new List<GeometryData>();
-            this.lights = new Queue<LightBase>();
-
-            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-geometry.fesp");
+            this.geometryRenderer = geometryRenderer ?? throw new ArgumentNullException(nameof(geometryRenderer));
+            this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
 
         ~RenderingEngine()
         {
             this.Dispose(false);
         }
+
+        public RenderQualitySettings RenderQualitySettings { get; }
+
+        public TextureQualitySettings TextureQualitySettings { get; }
 
         protected bool IsDisposed { get; private set; }
 
@@ -59,41 +50,22 @@ namespace FinalEngine.Rendering
             GC.SuppressFinalize(this);
         }
 
-        public void Enqueue(GeometryData data)
+        public void Initialize()
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            this.fileSystem.AddVirtualTextFile("material", "Resources\\Shaders\\Includes\\material.glsl");
+            this.fileSystem.AddVirtualTextFile("lighting", "Resources\\Shaders\\Includes\\lighting.glsl");
 
-            this.geometryDatas.Add(data);
-        }
-
-        public void Enqueue(LightBase light)
-        {
-            if (light == null)
-            {
-                throw new ArgumentNullException(nameof(light));
-            }
-
-            this.lights.Enqueue(light);
+            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-geometry.fesp");
         }
 
         public void Render(CameraData camera)
         {
-            if (this.IsDisposed)
-            {
-                throw new ObjectDisposedException(nameof(RenderingEngine));
-            }
-
-            this.renderDevice.Clear(Color.Black);
-
             this.renderDevice.Rasterizer.SetRasterState(new RasterStateDescription()
             {
                 CullEnabled = true,
                 CullMode = FaceCullMode.Back,
                 WindingDirection = WindingDirection.CounterClockwise,
-                MultiSamplingEnabled = this.settings.MultiSamplingEnabled,
+                MultiSamplingEnabled = this.RenderQualitySettings.MultiSamplingEnabled,
             });
 
             this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
@@ -101,43 +73,14 @@ namespace FinalEngine.Rendering
                 ReadEnabled = true,
             });
 
-            this.RenderGeometryData(this.shaderProgram!, camera);
+            this.renderDevice.Clear(Color.Black);
 
-            //this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
-            //{
-            //    Enabled = true,
-            //    SourceMode = BlendMode.One,
-            //    DestinationMode = BlendMode.Zero,
-            //    EquationMode = BlendEquationMode.Add,
-            //});
+            this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram);
 
-            //this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-            //{
-            //    ReadEnabled = true,
-            //    WriteEnabled = false,
-            //    ComparisonMode = ComparisonMode.Equal,
-            //});
+            this.UpdateUniforms(camera);
+            this.geometryRenderer.Render();
 
-            //while (this.lights.Count > 0)
-            //{
-            //    this.activeLight = this.lights.Dequeue();
-            //    this.RenderGeometryData(this.activeLight.ShaderProgram, camera);
-            //}
-
-            //this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-            //{
-            //    ReadEnabled = true,
-            //    WriteEnabled = true,
-            //    ComparisonMode = ComparisonMode.Less,
-            //});
-
-            //this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
-            //{
-            //    Enabled = false,
-            //});
-
-            this.geometryDatas.Clear();
-            this.lights.Clear();
+            this.geometryRenderer.ClearGeometry();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -147,41 +90,15 @@ namespace FinalEngine.Rendering
                 return;
             }
 
-            if (disposing)
-            {
-                if (this.shaderProgram != null)
-                {
-                    ResourceManager.Instance.UnloadResource(this.shaderProgram);
+            this.fileSystem.RemoveVirtualTextFile("material");
+            this.fileSystem.RemoveVirtualTextFile("lighting");
 
-                    this.shaderProgram.Dispose();
-                    this.shaderProgram = null;
-                }
-            }
+            ResourceManager.Instance.UnloadResource(this.shaderProgram);
 
             this.IsDisposed = true;
         }
 
-        private void RenderGeometryData(IShaderProgram shaderProgram, CameraData camera)
-        {
-            this.renderDevice.Pipeline.SetShaderProgram(shaderProgram);
-
-            foreach (var data in this.geometryDatas)
-            {
-                var transform = data.Transformation;
-                var mesh = data.Mesh;
-                var material = data.Material;
-
-                this.UpdateUniforms(transform, material, camera);
-
-                this.renderDevice.Pipeline.SetTexture(material.DiffuseTexture, 0);
-                this.renderDevice.Pipeline.SetTexture(material.SpecularTexture, 1);
-
-                mesh.Bind(this.renderDevice.InputAssembler);
-                mesh.Render(this.renderDevice);
-            }
-        }
-
-        private void UpdateUniforms(Matrix4x4 transform, IMaterial material, CameraData camera)
+        private void UpdateUniforms(CameraData camera)
         {
             var uniforms = this.renderDevice.Pipeline.ShaderUniforms;
 
@@ -199,64 +116,8 @@ namespace FinalEngine.Rendering
                         this.renderDevice.Pipeline.SetUniform("u_view", camera.View);
                         break;
 
-                    case "u_transform":
-                        this.renderDevice.Pipeline.SetUniform("u_transform", transform);
-                        break;
-
-                    case "u_material.diffuseTexture":
-                        this.renderDevice.Pipeline.SetUniform("u_material.diffuseTexture", 0);
-                        break;
-
-                    case "u_material.specularTexture":
-                        this.renderDevice.Pipeline.SetUniform("u_material.specularTexture", 1);
-                        break;
-
-                    case "u_material.shininess":
-                        this.renderDevice.Pipeline.SetUniform("u_material.shininess", material.Shininess);
-                        break;
-
-                    case "u_light.base.ambientColor":
-                        if (this.activeLight == null)
-                        {
-                            continue;
-                        }
-
-                        this.renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", this.activeLight.AmbientColor);
-                        break;
-
-                    case "u_light.base.diffuseColor":
-                        if (this.activeLight == null)
-                        {
-                            continue;
-                        }
-
-                        this.renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", this.activeLight.DiffuseColor);
-                        break;
-
-                    case "u_light.base.specularColor":
-                        if (this.activeLight == null)
-                        {
-                            continue;
-                        }
-
-                        this.renderDevice.Pipeline.SetUniform("u_light.base.specularColor", this.activeLight.SpecularColor);
-                        break;
-
-                    case "u_light.direction":
-                        if (this.activeLight is not DirectionalLight directionalLight)
-                        {
-                            continue;
-                        }
-
-                        this.renderDevice.Pipeline.SetUniform("u_light.direction", directionalLight.Direction);
-                        break;
-
-                    case "u_viewPosition":
-                        this.renderDevice.Pipeline.SetUniform("u_viewPosition", camera.ViewPostiion);
-                        break;
-
                     default:
-                        throw new NotSupportedException($"The specified uniform name: '{name}' is not supported by the rendering engine.");
+                        continue;
                 }
             }
         }

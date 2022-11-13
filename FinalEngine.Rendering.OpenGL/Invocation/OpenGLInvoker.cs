@@ -546,5 +546,10 @@ namespace FinalEngine.Rendering.OpenGL.Invocation
         {
             GL.GetProgram(program, pname, out @params);
         }
+
+        public void GenerateTextureMipmap(int texture)
+        {
+            GL.GenerateTextureMipmap(texture);
+        }
     }
 }
