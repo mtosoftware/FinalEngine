@@ -5,6 +5,7 @@
 namespace FinalEngine.Extensions.Resources.Loaders
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using FinalEngine.Extensions.Resources.Invocation;
     using FinalEngine.IO;
@@ -97,15 +98,18 @@ namespace FinalEngine.Extensions.Resources.Loaders
                     int width = image.Width;
                     int height = image.Height;
 
-                    int[] data = new int[width * height];
+                    var pixels = new List<byte>(4 * image.Width * image.Height);
 
-                    // Just simple bit manipulation to convert RGBA to ABGR.
-                    for (int x = 0; x < width; x++)
+                    for (int y = 0; y < image.Height; y++)
                     {
-                        for (int y = 0; y < height; y++)
+                        var row = image.GetPixelRowSpan(y);
+
+                        for (int x = 0; x < image.Width; x++)
                         {
-                            var color = image[x, y];
-                            data[(y * width) + x] = (color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0);
+                            pixels.Add(row[x].R);
+                            pixels.Add(row[x].G);
+                            pixels.Add(row[x].B);
+                            pixels.Add(row[x].A);
                         }
                     }
 
@@ -125,7 +129,7 @@ namespace FinalEngine.Extensions.Resources.Loaders
 
                             GenerateMipmaps = true,
                         },
-                        data);
+                        pixels.ToArray());
                 }
             }
         }
