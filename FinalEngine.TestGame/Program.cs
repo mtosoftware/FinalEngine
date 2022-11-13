@@ -128,7 +128,7 @@ while (isRunning)
 
     window.Title = $"{GameTime.FrameRate}";
 
-    cameraSystem.Process();
+    world.ProcessAll(GameLoopType.Update);
 
     keyboard.Update();
     mouse.Update();
