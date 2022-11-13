@@ -109,7 +109,7 @@ camera.AddComponent(new CameraComponent()
 
 camera.AddComponent(new VelocityComponent()
 {
-    Speed = 0.1f,
+    Speed = 0.4f,
 });
 
 world.AddEntity(camera);
