@@ -22,6 +22,8 @@ using FinalEngine.Rendering.Renderers;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
+using FinalEngine.TestGame;
+using ImGuiNET;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -119,6 +121,17 @@ world.AddSystem(cameraSystem);
 
 bool isRunning = true;
 
+var controller = new ImGuiController(1280, 720);
+
+var ambientColor = new Vector4(1, 1, 1, 1);
+var diffuseColor = new Vector4(1, 1, 1, 1);
+var specularColor = new Vector4(1, 1, 1, 1);
+var direction = new Vector3(-1, -1, -1);
+
+var batcher = new SpriteBatcher(renderDevice.InputAssembler);
+var binder = new TextureBinder(renderDevice.Pipeline);
+var drawer = new SpriteDrawer(renderDevice, batcher, binder, 1280, 720);
+
 while (isRunning)
 {
     if (!gameTime.CanProcessNextFrame())
@@ -129,9 +142,6 @@ while (isRunning)
     window.Title = $"{GameTime.FrameRate}";
 
     world.ProcessAll(GameLoopType.Update);
-
-    keyboard.Update();
-    mouse.Update();
 
     for (int i = 0; i < model.ModelDatas.Count; i++)
     {
@@ -145,7 +155,38 @@ while (isRunning)
         ViewPostiion = camera.GetComponent<TransformComponent>().Position,
     };
 
+    controller.Update(keyboard, mouse, GameTime.Delta);
+
+    keyboard.Update();
+    mouse.Update();
+
     renderingEngine.Render(cameraData);
+
+    renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", new Vector3(ambientColor.X, ambientColor.Y, ambientColor.Z));
+    renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(diffuseColor.X, diffuseColor.Y, diffuseColor.Z));
+    renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(specularColor.X, specularColor.Y, specularColor.Z));
+    renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(direction.X, direction.Y, direction.Z));
+
+    drawer.Begin();
+    drawer.Draw(
+        new Material().DiffuseTexture,
+        Color.Red,
+        Vector2.Zero,
+        Vector2.Zero,
+        0,
+        new Vector2(256, 256));
+    drawer.End();
+
+    ImGui.Begin("Tools");
+
+    ImGui.ColorEdit4("Ambient Color", ref ambientColor);
+    ImGui.ColorEdit4("Diffuse Color", ref diffuseColor);
+    ImGui.ColorEdit4("Specular Color", ref specularColor);
+    ImGui.DragFloat3("Direction", ref direction, 0.1f, -1, 1);
+
+    ImGui.End();
+
+    controller.Render();
 
     renderContext.SwapBuffers();
     window.ProcessEvents();

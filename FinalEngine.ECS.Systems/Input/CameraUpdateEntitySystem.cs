@@ -86,7 +86,7 @@ namespace FinalEngine.ECS.Systems.Input
                 camera.IsLocked = false;
             }
 
-            if (this.mouse.IsButtonReleased(MouseButton.Left))
+            if (this.mouse.IsButtonReleased(MouseButton.Right))
             {
                 this.mouse.Location = new PointF(centerPosition.X, centerPosition.Y);
 

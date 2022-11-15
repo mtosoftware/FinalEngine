@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyVersion>2022.4.0.0</AssemblyVersion>
     <FileVersion>2022.4.0.0</FileVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -247,6 +248,10 @@
     <None Update="Resources\Textures\stone_floor_specular.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImGui.NET" Version="1.88.0" />
   </ItemGroup>
 
 </Project>

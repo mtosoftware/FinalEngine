@@ -55,7 +55,7 @@ namespace FinalEngine.Rendering
             this.fileSystem.AddVirtualTextFile("material", "Resources\\Shaders\\Includes\\material.glsl");
             this.fileSystem.AddVirtualTextFile("lighting", "Resources\\Shaders\\Includes\\lighting.glsl");
 
-            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-geometry.fesp");
+            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-directional.fesp");
         }
 
         public void Render(CameraData camera)
