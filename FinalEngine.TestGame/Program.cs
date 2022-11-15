@@ -41,7 +41,7 @@ var settings = new NativeWindowSettings()
     WindowBorder = WindowBorder.Fixed,
     WindowState = WindowState.Normal,
 
-    Size = new OpenTK.Mathematics.Vector2i(1280, 720),
+    Size = new OpenTK.Mathematics.Vector2i(1600, 900),
 
     StartVisible = true,
 
@@ -96,7 +96,7 @@ camera.AddComponent<TransformComponent>();
 
 camera.AddComponent(new PerspectiveComponent()
 {
-    AspectRatio = 1280.0f / 720.0f,
+    AspectRatio = 1600.0f / 900.0f,
     FarPlaneDistance = 1000.0f,
     NearPlaneDistance = 0.1f,
     FieldOfView = 70.0f,
@@ -106,7 +106,7 @@ camera.AddComponent(new CameraComponent()
 {
     IsEnabled = true,
     IsLocked = false,
-    Viewport = new Rectangle(0, 0, 1280, 720),
+    Viewport = new Rectangle(0, 0, 1600, 900),
 });
 
 camera.AddComponent(new VelocityComponent()
@@ -121,7 +121,7 @@ world.AddSystem(cameraSystem);
 
 bool isRunning = true;
 
-var controller = new ImGuiController(1280, 720);
+var controller = new ImGuiController(1600, 900);
 
 var ambientColor = new Vector4(1, 1, 1, 1);
 var diffuseColor = new Vector4(1, 1, 1, 1);
@@ -130,7 +130,9 @@ var direction = new Vector3(-1, -1, -1);
 
 var batcher = new SpriteBatcher(renderDevice.InputAssembler);
 var binder = new TextureBinder(renderDevice.Pipeline);
-var drawer = new SpriteDrawer(renderDevice, batcher, binder, 1280, 720);
+var drawer = new SpriteDrawer(renderDevice, batcher, binder, 1600, 900);
+
+var scale = new Vector3(0.3f);
 
 while (isRunning)
 {
@@ -145,7 +147,7 @@ while (isRunning)
 
     for (int i = 0; i < model.ModelDatas.Count; i++)
     {
-        geometryRenderer.AddGeometry(new GeometryData(model.ModelDatas[i].Material, model.ModelDatas[i].Mesh, Matrix4x4.CreateScale(0.4f)));
+        geometryRenderer.AddGeometry(new GeometryData(model.ModelDatas[i].Material, model.ModelDatas[i].Mesh, Matrix4x4.CreateScale(scale)));
     }
 
     var cameraData = new CameraData()
@@ -161,11 +163,6 @@ while (isRunning)
     mouse.Update();
 
     renderingEngine.Render(cameraData);
-
-    renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", new Vector3(ambientColor.X, ambientColor.Y, ambientColor.Z));
-    renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(diffuseColor.X, diffuseColor.Y, diffuseColor.Z));
-    renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(specularColor.X, specularColor.Y, specularColor.Z));
-    renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(direction.X, direction.Y, direction.Z));
 
     drawer.Begin();
     drawer.Draw(
@@ -183,6 +180,7 @@ while (isRunning)
     ImGui.ColorEdit4("Diffuse Color", ref diffuseColor);
     ImGui.ColorEdit4("Specular Color", ref specularColor);
     ImGui.DragFloat3("Direction", ref direction, 0.1f, -1, 1);
+    ImGui.InputFloat3("Scale", ref scale);
 
     ImGui.End();
 

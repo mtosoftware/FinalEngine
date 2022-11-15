@@ -579,6 +579,11 @@ void main()
                 }
 
                 io.KeysDown[(int)key] = keyboard.IsKeyDown(key);
+
+                if (keyboard.IsKeyPressed(key))
+                {
+                    this.PressChar((char)(int)key);
+                }
             }
 
             foreach (char c in this.PressedChars)
