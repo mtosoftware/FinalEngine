@@ -8,6 +8,8 @@ Final Engine is a *WIP* cross-platform Game Engine developed in C# 9.0, using .N
 <i>Create an engine that will make game development fun, simple and easy whilst giving the end user complete freedom.</i>
 </p>
 
+![image](https://user-images.githubusercontent.com/50978201/202500840-07f0a568-633b-4494-99af-4ca0e17afd4f.png)
+
 ## Build Instructions
 
 Below is a list of prerequisites and build instructions.
