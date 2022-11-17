@@ -220,7 +220,7 @@ void main()
         {
             var io = ImGui.GetIO();
 
-            io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out _);
+            io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out int _);
 
             int mips = (int)Math.Floor(Math.Log(Math.Max(width, height), 2));
 

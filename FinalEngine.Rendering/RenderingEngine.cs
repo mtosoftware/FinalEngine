@@ -16,6 +16,10 @@ namespace FinalEngine.Rendering
 
     public class RenderingEngine : IRenderingEngine
     {
+        public Vector3 ambientColor, diffuseColor, specularColor;
+
+        public Vector3 direction;
+
         private readonly IFileSystem fileSystem;
 
         private readonly IGeometryRenderer geometryRenderer;
@@ -80,10 +84,10 @@ namespace FinalEngine.Rendering
 
             this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram);
 
-            this.renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", new Vector3(0.3f));
-            this.renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.4f));
-            this.renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.6f));
-            this.renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(1));
+            this.renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", this.ambientColor);
+            this.renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", this.diffuseColor);
+            this.renderDevice.Pipeline.SetUniform("u_light.base.specularColor", this.specularColor);
+            this.renderDevice.Pipeline.SetUniform("u_light.direction", this.direction);
 
             this.UpdateUniforms(camera);
             this.geometryRenderer.Render();

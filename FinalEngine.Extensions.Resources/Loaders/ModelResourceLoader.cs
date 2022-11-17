@@ -109,7 +109,7 @@ namespace FinalEngine.Extensions.Resources.Loaders
                     result.NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>($"{directory}\\{assimpMaterial.TextureHeight.FilePath}");
                 }
 
-                result.Shininess = assimpMaterial.Shininess;
+                result.Shininess = assimpMaterial.Shininess * assimpMaterial.ShininessStrength;
             }
 
             return result;
@@ -133,7 +133,7 @@ namespace FinalEngine.Extensions.Resources.Loaders
 
                     if (mesh.HasVertexColors(0))
                     {
-                        //// TODO: Let's check if we need to convert from 255 to 0-1.
+                        //// TODO: Honestly, just remove vertex colors. It's not very modern anyways.
                         vertex.Color = new Vector4(
                             mesh.VertexColorChannels[0][i].R,
                             mesh.VertexColorChannels[0][i].G,

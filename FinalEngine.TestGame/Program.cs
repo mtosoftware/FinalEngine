@@ -123,15 +123,16 @@ bool isRunning = true;
 
 var controller = new ImGuiController(1600, 900);
 
-var ambientColor = new Vector4(1, 1, 1, 1);
-var diffuseColor = new Vector4(1, 1, 1, 1);
-var specularColor = new Vector4(1, 1, 1, 1);
+var ambientColor = new Vector3(126 / 255.0f, 18 / 255.0f, 18 / 255.0f);
+var diffuseColor = new Vector3(191 / 255.0f, 149 / 255.0f, 89 / 255.0f);
+var specularColor = new Vector3(188 / 255.0f, 128 / 255.0f, 52 / 255.0f);
 var direction = new Vector3(-1, -1, -1);
 
 var batcher = new SpriteBatcher(renderDevice.InputAssembler);
 var binder = new TextureBinder(renderDevice.Pipeline);
 var drawer = new SpriteDrawer(renderDevice, batcher, binder, 1600, 900);
 
+var _ = new Vector3(5);
 var scale = new Vector3(0.3f);
 
 while (isRunning)
@@ -161,6 +162,10 @@ while (isRunning)
 
     keyboard.Update();
     mouse.Update();
+    renderingEngine.diffuseColor = diffuseColor;
+    renderingEngine.specularColor = specularColor;
+    renderingEngine.ambientColor = ambientColor;
+    renderingEngine.direction = direction;
 
     renderingEngine.Render(cameraData);
 
@@ -176,9 +181,9 @@ while (isRunning)
 
     ImGui.Begin("Tools");
 
-    ImGui.ColorEdit4("Ambient Color", ref ambientColor);
-    ImGui.ColorEdit4("Diffuse Color", ref diffuseColor);
-    ImGui.ColorEdit4("Specular Color", ref specularColor);
+    ImGui.ColorEdit3("Ambient Color", ref ambientColor);
+    ImGui.ColorEdit3("Diffuse Color", ref diffuseColor);
+    ImGui.ColorEdit3("Specular Color", ref specularColor);
     ImGui.DragFloat3("Direction", ref direction, 0.1f, -1, 1);
     ImGui.InputFloat3("Scale", ref scale);
 
