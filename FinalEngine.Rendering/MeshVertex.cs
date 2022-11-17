@@ -38,6 +38,7 @@ namespace FinalEngine.Rendering
                     new InputElement(1, 4, InputElementType.Float, 3 * sizeof(float)),
                     new InputElement(2, 2, InputElementType.Float, 7 * sizeof(float)),
                     new InputElement(3, 3, InputElementType.Float, 9 * sizeof(float)),
+                    new InputElement(4, 3, InputElementType.Float, 12 * sizeof(float)),
                 };
             }
         }
@@ -73,6 +74,14 @@ namespace FinalEngine.Rendering
         ///   The normal.
         /// </value>
         public Vector3 Normal { get; set; }
+
+        /// <summary>
+        ///   Gets or sets the tangent.
+        /// </summary>
+        /// <value>
+        ///   The tangent.
+        /// </value>
+        public Vector3 Tangent { get; set; }
 
         /// <summary>
         ///   Implements the operator ==.
@@ -122,7 +131,8 @@ namespace FinalEngine.Rendering
             return this.Position == other.Position &&
                    this.Color == other.Color &&
                    this.TextureCoordinate == other.TextureCoordinate &&
-                   this.Normal == other.Normal;
+                   this.Normal == other.Normal &&
+                   this.Tangent == other.Tangent;
         }
 
         /// <summary>
@@ -152,7 +162,8 @@ namespace FinalEngine.Rendering
             return (this.Position.GetHashCode() * accumulator) +
                    (this.Color.GetHashCode() * accumulator) +
                    (this.TextureCoordinate.GetHashCode() * accumulator) +
-                   (this.Normal.GetHashCode() * accumulator);
+                   (this.Normal.GetHashCode() * accumulator) +
+                   (this.Tangent.GetHashCode() * accumulator);
         }
     }
 }

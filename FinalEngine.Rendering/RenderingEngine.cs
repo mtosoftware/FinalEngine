@@ -57,7 +57,7 @@ namespace FinalEngine.Rendering
             this.fileSystem.AddVirtualTextFile("lighting", "Resources\\Shaders\\Includes\\lighting.glsl");
             this.fileSystem.AddVirtualTextFile("attenuation", "Resources\\Shaders\\Includes\\attenuation.glsl");
 
-            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-point.fesp");
+            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-directional.fesp");
         }
 
         public void Render(CameraData camera)
@@ -82,10 +82,7 @@ namespace FinalEngine.Rendering
             this.renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", new Vector3(0.3f));
             this.renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.4f));
             this.renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.6f));
-            this.renderDevice.Pipeline.SetUniform("u_light.position", new Vector3(5, 5, 5));
-            this.renderDevice.Pipeline.SetUniform("u_light.attenuation.constant", 1.0f);
-            this.renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.022f);
-            this.renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0019f);
+            this.renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(1));
 
             this.UpdateUniforms(camera);
             this.geometryRenderer.Render();

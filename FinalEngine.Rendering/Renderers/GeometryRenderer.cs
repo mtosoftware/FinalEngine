@@ -48,6 +48,7 @@ namespace FinalEngine.Rendering.Renderers
 
                 this.renderDevice.Pipeline.SetTexture(material.DiffuseTexture, 0);
                 this.renderDevice.Pipeline.SetTexture(material.SpecularTexture, 1);
+                this.renderDevice.Pipeline.SetTexture(material.NormalTexture, 2);
 
                 mesh.Bind(this.renderDevice.InputAssembler);
                 mesh.Render(this.renderDevice);
@@ -74,6 +75,10 @@ namespace FinalEngine.Rendering.Renderers
 
                     case "u_material.specularTexture":
                         this.renderDevice.Pipeline.SetUniform("u_material.specularTexture", 1);
+                        break;
+
+                    case "u_material.normalTexture":
+                        this.renderDevice.Pipeline.SetUniform("u_material.normalTexture", 2);
                         break;
 
                     case "u_material.shininess":

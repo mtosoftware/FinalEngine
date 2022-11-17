@@ -97,7 +97,7 @@ camera.AddComponent<TransformComponent>();
 camera.AddComponent(new PerspectiveComponent()
 {
     AspectRatio = 1600.0f / 900.0f,
-    FarPlaneDistance = 1000.0f,
+    FarPlaneDistance = 10000.0f,
     NearPlaneDistance = 0.1f,
     FieldOfView = 70.0f,
 });

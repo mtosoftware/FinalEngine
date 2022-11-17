@@ -71,7 +71,9 @@ namespace FinalEngine.Extensions.Resources.Loaders
 
             using (var context = new AssimpContext())
             {
-                var scene = context.ImportFile(filePath, PostProcessSteps.Triangulate | PostProcessSteps.FlipUVs | PostProcessSteps.GenerateSmoothNormals);
+                var scene = context.ImportFile(
+                    filePath,
+                    PostProcessSteps.Triangulate | PostProcessSteps.FlipUVs | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.CalculateTangentSpace);
 
                 if (scene == null || scene.SceneFlags.HasFlag(SceneFlags.Incomplete) || scene.RootNode == null)
                 {
@@ -100,6 +102,11 @@ namespace FinalEngine.Extensions.Resources.Loaders
                 if (assimpMaterial.HasTextureSpecular)
                 {
                     result.SpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>($"{directory}\\{assimpMaterial.TextureSpecular.FilePath}");
+                }
+
+                if (assimpMaterial.HasTextureHeight)
+                {
+                    result.NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>($"{directory}\\{assimpMaterial.TextureHeight.FilePath}");
                 }
 
                 result.Shininess = assimpMaterial.Shininess;
@@ -151,6 +158,14 @@ namespace FinalEngine.Extensions.Resources.Loaders
                             mesh.Normals[i].X,
                             mesh.Normals[i].Y,
                             mesh.Normals[i].Z);
+                    }
+
+                    if (mesh.HasTangentBasis)
+                    {
+                        vertex.Tangent = new Vector3(
+                            mesh.Tangents[i].X,
+                            mesh.Tangents[i].Y,
+                            mesh.Tangents[i].Z);
                     }
 
                     vertices.Add(vertex);

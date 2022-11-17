@@ -11,11 +11,15 @@ namespace FinalEngine.Rendering
     {
         private static readonly ITexture2D DefaultDiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_diffuse.png");
 
+        private static readonly ITexture2D DefaultNormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_normal.png");
+
         private static readonly ITexture2D DefaultSpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_specular.png");
 
         private ITexture2D? diffuseTexture;
 
-        private ITexture2D specularTexture;
+        private ITexture2D? normalTexture;
+
+        private ITexture2D? specularTexture;
 
         public Material()
         {
@@ -26,6 +30,12 @@ namespace FinalEngine.Rendering
         {
             get { return this.diffuseTexture ??= DefaultDiffuseTexture; }
             set { this.diffuseTexture = value; }
+        }
+
+        public ITexture2D NormalTexture
+        {
+            get { return this.normalTexture ??= DefaultNormalTexture; }
+            set { this.normalTexture = value; }
         }
 
         public float Shininess { get; set; }
