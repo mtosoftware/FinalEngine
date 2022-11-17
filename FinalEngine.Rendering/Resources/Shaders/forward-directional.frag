@@ -16,6 +16,13 @@ uniform DirectionalLight u_light;
 
 void main()
 {
+    vec4 texColor = texture(u_material.diffuseTexture, in_texCoord);
+
+    if (texColor.a < 0.1)
+    {
+        discard;
+    }
+
     vec3 normal = CalculateNormal(in_tbn, u_material.normalTexture, in_texCoord);
     vec3 viewDirection = normalize(u_viewPosition - in_fragPos);
 
