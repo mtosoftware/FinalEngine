@@ -18,16 +18,16 @@
   - Texture Loader :)
   - Sprite Batching :)
   - Meshes :)
-  - Materials
+  - Materials :)
   - Lighting
-    - Directional
-    - Point
+    - Directional :)
+    - Point :)
     - Spot
-    - Volumetric
-  - Deferred Rendering Engine
-    - This will likely be an Entity System
-      - Probably inherited from some RenderSystemBase
-        - The base system will update camera stuff.
+  - Fog
+    - Linear
+    - Exponential
+    - Expotential Squared
+- Forward Rendering Engine
 - Audio
 - Physics
 - Scene & Entity Management
