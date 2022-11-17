@@ -30,10 +30,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
+    <ProjectReference Include="..\FinalEngine.Maths\FinalEngine.Maths.csproj" />
     <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resources\Shaders\forward-point.fesp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Shaders\forward-directional.fesp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -52,6 +56,15 @@
     <None Update="Resources\Shaders\forward-geometry.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Shaders\forward-point.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\forward-point.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Includes\attenuation.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Shaders\Includes\lighting.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -66,5 +79,5 @@
     </None>
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties resources_4shaders_4forward-point_1fesp__JsonSchema="https://appliedengdesign.github.io/cnccodes-json-schema/draft/2022-07/schema" /></VisualStudio></ProjectExtensions>
 </Project>

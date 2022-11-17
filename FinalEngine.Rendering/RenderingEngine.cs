@@ -6,6 +6,7 @@ namespace FinalEngine.Rendering
 {
     using System;
     using System.Drawing;
+    using System.Numerics;
     using FinalEngine.IO;
     using FinalEngine.Rendering.Data;
     using FinalEngine.Rendering.Pipeline;
@@ -54,8 +55,9 @@ namespace FinalEngine.Rendering
         {
             this.fileSystem.AddVirtualTextFile("material", "Resources\\Shaders\\Includes\\material.glsl");
             this.fileSystem.AddVirtualTextFile("lighting", "Resources\\Shaders\\Includes\\lighting.glsl");
+            this.fileSystem.AddVirtualTextFile("attenuation", "Resources\\Shaders\\Includes\\attenuation.glsl");
 
-            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-geometry.fesp");
+            this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-point.fesp");
         }
 
         public void Render(CameraData camera)
@@ -76,6 +78,14 @@ namespace FinalEngine.Rendering
             this.renderDevice.Clear(Color.Black);
 
             this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram);
+
+            this.renderDevice.Pipeline.SetUniform("u_light.base.ambientColor", new Vector3(0.3f));
+            this.renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.4f));
+            this.renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.6f));
+            this.renderDevice.Pipeline.SetUniform("u_light.position", new Vector3(5, 5, 5));
+            this.renderDevice.Pipeline.SetUniform("u_light.attenuation.constant", 1.0f);
+            this.renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.022f);
+            this.renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0019f);
 
             this.UpdateUniforms(camera);
             this.geometryRenderer.Render();

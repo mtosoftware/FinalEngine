@@ -410,7 +410,11 @@ namespace FinalEngine.Rendering.OpenGL
 
                 if (location == -1)
                 {
+#if DEBUG
+                    return false;
+#else
                     throw new UniformNotLocatedException($"The specified uniform, {name} couldn't be located.", nameof(name));
+#endif
                 }
 
                 this.uniformLocations.Add(name, location);
