@@ -56,6 +56,7 @@ namespace FinalEngine.Rendering
             this.fileSystem.AddVirtualTextFile("material", "Resources\\Shaders\\Includes\\material.glsl");
             this.fileSystem.AddVirtualTextFile("lighting", "Resources\\Shaders\\Includes\\lighting.glsl");
             this.fileSystem.AddVirtualTextFile("attenuation", "Resources\\Shaders\\Includes\\attenuation.glsl");
+            this.fileSystem.AddVirtualTextFile("mapping", "Resources\\Shaders\\Includes\\mapping.glsl");
 
             this.shaderProgram = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\forward-directional.fesp");
         }

@@ -1,5 +1,7 @@
 #version 450
 
+#include "mapping"
+
 layout (location = 0) in vec3 in_position;
 layout (location = 1) in vec4 in_color;
 layout (location = 2) in vec2 in_texCoord;
@@ -20,14 +22,7 @@ void main()
 	out_color = in_color;
 	out_texCoord = in_texCoord;
     out_fragPos = vec3(u_transform * vec4(in_position, 1.0));
-
-    vec3 n = normalize((u_transform * vec4(in_normal, 0.0)).xyz);
-    vec3 t = normalize((u_transform * vec4(in_tangent, 0.0)).xyz); 
-    t = normalize(t - dot(t, n) * n);
-
-    vec3 b = cross(t, n);
-
-    out_tbn = mat3(t, b, n);
+    out_tbn = CreateTBN(u_transform, in_normal, in_tangent);
 
 	gl_Position = u_projection * u_view * u_transform * vec4(in_position, 1.0);
 }
