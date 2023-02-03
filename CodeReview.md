@@ -61,8 +61,6 @@
 
 ## Styling and Coding Conventions
 
-A great tip for below is to include [Roslynator 2019](https://marketplace.visualstudio.com/items?itemName=josefpihrt.Roslynator2019) in your project(s). 
-
 - [ ] Any new files have been named consistently and spelled correctly.
 - [ ] Any and all members have been named simply and if possible, short and to the point (prefer `isMatch` over `isPatternMatched`).
 - [ ] There is _no_ commented out code.
@@ -71,9 +69,11 @@ A great tip for below is to include [Roslynator 2019](https://marketplace.visual
 	2. Run Code Analysis on solution and fix any warnings.
 	3. In terms of a new project, make sure it contains:
 		- StyleCop.Analysers
-		- Microsoft.CodeAnalysis.FxCopAnalyzers
+		- Microsoft.CodeAnalysis.NetAnalyzers
 	4. Make sure the appropriate StyleCop JSON file is added as a link to the new project.
-	5. Make sure all StyleCop and FxCopAnalyzer warnings have been fixed and none have been suppressed.
+	5. Make sure all StyleCop and NetAnalyzers warnings have been fixed and none have been suppressed.
+      - If one has to be supressed, you'll likely see examples of it being suppressed elsewhere.
+      - If this happens, be sure to suppress the warning using the `SuppressMessage` attribute on the method.
 	6. Just to be sure, clean and build the solution.
 
 ## Documentation
