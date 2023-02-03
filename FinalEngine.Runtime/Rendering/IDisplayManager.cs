@@ -1,8 +1,8 @@
-// <copyright file="IResolutionManager.cs" company="Software Antics">
+// <copyright file="IDisplayManager.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering;
+namespace FinalEngine.Runtime.Rendering;
 
 /// <summary>
 /// Enumerates the available display resolutions for the client.
@@ -33,7 +33,7 @@ public enum DisplayResolution
 /// <summary>
 /// Defines an interface that provides methods to handle the display resolution.
 /// </summary>
-public interface IResolutionManager
+public interface IDisplayManager
 {
     /// <summary>
     /// Changes the display resolution to the specified <paramref name="resolution"/>.

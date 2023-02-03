@@ -1,23 +1,24 @@
-// <copyright file="ResolutionManager.cs" company="Software Antics">
+// <copyright file="DisplayManager.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering;
+namespace FinalEngine.Runtime.Rendering;
 
 using System;
 using System.Drawing;
-using FinalEngine.Input.Displays;
+using FinalEngine.Platform;
+using FinalEngine.Rendering;
 
-public class ResolutionManager : IResolutionManager
+public class DisplayManager : IDisplayManager
 {
-    private readonly IDisplay display;
-
     private readonly IRasterizer rasterizer;
 
-    public ResolutionManager(IRasterizer rasterizer, IDisplay display)
+    private readonly IWindow window;
+
+    public DisplayManager(IRasterizer rasterizer, IWindow window)
     {
         this.rasterizer = rasterizer ?? throw new ArgumentNullException(nameof(rasterizer));
-        this.display = display ?? throw new ArgumentNullException(nameof(display));
+        this.window = window ?? throw new ArgumentNullException(nameof(window));
     }
 
     public void ChangeResolution(DisplayResolution resolution)
@@ -31,9 +32,11 @@ public class ResolutionManager : IResolutionManager
             _ => throw new NotSupportedException($"The specified {nameof(resolution)} is not supported."),
         };
 
-        this.display.Width = viewport.Width;
-        this.display.Height = viewport.Height;
+        this.window.Size = new Size(
+            viewport.Width,
+            viewport.Height);
 
+        // glViewport
         this.rasterizer.SetViewport(viewport);
     }
 }

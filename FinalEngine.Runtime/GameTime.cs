@@ -5,6 +5,7 @@
 namespace FinalEngine.Runtime;
 
 using System;
+using System.Diagnostics;
 using FinalEngine.Runtime.Invocation;
 
 /// <summary>
@@ -32,6 +33,11 @@ public class GameTime : IGameTime
     ///   The last time a frame has been processed, in milliseconds.
     /// </summary>
     private double lastTime;
+
+    public GameTime(double frameCap)
+        : this(new StopwatchInvoker(new Stopwatch()), frameCap)
+    {
+    }
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="GameTime"/> class.

@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
-	  <AnalysisMode>All</AnalysisMode>
+    <AnalysisMode>All</AnalysisMode>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
@@ -23,8 +23,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -32,10 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
-    <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
-    <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.csproj" />
-    <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
-    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
+    <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
   </ItemGroup>
 </Project>
