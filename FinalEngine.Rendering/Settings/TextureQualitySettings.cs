@@ -9,6 +9,8 @@ using FinalEngine.Rendering.Textures;
 
 public enum TextureFilterType
 {
+    NearestNeighbour,
+
     Bilinear,
 
     Trilinear,
@@ -35,7 +37,16 @@ public struct TextureQualitySettings : IEquatable<TextureQualitySettings>
 
     public TextureFilterMode MagFilter
     {
-        get { return TextureFilterMode.Linear; }
+        get
+        {
+            return this.FilterType switch
+            {
+                TextureFilterType.NearestNeighbour => TextureFilterMode.Nearest,
+                TextureFilterType.Bilinear => TextureFilterMode.Linear,
+                TextureFilterType.Trilinear => TextureFilterMode.Linear,
+                _ => TextureFilterMode.Linear,
+            };
+        }
     }
 
     public TextureFilterMode MinFilter
