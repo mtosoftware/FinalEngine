@@ -31,8 +31,8 @@ Release builds will be available as NuGet packages.
 
 If you do not follow the steps below, it is unlikely your PR will be merged.
 
-1. Install [Git](https://git-scm.com/downloads) and the [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
-2. [Fork](https://github.com/mtosoftware/FinalEngine/fork) the repository.
+1. Install [Git](https://git-scm.com/downloads) and the [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0).
+2. [Fork](https://github.com/softwareantics/FinalEngine/fork) the repository.
 3. Create a new branch of develop on your fork, make sure the branch name is descriptive.
 4. Add an empty commit to start your work off: `git commit --allow-empty -m "[WIP] Thing you're doing"`.
 5. Open a Pull request with `[WIP]` in the title; following the template. Do this **before** you start working.
