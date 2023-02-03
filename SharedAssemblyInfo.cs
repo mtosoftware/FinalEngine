@@ -6,11 +6,11 @@ using System.Reflection;
 
 [assembly: AssemblyProduct("Final Engine")]
 [assembly: AssemblyCompany("Software Antics")]
-[assembly: AssemblyCopyright("© 2022 Software Antics")]
+[assembly: AssemblyCopyright("© 2023 Software Antics")]
 [assembly: AssemblyTrademark("Software Antics™")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2022.4.0.0")]
-[assembly: AssemblyFileVersion("2022.4.0.0")]
+[assembly: AssemblyVersion("2023.1.0.0")]
+[assembly: AssemblyFileVersion("2023.1.0.0")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else

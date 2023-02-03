@@ -6,6 +6,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK;
 
 using System;
 using System.Drawing;
+using FinalEngine.Input.Displays;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using global::OpenTK.Mathematics;
 using global::OpenTK.Windowing.Common;
@@ -15,7 +16,7 @@ using global::OpenTK.Windowing.Common;
 /// </summary>
 /// <seealso cref="IWindow"/>
 /// <seealso cref="IEventsProcessor"/>
-public class OpenTKWindow : IWindow, IEventsProcessor
+public class OpenTKWindow : IDisplay, IWindow, IEventsProcessor
 {
     /// <summary>
     ///   The native window.
@@ -50,6 +51,12 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     public Size ClientSize
     {
         get { return new Size(this.nativeWindow.ClientSize.X, this.nativeWindow.ClientSize.Y); }
+    }
+
+    public int Height
+    {
+        get { return this.nativeWindow.Size.Y; }
+        set { this.nativeWindow.Size = new Vector2i(this.nativeWindow.Size.X, value); }
     }
 
     /// <inheritdoc/>
@@ -113,6 +120,12 @@ public class OpenTKWindow : IWindow, IEventsProcessor
 
             this.nativeWindow.IsVisible = value;
         }
+    }
+
+    public int Width
+    {
+        get { return this.nativeWindow.Size.X; }
+        set { this.nativeWindow.Size = new Vector2i(value, this.nativeWindow.Size.Y); }
     }
 
     /// <summary>
