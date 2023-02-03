@@ -8,15 +8,13 @@ Final Engine is a *WIP* cross-platform Game Engine developed in C# 9.0, using .N
 <i>Create an engine that will make game development fun, simple and easy whilst giving the end user complete freedom.</i>
 </p>
 
-![image](https://user-images.githubusercontent.com/50978201/202500840-07f0a568-633b-4494-99af-4ca0e17afd4f.png)
-
 ## Build Instructions
 
 Below is a list of prerequisites and build instructions.
 
 ### Prerequisites
 
-- [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
+- [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0).
 
 ### Windows, Mac and Linux
 
@@ -33,8 +31,8 @@ Release builds will be available as NuGet packages.
 
 If you do not follow the steps below, it is unlikely your PR will be merged.
 
-1. Install [Git](https://git-scm.com/downloads) and the [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
-2. [Fork](https://github.com/mtosoftware/FinalEngine/fork) the repository.
+1. Install [Git](https://git-scm.com/downloads) and the [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0).
+2. [Fork](https://github.com/softwareantics/FinalEngine/fork) the repository.
 3. Create a new branch of develop on your fork, make sure the branch name is descriptive.
 4. Add an empty commit to start your work off: `git commit --allow-empty -m "[WIP] Thing you're doing"`.
 5. Open a Pull request with `[WIP]` in the title; following the template. Do this **before** you start working.
