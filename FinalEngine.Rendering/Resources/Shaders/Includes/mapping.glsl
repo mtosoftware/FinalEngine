@@ -14,7 +14,7 @@ mat3 CreateTBN(mat4 transform, vec3 normal, vec3 tangent)
 
 vec3 CalculateNormal(mat3 tbn, sampler2D sampler, vec2 texCoord)
 {
-    return normalize(tbn * (255.0 / 128.0 * texture2D(sampler, texCoord).xyz - 1));
+    return normalize(tbn * (255.0 / 128.0 * texture(sampler, texCoord).xyz - 1));
 }
 
 #endif // MAPPING_GLSL

@@ -46,7 +46,7 @@ var settings = new NativeWindowSettings()
     StartVisible = true,
 
     //// TODO: Issue #159
-    NumberOfSamples = 8,
+    NumberOfSamples = 4,
 };
 
 var nativeWindow = new NativeWindowInvoker(settings);
