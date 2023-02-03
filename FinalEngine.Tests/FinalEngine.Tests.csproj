@@ -6,11 +6,12 @@
 		<IsPackable>false</IsPackable>
 		<AnalysisMode>All</AnalysisMode>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Platforms>x64</Platforms>
 	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <NoWarn>SA0001;CS1591;SA1600;CA1001</NoWarn>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NoWarn>SA0001;CS1591;SA1600;CA1001</NoWarn>
+  </PropertyGroup>
   
 	<ItemGroup>
 		<AdditionalFiles Include="..\Styling\StyleCop\Tests\stylecop.json" Link="stylecop.json" />
