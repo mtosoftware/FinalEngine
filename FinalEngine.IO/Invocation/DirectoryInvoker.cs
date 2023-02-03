@@ -11,7 +11,7 @@ using System.IO;
 ///   Provides an implementation of an <see cref="IDirectoryInvoker"/>.
 /// </summary>
 /// <seealso cref="IDirectoryInvoker"/>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public class DirectoryInvoker : IDirectoryInvoker
 {
     /// <inheritdoc/>

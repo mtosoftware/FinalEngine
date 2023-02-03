@@ -11,7 +11,7 @@ using System.IO;
 ///   Provides an implementation of a n <see cref="IFileInvoker"/>.
 /// </summary>
 /// <seealso cref="IFileInvoker"/>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public class FileInvoker : IFileInvoker
 {
     /// <inheritdoc/>

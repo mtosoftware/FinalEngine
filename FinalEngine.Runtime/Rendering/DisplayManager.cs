@@ -28,7 +28,7 @@ public class DisplayManager : IDisplayManager
             DisplayResolution.StandardDefinition => new Rectangle(0, 0, 640, 480),
             DisplayResolution.HighDefinition => new Rectangle(0, 0, 1280, 720),
             DisplayResolution.FullHighDefinition => new Rectangle(0, 0, 1920, 1080),
-            DisplayResolution.UltaHighDefinition => new Rectangle(0, 0, 3840, 2160),
+            DisplayResolution.UltraHighDefinition => new Rectangle(0, 0, 3840, 2160),
             _ => throw new NotSupportedException($"The specified {nameof(resolution)} is not supported."),
         };
 

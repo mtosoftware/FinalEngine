@@ -27,7 +27,7 @@ public enum DisplayResolution
     /// <summary>
     /// Ultra High Definition (UHD - 3840 x 2160).
     /// </summary>
-    UltaHighDefinition,
+    UltraHighDefinition,
 }
 
 /// <summary>

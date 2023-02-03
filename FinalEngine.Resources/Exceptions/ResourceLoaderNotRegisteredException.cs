@@ -13,7 +13,7 @@ using System.Runtime.Serialization;
 /// </summary>
 /// <seealso cref="Exception"/>
 [Serializable]
-[ExcludeFromCodeCoverage(Justification = "Exception Class")]
+[ExcludeFromCodeCoverage]
 public class ResourceLoaderNotRegisteredException : Exception
 {
     /// <summary>

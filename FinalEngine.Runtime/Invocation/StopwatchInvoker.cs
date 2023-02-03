@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 ///   Provides a standard implementation of an <see cref="IStopwatchInvoker"/>.
 /// </summary>
 /// <seealso cref="IStopwatchInvoker"/>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public class StopwatchInvoker : IStopwatchInvoker
 {
     /// <summary>

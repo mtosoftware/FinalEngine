@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 ///   Provides a standard implementation of an <see cref="IRuntimeInformationInvoker"/>.
 /// </summary>
 /// <seealso cref="IRuntimeInformationInvoker"/>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public class RuntimeInformationInvoker : IRuntimeInformationInvoker
 {
     /// <inheritdoc/>

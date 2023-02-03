@@ -78,6 +78,13 @@ public class OpenGLTexture2DTests
     }
 
     [Test]
+    public void ConstructorShouldInvokeGenerateTextureMipmapWhenGenerateMipmapsIsTrue()
+    {
+        // Assert
+        this.invoker.Verify(x => x.GenerateTextureMipmap(ID), Times.Once());
+    }
+
+    [Test]
     public void ConstructorShouldInvokeGenTextureWhenInvoked()
     {
         // Assert
@@ -194,6 +201,7 @@ public class OpenGLTexture2DTests
             PixelType = PixelType.Short,
             WrapS = TextureWrapMode.Clamp,
             WrapT = TextureWrapMode.Repeat,
+            GenerateMipmaps = true,
         };
 
         this.texture = new OpenGLTexture2D(this.invoker.Object, this.mapper.Object, this.description, PixelFormat.Rgba, SizedFormat.R8, new IntPtr(1));

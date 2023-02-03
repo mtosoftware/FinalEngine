@@ -55,6 +55,7 @@ public struct TextureQualitySettings : IEquatable<TextureQualitySettings>
         {
             return this.FilterType switch
             {
+                TextureFilterType.NearestNeighbour => TextureFilterMode.Nearest,
                 TextureFilterType.Bilinear => TextureFilterMode.Linear,
                 TextureFilterType.Trilinear => TextureFilterMode.LinearMipmapLinear,
                 _ => TextureFilterMode.LinearMipmapLinear,

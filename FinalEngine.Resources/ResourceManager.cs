@@ -43,7 +43,7 @@ public class ResourceManager : IResourceManager
     /// <summary>
     ///   Finalizes an instance of the <see cref="ResourceManager"/> class.
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Exception Class")]
+    [ExcludeFromCodeCoverage]
     ~ResourceManager()
     {
         this.Dispose(false);

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FinalEngine.ECS;
 
+[EntitySystemProcess(ExecutionType = GameLoopType.Render)]
 public class MockEntitySystemB : EntitySystemBase
 {
     public Predicate<IReadOnlyEntity> IsMatchFunction { get; set; }

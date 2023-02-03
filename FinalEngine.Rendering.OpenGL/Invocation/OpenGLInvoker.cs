@@ -16,7 +16,7 @@ using OpenTK.Graphics.OpenGL4;
 ///   Provides an OpenTK implementation of an <see cref="IOpenGLInvoker"/>.
 /// </summary>
 /// <seealso cref="IOpenGLInvoker"/>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public class OpenGLInvoker : IOpenGLInvoker
 {
     /// <summary>

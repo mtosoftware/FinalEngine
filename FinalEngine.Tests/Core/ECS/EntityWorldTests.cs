@@ -216,6 +216,83 @@ public class EntityWorldTests
     }
 
     [Test]
+    public void ProcessAllShouldInvokeSystemProcessWhenInvoked()
+    {
+        // Arrange
+        var entity = new Entity();
+        var system = new MockEntitySystemA()
+        {
+            ProcessFunction = (entities) =>
+            {
+                Assert.Pass();
+            },
+
+            IsMatchFunction = (entity) =>
+            {
+                return true;
+            },
+        };
+
+        this.world.AddSystem(system);
+        this.world.AddEntity(entity);
+
+        // Act
+        this.world.ProcessAll(GameLoopType.Update);
+    }
+
+    [Test]
+    public void ProcessAllShouldNotProcessSystemWithUpdateAttributeWhenProcessingRenderSystems()
+    {
+        // Arrange
+        var entity = new Entity();
+        var systemA = new MockEntitySystemA()
+        {
+            ProcessFunction = (_) =>
+            {
+                // Fail if update system is processed.
+                Assert.Fail();
+            },
+        };
+
+        var systemB = new MockEntitySystemB();
+
+        this.world.AddEntity(entity);
+        this.world.AddSystem(systemA);
+        this.world.AddSystem(systemB);
+
+        // Act
+        this.world.ProcessAll(GameLoopType.Render);
+
+        // Assert
+        Assert.Pass();
+    }
+
+    [Test]
+    public void ProcessAllShouldProcessExecutionTypeFromAttributeWhenInvoked()
+    {
+        // Arrange
+        var entity = new Entity();
+        var system = new MockEntitySystemB()
+        {
+            IsMatchFunction = (_) =>
+            {
+                return true;
+            },
+
+            ProcessFunction = (_) =>
+            {
+                Assert.Pass();
+            },
+        };
+
+        this.world.AddEntity(entity);
+        this.world.AddSystem(system);
+
+        // Act
+        this.world.ProcessAll(GameLoopType.Render);
+    }
+
+    [Test]
     public void RemoveEntityShouldInvokeSystemAddOrRemoveByAspectWhenInvoked()
     {
         // Arrange

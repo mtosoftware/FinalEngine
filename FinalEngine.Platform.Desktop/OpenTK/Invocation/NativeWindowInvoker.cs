@@ -11,7 +11,7 @@ using global::OpenTK.Windowing.Desktop;
 ///   Provides an implementation of an <see cref="INativeWindowInvoker"/>.
 /// </summary>
 /// <seealso cref="INativeWindowInvoker"/>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public sealed class NativeWindowInvoker : NativeWindow, INativeWindowInvoker
 {
     /// <inheritdoc cref="NativeWindow(NativeWindowSettings)"/>

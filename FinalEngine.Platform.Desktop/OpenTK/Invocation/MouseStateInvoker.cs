@@ -13,7 +13,7 @@ using global::OpenTK.Windowing.GraphicsLibraryFramework;
 ///   Provides an implementation of an <see cref="IMouseStateInvoker"/>.
 /// </summary>
 /// <seealso cref="IMouseStateInvoker"/>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public class MouseStateInvoker : IMouseStateInvoker
 {
     /// <summary>

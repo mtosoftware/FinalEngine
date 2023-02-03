@@ -5,7 +5,6 @@
 namespace FinalEngine.IO;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using FinalEngine.IO.Invocation;
 
@@ -25,8 +24,6 @@ public class FileSystem : IFileSystem
     /// </summary>
     private readonly IFileInvoker file;
 
-    private readonly IDictionary<string, string> nameToConentMap;
-
     /// <summary>
     ///   Initializes a new instance of the <see cref="FileSystem"/> class.
     /// </summary>
@@ -43,39 +40,6 @@ public class FileSystem : IFileSystem
     {
         this.file = file ?? throw new ArgumentNullException(nameof(file));
         this.directory = directory ?? throw new ArgumentNullException(nameof(directory));
-        this.nameToConentMap = new Dictionary<string, string>();
-    }
-
-    public void AddVirtualTextFile(string name, string filePath)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException($"The specified {nameof(name)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(name));
-        }
-
-        if (string.IsNullOrWhiteSpace(filePath))
-        {
-            throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
-        }
-
-        if (!this.FileExists(filePath))
-        {
-            throw new FileNotFoundException($"Failed to locate file at path: '{filePath}'.");
-        }
-
-        if (this.nameToConentMap.ContainsKey(name))
-        {
-            throw new ArgumentException($"A virtual file has already been added with the specified {nameof(name)}.", nameof(name));
-        }
-
-        using (var stream = this.OpenFile(filePath, FileAccessMode.Read))
-        {
-            using (var reader = new StreamReader(stream))
-            {
-                string content = reader.ReadToEnd();
-                this.nameToConentMap.Add(name, content);
-            }
-        }
     }
 
     /// <inheritdoc/>
@@ -162,21 +126,6 @@ public class FileSystem : IFileSystem
         return this.file.Exists(path);
     }
 
-    public string GetVirtualTextFile(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException($"The specified {nameof(name)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(name));
-        }
-
-        if (!this.nameToConentMap.TryGetValue(name, out string? content))
-        {
-            throw new ArgumentException($"A virtual file that matches the specified {nameof(name)} couldn't be located.", nameof(name));
-        }
-
-        return content;
-    }
-
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
     ///   The specified <paramref name="path"/> parameter is null, empty of contains only whitespace characters.
@@ -197,20 +146,5 @@ public class FileSystem : IFileSystem
         };
 
         return this.file.Open(path, FileMode.Open, access);
-    }
-
-    public void RemoveVirtualTextFile(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException($"The specified {nameof(name)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(name));
-        }
-
-        if (!this.nameToConentMap.TryGetValue(name, out _))
-        {
-            throw new ArgumentException($"A virtual file that matches the specified {nameof(name)} couldn't be located.", nameof(name));
-        }
-
-        this.nameToConentMap.Remove(name);
     }
 }

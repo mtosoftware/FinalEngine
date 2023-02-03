@@ -12,7 +12,7 @@ using SixLabors.ImageSharp.PixelFormats;
 /// <summary>
 ///   Defines an interface that provides methods for invocation of the <see cref="Image"/> functions.
 /// </summary>
-[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+[ExcludeFromCodeCoverage]
 public class ImageInvoker : IImageInvoker
 {
     /// <inheritdoc cref="Image.Load{TPixel}(Stream)"/>

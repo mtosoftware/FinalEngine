@@ -11,8 +11,6 @@ using System.IO;
 /// </summary>
 public interface IFileSystem
 {
-    void AddVirtualTextFile(string name, string filePath);
-
     /// <summary>
     ///   Creates a directory at the specified <paramref name="path"/>.
     /// </summary>
@@ -70,8 +68,6 @@ public interface IFileSystem
     /// </returns>
     bool FileExists(string path);
 
-    string GetVirtualTextFile(string name);
-
     /// <summary>
     ///   Opens a file located at the specified <paramref name="path"/>, with the specified <paramref name="mode"/>.
     /// </summary>
@@ -85,6 +81,4 @@ public interface IFileSystem
     ///   The <see cref="Stream"/> representation of the file.
     /// </returns>
     Stream OpenFile(string path, FileAccessMode mode);
-
-    void RemoveVirtualTextFile(string name);
 }

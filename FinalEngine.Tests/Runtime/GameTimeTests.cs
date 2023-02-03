@@ -42,6 +42,13 @@ public class GameTimeTests
     }
 
     [Test]
+    public void ConstructorShouldNotThrowExceptionWhenInvoked()
+    {
+        // Act and assert
+        Assert.DoesNotThrow(() => new GameTime(120.0d));
+    }
+
+    [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenWatchIsNull()
     {
         // Arrange, act and assert
