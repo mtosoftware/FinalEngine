@@ -14,7 +14,7 @@ Below is a list of prerequisites and build instructions.
 
 ### Prerequisites
 
-- [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
+- [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0).
 
 ### Windows, Mac and Linux
 
