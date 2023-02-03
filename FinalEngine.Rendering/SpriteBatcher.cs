@@ -117,10 +117,10 @@ public class SpriteBatcher : ISpriteBatcher
     /// <param name="rotation">
     ///   The rotation of the vertices.
     /// </param>
-    /// <param name="size">
-    ///   The size of the vertices.
+    /// <param name="scale">
+    ///   The scale of the vertices.
     /// </param>
-    public void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 size)
+    public void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale, int textureWidth, int textureHeight)
     {
         float x = position.X;
         float y = position.Y;
@@ -128,8 +128,8 @@ public class SpriteBatcher : ISpriteBatcher
         float dx = -origin.X;
         float dy = -origin.Y;
 
-        float w = size.X;
-        float h = size.Y;
+        float w = scale.X * textureWidth;
+        float h = scale.Y * textureHeight;
 
         float cos = (float)Math.Cos(rotation);
         float sin = (float)Math.Sin(rotation);

@@ -36,7 +36,7 @@ public interface ISpriteDrawer
     void Begin();
 
     /// <summary>
-    ///   Draws the specified texture, blended with the specified <paramref name="color"/>, with the specified <paramref name="origin"/>, at the specified <paramref name="position"/>, <paramref name="rotation"/> and <paramref name="size"/>.
+    ///   Draws the specified texture, blended with the specified <paramref name="color"/>, with the specified <paramref name="origin"/>, at the specified <paramref name="position"/>, <paramref name="rotation"/> and <paramref name="scale"/>.
     /// </summary>
     /// <param name="texture">
     ///   The texture to draw.
@@ -53,10 +53,10 @@ public interface ISpriteDrawer
     /// <param name="rotation">
     ///   The rotation of the texture, relative to it's origin.
     /// </param>
-    /// <param name="size">
-    ///   The size of the texture.
+    /// <param name="scale">
+    ///   The scale of the texture.
     /// </param>
-    void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 size);
+    void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale);
 
     /// <summary>
     ///   Flushes the contents of the drawer to the unspecified surface.
