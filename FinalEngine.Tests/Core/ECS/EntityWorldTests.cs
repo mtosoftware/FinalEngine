@@ -124,7 +124,10 @@ public class EntityWorldTests
         this.world.RemoveSystem(typeof(MockEntitySystemA));
 
         // Assert
-        this.world.AddSystem(new MockEntitySystemA());
+        Assert.DoesNotThrow(() =>
+        {
+            this.world.AddSystem(new MockEntitySystemA());
+        });
     }
 
     [Test]
