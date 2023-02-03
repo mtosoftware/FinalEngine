@@ -126,7 +126,7 @@ public class OpenGLRenderDevice : IRenderDevice
         this.mapper = new EnumMapper(map);
 
         this.Factory = new OpenGLGPUResourceFactory(invoker, this.mapper);
-        this.InputAssembler = new OpenGLInputAssembler(invoker);
+        this.InputAssembler = new OpenGLInputAssembler();
         this.OutputMerger = new OpenGLOutputMerger(invoker, this.mapper);
         this.Pipeline = new OpenGLPipeline(invoker);
         this.Rasterizer = new OpenGLRasterizer(invoker, this.mapper);

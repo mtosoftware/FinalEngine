@@ -7,7 +7,6 @@ namespace FinalEngine.Rendering.Settings;
 using System;
 using FinalEngine.Rendering.Textures;
 
-//// TODO: Add support for nearest neighbour for use with Mantanimus.
 public enum TextureFilterType
 {
     Bilinear,

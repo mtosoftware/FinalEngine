@@ -46,10 +46,7 @@ public class OpenGLIndexBufferTests
         this.indexBuffer.Dispose();
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.indexBuffer.Bind();
-        });
+        Assert.Throws<ObjectDisposedException>(this.indexBuffer.Bind);
     }
 
     [Test]

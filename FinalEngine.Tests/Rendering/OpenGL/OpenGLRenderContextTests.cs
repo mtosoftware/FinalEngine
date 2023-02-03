@@ -116,10 +116,7 @@ public class OpenGLRenderContextTests
         this.graphicsContext.SetupGet(x => x.IsCurrent).Returns(false);
 
         // Act and assert
-        Assert.Throws<RenderContextException>(() =>
-        {
-            this.renderContext.SwapBuffers();
-        });
+        Assert.Throws<RenderContextException>(this.renderContext.SwapBuffers);
     }
 
     [TearDown]

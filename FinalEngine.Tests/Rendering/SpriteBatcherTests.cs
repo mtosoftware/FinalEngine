@@ -32,7 +32,7 @@ public class SpriteBatcherTests
         // Act
         for (int i = 0; i < incrementer; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Assert
@@ -48,7 +48,7 @@ public class SpriteBatcherTests
         // Act
         for (int i = 0; i < incrementer; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Assert
@@ -111,7 +111,7 @@ public class SpriteBatcherTests
         // Arrange
         for (int i = 0; i < MaxCapacity; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Act
@@ -127,7 +127,7 @@ public class SpriteBatcherTests
         // Arrange
         for (int i = 0; i < MaxCapacity; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Act
@@ -143,7 +143,7 @@ public class SpriteBatcherTests
         // Arrange
         for (int i = 0; i < MaxCapacity; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Act
@@ -167,7 +167,7 @@ public class SpriteBatcherTests
         // Act
         for (int i = 0; i < MaxCapacity - 1; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Assert
@@ -180,7 +180,7 @@ public class SpriteBatcherTests
         // Act
         for (int i = 0; i < MaxCapacity; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Assert
@@ -193,7 +193,7 @@ public class SpriteBatcherTests
         // Act
         for (int i = 0; i < MaxCapacity + 1; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Assert
@@ -206,7 +206,7 @@ public class SpriteBatcherTests
         // Arrange
         for (int i = 0; i < MaxCapacity + 1; i++)
         {
-            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
+            this.batcher.Batch(0, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0);
         }
 
         // Act

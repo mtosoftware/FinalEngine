@@ -41,10 +41,7 @@ public class OpenGLShaderProgramTests
         this.program.Dispose();
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.program.Bind();
-        });
+        Assert.Throws<ObjectDisposedException>(this.program.Bind);
     }
 
     [Test]

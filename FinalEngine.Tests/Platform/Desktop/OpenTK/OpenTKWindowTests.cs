@@ -63,10 +63,7 @@ public class OpenTKWindowTests
         this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.Close();
-        });
+        Assert.Throws<ObjectDisposedException>(this.window.Close);
     }
 
     [Test]
@@ -178,10 +175,7 @@ public class OpenTKWindowTests
         this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.ProcessEvents();
-        });
+        Assert.Throws<ObjectDisposedException>(this.window.ProcessEvents);
     }
 
     [SetUp]

@@ -109,10 +109,7 @@ public class SpriteDrawerTests
         this.drawer.Dispose();
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.drawer.Begin();
-        });
+        Assert.Throws<ObjectDisposedException>(this.drawer.Begin);
     }
 
     [Test]
@@ -220,7 +217,7 @@ public class SpriteDrawerTests
         this.drawer.Draw(this.texture.Object, Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero);
 
         // Assert
-        this.batcher.Verify(x => x.Batch(It.IsAny<float>(), Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero));
+        this.batcher.Verify(x => x.Batch(It.IsAny<float>(), Color.White, Vector2.Zero, Vector2.Zero, 0, Vector2.Zero, 0, 0));
     }
 
     [Test]
@@ -329,10 +326,7 @@ public class SpriteDrawerTests
         this.drawer.Dispose();
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.drawer.End();
-        });
+        Assert.Throws<ObjectDisposedException>(this.drawer.End);
     }
 
     [Test]

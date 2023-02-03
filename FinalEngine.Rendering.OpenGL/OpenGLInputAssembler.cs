@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.OpenGL.Buffers;
-using FinalEngine.Rendering.OpenGL.Invocation;
 
 /// <summary>
 ///   Provides an OpenGL implementation of an <see cref="IInputAssembler"/>.
@@ -17,31 +16,12 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 public class OpenGLInputAssembler : IInputAssembler
 {
     /// <summary>
-    ///   The OpenGL invoker.
-    /// </summary>
-    private readonly IOpenGLInvoker invoker;
-
-    /// <summary>
     ///   The currently bound input layout.
     /// </summary>
     /// <remarks>
     ///   This is used to call <see cref="IOpenGLInputLayout.Unbind"/> when the user calls <see cref="SetInputLayout(IInputLayout?)"/> and passes <c>null</c> as the parameter.
     /// </remarks>
     private IOpenGLInputLayout? boundLayout;
-
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="OpenGLInputAssembler"/> class.
-    /// </summary>
-    /// <param name="invoker">
-    ///   Specifies an <see cref="IOpenGLInvoker"/> that represents the invoker used to invoke OpenGL calls.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="invoker"/> parameter is null.
-    /// </exception>
-    public OpenGLInputAssembler(IOpenGLInvoker invoker)
-    {
-        this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
-    }
 
     /// <summary>
     ///   Sets the specified <paramref name="buffer"/>, binding it to the GPU.

@@ -16,11 +16,6 @@ using global::OpenTK.Windowing.Common;
 public class OpenTKKeyboardDevice : IKeyboardDevice
 {
     /// <summary>
-    ///   The native window.
-    /// </summary>
-    private readonly INativeWindowInvoker nativeWindow;
-
-    /// <summary>
     ///   Initializes a new instance of the <see cref="OpenTKKeyboardDevice"/> class.
     /// </summary>
     /// <param name="nativeWindow">
@@ -31,10 +26,13 @@ public class OpenTKKeyboardDevice : IKeyboardDevice
     /// </exception>
     public OpenTKKeyboardDevice(INativeWindowInvoker nativeWindow)
     {
-        this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow));
+        if (nativeWindow == null)
+        {
+            throw new ArgumentNullException(nameof(nativeWindow));
+        }
 
-        this.nativeWindow.KeyUp += this.NativeWindow_KeyUp;
-        this.nativeWindow.KeyDown += this.NativeWindow_KeyDown;
+        nativeWindow.KeyUp += this.NativeWindow_KeyUp;
+        nativeWindow.KeyDown += this.NativeWindow_KeyDown;
     }
 
     /// <inheritdoc/>

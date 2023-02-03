@@ -185,7 +185,7 @@ public class OpenGLGPUResourceFactory : IGPUResourceFactory
         SizedFormat internalFormat = SizedFormat.Rgba8)
     {
         var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-        var ptr = data == null ? IntPtr.Zero : handle.AddrOfPinnedObject();
+        IntPtr ptr = data == null ? IntPtr.Zero : handle.AddrOfPinnedObject();
 
         var result = new OpenGLTexture2D(this.invoker, this.mapper, description, format, internalFormat, ptr);
 

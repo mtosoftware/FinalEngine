@@ -90,7 +90,7 @@ public abstract class EntitySystemBase
     protected abstract bool IsMatch([NotNull] IReadOnlyEntity entity);
 
     /// <summary>
-    ///   Processes the specified <paramref name="entities"/>, frequency is dependent on <see cref="LoopType"/>.
+    ///   Processes the specified <paramref name="entities"/>.
     /// </summary>
     /// <param name="entities">
     ///   The entities to process.

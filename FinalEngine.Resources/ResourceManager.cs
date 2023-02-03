@@ -223,7 +223,7 @@ public class ResourceManager : IResourceManager
     /// <summary>
     ///   Represents a reference to a resource and it's associated data.
     /// </summary>
-    private class ResourceData
+    private sealed class ResourceData
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="ResourceData"/> class.

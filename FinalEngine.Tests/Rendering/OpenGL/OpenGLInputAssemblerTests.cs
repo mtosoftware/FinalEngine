@@ -8,7 +8,6 @@ using System;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Buffers;
-using FinalEngine.Rendering.OpenGL.Invocation;
 using Moq;
 using NUnit.Framework;
 
@@ -18,19 +17,7 @@ public class OpenGLInputAssemblerTests
 
     private OpenGLInputAssembler inputAssembler;
 
-    private Mock<IOpenGLInvoker> invoker;
-
     private Mock<IOpenGLVertexBuffer> vertexBuffer;
-
-    [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
-    {
-        // Arrange, act and assert
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            new OpenGLInputAssembler(null);
-        });
-    }
 
     [Test]
     public void SetIndexBufferShouldInvokeBindWhenInvoked()
@@ -136,11 +123,10 @@ public class OpenGLInputAssemblerTests
     public void Setup()
     {
         // Arrange
-        this.invoker = new Mock<IOpenGLInvoker>();
         this.vertexBuffer = new Mock<IOpenGLVertexBuffer>();
         this.indexBuffer = new Mock<IOpenGLIndexBuffer>();
 
-        this.inputAssembler = new OpenGLInputAssembler(this.invoker.Object);
+        this.inputAssembler = new OpenGLInputAssembler();
     }
 
     [Test]

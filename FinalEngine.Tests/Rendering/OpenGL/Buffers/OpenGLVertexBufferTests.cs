@@ -45,10 +45,7 @@ public class OpenGLVertexBufferTests
         this.vertexBuffer.Dispose();
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.vertexBuffer.Bind();
-        });
+        Assert.Throws<ObjectDisposedException>(this.vertexBuffer.Bind);
     }
 
     [Test]

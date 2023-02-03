@@ -55,8 +55,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Maths", "FinalE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Runtime", "FinalEngine.Runtime\FinalEngine.Runtime.csproj", "{C80D0CB9-DB56-4039-8DB6-EABC624704DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestGame", "TestGame", "{DB63A941-D37A-435D-93CB-C5BED35F6BF0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
