@@ -57,6 +57,9 @@ public class Keyboard : IKeyboard, IDisposable
         }
     }
 
+    /// <summary>
+    /// Finalizes an instance of the <see cref="Keyboard"/> class.
+    /// </summary>
     [ExcludeFromCodeCoverage]
     ~Keyboard()
     {
@@ -87,8 +90,17 @@ public class Keyboard : IKeyboard, IDisposable
         get { return this.keysDown.Contains(Key.LeftShift) || this.keysDown.Contains(Key.RightShift); }
     }
 
+    /// <summary>
+    /// Gets a value indicating whether this instance is disposed.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+    /// </value>
     protected bool IsDisposed { get; private set; }
 
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// </summary>
     public void Dispose()
     {
         this.Dispose(true);
@@ -122,6 +134,10 @@ public class Keyboard : IKeyboard, IDisposable
         this.keysDownLast = new List<Key>(this.keysDown);
     }
 
+    /// <summary>
+    /// Releases unmanaged and - optionally - managed resources.
+    /// </summary>
+    /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
     protected virtual void Dispose(bool disposing)
     {
         if (this.IsDisposed)

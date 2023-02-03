@@ -18,7 +18,7 @@ using FinalEngine.Runtime.Rendering;
 
 public abstract class GameContainerBase : IDisposable
 {
-    private IEventsProcessor eventsProcessor;
+    private readonly IEventsProcessor eventsProcessor;
 
     private IRenderContext renderContext;
 
@@ -64,9 +64,9 @@ public abstract class GameContainerBase : IDisposable
 
     protected bool IsRunning { get; private set; }
 
-    protected IKeyboard Keyboard { get; }
+    protected IKeyboard Keyboard { get; private set; }
 
-    protected IMouse Mouse { get; }
+    protected IMouse Mouse { get; private set; }
 
     protected IRenderDevice RenderDevice { get; }
 
@@ -130,6 +130,18 @@ public abstract class GameContainerBase : IDisposable
             {
                 this.Window.Dispose();
                 this.Window = null;
+            }
+
+            if (this.Keyboard is Keyboard keyboard)
+            {
+                keyboard.Dispose();
+                this.Keyboard = null;
+            }
+
+            if (this.Mouse is Mouse mouse)
+            {
+                mouse.Dispose();
+                this.Mouse = null;
             }
 
             if (this.renderContext != null)

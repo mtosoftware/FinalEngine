@@ -37,10 +37,7 @@ public class EntityTests
         this.entity.AddComponent(componentA);
 
         // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.entity.AddComponent<MockComponentA>();
-        });
+        Assert.Throws<ArgumentException>(this.entity.AddComponent<MockComponentA>);
     }
 
     [Test]
@@ -282,10 +279,7 @@ public class EntityTests
     public void RemoveComponentGenericShouldThrowArgumentExceptionWhenComponentTypeIsNotAdded()
     {
         // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.entity.RemoveComponent<MockComponentA>();
-        });
+        Assert.Throws<ArgumentException>(this.entity.RemoveComponent<MockComponentA>);
     }
 
     [Test]

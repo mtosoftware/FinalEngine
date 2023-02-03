@@ -107,6 +107,12 @@ public struct RasterStateDescription : IEquatable<RasterStateDescription>
         set { this.fillMode = value; }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether mutlisampling is enabled.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if multisampling is enabled; otherwise, <c>false</c>.
+    /// </value>
     public bool MultiSamplingEnabled { get; set; }
 
     /// <summary>

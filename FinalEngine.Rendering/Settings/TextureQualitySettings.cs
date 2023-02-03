@@ -7,15 +7,30 @@ namespace FinalEngine.Rendering.Settings;
 using System;
 using FinalEngine.Rendering.Textures;
 
+/// <summary>
+/// Enumerates the available texture filter types.
+/// </summary>
 public enum TextureFilterType
 {
+    /// <summary>
+    /// Nearest neighbour filtering.
+    /// </summary>
     NearestNeighbour,
 
+    /// <summary>
+    /// Bilinear filtering.
+    /// </summary>
     Bilinear,
 
+    /// <summary>
+    /// Trinlinear filtering.
+    /// </summary>
     Trilinear,
 }
 
+/// <summary>
+/// Represents texture quality settings used when rendering textures.
+/// </summary>
 public struct TextureQualitySettings : IEquatable<TextureQualitySettings>
 {
     /// <summary>
@@ -35,6 +50,12 @@ public struct TextureQualitySettings : IEquatable<TextureQualitySettings>
         set { this.filterType = value; }
     }
 
+    /// <summary>
+    /// Gets the mag filter.
+    /// </summary>
+    /// <value>
+    /// The mag filter.
+    /// </value>
     public TextureFilterMode MagFilter
     {
         get
@@ -49,6 +70,12 @@ public struct TextureQualitySettings : IEquatable<TextureQualitySettings>
         }
     }
 
+    /// <summary>
+    /// Gets the minimum filter.
+    /// </summary>
+    /// <value>
+    /// The minimum filter.
+    /// </value>
     public TextureFilterMode MinFilter
     {
         get
