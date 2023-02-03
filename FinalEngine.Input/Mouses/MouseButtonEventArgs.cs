@@ -2,22 +2,21 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Input.Mouses
-{
-    using System;
+namespace FinalEngine.Input.Mouses;
 
+using System;
+
+/// <summary>
+///   Provides event data for the <see cref="IMouseDevice.ButtonUp"/> and <see cref="IMouseDevice.ButtonDown"/> events.
+/// </summary>
+/// <seealso cref="EventArgs"/>
+public class MouseButtonEventArgs : EventArgs
+{
     /// <summary>
-    ///   Provides event data for the <see cref="IMouseDevice.ButtonUp"/> and <see cref="IMouseDevice.ButtonDown"/> events.
+    ///   Gets the button that raised this event.
     /// </summary>
-    /// <seealso cref="EventArgs"/>
-    public class MouseButtonEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Gets the button that raised this event.
-        /// </summary>
-        /// <value>
-        ///   The button that raised this event.
-        /// </value>
-        public MouseButton Button { get; init; }
-    }
+    /// <value>
+    ///   The button that raised this event.
+    /// </value>
+    public MouseButton Button { get; init; }
 }

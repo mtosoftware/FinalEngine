@@ -2,49 +2,48 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Platform.Desktop.OpenTK.Invocation
+namespace FinalEngine.Platform.Desktop.OpenTK.Invocation;
+
+using System.Diagnostics.CodeAnalysis;
+using global::OpenTK.Windowing.Desktop;
+
+/// <summary>
+///   Provides an implementation of an <see cref="INativeWindowInvoker"/>.
+/// </summary>
+/// <seealso cref="INativeWindowInvoker"/>
+[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+public sealed class NativeWindowInvoker : NativeWindow, INativeWindowInvoker
 {
-    using System.Diagnostics.CodeAnalysis;
-    using global::OpenTK.Windowing.Desktop;
+    /// <inheritdoc cref="NativeWindow(NativeWindowSettings)"/>
+    public NativeWindowInvoker(NativeWindowSettings settings)
+        : base(settings)
+    {
+    }
 
     /// <summary>
-    ///   Provides an implementation of an <see cref="INativeWindowInvoker"/>.
+    ///   Gets a value indicating whether this instance is disposed.
     /// </summary>
-    /// <seealso cref="INativeWindowInvoker"/>
-    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
-    public sealed class NativeWindowInvoker : NativeWindow, INativeWindowInvoker
+    /// <value>
+    ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsDisposed { get; private set; }
+
+    /// <inheritdoc/>
+    IMouseStateInvoker INativeWindowInvoker.MouseState
     {
-        /// <inheritdoc cref="NativeWindow(NativeWindowSettings)"/>
-        public NativeWindowInvoker(NativeWindowSettings settings)
-            : base(settings)
-        {
-        }
+        get { return new MouseStateInvoker(this.MouseState); }
+    }
 
-        /// <summary>
-        ///   Gets a value indicating whether this instance is disposed.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsDisposed { get; private set; }
+    /// <inheritdoc/>
+    public new void ProcessWindowEvents(bool waitForEvents)
+    {
+        NativeWindow.ProcessWindowEvents(waitForEvents);
+    }
 
-        /// <inheritdoc/>
-        IMouseStateInvoker INativeWindowInvoker.MouseState
-        {
-            get { return new MouseStateInvoker(this.MouseState); }
-        }
-
-        /// <inheritdoc/>
-        public new void ProcessWindowEvents(bool waitForEvents)
-        {
-            NativeWindow.ProcessWindowEvents(waitForEvents);
-        }
-
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            this.IsDisposed = true;
-        }
+    /// <inheritdoc/>
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        this.IsDisposed = true;
     }
 }

@@ -2,362 +2,361 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering
+namespace FinalEngine.Tests.Rendering;
+
+using FinalEngine.Rendering;
+using NUnit.Framework;
+
+public class RasterStateDescriptionTests
 {
-    using FinalEngine.Rendering;
-    using NUnit.Framework;
+    private RasterStateDescription description;
 
-    public class RasterStateDescriptionTests
+    [Test]
+    public void CullEnabledShouldReturnFalseWhenDefault()
     {
-        private RasterStateDescription description;
+        // Act
+        bool actual = this.description.CullEnabled;
 
-        [Test]
-        public void CullEnabledShouldReturnFalseWhenDefault()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void CullEnabledShouldReturnTrueWhenSetToTrue()
+    {
+        // Act
+        this.description.CullEnabled = true;
+
+        // Assert
+        Assert.True(this.description.CullEnabled);
+    }
+
+    [Test]
+    public void CullModeShouldReturnBackWhenDefault()
+    {
+        // Arrange
+        const FaceCullMode expected = FaceCullMode.Back;
+
+        // Act
+        var actual = this.description.CullMode;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void CullModeShouldReturnFrontWhenSetToFront()
+    {
+        // Arrange
+        const FaceCullMode expected = FaceCullMode.Front;
+
+        // Act
+        this.description.CullMode = expected;
+
+        // Assert
+        Assert.AreEqual(expected, this.description.CullMode);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new RasterStateDescription()
         {
-            // Act
-            bool actual = this.description.CullEnabled;
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void CullEnabledShouldReturnTrueWhenSetToTrue()
+        var right = new RasterStateDescription()
         {
-            // Act
-            this.description.CullEnabled = true;
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Solid,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Assert
-            Assert.True(this.description.CullEnabled);
-        }
+        // Act
+        bool actual = left == right;
 
-        [Test]
-        public void CullModeShouldReturnBackWhenDefault()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new RasterStateDescription()
         {
-            // Arrange
-            const FaceCullMode expected = FaceCullMode.Back;
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Act
-            var actual = this.description.CullMode;
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void CullModeShouldReturnFrontWhenSetToFront()
+        var right = new RasterStateDescription()
         {
-            // Arrange
-            const FaceCullMode expected = FaceCullMode.Front;
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Act
-            this.description.CullMode = expected;
+        // Act
+        bool actual = left == right;
 
-            // Assert
-            Assert.AreEqual(expected, this.description.CullMode);
-        }
+        // Assert
+        Assert.True(actual);
+    }
 
-        [Test]
-        public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNotRasterStateDescription()
+    {
+        // Act
+        bool actual = this.description.Equals(new object());
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNull()
+    {
+        // Act
+        bool actual = this.description.Equals(null);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new RasterStateDescription()
         {
-            // Arrange
-            var left = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            var right = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Solid,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
-
-            // Act
-            bool actual = left == right;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+        var right = new RasterStateDescription()
         {
-            // Arrange
-            var left = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+            CullEnabled = false,
+            CullMode = FaceCullMode.Back,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            var right = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+        // Act
+        bool actual = left.Equals(right);
 
-            // Act
-            bool actual = left == right;
+        // Assert
+        Assert.False(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNotRasterStateDescription()
+    [Test]
+    public void EqualsShouldReturnTrueWhenObjectIsRasterStateDescriptionAndHasSameProperties()
+    {
+        // Arrange
+        var left = new RasterStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(new object());
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNull()
+        object right = new RasterStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(null);
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
+        // Act
+        bool actual = left.Equals(right);
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Test]
+    public void FillModeShouldReturnSolidWhenDefault()
+    {
+        // Arrange
+        const RasterMode expected = RasterMode.Solid;
+
+        // Act
+        var actual = this.description.FillMode;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void FillModeShouldReturnWireframeWhenSetToWireframe()
+    {
+        // Arrange
+        const RasterMode expected = RasterMode.Wireframe;
+
+        // Act
+        this.description.FillMode = RasterMode.Wireframe;
+
+        // Assert
+        Assert.AreEqual(expected, this.description.FillMode);
+    }
+
+    [Test]
+    public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    {
+        // Arrange
+        var left = new RasterStateDescription()
         {
-            // Arrange
-            var left = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            var right = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Back,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
-
-            // Act
-            bool actual = left.Equals(right);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnTrueWhenObjectIsRasterStateDescriptionAndHasSameProperties()
+        var right = new RasterStateDescription()
         {
-            // Arrange
-            var left = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            object right = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+        // Act
+        int leftHashCode = left.GetHashCode();
+        int rightHashCode = right.GetHashCode();
 
-            // Act
-            bool actual = left.Equals(right);
+        // Assert
+        Assert.AreEqual(leftHashCode, rightHashCode);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void FillModeShouldReturnSolidWhenDefault()
+    [Test]
+    public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new RasterStateDescription()
         {
-            // Arrange
-            const RasterMode expected = RasterMode.Solid;
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Act
-            var actual = this.description.FillMode;
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void FillModeShouldReturnWireframeWhenSetToWireframe()
+        var right = new RasterStateDescription()
         {
-            // Arrange
-            const RasterMode expected = RasterMode.Wireframe;
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            // Act
-            this.description.FillMode = RasterMode.Wireframe;
+        // Act
+        bool actual = left != right;
 
-            // Assert
-            Assert.AreEqual(expected, this.description.FillMode);
-        }
+        // Assert
+        Assert.False(actual);
+    }
 
-        [Test]
-        public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    [Test]
+    public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new RasterStateDescription()
         {
-            // Arrange
-            var left = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Wireframe,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            var right = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
-
-            // Act
-            int leftHashCode = left.GetHashCode();
-            int rightHashCode = right.GetHashCode();
-
-            // Assert
-            Assert.AreEqual(leftHashCode, rightHashCode);
-        }
-
-        [Test]
-        public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
+        var right = new RasterStateDescription()
         {
-            // Arrange
-            var left = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+            CullEnabled = false,
+            CullMode = FaceCullMode.Front,
+            FillMode = RasterMode.Solid,
+            ScissorEnabled = true,
+            WindingDirection = WindingDirection.Clockwise,
+        };
 
-            var right = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+        // Act
+        bool actual = left != right;
 
-            // Act
-            bool actual = left != right;
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.False(actual);
-        }
+    [Test]
+    public void ScissorEnabledShouldReturnFalseWhenDefault()
+    {
+        // Act
+        bool actual = this.description.ScissorEnabled;
 
-        [Test]
-        public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
-        {
-            // Arrange
-            var left = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Wireframe,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+        // Assert
+        Assert.False(actual);
+    }
 
-            var right = new RasterStateDescription()
-            {
-                CullEnabled = false,
-                CullMode = FaceCullMode.Front,
-                FillMode = RasterMode.Solid,
-                ScissorEnabled = true,
-                WindingDirection = WindingDirection.Clockwise,
-            };
+    [Test]
+    public void ScissorEnableShouldReturnTrueWhenSetToTrue()
+    {
+        // Act
+        this.description.ScissorEnabled = true;
 
-            // Act
-            bool actual = left != right;
+        // Assert
+        Assert.True(this.description.ScissorEnabled);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.description = default;
+    }
 
-        [Test]
-        public void ScissorEnabledShouldReturnFalseWhenDefault()
-        {
-            // Act
-            bool actual = this.description.ScissorEnabled;
+    [Test]
+    public void WindingDirectionShouldReturnClockwiseWhenSetToClockwise()
+    {
+        // Arrange
+        const WindingDirection expected = WindingDirection.Clockwise;
 
-            // Assert
-            Assert.False(actual);
-        }
+        // Act
+        this.description.WindingDirection = expected;
 
-        [Test]
-        public void ScissorEnableShouldReturnTrueWhenSetToTrue()
-        {
-            // Act
-            this.description.ScissorEnabled = true;
+        // Assert
+        Assert.AreEqual(expected, this.description.WindingDirection);
+    }
 
-            // Assert
-            Assert.True(this.description.ScissorEnabled);
-        }
+    [Test]
+    public void WindingDirectionShouldReturnCounterClockwiseWhenDefault()
+    {
+        // Arrange
+        const WindingDirection expected = WindingDirection.CounterClockwise;
 
-        [SetUp]
-        public void Setup()
-        {
-            // Arrange
-            this.description = default;
-        }
+        // Act
+        var actual = this.description.WindingDirection;
 
-        [Test]
-        public void WindingDirectionShouldReturnClockwiseWhenSetToClockwise()
-        {
-            // Arrange
-            const WindingDirection expected = WindingDirection.Clockwise;
-
-            // Act
-            this.description.WindingDirection = expected;
-
-            // Assert
-            Assert.AreEqual(expected, this.description.WindingDirection);
-        }
-
-        [Test]
-        public void WindingDirectionShouldReturnCounterClockwiseWhenDefault()
-        {
-            // Arrange
-            const WindingDirection expected = WindingDirection.CounterClockwise;
-
-            // Act
-            var actual = this.description.WindingDirection;
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
     }
 }

@@ -2,21 +2,20 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Textures
+namespace FinalEngine.Rendering.Textures;
+
+/// <summary>
+///   Enumerates the available texture wrapping modes.
+/// </summary>
+public enum TextureWrapMode
 {
     /// <summary>
-    ///   Enumerates the available texture wrapping modes.
+    ///   Specifies the texture will be clamped to the edge.
     /// </summary>
-    public enum TextureWrapMode
-    {
-        /// <summary>
-        ///   Specifies the texture will be clamped to the edge.
-        /// </summary>
-        Clamp,
+    Clamp,
 
-        /// <summary>
-        ///   Specifies the texture will be repeated.
-        /// </summary>
-        Repeat,
-    }
+    /// <summary>
+    ///   Specifies the texture will be repeated.
+    /// </summary>
+    Repeat,
 }

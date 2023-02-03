@@ -2,312 +2,311 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.ECS
+namespace FinalEngine.Tests.Core.ECS;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using FinalEngine.ECS;
+using FinalEngine.Tests.Core.ECS.Mocks;
+using NUnit.Framework;
+
+public class EntityWorldTests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using FinalEngine.ECS;
-    using FinalEngine.Tests.Core.ECS.Mocks;
-    using NUnit.Framework;
+    private EntityWorld world;
 
-    public class EntityWorldTests
+    [Test]
+    public void AddEntityShouldHookOntoEntityOnComponentsChangedWhenInvoked()
     {
-        private EntityWorld world;
+        // Arrange
+        var entity = new Entity();
 
-        [Test]
-        public void AddEntityShouldHookOntoEntityOnComponentsChangedWhenInvoked()
+        // Act
+        this.world.AddEntity(entity);
+
+        // Assert
+        Assert.AreEqual(entity.OnComponentsChanged.GetInvocationList().Length, 1);
+    }
+
+    [Test]
+    public void AddEntityShouldInvokeSystemAddOrRemoveByAspectWhenSystemIsAdded()
+    {
+        // Arrange
+        var entity = new Entity();
+
+        var system = new MockEntitySystemA()
         {
-            // Arrange
+            IsMatchFunction = (_) =>
+            {
+                return true;
+            },
+            ProcessFunction = (entities) =>
+            {
+                // Assert
+                Assert.AreEqual(entity, entities.FirstOrDefault());
+            },
+        };
+
+        this.world.AddSystem(system);
+
+        // Act
+        this.world.AddEntity(entity);
+        system.Process();
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentExceptionWhenEntityHasAlreadyBeenAdded()
+    {
+        // Arrange
+        var entity = new Entity();
+        this.world.AddEntity(entity);
+
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.world.AddEntity(entity);
+        });
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentNullExceptionWhenEntityIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.world.AddEntity(null);
+        });
+    }
+
+    [Test]
+    public void AddSystemShouldInvokeSystemAddOrRemveByAspectForEachEntityAddedWhenInvoked()
+    {
+        // Arrange
+        var entities = new List<Entity>();
+
+        for (int i = 0; i < 10; i++)
+        {
             var entity = new Entity();
 
-            // Act
             this.world.AddEntity(entity);
-
-            // Assert
-            Assert.AreEqual(entity.OnComponentsChanged.GetInvocationList().Length, 1);
+            entities.Add(entity);
         }
 
-        [Test]
-        public void AddEntityShouldInvokeSystemAddOrRemoveByAspectWhenSystemIsAdded()
+        var system = new MockEntitySystemA()
         {
-            // Arrange
-            var entity = new Entity();
-
-            var system = new MockEntitySystemA()
+            IsMatchFunction = (_) =>
             {
-                IsMatchFunction = (_) =>
+                return true;
+            },
+            ProcessFunction = (collection) =>
+            {
+                // Assert
+                for (int i = 0; i < collection.Count(); i++)
                 {
-                    return true;
-                },
-                ProcessFunction = (entities) =>
-                {
-                    // Assert
-                    Assert.AreEqual(entity, entities.FirstOrDefault());
-                },
-            };
+                    Assert.AreSame(collection.ElementAt(i), entities[i]);
+                }
+            },
+        };
 
-            this.world.AddSystem(system);
+        // Act
+        this.world.AddSystem(system);
+        system.Process();
+    }
 
-            // Act
-            this.world.AddEntity(entity);
-            system.Process();
-        }
+    [Test]
+    public void AddSystemShouldNotThrowExceptionWhenSystemOfSameTypeHasPreviouslyBeenRemoved()
+    {
+        // Arrange
+        this.world.AddSystem(new MockEntitySystemA());
+        this.world.AddSystem(new MockEntitySystemB());
 
-        [Test]
-        public void AddEntityShouldThrowArgumentExceptionWhenEntityHasAlreadyBeenAdded()
+        // Act
+        this.world.RemoveSystem(typeof(MockEntitySystemA));
+
+        // Assert
+        this.world.AddSystem(new MockEntitySystemA());
+    }
+
+    [Test]
+    public void AddSystemShouldThrowArgumentExceptionWhenSystemOfSameTypeIsAlreadyAdded()
+    {
+        // Arrange
+        var systemA = new MockEntitySystemA();
+        var systemB = new MockEntitySystemB();
+        var systemC = new MockEntitySystemA();
+
+        this.world.AddSystem(systemA);
+        this.world.AddSystem(systemB);
+
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Arrange
-            var entity = new Entity();
-            this.world.AddEntity(entity);
+            this.world.AddSystem(systemC);
+        });
+    }
 
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.world.AddEntity(entity);
-            });
-        }
-
-        [Test]
-        public void AddEntityShouldThrowArgumentNullExceptionWhenEntityIsNull()
+    [Test]
+    public void AddSystemShouldThrowArgumentNullExceptionWhenSystemIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.world.AddEntity(null);
-            });
-        }
+            this.world.AddSystem(null);
+        });
+    }
 
-        [Test]
-        public void AddSystemShouldInvokeSystemAddOrRemveByAspectForEachEntityAddedWhenInvoked()
+    [Test]
+    public void EntityOnComponentsChangedShouldInvokeSystemAddOrRemoveByAspectWhenInvoked()
+    {
+        // Arrange
+        var entity = new Entity();
+
+        var systemA = new MockEntitySystemA()
         {
-            // Arrange
-            var entities = new List<Entity>();
-
-            for (int i = 0; i < 10; i++)
+            IsMatchFunction = (_) =>
             {
-                var entity = new Entity();
-
-                this.world.AddEntity(entity);
-                entities.Add(entity);
-            }
-
-            var system = new MockEntitySystemA()
+                return true;
+            },
+            ProcessFunction = (entities) =>
             {
-                IsMatchFunction = (_) =>
-                {
-                    return true;
-                },
-                ProcessFunction = (collection) =>
-                {
-                    // Assert
-                    for (int i = 0; i < collection.Count(); i++)
-                    {
-                        Assert.AreSame(collection.ElementAt(i), entities[i]);
-                    }
-                },
-            };
+                Assert.AreSame(entity, entities.FirstOrDefault());
+            },
+        };
 
-            // Act
-            this.world.AddSystem(system);
-            system.Process();
-        }
+        var systemB = new MockEntitySystemB();
 
-        [Test]
-        public void AddSystemShouldNotThrowExceptionWhenSystemOfSameTypeHasPreviouslyBeenRemoved()
+        this.world.AddSystem(systemA);
+        this.world.AddSystem(systemB);
+
+        this.world.AddEntity(entity);
+
+        // Act
+        entity.OnComponentsChanged.Invoke(entity, EventArgs.Empty);
+    }
+
+    [Test]
+    public void EntityOnComponentsChangedShouldThrowArgumentExceptionWhenSenderIsNotEntity()
+    {
+        // Arrange
+        var entity = new Entity();
+        this.world.AddEntity(entity);
+
+        // Act
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Arrange
-            this.world.AddSystem(new MockEntitySystemA());
-            this.world.AddSystem(new MockEntitySystemB());
+            entity.OnComponentsChanged.Invoke(this, EventArgs.Empty);
+        });
+    }
 
-            // Act
+    [Test]
+    public void EntityOnComponentsChangedShouldThrowArgumentNullExceptionWhenSenderIsNull()
+    {
+        // Arrange
+        var entity = new Entity();
+        this.world.AddEntity(entity);
+
+        // Act
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            entity.OnComponentsChanged.Invoke(null, EventArgs.Empty);
+        });
+    }
+
+    [Test]
+    public void RemoveEntityShouldInvokeSystemAddOrRemoveByAspectWhenInvoked()
+    {
+        // Arrange
+        var systemA = new MockEntitySystemA();
+        var systemB = new MockEntitySystemB()
+        {
+            IsMatchFunction = (_) =>
+            {
+                return true;
+            },
+            ProcessFunction = (entities) =>
+            {
+                // Assert
+                Assert.Zero(entities.Count());
+            },
+        };
+
+        this.world.AddSystem(systemA);
+        this.world.AddSystem(systemB);
+
+        var entity = new Entity();
+        this.world.AddEntity(entity);
+
+        // Act
+        this.world.RemoveEntity(entity);
+    }
+
+    [Test]
+    public void RemoveEntityShouldThrowArgumentExceptionWhenEntityIsNotAdded()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.world.RemoveEntity(new Entity());
+        });
+    }
+
+    [Test]
+    public void RemoveEntityShouldThrowArgumentNulLExceptionWhenEntityIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.world.RemoveEntity(null);
+        });
+    }
+
+    [Test]
+    public void RemoveEntityShouldUnhookFromEntityOnComponentsChangedWhenInvoked()
+    {
+        // Arrange
+        var entity = new Entity();
+        this.world.AddEntity(entity);
+
+        // Act
+        this.world.RemoveEntity(entity);
+
+        // Assert
+        Assert.Null(entity.OnComponentsChanged);
+    }
+
+    [Test]
+    public void RemoveSystemShouldThrowArgumentExceptionWhenSystemHasNotBeenAddedToWorld()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
             this.world.RemoveSystem(typeof(MockEntitySystemA));
+        });
+    }
 
-            // Assert
-            this.world.AddSystem(new MockEntitySystemA());
-        }
-
-        [Test]
-        public void AddSystemShouldThrowArgumentExceptionWhenSystemOfSameTypeIsAlreadyAdded()
+    [Test]
+    public void RemoveSystemShouldThrowArgumentExceptionWhenTypeDoesNotInheritFromEntitySYstemBase()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Arrange
-            var systemA = new MockEntitySystemA();
-            var systemB = new MockEntitySystemB();
-            var systemC = new MockEntitySystemA();
+            this.world.RemoveSystem(typeof(EntityWorldTests));
+        });
+    }
 
-            this.world.AddSystem(systemA);
-            this.world.AddSystem(systemB);
-
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.world.AddSystem(systemC);
-            });
-        }
-
-        [Test]
-        public void AddSystemShouldThrowArgumentNullExceptionWhenSystemIsNull()
+    [Test]
+    public void RemoveSystemShouldThrowArgumentNullExceptionWhenSystemIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.world.AddSystem(null);
-            });
-        }
+            this.world.RemoveSystem(null);
+        });
+    }
 
-        [Test]
-        public void EntityOnComponentsChangedShouldInvokeSystemAddOrRemoveByAspectWhenInvoked()
-        {
-            // Arrange
-            var entity = new Entity();
-
-            var systemA = new MockEntitySystemA()
-            {
-                IsMatchFunction = (_) =>
-                {
-                    return true;
-                },
-                ProcessFunction = (entities) =>
-                {
-                    Assert.AreSame(entity, entities.FirstOrDefault());
-                },
-            };
-
-            var systemB = new MockEntitySystemB();
-
-            this.world.AddSystem(systemA);
-            this.world.AddSystem(systemB);
-
-            this.world.AddEntity(entity);
-
-            // Act
-            entity.OnComponentsChanged.Invoke(entity, EventArgs.Empty);
-        }
-
-        [Test]
-        public void EntityOnComponentsChangedShouldThrowArgumentExceptionWhenSenderIsNotEntity()
-        {
-            // Arrange
-            var entity = new Entity();
-            this.world.AddEntity(entity);
-
-            // Act
-            Assert.Throws<ArgumentException>(() =>
-            {
-                entity.OnComponentsChanged.Invoke(this, EventArgs.Empty);
-            });
-        }
-
-        [Test]
-        public void EntityOnComponentsChangedShouldThrowArgumentNullExceptionWhenSenderIsNull()
-        {
-            // Arrange
-            var entity = new Entity();
-            this.world.AddEntity(entity);
-
-            // Act
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                entity.OnComponentsChanged.Invoke(null, EventArgs.Empty);
-            });
-        }
-
-        [Test]
-        public void RemoveEntityShouldInvokeSystemAddOrRemoveByAspectWhenInvoked()
-        {
-            // Arrange
-            var systemA = new MockEntitySystemA();
-            var systemB = new MockEntitySystemB()
-            {
-                IsMatchFunction = (_) =>
-                {
-                    return true;
-                },
-                ProcessFunction = (entities) =>
-                {
-                    // Assert
-                    Assert.Zero(entities.Count());
-                },
-            };
-
-            this.world.AddSystem(systemA);
-            this.world.AddSystem(systemB);
-
-            var entity = new Entity();
-            this.world.AddEntity(entity);
-
-            // Act
-            this.world.RemoveEntity(entity);
-        }
-
-        [Test]
-        public void RemoveEntityShouldThrowArgumentExceptionWhenEntityIsNotAdded()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.world.RemoveEntity(new Entity());
-            });
-        }
-
-        [Test]
-        public void RemoveEntityShouldThrowArgumentNulLExceptionWhenEntityIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.world.RemoveEntity(null);
-            });
-        }
-
-        [Test]
-        public void RemoveEntityShouldUnhookFromEntityOnComponentsChangedWhenInvoked()
-        {
-            // Arrange
-            var entity = new Entity();
-            this.world.AddEntity(entity);
-
-            // Act
-            this.world.RemoveEntity(entity);
-
-            // Assert
-            Assert.Null(entity.OnComponentsChanged);
-        }
-
-        [Test]
-        public void RemoveSystemShouldThrowArgumentExceptionWhenSystemHasNotBeenAddedToWorld()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.world.RemoveSystem(typeof(MockEntitySystemA));
-            });
-        }
-
-        [Test]
-        public void RemoveSystemShouldThrowArgumentExceptionWhenTypeDoesNotInheritFromEntitySYstemBase()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.world.RemoveSystem(typeof(EntityWorldTests));
-            });
-        }
-
-        [Test]
-        public void RemoveSystemShouldThrowArgumentNullExceptionWhenSystemIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.world.RemoveSystem(null);
-            });
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            this.world = new EntityWorld();
-        }
+    [SetUp]
+    public void Setup()
+    {
+        this.world = new EntityWorld();
     }
 }

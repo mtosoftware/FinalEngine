@@ -2,19 +2,18 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.ECS
+namespace FinalEngine.ECS;
+
+/// <summary>
+///   Defines an interface that provides a factory method for creating entities.
+/// </summary>
+public interface IEntityFactory
 {
     /// <summary>
-    ///   Defines an interface that provides a factory method for creating entities.
+    ///   Creates an <see cref="Entity"/>.
     /// </summary>
-    public interface IEntityFactory
-    {
-        /// <summary>
-        ///   Creates an <see cref="Entity"/>.
-        /// </summary>
-        /// <returns>
-        ///   The newly created <see cref="Entity"/>.
-        /// </returns>
-        Entity CreateEntity();
-    }
+    /// <returns>
+    ///   The newly created <see cref="Entity"/>.
+    /// </returns>
+    Entity CreateEntity();
 }

@@ -2,330 +2,329 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering
+namespace FinalEngine.Tests.Rendering;
+
+using System.Drawing;
+using FinalEngine.Rendering;
+using NUnit.Framework;
+
+public class BlendStateDescriptionTests
 {
-    using System.Drawing;
-    using FinalEngine.Rendering;
-    using NUnit.Framework;
+    private BlendStateDescription description;
 
-    public class BlendStateDescriptionTests
+    [Test]
+    public void ColorShouldReturnBlackWhenDefault()
     {
-        private BlendStateDescription description;
+        // Assert
+        Assert.AreEqual(Color.Black, this.description.Color);
+    }
 
-        [Test]
-        public void ColorShouldReturnBlackWhenDefault()
+    [Test]
+    public void ColorShouldReturnCornflowerBlueWhenSetToCornflowerBlue()
+    {
+        // Act
+        this.description.Color = Color.CornflowerBlue;
+
+        // Assert
+        Assert.AreEqual(Color.CornflowerBlue, this.description.Color);
+    }
+
+    [Test]
+    public void DestinationModeShouldReturnZeroWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(BlendMode.Zero, this.description.DestinationMode);
+    }
+
+    [Test]
+    public void DestinationModeShouldReturnZeroWhenSetToZero()
+    {
+        // Act
+        this.description.DestinationMode = BlendMode.Zero;
+
+        // Assert
+        Assert.AreEqual(BlendMode.Zero, this.description.DestinationMode);
+    }
+
+    [Test]
+    public void EnabledShouldReturnFalseWhenDefault()
+    {
+        // Assert
+        Assert.False(this.description.Enabled);
+    }
+
+    [Test]
+    public void EnabledShouldReturnTrueWhenSetToTrue()
+    {
+        // Act
+        this.description.Enabled = true;
+
+        // Assert
+        Assert.True(this.description.Enabled);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new BlendStateDescription()
         {
-            // Assert
-            Assert.AreEqual(Color.Black, this.description.Color);
-        }
+            SourceMode = BlendMode.Zero,
+            Color = Color.Green,
+            DestinationMode = BlendMode.DestinationColor,
+            Enabled = false,
+            EquationMode = BlendEquationMode.Min,
+        };
 
-        [Test]
-        public void ColorShouldReturnCornflowerBlueWhenSetToCornflowerBlue()
+        var right = new BlendStateDescription()
         {
-            // Act
-            this.description.Color = Color.CornflowerBlue;
+            SourceMode = BlendMode.DestinationAlpha,
+            Color = Color.Gainsboro,
+            DestinationMode = BlendMode.OneMinusDestinationColor,
+            Enabled = true,
+            EquationMode = BlendEquationMode.Subtract,
+        };
 
-            // Assert
-            Assert.AreEqual(Color.CornflowerBlue, this.description.Color);
-        }
+        // Act
+        bool actual = left == right;
 
-        [Test]
-        public void DestinationModeShouldReturnZeroWhenDefault()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new BlendStateDescription()
         {
-            // Assert
-            Assert.AreEqual(BlendMode.Zero, this.description.DestinationMode);
-        }
+            SourceMode = BlendMode.Zero,
+            Color = Color.Green,
+            DestinationMode = BlendMode.DestinationColor,
+            Enabled = false,
+            EquationMode = BlendEquationMode.Min,
+        };
 
-        [Test]
-        public void DestinationModeShouldReturnZeroWhenSetToZero()
+        var right = new BlendStateDescription()
         {
-            // Act
-            this.description.DestinationMode = BlendMode.Zero;
+            SourceMode = BlendMode.Zero,
+            Color = Color.Green,
+            DestinationMode = BlendMode.DestinationColor,
+            Enabled = false,
+            EquationMode = BlendEquationMode.Min,
+        };
 
-            // Assert
-            Assert.AreEqual(BlendMode.Zero, this.description.DestinationMode);
-        }
+        // Act
+        bool actual = left == right;
 
-        [Test]
-        public void EnabledShouldReturnFalseWhenDefault()
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNotBlendStateDescription()
+    {
+        // Act
+        bool actual = this.description.Equals(new object());
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNull()
+    {
+        // Act
+        bool actual = this.description.Equals(null);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new BlendStateDescription()
         {
-            // Assert
-            Assert.False(this.description.Enabled);
-        }
+            SourceMode = BlendMode.Zero,
+            Color = Color.Green,
+            DestinationMode = BlendMode.DestinationColor,
+            Enabled = false,
+            EquationMode = BlendEquationMode.Min,
+        };
 
-        [Test]
-        public void EnabledShouldReturnTrueWhenSetToTrue()
+        var right = new BlendStateDescription()
         {
-            // Act
-            this.description.Enabled = true;
+            SourceMode = BlendMode.DestinationAlpha,
+            Color = Color.Gainsboro,
+            DestinationMode = BlendMode.OneMinusDestinationColor,
+            Enabled = true,
+            EquationMode = BlendEquationMode.Subtract,
+        };
 
-            // Assert
-            Assert.True(this.description.Enabled);
-        }
+        // Act
+        bool actual = left.Equals(right);
 
-        [Test]
-        public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnTrueWhenObjectIsBlendStateDescriptionAndHasSameProperties()
+    {
+        // Arrange
+        var left = new BlendStateDescription()
         {
-            // Arrange
-            var left = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.Zero,
-                Color = Color.Green,
-                DestinationMode = BlendMode.DestinationColor,
-                Enabled = false,
-                EquationMode = BlendEquationMode.Min,
-            };
+            SourceMode = BlendMode.DestinationAlpha,
+            Color = Color.Gainsboro,
+            DestinationMode = BlendMode.OneMinusDestinationColor,
+            Enabled = true,
+            EquationMode = BlendEquationMode.Subtract,
+        };
 
-            var right = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.DestinationAlpha,
-                Color = Color.Gainsboro,
-                DestinationMode = BlendMode.OneMinusDestinationColor,
-                Enabled = true,
-                EquationMode = BlendEquationMode.Subtract,
-            };
-
-            // Act
-            bool actual = left == right;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+        object right = new BlendStateDescription()
         {
-            // Arrange
-            var left = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.Zero,
-                Color = Color.Green,
-                DestinationMode = BlendMode.DestinationColor,
-                Enabled = false,
-                EquationMode = BlendEquationMode.Min,
-            };
+            SourceMode = BlendMode.DestinationAlpha,
+            Color = Color.Gainsboro,
+            DestinationMode = BlendMode.OneMinusDestinationColor,
+            Enabled = true,
+            EquationMode = BlendEquationMode.Subtract,
+        };
 
-            var right = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.Zero,
-                Color = Color.Green,
-                DestinationMode = BlendMode.DestinationColor,
-                Enabled = false,
-                EquationMode = BlendEquationMode.Min,
-            };
+        // Act
+        bool actual = left.Equals(right);
 
-            // Act
-            bool actual = left == right;
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
+    [Test]
+    public void EquationModeShouldReturnAddWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(BlendEquationMode.Add, this.description.EquationMode);
+    }
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNotBlendStateDescription()
+    [Test]
+    public void EquationModeShouldReturnReverseSubtractWhenSetToReverseSubtract()
+    {
+        // Act
+        this.description.EquationMode = BlendEquationMode.ReverseSubtract;
+
+        // Assert
+        Assert.AreEqual(BlendEquationMode.ReverseSubtract, this.description.EquationMode);
+    }
+
+    [Test]
+    public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    {
+        // Arrange
+        var left = new BlendStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(new object());
+            SourceMode = BlendMode.DestinationAlpha,
+            Color = Color.Gainsboro,
+            DestinationMode = BlendMode.OneMinusDestinationColor,
+            Enabled = true,
+            EquationMode = BlendEquationMode.Subtract,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNull()
+        object right = new BlendStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(null);
+            SourceMode = BlendMode.DestinationAlpha,
+            Color = Color.Gainsboro,
+            DestinationMode = BlendMode.OneMinusDestinationColor,
+            Enabled = true,
+            EquationMode = BlendEquationMode.Subtract,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
+        // Act
+        int leftHashCode = left.GetHashCode();
+        int rightHashCode = right.GetHashCode();
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+        // Assert
+        Assert.AreEqual(leftHashCode, rightHashCode);
+    }
+
+    [Test]
+    public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new BlendStateDescription()
         {
-            // Arrange
-            var left = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.Zero,
-                Color = Color.Green,
-                DestinationMode = BlendMode.DestinationColor,
-                Enabled = false,
-                EquationMode = BlendEquationMode.Min,
-            };
+            SourceMode = BlendMode.Zero,
+            Color = Color.Green,
+            DestinationMode = BlendMode.DestinationColor,
+            Enabled = false,
+            EquationMode = BlendEquationMode.Min,
+        };
 
-            var right = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.DestinationAlpha,
-                Color = Color.Gainsboro,
-                DestinationMode = BlendMode.OneMinusDestinationColor,
-                Enabled = true,
-                EquationMode = BlendEquationMode.Subtract,
-            };
-
-            // Act
-            bool actual = left.Equals(right);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnTrueWhenObjectIsBlendStateDescriptionAndHasSameProperties()
+        var right = new BlendStateDescription()
         {
-            // Arrange
-            var left = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.DestinationAlpha,
-                Color = Color.Gainsboro,
-                DestinationMode = BlendMode.OneMinusDestinationColor,
-                Enabled = true,
-                EquationMode = BlendEquationMode.Subtract,
-            };
+            SourceMode = BlendMode.Zero,
+            Color = Color.Green,
+            DestinationMode = BlendMode.DestinationColor,
+            Enabled = false,
+            EquationMode = BlendEquationMode.Min,
+        };
 
-            object right = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.DestinationAlpha,
-                Color = Color.Gainsboro,
-                DestinationMode = BlendMode.OneMinusDestinationColor,
-                Enabled = true,
-                EquationMode = BlendEquationMode.Subtract,
-            };
+        // Act
+        bool actual = left != right;
 
-            // Act
-            bool actual = left.Equals(right);
+        // Assert
+        Assert.False(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void EquationModeShouldReturnAddWhenDefault()
+    [Test]
+    public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new BlendStateDescription()
         {
-            // Assert
-            Assert.AreEqual(BlendEquationMode.Add, this.description.EquationMode);
-        }
+            SourceMode = BlendMode.DestinationAlpha,
+            Color = Color.Green,
+            DestinationMode = BlendMode.DestinationColor,
+            Enabled = false,
+            EquationMode = BlendEquationMode.Min,
+        };
 
-        [Test]
-        public void EquationModeShouldReturnReverseSubtractWhenSetToReverseSubtract()
+        var right = new BlendStateDescription()
         {
-            // Act
-            this.description.EquationMode = BlendEquationMode.ReverseSubtract;
+            SourceMode = BlendMode.OneMinusDestinationAlpha,
+            Color = Color.Aqua,
+            DestinationMode = BlendMode.SourceAlpha,
+            Enabled = true,
+            EquationMode = BlendEquationMode.Max,
+        };
 
-            // Assert
-            Assert.AreEqual(BlendEquationMode.ReverseSubtract, this.description.EquationMode);
-        }
+        // Act
+        bool actual = left != right;
 
-        [Test]
-        public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
-        {
-            // Arrange
-            var left = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.DestinationAlpha,
-                Color = Color.Gainsboro,
-                DestinationMode = BlendMode.OneMinusDestinationColor,
-                Enabled = true,
-                EquationMode = BlendEquationMode.Subtract,
-            };
+        // Assert
+        Assert.True(actual);
+    }
 
-            object right = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.DestinationAlpha,
-                Color = Color.Gainsboro,
-                DestinationMode = BlendMode.OneMinusDestinationColor,
-                Enabled = true,
-                EquationMode = BlendEquationMode.Subtract,
-            };
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.description = default;
+    }
 
-            // Act
-            int leftHashCode = left.GetHashCode();
-            int rightHashCode = right.GetHashCode();
+    [Test]
+    public void SourceModeShouldReturnOneMinusSourceColorWhenSetToOneMinusSourceColor()
+    {
+        // Act
+        this.description.SourceMode = BlendMode.OneMinusSourceColor;
 
-            // Assert
-            Assert.AreEqual(leftHashCode, rightHashCode);
-        }
+        // Assert
+        Assert.AreEqual(BlendMode.OneMinusSourceColor, this.description.SourceMode);
+    }
 
-        [Test]
-        public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
-        {
-            // Arrange
-            var left = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.Zero,
-                Color = Color.Green,
-                DestinationMode = BlendMode.DestinationColor,
-                Enabled = false,
-                EquationMode = BlendEquationMode.Min,
-            };
-
-            var right = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.Zero,
-                Color = Color.Green,
-                DestinationMode = BlendMode.DestinationColor,
-                Enabled = false,
-                EquationMode = BlendEquationMode.Min,
-            };
-
-            // Act
-            bool actual = left != right;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
-        {
-            // Arrange
-            var left = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.DestinationAlpha,
-                Color = Color.Green,
-                DestinationMode = BlendMode.DestinationColor,
-                Enabled = false,
-                EquationMode = BlendEquationMode.Min,
-            };
-
-            var right = new BlendStateDescription()
-            {
-                SourceMode = BlendMode.OneMinusDestinationAlpha,
-                Color = Color.Aqua,
-                DestinationMode = BlendMode.SourceAlpha,
-                Enabled = true,
-                EquationMode = BlendEquationMode.Max,
-            };
-
-            // Act
-            bool actual = left != right;
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            // Arrange
-            this.description = default;
-        }
-
-        [Test]
-        public void SourceModeShouldReturnOneMinusSourceColorWhenSetToOneMinusSourceColor()
-        {
-            // Act
-            this.description.SourceMode = BlendMode.OneMinusSourceColor;
-
-            // Assert
-            Assert.AreEqual(BlendMode.OneMinusSourceColor, this.description.SourceMode);
-        }
-
-        [Test]
-        public void SourceModeShouldReturnOneWhenDefault()
-        {
-            // Assert
-            Assert.AreEqual(BlendMode.One, this.description.SourceMode);
-        }
+    [Test]
+    public void SourceModeShouldReturnOneWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(BlendMode.One, this.description.SourceMode);
     }
 }

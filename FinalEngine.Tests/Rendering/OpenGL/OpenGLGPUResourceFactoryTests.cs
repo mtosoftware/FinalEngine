@@ -2,217 +2,216 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering.OpenGL
+namespace FinalEngine.Tests.Rendering.OpenGL;
+
+using System;
+using System.Collections.Generic;
+using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.OpenGL;
+using FinalEngine.Rendering.OpenGL.Buffers;
+using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.OpenGL.Pipeline;
+using FinalEngine.Rendering.OpenGL.Textures;
+using FinalEngine.Rendering.Pipeline;
+using FinalEngine.Utilities;
+using Moq;
+using NUnit.Framework;
+using OpenTK.Graphics.OpenGL4;
+
+public class OpenGLGPUResourceFactoryTests
 {
-    using System;
-    using System.Collections.Generic;
-    using FinalEngine.Rendering.Buffers;
-    using FinalEngine.Rendering.OpenGL;
-    using FinalEngine.Rendering.OpenGL.Buffers;
-    using FinalEngine.Rendering.OpenGL.Invocation;
-    using FinalEngine.Rendering.OpenGL.Pipeline;
-    using FinalEngine.Rendering.OpenGL.Textures;
-    using FinalEngine.Rendering.Pipeline;
-    using FinalEngine.Utilities;
-    using Moq;
-    using NUnit.Framework;
-    using OpenTK.Graphics.OpenGL4;
+    private OpenGLGPUResourceFactory factory;
 
-    public class OpenGLGPUResourceFactoryTests
+    private Mock<IOpenGLInvoker> invoker;
+
+    private Mock<IEnumMapper> mapper;
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
     {
-        private OpenGLGPUResourceFactory factory;
-
-        private Mock<IOpenGLInvoker> invoker;
-
-        private Mock<IEnumMapper> mapper;
-
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new OpenGLGPUResourceFactory(null, this.mapper.Object);
-            });
-        }
+            new OpenGLGPUResourceFactory(null, this.mapper.Object);
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
+    {
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new OpenGLGPUResourceFactory(this.invoker.Object, null);
-            });
-        }
+            new OpenGLGPUResourceFactory(this.invoker.Object, null);
+        });
+    }
 
-        [Test]
-        public void CreateIndexBufferShouldReturnOpenGLIndexBufferWhenInvoked()
+    [Test]
+    public void CreateIndexBufferShouldReturnOpenGLIndexBufferWhenInvoked()
+    {
+        // Act
+        var actual = this.factory.CreateIndexBuffer(BufferUsageType.Static, Array.Empty<int>(), 0);
+
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLIndexBuffer<int>), actual);
+    }
+
+    [Test]
+    public void CreateIndexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act
-            var actual = this.factory.CreateIndexBuffer(BufferUsageType.Static, Array.Empty<int>(), 0);
+            this.factory.CreateIndexBuffer<int>(BufferUsageType.Dynamic, null, 0);
+        });
+    }
 
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLIndexBuffer<int>), actual);
-        }
+    [Test]
+    public void CreateInputLayoutShouldReturnOpenGLInputLayoutWhenInvoked()
+    {
+        // Act
+        IReadOnlyCollection<InputElement> elements = new List<InputElement>();
+        var actual = this.factory.CreateInputLayout(elements);
 
-        [Test]
-        public void CreateIndexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLInputLayout), actual);
+    }
+
+    [Test]
+    public void CreateInputLayoutShouldThrowArgumentNullExceptionWhenElementsIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.factory.CreateIndexBuffer<int>(BufferUsageType.Dynamic, null, 0);
-            });
-        }
+            this.factory.CreateInputLayout(null);
+        });
+    }
 
-        [Test]
-        public void CreateInputLayoutShouldReturnOpenGLInputLayoutWhenInvoked()
+    [Test]
+    public void CreateShaderProgramShouldReturnOpenGLShaderProgramWhenInvoked()
+    {
+        // Act
+        IReadOnlyCollection<IOpenGLShader> shaders = new List<IOpenGLShader>();
+        var actual = this.factory.CreateShaderProgram(shaders);
+
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLShaderProgram), actual);
+    }
+
+    [Test]
+    public void CreateShaderProgramShouldThrowArgumentNullExceptionWhenShadersIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act
-            IReadOnlyCollection<InputElement> elements = new List<InputElement>();
-            var actual = this.factory.CreateInputLayout(elements);
+            this.factory.CreateShaderProgram(null);
+        });
+    }
 
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLInputLayout), actual);
-        }
-
-        [Test]
-        public void CreateInputLayoutShouldThrowArgumentNullExceptionWhenElementsIsNull()
+    [Test]
+    public void CreateShaderProgramShouldThrowInvalidCastExceptionWhenShadersContainsNotOpenGLShader()
+    {
+        // Arrange
+        IReadOnlyCollection<IShader> shaders = new List<IShader>()
         {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.factory.CreateInputLayout(null);
-            });
-        }
+            new Mock<IShader>().Object,
+            new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, "test"),
+        };
 
-        [Test]
-        public void CreateShaderProgramShouldReturnOpenGLShaderProgramWhenInvoked()
+        // Act and assert
+        Assert.Throws<InvalidCastException>(() =>
         {
-            // Act
-            IReadOnlyCollection<IOpenGLShader> shaders = new List<IOpenGLShader>();
-            var actual = this.factory.CreateShaderProgram(shaders);
+            this.factory.CreateShaderProgram(shaders);
+        });
+    }
 
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLShaderProgram), actual);
-        }
+    [Test]
+    public void CreateShaderShouldReturnOpenGLShaderWhenInvoked()
+    {
+        // Act
+        var actual = this.factory.CreateShader(PipelineTarget.Vertex, "test");
 
-        [Test]
-        public void CreateShaderProgramShouldThrowArgumentNullExceptionWhenShadersIsNull()
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLShader), actual);
+    }
+
+    [Test]
+    public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsEmpty()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.factory.CreateShaderProgram(null);
-            });
-        }
+            this.factory.CreateShader(PipelineTarget.Vertex, string.Empty);
+        });
+    }
 
-        [Test]
-        public void CreateShaderProgramShouldThrowInvalidCastExceptionWhenShadersContainsNotOpenGLShader()
+    [Test]
+    public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Arrange
-            IReadOnlyCollection<IShader> shaders = new List<IShader>()
-            {
-                new Mock<IShader>().Object,
-                new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, "test"),
-            };
+            this.factory.CreateShader(PipelineTarget.Vertex, null);
+        });
+    }
 
-            // Act and assert
-            Assert.Throws<InvalidCastException>(() =>
-            {
-                this.factory.CreateShaderProgram(shaders);
-            });
-        }
-
-        [Test]
-        public void CreateShaderShouldReturnOpenGLShaderWhenInvoked()
+    [Test]
+    public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsWhitespace()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Act
-            var actual = this.factory.CreateShader(PipelineTarget.Vertex, "test");
+            this.factory.CreateShader(PipelineTarget.Vertex, "\r\n\t");
+        });
+    }
 
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLShader), actual);
-        }
-
-        [Test]
-        public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsEmpty()
+    [Test]
+    public void CreateTexture2DShouldNotThrowArgumentNullExceptionWhenDataIsNull()
+    {
+        // Act and assert
+        Assert.DoesNotThrow(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.factory.CreateShader(PipelineTarget.Vertex, string.Empty);
-            });
-        }
+            this.factory.CreateTexture2D<int>(default, null);
+        });
+    }
 
-        [Test]
-        public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsNull()
+    [Test]
+    public void CreateTexture2DShouldReturnOpenGLTexture2DWhenInvoked()
+    {
+        // Act
+        var actual = this.factory.CreateTexture2D(default, Array.Empty<int>());
+
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLTexture2D), actual);
+    }
+
+    [Test]
+    public void CreateVertexBufferShouldReturnOpenGLVertexBufferWhenInvoked()
+    {
+        // Act
+        var actual = this.factory.CreateVertexBuffer(BufferUsageType.Dynamic, Array.Empty<int>(), 0, 0);
+
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLVertexBuffer<int>), actual);
+    }
+
+    [Test]
+    public void CreateVertexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.factory.CreateShader(PipelineTarget.Vertex, null);
-            });
-        }
+            this.factory.CreateVertexBuffer<int>(BufferUsageType.Static, null, 0, 0);
+        });
+    }
 
-        [Test]
-        public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsWhitespace()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.factory.CreateShader(PipelineTarget.Vertex, "\r\n\t");
-            });
-        }
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.invoker = new Mock<IOpenGLInvoker>();
+        this.mapper = new Mock<IEnumMapper>();
 
-        [Test]
-        public void CreateTexture2DShouldNotThrowArgumentNullExceptionWhenDataIsNull()
-        {
-            // Act and assert
-            Assert.DoesNotThrow(() =>
-            {
-                this.factory.CreateTexture2D<int>(default, null);
-            });
-        }
-
-        [Test]
-        public void CreateTexture2DShouldReturnOpenGLTexture2DWhenInvoked()
-        {
-            // Act
-            var actual = this.factory.CreateTexture2D(default, Array.Empty<int>());
-
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLTexture2D), actual);
-        }
-
-        [Test]
-        public void CreateVertexBufferShouldReturnOpenGLVertexBufferWhenInvoked()
-        {
-            // Act
-            var actual = this.factory.CreateVertexBuffer(BufferUsageType.Dynamic, Array.Empty<int>(), 0, 0);
-
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLVertexBuffer<int>), actual);
-        }
-
-        [Test]
-        public void CreateVertexBufferShouldThrowArgumentNullExceptionWhenDataIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.factory.CreateVertexBuffer<int>(BufferUsageType.Static, null, 0, 0);
-            });
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            // Arrange
-            this.invoker = new Mock<IOpenGLInvoker>();
-            this.mapper = new Mock<IEnumMapper>();
-
-            this.factory = new OpenGLGPUResourceFactory(this.invoker.Object, this.mapper.Object);
-        }
+        this.factory = new OpenGLGPUResourceFactory(this.invoker.Object, this.mapper.Object);
     }
 }

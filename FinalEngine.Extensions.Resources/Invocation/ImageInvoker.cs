@@ -2,24 +2,23 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Extensions.Resources.Invocation
-{
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using SixLabors.ImageSharp;
-    using SixLabors.ImageSharp.PixelFormats;
+namespace FinalEngine.Extensions.Resources.Invocation;
 
-    /// <summary>
-    ///   Defines an interface that provides methods for invocation of the <see cref="Image"/> functions.
-    /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Invocation Class")]
-    public class ImageInvoker : IImageInvoker
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+
+/// <summary>
+///   Defines an interface that provides methods for invocation of the <see cref="Image"/> functions.
+/// </summary>
+[ExcludeFromCodeCoverage(Justification = "Invocation Class")]
+public class ImageInvoker : IImageInvoker
+{
+    /// <inheritdoc cref="Image.Load{TPixel}(Stream)"/>
+    public Image<TPixel> Load<TPixel>(Stream stream)
+        where TPixel : unmanaged, IPixel<TPixel>
     {
-        /// <inheritdoc cref="Image.Load{TPixel}(Stream)"/>
-        public Image<TPixel> Load<TPixel>(Stream stream)
-            where TPixel : unmanaged, IPixel<TPixel>
-        {
-            return Image.Load<TPixel>(stream);
-        }
+        return Image.Load<TPixel>(stream);
     }
 }

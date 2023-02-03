@@ -2,208 +2,207 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.OpenGL.Textures
+namespace FinalEngine.Rendering.OpenGL.Textures;
+
+using System;
+using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.Textures;
+using FinalEngine.Utilities;
+using OpenTK.Graphics.OpenGL4;
+using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
+using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
+using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
+using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
+
+/// <summary>
+///   Provides an OpenGL implementation of an <see cref="ITexture2D"/> and <see cref="IOpenGLTexture"/>.
+/// </summary>
+/// <seealso cref="ITexture2D"/>
+/// <seealso cref="IOpenGLTexture"/>
+public class OpenGLTexture2D : ITexture2D, IOpenGLTexture
 {
-    using System;
-    using FinalEngine.Rendering.OpenGL.Invocation;
-    using FinalEngine.Rendering.Textures;
-    using FinalEngine.Utilities;
-    using OpenTK.Graphics.OpenGL4;
-    using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
-    using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
-    using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
-    using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
+    /// <summary>
+    ///   The OpenGL invoker.
+    /// </summary>
+    private readonly IOpenGLInvoker invoker;
 
     /// <summary>
-    ///   Provides an OpenGL implementation of an <see cref="ITexture2D"/> and <see cref="IOpenGLTexture"/>.
+    ///   The OpenGL renderer identifier.
     /// </summary>
-    /// <seealso cref="ITexture2D"/>
-    /// <seealso cref="IOpenGLTexture"/>
-    public class OpenGLTexture2D : ITexture2D, IOpenGLTexture
+    private int rendererID;
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="OpenGLTexture2D"/> class.
+    /// </summary>
+    /// <param name="invoker">
+    ///   Specifies an <see cref="IOpenGLInvoker"/> that represents the invoker used to invoke OpenGL calls.
+    /// </param>
+    /// <param name="mapper">
+    ///   Specifies an <see cref="IEnumMapper"/> that represents the enumeration mapper used to map OpenGL enumerations to the rendering APIs equivalent.
+    /// </param>
+    /// <param name="description">
+    ///   Specifies a <see cref="Texture2DDescription"/> that represents the properties used when creating this <see cref="OpenGLTexture2D"/>.
+    /// </param>
+    /// <param name="format">
+    ///   Specifies a <see cref="PixelFormat"/> that represents the format of this <see cref="OpenGLTexture2D"/>.
+    /// </param>
+    /// <param name="internalFormat">
+    ///   Specifies a <see cref="SizedFormat"/> that represents the internal format of this <see cref="OpenGLTexture2D"/>.
+    /// </param>
+    /// <param name="data">
+    ///   Specifies a <see cref="IntPtr"/> that represents the data this <see cref="OpenGLTexture2D"/> will contain.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    ///   The specified <paramref name="invoker"/> or <paramref name="mapper"/> parameter is null.
+    /// </exception>
+    public OpenGLTexture2D(
+        IOpenGLInvoker invoker,
+        IEnumMapper mapper,
+        Texture2DDescription description,
+        PixelFormat format,
+        SizedFormat internalFormat,
+        IntPtr data)
     {
-        /// <summary>
-        ///   The OpenGL invoker.
-        /// </summary>
-        private readonly IOpenGLInvoker invoker;
+        this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
-        /// <summary>
-        ///   The OpenGL renderer identifier.
-        /// </summary>
-        private int rendererID;
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="OpenGLTexture2D"/> class.
-        /// </summary>
-        /// <param name="invoker">
-        ///   Specifies an <see cref="IOpenGLInvoker"/> that represents the invoker used to invoke OpenGL calls.
-        /// </param>
-        /// <param name="mapper">
-        ///   Specifies an <see cref="IEnumMapper"/> that represents the enumeration mapper used to map OpenGL enumerations to the rendering APIs equivalent.
-        /// </param>
-        /// <param name="description">
-        ///   Specifies a <see cref="Texture2DDescription"/> that represents the properties used when creating this <see cref="OpenGLTexture2D"/>.
-        /// </param>
-        /// <param name="format">
-        ///   Specifies a <see cref="PixelFormat"/> that represents the format of this <see cref="OpenGLTexture2D"/>.
-        /// </param>
-        /// <param name="internalFormat">
-        ///   Specifies a <see cref="SizedFormat"/> that represents the internal format of this <see cref="OpenGLTexture2D"/>.
-        /// </param>
-        /// <param name="data">
-        ///   Specifies a <see cref="IntPtr"/> that represents the data this <see cref="OpenGLTexture2D"/> will contain.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   The specified <paramref name="invoker"/> or <paramref name="mapper"/> parameter is null.
-        /// </exception>
-        public OpenGLTexture2D(
-            IOpenGLInvoker invoker,
-            IEnumMapper mapper,
-            Texture2DDescription description,
-            PixelFormat format,
-            SizedFormat internalFormat,
-            IntPtr data)
+        if (mapper == null)
         {
-            this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
-
-            if (mapper == null)
-            {
-                throw new ArgumentNullException(nameof(mapper));
-            }
-
-            this.rendererID = invoker.CreateTexture(TextureTarget.Texture2D);
-
-            this.Format = format;
-            this.InternalFormat = internalFormat;
-
-            this.Description = description;
-
-            int mipmap = (int)Math.Ceiling(Math.Max(Math.Log2(description.Width + 1), Math.Log2(description.Height + 1)));
-
-            invoker.TextureStorage2D(this.rendererID, mipmap, mapper.Forward<SizedInternalFormat>(this.InternalFormat), description.Width, description.Height);
-
-            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMinFilter, (int)mapper.Forward<TextureMinFilter>(description.MinFilter));
-            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMagFilter, (int)mapper.Forward<TextureMagFilter>(description.MagFilter));
-            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapS, (int)mapper.Forward<TKTextureWrapMode>(description.WrapS));
-            invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapT, (int)mapper.Forward<TKTextureWrapMode>(description.WrapT));
-
-            if (data != IntPtr.Zero)
-            {
-                invoker.TextureSubImage2D(
-                    texture: this.rendererID,
-                    level: 0,
-                    xoffset: 0,
-                    yoffset: 0,
-                    width: description.Width,
-                    height: description.Height,
-                    format: mapper.Forward<TKPixelForamt>(this.Format),
-                    type: mapper.Forward<TKPixelType>(description.PixelType),
-                    pixels: data);
-
-                if (description.GenerateMipmaps)
-                {
-                    invoker.GenerateTextureMipmap(this.rendererID);
-                }
-            }
+            throw new ArgumentNullException(nameof(mapper));
         }
 
-        /// <summary>
-        ///   Finalizes an instance of the <see cref="OpenGLTexture2D"/> class.
-        /// </summary>
-        ~OpenGLTexture2D()
+        this.rendererID = invoker.CreateTexture(TextureTarget.Texture2D);
+
+        this.Format = format;
+        this.InternalFormat = internalFormat;
+
+        this.Description = description;
+
+        int mipmap = (int)Math.Ceiling(Math.Max(Math.Log2(description.Width + 1), Math.Log2(description.Height + 1)));
+
+        invoker.TextureStorage2D(this.rendererID, mipmap, mapper.Forward<SizedInternalFormat>(this.InternalFormat), description.Width, description.Height);
+
+        invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMinFilter, (int)mapper.Forward<TextureMinFilter>(description.MinFilter));
+        invoker.TextureParameter(this.rendererID, TextureParameterName.TextureMagFilter, (int)mapper.Forward<TextureMagFilter>(description.MagFilter));
+        invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapS, (int)mapper.Forward<TKTextureWrapMode>(description.WrapS));
+        invoker.TextureParameter(this.rendererID, TextureParameterName.TextureWrapT, (int)mapper.Forward<TKTextureWrapMode>(description.WrapT));
+
+        if (data != IntPtr.Zero)
         {
-            this.Dispose(false);
-        }
+            invoker.TextureSubImage2D(
+                texture: this.rendererID,
+                level: 0,
+                xoffset: 0,
+                yoffset: 0,
+                width: description.Width,
+                height: description.Height,
+                format: mapper.Forward<TKPixelForamt>(this.Format),
+                type: mapper.Forward<TKPixelType>(description.PixelType),
+                pixels: data);
 
-        /// <summary>
-        ///   Gets the description that describes the properties of this <see cref="OpenGLTexture2D"/>.
-        /// </summary>
-        /// <value>
-        ///   The description that describes the properties of this <see cref="OpenGLTexture2D"/>.
-        /// </value>
-        public Texture2DDescription Description { get; }
-
-        /// <summary>
-        ///   Gets the format of this <see cref="OpenGLTexture2D"/>.
-        /// </summary>
-        /// <value>
-        ///   The format of this <see cref="OpenGLTexture2D"/>.
-        /// </value>
-        public PixelFormat Format { get; }
-
-        /// <summary>
-        ///   Gets the internal format of this <see cref="OpenGLTexture2D"/>.
-        /// </summary>
-        /// <value>
-        ///   The internal format of this <see cref="OpenGLTexture2D"/>.
-        /// </value>
-        public SizedFormat InternalFormat { get; }
-
-        /// <summary>
-        ///   Gets a value indicating whether this <see cref="OpenGLTexture2D"/> is disposed.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this <see cref="OpenGLTexture2D"/> is disposed; otherwise, <c>false</c>.
-        /// </value>
-        protected bool IsDisposed { get; private set; }
-
-        public void Attach(FramebufferAttachment type, int framebuffer)
-        {
-            if (this.IsDisposed)
+            if (description.GenerateMipmaps)
             {
-                throw new ObjectDisposedException(nameof(OpenGLTexture2D));
+                invoker.GenerateTextureMipmap(this.rendererID);
             }
-
-            this.invoker.NamedFramebufferTexture(framebuffer, type, this.rendererID, 0);
         }
+    }
 
-        /// <summary>
-        ///   Binds this <see cref="IOpenGLTexture"/> to the graphics processing unit.
-        /// </summary>
-        /// <param name="unit">
-        ///   Specifies an <see cref="int"/> that represents which texture slot to activate.
-        /// </param>
-        /// <exception cref="ObjectDisposedException">
-        ///   The <see cref="OpenGLTexture2D"/> has been disposed.
-        /// </exception>
-        public void Bind(int unit)
+    /// <summary>
+    ///   Finalizes an instance of the <see cref="OpenGLTexture2D"/> class.
+    /// </summary>
+    ~OpenGLTexture2D()
+    {
+        this.Dispose(false);
+    }
+
+    /// <summary>
+    ///   Gets the description that describes the properties of this <see cref="OpenGLTexture2D"/>.
+    /// </summary>
+    /// <value>
+    ///   The description that describes the properties of this <see cref="OpenGLTexture2D"/>.
+    /// </value>
+    public Texture2DDescription Description { get; }
+
+    /// <summary>
+    ///   Gets the format of this <see cref="OpenGLTexture2D"/>.
+    /// </summary>
+    /// <value>
+    ///   The format of this <see cref="OpenGLTexture2D"/>.
+    /// </value>
+    public PixelFormat Format { get; }
+
+    /// <summary>
+    ///   Gets the internal format of this <see cref="OpenGLTexture2D"/>.
+    /// </summary>
+    /// <value>
+    ///   The internal format of this <see cref="OpenGLTexture2D"/>.
+    /// </value>
+    public SizedFormat InternalFormat { get; }
+
+    /// <summary>
+    ///   Gets a value indicating whether this <see cref="OpenGLTexture2D"/> is disposed.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this <see cref="OpenGLTexture2D"/> is disposed; otherwise, <c>false</c>.
+    /// </value>
+    protected bool IsDisposed { get; private set; }
+
+    public void Attach(FramebufferAttachment type, int framebuffer)
+    {
+        if (this.IsDisposed)
         {
-            if (this.IsDisposed)
-            {
-                throw new ObjectDisposedException(nameof(OpenGLTexture2D));
-            }
-
-            this.invoker.BindTextureUnit(unit, this.rendererID);
+            throw new ObjectDisposedException(nameof(OpenGLTexture2D));
         }
 
-        /// <summary>
-        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
+        this.invoker.NamedFramebufferTexture(framebuffer, type, this.rendererID, 0);
+    }
+
+    /// <summary>
+    ///   Binds this <see cref="IOpenGLTexture"/> to the graphics processing unit.
+    /// </summary>
+    /// <param name="unit">
+    ///   Specifies an <see cref="int"/> that represents which texture slot to activate.
+    /// </param>
+    /// <exception cref="ObjectDisposedException">
+    ///   The <see cref="OpenGLTexture2D"/> has been disposed.
+    /// </exception>
+    public void Bind(int unit)
+    {
+        if (this.IsDisposed)
         {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            throw new ObjectDisposedException(nameof(OpenGLTexture2D));
         }
 
-        /// <summary>
-        ///   Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing">
-        ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
+        this.invoker.BindTextureUnit(unit, this.rendererID);
+    }
+
+    /// <summary>
+    ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// </summary>
+    public void Dispose()
+    {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    ///   Releases unmanaged and - optionally - managed resources.
+    /// </summary>
+    /// <param name="disposing">
+    ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (this.IsDisposed)
         {
-            if (this.IsDisposed)
-            {
-                return;
-            }
-
-            if (disposing && this.rendererID != -1)
-            {
-                this.invoker.DeleteTexture(this.rendererID);
-                this.rendererID = -1;
-            }
-
-            this.IsDisposed = true;
+            return;
         }
+
+        if (disposing && this.rendererID != -1)
+        {
+            this.invoker.DeleteTexture(this.rendererID);
+            this.rendererID = -1;
+        }
+
+        this.IsDisposed = true;
     }
 }

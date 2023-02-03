@@ -2,442 +2,441 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.Input.Mouse
+namespace FinalEngine.Tests.Core.Input.Mouse;
+
+using System;
+using System.Drawing;
+using FinalEngine.Input.Mouses;
+using Moq;
+using NUnit.Framework;
+
+public class MouseTests
 {
-    using System;
-    using System.Drawing;
-    using FinalEngine.Input.Mouses;
-    using Moq;
-    using NUnit.Framework;
+    private Mouse mouse;
 
-    public class MouseTests
+    private Mock<IMouseDevice> mouseDevice;
+
+    [Test]
+    public void ConstructorShouldHookOntoButtonDownEventWhenNouseDeviceIsNotNull()
     {
-        private Mouse mouse;
-
-        private Mock<IMouseDevice> mouseDevice;
-
-        [Test]
-        public void ConstructorShouldHookOntoButtonDownEventWhenNouseDeviceIsNotNull()
-        {
-            // Assert
-            this.mouseDevice.VerifyAdd(
-                x =>
-                {
-                    x.ButtonDown += It.IsAny<EventHandler<MouseButtonEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void ConstructorShouldHookOntoButtonUpEventWhenNouseDeviceIsNotNull()
-        {
-            // Assert
-            this.mouseDevice.VerifyAdd(
-                x =>
-                {
-                    x.ButtonUp += It.IsAny<EventHandler<MouseButtonEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void ConstructorShouldHookOntoMoveEventWhenNouseDeviceIsNotNull()
-        {
-            // Assert
-            this.mouseDevice.VerifyAdd(
-                x =>
-                {
-                    x.Move += It.IsAny<EventHandler<MouseMoveEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void ConstructorShouldHookOntoScrollEventWhenNouseDeviceIsNotNull()
-        {
-            // Assert
-            this.mouseDevice.VerifyAdd(
-                x =>
-                {
-                    x.Scroll += It.IsAny<EventHandler<MouseScrollEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void DeltaShouldReturnDeviceLocationDeltaWhenDeviceIsNotNull()
-        {
-            // Act
-            var actual = this.mouse.Delta;
-
-            // Assert
-            this.mouseDevice.VerifyGet(x => x.LocationDelta, Times.Once);
-        }
-
-        [Test]
-        public void DeltaShouldReturnPointEmptyWhenDeviceIsNull()
-        {
-            // Arrange
-            var mouse = new Mouse(null);
-            PointF expected = Point.Empty;
-
-            // Act
-            var actual = mouse.Delta;
-            mouse.Dispose();
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void DeviceButtonDownShouldThrowArgumentNullExceptionWhenEventDataIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+        // Assert
+        this.mouseDevice.VerifyAdd(
+            x =>
             {
-                this.mouseDevice.Raise(
-                    x =>
-                {
-                    x.ButtonDown += null;
-                }, new object[] { new object(), null });
-            });
-        }
+                x.ButtonDown += It.IsAny<EventHandler<MouseButtonEventArgs>>();
+            }, Times.Once);
+    }
 
-        [Test]
-        public void DeviceButtonUpShouldThrowArgumentNullExceptionWhenEventDataIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+    [Test]
+    public void ConstructorShouldHookOntoButtonUpEventWhenNouseDeviceIsNotNull()
+    {
+        // Assert
+        this.mouseDevice.VerifyAdd(
+            x =>
             {
-                this.mouseDevice.Raise(
-                    x =>
-                {
-                    x.ButtonUp += null;
-                }, new object[] { new object(), null });
-            });
-        }
+                x.ButtonUp += It.IsAny<EventHandler<MouseButtonEventArgs>>();
+            }, Times.Once);
+    }
 
-        [Test]
-        public void DeviceMoveShouldSetLocationWhenDeviceMoveRaised()
+    [Test]
+    public void ConstructorShouldHookOntoMoveEventWhenNouseDeviceIsNotNull()
+    {
+        // Assert
+        this.mouseDevice.VerifyAdd(
+            x =>
+            {
+                x.Move += It.IsAny<EventHandler<MouseMoveEventArgs>>();
+            }, Times.Once);
+    }
+
+    [Test]
+    public void ConstructorShouldHookOntoScrollEventWhenNouseDeviceIsNotNull()
+    {
+        // Assert
+        this.mouseDevice.VerifyAdd(
+            x =>
+            {
+                x.Scroll += It.IsAny<EventHandler<MouseScrollEventArgs>>();
+            }, Times.Once);
+    }
+
+    [Test]
+    public void DeltaShouldReturnDeviceLocationDeltaWhenDeviceIsNotNull()
+    {
+        // Act
+        var actual = this.mouse.Delta;
+
+        // Assert
+        this.mouseDevice.VerifyGet(x => x.LocationDelta, Times.Once);
+    }
+
+    [Test]
+    public void DeltaShouldReturnPointEmptyWhenDeviceIsNull()
+    {
+        // Arrange
+        var mouse = new Mouse(null);
+        PointF expected = Point.Empty;
+
+        // Act
+        var actual = mouse.Delta;
+        mouse.Dispose();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void DeviceButtonDownShouldThrowArgumentNullExceptionWhenEventDataIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Arrange
-            var point = new PointF(100, 400);
+            this.mouseDevice.Raise(
+                x =>
+            {
+                x.ButtonDown += null;
+            }, new object[] { new object(), null });
+        });
+    }
 
+    [Test]
+    public void DeviceButtonUpShouldThrowArgumentNullExceptionWhenEventDataIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.mouseDevice.Raise(
+                x =>
+            {
+                x.ButtonUp += null;
+            }, new object[] { new object(), null });
+        });
+    }
+
+    [Test]
+    public void DeviceMoveShouldSetLocationWhenDeviceMoveRaised()
+    {
+        // Arrange
+        var point = new PointF(100, 400);
+
+        this.mouseDevice.Raise(
+            x =>
+        {
+            x.Move += null;
+        }, new MouseMoveEventArgs()
+        {
+            Location = point,
+        });
+
+        // Act
+        var actual = this.mouse.Location;
+
+        // Assert
+        Assert.AreEqual(point, actual);
+    }
+
+    [Test]
+    public void DeviceMoveShouldThrowArgumentNullExceptionWhenEventDataIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
             this.mouseDevice.Raise(
                 x =>
             {
                 x.Move += null;
-            }, new MouseMoveEventArgs()
-            {
-                Location = point,
-            });
+            }, new object[] { new object(), null });
+        });
+    }
 
-            // Act
-            var actual = this.mouse.Location;
+    [Test]
+    public void DeviceScrollShouldSetWheelOffsetWhenDeviceScrollRaised()
+    {
+        // Arrange
+        const double expected = 132.0d;
 
-            // Assert
-            Assert.AreEqual(point, actual);
-        }
-
-        [Test]
-        public void DeviceMoveShouldThrowArgumentNullExceptionWhenEventDataIsNull()
+        this.mouseDevice.Raise(
+            x =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.mouseDevice.Raise(
-                    x =>
-                {
-                    x.Move += null;
-                }, new object[] { new object(), null });
-            });
-        }
-
-        [Test]
-        public void DeviceScrollShouldSetWheelOffsetWhenDeviceScrollRaised()
+            x.Scroll += null;
+        }, new MouseScrollEventArgs()
         {
-            // Arrange
-            const double expected = 132.0d;
+            Offset = expected,
+        });
 
+        // Act
+        double actual = this.mouse.WheelOffset;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void DeviceScrollShouldThrowArgumentNullExceptionWhenEventDataIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
             this.mouseDevice.Raise(
                 x =>
             {
                 x.Scroll += null;
-            }, new MouseScrollEventArgs()
+            }, new object[] { new object(), null });
+        });
+    }
+
+    [Test]
+    public void DisposeShouldDeregisterButtonDownEventWhenInvoked()
+    {
+        // Act
+        this.mouse.Dispose();
+
+        // Assert
+        this.mouseDevice.VerifyRemove(
+            x =>
             {
-                Offset = expected,
-            });
+                x.ButtonDown -= It.IsAny<EventHandler<MouseButtonEventArgs>>();
+            }, Times.Once);
+    }
 
-            // Act
-            double actual = this.mouse.WheelOffset;
+    [Test]
+    public void DisposeShouldDeregisterButtonUpEventWhenInvoked()
+    {
+        // Act
+        this.mouse.Dispose();
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void DeviceScrollShouldThrowArgumentNullExceptionWhenEventDataIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
+        // Assert
+        this.mouseDevice.VerifyRemove(
+            x =>
             {
-                this.mouseDevice.Raise(
-                    x =>
-                {
-                    x.Scroll += null;
-                }, new object[] { new object(), null });
-            });
-        }
+                x.ButtonUp -= It.IsAny<EventHandler<MouseButtonEventArgs>>();
+            }, Times.Once);
+    }
 
-        [Test]
-        public void DisposeShouldDeregisterButtonDownEventWhenInvoked()
-        {
-            // Act
-            this.mouse.Dispose();
+    [Test]
+    public void DisposeShouldDeregisterMoveEventWhenInvoked()
+    {
+        // Act
+        this.mouse.Dispose();
 
-            // Assert
-            this.mouseDevice.VerifyRemove(
-                x =>
-                {
-                    x.ButtonDown -= It.IsAny<EventHandler<MouseButtonEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void DisposeShouldDeregisterButtonUpEventWhenInvoked()
-        {
-            // Act
-            this.mouse.Dispose();
-
-            // Assert
-            this.mouseDevice.VerifyRemove(
-                x =>
-                {
-                    x.ButtonUp -= It.IsAny<EventHandler<MouseButtonEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void DisposeShouldDeregisterMoveEventWhenInvoked()
-        {
-            // Act
-            this.mouse.Dispose();
-
-            // Assert
-            this.mouseDevice.VerifyRemove(
-                x =>
-                {
-                    x.Move -= It.IsAny<EventHandler<MouseMoveEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void DisposeShouldDeregisterScrollEventWhenInvoked()
-        {
-            // Act
-            this.mouse.Dispose();
-
-            // Assert
-            this.mouseDevice.VerifyRemove(
-                x =>
-                {
-                    x.Scroll -= It.IsAny<EventHandler<MouseScrollEventArgs>>();
-                }, Times.Once);
-        }
-
-        [Test]
-        public void IsButtonDownShouldReturnFalseWhenButtonNotDownDuringCurrentFrame()
-        {
-            // Act
-            bool actual = this.mouse.IsButtonDown(MouseButton.Button1);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void IsButtonDownShouldReturnTrueWhenButtonDownDuringCurrentFrame()
-        {
-            // Arrange
-            const MouseButton button = MouseButton.Button3;
-
-            this.mouseDevice.Raise(
-                x =>
+        // Assert
+        this.mouseDevice.VerifyRemove(
+            x =>
             {
-                x.ButtonDown += null;
-            }, new MouseButtonEventArgs()
+                x.Move -= It.IsAny<EventHandler<MouseMoveEventArgs>>();
+            }, Times.Once);
+    }
+
+    [Test]
+    public void DisposeShouldDeregisterScrollEventWhenInvoked()
+    {
+        // Act
+        this.mouse.Dispose();
+
+        // Assert
+        this.mouseDevice.VerifyRemove(
+            x =>
             {
-                Button = button,
-            });
+                x.Scroll -= It.IsAny<EventHandler<MouseScrollEventArgs>>();
+            }, Times.Once);
+    }
 
-            // Act
-            bool actual = this.mouse.IsButtonDown(button);
+    [Test]
+    public void IsButtonDownShouldReturnFalseWhenButtonNotDownDuringCurrentFrame()
+    {
+        // Act
+        bool actual = this.mouse.IsButtonDown(MouseButton.Button1);
 
-            // Assert
-            Assert.True(actual);
-        }
+        // Assert
+        Assert.False(actual);
+    }
 
-        [Test]
-        public void IsButtonPressedShouldReturnFalseWhenButtonIsNotDownDuringCurrentFrame()
+    [Test]
+    public void IsButtonDownShouldReturnTrueWhenButtonDownDuringCurrentFrame()
+    {
+        // Arrange
+        const MouseButton button = MouseButton.Button3;
+
+        this.mouseDevice.Raise(
+            x =>
         {
-            // Arrange
-            const MouseButton button = MouseButton.Right;
-
-            this.mouseDevice.Raise(
-                x =>
-            {
-                x.ButtonDown += null;
-            }, new MouseButtonEventArgs()
-            {
-                Button = button,
-            });
-
-            this.mouse.Update();
-
-            this.mouseDevice.Raise(
-                x =>
-            {
-                x.ButtonUp += null;
-            }, new MouseButtonEventArgs()
-            {
-                Button = button,
-            });
-
-            // Act
-            bool actual = this.mouse.IsButtonPressed(button);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void IsButtonPressedShouldReturnTrueWhenButtonDownDuringCurrentFrameAndNotDownDuringPreviousFrame()
+            x.ButtonDown += null;
+        }, new MouseButtonEventArgs()
         {
-            // Arrange
-            const MouseButton button = MouseButton.Button6;
+            Button = button,
+        });
 
-            this.mouseDevice.Raise(
-                x =>
-            {
-                x.ButtonDown += null;
-            }, new MouseButtonEventArgs()
-            {
-                Button = button,
-            });
+        // Act
+        bool actual = this.mouse.IsButtonDown(button);
 
-            // Act
-            bool actual = this.mouse.IsButtonPressed(button);
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
+    [Test]
+    public void IsButtonPressedShouldReturnFalseWhenButtonIsNotDownDuringCurrentFrame()
+    {
+        // Arrange
+        const MouseButton button = MouseButton.Right;
 
-        [Test]
-        public void IsButtonReleasedShouldReturnFalseWhenButtonDownDuringCurrentFrameAndNotDownDuringPreviousFrame()
+        this.mouseDevice.Raise(
+            x =>
         {
-            // Arrange
-            const MouseButton button = MouseButton.Middle;
-
-            this.mouseDevice.Raise(
-                x =>
-            {
-                x.ButtonDown += null;
-            }, new MouseButtonEventArgs()
-            {
-                Button = button,
-            });
-
-            // Act
-            bool actual = this.mouse.IsButtonReleased(button);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void IsButtonReleasedShouldReturnTrueWhenButtonNotDownDuringCurrentFrameAndButtonDownDuringPreviousFrame()
+            x.ButtonDown += null;
+        }, new MouseButtonEventArgs()
         {
-            // Arrange
-            const MouseButton button = MouseButton.Left;
+            Button = button,
+        });
 
-            this.mouseDevice.Raise(
-                x =>
-            {
-                x.ButtonDown += null;
-            }, new MouseButtonEventArgs()
-            {
-                Button = button,
-            });
+        this.mouse.Update();
 
-            this.mouse.Update();
-
-            this.mouseDevice.Raise(
-                x =>
-            {
-                x.ButtonUp += null;
-            }, new MouseButtonEventArgs()
-            {
-                Button = button,
-            });
-
-            // Act
-            bool actual = this.mouse.IsButtonReleased(button);
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void LocationGetShouldReturnEmptyPointWhenNothingChanged()
+        this.mouseDevice.Raise(
+            x =>
         {
-            // Act
-            var actual = this.mouse.Location;
-
-            // Assert
-            Assert.AreEqual(PointF.Empty, actual);
-        }
-
-        [Test]
-        public void LocationSetShouldInvokeDeviceSetCursorLocationWhenValueIsNotEqualToLocation()
+            x.ButtonUp += null;
+        }, new MouseButtonEventArgs()
         {
-            // Arrange
-            var point = new PointF(100, 200);
+            Button = button,
+        });
 
-            // Act
-            this.mouse.Location = point;
+        // Act
+        bool actual = this.mouse.IsButtonPressed(button);
 
-            // Assert
-            this.mouseDevice.Verify(x => x.SetCursorLocation(point), Times.Once);
-        }
+        // Assert
+        Assert.False(actual);
+    }
 
-        [Test]
-        public void LocationSetShouldNotInvokeSetCursorLocationWhenValueIsEqualToLocation()
+    [Test]
+    public void IsButtonPressedShouldReturnTrueWhenButtonDownDuringCurrentFrameAndNotDownDuringPreviousFrame()
+    {
+        // Arrange
+        const MouseButton button = MouseButton.Button6;
+
+        this.mouseDevice.Raise(
+            x =>
         {
-            // Act
-            this.mouse.Location = PointF.Empty;
-
-            // Assert
-            this.mouseDevice.Verify(x => x.SetCursorLocation(It.IsAny<PointF>()), Times.Never);
-        }
-
-        [SetUp]
-        public void Setup()
+            x.ButtonDown += null;
+        }, new MouseButtonEventArgs()
         {
-            // Arrange
-            this.mouseDevice = new Mock<IMouseDevice>();
-            this.mouse = new Mouse(this.mouseDevice.Object);
-        }
+            Button = button,
+        });
 
-        [TearDown]
-        public void Teardown()
+        // Act
+        bool actual = this.mouse.IsButtonPressed(button);
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Test]
+    public void IsButtonReleasedShouldReturnFalseWhenButtonDownDuringCurrentFrameAndNotDownDuringPreviousFrame()
+    {
+        // Arrange
+        const MouseButton button = MouseButton.Middle;
+
+        this.mouseDevice.Raise(
+            x =>
         {
-            this.mouse.Dispose();
-        }
-
-        [Test]
-        public void WheelOffsetShouldBeZeroWhenNothingChanged()
+            x.ButtonDown += null;
+        }, new MouseButtonEventArgs()
         {
-            // Act
-            double actual = this.mouse.WheelOffset;
+            Button = button,
+        });
 
-            // Assert
-            Assert.Zero(actual);
-        }
+        // Act
+        bool actual = this.mouse.IsButtonReleased(button);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void IsButtonReleasedShouldReturnTrueWhenButtonNotDownDuringCurrentFrameAndButtonDownDuringPreviousFrame()
+    {
+        // Arrange
+        const MouseButton button = MouseButton.Left;
+
+        this.mouseDevice.Raise(
+            x =>
+        {
+            x.ButtonDown += null;
+        }, new MouseButtonEventArgs()
+        {
+            Button = button,
+        });
+
+        this.mouse.Update();
+
+        this.mouseDevice.Raise(
+            x =>
+        {
+            x.ButtonUp += null;
+        }, new MouseButtonEventArgs()
+        {
+            Button = button,
+        });
+
+        // Act
+        bool actual = this.mouse.IsButtonReleased(button);
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Test]
+    public void LocationGetShouldReturnEmptyPointWhenNothingChanged()
+    {
+        // Act
+        var actual = this.mouse.Location;
+
+        // Assert
+        Assert.AreEqual(PointF.Empty, actual);
+    }
+
+    [Test]
+    public void LocationSetShouldInvokeDeviceSetCursorLocationWhenValueIsNotEqualToLocation()
+    {
+        // Arrange
+        var point = new PointF(100, 200);
+
+        // Act
+        this.mouse.Location = point;
+
+        // Assert
+        this.mouseDevice.Verify(x => x.SetCursorLocation(point), Times.Once);
+    }
+
+    [Test]
+    public void LocationSetShouldNotInvokeSetCursorLocationWhenValueIsEqualToLocation()
+    {
+        // Act
+        this.mouse.Location = PointF.Empty;
+
+        // Assert
+        this.mouseDevice.Verify(x => x.SetCursorLocation(It.IsAny<PointF>()), Times.Never);
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.mouseDevice = new Mock<IMouseDevice>();
+        this.mouse = new Mouse(this.mouseDevice.Object);
+    }
+
+    [TearDown]
+    public void Teardown()
+    {
+        this.mouse.Dispose();
+    }
+
+    [Test]
+    public void WheelOffsetShouldBeZeroWhenNothingChanged()
+    {
+        // Act
+        double actual = this.mouse.WheelOffset;
+
+        // Assert
+        Assert.Zero(actual);
     }
 }

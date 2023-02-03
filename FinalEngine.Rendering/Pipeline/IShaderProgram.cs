@@ -2,16 +2,15 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Pipeline
-{
-    using System;
-    using FinalEngine.Resources;
+namespace FinalEngine.Rendering.Pipeline;
 
-    /// <summary>
-    ///   Defines an interface that represents a shader program.
-    /// </summary>
-    /// <seealso cref="IDisposable"/>
-    public interface IShaderProgram : IResource
-    {
-    }
+using System;
+using FinalEngine.Resources;
+
+/// <summary>
+///   Defines an interface that represents a shader program.
+/// </summary>
+/// <seealso cref="IDisposable"/>
+public interface IShaderProgram : IResource
+{
 }

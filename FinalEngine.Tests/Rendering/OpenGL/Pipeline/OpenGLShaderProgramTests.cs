@@ -2,204 +2,203 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline
+namespace FinalEngine.Tests.Rendering.OpenGL.Pipeline;
+
+using System;
+using System.Collections.Generic;
+using FinalEngine.Rendering.Exceptions;
+using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.OpenGL.Pipeline;
+using Moq;
+using NUnit.Framework;
+
+public class OpenGLShaderProgramTests
 {
-    using System;
-    using System.Collections.Generic;
-    using FinalEngine.Rendering.Exceptions;
-    using FinalEngine.Rendering.OpenGL.Invocation;
-    using FinalEngine.Rendering.OpenGL.Pipeline;
-    using Moq;
-    using NUnit.Framework;
+    private const int ID = 567;
 
-    public class OpenGLShaderProgramTests
+    private Mock<IOpenGLInvoker> invoker;
+
+    private OpenGLShaderProgram program;
+
+    private Mock<IOpenGLShader> shader;
+
+    private IReadOnlyCollection<IOpenGLShader> shaders;
+
+    [Test]
+    public void BindShouldInvokeUseProgramWhenProgramIsNotDisposed()
     {
-        private const int ID = 567;
+        // Act
+        this.program.Bind();
 
-        private Mock<IOpenGLInvoker> invoker;
+        // Assert
+        this.invoker.Verify(x => x.UseProgram(ID), Times.Once);
+    }
 
-        private OpenGLShaderProgram program;
+    [Test]
+    public void BindShouldThrowObjectDisposedExceptionWhenProgramIsDisposed()
+    {
+        // Arrange
+        this.program.Dispose();
 
-        private Mock<IOpenGLShader> shader;
-
-        private IReadOnlyCollection<IOpenGLShader> shaders;
-
-        [Test]
-        public void BindShouldInvokeUseProgramWhenProgramIsNotDisposed()
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(() =>
         {
-            // Act
             this.program.Bind();
+        });
+    }
 
-            // Assert
-            this.invoker.Verify(x => x.UseProgram(ID), Times.Once);
-        }
+    [Test]
+    public void ConstructorShouldInvokeAttachWhenInvoked()
+    {
+        // Assert
+        this.shader.Verify(x => x.Attach(ID), Times.Once);
+    }
 
-        [Test]
-        public void BindShouldThrowObjectDisposedExceptionWhenProgramIsDisposed()
+    [Test]
+    public void ConstructorShouldInvokeCreateProgramWhenInvoked()
+    {
+        // Assert
+        this.invoker.Verify(x => x.CreateProgram(), Times.Once);
+    }
+
+    [Test]
+    public void ConstructorShouldInvokeGetProgramInfoLogWhenInvoked()
+    {
+        // Assert
+        this.invoker.Verify(x => x.GetProgramInfoLog(ID), Times.Once);
+    }
+
+    [Test]
+    public void ConstructorShouldInvokeLinkProgramWhenInvoked()
+    {
+        // Assert
+        this.invoker.Verify(x => x.LinkProgram(ID), Times.Once);
+    }
+
+    [Test]
+    public void ConstructorShouldInvokeValidateProgramWhenInvoked()
+    {
+        // Assert
+        this.invoker.Verify(x => x.ValidateProgram(ID), Times.Once);
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
+    {
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Arrange
-            this.program.Dispose();
+            new OpenGLShaderProgram(null, this.shaders);
+        });
+    }
 
-            // Act and assert
-            Assert.Throws<ObjectDisposedException>(() =>
-            {
-                this.program.Bind();
-            });
-        }
-
-        [Test]
-        public void ConstructorShouldInvokeAttachWhenInvoked()
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenShadersIsNull()
+    {
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Assert
-            this.shader.Verify(x => x.Attach(ID), Times.Once);
-        }
+            new OpenGLShaderProgram(this.invoker.Object, null);
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldInvokeCreateProgramWhenInvoked()
+    [Test]
+    public void ConstructorShouldThrowProgramLinkingErrorExceptionWhenGetProgramInfoLogReturnsNotNullEmptyOrWhitspace()
+    {
+        // Arrange
+        this.invoker.Setup(x => x.GetProgramInfoLog(ID)).Returns("test");
+
+        // Act and assert
+        Assert.Throws<ProgramLinkingErrorException>(() =>
         {
-            // Assert
-            this.invoker.Verify(x => x.CreateProgram(), Times.Once);
-        }
+            new OpenGLShaderProgram(this.invoker.Object, this.shaders);
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldInvokeGetProgramInfoLogWhenInvoked()
+    [Test]
+    public void DisposeShouldInvokeDeleteProgramWhenProgramIsNotDisposed()
+    {
+        // Act
+        this.program.Dispose();
+
+        // Assert
+        this.invoker.Verify(x => x.DeleteProgram(ID), Times.Once);
+    }
+
+    [Test]
+    public void GetUniformLocationShouldInvokeGetUniformLocationWhenNameIsNotNullAndProgramIsNotDisposed()
+    {
+        // Act
+        this.program.GetUniformLocation("test");
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(ID, "test"), Times.Once);
+    }
+
+    [Test]
+    public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsEmpty()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Assert
-            this.invoker.Verify(x => x.GetProgramInfoLog(ID), Times.Once);
-        }
+            this.program.GetUniformLocation(string.Empty);
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldInvokeLinkProgramWhenInvoked()
+    [Test]
+    public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Assert
-            this.invoker.Verify(x => x.LinkProgram(ID), Times.Once);
-        }
+            this.program.GetUniformLocation(null);
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldInvokeValidateProgramWhenInvoked()
+    [Test]
+    public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsWhitespace()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Assert
-            this.invoker.Verify(x => x.ValidateProgram(ID), Times.Once);
-        }
+            this.program.GetUniformLocation("\t\r\n");
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
+    [Test]
+    public void GetUniformLocationShouldThrowObjectDisposedExceptionWhenProgramIsDisposed()
+    {
+        // Arrange
+        this.program.Dispose();
+
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(() =>
         {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new OpenGLShaderProgram(null, this.shaders);
-            });
-        }
+            this.program.GetUniformLocation(null);
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenShadersIsNull()
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.invoker = new Mock<IOpenGLInvoker>();
+        this.invoker.Setup(x => x.CreateProgram()).Returns(ID);
+
+        this.shader = new Mock<IOpenGLShader>();
+
+        this.shaders = new List<IOpenGLShader>()
         {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new OpenGLShaderProgram(this.invoker.Object, null);
-            });
-        }
+            null,
+            this.shader.Object,
+        };
 
-        [Test]
-        public void ConstructorShouldThrowProgramLinkingErrorExceptionWhenGetProgramInfoLogReturnsNotNullEmptyOrWhitspace()
-        {
-            // Arrange
-            this.invoker.Setup(x => x.GetProgramInfoLog(ID)).Returns("test");
+        this.program = new OpenGLShaderProgram(this.invoker.Object, this.shaders);
+    }
 
-            // Act and assert
-            Assert.Throws<ProgramLinkingErrorException>(() =>
-            {
-                new OpenGLShaderProgram(this.invoker.Object, this.shaders);
-            });
-        }
-
-        [Test]
-        public void DisposeShouldInvokeDeleteProgramWhenProgramIsNotDisposed()
-        {
-            // Act
-            this.program.Dispose();
-
-            // Assert
-            this.invoker.Verify(x => x.DeleteProgram(ID), Times.Once);
-        }
-
-        [Test]
-        public void GetUniformLocationShouldInvokeGetUniformLocationWhenNameIsNotNullAndProgramIsNotDisposed()
-        {
-            // Act
-            this.program.GetUniformLocation("test");
-
-            // Assert
-            this.invoker.Verify(x => x.GetUniformLocation(ID, "test"), Times.Once);
-        }
-
-        [Test]
-        public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsEmpty()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.program.GetUniformLocation(string.Empty);
-            });
-        }
-
-        [Test]
-        public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.program.GetUniformLocation(null);
-            });
-        }
-
-        [Test]
-        public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsWhitespace()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                this.program.GetUniformLocation("\t\r\n");
-            });
-        }
-
-        [Test]
-        public void GetUniformLocationShouldThrowObjectDisposedExceptionWhenProgramIsDisposed()
-        {
-            // Arrange
-            this.program.Dispose();
-
-            // Act and assert
-            Assert.Throws<ObjectDisposedException>(() =>
-            {
-                this.program.GetUniformLocation(null);
-            });
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            // Arrange
-            this.invoker = new Mock<IOpenGLInvoker>();
-            this.invoker.Setup(x => x.CreateProgram()).Returns(ID);
-
-            this.shader = new Mock<IOpenGLShader>();
-
-            this.shaders = new List<IOpenGLShader>()
-            {
-                null,
-                this.shader.Object,
-            };
-
-            this.program = new OpenGLShaderProgram(this.invoker.Object, this.shaders);
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            this.program.Dispose();
-        }
+    [TearDown]
+    public void Teardown()
+    {
+        this.program.Dispose();
     }
 }

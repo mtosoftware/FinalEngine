@@ -2,22 +2,21 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Input.Mouses
-{
-    using System;
+namespace FinalEngine.Input.Mouses;
 
+using System;
+
+/// <summary>
+///   Provides event data for the <see cref="IMouseDevice.Scroll"/> event.
+/// </summary>
+/// <seealso cref="EventArgs"/>
+public class MouseScrollEventArgs : EventArgs
+{
     /// <summary>
-    ///   Provides event data for the <see cref="IMouseDevice.Scroll"/> event.
+    ///   Gets the Y-offset of the scroll wheel.
     /// </summary>
-    /// <seealso cref="EventArgs"/>
-    public class MouseScrollEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Gets the Y-offset of the scroll wheel.
-        /// </summary>
-        /// <value>
-        ///   The Y-offset of the scroll wheel.
-        /// </value>
-        public double Offset { get; init; }
-    }
+    /// <value>
+    ///   The Y-offset of the scroll wheel.
+    /// </value>
+    public double Offset { get; init; }
 }

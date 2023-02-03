@@ -2,80 +2,79 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Runtime
+namespace FinalEngine.Tests.Runtime;
+
+using System;
+using FinalEngine.Runtime;
+using FinalEngine.Runtime.Invocation;
+using Moq;
+using NUnit.Framework;
+
+public class GameTimeTests
 {
-    using System;
-    using FinalEngine.Runtime;
-    using FinalEngine.Runtime.Invocation;
-    using Moq;
-    using NUnit.Framework;
+    private const double FrameCap = 120.0d;
 
-    public class GameTimeTests
+    private GameTime gameTime;
+
+    private Mock<IStopwatchInvoker> watch;
+
+    [Test]
+    public void CanProcessNextFrameShouldReturnFalseWhenCurrentTimeIsNotEqualToLastTimePlusWaitTime()
     {
-        private const double FrameCap = 120.0d;
+        // Act
+        bool actual = this.gameTime.CanProcessNextFrame();
 
-        private GameTime gameTime;
+        // Assert
+        Assert.False(actual);
+    }
 
-        private Mock<IStopwatchInvoker> watch;
+    [Test]
+    public void CanProcessNextFrameShouldReturnTrueWhenCurrentTimeIsGreaterThanLastTimePlusWaitTime()
+    {
+        // Arrange
+        this.watch.SetupGet(x => x.Elapsed).Returns(TimeSpan.FromMilliseconds(8.4d));
 
-        [Test]
-        public void CanProcessNextFrameShouldReturnFalseWhenCurrentTimeIsNotEqualToLastTimePlusWaitTime()
+        // Act
+        bool actual = this.gameTime.CanProcessNextFrame();
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenWatchIsNull()
+    {
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act
-            bool actual = this.gameTime.CanProcessNextFrame();
+            new GameTime(null, FrameCap);
+        });
+    }
 
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void CanProcessNextFrameShouldReturnTrueWhenCurrentTimeIsGreaterThanLastTimePlusWaitTime()
+    [Test]
+    public void ConstructorShouldThrowDivideByZeroExceptionWhenFrameCapIsEqualToZero()
+    {
+        // Arrange, act and assert
+        Assert.Throws<DivideByZeroException>(() =>
         {
-            // Arrange
-            this.watch.SetupGet(x => x.Elapsed).Returns(TimeSpan.FromMilliseconds(8.4d));
+            new GameTime(this.watch.Object, 0.0d);
+        });
+    }
 
-            // Act
-            bool actual = this.gameTime.CanProcessNextFrame();
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenWatchIsNull()
+    [Test]
+    public void ConstructorShouldThrowDivideByZeroExceptionWhenFrameCapIsLessThanZero()
+    {
+        // Arrange, act and assert
+        Assert.Throws<DivideByZeroException>(() =>
         {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new GameTime(null, FrameCap);
-            });
-        }
+            new GameTime(this.watch.Object, -0.1d);
+        });
+    }
 
-        [Test]
-        public void ConstructorShouldThrowDivideByZeroExceptionWhenFrameCapIsEqualToZero()
-        {
-            // Arrange, act and assert
-            Assert.Throws<DivideByZeroException>(() =>
-            {
-                new GameTime(this.watch.Object, 0.0d);
-            });
-        }
-
-        [Test]
-        public void ConstructorShouldThrowDivideByZeroExceptionWhenFrameCapIsLessThanZero()
-        {
-            // Arrange, act and assert
-            Assert.Throws<DivideByZeroException>(() =>
-            {
-                new GameTime(this.watch.Object, -0.1d);
-            });
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            this.watch = new Mock<IStopwatchInvoker>();
-            this.gameTime = new GameTime(this.watch.Object, FrameCap);
-        }
+    [SetUp]
+    public void Setup()
+    {
+        this.watch = new Mock<IStopwatchInvoker>();
+        this.gameTime = new GameTime(this.watch.Object, FrameCap);
     }
 }

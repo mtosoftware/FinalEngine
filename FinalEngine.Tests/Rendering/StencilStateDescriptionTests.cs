@@ -2,422 +2,421 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering
+namespace FinalEngine.Tests.Rendering;
+
+using FinalEngine.Rendering;
+using NUnit.Framework;
+
+public class StencilStateDescriptionTests
 {
-    using FinalEngine.Rendering;
-    using NUnit.Framework;
+    private StencilStateDescription description;
 
-    public class StencilStateDescriptionTests
+    [Test]
+    public void ComparisonModeShouldReturnAlwaysWhenDefault()
     {
-        private StencilStateDescription description;
+        // Assert
+        Assert.AreEqual(ComparisonMode.Always, this.description.ComparisonMode);
+    }
 
-        [Test]
-        public void ComparisonModeShouldReturnAlwaysWhenDefault()
+    [Test]
+    public void ComparisonModeShouldReturnNeverWhenSetToNever()
+    {
+        // Act
+        this.description.ComparisonMode = ComparisonMode.Never;
+
+        // Assert
+        Assert.AreEqual(ComparisonMode.Never, this.description.ComparisonMode);
+    }
+
+    [Test]
+    public void DepthFailShouldReturnKeepWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(StencilOperation.Keep, this.description.DepthFail);
+    }
+
+    [Test]
+    public void DepthFailShouldReturnReplaceWhenSetToReplace()
+    {
+        // Act
+        this.description.DepthFail = StencilOperation.Replace;
+
+        // Assert
+        Assert.AreEqual(StencilOperation.Replace, this.description.DepthFail);
+    }
+
+    [Test]
+    public void EnabledShouldReturnFalseWhenDefault()
+    {
+        // Assert
+        Assert.False(this.description.Enabled);
+    }
+
+    [Test]
+    public void EnabledShouldReturnTrueWhenSetToTrue()
+    {
+        // Act
+        this.description.Enabled = true;
+
+        // Assert
+        Assert.True(this.description.Enabled);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new StencilStateDescription()
         {
-            // Assert
-            Assert.AreEqual(ComparisonMode.Always, this.description.ComparisonMode);
-        }
+            ComparisonMode = ComparisonMode.GreaterEqual,
+            DepthFail = StencilOperation.Decrement,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 456,
+            ReferenceValue = 34,
+            StencilFail = StencilOperation.Zero,
+            WriteMask = 2,
+        };
 
-        [Test]
-        public void ComparisonModeShouldReturnNeverWhenSetToNever()
+        var right = new StencilStateDescription()
         {
-            // Act
-            this.description.ComparisonMode = ComparisonMode.Never;
+            ComparisonMode = ComparisonMode.Greater,
+            DepthFail = StencilOperation.Invert,
+            Enabled = false,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 46,
+            ReferenceValue = 4456,
+            StencilFail = StencilOperation.IncrementWrap,
+            WriteMask = 76543,
+        };
 
-            // Assert
-            Assert.AreEqual(ComparisonMode.Never, this.description.ComparisonMode);
-        }
+        // Act
+        bool actual = left == right;
 
-        [Test]
-        public void DepthFailShouldReturnKeepWhenDefault()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new StencilStateDescription()
         {
-            // Assert
-            Assert.AreEqual(StencilOperation.Keep, this.description.DepthFail);
-        }
+            ComparisonMode = ComparisonMode.Greater,
+            DepthFail = StencilOperation.Invert,
+            Enabled = false,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 46,
+            ReferenceValue = 4456,
+            StencilFail = StencilOperation.IncrementWrap,
+            WriteMask = 76543,
+        };
 
-        [Test]
-        public void DepthFailShouldReturnReplaceWhenSetToReplace()
+        var right = new StencilStateDescription()
         {
-            // Act
-            this.description.DepthFail = StencilOperation.Replace;
+            ComparisonMode = ComparisonMode.Greater,
+            DepthFail = StencilOperation.Invert,
+            Enabled = false,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 46,
+            ReferenceValue = 4456,
+            StencilFail = StencilOperation.IncrementWrap,
+            WriteMask = 76543,
+        };
 
-            // Assert
-            Assert.AreEqual(StencilOperation.Replace, this.description.DepthFail);
-        }
+        // Act
+        bool actual = left == right;
 
-        [Test]
-        public void EnabledShouldReturnFalseWhenDefault()
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNotStencilStateDescription()
+    {
+        // Act
+        bool actual = this.description.Equals(new object());
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNull()
+    {
+        // Act
+        bool actual = this.description.Equals(null);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new StencilStateDescription()
         {
-            // Assert
-            Assert.False(this.description.Enabled);
-        }
+            ComparisonMode = ComparisonMode.GreaterEqual,
+            DepthFail = StencilOperation.Decrement,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 456,
+            ReferenceValue = 34,
+            StencilFail = StencilOperation.Zero,
+            WriteMask = 2,
+        };
 
-        [Test]
-        public void EnabledShouldReturnTrueWhenSetToTrue()
+        var right = new StencilStateDescription()
         {
-            // Act
-            this.description.Enabled = true;
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            // Assert
-            Assert.True(this.description.Enabled);
-        }
+        // Act
+        bool actual = left.Equals(right);
 
-        [Test]
-        public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnTrueWhenObjectIsStencilStateDescriptionAndHasSameProperties()
+    {
+        // Arrange
+        var left = new StencilStateDescription()
         {
-            // Arrange
-            var left = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.GreaterEqual,
-                DepthFail = StencilOperation.Decrement,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 456,
-                ReferenceValue = 34,
-                StencilFail = StencilOperation.Zero,
-                WriteMask = 2,
-            };
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            var right = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                DepthFail = StencilOperation.Invert,
-                Enabled = false,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 46,
-                ReferenceValue = 4456,
-                StencilFail = StencilOperation.IncrementWrap,
-                WriteMask = 76543,
-            };
-
-            // Act
-            bool actual = left == right;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+        object right = new StencilStateDescription()
         {
-            // Arrange
-            var left = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                DepthFail = StencilOperation.Invert,
-                Enabled = false,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 46,
-                ReferenceValue = 4456,
-                StencilFail = StencilOperation.IncrementWrap,
-                WriteMask = 76543,
-            };
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            var right = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                DepthFail = StencilOperation.Invert,
-                Enabled = false,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 46,
-                ReferenceValue = 4456,
-                StencilFail = StencilOperation.IncrementWrap,
-                WriteMask = 76543,
-            };
+        // Act
+        bool actual = left.Equals(right);
 
-            // Act
-            bool actual = left == right;
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNotStencilStateDescription()
+    [Test]
+    public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    {
+        // Arrange
+        var left = new StencilStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(new object());
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNull()
+        object right = new StencilStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(null);
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
+        // Act
+        int leftHashCode = left.GetHashCode();
+        int rightHashCode = right.GetHashCode();
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+        // Assert
+        Assert.AreEqual(leftHashCode, rightHashCode);
+    }
+
+    [Test]
+    public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new StencilStateDescription()
         {
-            // Arrange
-            var left = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.GreaterEqual,
-                DepthFail = StencilOperation.Decrement,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 456,
-                ReferenceValue = 34,
-                StencilFail = StencilOperation.Zero,
-                WriteMask = 2,
-            };
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            var right = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
-
-            // Act
-            bool actual = left.Equals(right);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnTrueWhenObjectIsStencilStateDescriptionAndHasSameProperties()
+        var right = new StencilStateDescription()
         {
-            // Arrange
-            var left = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            object right = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
+        // Act
+        bool actual = left != right;
 
-            // Act
-            bool actual = left.Equals(right);
+        // Assert
+        Assert.False(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    [Test]
+    public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new StencilStateDescription()
         {
-            // Arrange
-            var left = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
+            ComparisonMode = ComparisonMode.Less,
+            DepthFail = StencilOperation.IncrementWrap,
+            Enabled = true,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 6,
+            ReferenceValue = 44,
+            StencilFail = StencilOperation.Replace,
+            WriteMask = 7543,
+        };
 
-            object right = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
-
-            // Act
-            int leftHashCode = left.GetHashCode();
-            int rightHashCode = right.GetHashCode();
-
-            // Assert
-            Assert.AreEqual(leftHashCode, rightHashCode);
-        }
-
-        [Test]
-        public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
+        var right = new StencilStateDescription()
         {
-            // Arrange
-            var left = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
+            ComparisonMode = ComparisonMode.Greater,
+            DepthFail = StencilOperation.Invert,
+            Enabled = false,
+            Pass = StencilOperation.DecrementWrap,
+            ReadMask = 46,
+            ReferenceValue = 4456,
+            StencilFail = StencilOperation.IncrementWrap,
+            WriteMask = 76543,
+        };
 
-            var right = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
+        // Act
+        bool actual = left != right;
 
-            // Act
-            bool actual = left != right;
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.False(actual);
-        }
+    [Test]
+    public void PassShouldReturnIncrementWhenSetToIncrement()
+    {
+        // Act
+        this.description.Pass = StencilOperation.Increment;
 
-        [Test]
-        public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
-        {
-            // Arrange
-            var left = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Less,
-                DepthFail = StencilOperation.IncrementWrap,
-                Enabled = true,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 6,
-                ReferenceValue = 44,
-                StencilFail = StencilOperation.Replace,
-                WriteMask = 7543,
-            };
+        // Assert
+        Assert.AreEqual(StencilOperation.Increment, this.description.Pass);
+    }
 
-            var right = new StencilStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                DepthFail = StencilOperation.Invert,
-                Enabled = false,
-                Pass = StencilOperation.DecrementWrap,
-                ReadMask = 46,
-                ReferenceValue = 4456,
-                StencilFail = StencilOperation.IncrementWrap,
-                WriteMask = 76543,
-            };
+    [Test]
+    public void PassShouldReturnKeepWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(StencilOperation.Keep, this.description.Pass);
+    }
 
-            // Act
-            bool actual = left != right;
+    [Test]
+    public void ReadMaskShouldReturnTenWhenSetToTen()
+    {
+        // Act
+        this.description.ReadMask = 10;
 
-            // Assert
-            Assert.True(actual);
-        }
+        // Assert
+        Assert.AreEqual(10, this.description.ReadMask);
+    }
 
-        [Test]
-        public void PassShouldReturnIncrementWhenSetToIncrement()
-        {
-            // Act
-            this.description.Pass = StencilOperation.Increment;
+    [Test]
+    public void ReadMaskShouldReturnZeroWhenDefault()
+    {
+        // Assert
+        Assert.Zero(this.description.ReadMask);
+    }
 
-            // Assert
-            Assert.AreEqual(StencilOperation.Increment, this.description.Pass);
-        }
+    [Test]
+    public void ReferenceValueShouldReturnSevenWhenSetToSeven()
+    {
+        // Act
+        this.description.ReferenceValue = 7;
 
-        [Test]
-        public void PassShouldReturnKeepWhenDefault()
-        {
-            // Assert
-            Assert.AreEqual(StencilOperation.Keep, this.description.Pass);
-        }
+        // Assert
+        Assert.AreEqual(7, this.description.ReferenceValue);
+    }
 
-        [Test]
-        public void ReadMaskShouldReturnTenWhenSetToTen()
-        {
-            // Act
-            this.description.ReadMask = 10;
+    [Test]
+    public void ReferenceValueShouldReturnZeroWhenDefault()
+    {
+        // Assert
+        Assert.Zero(this.description.ReferenceValue);
+    }
 
-            // Assert
-            Assert.AreEqual(10, this.description.ReadMask);
-        }
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.description = default;
+    }
 
-        [Test]
-        public void ReadMaskShouldReturnZeroWhenDefault()
-        {
-            // Assert
-            Assert.Zero(this.description.ReadMask);
-        }
+    [Test]
+    public void StencilFailShouldReturnDecrementWrapWhenSetToDecrementWrap()
+    {
+        // Act
+        this.description.StencilFail = StencilOperation.DecrementWrap;
 
-        [Test]
-        public void ReferenceValueShouldReturnSevenWhenSetToSeven()
-        {
-            // Act
-            this.description.ReferenceValue = 7;
+        // Assert
+        Assert.AreEqual(StencilOperation.DecrementWrap, this.description.StencilFail);
+    }
 
-            // Assert
-            Assert.AreEqual(7, this.description.ReferenceValue);
-        }
+    [Test]
+    public void StencilFailShouldReturnKeepWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(StencilOperation.Keep, this.description.StencilFail);
+    }
 
-        [Test]
-        public void ReferenceValueShouldReturnZeroWhenDefault()
-        {
-            // Assert
-            Assert.Zero(this.description.ReferenceValue);
-        }
+    [Test]
+    public void WriteMaskShouldReturnFourWhenSetToFour()
+    {
+        // Act
+        this.description.WriteMask = 4;
 
-        [SetUp]
-        public void Setup()
-        {
-            // Arrange
-            this.description = default;
-        }
+        // Assert
+        Assert.AreEqual(4, this.description.WriteMask);
+    }
 
-        [Test]
-        public void StencilFailShouldReturnDecrementWrapWhenSetToDecrementWrap()
-        {
-            // Act
-            this.description.StencilFail = StencilOperation.DecrementWrap;
-
-            // Assert
-            Assert.AreEqual(StencilOperation.DecrementWrap, this.description.StencilFail);
-        }
-
-        [Test]
-        public void StencilFailShouldReturnKeepWhenDefault()
-        {
-            // Assert
-            Assert.AreEqual(StencilOperation.Keep, this.description.StencilFail);
-        }
-
-        [Test]
-        public void WriteMaskShouldReturnFourWhenSetToFour()
-        {
-            // Act
-            this.description.WriteMask = 4;
-
-            // Assert
-            Assert.AreEqual(4, this.description.WriteMask);
-        }
-
-        [Test]
-        public void WriteShouldReturnNegativeOneWhenDefault()
-        {
-            // Assert
-            Assert.AreEqual(-1, this.description.WriteMask);
-        }
+    [Test]
+    public void WriteShouldReturnNegativeOneWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(-1, this.description.WriteMask);
     }
 }

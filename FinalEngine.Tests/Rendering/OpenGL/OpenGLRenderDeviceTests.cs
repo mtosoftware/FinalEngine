@@ -2,139 +2,138 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering.OpenGL
+namespace FinalEngine.Tests.Rendering.OpenGL;
+
+using System;
+using System.Drawing;
+using FinalEngine.Rendering;
+using FinalEngine.Rendering.OpenGL;
+using FinalEngine.Rendering.OpenGL.Invocation;
+using Moq;
+using NUnit.Framework;
+using OpenTK.Graphics.OpenGL4;
+
+public class OpenGLRenderDeviceTests
 {
-    using System;
-    using System.Drawing;
-    using FinalEngine.Rendering;
-    using FinalEngine.Rendering.OpenGL;
-    using FinalEngine.Rendering.OpenGL.Invocation;
-    using Moq;
-    using NUnit.Framework;
-    using OpenTK.Graphics.OpenGL4;
+    private Mock<IOpenGLInvoker> invoker;
 
-    public class OpenGLRenderDeviceTests
+    private OpenGLRenderDevice renderDevice;
+
+    [Test]
+    public void ClearShouldInvokeClearColorWhenInvoked()
     {
-        private Mock<IOpenGLInvoker> invoker;
+        // Act
+        this.renderDevice.Clear(Color.Cornsilk);
 
-        private OpenGLRenderDevice renderDevice;
+        // Assert
+        this.invoker.Verify(x => x.ClearColor(Color.Cornsilk), Times.Once);
+    }
 
-        [Test]
-        public void ClearShouldInvokeClearColorWhenInvoked()
+    [Test]
+    public void ClearShouldInvokeClearDepthWhenInvoked()
+    {
+        // Act
+        this.renderDevice.Clear(Color.Empty, 5, 0);
+
+        // Assert
+        this.invoker.Verify(x => x.ClearDepth(5), Times.Once);
+    }
+
+    [Test]
+    public void ClearShouldInvokeClearStencilWhenInvoked()
+    {
+        // Act
+        this.renderDevice.Clear(Color.Empty, 0, 63);
+
+        // Assert
+        this.invoker.Verify(x => x.ClearStencil(63), Times.Once);
+    }
+
+    [Test]
+    public void ClearShouldInvokeClearWhenInvoked()
+    {
+        // Act
+        this.renderDevice.Clear(Color.Empty);
+
+        // Assert
+        this.invoker.Verify(x => x.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit), Times.Once);
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
+    {
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act
-            this.renderDevice.Clear(Color.Cornsilk);
+            new OpenGLRenderDevice(null);
+        });
+    }
 
-            // Assert
-            this.invoker.Verify(x => x.ClearColor(Color.Cornsilk), Times.Once);
-        }
+    [Test]
+    public void DrawIndicesShouldInvokeDrawElementsWhenInvoked()
+    {
+        // Act
+        this.renderDevice.DrawIndices(PrimitiveTopology.TriangleStrip, 2, 5);
 
-        [Test]
-        public void ClearShouldInvokeClearDepthWhenInvoked()
-        {
-            // Act
-            this.renderDevice.Clear(Color.Empty, 5, 0);
+        // Assert
+        this.invoker.Verify(x => x.DrawElements(PrimitiveType.TriangleStrip, 5, DrawElementsType.UnsignedInt, 2), Times.Once);
+    }
 
-            // Assert
-            this.invoker.Verify(x => x.ClearDepth(5), Times.Once);
-        }
+    [Test]
+    public void FactoryShouldReturnOpenGLGPUResourceFactoryWhenInvoked()
+    {
+        // Act
+        var actual = this.renderDevice.Factory;
 
-        [Test]
-        public void ClearShouldInvokeClearStencilWhenInvoked()
-        {
-            // Act
-            this.renderDevice.Clear(Color.Empty, 0, 63);
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLGPUResourceFactory), actual);
+    }
 
-            // Assert
-            this.invoker.Verify(x => x.ClearStencil(63), Times.Once);
-        }
+    [Test]
+    public void InputAssemblerShouldReturnOpenGLInputAssemblerWhenInvoked()
+    {
+        // Act
+        var actual = this.renderDevice.InputAssembler;
 
-        [Test]
-        public void ClearShouldInvokeClearWhenInvoked()
-        {
-            // Act
-            this.renderDevice.Clear(Color.Empty);
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLInputAssembler), actual);
+    }
 
-            // Assert
-            this.invoker.Verify(x => x.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit), Times.Once);
-        }
+    [Test]
+    public void OutputMergerShouldReturnOpenGLOutputMergerWhenInvoked()
+    {
+        // Act
+        var actual = this.renderDevice.OutputMerger;
 
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
-        {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new OpenGLRenderDevice(null);
-            });
-        }
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLOutputMerger), actual);
+    }
 
-        [Test]
-        public void DrawIndicesShouldInvokeDrawElementsWhenInvoked()
-        {
-            // Act
-            this.renderDevice.DrawIndices(PrimitiveTopology.TriangleStrip, 2, 5);
+    [Test]
+    public void PipelineShouldReturnOpenGLPipelineWhenInvoked()
+    {
+        // Act
+        var actual = this.renderDevice.Pipeline;
 
-            // Assert
-            this.invoker.Verify(x => x.DrawElements(PrimitiveType.TriangleStrip, 5, DrawElementsType.UnsignedInt, 2), Times.Once);
-        }
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLPipeline), actual);
+    }
 
-        [Test]
-        public void FactoryShouldReturnOpenGLGPUResourceFactoryWhenInvoked()
-        {
-            // Act
-            var actual = this.renderDevice.Factory;
+    [Test]
+    public void RasterizerShouldReturnOpenGLRasterizerWhenInvoked()
+    {
+        // Act
+        var actual = this.renderDevice.Rasterizer;
 
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLGPUResourceFactory), actual);
-        }
+        // Assert
+        Assert.IsInstanceOf(typeof(OpenGLRasterizer), actual);
+    }
 
-        [Test]
-        public void InputAssemblerShouldReturnOpenGLInputAssemblerWhenInvoked()
-        {
-            // Act
-            var actual = this.renderDevice.InputAssembler;
-
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLInputAssembler), actual);
-        }
-
-        [Test]
-        public void OutputMergerShouldReturnOpenGLOutputMergerWhenInvoked()
-        {
-            // Act
-            var actual = this.renderDevice.OutputMerger;
-
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLOutputMerger), actual);
-        }
-
-        [Test]
-        public void PipelineShouldReturnOpenGLPipelineWhenInvoked()
-        {
-            // Act
-            var actual = this.renderDevice.Pipeline;
-
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLPipeline), actual);
-        }
-
-        [Test]
-        public void RasterizerShouldReturnOpenGLRasterizerWhenInvoked()
-        {
-            // Act
-            var actual = this.renderDevice.Rasterizer;
-
-            // Assert
-            Assert.IsInstanceOf(typeof(OpenGLRasterizer), actual);
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            // Arrange
-            this.invoker = new Mock<IOpenGLInvoker>();
-            this.renderDevice = new OpenGLRenderDevice(this.invoker.Object);
-        }
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.invoker = new Mock<IOpenGLInvoker>();
+        this.renderDevice = new OpenGLRenderDevice(this.invoker.Object);
     }
 }

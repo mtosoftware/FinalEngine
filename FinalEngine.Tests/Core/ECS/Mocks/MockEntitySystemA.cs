@@ -2,27 +2,26 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.ECS.Mocks
+namespace FinalEngine.Tests.Core.ECS.Mocks;
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using FinalEngine.ECS;
+
+public class MockEntitySystemA : EntitySystemBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using FinalEngine.ECS;
+    public Predicate<IReadOnlyEntity> IsMatchFunction { get; set; }
 
-    public class MockEntitySystemA : EntitySystemBase
+    public Action<IEnumerable<Entity>> ProcessFunction { get; set; }
+
+    protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
     {
-        public Predicate<IReadOnlyEntity> IsMatchFunction { get; set; }
+        return this.IsMatchFunction?.Invoke(entity) ?? false;
+    }
 
-        public Action<IEnumerable<Entity>> ProcessFunction { get; set; }
-
-        protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
-        {
-            return this.IsMatchFunction?.Invoke(entity) ?? false;
-        }
-
-        protected override void Process([NotNull] IEnumerable<Entity> entities)
-        {
-            this.ProcessFunction?.Invoke(entities);
-        }
+    protected override void Process([NotNull] IEnumerable<Entity> entities)
+    {
+        this.ProcessFunction?.Invoke(entities);
     }
 }

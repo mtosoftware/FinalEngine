@@ -2,16 +2,15 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Runtime.Invocation
-{
-    using System.Runtime.InteropServices;
+namespace FinalEngine.Runtime.Invocation;
 
-    /// <summary>
-    ///   Defines an interface that provides methods for of the <see cref="RuntimeInformation"/> class.
-    /// </summary>
-    public interface IRuntimeInformationInvoker
-    {
-        /// <inheritdoc cref="RuntimeInformation.IsOSPlatform(OSPlatform)"/>
-        bool IsOSPlatform(OSPlatform platform);
-    }
+using System.Runtime.InteropServices;
+
+/// <summary>
+///   Defines an interface that provides methods for of the <see cref="RuntimeInformation"/> class.
+/// </summary>
+public interface IRuntimeInformationInvoker
+{
+    /// <inheritdoc cref="RuntimeInformation.IsOSPlatform(OSPlatform)"/>
+    bool IsOSPlatform(OSPlatform platform);
 }

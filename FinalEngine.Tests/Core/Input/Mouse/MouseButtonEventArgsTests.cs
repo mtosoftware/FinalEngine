@@ -2,27 +2,26 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.Input.Mouse
+namespace FinalEngine.Tests.Core.Input.Mouse;
+
+using FinalEngine.Input.Mouses;
+using NUnit.Framework;
+
+public class MouseButtonEventArgsTests
 {
-    using FinalEngine.Input.Mouses;
-    using NUnit.Framework;
-
-    public class MouseButtonEventArgsTests
+    [Test]
+    public void ButtonShouldReturnSameAsInputWhenSet()
     {
-        [Test]
-        public void ButtonShouldReturnSameAsInputWhenSet()
+        // Arrange
+        const MouseButton expected = MouseButton.Button6;
+
+        // Act
+        var eventArgs = new MouseButtonEventArgs()
         {
-            // Arrange
-            const MouseButton expected = MouseButton.Button6;
+            Button = expected,
+        };
 
-            // Act
-            var eventArgs = new MouseButtonEventArgs()
-            {
-                Button = expected,
-            };
-
-            // Assert
-            Assert.AreEqual(expected, eventArgs.Button);
-        }
+        // Assert
+        Assert.AreEqual(expected, eventArgs.Button);
     }
 }

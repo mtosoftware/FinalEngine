@@ -2,171 +2,170 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering
+namespace FinalEngine.Tests.Rendering;
+
+using System;
+using FinalEngine.Rendering;
+using FinalEngine.Rendering.Textures;
+using Moq;
+using NUnit.Framework;
+
+public class TextureBinderTests
 {
-    using System;
-    using FinalEngine.Rendering;
-    using FinalEngine.Rendering.Textures;
-    using Moq;
-    using NUnit.Framework;
+    private TextureBinder binder;
 
-    public class TextureBinderTests
+    private Mock<IPipeline> pipeline;
+
+    private Mock<ITexture> texture;
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenPipelienIsNull()
     {
-        private TextureBinder binder;
-
-        private Mock<IPipeline> pipeline;
-
-        private Mock<ITexture> texture;
-
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenPipelienIsNull()
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new TextureBinder(null);
-            });
-        }
+            new TextureBinder(null);
+        });
+    }
 
-        [Test]
-        public void GetTextureSlotIndexShouldInvokePipelineSetTextureWhenInvoked()
+    [Test]
+    public void GetTextureSlotIndexShouldInvokePipelineSetTextureWhenInvoked()
+    {
+        // Act
+        this.binder.GetTextureSlotIndex(this.texture.Object);
+
+        // Assert
+        this.pipeline.Verify(x => x.SetTexture(this.texture.Object, 0), Times.Once);
+    }
+
+    [Test]
+    public void GetTextureSlotIndexShouldInvokeSetUniformWhenInvoked()
+    {
+        // Act
+        this.binder.GetTextureSlotIndex(this.texture.Object);
+
+        // Assert
+        this.pipeline.Verify(x => x.SetUniform("u_textures[0]", 0), Times.Once);
+    }
+
+    [Test]
+    public void GetTextureSlotIndexShouldReturnOneWhenTwoTexturesHaveBeenAddedAndTheSecondIsRetrieved()
+    {
+        // Arrange
+        const int expected = 1;
+
+        var textureA = new Mock<ITexture>();
+        var textureB = new Mock<ITexture>();
+
+        this.binder.GetTextureSlotIndex(textureA.Object);
+        this.binder.GetTextureSlotIndex(textureB.Object);
+
+        // Act
+        int actual = this.binder.GetTextureSlotIndex(textureB.Object);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void GetTextureSlotIndexShouldReturnTwoWhenTwoTexturesHaveAlreadyBeenAdded()
+    {
+        // Arrange
+        const int expected = 2;
+
+        var textureA = new Mock<ITexture>();
+        var textureB = new Mock<ITexture>();
+
+        this.binder.GetTextureSlotIndex(textureA.Object);
+        this.binder.GetTextureSlotIndex(textureB.Object);
+
+        // Act
+        int actual = this.binder.GetTextureSlotIndex(this.texture.Object);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void GetTextureSlotIndexShouldThrowArgumentNullExceptionWhenTextureIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act
-            this.binder.GetTextureSlotIndex(this.texture.Object);
+            this.binder.GetTextureSlotIndex(null);
+        });
+    }
 
-            // Assert
-            this.pipeline.Verify(x => x.SetTexture(this.texture.Object, 0), Times.Once);
-        }
+    [Test]
+    public void ResetShouldCauseGetTextureSlotIndexToReturnZeroOnAlreadyAddedTexture()
+    {
+        // Arrange
+        const int expected = 0;
 
-        [Test]
-        public void GetTextureSlotIndexShouldInvokeSetUniformWhenInvoked()
-        {
-            // Act
-            this.binder.GetTextureSlotIndex(this.texture.Object);
+        var textureA = new Mock<ITexture>();
+        var textureB = new Mock<ITexture>();
 
-            // Assert
-            this.pipeline.Verify(x => x.SetUniform("u_textures[0]", 0), Times.Once);
-        }
+        this.binder.GetTextureSlotIndex(textureA.Object);
+        this.binder.GetTextureSlotIndex(textureB.Object);
 
-        [Test]
-        public void GetTextureSlotIndexShouldReturnOneWhenTwoTexturesHaveBeenAddedAndTheSecondIsRetrieved()
-        {
-            // Arrange
-            const int expected = 1;
+        // Act
+        this.binder.Reset();
 
-            var textureA = new Mock<ITexture>();
-            var textureB = new Mock<ITexture>();
+        // Assert
+        Assert.AreEqual(expected, this.binder.GetTextureSlotIndex(textureB.Object));
+    }
 
-            this.binder.GetTextureSlotIndex(textureA.Object);
-            this.binder.GetTextureSlotIndex(textureB.Object);
+    [SetUp]
+    public void Setup()
+    {
+        this.pipeline = new Mock<IPipeline>();
+        this.texture = new Mock<ITexture>();
+        this.binder = new TextureBinder(this.pipeline.Object);
+    }
 
-            // Act
-            int actual = this.binder.GetTextureSlotIndex(textureB.Object);
+    [Test]
+    public void ShouldResetShouldReturnFalseWhenAmountOfTexturesAddedIsLessThanMaxTextureSlots()
+    {
+        // Arrange
+        this.pipeline.Setup(x => x.MaxTextureSlots).Returns(5);
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        this.binder.GetTextureSlotIndex(this.texture.Object);
 
-        [Test]
-        public void GetTextureSlotIndexShouldReturnTwoWhenTwoTexturesHaveAlreadyBeenAdded()
-        {
-            // Arrange
-            const int expected = 2;
+        // Act
+        bool actual = this.binder.ShouldReset;
 
-            var textureA = new Mock<ITexture>();
-            var textureB = new Mock<ITexture>();
+        // Assert
+        Assert.False(actual);
+    }
 
-            this.binder.GetTextureSlotIndex(textureA.Object);
-            this.binder.GetTextureSlotIndex(textureB.Object);
+    [Test]
+    public void ShouldResetShouldReturnTrueWhenAmountOfTexturesAddedIsEqualToMaxTextureSlots()
+    {
+        // Arrange
+        this.pipeline.Setup(x => x.MaxTextureSlots).Returns(1);
 
-            // Act
-            int actual = this.binder.GetTextureSlotIndex(this.texture.Object);
+        this.binder.GetTextureSlotIndex(this.texture.Object);
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Act
+        bool actual = this.binder.ShouldReset;
 
-        [Test]
-        public void GetTextureSlotIndexShouldThrowArgumentNullExceptionWhenTextureIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.binder.GetTextureSlotIndex(null);
-            });
-        }
+        // Assert
+        Assert.True(actual);
+    }
 
-        [Test]
-        public void ResetShouldCauseGetTextureSlotIndexToReturnZeroOnAlreadyAddedTexture()
-        {
-            // Arrange
-            const int expected = 0;
+    [Test]
+    public void ShouldResetShouldReturnTrueWhenAmountOfTexturesAddedIsGreaterThanMaxTextureSlots()
+    {
+        // Arrange
+        this.pipeline.Setup(x => x.MaxTextureSlots).Returns(1);
 
-            var textureA = new Mock<ITexture>();
-            var textureB = new Mock<ITexture>();
+        this.binder.GetTextureSlotIndex(this.texture.Object);
+        this.binder.GetTextureSlotIndex(Mock.Of<ITexture>());
 
-            this.binder.GetTextureSlotIndex(textureA.Object);
-            this.binder.GetTextureSlotIndex(textureB.Object);
+        // Act
+        bool actual = this.binder.ShouldReset;
 
-            // Act
-            this.binder.Reset();
-
-            // Assert
-            Assert.AreEqual(expected, this.binder.GetTextureSlotIndex(textureB.Object));
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            this.pipeline = new Mock<IPipeline>();
-            this.texture = new Mock<ITexture>();
-            this.binder = new TextureBinder(this.pipeline.Object);
-        }
-
-        [Test]
-        public void ShouldResetShouldReturnFalseWhenAmountOfTexturesAddedIsLessThanMaxTextureSlots()
-        {
-            // Arrange
-            this.pipeline.Setup(x => x.MaxTextureSlots).Returns(5);
-
-            this.binder.GetTextureSlotIndex(this.texture.Object);
-
-            // Act
-            bool actual = this.binder.ShouldReset;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void ShouldResetShouldReturnTrueWhenAmountOfTexturesAddedIsEqualToMaxTextureSlots()
-        {
-            // Arrange
-            this.pipeline.Setup(x => x.MaxTextureSlots).Returns(1);
-
-            this.binder.GetTextureSlotIndex(this.texture.Object);
-
-            // Act
-            bool actual = this.binder.ShouldReset;
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void ShouldResetShouldReturnTrueWhenAmountOfTexturesAddedIsGreaterThanMaxTextureSlots()
-        {
-            // Arrange
-            this.pipeline.Setup(x => x.MaxTextureSlots).Returns(1);
-
-            this.binder.GetTextureSlotIndex(this.texture.Object);
-            this.binder.GetTextureSlotIndex(Mock.Of<ITexture>());
-
-            // Act
-            bool actual = this.binder.ShouldReset;
-
-            // Assert
-            Assert.True(actual);
-        }
+        // Assert
+        Assert.True(actual);
     }
 }

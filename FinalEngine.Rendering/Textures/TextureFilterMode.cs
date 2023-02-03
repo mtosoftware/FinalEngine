@@ -2,23 +2,22 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Textures
+namespace FinalEngine.Rendering.Textures;
+
+/// <summary>
+///   Enumerates the available texture filter modes.
+/// </summary>
+public enum TextureFilterMode
 {
     /// <summary>
-    ///   Enumerates the available texture filter modes.
+    ///   Specifies linear interpolation.
     /// </summary>
-    public enum TextureFilterMode
-    {
-        /// <summary>
-        ///   Specifies linear interpolation.
-        /// </summary>
-        Linear,
+    Linear,
 
-        /// <summary>
-        ///   Specifies nearest-neighbor interpolation.
-        /// </summary>
-        Nearest,
+    /// <summary>
+    ///   Specifies nearest-neighbor interpolation.
+    /// </summary>
+    Nearest,
 
-        LinearMipmapLinear,
-    }
+    LinearMipmapLinear,
 }

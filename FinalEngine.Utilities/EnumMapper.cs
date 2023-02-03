@@ -2,56 +2,55 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Utilities
+namespace FinalEngine.Utilities;
+
+using System;
+using System.Collections.Generic;
+
+public class EnumMapper : IEnumMapper
 {
-    using System;
-    using System.Collections.Generic;
+    private readonly IReadOnlyDictionary<Enum, Enum> forwardToReverseMap;
 
-    public class EnumMapper : IEnumMapper
+    private readonly IReadOnlyDictionary<Enum, Enum> reverseToForwardMap;
+
+    public EnumMapper(IReadOnlyDictionary<Enum, Enum> forwardToReverseMap)
     {
-        private readonly IReadOnlyDictionary<Enum, Enum> forwardToReverseMap;
+        this.forwardToReverseMap = forwardToReverseMap ?? throw new ArgumentNullException(nameof(forwardToReverseMap));
+        this.reverseToForwardMap = new Dictionary<Enum, Enum>();
 
-        private readonly IReadOnlyDictionary<Enum, Enum> reverseToForwardMap;
-
-        public EnumMapper(IReadOnlyDictionary<Enum, Enum> forwardToReverseMap)
+        foreach (var key in forwardToReverseMap.Keys)
         {
-            this.forwardToReverseMap = forwardToReverseMap ?? throw new ArgumentNullException(nameof(forwardToReverseMap));
-            this.reverseToForwardMap = new Dictionary<Enum, Enum>();
+            ((IDictionary<Enum, Enum>)this.reverseToForwardMap).Add(forwardToReverseMap[key], key);
+        }
+    }
 
-            foreach (var key in forwardToReverseMap.Keys)
-            {
-                ((IDictionary<Enum, Enum>)this.reverseToForwardMap).Add(forwardToReverseMap[key], key);
-            }
+    public TResult Forward<TResult>(Enum enumeration)
+        where TResult : Enum
+    {
+        return Get<TResult>(this.forwardToReverseMap, enumeration);
+    }
+
+    public TResult Reverse<TResult>(Enum enumeration)
+        where TResult : Enum
+    {
+        return Get<TResult>(this.reverseToForwardMap, enumeration);
+    }
+
+    private static TResult Get<TResult>(IReadOnlyDictionary<Enum, Enum> map, Enum enumeration)
+        where TResult : Enum
+    {
+        if (enumeration == null)
+        {
+            throw new ArgumentNullException(nameof(enumeration));
         }
 
-        public TResult Forward<TResult>(Enum enumeration)
-            where TResult : Enum
+        try
         {
-            return Get<TResult>(this.forwardToReverseMap, enumeration);
+            return (TResult)map[enumeration];
         }
-
-        public TResult Reverse<TResult>(Enum enumeration)
-            where TResult : Enum
+        catch (KeyNotFoundException)
         {
-            return Get<TResult>(this.reverseToForwardMap, enumeration);
-        }
-
-        private static TResult Get<TResult>(IReadOnlyDictionary<Enum, Enum> map, Enum enumeration)
-            where TResult : Enum
-        {
-            if (enumeration == null)
-            {
-                throw new ArgumentNullException(nameof(enumeration));
-            }
-
-            try
-            {
-                return (TResult)map[enumeration];
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new KeyNotFoundException($"The specified {nameof(enumeration)} couldn't be located by the enumeration mapper.");
-            }
+            throw new KeyNotFoundException($"The specified {nameof(enumeration)} couldn't be located by the enumeration mapper.");
         }
     }
 }

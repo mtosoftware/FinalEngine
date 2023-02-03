@@ -2,406 +2,405 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering
+namespace FinalEngine.Tests.Rendering;
+
+using System.Collections.Generic;
+using System.Numerics;
+using FinalEngine.Rendering;
+using FinalEngine.Rendering.Buffers;
+using NUnit.Framework;
+
+public class SpriteVertexTests
 {
-    using System.Collections.Generic;
-    using System.Numerics;
-    using FinalEngine.Rendering;
-    using FinalEngine.Rendering.Buffers;
-    using NUnit.Framework;
-
-    public class SpriteVertexTests
+    [Test]
+    public void ColorShouldReturnZeroWhenInvoked()
     {
-        [Test]
-        public void ColorShouldReturnZeroWhenInvoked()
+        // Arrange
+        var expected = Vector4.Zero;
+        var vertex = default(SpriteVertex);
+
+        // Act
+        var actual = vertex.Color;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void ColoShouldReturnUnitWWhenSet()
+    {
+        // Arrange
+        var expected = Vector4.UnitW;
+        var vertex = default(SpriteVertex);
+
+        // Act
+        vertex.Color = expected;
+
+        // Assert
+        Assert.AreEqual(expected, vertex.Color);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var expected = Vector4.Zero;
-            var vertex = default(SpriteVertex);
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            // Act
-            var actual = vertex.Color;
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void ColoShouldReturnUnitWWhenSet()
+        var right = new SpriteVertex()
         {
-            // Arrange
-            var expected = Vector4.UnitW;
-            var vertex = default(SpriteVertex);
+            Position = new Vector2(2, 2),
+            Color = new Vector4(1, 55, 33, 1),
+            TextureCoordinate = new Vector2(33, 6),
+            TextureSlotIndex = 7.1f,
+        };
 
-            // Act
-            vertex.Color = expected;
+        // Act
+        bool actual = left == right;
 
-            // Assert
-            Assert.AreEqual(expected, vertex.Color);
-        }
+        // Assert
+        Assert.False(actual);
+    }
 
-        [Test]
-        public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+    [Test]
+    public void EqualityOperatorShouldReturnTrueWhenPropertiesDoMatch()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            var right = new SpriteVertex()
-            {
-                Position = new Vector2(2, 2),
-                Color = new Vector4(1, 55, 33, 1),
-                TextureCoordinate = new Vector2(33, 6),
-                TextureSlotIndex = 7.1f,
-            };
-
-            // Act
-            bool actual = left == right;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualityOperatorShouldReturnTrueWhenPropertiesDoMatch()
+        var right = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            var right = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+        // Act
+        bool actual = left == right;
 
-            // Act
-            bool actual = left == right;
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNotVertex()
+    {
+        // Arrange
+        var left = default(SpriteVertex);
+        object right = new SpriteVertexTests();
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNotVertex()
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNull()
+    {
+        // Act
+        bool actual = default(SpriteVertex).Equals(null);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var left = default(SpriteVertex);
-            object right = new SpriteVertexTests();
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            // Act
-            bool actual = left.Equals(right);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNull()
+        var right = new SpriteVertex()
         {
-            // Act
-            bool actual = default(SpriteVertex).Equals(null);
+            Position = new Vector2(2, 2),
+            Color = new Vector4(1, 55, 33, 1),
+            TextureCoordinate = new Vector2(33, 6),
+            TextureSlotIndex = 7.1f,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
+        // Act
+        bool actual = left.Equals(right);
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnTrueWhenObjectIsVertexAndHasSameProperties()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            var right = new SpriteVertex()
-            {
-                Position = new Vector2(2, 2),
-                Color = new Vector4(1, 55, 33, 1),
-                TextureCoordinate = new Vector2(33, 6),
-                TextureSlotIndex = 7.1f,
-            };
-
-            // Act
-            bool actual = left.Equals(right);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnTrueWhenObjectIsVertexAndHasSameProperties()
+        object right = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            object right = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+        // Act
+        bool actual = left.Equals(right);
 
-            // Act
-            bool actual = left.Equals(right);
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnTrueWhenPropertiesDoMatch()
+    [Test]
+    public void EqualsShouldReturnTrueWhenPropertiesDoMatch()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            var right = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
-
-            // Act
-            bool actual = left.Equals(right);
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+        var right = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            var right = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+        // Act
+        bool actual = left.Equals(right);
 
-            // Act
-            int leftHashCode = left.GetHashCode();
-            int rightHashCode = right.GetHashCode();
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.AreEqual(leftHashCode, rightHashCode);
-        }
-
-        [Test]
-        public void InEqualityOperatorShouldReturnFalseWhenPropertiesDoMatch()
+    [Test]
+    public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            var right = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
-
-            // Act
-            bool actual = left != right;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
+        var right = new SpriteVertex()
         {
-            // Arrange
-            var left = new SpriteVertex()
-            {
-                Position = new Vector2(1, 2),
-                Color = new Vector4(1, 2, 3, 4),
-                TextureCoordinate = new Vector2(5, 6),
-                TextureSlotIndex = 7.0f,
-            };
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            var right = new SpriteVertex()
-            {
-                Position = new Vector2(2, 2),
-                Color = new Vector4(1, 55, 33, 1),
-                TextureCoordinate = new Vector2(33, 6),
-                TextureSlotIndex = 7.1f,
-            };
+        // Act
+        int leftHashCode = left.GetHashCode();
+        int rightHashCode = right.GetHashCode();
 
-            // Act
-            bool actual = left != right;
+        // Assert
+        Assert.AreEqual(leftHashCode, rightHashCode);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void InputElementsShouldReturnFourElementsWhenInvoked()
+    [Test]
+    public void InEqualityOperatorShouldReturnFalseWhenPropertiesDoMatch()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var expected = new List<InputElement>()
-            {
-                // Position
-                new (0, 2, InputElementType.Float, 0),
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-                // Color
-                new (1, 4, InputElementType.Float, 2 * sizeof(float)),
-
-                // Texture coordinate
-                new (2, 2, InputElementType.Float, 6 * sizeof(float)),
-
-                // Texture slot index
-                new (3, 1, InputElementType.Float, 8 * sizeof(float)),
-            };
-
-            // Act
-            var actual = SpriteVertex.InputElements;
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void PositionShouldReturnUnitXWhenSet()
+        var right = new SpriteVertex()
         {
-            // Arrange
-            var expected = Vector2.UnitX;
-            var vertex = default(SpriteVertex);
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            // Act
-            vertex.Position = expected;
+        // Act
+        bool actual = left != right;
 
-            // Assert
-            Assert.AreEqual(expected, vertex.Position);
-        }
+        // Assert
+        Assert.False(actual);
+    }
 
-        [Test]
-        public void PositionShouldReturnZeroWhenInvoked()
+    [Test]
+    public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new SpriteVertex()
         {
-            // Arrange
-            var expected = Vector2.Zero;
-            var vertex = default(SpriteVertex);
+            Position = new Vector2(1, 2),
+            Color = new Vector4(1, 2, 3, 4),
+            TextureCoordinate = new Vector2(5, 6),
+            TextureSlotIndex = 7.0f,
+        };
 
-            // Act
-            var actual = vertex.Position;
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void SizeInBytesShouldReturnThirtySixWhenInvoked()
+        var right = new SpriteVertex()
         {
-            // Arrange
-            const int expected = 36;
+            Position = new Vector2(2, 2),
+            Color = new Vector4(1, 55, 33, 1),
+            TextureCoordinate = new Vector2(33, 6),
+            TextureSlotIndex = 7.1f,
+        };
 
-            // Act
-            int actual = SpriteVertex.SizeInBytes;
+        // Act
+        bool actual = left != right;
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.True(actual);
+    }
 
-        [Test]
-        public void TextureCoordianteShouldReturnZeroWhenInvoked()
+    [Test]
+    public void InputElementsShouldReturnFourElementsWhenInvoked()
+    {
+        // Arrange
+        var expected = new List<InputElement>()
         {
-            // Arrange
-            var expected = Vector2.Zero;
-            var vertex = default(SpriteVertex);
+            // Position
+            new (0, 2, InputElementType.Float, 0),
 
-            // Act
-            var actual = vertex.TextureCoordinate;
+            // Color
+            new (1, 4, InputElementType.Float, 2 * sizeof(float)),
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+            // Texture coordinate
+            new (2, 2, InputElementType.Float, 6 * sizeof(float)),
 
-        [Test]
-        public void TextureCoordinateShouldReturnUnitYWhenSet()
-        {
-            // Arrange
-            var expected = Vector2.UnitY;
-            var vertex = default(SpriteVertex);
+            // Texture slot index
+            new (3, 1, InputElementType.Float, 8 * sizeof(float)),
+        };
 
-            // Act
-            vertex.TextureCoordinate = expected;
+        // Act
+        var actual = SpriteVertex.InputElements;
 
-            // Assert
-            Assert.AreEqual(expected, vertex.TextureCoordinate);
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
 
-        [Test]
-        public void TextureSlotIndexShouldReturnSevenWhenSet()
-        {
-            // Arrange
-            const float expected = 7.0f;
-            var vertex = default(SpriteVertex);
+    [Test]
+    public void PositionShouldReturnUnitXWhenSet()
+    {
+        // Arrange
+        var expected = Vector2.UnitX;
+        var vertex = default(SpriteVertex);
 
-            // Act
-            vertex.TextureSlotIndex = expected;
+        // Act
+        vertex.Position = expected;
 
-            // Assert
-            Assert.AreEqual(expected, vertex.TextureSlotIndex);
-        }
+        // Assert
+        Assert.AreEqual(expected, vertex.Position);
+    }
 
-        [Test]
-        public void TextureSlotIndexShouldReturnZeroWhenInvoked()
-        {
-            // Arrange
-            const float expected = 0.0f;
-            var vertex = default(SpriteVertex);
+    [Test]
+    public void PositionShouldReturnZeroWhenInvoked()
+    {
+        // Arrange
+        var expected = Vector2.Zero;
+        var vertex = default(SpriteVertex);
 
-            // Act
-            float actual = vertex.TextureSlotIndex;
+        // Act
+        var actual = vertex.Position;
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void SizeInBytesShouldReturnThirtySixWhenInvoked()
+    {
+        // Arrange
+        const int expected = 36;
+
+        // Act
+        int actual = SpriteVertex.SizeInBytes;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void TextureCoordianteShouldReturnZeroWhenInvoked()
+    {
+        // Arrange
+        var expected = Vector2.Zero;
+        var vertex = default(SpriteVertex);
+
+        // Act
+        var actual = vertex.TextureCoordinate;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void TextureCoordinateShouldReturnUnitYWhenSet()
+    {
+        // Arrange
+        var expected = Vector2.UnitY;
+        var vertex = default(SpriteVertex);
+
+        // Act
+        vertex.TextureCoordinate = expected;
+
+        // Assert
+        Assert.AreEqual(expected, vertex.TextureCoordinate);
+    }
+
+    [Test]
+    public void TextureSlotIndexShouldReturnSevenWhenSet()
+    {
+        // Arrange
+        const float expected = 7.0f;
+        var vertex = default(SpriteVertex);
+
+        // Act
+        vertex.TextureSlotIndex = expected;
+
+        // Assert
+        Assert.AreEqual(expected, vertex.TextureSlotIndex);
+    }
+
+    [Test]
+    public void TextureSlotIndexShouldReturnZeroWhenInvoked()
+    {
+        // Arrange
+        const float expected = 0.0f;
+        var vertex = default(SpriteVertex);
+
+        // Act
+        float actual = vertex.TextureSlotIndex;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
     }
 }

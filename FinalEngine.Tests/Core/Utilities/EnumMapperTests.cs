@@ -2,118 +2,117 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.Utilities
+namespace FinalEngine.Tests.Core.Utilities;
+
+using System;
+using System.Collections.Generic;
+using FinalEngine.Utilities;
+using NUnit.Framework;
+
+public enum TestEnumerationA
 {
-    using System;
-    using System.Collections.Generic;
-    using FinalEngine.Utilities;
-    using NUnit.Framework;
+    A,
 
-    public enum TestEnumerationA
+    B,
+
+    C,
+}
+
+public enum TestEnumerationB
+{
+    D,
+
+    E,
+
+    F,
+}
+
+public class EnumMapperTests
+{
+    private IReadOnlyDictionary<Enum, Enum> forwardToReverseMap;
+
+    private EnumMapper mapper;
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenForwardToReverseMapIsNull()
     {
-        A,
-
-        B,
-
-        C,
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new EnumMapper(null);
+        });
     }
 
-    public enum TestEnumerationB
+    [Test]
+    public void ForwardShouldReturnCorrectMappedKeyWhenInvoked()
     {
-        D,
+        // Act
+        var actual = this.mapper.Forward<TestEnumerationB>(TestEnumerationA.B);
 
-        E,
-
-        F,
+        // Assert
+        Assert.AreEqual(TestEnumerationB.E, actual);
     }
 
-    public class EnumMapperTests
+    [Test]
+    public void ForwardShouldThrowArgumentNullExceptionWhenEnumerationIsNull()
     {
-        private IReadOnlyDictionary<Enum, Enum> forwardToReverseMap;
-
-        private EnumMapper mapper;
-
-        [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenForwardToReverseMapIsNull()
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new EnumMapper(null);
-            });
-        }
+            this.mapper.Forward<Enum>(null);
+        });
+    }
 
-        [Test]
-        public void ForwardShouldReturnCorrectMappedKeyWhenInvoked()
+    [Test]
+    public void ForwardShouldThrowKeyNotFoundExceptionWhenEnumerationIsNotMapped()
+    {
+        // Act and assert
+        Assert.Throws<KeyNotFoundException>(() =>
         {
-            // Act
-            var actual = this.mapper.Forward<TestEnumerationB>(TestEnumerationA.B);
+            this.mapper.Forward<TestEnumerationB>(TestEnumerationA.A);
+        });
+    }
 
-            // Assert
-            Assert.AreEqual(TestEnumerationB.E, actual);
-        }
+    [Test]
+    public void ReverseShouldReturnCorrectMappedKeyWhenInvoked()
+    {
+        // Act
+        var actual = this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.E);
 
-        [Test]
-        public void ForwardShouldThrowArgumentNullExceptionWhenEnumerationIsNull()
+        // Assert
+        Assert.AreEqual(TestEnumerationA.B, actual);
+    }
+
+    [Test]
+    public void ReverseShouldThrowArgumentNullExceptionWhenEnumerationIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.mapper.Forward<Enum>(null);
-            });
-        }
+            this.mapper.Reverse<Enum>(null);
+        });
+    }
 
-        [Test]
-        public void ForwardShouldThrowKeyNotFoundExceptionWhenEnumerationIsNotMapped()
+    [Test]
+    public void ReverseShouldThrowKeyNotFoundExceptionWhenEnumerationIsNotMapped()
+    {
+        // Act and assert
+        Assert.Throws<KeyNotFoundException>(() =>
         {
-            // Act and assert
-            Assert.Throws<KeyNotFoundException>(() =>
-            {
-                this.mapper.Forward<TestEnumerationB>(TestEnumerationA.A);
-            });
-        }
+            this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.D);
+        });
+    }
 
-        [Test]
-        public void ReverseShouldReturnCorrectMappedKeyWhenInvoked()
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.forwardToReverseMap = new Dictionary<Enum, Enum>()
         {
-            // Act
-            var actual = this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.E);
+            { TestEnumerationA.B, TestEnumerationB.E },
+            { TestEnumerationA.C, TestEnumerationB.F },
+        };
 
-            // Assert
-            Assert.AreEqual(TestEnumerationA.B, actual);
-        }
-
-        [Test]
-        public void ReverseShouldThrowArgumentNullExceptionWhenEnumerationIsNull()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                this.mapper.Reverse<Enum>(null);
-            });
-        }
-
-        [Test]
-        public void ReverseShouldThrowKeyNotFoundExceptionWhenEnumerationIsNotMapped()
-        {
-            // Act and assert
-            Assert.Throws<KeyNotFoundException>(() =>
-            {
-                this.mapper.Reverse<TestEnumerationA>(TestEnumerationB.D);
-            });
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            // Arrange
-            this.forwardToReverseMap = new Dictionary<Enum, Enum>()
-            {
-                { TestEnumerationA.B, TestEnumerationB.E },
-                { TestEnumerationA.C, TestEnumerationB.F },
-            };
-
-            this.mapper = new EnumMapper(this.forwardToReverseMap);
-        }
+        this.mapper = new EnumMapper(this.forwardToReverseMap);
     }
 }

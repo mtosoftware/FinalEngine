@@ -2,267 +2,266 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering
+namespace FinalEngine.Tests.Rendering;
+
+using FinalEngine.Rendering;
+using NUnit.Framework;
+
+public class DepthStateDescriptionTests
 {
-    using FinalEngine.Rendering;
-    using NUnit.Framework;
+    private DepthStateDescription description;
 
-    public class DepthStateDescriptionTests
+    [Test]
+    public void ComparisonModeShouldReturnLessEqualWhenSetToLessEqual()
     {
-        private DepthStateDescription description;
+        // Act
+        this.description.ComparisonMode = ComparisonMode.LessEqual;
 
-        [Test]
-        public void ComparisonModeShouldReturnLessEqualWhenSetToLessEqual()
+        // Assert
+        Assert.AreEqual(ComparisonMode.LessEqual, this.description.ComparisonMode);
+    }
+
+    [Test]
+    public void ComparisonModeShouldReturnLessWhenDefault()
+    {
+        // Assert
+        Assert.AreEqual(ComparisonMode.Less, this.description.ComparisonMode);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new DepthStateDescription()
         {
-            // Act
-            this.description.ComparisonMode = ComparisonMode.LessEqual;
+            ComparisonMode = ComparisonMode.LessEqual,
+            ReadEnabled = false,
+            WriteEnabled = false,
+        };
 
-            // Assert
-            Assert.AreEqual(ComparisonMode.LessEqual, this.description.ComparisonMode);
-        }
-
-        [Test]
-        public void ComparisonModeShouldReturnLessWhenDefault()
+        var right = new DepthStateDescription()
         {
-            // Assert
-            Assert.AreEqual(ComparisonMode.Less, this.description.ComparisonMode);
-        }
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = false,
+            WriteEnabled = true,
+        };
 
-        [Test]
-        public void EqualityOperatorShouldReturnFalseWhenPropertiesDontMatch()
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new DepthStateDescription()
         {
-            // Arrange
-            var left = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.LessEqual,
-                ReadEnabled = false,
-                WriteEnabled = false,
-            };
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = true,
+            WriteEnabled = false,
+        };
 
-            var right = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = false,
-                WriteEnabled = true,
-            };
-
-            // Act
-            bool actual = left == right;
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualityOperatorShouldReturnTrueWhenPropertiesMatch()
+        var right = new DepthStateDescription()
         {
-            // Arrange
-            var left = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = true,
-                WriteEnabled = false,
-            };
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = true,
+            WriteEnabled = false,
+        };
 
-            var right = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = true,
-                WriteEnabled = false,
-            };
+        // Act
+        bool actual = left == right;
 
-            // Act
-            bool actual = left == right;
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNotDepthStateDescription()
+    {
+        // Act
+        bool actual = this.description.Equals(new object());
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNotDepthStateDescription()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenObjectIsNull()
+    {
+        // Act
+        bool actual = this.description.Equals(null);
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new DepthStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(new object());
+            ComparisonMode = ComparisonMode.Never,
+            ReadEnabled = true,
+            WriteEnabled = true,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnFalseWhenObjectIsNull()
+        var right = new DepthStateDescription()
         {
-            // Act
-            bool actual = this.description.Equals(null);
+            ComparisonMode = ComparisonMode.GreaterEqual,
+            ReadEnabled = false,
+            WriteEnabled = true,
+        };
 
-            // Assert
-            Assert.False(actual);
-        }
+        // Act
+        bool actual = left.Equals(right);
 
-        [Test]
-        public void EqualsShouldReturnFalseWhenPropertiesDontMatch()
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void EqualsShouldReturnTrueWhenObjectIsDepthStateDescriptionAndHasSameProperties()
+    {
+        // Arrange
+        var left = new DepthStateDescription()
         {
-            // Arrange
-            var left = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Never,
-                ReadEnabled = true,
-                WriteEnabled = true,
-            };
+            ComparisonMode = ComparisonMode.Never,
+            ReadEnabled = true,
+            WriteEnabled = true,
+        };
 
-            var right = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.GreaterEqual,
-                ReadEnabled = false,
-                WriteEnabled = true,
-            };
-
-            // Act
-            bool actual = left.Equals(right);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void EqualsShouldReturnTrueWhenObjectIsDepthStateDescriptionAndHasSameProperties()
+        object right = new DepthStateDescription()
         {
-            // Arrange
-            var left = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Never,
-                ReadEnabled = true,
-                WriteEnabled = true,
-            };
+            ComparisonMode = ComparisonMode.Never,
+            ReadEnabled = true,
+            WriteEnabled = true,
+        };
 
-            object right = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Never,
-                ReadEnabled = true,
-                WriteEnabled = true,
-            };
+        // Act
+        bool actual = left.Equals(right);
 
-            // Act
-            bool actual = left.Equals(right);
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    [Test]
+    public void GetHashCodeShouldReturnSameAsOtherObjectWhenPropertiesAreEqual()
+    {
+        // Arrange
+        var left = new DepthStateDescription()
         {
-            // Arrange
-            var left = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = true,
-                WriteEnabled = false,
-            };
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = true,
+            WriteEnabled = false,
+        };
 
-            var right = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = true,
-                WriteEnabled = false,
-            };
-
-            // Act
-            int leftHashCode = left.GetHashCode();
-            int rightHashCode = right.GetHashCode();
-
-            // Assert
-            Assert.AreEqual(leftHashCode, rightHashCode);
-        }
-
-        [Test]
-        public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
+        var right = new DepthStateDescription()
         {
-            // Arrange
-            var left = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = true,
-                WriteEnabled = false,
-            };
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = true,
+            WriteEnabled = false,
+        };
 
-            var right = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = true,
-                WriteEnabled = false,
-            };
+        // Act
+        int leftHashCode = left.GetHashCode();
+        int rightHashCode = right.GetHashCode();
 
-            // Act
-            bool actual = left != right;
+        // Assert
+        Assert.AreEqual(leftHashCode, rightHashCode);
+    }
 
-            // Assert
-            Assert.False(actual);
-        }
-
-        [Test]
-        public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
+    [Test]
+    public void InEqualityOperatorShouldReturnFalseWhenPropertiesMatch()
+    {
+        // Arrange
+        var left = new DepthStateDescription()
         {
-            // Arrange
-            var left = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Always,
-                ReadEnabled = false,
-                WriteEnabled = false,
-            };
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = true,
+            WriteEnabled = false,
+        };
 
-            var right = new DepthStateDescription()
-            {
-                ComparisonMode = ComparisonMode.Greater,
-                ReadEnabled = true,
-                WriteEnabled = false,
-            };
-
-            // Act
-            bool actual = left != right;
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        [Test]
-        public void ReadEnabledShouldReturnFalseWhenDefault()
+        var right = new DepthStateDescription()
         {
-            // Assert
-            Assert.False(this.description.ReadEnabled);
-        }
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = true,
+            WriteEnabled = false,
+        };
 
-        [Test]
-        public void ReadEnabledShouldReturnTrueWhenSetToTrue()
+        // Act
+        bool actual = left != right;
+
+        // Assert
+        Assert.False(actual);
+    }
+
+    [Test]
+    public void InEqualityOperatorShouldReturnTrueWhenPropertiesDontMatch()
+    {
+        // Arrange
+        var left = new DepthStateDescription()
         {
-            // Act
-            this.description.ReadEnabled = true;
+            ComparisonMode = ComparisonMode.Always,
+            ReadEnabled = false,
+            WriteEnabled = false,
+        };
 
-            // Assert
-            Assert.True(this.description.ReadEnabled);
-        }
-
-        [SetUp]
-        public void Setup()
+        var right = new DepthStateDescription()
         {
-            // Arrange
-            this.description = default;
-        }
+            ComparisonMode = ComparisonMode.Greater,
+            ReadEnabled = true,
+            WriteEnabled = false,
+        };
 
-        [Test]
-        public void WriteEnabledShouldReturnTrueWhenDefault()
-        {
-            // Assert
-            Assert.True(this.description.WriteEnabled);
-        }
+        // Act
+        bool actual = left != right;
 
-        [Test]
-        public void WriteEnabledSohuldReturnFalseWhenSetToFalse()
-        {
-            // Act
-            this.description.WriteEnabled = false;
+        // Assert
+        Assert.True(actual);
+    }
 
-            // Assert
-            Assert.False(this.description.WriteEnabled);
-        }
+    [Test]
+    public void ReadEnabledShouldReturnFalseWhenDefault()
+    {
+        // Assert
+        Assert.False(this.description.ReadEnabled);
+    }
+
+    [Test]
+    public void ReadEnabledShouldReturnTrueWhenSetToTrue()
+    {
+        // Act
+        this.description.ReadEnabled = true;
+
+        // Assert
+        Assert.True(this.description.ReadEnabled);
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        // Arrange
+        this.description = default;
+    }
+
+    [Test]
+    public void WriteEnabledShouldReturnTrueWhenDefault()
+    {
+        // Assert
+        Assert.True(this.description.WriteEnabled);
+    }
+
+    [Test]
+    public void WriteEnabledSohuldReturnFalseWhenSetToFalse()
+    {
+        // Act
+        this.description.WriteEnabled = false;
+
+        // Assert
+        Assert.False(this.description.WriteEnabled);
     }
 }

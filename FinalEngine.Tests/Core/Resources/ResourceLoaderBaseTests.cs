@@ -2,63 +2,62 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.Resources
+namespace FinalEngine.Tests.Core.Resources;
+
+using System;
+using FinalEngine.Resources;
+using Moq;
+using NUnit.Framework;
+
+public class ResourceLoaderBaseTests
 {
-    using System;
-    using FinalEngine.Resources;
-    using Moq;
-    using NUnit.Framework;
+    private const string FilePath = "path\\to\\file";
 
-    public class ResourceLoaderBaseTests
+    private Mock<ResourceLoaderBase<IResource>> resourceLoader;
+
+    [Test]
+    public void LoadResourceInternalShouldInvokeLoadResourceWhenFilePathIsNotNullEmptyOrWhitespaceCharacters()
     {
-        private const string FilePath = "path\\to\\file";
+        // Act
+        (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(FilePath);
 
-        private Mock<ResourceLoaderBase<IResource>> resourceLoader;
+        // Assert
+        this.resourceLoader.Verify(x => x.LoadResource(FilePath));
+    }
 
-        [Test]
-        public void LoadResourceInternalShouldInvokeLoadResourceWhenFilePathIsNotNullEmptyOrWhitespaceCharacters()
+    [Test]
+    public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Act
-            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(FilePath);
+            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null);
+        });
+    }
 
-            // Assert
-            this.resourceLoader.Verify(x => x.LoadResource(FilePath));
-        }
-
-        [Test]
-        public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsNull()
+    [Test]
+    public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsStringEmpty()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null);
-            });
-        }
+            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(string.Empty);
+        });
+    }
 
-        [Test]
-        public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsStringEmpty()
+    [Test]
+    public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsWhitespaceCharacters()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
         {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(string.Empty);
-            });
-        }
+            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource("\t\r\n");
+        });
+    }
 
-        [Test]
-        public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsWhitespaceCharacters()
-        {
-            // Act and assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource("\t\r\n");
-            });
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            this.resourceLoader = new Mock<ResourceLoaderBase<IResource>>();
-        }
+    [SetUp]
+    public void Setup()
+    {
+        this.resourceLoader = new Mock<ResourceLoaderBase<IResource>>();
     }
 }
