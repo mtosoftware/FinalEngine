@@ -44,7 +44,7 @@ public class DesktopRuntimeFactory : IRuntimeFactory
 
             AutoLoadBindings = false,
 
-            WindowBorder = WindowBorder.Resizable,
+            WindowBorder = WindowBorder.Fixed,
             WindowState = WindowState.Normal,
 
             Size = new OpenTK.Mathematics.Vector2i(1280, 720),

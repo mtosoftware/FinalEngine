@@ -1,4 +1,4 @@
-// <copyright file="ProgramLinkingErrorException.cs" company="Software Antics">
+// <copyright file="ProgramLinkingException.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -14,28 +14,28 @@ using System.Runtime.Serialization;
 /// <seealso cref="Exception"/>
 [Serializable]
 [ExcludeFromCodeCoverage]
-public class ProgramLinkingErrorException : Exception
+public class ProgramLinkingException : Exception
 {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ProgramLinkingErrorException"/> class.
+    ///   Initializes a new instance of the <see cref="ProgramLinkingException"/> class.
     /// </summary>
-    public ProgramLinkingErrorException()
+    public ProgramLinkingException()
     {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ProgramLinkingErrorException"/> class.
+    ///   Initializes a new instance of the <see cref="ProgramLinkingException"/> class.
     /// </summary>
     /// <param name="message">
     ///   The message that describes the error, or a null reference if no message can be specified.
     /// </param>
-    public ProgramLinkingErrorException(string? message)
+    public ProgramLinkingException(string? message)
         : base(message)
     {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ProgramLinkingErrorException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+    ///   Initializes a new instance of the <see cref="ProgramLinkingException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
     /// </summary>
     /// <param name="message">
     ///   The error message that explains the reason for the exception, or a null reference if no message can be specified.
@@ -43,13 +43,13 @@ public class ProgramLinkingErrorException : Exception
     /// <param name="inner">
     ///   The exception that is the cause of the current exception, or a null reference if no inner exception is specified.
     /// </param>
-    public ProgramLinkingErrorException(string? message, Exception? inner)
+    public ProgramLinkingException(string? message, Exception? inner)
         : base(message, inner)
     {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ProgramLinkingErrorException"/> class.
+    ///   Initializes a new instance of the <see cref="ProgramLinkingException"/> class.
     /// </summary>
     /// <param name="message">
     ///   The error message that explains the reason for the exception, or a null reference if no message can be specified.
@@ -57,14 +57,14 @@ public class ProgramLinkingErrorException : Exception
     /// <param name="errorLog">
     ///   The error log that was provided by the shader linker.
     /// </param>
-    public ProgramLinkingErrorException(string? message, string errorLog)
+    public ProgramLinkingException(string? message, string errorLog)
         : base(message)
     {
         this.ErrorLog = errorLog;
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ProgramLinkingErrorException"/> class with serialized data.
+    ///   Initializes a new instance of the <see cref="ProgramLinkingException"/> class with serialized data.
     /// </summary>
     /// <param name="info">
     ///   The <see cref="SerializationInfo"/> that holds the serialized object data about the exception being thrown.
@@ -72,7 +72,7 @@ public class ProgramLinkingErrorException : Exception
     /// <param name="context">
     ///   The <see cref="StreamingContext"/> that contains contextual information about the source or destination.
     /// </param>
-    protected ProgramLinkingErrorException(SerializationInfo info, StreamingContext context)
+    protected ProgramLinkingException(SerializationInfo info, StreamingContext context)
         : base(info, context)
     {
     }

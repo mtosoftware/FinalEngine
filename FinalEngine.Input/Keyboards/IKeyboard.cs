@@ -10,42 +10,42 @@ namespace FinalEngine.Input.Keyboards;
 public interface IKeyboard
 {
     /// <summary>
-    ///   Gets a value indicating whether the <see cref="Key.LeftAlt"/> or <see cref="Key.RightAlt"/> is down during the current frame.
+    ///   Gets a value indicating whether the <see cref="Key.LeftAlt"/> or <see cref="Key.RightAlt"/> key is down during the current frame.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if the <see cref="Key.LeftAlt"/> or <see cref="Key.RightAlt"/> is down during the current frame; otherwise, <c>false</c>.
+    ///   <c>true</c> if the <see cref="Key.LeftAlt"/> or <see cref="Key.RightAlt"/> key is down during the current frame; otherwise, <c>false</c>.
     /// </value>
     bool IsAltDown { get; }
 
     /// <summary>
-    ///   Gets a value indicating whether the <see cref="Key.CapsLock"/> is currently locked.
+    ///   Gets a value indicating whether the <see cref="Key.CapsLock"/> key is currently locked.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if the <see cref="Key.CapsLock"/> is currently locked; otherwise, <c>false</c>.
+    ///   <c>true</c> if the <see cref="Key.CapsLock"/> key is currently locked; otherwise, <c>false</c>.
     /// </value>
     bool IsCapsLocked { get; }
 
     /// <summary>
-    ///   Gets a value indicating whether the <see cref="Key.LeftControl"/> or <see cref="Key.RightControl"/> is down during the current frame.
+    ///   Gets a value indicating whether the <see cref="Key.LeftControl"/> or <see cref="Key.RightControl"/> key is down during the current frame.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if the <see cref="Key.LeftControl"/> or <see cref="Key.RightControl"/> is down during the current frame; otherwise, <c>false</c>.
+    ///   <c>true</c> if the <see cref="Key.LeftControl"/> or <see cref="Key.RightControl"/> key is down during the current frame; otherwise, <c>false</c>.
     /// </value>
     bool IsControlDown { get; }
 
     /// <summary>
-    ///   Gets a value indicating whether the <see cref="Key.NumLock"/> is currently locked.
+    ///   Gets a value indicating whether the <see cref="Key.NumLock"/> key is currently locked.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if the <see cref="Key.NumLock"/> is currently locked; otherwise, <c>false</c>.
+    ///   <c>true</c> if the <see cref="Key.NumLock"/> key is currently locked; otherwise, <c>false</c>.
     /// </value>
     bool IsNumLocked { get; }
 
     /// <summary>
-    ///   Gets a value indicating whether the <see cref="Key.LeftShift"/> or <see cref="Key.RightShift"/> is down during the current frame.
+    ///   Gets a value indicating whether the <see cref="Key.LeftShift"/> or <see cref="Key.RightShift"/> key is down during the current frame.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if the <see cref="Key.LeftShift"/> or <see cref="Key.RightShift"/> is down during the current frame; otherwise, <c>false</c>.
+    ///   <c>true</c> if the <see cref="Key.LeftShift"/> or <see cref="Key.RightShift"/> key is down during the current frame; otherwise, <c>false</c>.
     /// </value>
     bool IsShiftDown { get; }
 
@@ -85,5 +85,8 @@ public interface IKeyboard
     /// <summary>
     ///   Updates this <see cref="IKeyboard"/>.
     /// </summary>
+    /// <remarks>
+    ///   This method should only be called after the user has checked for input state changes.
+    /// </remarks>
     void Update();
 }

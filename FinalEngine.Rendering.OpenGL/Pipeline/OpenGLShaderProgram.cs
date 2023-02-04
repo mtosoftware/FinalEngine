@@ -37,8 +37,8 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram
     /// <exception cref="ArgumentNullException">
     ///   The specified <paramref name="invoker"/> or <paramref name="shaders"/> parameter is null.
     /// </exception>
-    /// <exception cref="ProgramLinkingErrorException">
-    ///   The <see cref="OpenGLShaderProgram"/> failed to link - see <see cref="ProgramLinkingErrorException.ErrorLog"/> for more details.
+    /// <exception cref="ProgramLinkingException">
+    ///   The <see cref="OpenGLShaderProgram"/> failed to link - see <see cref="ProgramLinkingException.ErrorLog"/> for more details.
     /// </exception>
     public OpenGLShaderProgram(IOpenGLInvoker invoker, IReadOnlyCollection<IOpenGLShader> shaders)
     {
@@ -68,7 +68,7 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram
 
         if (!string.IsNullOrWhiteSpace(log))
         {
-            throw new ProgramLinkingErrorException($"The {nameof(OpenGLShaderProgram)} failed to link.", log);
+            throw new ProgramLinkingException($"The {nameof(OpenGLShaderProgram)} failed to link.", log);
         }
     }
 

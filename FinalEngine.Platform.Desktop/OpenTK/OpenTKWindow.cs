@@ -49,26 +49,67 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     /// <inheritdoc/>
     public Size ClientSize
     {
-        get { return new Size(this.nativeWindow.ClientSize.X, this.nativeWindow.ClientSize.Y); }
+        get
+        {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
+            }
+
+            return new Size(this.nativeWindow.ClientSize.X, this.nativeWindow.ClientSize.Y);
+        }
     }
 
     /// <inheritdoc/>
     public bool IsExiting
     {
-        get { return this.nativeWindow.IsExiting; }
+        get
+        {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
+            }
+
+            return this.nativeWindow.IsExiting;
+        }
     }
 
     /// <inheritdoc/>
     public bool IsFocused
     {
-        get { return this.nativeWindow.IsFocused; }
+        get
+        {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
+            }
+
+            return this.nativeWindow.IsFocused;
+        }
     }
 
     /// <inheritdoc/>
     public Size Size
     {
-        get { return new Size(this.nativeWindow.Size.X, this.nativeWindow.Size.Y); }
-        set { this.nativeWindow.Size = new Vector2i(value.Width, value.Height); }
+        get
+        {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
+            }
+
+            return new Size(this.nativeWindow.Size.X, this.nativeWindow.Size.Y);
+        }
+
+        set
+        {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
+            }
+
+            this.nativeWindow.Size = new Vector2i(value.Width, value.Height);
+        }
     }
 
     /// <inheritdoc/>
@@ -79,14 +120,19 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
+            }
+
             return this.nativeWindow.Title;
         }
 
         set
         {
-            if (this.nativeWindow.IsDisposed)
+            if (this.IsDisposed)
             {
-                throw new ObjectDisposedException(nameof(this.nativeWindow), $"The underlying {nameof(this.nativeWindow)} has been disposed.");
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
             }
 
             this.nativeWindow.Title = value;
@@ -101,14 +147,19 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
+            }
+
             return this.nativeWindow.IsVisible;
         }
 
         set
         {
-            if (this.nativeWindow.IsDisposed)
+            if (this.IsDisposed)
             {
-                throw new ObjectDisposedException(nameof(this.nativeWindow), $"The underlying {nameof(this.nativeWindow)} has been disposed.");
+                throw new ObjectDisposedException(nameof(OpenTKWindow));
             }
 
             this.nativeWindow.IsVisible = value;
@@ -129,9 +180,9 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     /// </exception>
     public void Close()
     {
-        if (this.nativeWindow.IsDisposed)
+        if (this.IsDisposed)
         {
-            throw new ObjectDisposedException(nameof(this.nativeWindow), $"The underlying {nameof(this.nativeWindow)} has been disposed.");
+            throw new ObjectDisposedException(nameof(OpenTKWindow));
         }
 
         this.nativeWindow.Close();
@@ -153,9 +204,9 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     /// </exception>
     public void ProcessEvents()
     {
-        if (this.nativeWindow.IsDisposed)
+        if (this.IsDisposed)
         {
-            throw new ObjectDisposedException(nameof(this.nativeWindow), $"The underlying {nameof(this.nativeWindow)} has been disposed.");
+            throw new ObjectDisposedException(nameof(OpenTKWindow));
         }
 
         this.nativeWindow.ProcessWindowEvents(false);

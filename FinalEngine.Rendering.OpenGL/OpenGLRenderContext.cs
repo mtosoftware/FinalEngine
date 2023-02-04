@@ -103,6 +103,11 @@ public class OpenGLRenderContext : IRenderContext
     /// </exception>
     public void SwapBuffers()
     {
+        if (this.IsDisposed)
+        {
+            throw new ObjectDisposedException(nameof(OpenGLRenderContext));
+        }
+
         if (!this.context.IsCurrent)
         {
             throw new RenderContextException($"This {nameof(OpenGLRenderContext)} is not current on the calling thread.");

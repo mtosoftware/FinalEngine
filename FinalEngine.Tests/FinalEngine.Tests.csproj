@@ -42,6 +42,7 @@
 		<ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
 		<ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
 		<ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
+		<ProjectReference Include="..\FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj" />
 		<ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
 		<ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
 		<ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />

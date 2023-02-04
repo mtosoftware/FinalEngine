@@ -101,6 +101,11 @@ public class ResourceManager : IResourceManager
     public T LoadResource<T>(string filePath)
         where T : IResource
     {
+        if (this.IsDisposed)
+        {
+            throw new ObjectDisposedException(nameof(ResourceManager));
+        }
+
         if (string.IsNullOrWhiteSpace(filePath))
         {
             throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
@@ -140,6 +145,11 @@ public class ResourceManager : IResourceManager
     public void RegisterLoader<T>(ResourceLoaderBase<T> loader)
         where T : IResource
     {
+        if (this.IsDisposed)
+        {
+            throw new ObjectDisposedException(nameof(ResourceManager));
+        }
+
         if (loader == null)
         {
             throw new ArgumentNullException(nameof(loader));
@@ -164,6 +174,11 @@ public class ResourceManager : IResourceManager
     /// </exception>
     public void UnloadResource(IResource resource)
     {
+        if (this.IsDisposed)
+        {
+            throw new ObjectDisposedException(nameof(ResourceManager));
+        }
+
         if (resource == null)
         {
             throw new ArgumentNullException(nameof(resource));

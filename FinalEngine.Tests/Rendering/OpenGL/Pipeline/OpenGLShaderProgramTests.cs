@@ -106,7 +106,7 @@ public class OpenGLShaderProgramTests
         this.invoker.Setup(x => x.GetProgramInfoLog(ID)).Returns("test");
 
         // Act and assert
-        Assert.Throws<ProgramLinkingErrorException>(() =>
+        Assert.Throws<ProgramLinkingException>(() =>
         {
             new OpenGLShaderProgram(this.invoker.Object, this.shaders);
         });

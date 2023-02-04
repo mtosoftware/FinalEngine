@@ -82,17 +82,32 @@ public abstract class GameContainerBase : IDisposable
 
     public void Exit()
     {
+        if (this.IsDisposed)
+        {
+            throw new ObjectDisposedException(nameof(GameContainerBase));
+        }
+
         this.IsRunning = false;
     }
 
     [ExcludeFromCodeCoverage]
     public void Run(double frameCap)
     {
+        if (this.IsDisposed)
+        {
+            throw new ObjectDisposedException(nameof(GameContainerBase));
+        }
+
         this.Run(new GameTime(frameCap));
     }
 
     public void Run(IGameTime gameTime)
     {
+        if (this.IsDisposed)
+        {
+            throw new ObjectDisposedException(nameof(GameContainerBase));
+        }
+
         this.IsRunning = true;
 
         this.Initialize();
