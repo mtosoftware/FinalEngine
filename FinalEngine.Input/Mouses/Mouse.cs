@@ -44,8 +44,11 @@ public class Mouse : IMouse, IDisposable
     ///   Initializes a new instance of the <see cref="Mouse"/> class.
     /// </summary>
     /// <param name="device">
-    ///   Specifies a <see cref="IMouseDevice"/> that represents the mouse device to listen to.
+    ///   Specifies an <see cref="IMouseDevice"/> that represents the mouse device to listen to.
     /// </param>
+    /// <remarks>
+    ///   The <paramref name="device"/> parameter is nullable, when set to null the events are not hooked and therefore the object will not listen out for mouse events. This can be useful in situations where the end-user might not have a mouise or require a mouse on the underlying platform (for example, a mobile device).
+    /// </remarks>
     public Mouse(IMouseDevice? device)
     {
         this.device = device;
@@ -138,9 +141,6 @@ public class Mouse : IMouse, IDisposable
     }
 
     /// <inheritdoc/>
-    /// <remarks>
-    ///   This method should only be called after the user has checked for input state changes.
-    /// </remarks>
     public void Update()
     {
         this.buttonsDownLast = new List<MouseButton>(this.buttonsDown);
@@ -172,13 +172,13 @@ public class Mouse : IMouse, IDisposable
     ///   Handles the <see cref="IMouseDevice.ButtonDown"/> event.
     /// </summary>
     /// <param name="sender">
-    ///   The sender.
+    ///   Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
     /// <param name="e">
-    ///   The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    ///   Specifies a <see cref="MouseButtonEventArgs"/> containing the event data.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="e"/> parameter is null.
+    ///   The specified <paramref name="e"/> parameter cannot be null.
     /// </exception>
     private void Device_ButtonDown(object? sender, MouseButtonEventArgs e)
     {
@@ -194,13 +194,13 @@ public class Mouse : IMouse, IDisposable
     ///   Handles the <see cref="IMouseDevice.ButtonUp"/> event.
     /// </summary>
     /// <param name="sender">
-    ///   The sender.
+    ///   Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
     /// <param name="e">
-    ///   The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    ///   Specifies a <see cref="MouseButtonEventArgs"/> containing the event data.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="e"/> parameter is null.
+    ///   The specified <paramref name="e"/> parameter cannot be null.
     /// </exception>
     private void Device_ButtonUp(object? sender, MouseButtonEventArgs e)
     {
@@ -219,13 +219,13 @@ public class Mouse : IMouse, IDisposable
     ///   Handles the <see cref="IMouseDevice.Move"/> event.
     /// </summary>
     /// <param name="sender">
-    ///   The sender.
+    ///   Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
     /// <param name="e">
-    ///   The <see cref="MouseMoveEventArgs"/> instance containing the event data.
+    ///   Specifies a <see cref="MouseMoveEventArgs"/> containing the event data.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="e"/> parameter is null.
+    ///   The specified <paramref name="e"/> parameter cannot be null.
     /// </exception>
     private void Device_Move(object? sender, MouseMoveEventArgs e)
     {
@@ -241,13 +241,13 @@ public class Mouse : IMouse, IDisposable
     ///   Handles the <see cref="IMouseDevice.Scroll"/> event.
     /// </summary>
     /// <param name="sender">
-    ///   The sender.
+    ///   Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
     /// <param name="e">
-    ///   The <see cref="MouseScrollEventArgs"/> instance containing the event data.
+    ///   Specifies a <see cref="MouseScrollEventArgs"/> containing the event data.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="e"/> parameter is null.
+    ///   The specified <paramref name="e"/> parameter cannot be null.
     /// </exception>
     private void Device_Scroll(object? sender, MouseScrollEventArgs e)
     {

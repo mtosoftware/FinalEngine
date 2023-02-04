@@ -71,5 +71,8 @@ public interface IMouse
     /// <summary>
     ///   Updates this <see cref="IMouse"/>.
     /// </summary>
+    /// <remarks>
+    ///   This method should only be called after the user has checked for input state changes.
+    /// </remarks>
     void Update();
 }

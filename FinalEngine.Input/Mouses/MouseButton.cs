@@ -9,6 +9,9 @@ using System.Diagnostics.CodeAnalysis;
 /// <summary>
 ///   Enumerates the available mouse buttons on a mouse.
 /// </summary>
+/// <remarks>
+///   The values of each enumeration corresponds to OpenTK's MouseButtons enumeration.
+/// </remarks>
 [SuppressMessage("Design", "CA1027:Mark enums with FlagsAttribute", Justification = "Not required by API")]
 public enum MouseButton
 {

@@ -209,7 +209,7 @@ public class Keyboard : IKeyboard, IDisposable
     ///   Handles the <see cref="IKeyboardDevice.KeyDown"/> event.
     /// </summary>
     /// <param name="sender">
-    ///   The sender.
+    ///   Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
     /// <param name="e">
     ///   Specifies a <see cref="KeyEventArgs"/> containing the event data.
