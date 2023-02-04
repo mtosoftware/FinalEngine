@@ -33,10 +33,10 @@ public interface IMouseDevice
     event EventHandler<MouseScrollEventArgs>? Scroll;
 
     /// <summary>
-    ///   Gets the last known location of the mouse.
+    /// Gets the change in position of the cursor since the last frame.
     /// </summary>
     /// <value>
-    ///   The last known location of the mouse.
+    /// The change in position of the cursor since the last frame.
     /// </value>
     public PointF LocationDelta { get; }
 

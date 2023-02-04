@@ -14,10 +14,10 @@ using System.Drawing;
 public class MouseMoveEventArgs : EventArgs
 {
     /// <summary>
-    ///   Gets the location of the mouse in window pixel coordinates.
+    /// Gets the location of the mouse in window pixel coordinates.
     /// </summary>
     /// <value>
-    ///   The location of the mouse in window pixel coordinates.
+    /// The location of the mouse in window pixel coordinates.
     /// </value>
     public PointF Location { get; init; }
 }

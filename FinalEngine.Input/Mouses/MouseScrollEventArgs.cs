@@ -13,10 +13,10 @@ using System;
 public class MouseScrollEventArgs : EventArgs
 {
     /// <summary>
-    ///   Gets the Y-offset of the scroll wheel.
+    /// Gets the Y-offset of the scroll wheel.
     /// </summary>
     /// <value>
-    ///   The Y-offset of the scroll wheel.
+    /// The Y-offset of the scroll wheel.
     /// </value>
     public double Offset { get; init; }
 }

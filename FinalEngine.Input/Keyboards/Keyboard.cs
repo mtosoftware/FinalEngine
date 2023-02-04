@@ -15,7 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 /// In almost all cases, you should never need to instantiate a <see cref="Keyboard"/>. Generally speaking, you should use the <see cref="IKeyboard"/> interface provided to you via the runtime factory. The only instance where you should instantiate a <see cref="Keyboard"/> is if you choose to roll your own game class and not use the one provided by the runtime library; an example of this might be if you were to implement your own runtime for the engine.
 /// </remarks>
 /// <example>
-/// Below you'll find an example of how to handle input state changes with the Keyboard class. Please note that you should generally use the IKeyboard interface via dependency injection and this example is just to showcase the bare minimum required to use this implementation.
+/// Below you'll find an example of how to handle input state changes with the <see cref="Keyboard"/> class. Please note that you should generally use the <see cref="IKeyboard"/> interface via dependency injection and this example is just to showcase the bare minimum required to use this implementation.
 /// <code title="InputExample.cs">
 /// namespace MyInputExample;
 ///
@@ -74,28 +74,28 @@ using System.Diagnostics.CodeAnalysis;
 public class Keyboard : IKeyboard, IDisposable
 {
     /// <summary>
-    ///   The physical keyboard device.
+    /// The physical keyboard device.
     /// </summary>
     private readonly IKeyboardDevice? device;
 
     /// <summary>
-    ///   The keys down during the current frame.
+    /// The keys down during the current frame.
     /// </summary>
     private readonly IList<Key> keysDown;
 
     /// <summary>
-    ///   The keys down during the previous frame.
+    /// The keys down during the previous frame.
     /// </summary>
     private IList<Key> keysDownLast;
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Keyboard"/> class.
+    /// Initializes a new instance of the <see cref="Keyboard"/> class.
     /// </summary>
     /// <param name="device">
-    ///   Specifies an <see cref="IKeyboardDevice"/> that represents the keyboard device to listen to.
+    /// Specifies an <see cref="IKeyboardDevice"/> that represents the keyboard device to listen to.
     /// </param>
     /// <remarks>
-    ///   The <paramref name="device"/> parameter is nullable, when set to null the events are not hooked and therefore the object will not listen out for keyboard events. This can be useful in situations where the end-user might not have a keyboard or require a keyboard on the underlying platform (for example, a mobile device).
+    /// The <paramref name="device"/> parameter is nullable, when set to null the events are not hooked and therefore the object will not listen out for keyboard events. This can be useful in situations where the end-user might not have a keyboard or require a keyboard on the underlying platform (for example, a mobile device).
     /// </remarks>
     public Keyboard(IKeyboardDevice? device)
     {
@@ -148,7 +148,7 @@ public class Keyboard : IKeyboard, IDisposable
     /// Gets a value indicating whether this instance is disposed.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+    /// <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
     /// </value>
     protected bool IsDisposed { get; private set; }
 
@@ -206,13 +206,13 @@ public class Keyboard : IKeyboard, IDisposable
     }
 
     /// <summary>
-    ///   Handles the <see cref="IKeyboardDevice.KeyDown"/> event.
+    /// Handles the <see cref="IKeyboardDevice.KeyDown"/> event.
     /// </summary>
     /// <param name="sender">
-    ///   Specifies an <see cref="object"/> that represents the instance that raised the event.
+    /// Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
     /// <param name="e">
-    ///   Specifies a <see cref="KeyEventArgs"/> containing the event data.
+    /// Specifies a <see cref="KeyEventArgs"/> containing the event data.
     /// </param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="e"/> parameter cannot be null.
@@ -231,16 +231,16 @@ public class Keyboard : IKeyboard, IDisposable
     }
 
     /// <summary>
-    ///   Handles the <see cref="IKeyboardDevice.KeyUp"/> event.
+    /// Handles the <see cref="IKeyboardDevice.KeyUp"/> event.
     /// </summary>
     /// <param name="sender">
-    ///   Specifies an <see cref="object"/> that represents the instance that raised the event.
+    /// Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
     /// <param name="e">
-    ///   Specifies a <see cref="KeyEventArgs"/> containing the event data.
+    /// Specifies a <see cref="KeyEventArgs"/> containing the event data.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="e"/> parameter cannot be null.
+    /// The specified <paramref name="e"/> parameter cannot be null.
     /// </exception>
     private void Device_KeyUp(object? sender, KeyEventArgs e)
     {
