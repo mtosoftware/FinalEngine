@@ -9,10 +9,10 @@ using System.Reflection;
 [assembly: AssemblyCopyright("© 2023 Software Antics")]
 [assembly: AssemblyTrademark("Software Antics™")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2023.1.270.1451")]
-[assembly: AssemblyFileVersion("2023.1.270.1451")]
+[assembly: AssemblyVersion("2023.1.318.0916")]
+[assembly: AssemblyFileVersion("2023.1.318.0916")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
- [assembly: AssemblyConfiguration("Release")]
+[assembly: AssemblyConfiguration("Release")]
 #endif

@@ -7,7 +7,7 @@ namespace FinalEngine.IO.Invocation;
 using System.IO;
 
 /// <summary>
-///   Defines an interface that provides methods for invocation of the <see cref="File"/> class.
+/// Defines an interface that provides methods for invocation of the <see cref="File"/> class.
 /// </summary>
 public interface IFileInvoker
 {

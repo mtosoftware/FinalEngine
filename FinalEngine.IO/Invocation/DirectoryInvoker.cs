@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 /// <summary>
-///   Provides an implementation of an <see cref="IDirectoryInvoker"/>.
+/// Provides an implementation of an <see cref="IDirectoryInvoker"/>.
 /// </summary>
 /// <seealso cref="IDirectoryInvoker"/>
 [ExcludeFromCodeCoverage]
