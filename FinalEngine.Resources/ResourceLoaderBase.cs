@@ -37,7 +37,7 @@ public abstract class ResourceLoaderBase<T> : IResourceLoaderInternal
     ///   The newly loaded resource.
     /// </returns>
     /// <exception cref="ArgumentNullException">
-    ///   filePath - The specified <paramref name="filePath"/> parameter cannot be null, empty or consist of only whitespace characters.
+    ///   The specified <paramref name="filePath"/> parameter cannot be null, empty or consist of only whitespace characters.
     /// </exception>
     IResource IResourceLoaderInternal.LoadResource(string filePath)
     {
