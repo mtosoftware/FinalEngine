@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Extensions.Resources.Loaders;
+namespace FinalEngine.Extensions.Resources.Loaders.Textures;
 
 using System;
 using System.Collections.Generic;

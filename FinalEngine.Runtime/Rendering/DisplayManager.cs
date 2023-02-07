@@ -23,12 +23,12 @@ public class DisplayManager : IDisplayManager
 
     public int DisplayHeight
     {
-        get { return this.rasterizer.GetViewport().Width; }
+        get { return this.rasterizer.GetViewport().Height; }
     }
 
     public int DisplayWidth
     {
-        get { return this.rasterizer.GetViewport().Height; }
+        get { return this.rasterizer.GetViewport().Width; }
     }
 
     public void ChangeResolution(DisplayResolution resolution)

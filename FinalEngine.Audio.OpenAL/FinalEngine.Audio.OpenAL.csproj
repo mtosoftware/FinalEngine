@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <LangVersion>11.0</LangVersion>
-	  <Nullable>enable</Nullable>
-	  <AnalysisMode>All</AnalysisMode>
+    <Nullable>enable</Nullable>
+    <AnalysisMode>All</AnalysisMode>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="KinsonDigital.CASL" Version="1.0.0-preview.11" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -31,11 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.Audio.OpenAL\FinalEngine.Audio.OpenAL.csproj" />
     <ProjectReference Include="..\FinalEngine.Audio\FinalEngine.Audio.csproj" />
-    <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
-    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
-    <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
   </ItemGroup>
-
 </Project>
