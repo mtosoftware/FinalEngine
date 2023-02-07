@@ -35,6 +35,10 @@ public enum DisplayResolution
 /// </summary>
 public interface IDisplayManager
 {
+    int DisplayHeight { get; }
+
+    int DisplayWidth { get; }
+
     /// <summary>
     /// Changes the display resolution to the specified <paramref name="resolution"/>.
     /// </summary>

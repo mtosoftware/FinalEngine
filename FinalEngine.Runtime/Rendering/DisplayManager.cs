@@ -21,6 +21,16 @@ public class DisplayManager : IDisplayManager
         this.window = window ?? throw new ArgumentNullException(nameof(window));
     }
 
+    public int DisplayHeight
+    {
+        get { return this.rasterizer.GetViewport().Width; }
+    }
+
+    public int DisplayWidth
+    {
+        get { return this.rasterizer.GetViewport().Height; }
+    }
+
     public void ChangeResolution(DisplayResolution resolution)
     {
         var viewport = resolution switch
