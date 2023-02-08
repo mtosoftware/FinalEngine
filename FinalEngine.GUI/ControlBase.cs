@@ -7,10 +7,10 @@ namespace FinalEngine.GUI;
 using System;
 using System.Drawing;
 using System.Numerics;
-using FinalEngine.GUI.Panels;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Textures;
 
+//// TODO: Add support to anchor to panels.
 //// TODO: Depth
 //// TODO: Events
 
@@ -27,9 +27,11 @@ public abstract class ControlBase
 
     public Vector2 Offset { get; set; }
 
-    public Panel? Panel { get; set; }
-
     public ITexture2D? Texture { get; set; }
+
+    protected Vector2 Origin { get; private set; }
+
+    protected Vector2 Position { get; private set; }
 
     public void Draw(ISpriteDrawer drawer, IRasterizer rasterizer)
     {
@@ -48,24 +50,29 @@ public abstract class ControlBase
             return;
         }
 
-        var (position, origin) = this.CalculatePositionAndOrigin(rasterizer.GetViewport());
+        this.CalculatePositionAndOrigin(rasterizer.GetViewport());
 
         drawer.Draw(
             texture: this.Texture,
             color: Color.White,
-            origin: origin,
-            position: position,
+            origin: this.Origin,
+            position: this.Position + this.Offset,
             rotation: 0,
             scale: Vector2.One);
     }
 
-    private (Vector2 position, Vector2 origin) CalculatePositionAndOrigin(Rectangle bounds)
+    private void CalculatePositionAndOrigin(Rectangle bounds)
     {
         var position = Vector2.Zero;
         var origin = Vector2.Zero;
 
-        int width = this.Texture!.Description.Width;
-        int height = this.Texture!.Description.Height;
+        if (this.Texture == null)
+        {
+            return;
+        }
+
+        int width = this.Texture.Description.Width;
+        int height = this.Texture.Description.Height;
 
         switch (this.Anchor)
         {
@@ -118,6 +125,7 @@ public abstract class ControlBase
                 break;
         }
 
-        return (position + this.Offset, origin);
+        this.Position = position;
+        this.Origin = origin;
     }
 }

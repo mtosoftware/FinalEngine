@@ -31,9 +31,9 @@ public class Game : GameBase
     {
         this.ResourceManager.RegisterLoader(new Texture2DResourceLoader(this.FileSystem, this.RenderDevice.Factory, new ImageInvoker()));
 
-        this.panel = new Panel()
+        this.panel = new Panel
         {
-            Anchor = Anchor.BottomRight,
+            Anchor = Anchor.Center,
             Texture = this.ResourceManager.LoadResource<ITexture2D>("panel.png"),
         };
 
@@ -44,6 +44,7 @@ public class Game : GameBase
     {
         this.drawer.Begin();
         this.panel.Draw(this.drawer, this.RenderDevice.Rasterizer);
+
         this.drawer.End();
         base.Render();
     }
