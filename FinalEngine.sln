@@ -66,6 +66,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GUI", "GUI", "{6A1F9E58-3B5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.GUI", "FinalEngine.GUI\FinalEngine.GUI.csproj", "{F45159AB-ABD3-485C-8193-C74B875F7374}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGame", "TestGame\TestGame.csproj", "{7E69DEC4-4DEC-4ABC-A562-79D78CB7A52C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -148,6 +150,10 @@ Global
 		{F45159AB-ABD3-485C-8193-C74B875F7374}.Debug|x64.Build.0 = Debug|x64
 		{F45159AB-ABD3-485C-8193-C74B875F7374}.Release|x64.ActiveCfg = Release|x64
 		{F45159AB-ABD3-485C-8193-C74B875F7374}.Release|x64.Build.0 = Release|x64
+		{7E69DEC4-4DEC-4ABC-A562-79D78CB7A52C}.Debug|x64.ActiveCfg = Debug|x64
+		{7E69DEC4-4DEC-4ABC-A562-79D78CB7A52C}.Debug|x64.Build.0 = Debug|x64
+		{7E69DEC4-4DEC-4ABC-A562-79D78CB7A52C}.Release|x64.ActiveCfg = Release|x64
+		{7E69DEC4-4DEC-4ABC-A562-79D78CB7A52C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

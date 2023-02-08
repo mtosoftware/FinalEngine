@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>11.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <Platforms>x64</Platforms>
+    <AssemblyVersion>2023.1.0.0</AssemblyVersion>
+    <FileVersion>2023.1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
+    <ProjectReference Include="..\FinalEngine.GUI\FinalEngine.GUI.csproj" />
+    <ProjectReference Include="..\FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="panel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
