@@ -1,5 +1,7 @@
 ![GitHub-Mark-Light](https://user-images.githubusercontent.com/50978201/193459338-32d71599-19d6-4eb6-b5b3-c34348d623b9.svg#gh-dark-mode-only)![GitHub-Mark-Dark](https://user-images.githubusercontent.com/50978201/193459322-b078ed0d-cf0d-4791-ad10-ee2f3131cd20.svg#gh-light-mode-only)
 
+![image](https://user-images.githubusercontent.com/50978201/202500840-07f0a568-633b-4494-99af-4ca0e17afd4f.png)
+
 <p align="center">
 Final Engine is a *WIP* cross-platform Game Engine developed in C# 11.0, using .NET 7.0. The engine originally started as a hobby project but has quickly developed into something that I wish to maintain and actively develop as time goes on. The primary goal and focus of Final Engine is to provide a feature-rich 2D Game Engine that keeps the idea of simplicity and new users in mind. Our mission statement:
 </p>
