@@ -6,8 +6,8 @@
     <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
-    <AssemblyVersion>2023.1.0.0</AssemblyVersion>
-    <FileVersion>2023.1.0.0</FileVersion>
+    <AssemblyVersion>2023.1.1.1146</AssemblyVersion>
+    <FileVersion>2023.1.1.1146</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
