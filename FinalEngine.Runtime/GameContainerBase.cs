@@ -13,6 +13,7 @@ using FinalEngine.Platform;
 using FinalEngine.Rendering;
 using FinalEngine.Resources;
 using FinalEngine.Runtime.Rendering;
+using Resources = FinalEngine.Resources.ResourceManager;
 
 #nullable disable warnings
 
@@ -36,17 +37,16 @@ public abstract class GameContainerBase : IDisposable
             out var mouseDevice,
             out var fileSystem,
             out this.renderContext,
-            out var renderDevice,
-            out var displayManager,
-            out var resourceManager);
+            out var renderDevice);
 
         this.Window = window;
-        this.Keyboard = new Keyboard(keyboardDevice);
-        this.Mouse = new Mouse(mouseDevice);
         this.FileSystem = fileSystem;
         this.RenderDevice = renderDevice;
-        this.DisplayManager = displayManager;
-        this.ResourceManager = resourceManager;
+
+        this.Keyboard = new Keyboard(keyboardDevice);
+        this.Mouse = new Mouse(mouseDevice);
+        this.DisplayManager = new DisplayManager(this.RenderDevice.Rasterizer, this.Window);
+        this.ResourceManager = Resources.Instance;
 
         this.DisplayManager.ChangeResolution(DisplayResolution.HighDefinition);
     }

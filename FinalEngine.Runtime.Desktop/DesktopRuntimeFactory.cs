@@ -15,8 +15,6 @@ using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
-using FinalEngine.Resources;
-using FinalEngine.Runtime.Rendering;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -30,9 +28,7 @@ public class DesktopRuntimeFactory : IRuntimeFactory
         out IMouseDevice mouseDevice,
         out IFileSystem fileSystem,
         out IRenderContext renderContext,
-        out IRenderDevice renderDevice,
-        out IDisplayManager displayManager,
-        out IResourceManager resourceManager)
+        out IRenderDevice renderDevice)
     {
         var settings = new NativeWindowSettings()
         {
@@ -65,7 +61,5 @@ public class DesktopRuntimeFactory : IRuntimeFactory
         mouseDevice = new OpenTKMouseDevice(nativeWindow);
         renderContext = new OpenGLRenderContext(opengl, bindings, nativeWindow.Context);
         renderDevice = new OpenGLRenderDevice(opengl);
-        displayManager = new DisplayManager(renderDevice.Rasterizer, window);
-        resourceManager = ResourceManager.Instance;
     }
 }

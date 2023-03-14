@@ -20,8 +20,6 @@ using NUnit.Framework;
 [TestFixture]
 public class GameContainerBaseTests
 {
-    private Mock<IDisplayManager> displayManager;
-
     private Mock<IEventsProcessor> eventsProcessor;
 
     private Mock<IFileSystem> fileSystem;
@@ -37,8 +35,6 @@ public class GameContainerBaseTests
     private Mock<IRenderContext> renderContext;
 
     private Mock<IRenderDevice> renderDevice;
-
-    private Mock<IResourceManager> resourceManager;
 
     private Mock<IRuntimeFactory> runtimeFactory;
 
@@ -59,17 +55,10 @@ public class GameContainerBaseTests
     }
 
     [Test]
-    public void ConstructorShouldInvokeDisplayManagerChangeResolutionWhenInvoked()
-    {
-        // Assert
-        this.displayManager.Verify(x => x.ChangeResolution(DisplayResolution.HighDefinition), Times.Once());
-    }
-
-    [Test]
     public void ConstructorShouldSetDisplayManagerToDisplayManager()
     {
         // Assert
-        Assert.That(this.displayManager.Object, Is.SameAs(this.gameContainer.DisplayManagerObject));
+        Assert.That(this.gameContainer.ResourceManagerObject, Is.InstanceOf<DisplayManager>());
     }
 
     [Test]
@@ -90,7 +79,7 @@ public class GameContainerBaseTests
     public void ConstructorShouldSetResourceManagerToResourceManager()
     {
         // Assert
-        Assert.That(this.resourceManager.Object, Is.SameAs(this.gameContainer.ResourceManagerObject));
+        Assert.That(this.gameContainer.ResourceManagerObject, Is.InstanceOf<ResourceManager>());
     }
 
     [Test]
@@ -352,8 +341,6 @@ public class GameContainerBaseTests
         this.fileSystem = new Mock<IFileSystem>();
         this.renderContext = new Mock<IRenderContext>();
         this.renderDevice = new Mock<IRenderDevice>();
-        this.displayManager = new Mock<IDisplayManager>();
-        this.resourceManager = new Mock<IResourceManager>();
         this.runtimeFactory = new Mock<IRuntimeFactory>();
         this.gameTime = new Mock<IGameTime>();
 
@@ -364,8 +351,6 @@ public class GameContainerBaseTests
         var fileSystemObject = this.fileSystem.Object;
         var renderContextObject = this.renderContext.Object;
         var renderDeviceObject = this.renderDevice.Object;
-        var displayManagerObject = this.displayManager.Object;
-        var resourceManagerObject = this.resourceManager.Object;
 
         this.runtimeFactory.Setup(x => x.InitializeRuntime(
             out windowObject,
@@ -374,9 +359,7 @@ public class GameContainerBaseTests
             out mouseDeviceObject,
             out fileSystemObject,
             out renderContextObject,
-            out renderDeviceObject,
-            out displayManagerObject,
-            out resourceManagerObject));
+            out renderDeviceObject));
 
         this.gameContainer = new GameContainerMock(this.runtimeFactory.Object);
     }

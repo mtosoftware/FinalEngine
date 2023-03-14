@@ -9,8 +9,6 @@ using FinalEngine.Input.Mouses;
 using FinalEngine.IO;
 using FinalEngine.Platform;
 using FinalEngine.Rendering;
-using FinalEngine.Resources;
-using FinalEngine.Runtime.Rendering;
 
 public interface IRuntimeFactory
 {
@@ -21,7 +19,5 @@ public interface IRuntimeFactory
         out IMouseDevice mouseDevice,
         out IFileSystem fileSystem,
         out IRenderContext renderContext,
-        out IRenderDevice renderDevice,
-        out IDisplayManager displayManager,
-        out IResourceManager resourceManager);
+        out IRenderDevice renderDevice);
 }

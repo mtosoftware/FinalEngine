@@ -349,7 +349,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code></example>
+    /// }</code>
+    /// </example>
     public bool DirectoryExists(string path)
     {
         if (string.IsNullOrWhiteSpace(path))
@@ -408,7 +409,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code></example>
+    /// }</code>
+    /// </example>
     public bool FileExists(string path)
     {
         if (string.IsNullOrWhiteSpace(path))
@@ -485,7 +487,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code></example>
+    /// }</code>
+    /// </example>
     public Stream OpenFile(string path, FileAccessMode mode)
     {
         if (string.IsNullOrWhiteSpace(path))
