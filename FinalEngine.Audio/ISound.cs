@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Audio;
 
+using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Resources;
 
 /// <summary>
@@ -46,5 +47,6 @@ public interface ISound : IResource
     /// <remarks>
     /// If you wish to pause a sound and later play it from it's current position use <see cref="Pause"/>.
     /// </remarks>
+    [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Required by API")]
     void Stop();
 }
