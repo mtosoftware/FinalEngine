@@ -6,7 +6,7 @@ namespace FinalEngine.ECS.Components.Core;
 
 using System.Numerics;
 
-public class TransformComponent : IComponent
+public sealed class TransformComponent : IComponent
 {
     public TransformComponent()
     {
