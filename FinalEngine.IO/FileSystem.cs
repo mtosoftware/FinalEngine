@@ -97,7 +97,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public void CreateDirectory(string path)
     {
@@ -159,7 +160,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public Stream CreateFile(string path)
     {
@@ -221,7 +223,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public void DeleteDirectory(string path)
     {
@@ -276,7 +279,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public void DeleteFile(string path)
     {
@@ -349,7 +353,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public bool DirectoryExists(string path)
     {
@@ -409,7 +414,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public bool FileExists(string path)
     {
@@ -487,7 +493,8 @@ public class FileSystem : IFileSystem
     ///             Console.WriteLine("The process failed: {0}", ex.ToString());
     ///         }
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public Stream OpenFile(string path, FileAccessMode mode)
     {
