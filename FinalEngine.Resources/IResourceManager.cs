@@ -9,6 +9,10 @@ using System;
 /// <summary>
 ///   Defines an interface that loads, unloads and manages resources.
 /// </summary>
+/// <remarks>
+/// To see standard implementation details, check out <see cref="ResourceManager"/>.
+/// </remarks>
+/// <seealso cref="ResourceManager"/>
 /// <seealso cref="IDisposable"/>
 public interface IResourceManager : IDisposable
 {
