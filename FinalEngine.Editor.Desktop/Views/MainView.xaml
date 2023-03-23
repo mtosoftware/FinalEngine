@@ -5,6 +5,7 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:panes="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking.Panes"
                  mc:Ignorable="d"
                  Width="800"
                  Height="450"
@@ -30,4 +31,9 @@
             </Menu>
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
+
+    <!-- TEMP -->
+    <DockPanel LastChildFill="True">
+        <panes:SceneView />
+    </DockPanel>
 </mah:MetroWindow>
