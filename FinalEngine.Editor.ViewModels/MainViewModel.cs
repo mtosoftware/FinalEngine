@@ -6,7 +6,6 @@ namespace FinalEngine.Editor.ViewModels;
 
 using System;
 using System.Reflection;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Interaction;
@@ -18,7 +17,7 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 /// <seealso cref="ObservableObject"/>
 /// <seealso cref="IMainViewModel"/>
-public sealed class MainViewModel : ObservableObject, IMainViewModel
+public partial class MainViewModel : ObservableObject, IMainViewModel
 {
     /// <summary>
     /// The logger.
@@ -26,13 +25,9 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private readonly ILogger<MainViewModel> logger;
 
     /// <summary>
-    /// The exit command.
+    /// The main application title.
     /// </summary>
-    private ICommand? exitCommand;
-
-    /// <summary>
-    /// The title.
-    /// </summary>
+    [ObservableProperty]
     private string? title;
 
     /// <summary>
@@ -50,19 +45,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.Title = $"Final Engine - {Assembly.GetExecutingAssembly().GetVersionString()}";
     }
 
-    /// <inheritdoc/>
-    public ICommand ExitCommand
-    {
-        get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Exit); }
-    }
-
-    /// <inheritdoc/>
-    public string Title
-    {
-        get { return this.title ?? string.Empty; }
-        private set { this.SetProperty(ref this.title, value); }
-    }
-
     /// <summary>
     /// Attempts to the exit the main application.
     /// </summary>
@@ -72,6 +54,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="closeable"/> parameter cannot be null.
     /// </exception>
+    [RelayCommand]
     private void Exit(ICloseable? closeable)
     {
         if (closeable == null)

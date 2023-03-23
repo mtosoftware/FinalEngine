@@ -93,11 +93,6 @@ public abstract class GameContainerBase : IDisposable
     [ExcludeFromCodeCoverage]
     public void Run(double frameCap)
     {
-        if (this.IsDisposed)
-        {
-            throw new ObjectDisposedException(nameof(GameContainerBase));
-        }
-
         this.Run(new GameTime(frameCap));
     }
 

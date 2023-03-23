@@ -4,7 +4,8 @@
 
 namespace FinalEngine.Editor.ViewModels;
 
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using FinalEngine.Editor.ViewModels.Interaction;
 
 /// <summary>
 /// Defines an interface that represents the main view.
@@ -17,7 +18,7 @@ public interface IMainViewModel
     /// <value>
     /// The exit command.
     /// </value>
-    ICommand ExitCommand { get; }
+    IRelayCommand<ICloseable?> ExitCommand { get; }
 
     /// <summary>
     /// Gets the title.

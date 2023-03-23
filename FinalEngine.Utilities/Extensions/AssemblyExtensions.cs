@@ -5,11 +5,13 @@
 namespace FinalEngine.Utilities.Extensions;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 /// <summary>
 /// Provides extension methods for <see cref="Assembly"/>.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Extensions")]
 public static class AssemblyExtensions
 {
     /// <summary>

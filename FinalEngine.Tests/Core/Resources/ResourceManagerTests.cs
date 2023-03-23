@@ -119,6 +119,19 @@ public class ResourceManagerTests
     }
 
     [Test]
+    public void LoadResourceShouldThrowObjectDisposeExceptionWhenDisposed()
+    {
+        // Arrange
+        this.resourceManager.Dispose();
+
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(() =>
+        {
+            this.resourceManager.LoadResource<IResource>(FilePath);
+        });
+    }
+
+    [Test]
     public void LoadResourceShouldThrowResourceLoaderNotRegisteredExceptionWhenGenericTypeNotRegisteredWithLoader()
     {
         // Act and assert
@@ -149,6 +162,19 @@ public class ResourceManagerTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             this.resourceManager.RegisterLoader<IResource>(null);
+        });
+    }
+
+    [Test]
+    public void RegisterLoaderShouldThrowObjectDisposedExceptionWhenDisposed()
+    {
+        // Arrange
+        this.resourceManager.Dispose();
+
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(() =>
+        {
+            this.resourceManager.RegisterLoader(this.resourceLoader.Object);
         });
     }
 
@@ -207,6 +233,19 @@ public class ResourceManagerTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             this.resourceManager.UnloadResource(null);
+        });
+    }
+
+    [Test]
+    public void UnloadResourceShouldThrowObjectDisposedExceptionWhenDisposed()
+    {
+        // Arrange
+        this.resourceManager.Dispose();
+
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(() =>
+        {
+            this.resourceManager.UnloadResource(this.resource.Object);
         });
     }
 }

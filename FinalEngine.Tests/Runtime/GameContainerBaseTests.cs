@@ -32,6 +32,8 @@ public class GameContainerBaseTests
 
     private Mock<IMouseDevice> mouseDevice;
 
+    private Mock<IRasterizer> rasterizer;
+
     private Mock<IRenderContext> renderContext;
 
     private Mock<IRenderDevice> renderDevice;
@@ -58,7 +60,7 @@ public class GameContainerBaseTests
     public void ConstructorShouldSetDisplayManagerToDisplayManager()
     {
         // Assert
-        Assert.That(this.gameContainer.ResourceManagerObject, Is.InstanceOf<DisplayManager>());
+        Assert.That(this.gameContainer.DisplayManagerObject, Is.InstanceOf<DisplayManager>());
     }
 
     [Test]
@@ -143,6 +145,16 @@ public class GameContainerBaseTests
 
         // Assert
         Assert.That(this.gameContainer.IsRunningBoolean, Is.False);
+    }
+
+    [Test]
+    public void ExitShouldThrowObjectDisposedExceptionWhenDisposed()
+    {
+        // Arrange
+        this.gameContainer.Dispose();
+
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(this.gameContainer.Exit);
     }
 
     [Test]
@@ -331,6 +343,19 @@ public class GameContainerBaseTests
         this.eventsProcessor.Verify(x => x.ProcessEvents(), Times.Never());
     }
 
+    [Test]
+    public void RunShouldThrowObjectDisposedExceptionWhenDisposed()
+    {
+        // Arrange
+        this.gameContainer.Dispose();
+
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(() =>
+        {
+            this.gameContainer.Run(120.0d);
+        });
+    }
+
     [SetUp]
     public void Setup()
     {
@@ -343,6 +368,9 @@ public class GameContainerBaseTests
         this.renderDevice = new Mock<IRenderDevice>();
         this.runtimeFactory = new Mock<IRuntimeFactory>();
         this.gameTime = new Mock<IGameTime>();
+        this.rasterizer = new Mock<IRasterizer>();
+
+        this.renderDevice.SetupGet(x => x.Rasterizer).Returns(this.rasterizer.Object);
 
         var windowObject = this.window.Object;
         var eventsProcessorObject = this.eventsProcessor.Object;

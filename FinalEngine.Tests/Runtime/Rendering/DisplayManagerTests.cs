@@ -131,10 +131,38 @@ public class DisplayManagerTests
         });
     }
 
+    [Test]
+    public void DislayHeightShouldReturnViewportHeight()
+    {
+        // Arrange
+        const int expected = 720;
+
+        // Act
+        int actual = this.displayManager.DisplayHeight;
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void DislayWidthShouldReturnViewportWidth()
+    {
+        // Arrange
+        const int expected = 1280;
+
+        // Act
+        int actual = this.displayManager.DisplayWidth;
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
     [SetUp]
     public void Setup()
     {
         this.rasterizer = new Mock<IRasterizer>();
+
+        this.rasterizer.Setup(x => x.GetViewport()).Returns(new Rectangle(0, 0, 1280, 720));
 
         this.window = new Mock<IWindow>();
         this.window.SetupAllProperties();
