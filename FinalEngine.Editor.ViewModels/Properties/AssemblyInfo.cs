@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTitle("FinalEngine.Editor.ViewModels")]
 [assembly: AssemblyDescription("The view models required by the main application editor for Final Engine games.")]

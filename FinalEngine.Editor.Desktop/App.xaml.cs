@@ -18,6 +18,12 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 public partial class App : Application
 {
+    /// <summary>
+    /// Starts up the main application on the current platform.
+    /// </summary>
+    /// <param name="e">
+    ///   A <see cref="StartupEventArgs"/> that contains the event data.
+    /// </param>
     protected override void OnStartup(StartupEventArgs e)
     {
         var viewModel = ConfigureServices().GetRequiredService<IMainViewModel>();
@@ -30,6 +36,12 @@ public partial class App : Application
         view.ShowDialog();
     }
 
+    /// <summary>
+    /// Builds the configuration used throughout the lifetime of the application.
+    /// </summary>
+    /// <returns>
+    /// The newly created <see cref="IConfiguration"/> to be used throughout the lifetime of the application.
+    /// </returns>
     private static IConfiguration BuildConfiguration()
     {
         return new ConfigurationBuilder()
@@ -38,6 +50,12 @@ public partial class App : Application
             .Build();
     }
 
+    /// <summary>
+    ///   Configures the services to be consumed by the application.
+    /// </summary>
+    /// <returns>
+    ///   The newly configured <see cref="IServiceProvider"/>.
+    /// </returns>
     private static IServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
