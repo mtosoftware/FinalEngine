@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.Desktop;
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using FinalEngine.Editor.Desktop.Views;
@@ -44,9 +45,11 @@ public partial class App : Application
     /// </returns>
     private static IConfiguration BuildConfiguration()
     {
+        string environment = Debugger.IsAttached ? "Development" : "Production";
+
         return new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{environment}.json")
             .Build();
     }
 
@@ -61,9 +64,11 @@ public partial class App : Application
         var services = new ServiceCollection();
         var configuration = BuildConfiguration();
 
-        services.AddLogging(x =>
+        services.AddLogging(builder =>
         {
-            x.AddConsole().AddFile(configuration.GetSection("LoggingOptions"));
+            builder
+            .AddConsole()
+            .AddFile(configuration.GetSection("LoggingOptions"));
         });
 
         services.AddSingleton<IMainViewModel, MainViewModel>();

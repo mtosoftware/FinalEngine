@@ -47,7 +47,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     public MainViewModel(ILogger<MainViewModel> logger)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
         this.Title = $"Final Engine - {Assembly.GetExecutingAssembly().GetVersionString()}";
     }
 
@@ -80,7 +79,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
             throw new ArgumentNullException(nameof(closeable));
         }
 
-        this.logger.LogDebug($"Closing the main view...");
+        this.logger.LogInformation($"Closing the main view...");
 
         closeable.Close();
     }
