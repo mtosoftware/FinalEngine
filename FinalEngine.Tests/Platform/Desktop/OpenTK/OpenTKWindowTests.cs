@@ -60,7 +60,7 @@ public class OpenTKWindowTests
     public void CloseShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
     {
         // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
+        this.window.Dispose();
 
         // Act and assert
         Assert.Throws<ObjectDisposedException>(this.window.Close);
@@ -172,7 +172,7 @@ public class OpenTKWindowTests
     public void ProcessEventsShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
     {
         // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
+        this.window.Dispose();
 
         // Act and assert
         Assert.Throws<ObjectDisposedException>(this.window.ProcessEvents);
@@ -265,7 +265,7 @@ public class OpenTKWindowTests
     public void TitleSetShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
     {
         // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
+        this.window.Dispose();
 
         // Act and assert
         Assert.Throws<ObjectDisposedException>(() =>
@@ -306,7 +306,7 @@ public class OpenTKWindowTests
     public void VisibleSetShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
     {
         // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
+        this.window.Dispose();
 
         // Act and assert
         Assert.Throws<ObjectDisposedException>(() =>
