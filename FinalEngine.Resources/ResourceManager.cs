@@ -204,7 +204,8 @@ public class ResourceManager : IResourceManager
     ///         // And then use the resource.
     ///         sound.Start();
     ///     }
-    /// }</code>
+    /// }
+    /// </code>
     /// </example>
     public void RegisterLoader<T>(ResourceLoaderBase<T> loader)
         where T : IResource
@@ -254,7 +255,9 @@ public class ResourceManager : IResourceManager
     ///         this.ResourceManager.UnloadResource(resource);
     /// #endif
     ///     }
-    /// }</code></example>
+    /// }
+    /// </code>
+    /// </example>
     public void UnloadResource(IResource resource)
     {
         if (this.IsDisposed)

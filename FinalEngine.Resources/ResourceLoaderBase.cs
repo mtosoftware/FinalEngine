@@ -47,7 +47,8 @@ using System;
 ///             }
 ///         }
 ///     }
-/// }</code>
+/// }
+/// </code>
 /// </example>
 /// <seealso cref="IResourceLoaderInternal" />
 public abstract class ResourceLoaderBase<TResource> : IResourceLoaderInternal
