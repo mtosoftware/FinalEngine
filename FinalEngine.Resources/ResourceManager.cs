@@ -11,9 +11,12 @@ using System.Linq;
 using FinalEngine.Resources.Exceptions;
 
 /// <summary>
-///   Provides a standard resource manager with reference counting.
+/// Provides a standard resource manager with reference counting.
 /// </summary>
-/// <seealso cref="IResourceManager"/>
+/// <remarks>
+/// The <see cref="ResourceManager"/> is used to manage resources throughout the life-cycle of your game or application. It utilizes reference counting so it's important to remember to unload resources once you are done with them. It internally manages the life-cycle of the dependency and once all references have been unloaded their dispose method is invoked. It's also super important to provide the correct extension suffix for the resource you're attempting to load as the manager does not attempt to resolve this for you.
+/// </remarks>
+/// <seealso cref="IResourceManager" />
 public class ResourceManager : IResourceManager
 {
     /// <summary>
@@ -98,6 +101,48 @@ public class ResourceManager : IResourceManager
     /// <exception cref="Exception">
     ///   The specified <typeparamref name="T"/> parameter does not have an associated registered loader, call <see cref="RegisterLoader{T}(ResourceLoaderBase{T})"/> to register the appropriate resource loader.
     /// </exception>
+    /// <example>
+    /// Below you'll see an example of how to load and unload texture resources using the resource manager.
+    /// <code title="ResourceManagerExample.cs">
+    /// namespace TextureResourceLoadingExample;
+    ///
+    /// using FinalEngine.Extensions.Resources.Loaders.Textures;
+    /// using FinalEngine.Rendering.Textures;
+    ///
+    /// public class Game : GameBase
+    /// {
+    ///     protected override void LoadResources()
+    ///     {
+    ///         // Register the resource loader(s) if you haven't already.
+    ///         // Here we are using the standard implementation through
+    ///         // an interface that refers to ResourceManager.Instance.
+    ///         this.ResourceManager.RegisterLoader(new Texture2DResourceLoader(this.FileSystem, this.RenderDevice.Factory));
+    ///
+    ///         // Finally, we can load a resource of type ITexture2D.
+    ///         // We now don't have to worry about disposing of the resource
+    ///         // as it will be handled by the resource manager once all
+    ///         // references have been removed.
+    ///         var texture = this.ResourceManager.LoadResource&lt;ITexture2D&gt;("Resources\\Textures\\texture.png"); // First reference.
+    ///
+    ///         // Now let's load the same texture into a different variable.
+    ///         // This will mean the reference count will be two. As such,
+    ///         // once the resource has been unloaded it will still be loaded
+    ///         // in memory.
+    ///         var texture_two = this.ResourceManager.LoadResource&lt;ITexture2D&gt;("Resources\\Textures\\texture.png"); // Second reference.
+    ///
+    ///         // Now, let's unload a reference.
+    ///         this.ResourceManager.UnloadResource(texture_two);
+    ///
+    ///         // Note that here we can still refer to texture and texture_two
+    ///         // as they still both refer to the same reference object.
+    ///         // so we could pass in texture_two here if we wanted to.
+    ///         this.ResourceManager.UnloadResource(texture);
+    ///
+    ///         base.LoadResources();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     public T LoadResource<T>(string filePath)
         where T : IResource
     {
@@ -128,20 +173,40 @@ public class ResourceManager : IResourceManager
     }
 
     /// <summary>
-    ///   Registers the specified <paramref name="loader"/> to this <see cref="IResourceManager"/>.
+    /// Registers the specified <paramref name="loader" /> to this <see cref="IResourceManager" />.
     /// </summary>
     /// <typeparam name="T">
-    ///   The type of resource the loader can load.
+    /// The type of resource the loader can load.
     /// </typeparam>
     /// <param name="loader">
-    ///   The loader to register.
+    /// The loader to register.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="loader"/> parameter cannot be null.
+    /// The specified <paramref name="loader" /> parameter cannot be null.
     /// </exception>
     /// <exception cref="ArgumentException">
-    ///   The specified <typeparamref name="T"/> parameter has already been registered to a resource loader.
+    /// The specified <span class="typeparameter">T</span> parameter has already been registered to a resource loader.
     /// </exception>
+    /// <example>
+    /// Below you'll find an example of how to register a sound resource loader.
+    /// <code title="RegisterLoaderExample.cs">
+    /// public class Game : GameBase
+    /// {
+    ///     protected override void LoadResources()
+    ///     {
+    ///         // Use the interface provided instead of the implementation
+    ///         // Or use ResourceManager.Instance if you like.
+    ///         this.ResourceManager.RegisterLoader(new SoundResourceLoader(this.FileSystem));
+    ///
+    ///         // Now we can load sound resources.
+    ///         var sound = ResourceManager.LoadResource&lt;ISound&gt;("sound.mp3");
+    ///
+    ///         // And then use the resource.
+    ///         sound.Start();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     public void RegisterLoader<T>(ResourceLoaderBase<T> loader)
         where T : IResource
     {
@@ -164,14 +229,35 @@ public class ResourceManager : IResourceManager
     }
 
     /// <summary>
-    ///   Unloads the specified <paramref name="resource"/> from this <see cref="IResourceManager"/>.
+    /// Unloads the specified <paramref name="resource" /> from this <see cref="IResourceManager" />.
     /// </summary>
     /// <param name="resource">
-    ///   The resource to unload.
+    /// The resource to unload.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="resource"/> parameter cannot be null.
+    /// The specified <paramref name="resource" /> parameter cannot be null.
     /// </exception>
+    /// <example>
+    /// Unloading resources is pretty straightforward. Here is an example of unloading a loaded resource:
+    /// <code title="UnloadResourceExample.cs">
+    /// public class Game : GameBase
+    /// {
+    ///     private IResource resource;
+    ///
+    ///     protected override void LoadResources()
+    ///     {
+    ///         resource = this.ResourceManager.LoadResource&lt;ITexture2D&gt;("Resources\\Textures\\mac.jpg");
+    ///
+    /// #if WINDOWS
+    ///         // If we're running on windows, unload the resource.
+    ///         // Dunno why you'd do this, but the use case of this
+    ///         // function is pretty straightforward.
+    ///         this.ResourceManager.UnloadResource(resource);
+    /// #endif
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     public void UnloadResource(IResource resource)
     {
         if (this.IsDisposed)

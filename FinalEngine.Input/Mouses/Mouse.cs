@@ -16,7 +16,7 @@ using System.Drawing;
 /// In almost all cases, you should never need to instantiate a <see cref="Mouse" />. Generally speaking, you should use the <see cref="IMouse" /> interface provided to you via the runtime factory. The only instance where you should instantiate a <see cref="Mouse" /> is if you choose to roll your own game class and not use the one provided by the runtime library; an example of this might be if you were to implement your own runtime for the engine.
 /// </remarks>
 /// <example>
-/// Below you'll find an example of how to handle input state changes with the Mouse class. Please note that you should generally use the IMouse interface via dependency injection and this example is just to showcase the bare minimum required to use this implementation.
+/// Below you'll find an example of how to handle input state changes with the <see cref="Mouse"/> class. Please note that you should generally use the <see cref="IMouse"/> interface via dependency injection and this example is just to showcase the bare minimum required to use this implementation.
 /// <code title="InputExample.cs">
 /// namespace MyInputExample;
 ///
@@ -104,7 +104,7 @@ public class Mouse : IMouse, IDisposable
     /// Specifies an <see cref="IMouseDevice"/> that represents the mouse device to listen to.
     /// </param>
     /// <remarks>
-    /// The <paramref name="device"/> parameter is nullable, when set to null the events are not hooked and therefore the object will not listen out for mouse events. This can be useful in situations where the end-user might not have a mouise or require a mouse on the underlying platform (for example, a mobile device).
+    /// The <paramref name="device"/> parameter is nullable, when set to <c>null</c> the events are not hooked and therefore the object will not listen out for mouse events. This can be useful in situations where the end-user might not have a mouse or require a mouse on the underlying platform (for example, a mobile device).
     /// </remarks>
     public Mouse(IMouseDevice? device)
     {
@@ -198,6 +198,9 @@ public class Mouse : IMouse, IDisposable
     }
 
     /// <inheritdoc/>
+    /// <remarks>
+    /// Please note that you should not need to invoke this function if you're using a game container as the base implementation takes care of it for you.
+    /// </remarks>
     public void Update()
     {
         this.buttonsDownLast = new List<MouseButton>(this.buttonsDown);
