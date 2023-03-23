@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Interaction;
 using FinalEngine.Utilities.Extensions;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 ///   Provides a standard implementation of an <see cref="IMainViewModel"/>.
@@ -19,6 +20,11 @@ using FinalEngine.Utilities.Extensions;
 /// <seealso cref="IMainViewModel"/>
 public sealed class MainViewModel : ObservableObject, IMainViewModel
 {
+    /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<MainViewModel> logger;
+
     /// <summary>
     /// The exit command.
     /// </summary>
@@ -32,8 +38,16 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.
     /// </summary>
-    public MainViewModel()
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// The specified <paramref name="logger"/> parameter cannot be null.
+    /// </exception>
+    public MainViewModel(ILogger<MainViewModel> logger)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
         this.Title = $"Final Engine - {Assembly.GetExecutingAssembly().GetVersionString()}";
     }
 
@@ -65,6 +79,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         {
             throw new ArgumentNullException(nameof(closeable));
         }
+
+        this.logger.LogDebug($"Closing the main view...");
 
         closeable.Close();
     }
