@@ -19,7 +19,6 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OpenTK.Windowing.Desktop;
 
 /// <summary>
 /// Interaction logic for App.xaml.
@@ -77,8 +76,6 @@ public partial class App : Application
             .AddConsole()
             .AddFile(configuration.GetSection("LoggingOptions"));
         });
-
-        services.AddSingleton<GLFWGraphicsContext>();
 
         services.AddSingleton<IOpenGLInvoker, OpenGLInvoker>();
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();

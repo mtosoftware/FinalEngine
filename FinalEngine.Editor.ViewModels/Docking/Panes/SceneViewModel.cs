@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.ViewModels.Docking.Panes;
 
 using System;
+using System.Drawing;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Rendering;
@@ -13,11 +14,9 @@ public partial class SceneViewModel : PaneViewModelBase, ISceneViewModel
 {
     private readonly ISceneRenderer sceneRenderer;
 
-    private int projectionHeight;
-
-    private int projectionWidth;
-
     private ICommand? renderCommand;
+
+    private Size projectionSize;
 
     public SceneViewModel(ISceneRenderer sceneRenderer)
     {
@@ -26,31 +25,18 @@ public partial class SceneViewModel : PaneViewModelBase, ISceneViewModel
         this.Title = "Scene View";
     }
 
-    public int ProjectionHeight
+    //// TODO: Hook this up to GLWpfControl.RenderSize, waiting on: https://github.com/opentk/GLWpfControl/issues/108.
+    public Size ProjectionSize
     {
         get
         {
-            return this.projectionHeight;
+            return this.projectionSize;
         }
 
-        set
+        private set
         {
-            this.SetProperty(ref this.projectionHeight, value);
-            this.sceneRenderer.ChangeProjection(this.ProjectionWidth, this.ProjectionHeight);
-        }
-    }
-
-    public int ProjectionWidth
-    {
-        get
-        {
-            return this.projectionWidth;
-        }
-
-        set
-        {
-            this.SetProperty(ref this.projectionWidth, value);
-            this.sceneRenderer.ChangeProjection(this.ProjectionWidth, this.ProjectionHeight);
+            this.SetProperty(ref this.projectionSize, value);
+            this.sceneRenderer.ChangeProjection(this.projectionSize.Width, this.projectionSize.Height);
         }
     }
 
