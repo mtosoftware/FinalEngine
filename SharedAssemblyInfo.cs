@@ -9,8 +9,8 @@ using System.Reflection;
 [assembly: AssemblyCopyright("© 2023 Software Antics")]
 [assembly: AssemblyTrademark("Software Antics™")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2023.1.1244.1239")]
-[assembly: AssemblyFileVersion("2023.1.1244.1239")]
+[assembly: AssemblyVersion("2023.1.1253.1306")]
+[assembly: AssemblyFileVersion("2023.1.1253.1306")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else

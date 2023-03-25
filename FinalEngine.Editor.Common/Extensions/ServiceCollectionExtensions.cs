@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.Common.Extensions;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.Common.Services.Rendering;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// Provides extension methods for an <see cref="IServiceCollection"/>.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Extension Methods")]
 public static class ServiceCollectionExtensions
 {
     /// <summary>
