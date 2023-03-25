@@ -24,7 +24,7 @@ public sealed class SceneRenderer : ISceneRenderer
 
     public void ChangeProjection(int projectionWidth, int projectionHeight)
     {
-        this.logger.LogInformation($"Changing projection to: ({projectionWidth}, {projectionHeight}).");
+        this.logger.LogDebug($"Changing projection to: ({projectionWidth}, {projectionHeight}).");
 
         this.renderDevice.Pipeline.SetUniform("u_projection", Matrix4x4.CreateOrthographicOffCenter(0, projectionWidth, 0, projectionHeight, -1, 1));
         this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, projectionWidth, projectionHeight));

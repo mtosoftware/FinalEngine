@@ -4,20 +4,18 @@
 
 namespace FinalEngine.Editor.Desktop;
 
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using FinalEngine.Editor.Common.Services.Rendering;
+using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.ViewModels;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Extensions;
-using FinalEngine.Rendering;
-using FinalEngine.Rendering.OpenGL;
-using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.OpenGL.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -25,15 +23,33 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 public partial class App : Application
 {
+    public App()
+    {
+        AppHost = Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration(ConfigureAppConfiguration)
+            .ConfigureServices(ConfigureServices)
+            .Build();
+    }
+
+    private static IHost? AppHost { get; set; }
+
+    protected override async void OnExit(ExitEventArgs e)
+    {
+        await AppHost!.StopAsync();
+        base.OnExit(e);
+    }
+
     /// <summary>
     /// Starts up the main application on the current platform.
     /// </summary>
     /// <param name="e">
     ///   A <see cref="StartupEventArgs"/> that contains the event data.
     /// </param>
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
-        var viewModel = ConfigureServices().GetRequiredService<IMainViewModel>();
+        await AppHost!.StartAsync();
+
+        var viewModel = AppHost.Services.GetRequiredService<IMainViewModel>();
 
         var view = new MainView()
         {
@@ -43,32 +59,18 @@ public partial class App : Application
         view.ShowDialog();
     }
 
-    /// <summary>
-    /// Builds the configuration used throughout the lifetime of the application.
-    /// </summary>
-    /// <returns>
-    /// The newly created <see cref="IConfiguration"/> to be used throughout the lifetime of the application.
-    /// </returns>
-    private static IConfiguration BuildConfiguration()
+    private static void ConfigureAppConfiguration(IConfigurationBuilder builder)
     {
         string environment = Debugger.IsAttached ? "Development" : "Production";
 
-        return new ConfigurationBuilder()
+        builder
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile($"appsettings.{environment}.json")
-            .Build();
+            .AddJsonFile($"appsettings.{environment}.json");
     }
 
-    /// <summary>
-    ///   Configures the services to be consumed by the application.
-    /// </summary>
-    /// <returns>
-    ///   The newly configured <see cref="IServiceProvider"/>.
-    /// </returns>
-    private static IServiceProvider ConfigureServices()
+    private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
-        var services = new ServiceCollection();
-        var configuration = BuildConfiguration();
+        var configuration = context.Configuration;
 
         services.AddLogging(builder =>
         {
@@ -77,14 +79,10 @@ public partial class App : Application
             .AddFile(configuration.GetSection("LoggingOptions"));
         });
 
-        services.AddSingleton<IOpenGLInvoker, OpenGLInvoker>();
-        services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
-
-        services.AddSingleton<ISceneRenderer, SceneRenderer>();
+        services.AddCommon();
+        services.AddRendering();
 
         services.AddViewModelFactory<SceneViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();
-
-        return services.BuildServiceProvider();
     }
 }
