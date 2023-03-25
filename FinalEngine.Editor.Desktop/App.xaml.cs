@@ -11,7 +11,6 @@ using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.ViewModels;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
-using FinalEngine.Editor.ViewModels.Extensions;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
@@ -116,7 +115,7 @@ public partial class App : Application
 
         services.AddCommon();
 
-        services.AddViewModelFactory<SceneViewModel>();
+        services.AddFactory<SceneViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();
     }
 }

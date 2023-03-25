@@ -6,7 +6,9 @@ namespace FinalEngine.Tests.Editor.ViewModels;
 
 using System;
 using System.Reflection;
+using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Interaction;
 using FinalEngine.Utilities.Extensions;
 using Microsoft.Extensions.Logging;
@@ -18,6 +20,8 @@ public sealed class MainViewModelTests
 {
     private Mock<ILogger<MainViewModel>> logger;
 
+    private Mock<IFactory<SceneViewModel>> sceneViewModelFactory;
+
     private MainViewModel viewModel;
 
     [Test]
@@ -26,7 +30,17 @@ public sealed class MainViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new MainViewModel(null);
+            new MainViewModel(null, this.sceneViewModelFactory.Object);
+        });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenSceneViewModelFactoryIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new MainViewModel(this.logger.Object, null);
         });
     }
 
@@ -57,7 +71,9 @@ public sealed class MainViewModelTests
     public void Setup()
     {
         this.logger = new Mock<ILogger<MainViewModel>>();
-        this.viewModel = new MainViewModel(this.logger.Object);
+        this.sceneViewModelFactory = new Mock<IFactory<SceneViewModel>>();
+
+        this.viewModel = new MainViewModel(this.logger.Object, this.sceneViewModelFactory.Object);
     }
 
     [Test]

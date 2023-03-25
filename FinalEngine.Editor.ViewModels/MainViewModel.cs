@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Interaction;
@@ -50,7 +51,7 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/> parameter cannot be null.
     /// </exception>
-    public MainViewModel(ILogger<MainViewModel> logger, IAbstractFactory<SceneViewModel> sceneViewModelFactory)
+    public MainViewModel(ILogger<MainViewModel> logger, IFactory<SceneViewModel> sceneViewModelFactory)
     {
         if (sceneViewModelFactory == null)
         {
