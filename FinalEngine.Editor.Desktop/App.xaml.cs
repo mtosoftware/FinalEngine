@@ -8,11 +8,18 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using FinalEngine.Editor.Common.Services.Rendering;
 using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
+using FinalEngine.Editor.ViewModels.Extensions;
+using FinalEngine.Rendering;
+using FinalEngine.Rendering.OpenGL;
+using FinalEngine.Rendering.OpenGL.Invocation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OpenTK.Windowing.Desktop;
 
 /// <summary>
 /// Interaction logic for App.xaml.
@@ -71,6 +78,14 @@ public partial class App : Application
             .AddFile(configuration.GetSection("LoggingOptions"));
         });
 
+        services.AddSingleton<GLFWGraphicsContext>();
+
+        services.AddSingleton<IOpenGLInvoker, OpenGLInvoker>();
+        services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
+
+        services.AddSingleton<ISceneRenderer, SceneRenderer>();
+
+        services.AddViewModelFactory<SceneViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();
 
         return services.BuildServiceProvider();

@@ -3,8 +3,10 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:eb="clr-namespace:EventBinder;assembly=EventBinder"
+                    xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Docking.Panes;assembly=FinalEngine.Editor.ViewModels"
                     xmlns:glwpf="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
+                    d:DataContext="{d:DesignInstance Type=vm:SceneViewModel}"
                     mc:Ignorable="d"
-                    Width="200"
-                    Height="200">
+                    Render="{eb:EventBinding RenderCommand.Execute, `null`}">
 </glwpf:GLWpfControl>

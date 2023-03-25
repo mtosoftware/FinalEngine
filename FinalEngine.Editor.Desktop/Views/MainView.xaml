@@ -5,7 +5,10 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:selectors="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Docking"
                  xmlns:panes="clr-namespace:FinalEngine.Editor.Desktop.Views.Docking.Panes"
+                 xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels;assembly=FinalEngine.Editor.ViewModels"
+                 d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
                  mc:Ignorable="d"
                  Width="800"
                  Height="450"
@@ -32,8 +35,43 @@
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
 
-    <!-- TEMP -->
-    <DockPanel LastChildFill="True">
-        <panes:SceneView />
-    </DockPanel>
+    <Grid>
+        <!-- DOCKING MANAGER -->
+        <DockingManager AnchorablesSource="{Binding Tools}"
+                        DocumentsSource="{Binding Panes}">
+
+            <!-- THEME -->
+            <DockingManager.Theme>
+                <Vs2013DarkTheme />
+            </DockingManager.Theme>
+
+            <!-- TEMPLATE SELECTOR -->
+            <DockingManager.LayoutItemTemplateSelector>
+                <selectors:PanesTemplateSelector>
+                    <!-- SCENE VIEW -->
+                    <selectors:PanesTemplateSelector.SceneTemplate>
+                        <DataTemplate>
+                            <panes:SceneView />
+                        </DataTemplate>
+                    </selectors:PanesTemplateSelector.SceneTemplate>
+                </selectors:PanesTemplateSelector>
+            </DockingManager.LayoutItemTemplateSelector>
+
+            <!-- STYLE SELECTOR -->
+            <DockingManager.LayoutItemContainerStyleSelector>
+                <selectors:PanesStyleSelector ToolStyle="{StaticResource ToolStyle}" PaneStyle="{StaticResource PaneStyle}" />
+            </DockingManager.LayoutItemContainerStyleSelector>
+
+            <!-- LAYOUT ROOT -->
+            <LayoutRoot>
+                <LayoutPanel Orientation="Horizontal">
+                    <LayoutPanel Orientation="Vertical">
+
+                        <!-- DOCUMENTS -->
+                        <LayoutDocumentPane />
+                    </LayoutPanel>
+                </LayoutPanel>
+            </LayoutRoot>
+        </DockingManager>
+    </Grid>
 </mah:MetroWindow>

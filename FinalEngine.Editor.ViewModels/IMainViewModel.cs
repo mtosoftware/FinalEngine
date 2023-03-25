@@ -4,8 +4,10 @@
 
 namespace FinalEngine.Editor.ViewModels;
 
-using CommunityToolkit.Mvvm.Input;
-using FinalEngine.Editor.ViewModels.Interaction;
+using System.Collections.Generic;
+using System.Windows.Input;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
+using FinalEngine.Editor.ViewModels.Docking.Tools;
 
 /// <summary>
 /// Defines an interface that represents the main view.
@@ -18,7 +20,15 @@ public interface IMainViewModel
     /// <value>
     /// The exit command.
     /// </value>
-    IRelayCommand<ICloseable?> ExitCommand { get; }
+    ICommand ExitCommand { get; }
+
+    /// <summary>
+    ///   Gets the documents attached to this <see cref="IMainViewModel"/>.
+    /// </summary>
+    /// <value>
+    ///   The documents attached to this <see cref="IMainViewModel"/>.
+    /// </value>
+    IEnumerable<IPaneViewModel> Panes { get; }
 
     /// <summary>
     /// Gets the title.
@@ -27,4 +37,12 @@ public interface IMainViewModel
     /// The title.
     /// </value>
     string Title { get; }
+
+    /// <summary>
+    ///   Gets the tool windows attached to this <see cref="IMainViewModel"/>.
+    /// </summary>
+    /// <value>
+    ///   The tool windows attached to this <see cref="IMainViewModel"/>.
+    /// </value>
+    IEnumerable<IToolViewModel> Tools { get; }
 }

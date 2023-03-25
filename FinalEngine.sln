@@ -64,9 +64,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Audio.OpenAL", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editor", "Editor", "{37EAC441-4D26-49E2-884D-E1979650C873}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Editor.Desktop", "FinalEngine.Editor.Desktop\FinalEngine.Editor.Desktop.csproj", "{8FF533B9-33BB-4E42-AAE1-95E8F2747264}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Desktop", "FinalEngine.Editor.Desktop\FinalEngine.Editor.Desktop.csproj", "{8FF533B9-33BB-4E42-AAE1-95E8F2747264}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.ViewModels", "FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj", "{DB6A0D9E-7199-4721-AFCF-2774080012FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Common", "FinalEngine.Editor.Common\FinalEngine.Editor.Common.csproj", "{5CD4CCAD-5645-43E2-A61F-E2882FEE3EF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -154,6 +156,10 @@ Global
 		{DB6A0D9E-7199-4721-AFCF-2774080012FD}.Debug|x64.Build.0 = Debug|x64
 		{DB6A0D9E-7199-4721-AFCF-2774080012FD}.Release|x64.ActiveCfg = Release|Any CPU
 		{DB6A0D9E-7199-4721-AFCF-2774080012FD}.Release|x64.Build.0 = Release|Any CPU
+		{5CD4CCAD-5645-43E2-A61F-E2882FEE3EF8}.Debug|x64.ActiveCfg = Debug|x64
+		{5CD4CCAD-5645-43E2-A61F-E2882FEE3EF8}.Debug|x64.Build.0 = Debug|x64
+		{5CD4CCAD-5645-43E2-A61F-E2882FEE3EF8}.Release|x64.ActiveCfg = Release|Any CPU
+		{5CD4CCAD-5645-43E2-A61F-E2882FEE3EF8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,6 +185,7 @@ Global
 		{D67794A8-89AC-46E0-B303-94110BB382F8} = {B4084D99-8DC5-4E1C-B5BF-9C7351CE71B8}
 		{8FF533B9-33BB-4E42-AAE1-95E8F2747264} = {37EAC441-4D26-49E2-884D-E1979650C873}
 		{DB6A0D9E-7199-4721-AFCF-2774080012FD} = {37EAC441-4D26-49E2-884D-E1979650C873}
+		{5CD4CCAD-5645-43E2-A61F-E2882FEE3EF8} = {37EAC441-4D26-49E2-884D-E1979650C873}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}

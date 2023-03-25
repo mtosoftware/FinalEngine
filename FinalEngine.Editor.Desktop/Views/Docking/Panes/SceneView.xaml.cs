@@ -4,7 +4,9 @@
 
 namespace FinalEngine.Editor.Desktop.Views.Docking.Panes;
 
-using System.Drawing;
+using System;
+using System.Windows;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Wpf;
@@ -24,7 +26,7 @@ public partial class SceneView : GLWpfControl
         this.Start(new GLWpfControlSettings()
         {
             MajorVersion = 4,
-            MinorVersion = 6,
+            MinorVersion = 5,
             GraphicsContextFlags = ContextFlags.ForwardCompatible,
             GraphicsProfile = ContextProfile.Core,
             RenderContinuously = true,
@@ -33,9 +35,23 @@ public partial class SceneView : GLWpfControl
         this.Render += this.SceneView_Render;
     }
 
+    protected override void OnRenderSizeChanged(SizeChangedInfo info)
+    {
+        // I hate to do this because I'm violating MVVM but GLWpfControl doesn't use dependency properties.
+        if (this.DataContext is not ISceneViewModel viewModel)
+        {
+            throw new InvalidOperationException($"The current {nameof(this.DataContext)} is not of type {nameof(ISceneViewModel)}.");
+        }
+
+        viewModel.ProjectionWidth = (int)info.NewSize.Width;
+        viewModel.ProjectionHeight = (int)info.NewSize.Height;
+
+        base.OnRenderSizeChanged(info);
+    }
+
+    //// TODO: Add issue to GLWpfControl repo to support commands.
     private void SceneView_Render(System.TimeSpan obj)
     {
-        GL.ClearColor(Color.CornflowerBlue);
-        GL.Clear(ClearBufferMask.ColorBufferBit);
+        GL.Finish();
     }
 }
