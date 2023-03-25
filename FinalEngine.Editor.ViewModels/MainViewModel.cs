@@ -81,7 +81,7 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// <inheritdoc/>
     public string Title
     {
-        get { return this.title ?? string.Empty; }
+        get { return this.title!; }
         private set { this.SetProperty(ref this.title, value); }
     }
 

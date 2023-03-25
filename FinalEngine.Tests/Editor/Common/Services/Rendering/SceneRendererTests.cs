@@ -6,6 +6,8 @@ namespace FinalEngine.Tests.Editor.Common.Services.Rendering;
 
 using System;
 using System.Drawing;
+using System.Linq.Expressions;
+using System.Numerics;
 using FinalEngine.Editor.Common.Services.Rendering;
 using FinalEngine.Rendering;
 using Microsoft.Extensions.Logging;
@@ -17,9 +19,51 @@ public sealed class SceneRendererTests
 {
     private Mock<ILogger<SceneRenderer>> logger;
 
+    private Mock<IPipeline> pipeline;
+
+    private Mock<IRasterizer> rasterizer;
+
     private Mock<IRenderDevice> renderDevice;
 
     private SceneRenderer sceneRenderer;
+
+    [Test]
+    public void ChangeProjectionShouldSetUniformProjectionWhenInvoked()
+    {
+        // Arrange
+        const int width = 1280;
+        const int height = 720;
+
+        var projection = Matrix4x4.CreateOrthographicOffCenter(0, width, 0, height, -1, 1);
+
+        Expression<Func<Matrix4x4, bool>> match = (mat) => mat.Equals(projection);
+
+        // Act
+        this.sceneRenderer.ChangeProjection(width, height);
+
+        // Assert
+        this.pipeline.Verify(x => x.SetUniform("u_projection", It.Is<Matrix4x4>(match)), Times.Once);
+    }
+
+    [Test]
+    public void ChangeProjectionShouldSetViewportWhenInvoked()
+    {
+        // Arrange
+        const int width = 1280;
+        const int height = 720;
+
+        Expression<Func<Rectangle, bool>> match = (rect) =>
+            rect.X == 0 &&
+            rect.Y == 0 &&
+            rect.Width == width
+            && rect.Height == height;
+
+        // Act
+        this.sceneRenderer.ChangeProjection(width, height);
+
+        // Assert
+        this.rasterizer.Verify(x => x.SetViewport(It.Is<Rectangle>(match), 0, 1), Times.Once);
+    }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
@@ -56,6 +100,11 @@ public sealed class SceneRendererTests
     {
         this.logger = new Mock<ILogger<SceneRenderer>>();
         this.renderDevice = new Mock<IRenderDevice>();
+        this.pipeline = new Mock<IPipeline>();
+        this.rasterizer = new Mock<IRasterizer>();
+
+        this.renderDevice.SetupGet(x => x.Pipeline).Returns(this.pipeline.Object);
+        this.renderDevice.SetupGet(x => x.Rasterizer).Returns(this.rasterizer.Object);
 
         this.sceneRenderer = new SceneRenderer(this.logger.Object, this.renderDevice.Object);
     }
