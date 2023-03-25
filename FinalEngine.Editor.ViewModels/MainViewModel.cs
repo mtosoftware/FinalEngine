@@ -28,8 +28,14 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private readonly ILogger<MainViewModel> logger;
 
+    /// <summary>
+    /// The exit command.
+    /// </summary>
     private ICommand? exitCommand;
 
+    /// <summary>
+    /// The application title.
+    /// </summary>
     private string? title;
 
     /// <summary>
@@ -37,6 +43,9 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     /// <param name="logger">
     /// The logger.
+    /// </param>
+    /// <param name="sceneViewModelFactory">
+    /// The scene view model factory.
     /// </param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/> parameter cannot be null.
@@ -59,19 +68,23 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
         this.Title = $"Final Engine - {Assembly.GetExecutingAssembly().GetVersionString()}";
     }
 
+    /// <inheritdoc/>
     public ICommand ExitCommand
     {
         get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Exit); }
     }
 
+    /// <inheritdoc/>
     public IEnumerable<IPaneViewModel> Panes { get; }
 
+    /// <inheritdoc/>
     public string Title
     {
         get { return this.title ?? string.Empty; }
         private set { this.SetProperty(ref this.title, value); }
     }
 
+    /// <inheritdoc/>
     public IEnumerable<IToolViewModel> Tools { get; }
 
     /// <summary>
