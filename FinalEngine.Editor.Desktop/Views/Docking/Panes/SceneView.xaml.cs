@@ -4,9 +4,6 @@
 
 namespace FinalEngine.Editor.Desktop.Views.Docking.Panes;
 
-using System;
-using System.Windows;
-using FinalEngine.Editor.ViewModels.Docking.Panes;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Wpf;
@@ -23,6 +20,7 @@ public partial class SceneView : GLWpfControl
     {
         this.InitializeComponent();
 
+        //// TODO: Use XAML and implement this in view model, waiting on: https://github.com/opentk/GLWpfControl/pull/106.
         this.Start(new GLWpfControlSettings()
         {
             MajorVersion = 4,
@@ -35,6 +33,12 @@ public partial class SceneView : GLWpfControl
         this.Render += this.SceneView_Render;
     }
 
+    /// <summary>
+    /// Block and wait until the scene is rendered.
+    /// </summary>
+    /// <param name="obj">
+    /// The delta time.
+    /// </param>
     private void SceneView_Render(System.TimeSpan obj)
     {
         //// TODO: Create issue for this.

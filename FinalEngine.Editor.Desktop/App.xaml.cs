@@ -12,7 +12,9 @@ using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.ViewModels;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Extensions;
-using FinalEngine.Rendering.OpenGL.Extensions;
+using FinalEngine.Rendering;
+using FinalEngine.Rendering.OpenGL;
+using FinalEngine.Rendering.OpenGL.Invocation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +25,9 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 public partial class App : Application
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="App"/> class.
+    /// </summary>
     public App()
     {
         AppHost = Host.CreateDefaultBuilder()
@@ -31,8 +36,20 @@ public partial class App : Application
             .Build();
     }
 
+    /// <summary>
+    /// Gets or sets the application host.
+    /// </summary>
+    /// <value>
+    /// The application host.
+    /// </value>
     private static IHost? AppHost { get; set; }
 
+    /// <summary>
+    /// Exits the main application, disposing of any existing resources.
+    /// </summary>
+    /// <param name="e">
+    /// The <see cref="ExitEventArgs"/> instance containing the event data.
+    /// </param>
     protected override async void OnExit(ExitEventArgs e)
     {
         await AppHost!.StopAsync();
@@ -59,6 +76,12 @@ public partial class App : Application
         view.ShowDialog();
     }
 
+    /// <summary>
+    /// Configures the applications configuration.
+    /// </summary>
+    /// <param name="builder">
+    /// The builder.
+    /// </param>
     private static void ConfigureAppConfiguration(IConfigurationBuilder builder)
     {
         string environment = Debugger.IsAttached ? "Development" : "Production";
@@ -68,6 +91,15 @@ public partial class App : Application
             .AddJsonFile($"appsettings.{environment}.json");
     }
 
+    /// <summary>
+    /// Configures the services to be consumed by the application.
+    /// </summary>
+    /// <param name="context">
+    /// The context.
+    /// </param>
+    /// <param name="services">
+    /// The services.
+    /// </param>
     private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
         var configuration = context.Configuration;
@@ -79,8 +111,10 @@ public partial class App : Application
             .AddFile(configuration.GetSection("LoggingOptions"));
         });
 
+        services.AddSingleton<IOpenGLInvoker, OpenGLInvoker>();
+        services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
+
         services.AddCommon();
-        services.AddRendering();
 
         services.AddViewModelFactory<SceneViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();

@@ -23,7 +23,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="OpenTK.Graphics" Version="4.7.5" />
     <PackageReference Include="OpenTK.Windowing.Common" Version="4.7.5" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">

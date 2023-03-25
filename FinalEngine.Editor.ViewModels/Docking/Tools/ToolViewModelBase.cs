@@ -6,6 +6,11 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools;
 
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 
+/// <summary>
+/// The base class to be implemented for a tool window view.
+/// </summary>
+/// <seealso cref="PaneViewModelBase" />
+/// <seealso cref="IToolViewModel" />
 public partial class ToolViewModelBase : PaneViewModelBase, IToolViewModel
 {
     /// <summary>

@@ -6,6 +6,11 @@ namespace FinalEngine.Editor.ViewModels.Docking.Panes;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
+/// <summary>
+/// The base class to be implemented for a document view.
+/// </summary>
+/// <seealso cref="ObservableObject" />
+/// <seealso cref="IPaneViewModel" />
 public partial class PaneViewModelBase : ObservableObject, IPaneViewModel
 {
     /// <summary>
