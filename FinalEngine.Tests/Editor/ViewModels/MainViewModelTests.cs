@@ -5,8 +5,12 @@
 namespace FinalEngine.Tests.Editor.ViewModels;
 
 using System;
+using System.Linq;
 using System.Reflection;
+using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.Common.Services.Rendering;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Interaction;
 using FinalEngine.Utilities.Extensions;
 using Microsoft.Extensions.Logging;
@@ -18,7 +22,18 @@ public sealed class MainViewModelTests
 {
     private Mock<ILogger<MainViewModel>> logger;
 
+    private Mock<ISceneRenderer> sceneRenderer;
+
+    private Mock<IFactory<SceneViewModel>> sceneViewModelFactory;
+
     private MainViewModel viewModel;
+
+    [Test]
+    public void ConstructorShouldInvokeSceneViewModelFactoryCreateWhenInvoked()
+    {
+        // Assert
+        this.sceneViewModelFactory.Verify(x => x.Create(), Times.Once());
+    }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
@@ -26,7 +41,17 @@ public sealed class MainViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new MainViewModel(null);
+            new MainViewModel(null, this.sceneViewModelFactory.Object);
+        });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenSceneViewModelFactoryIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new MainViewModel(this.logger.Object, null);
         });
     }
 
@@ -53,11 +78,37 @@ public sealed class MainViewModelTests
         });
     }
 
+    [Test]
+    public void PanesShouldContainSceneViewModelWhenCreated()
+    {
+        // Act
+        var actual = this.viewModel.Panes.FirstOrDefault(x =>
+        {
+            return x.GetType() == typeof(SceneViewModel);
+        });
+
+        // Assert
+        Assert.That(actual, Is.Not.Null);
+    }
+
+    [Test]
+    public void PanesShouldNotBeNullWhenCreated()
+    {
+        // Act
+        var actual = this.viewModel.Panes;
+
+        // Assert
+        Assert.That(actual, Is.Not.Null);
+    }
+
     [SetUp]
     public void Setup()
     {
         this.logger = new Mock<ILogger<MainViewModel>>();
-        this.viewModel = new MainViewModel(this.logger.Object);
+        this.sceneViewModelFactory = new Mock<IFactory<SceneViewModel>>();
+        this.sceneRenderer = new Mock<ISceneRenderer>();
+        this.sceneViewModelFactory.Setup(x => x.Create()).Returns(new SceneViewModel(this.sceneRenderer.Object));
+        this.viewModel = new MainViewModel(this.logger.Object, this.sceneViewModelFactory.Object);
     }
 
     [Test]
@@ -71,5 +122,15 @@ public sealed class MainViewModelTests
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ToolsShouldNotBeNullWhenCreated()
+    {
+        // Act
+        var actual = this.viewModel.Tools;
+
+        // Assert
+        Assert.That(actual, Is.Not.Null);
     }
 }
