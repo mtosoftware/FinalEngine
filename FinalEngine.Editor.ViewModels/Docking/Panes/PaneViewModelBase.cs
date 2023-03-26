@@ -39,7 +39,7 @@ public partial class PaneViewModelBase : ObservableObject, IPaneViewModel
     /// <value>
     ///   The content identifier.
     /// </value>
-    public string? ContentID
+    public string ContentID
     {
         get { return this.contentID ?? string.Empty; }
         set { this.SetProperty(ref this.contentID, value); }

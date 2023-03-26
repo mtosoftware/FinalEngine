@@ -18,7 +18,7 @@ public interface IPaneViewModel
     /// <value>
     ///   The content identifier.
     /// </value>
-    string? ContentID { get; set; }
+    string ContentID { get; set; }
 
     /// <summary>
     ///   Gets or sets a value indicating whether this instance is active.

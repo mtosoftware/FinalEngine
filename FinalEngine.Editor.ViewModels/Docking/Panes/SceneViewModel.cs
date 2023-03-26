@@ -61,7 +61,7 @@ public partial class SceneViewModel : PaneViewModelBase, ISceneViewModel
             return this.projectionSize;
         }
 
-        private set
+        set
         {
             //// TODO: Hook this up to GLWpfControl.RenderSize, waiting on: https://github.com/opentk/GLWpfControl/issues/108.
             this.SetProperty(ref this.projectionSize, value);
