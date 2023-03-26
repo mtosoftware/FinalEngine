@@ -14,6 +14,8 @@ using FinalEngine.Editor.ViewModels.Docking.Panes;
 /// <seealso cref="DataTemplateSelector"/>
 public class PanesTemplateSelector : DataTemplateSelector
 {
+    public DataTemplate? CodeTemplate { get; set; }
+
     /// <summary>
     /// Gets or sets the scene template.
     /// </summary>
@@ -39,6 +41,10 @@ public class PanesTemplateSelector : DataTemplateSelector
         if (item is ISceneViewModel)
         {
             return this.SceneTemplate;
+        }
+        else if (item is ICodeViewModel)
+        {
+            return this.CodeTemplate;
         }
 
         return base.SelectTemplate(item, container);

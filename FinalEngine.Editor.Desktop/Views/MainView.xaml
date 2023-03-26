@@ -54,6 +54,13 @@
                             <panes:SceneView />
                         </DataTemplate>
                     </selectors:PanesTemplateSelector.SceneTemplate>
+
+                    <!-- CODE VIEW -->
+                    <selectors:PanesTemplateSelector.CodeTemplate>
+                        <DataTemplate>
+                            <panes:CodeView />
+                        </DataTemplate>
+                    </selectors:PanesTemplateSelector.CodeTemplate>
                 </selectors:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 

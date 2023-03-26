@@ -116,6 +116,7 @@ public partial class App : Application
         services.AddCommon();
 
         services.AddFactory<SceneViewModel>();
+        services.AddFactory<CodeViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();
     }
 }

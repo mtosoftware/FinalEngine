@@ -51,16 +51,25 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/> parameter cannot be null.
     /// </exception>
-    public MainViewModel(ILogger<MainViewModel> logger, IFactory<SceneViewModel> sceneViewModelFactory)
+    public MainViewModel(
+        ILogger<MainViewModel> logger,
+        IFactory<SceneViewModel> sceneViewModelFactory,
+        IFactory<CodeViewModel> codeViewModelFactory)
     {
         if (sceneViewModelFactory == null)
         {
             throw new ArgumentNullException(nameof(sceneViewModelFactory));
         }
 
+        if (codeViewModelFactory == null)
+        {
+            throw new ArgumentNullException(nameof(codeViewModelFactory));
+        }
+
         this.Panes = new List<IPaneViewModel>()
         {
             sceneViewModelFactory.Create(),
+            codeViewModelFactory.Create(),
         };
 
         this.Tools = new List<IToolViewModel>();
