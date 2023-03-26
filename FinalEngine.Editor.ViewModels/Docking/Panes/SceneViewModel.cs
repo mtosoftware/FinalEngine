@@ -49,7 +49,7 @@ public partial class SceneViewModel : PaneViewModelBase, ISceneViewModel
     }
 
     /// <summary>
-    /// Gets the size of the projection.
+    /// Gets or sets the size of the projection.
     /// </summary>
     /// <value>
     /// The size of the projection.
@@ -63,7 +63,6 @@ public partial class SceneViewModel : PaneViewModelBase, ISceneViewModel
 
         set
         {
-            //// TODO: Hook this up to GLWpfControl.RenderSize, waiting on: https://github.com/opentk/GLWpfControl/issues/108.
             this.SetProperty(ref this.projectionSize, value);
             this.sceneRenderer.ChangeProjection(this.projectionSize.Width, this.projectionSize.Height);
         }

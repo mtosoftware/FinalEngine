@@ -20,7 +20,6 @@ public partial class SceneView : GLWpfControl
     {
         this.InitializeComponent();
 
-        //// TODO: Use XAML and implement this in view model, waiting on: https://github.com/opentk/GLWpfControl/pull/106.
         this.Start(new GLWpfControlSettings()
         {
             MajorVersion = 4,
@@ -41,7 +40,6 @@ public partial class SceneView : GLWpfControl
     /// </param>
     private void SceneView_Render(System.TimeSpan obj)
     {
-        //// TODO: Create issue for this.
         GL.Finish();
     }
 }
