@@ -29,6 +29,9 @@
         <mah:WindowCommands ShowLastSeparator="False">
             <Menu IsMainMenu="True">
                 <MenuItem Header="_File">
+                    <MenuItem Header="_New">
+                        <MenuItem Header="_Project" InputGestureText="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
+                    </MenuItem>
                     <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
                 </MenuItem>
             </Menu>

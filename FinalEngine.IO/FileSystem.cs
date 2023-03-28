@@ -427,6 +427,16 @@ public class FileSystem : IFileSystem
         return this.file.Exists(path);
     }
 
+    public bool IsValidDirectory(string location)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsValidFileName(string name)
+    {
+        throw new NotImplementedException();
+    }
+
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="path" /> parameter is null, empty of contains only whitespace characters.

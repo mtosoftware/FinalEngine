@@ -10,7 +10,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Panes;
 /// <remarks>
 ///   A pane view is a view which is used as part of a dockable layout system. It represents any element that can be docked to a dockable layout.
 /// </remarks>
-public interface IPaneViewModel
+public interface IPaneViewModel : IViewModel
 {
     /// <summary>
     ///   Gets or sets the content identifier.

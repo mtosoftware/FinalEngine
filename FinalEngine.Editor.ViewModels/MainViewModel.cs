@@ -10,10 +10,11 @@ using System.Reflection;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
+using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interaction;
+using FinalEngine.Editor.ViewModels.Projects;
 using FinalEngine.Utilities.Extensions;
 using Microsoft.Extensions.Logging;
 
@@ -29,15 +30,21 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private readonly ILogger<MainViewModel> logger;
 
+    private readonly IViewModelFactory viewModelFactory;
+
     /// <summary>
     /// The exit command.
     /// </summary>
     private ICommand? exitCommand;
 
+    private ICommand? newProjectCommand;
+
     /// <summary>
     /// The application title.
     /// </summary>
     private string? title;
+
+    private IViewPresenter viewPresenter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -45,36 +52,25 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// <param name="logger">
     /// The logger.
     /// </param>
-    /// <param name="sceneViewModelFactory">
-    /// The scene view model factory.
-    /// </param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/> parameter cannot be null.
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
-        IFactory<SceneViewModel> sceneViewModelFactory,
-        IFactory<CodeViewModel> codeViewModelFactory)
+        IViewPresenter viewPresenter,
+        IViewModelFactory viewModelFactory)
     {
-        if (sceneViewModelFactory == null)
-        {
-            throw new ArgumentNullException(nameof(sceneViewModelFactory));
-        }
-
-        if (codeViewModelFactory == null)
-        {
-            throw new ArgumentNullException(nameof(codeViewModelFactory));
-        }
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
+        this.viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
         this.Panes = new List<IPaneViewModel>()
         {
-            sceneViewModelFactory.Create(),
-            codeViewModelFactory.Create(),
+            this.viewModelFactory.CreateViewModel<ISceneViewModel>(),
+            this.viewModelFactory.CreateViewModel<ICodeViewModel>(),
         };
 
         this.Tools = new List<IToolViewModel>();
-
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.Title = $"Final Engine - {Assembly.GetExecutingAssembly().GetVersionString()}";
     }
 
@@ -82,6 +78,11 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     public ICommand ExitCommand
     {
         get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Exit); }
+    }
+
+    public ICommand NewProjectCommand
+    {
+        get { return this.newProjectCommand ??= new RelayCommand(this.ShowNewProjectView); }
     }
 
     /// <inheritdoc/>
@@ -116,5 +117,11 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
         this.logger.LogInformation($"Closing the main view...");
 
         closeable.Close();
+    }
+
+    private void ShowNewProjectView()
+    {
+        var viewModel = this.viewModelFactory.CreateViewModel<INewProjectViewModel>();
+        this.viewPresenter.ShowNewProjectView(viewModel);
     }
 }

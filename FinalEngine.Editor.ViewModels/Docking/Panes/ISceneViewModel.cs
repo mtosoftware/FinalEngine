@@ -10,7 +10,7 @@ using System.Windows.Input;
 /// <summary>
 /// Defines an interface that represents a scene view, view model.
 /// </summary>
-public interface ISceneViewModel
+public interface ISceneViewModel : IPaneViewModel
 {
     /// <summary>
     /// Gets the size of the projection.

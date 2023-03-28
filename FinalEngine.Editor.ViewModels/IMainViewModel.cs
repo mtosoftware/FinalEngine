@@ -12,7 +12,7 @@ using FinalEngine.Editor.ViewModels.Docking.Tools;
 /// <summary>
 /// Defines an interface that represents the main view.
 /// </summary>
-public interface IMainViewModel
+public interface IMainViewModel : IViewModel
 {
     /// <summary>
     /// Gets the exit command.
@@ -21,6 +21,8 @@ public interface IMainViewModel
     /// The exit command.
     /// </value>
     ICommand ExitCommand { get; }
+
+    ICommand NewProjectCommand { get; }
 
     /// <summary>
     ///   Gets the documents attached to this <see cref="IMainViewModel"/>.

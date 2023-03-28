@@ -8,9 +8,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using FinalEngine.Editor.Common.Extensions;
+using FinalEngine.Editor.Desktop.Interactions;
 using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.ViewModels;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
+using FinalEngine.Editor.ViewModels.Factories;
+using FinalEngine.Editor.ViewModels.Interaction;
+using FinalEngine.Editor.ViewModels.Projects;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
@@ -115,8 +119,16 @@ public partial class App : Application
 
         services.AddCommon();
 
-        services.AddFactory<SceneViewModel>();
-        services.AddFactory<CodeViewModel>();
+        services.AddSingleton<IViewPresenter, ViewPresenter>();
+        services.AddTransient<IViewModelFactory>(x =>
+        {
+            return new ViewModelFactory(x);
+        });
+
+        // View models
+        services.AddTransient<INewProjectViewModel, NewProjectViewModel>();
+        services.AddTransient<ISceneViewModel, SceneViewModel>();
+        services.AddTransient<ICodeViewModel, CodeViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();
     }
 }

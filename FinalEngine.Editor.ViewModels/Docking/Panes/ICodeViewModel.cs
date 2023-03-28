@@ -4,6 +4,6 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Panes;
 
-public interface ICodeViewModel
+public interface ICodeViewModel : IPaneViewModel
 {
 }

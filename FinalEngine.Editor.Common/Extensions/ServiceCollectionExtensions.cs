@@ -6,7 +6,7 @@ namespace FinalEngine.Editor.Common.Extensions;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.Common.Services.Projects;
 using FinalEngine.Editor.Common.Services.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,39 +36,18 @@ public static class ServiceCollectionExtensions
         }
 
         services.AddSingleton<ISceneRenderer, SceneRenderer>();
+        services.AddSingleton<ProjectContext>();
 
-        return services;
-    }
-
-    /// <summary>
-    /// Adds a factory that creates an instance of type <typeparamref name="TViewModel"/> to the specified <paramref name="services"/> collection.
-    /// </summary>
-    /// <typeparam name="TViewModel">
-    /// The type of instance to create.
-    /// </typeparam>
-    /// <param name="services">
-    /// The services collection.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="services"/> parameter cannot be null.
-    /// </exception>
-    public static void AddFactory<TViewModel>(this IServiceCollection services)
-        where TViewModel : class
-    {
-        if (services == null)
+        services.AddSingleton<IProjectContext>(x =>
         {
-            throw new ArgumentNullException(nameof(services));
-        }
-
-        services.AddTransient<TViewModel>();
-        services.AddSingleton<Func<TViewModel>>(x =>
-        {
-            return () =>
-            {
-                return x.GetRequiredService<TViewModel>();
-            };
+            return x.GetRequiredService<ProjectContext>();
         });
 
-        services.AddSingleton<IFactory<TViewModel>, Factory<TViewModel>>();
+        services.AddSingleton<IProjectFileHandler>(x =>
+        {
+            return x.GetRequiredService<ProjectContext>();
+        });
+
+        return services;
     }
 }

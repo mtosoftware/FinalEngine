@@ -67,6 +67,8 @@ public interface IFileSystem
     /// <c>true</c> if the file exists; otherwise, <c>false</c>.
     /// </returns>
     bool FileExists(string path);
+    bool IsValidDirectory(string location);
+    bool IsValidFileName(string name);
 
     /// <summary>
     /// Opens a file located at the specified <paramref name="path"/>, with the specified <paramref name="mode"/>.
