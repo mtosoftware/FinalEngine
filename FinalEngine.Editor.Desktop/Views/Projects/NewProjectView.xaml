@@ -1,3 +1,4 @@
+<!-- TODO: Add data context -->
 <mah:MetroWindow x:Name="Window"
                  x:Class="FinalEngine.Editor.Desktop.Views.Projects.NewProjectView"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

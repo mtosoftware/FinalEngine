@@ -12,6 +12,10 @@
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NoWarn>CA1848</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Resources\Images\Splash\splash.png" />
   </ItemGroup>
@@ -41,6 +45,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
     <PackageReference Include="OpenTK.GLWpfControl" Version="4.2.3" />
     <PackageReference Include="OpenTK.Windowing.Desktop" Version="4.7.5" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />

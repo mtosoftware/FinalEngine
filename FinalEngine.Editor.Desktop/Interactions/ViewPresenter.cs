@@ -1,5 +1,5 @@
 // <copyright file="ViewPresenter.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Editor.Desktop.Interactions;
@@ -10,6 +10,7 @@ using FinalEngine.Editor.ViewModels.Interaction;
 using FinalEngine.Editor.ViewModels.Projects;
 using Microsoft.Extensions.Logging;
 
+//// TODO: Determine how views can know what parent view created it.
 public sealed class ViewPresenter : IViewPresenter
 {
     private readonly ILogger<ViewPresenter> logger;
