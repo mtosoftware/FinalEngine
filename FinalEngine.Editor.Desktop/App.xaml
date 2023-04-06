@@ -10,6 +10,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
                 <ResourceDictionary Source="Styles/Docking/ToolStyle.xaml" />
                 <ResourceDictionary Source="Styles/Docking/PaneStyle.xaml" />
+                <ResourceDictionary Source="Styles/Standard/LabelStyle.xaml" />
+                <ResourceDictionary Source="Styles/Standard/ButtonStyle.xaml" />
+                <ResourceDictionary Source="Styles/Standard/TextBoxStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
