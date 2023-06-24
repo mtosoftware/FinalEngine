@@ -48,7 +48,10 @@ public class DesktopRuntimeFactory : IRuntimeFactory
             StartVisible = true,
         };
 
+#pragma warning disable CA2000 // Dispose objects before losing scope
         var nativeWindow = new NativeWindowInvoker(settings);
+#pragma warning restore CA2000 // Dispose objects before losing scope
+
         var file = new FileInvoker();
         var directory = new DirectoryInvoker();
         var opengl = new OpenGLInvoker();

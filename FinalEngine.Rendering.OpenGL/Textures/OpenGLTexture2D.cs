@@ -146,6 +146,18 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture
     /// </value>
     protected bool IsDisposed { get; private set; }
 
+    /// <summary>
+    /// Attaches this texture to the specified <paramref name="framebuffer" />.
+    /// </summary>
+    /// <param name="type">
+    /// The type of attachment.
+    /// </param>
+    /// <param name="framebuffer">
+    /// The OpenGL Framebuffer.
+    /// </param>
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="OpenGLTexture2D"/> has been disposed.
+    /// </exception>
     public void Attach(FramebufferAttachment type, int framebuffer)
     {
         if (this.IsDisposed)

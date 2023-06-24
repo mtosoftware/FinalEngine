@@ -11,7 +11,7 @@ using System;
 /// </summary>
 /// <seealso cref="Attribute"/>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public class EntitySystemProcessAttribute : Attribute
+public sealed class EntitySystemProcessAttribute : Attribute
 {
     /// <summary>
     ///   Gets the execution type.

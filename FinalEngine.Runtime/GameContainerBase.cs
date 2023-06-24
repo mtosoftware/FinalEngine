@@ -103,6 +103,11 @@ public abstract class GameContainerBase : IDisposable
 
     public void Run(IGameTime gameTime)
     {
+        if (gameTime == null)
+        {
+            throw new ArgumentNullException(nameof(gameTime));
+        }
+
         if (this.IsDisposed)
         {
             throw new ObjectDisposedException(nameof(GameContainerBase));

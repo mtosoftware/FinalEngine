@@ -37,6 +37,12 @@ public struct Texture2DDescription : IEquatable<Texture2DDescription>
     /// </summary>
     private TextureWrapMode? wrapT;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the texture should generate mipmaps.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if the texture should generate mipmaps; otherwise, <c>false</c>.
+    /// </value>
     public bool GenerateMipmaps { get; set; }
 
     /// <summary>

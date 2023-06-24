@@ -19,5 +19,8 @@ public enum TextureFilterMode
     /// </summary>
     Nearest,
 
+    /// <summary>
+    ///   Specifies mipmap linear interpolation.
+    /// </summary>
     LinearMipmapLinear,
 }

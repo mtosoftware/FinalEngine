@@ -14,6 +14,15 @@ using OpenTK.Graphics.OpenGL4;
 /// <seealso cref="ITexture"/>
 public interface IOpenGLTexture : ITexture
 {
+    /// <summary>
+    /// Attaches this texture to the specified <paramref name="framebuffer"/>.
+    /// </summary>
+    /// <param name="type">
+    /// The type of attachment.
+    /// </param>
+    /// <param name="framebuffer">
+    /// The OpenGL Framebuffer.
+    /// </param>
     void Attach(FramebufferAttachment type, int framebuffer);
 
     /// <summary>

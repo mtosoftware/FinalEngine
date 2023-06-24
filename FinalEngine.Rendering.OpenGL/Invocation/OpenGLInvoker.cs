@@ -283,6 +283,7 @@ public class OpenGLInvoker : IOpenGLInvoker
         GL.FrontFace(mode);
     }
 
+    /// <inheritdoc/>
     public void GenerateTextureMipmap(int texture)
     {
         GL.GenerateTextureMipmap(texture);

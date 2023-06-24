@@ -61,6 +61,12 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
     }
 
+    /// <summary>
+    /// Gets or sets the texture quality settings.
+    /// </summary>
+    /// <value>
+    /// The texture quality settings.
+    /// </value>
     public TextureQualitySettings TextureQualitySettings { get; set; }
 
     /// <summary>

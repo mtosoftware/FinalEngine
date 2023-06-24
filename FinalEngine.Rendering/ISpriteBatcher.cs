@@ -74,6 +74,12 @@ public interface ISpriteBatcher
     /// <param name="scale">
     ///   The size of the vertices.
     /// </param>
+    /// <param name="textureWidth">
+    /// The width of the texture (in pixels).
+    /// </param>
+    /// <param name="textureHeight">
+    /// The height of the texture (in pixels).
+    /// </param>
     void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale, int textureWidth, int textureHeight);
 
     /// <summary>

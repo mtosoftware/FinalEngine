@@ -120,6 +120,12 @@ public class SpriteBatcher : ISpriteBatcher
     /// <param name="scale">
     ///   The scale of the vertices.
     /// </param>
+    /// <param name="textureWidth">
+    /// The width of the texture (in pixels).
+    /// </param>
+    /// <param name="textureHeight">
+    /// The height of the texture (in pixels).
+    /// </param>
     public void Batch(float textureSlotIndex, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale, int textureWidth, int textureHeight)
     {
         float x = position.X;

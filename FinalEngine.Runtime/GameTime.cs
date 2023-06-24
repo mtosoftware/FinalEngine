@@ -34,6 +34,12 @@ public class GameTime : IGameTime
     /// </summary>
     private double lastTime;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GameTime"/> class.
+    /// </summary>
+    /// <param name="frameCap">
+    /// The frame cap.
+    /// </param>
     public GameTime(double frameCap)
         : this(new StopwatchInvoker(new Stopwatch()), frameCap)
     {
