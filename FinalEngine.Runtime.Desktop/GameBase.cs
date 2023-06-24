@@ -4,6 +4,10 @@
 
 namespace FinalEngine.Runtime.Desktop;
 
+/// <summary>
+/// Provides a desktop implementation of a <see cref="GameContainerBase"/>.
+/// </summary>
+/// <seealso cref="GameContainerBase" />
 public abstract class GameBase : GameContainerBase
 {
     /// <summary>

@@ -35,8 +35,20 @@ public enum DisplayResolution
 /// </summary>
 public interface IDisplayManager
 {
+    /// <summary>
+    /// Gets the display height.
+    /// </summary>
+    /// <value>
+    /// The display height.
+    /// </value>
     int DisplayHeight { get; }
 
+    /// <summary>
+    /// Gets the display width.
+    /// </summary>
+    /// <value>
+    /// The display width.
+    /// </value>
     int DisplayWidth { get; }
 
     /// <summary>

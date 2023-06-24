@@ -36,7 +36,7 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
     }
 
     /// <summary>
-    /// Loads a resource of the specified <typeparamref name="TResource" /> from the specified <paramref name="filePath" />.
+    /// Loads a resource of the specified <see cref="ISound"/> from the specified <paramref name="filePath" />.
     /// </summary>
     /// <param name="filePath">The file path to load the resource.</param>
     /// <returns>

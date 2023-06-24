@@ -19,8 +19,36 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
+/// <summary>
+/// Provides a desktop implementation of an <see cref="IRuntimeFactory"/>.
+/// </summary>
+/// <seealso cref="IRuntimeFactory" />
 public class DesktopRuntimeFactory : IRuntimeFactory
 {
+    /// <summary>
+    /// Initializes the runtime.
+    /// </summary>
+    /// <param name="window">
+    /// The window.
+    /// </param>
+    /// <param name="eventsProcessor">
+    /// The events processor.
+    /// </param>
+    /// <param name="keyboardDevice">
+    /// The keyboard device.
+    /// </param>
+    /// <param name="mouseDevice">
+    /// The mouse device.
+    /// </param>
+    /// <param name="fileSystem">
+    /// The file system.
+    /// </param>
+    /// <param name="renderContext">
+    /// The render context.
+    /// </param>
+    /// <param name="renderDevice">
+    /// The render device.
+    /// </param>
     public void InitializeRuntime(
         out IWindow window,
         out IEventsProcessor eventsProcessor,
