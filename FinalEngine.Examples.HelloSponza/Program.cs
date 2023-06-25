@@ -7,17 +7,22 @@ namespace FinalEngine.Examples.HelloSponza;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Numerics;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
+using FinalEngine.Extensions.Resources.Loaders.Shaders;
 using FinalEngine.Extensions.Resources.Loaders.Textures;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.IO;
 using FinalEngine.IO.Invocation;
+using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
+using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -74,8 +79,51 @@ internal static class Program
 
         resourceManager.RegisterLoader(new SoundResourceLoader(fileSystem));
         resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
+        resourceManager.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice.Factory));
 
         displayManager.ChangeResolution(DisplayResolution.HighDefinition);
+
+        var vertexShader = resourceManager.LoadResource<IShader>("Resources\\Shaders\\forward-geometry.vert");
+        var fragmentShader = resourceManager.LoadResource<IShader>("Resources\\Shaders\\forward-geometry.frag");
+        var shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, fragmentShader });
+
+        MeshVertex[] vertices =
+        {
+            new MeshVertex()
+            {
+                Position = new Vector3(-1, -1, 0),
+                Color = new Vector4(1, 0, 0, 1),
+                TextureCoordinate = new Vector2(0, 0),
+            },
+
+            new MeshVertex()
+            {
+                Position = new Vector3(1, -1, 0),
+                Color = new Vector4(0, 1, 0, 1),
+                TextureCoordinate = new Vector2(1, 0),
+            },
+
+            new MeshVertex()
+            {
+                Position = new Vector3(0, 1, 0),
+                Color = new Vector4(0, 0, 1, 1),
+                TextureCoordinate = new Vector2(0.5f, 1),
+            },
+        };
+
+        int[] indices =
+        {
+            0, 1, 2,
+        };
+
+        var mesh = new Mesh(renderDevice.Factory, vertices, indices);
+        var material = new Material();
+
+        renderDevice.Pipeline.SetShaderProgram(shaderProgram);
+
+        renderDevice.Pipeline.SetUniform("u_projection", Matrix4x4.CreatePerspectiveFieldOfView(
+            MathHelper.DegreesToRadians(70.0f), 1280.0f / 720.0f, 0.1f, 1000.0f));
+        renderDevice.Pipeline.SetUniform("u_view", Matrix4x4.CreateLookAt(new Vector3(0, 0, -1), Vector3.Zero, Vector3.UnitY));
 
         while (!window.IsExiting)
         {

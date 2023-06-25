@@ -35,5 +35,23 @@
     <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\Shaders\forward-geometry.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\forward-geometry.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\default_diffuse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\default_normal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\default_specular.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties resources_4shaders_4forward-point_1fesp__JsonSchema="https://appliedengdesign.github.io/cnccodes-json-schema/draft/2022-07/schema" /></VisualStudio></ProjectExtensions>
 </Project>
