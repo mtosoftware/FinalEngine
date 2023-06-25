@@ -39,7 +39,12 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 //// TODO: ShaderProgram resource loader
 //// TODO: Create shader programs in the rendering engine
 //// TODO: Unit tests to 100%
+
+//// Here marks the point of no return, lighting.
+//// TODO: Load 3D models using Assimp; take your time.
 //// TODO: Create LightNodeBase - Likely will have a ShaderProgram? Eww... I dunno yet.
+//// TODO: Add a EnqueueNode(LightNodeBase node) function to RenderingEngine
+//// TODO: Finally, finish up the forward rendering pipeline.
 
 internal static class Program
 {
@@ -158,6 +163,10 @@ internal static class Program
             {
                 continue;
             }
+
+            var transform = entity.GetComponent<TransformComponent>();
+
+            transform.Rotate(Vector3.UnitY, MathHelper.DegreesToRadians(1.0f));
 
             world.ProcessAll(GameLoopType.Update);
 
