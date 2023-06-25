@@ -8,6 +8,10 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
+using FinalEngine.ECS;
+using FinalEngine.ECS.Components.Core;
+using FinalEngine.ECS.Components.Rendering;
+using FinalEngine.ECS.Systems.Rendering;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
 using FinalEngine.Extensions.Resources.Loaders.Shaders;
@@ -125,6 +129,21 @@ internal static class Program
             MathHelper.DegreesToRadians(70.0f), 1280.0f / 720.0f, 0.1f, 1000.0f));
         renderDevice.Pipeline.SetUniform("u_view", Matrix4x4.CreateLookAt(new Vector3(0, 0, -1), Vector3.Zero, Vector3.UnitY));
 
+        var world = new EntityWorld();
+
+        world.AddSystem(new MeshRenderEntitySystem(renderDevice));
+
+        var entity = new Entity();
+
+        entity.AddComponent(new TransformComponent());
+        entity.AddComponent(new MeshComponent()
+        {
+            Mesh = mesh,
+            Material = material,
+        });
+
+        world.AddEntity(entity);
+
         while (!window.IsExiting)
         {
             if (!gameTime.CanProcessNextFrame())
@@ -132,10 +151,14 @@ internal static class Program
                 continue;
             }
 
+            world.ProcessAll(GameLoopType.Update);
+
             keyboard.Update();
             mouse.Update();
 
             renderDevice.Clear(Color.CornflowerBlue);
+
+            world.ProcessAll(GameLoopType.Render);
 
             renderContext.SwapBuffers();
             window.ProcessEvents();
