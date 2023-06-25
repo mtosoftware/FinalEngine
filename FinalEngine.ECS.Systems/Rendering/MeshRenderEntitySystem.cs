@@ -10,20 +10,15 @@ using System.Diagnostics.CodeAnalysis;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.ECS.Components.Rendering;
 using FinalEngine.Rendering;
+using FinalEngine.Rendering.Nodes;
 
-[EntitySystemProcess(ExecutionType = GameLoopType.Render)]
-public sealed class MeshRenderEntitySystem : EntitySystemBase, ISceneRenderer
+public sealed class MeshRenderEntitySystem : EntitySystemBase
 {
-    private readonly IRenderDevice renderDevice;
+    private readonly IRenderingEngine renderingEngine;
 
-    public MeshRenderEntitySystem(IRenderDevice renderDevice)
+    public MeshRenderEntitySystem(IRenderingEngine renderingEngine)
     {
-        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
-    }
-
-    public void Render()
-    {
-        this.Process();
+        this.renderingEngine = renderingEngine ?? throw new ArgumentNullException(nameof(renderingEngine));
     }
 
     protected override bool IsMatch([NotNull] IReadOnlyEntity entity)
@@ -39,23 +34,12 @@ public sealed class MeshRenderEntitySystem : EntitySystemBase, ISceneRenderer
             var transform = entity.GetComponent<TransformComponent>();
             var model = entity.GetComponent<MeshComponent>();
 
-            var mesh = model.Mesh;
-            var material = model.Material;
-
-            if (mesh == null || material == null)
+            this.renderingEngine.EnqueueNode(new MeshNode()
             {
-                continue;
-            }
-
-            //// TODO: Move this into the appropriae light rendering system.
-            this.renderDevice.Pipeline.SetUniform("u_material.diffuseTexture", 0);
-
-            this.renderDevice.Pipeline.SetTexture(material.DiffuseTexture, 0);
-
-            this.renderDevice.Pipeline.SetUniform("u_transform", transform.CreateTransformationMatrix());
-
-            mesh.Bind(this.renderDevice.InputAssembler);
-            mesh.Render(this.renderDevice);
+                Mesh = model.Mesh,
+                Material = model.Material,
+                Transformation = transform.CreateTransformationMatrix(),
+            });
         }
     }
 }

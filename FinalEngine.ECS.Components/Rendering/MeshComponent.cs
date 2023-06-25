@@ -8,7 +8,7 @@ using FinalEngine.Rendering;
 
 public sealed class MeshComponent : IComponent
 {
-    public IMaterial Material { get; set; }
+    public IMaterial? Material { get; set; }
 
     public IMesh? Mesh { get; set; }
 }

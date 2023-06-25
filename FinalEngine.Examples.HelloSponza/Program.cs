@@ -127,11 +127,13 @@ internal static class Program
 
         renderDevice.Pipeline.SetUniform("u_projection", Matrix4x4.CreatePerspectiveFieldOfView(
             MathHelper.DegreesToRadians(70.0f), 1280.0f / 720.0f, 0.1f, 1000.0f));
-        renderDevice.Pipeline.SetUniform("u_view", Matrix4x4.CreateLookAt(new Vector3(0, 0, -1), Vector3.Zero, Vector3.UnitY));
+        renderDevice.Pipeline.SetUniform("u_view", Matrix4x4.CreateLookAt(new Vector3(0, 0, -2), Vector3.Zero, Vector3.UnitY));
+
+        var renderingEngine = new RenderingEngine(renderDevice);
 
         var world = new EntityWorld();
 
-        world.AddSystem(new MeshRenderEntitySystem(renderDevice));
+        world.AddSystem(new MeshRenderEntitySystem(renderingEngine));
 
         var entity = new Entity();
 
@@ -159,6 +161,8 @@ internal static class Program
             renderDevice.Clear(Color.CornflowerBlue);
 
             world.ProcessAll(GameLoopType.Render);
+
+            renderingEngine.Render();
 
             renderContext.SwapBuffers();
             window.ProcessEvents();

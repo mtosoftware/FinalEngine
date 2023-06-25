@@ -407,7 +407,8 @@ public class OpenGLPipeline : IPipeline
 
             if (location == -1)
             {
-                throw new UniformNotLocatedException($"The specified uniform, {name} couldn't be located.", nameof(name));
+                //// TODO: Go back to throwing a UniformNotLocatedException once you sort out the issue in RenderingEngine.
+                return false;
             }
 
             this.uniformLocations.Add(name, location);
