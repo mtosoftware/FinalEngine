@@ -35,6 +35,12 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
+//// TODO: Virtual file system for shader includes
+//// TODO: ShaderProgram resource loader
+//// TODO: Create shader programs in the rendering engine
+//// TODO: Unit tests to 100%
+//// TODO: Create LightNodeBase - Likely will have a ShaderProgram? Eww... I dunno yet.
+
 internal static class Program
 {
     internal static void Main()
@@ -163,6 +169,8 @@ internal static class Program
             world.ProcessAll(GameLoopType.Render);
 
             renderingEngine.Render();
+
+            window.Title = GameTime.FrameRate.ToString();
 
             renderContext.SwapBuffers();
             window.ProcessEvents();

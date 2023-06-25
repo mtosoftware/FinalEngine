@@ -40,9 +40,7 @@ public sealed class RenderingEngine : IRenderingEngine
     public void Render()
     {
         this.renderDevice.Clear(Color.Black);
-
         this.RenderScene();
-
         this.meshes.Clear();
     }
 
