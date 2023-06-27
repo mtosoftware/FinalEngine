@@ -322,13 +322,13 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
             if (this.vertexShader != null)
             {
-                this.vertexShader.Dispose();
+                ResourceManager.Instance.UnloadResource(this.vertexShader);
                 this.vertexShader = null;
             }
 
             if (this.fragmentShader != null)
             {
-                this.fragmentShader.Dispose();
+                ResourceManager.Instance.UnloadResource(this.fragmentShader);
                 this.fragmentShader = null;
             }
         }
