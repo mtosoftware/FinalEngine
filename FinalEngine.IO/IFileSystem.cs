@@ -69,6 +69,17 @@ public interface IFileSystem
     bool FileExists(string path);
 
     /// <summary>
+    /// Gets the extension from the file at the specified <paramref name="path"/> (including the period).
+    /// </summary>
+    /// <param name="path">
+    /// The path of the file.
+    /// </param>
+    /// <returns>
+    /// The extension of the file at the specified <paramref name="path"/> (including the period).
+    /// </returns>
+    string GetExtension(string path);
+
+    /// <summary>
     /// Opens a file located at the specified <paramref name="path"/>, with the specified <paramref name="mode"/>.
     /// </summary>
     /// <param name="path">

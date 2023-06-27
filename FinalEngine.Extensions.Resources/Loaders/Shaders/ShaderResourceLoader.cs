@@ -71,7 +71,7 @@ public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
             throw new FileNotFoundException($"The specified {nameof(filePath)} couldn't be located.", filePath);
         }
 
-        var target = this.GetPipelineTarget(Path.GetExtension(filePath));
+        var target = this.GetPipelineTarget(this.fileSystem.GetExtension(filePath));
 
         using (var stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read))
         {
