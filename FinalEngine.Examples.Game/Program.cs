@@ -31,8 +31,14 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
+/// <summary>
+/// The test game application.
+/// </summary>
 internal static class Program
 {
+    /// <summary>
+    /// Defines the entry point of the application.
+    /// </summary>
     internal static void Main()
     {
         var settings = new NativeWindowSettings()
@@ -153,8 +159,34 @@ internal static class Program
             renderContext.SwapBuffers();
             window.ProcessEvents();
         }
+
+        mesh.Dispose();
+        shaderProgram.Dispose();
+        fragmentShader.Dispose();
+        vertexShader.Dispose();
+        resourceManager.Dispose();
+        renderContext.Dispose();
+        mouse.Dispose();
+        keyboard.Dispose();
+        window.Dispose();
+        nativeWindow.Dispose();
     }
 
+    /// <summary>
+    /// Loads a shader from the specified <paramref name="filePath"/>.
+    /// </summary>
+    /// <param name="factory">
+    /// The GPU factory.
+    /// </param>
+    /// <param name="target">
+    /// The pipeline target for the shader.
+    /// </param>
+    /// <param name="filePath">
+    /// The file path.
+    /// </param>
+    /// <returns>
+    /// The newly created <see cref="IShader"/> loaded into memory.
+    /// </returns>
     private static IShader LoadShader(IGPUResourceFactory factory, PipelineTarget target, string filePath)
     {
         return factory.CreateShader(target, File.ReadAllText(filePath));
