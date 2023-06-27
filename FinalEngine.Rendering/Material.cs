@@ -9,6 +9,10 @@ using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 
+/// <summary>
+/// Provides a standard implementation of an <see cref="IMaterial"/> that can be bound to a <see cref="IPipeline"/>.
+/// </summary>
+/// <seealso cref="IMaterial" />
 public sealed class Material : IMaterial
 {
     /// <summary>
