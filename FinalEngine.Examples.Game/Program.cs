@@ -1,7 +1,13 @@
+// <copyright file="Program.cs" company="Software Antics">
+// Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
 namespace FinalEngine.Examples.Game;
 
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Numerics;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
