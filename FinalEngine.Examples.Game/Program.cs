@@ -76,8 +76,8 @@ internal static class Program
 
         displayManager.ChangeResolution(DisplayResolution.HighDefinition);
 
-        var vertexShader = resourceManager.LoadResource<IShader>("Resources\\Shaders\\forward-geometry.vert");
-        var fragmentShader = resourceManager.LoadResource<IShader>("Resources\\Shaders\\forward-geometry.frag");
+        var vertexShader = LoadShader(renderDevice.Factory, PipelineTarget.Vertex, "Resources\\Shaders\\forward-geometry.vert");
+        var fragmentShader = LoadShader(renderDevice.Factory, PipelineTarget.Fragment, "Resources\\Shaders\\forward-geometry.frag");
         var shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, fragmentShader });
 
         renderDevice.Pipeline.SetShaderProgram(shaderProgram);
@@ -93,6 +93,8 @@ internal static class Program
         renderDevice.Pipeline.SetUniform(
             "u_transform",
             Matrix4x4.CreateTranslation(Vector3.Zero));
+
+        renderDevice.Pipeline.SetUniform("u_material.diffuseTexture", 0);
 
         MeshVertex[] vertices =
         {
@@ -124,6 +126,7 @@ internal static class Program
         };
 
         var mesh = new Mesh(renderDevice.Factory, vertices, indices);
+        var material = new Material();
 
         while (!window.IsExiting)
         {
@@ -137,11 +140,17 @@ internal static class Program
 
             renderDevice.Clear(Color.CornflowerBlue);
 
+            material.Bind(renderDevice.Pipeline);
             mesh.Bind(renderDevice.InputAssembler);
             mesh.Draw(renderDevice);
 
             renderContext.SwapBuffers();
             window.ProcessEvents();
         }
+    }
+
+    private static IShader LoadShader(IGPUResourceFactory factory, PipelineTarget target, string filePath)
+    {
+        return factory.CreateShader(target, File.ReadAllText(filePath));
     }
 }
