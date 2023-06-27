@@ -58,10 +58,10 @@ public sealed class ShaderResourceLoaderTests
     public void LoadResourceShouldInvokeFileSystemGetExtensionWhenFileExists()
     {
         // Act
-        this.loader.LoadResource("test.vert");
+        this.loader.LoadResource("test.vs");
 
         // Assert
-        this.fileSystem.Verify(x => x.GetExtension("test.vert"), Times.Once);
+        this.fileSystem.Verify(x => x.GetExtension("test.vs"), Times.Once);
     }
 
     [Test]
@@ -136,6 +136,8 @@ public sealed class ShaderResourceLoaderTests
 
         this.fileSystem.Setup(x => x.GetExtension("test.vert")).Returns(".vert");
         this.fileSystem.Setup(x => x.GetExtension("test.frag")).Returns(".frag");
+        this.fileSystem.Setup(x => x.GetExtension("test.vs")).Returns(".vs");
+        this.fileSystem.Setup(x => x.GetExtension("test.fs")).Returns(".fs");
         this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(true);
         this.fileSystem.Setup(x => x.OpenFile(It.IsAny<string>(), FileAccessMode.Read)).Returns(() =>
         {

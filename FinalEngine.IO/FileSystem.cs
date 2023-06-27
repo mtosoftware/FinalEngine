@@ -448,7 +448,7 @@ public class FileSystem : IFileSystem
     /// <exception cref="ArgumentException">
     /// The specified <paramref name="path"/> parameter cannot be null, empty or consist of only whitespace characters.
     /// </exception>
-    public string GetExtension(string path)
+    public string? GetExtension(string path)
     {
         if (string.IsNullOrWhiteSpace(path))
         {

@@ -91,7 +91,7 @@ public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
     /// <returns>
     /// The pipeline target that relates to the specified <paramref name="extension"/>.
     /// </returns>
-    private PipelineTarget GetPipelineTarget(string extension)
+    private PipelineTarget GetPipelineTarget(string? extension)
     {
         return extension switch
         {
