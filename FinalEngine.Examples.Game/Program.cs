@@ -179,6 +179,7 @@ internal static class Program
             window.ProcessEvents();
         }
 
+        drawer.Dispose();
         mesh.Dispose();
         shaderProgram.Dispose();
         fragmentShader.Dispose();
