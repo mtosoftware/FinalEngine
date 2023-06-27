@@ -7,10 +7,10 @@ namespace FinalEngine.Examples.Game;
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Numerics;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
+using FinalEngine.Extensions.Resources.Loaders.Shaders;
 using FinalEngine.Extensions.Resources.Loaders.Textures;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
@@ -84,12 +84,13 @@ internal static class Program
         var gameTime = new GameTime(watchInvoker, 120.0d);
 
         resourceManager.RegisterLoader(new SoundResourceLoader(fileSystem));
+        resourceManager.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
         resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
 
         displayManager.ChangeResolution(DisplayResolution.HighDefinition);
 
-        var vertexShader = LoadShader(renderDevice.Factory, PipelineTarget.Vertex, "Resources\\Shaders\\forward-geometry.vert");
-        var fragmentShader = LoadShader(renderDevice.Factory, PipelineTarget.Fragment, "Resources\\Shaders\\forward-geometry.frag");
+        var vertexShader = resourceManager.LoadResource<IShader>("Resources\\Shaders\\forward-geometry.vert");
+        var fragmentShader = resourceManager.LoadResource<IShader>("Resources\\Shaders\\forward-geometry.frag");
         var shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, fragmentShader });
 
         renderDevice.Pipeline.SetShaderProgram(shaderProgram);
@@ -140,6 +141,10 @@ internal static class Program
         var mesh = new Mesh(renderDevice.Factory, vertices, indices);
         var material = new Material();
 
+        var batcher = new SpriteBatcher(renderDevice.InputAssembler);
+        var binder = new TextureBinder(renderDevice.Pipeline);
+        var drawer = new SpriteDrawer(renderDevice, batcher, binder, window.ClientSize.Width, window.ClientSize.Height);
+
         while (!window.IsExiting)
         {
             if (!gameTime.CanProcessNextFrame())
@@ -151,6 +156,20 @@ internal static class Program
             mouse.Update();
 
             renderDevice.Clear(Color.CornflowerBlue);
+
+            drawer.Begin();
+
+            drawer.Draw(
+                material.DiffuseTexture,
+                Color.Red,
+                Vector2.Zero,
+                Vector2.Zero,
+                0,
+                new Vector2(1, 1));
+
+            drawer.End();
+
+            renderDevice.Pipeline.SetShaderProgram(shaderProgram);
 
             material.Bind(renderDevice.Pipeline);
             mesh.Bind(renderDevice.InputAssembler);
@@ -170,25 +189,5 @@ internal static class Program
         keyboard.Dispose();
         window.Dispose();
         nativeWindow.Dispose();
-    }
-
-    /// <summary>
-    /// Loads a shader from the specified <paramref name="filePath"/>.
-    /// </summary>
-    /// <param name="factory">
-    /// The GPU factory.
-    /// </param>
-    /// <param name="target">
-    /// The pipeline target for the shader.
-    /// </param>
-    /// <param name="filePath">
-    /// The file path.
-    /// </param>
-    /// <returns>
-    /// The newly created <see cref="IShader"/> loaded into memory.
-    /// </returns>
-    private static IShader LoadShader(IGPUResourceFactory factory, PipelineTarget target, string filePath)
-    {
-        return factory.CreateShader(target, File.ReadAllText(filePath));
     }
 }
