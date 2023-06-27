@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering.Textures;
+namespace FinalEngine.Tests.Extensions.Resources.Loaders.Textures;
 
 using System;
 using System.IO;

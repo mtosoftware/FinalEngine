@@ -11,6 +11,7 @@ using FinalEngine.Rendering;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
+using FinalEngine.Resources;
 using Moq;
 using NUnit.Framework;
 
@@ -43,6 +44,8 @@ public class SpriteDrawerTests
     private Mock<IRasterizer> rasterizer;
 
     private Mock<IRenderDevice> renderDevice;
+
+    private Mock<ResourceLoaderBase<IShader>> resourceLoader;
 
     private Mock<IShaderProgram> shaderProgram;
 
@@ -113,13 +116,6 @@ public class SpriteDrawerTests
     }
 
     [Test]
-    public void ConstructorShouldInvokeCreateFragmentShaderWhenInvoked()
-    {
-        // Assert
-        this.factory.Verify(x => x.CreateShader(PipelineTarget.Fragment, It.IsAny<string>()), Times.Once);
-    }
-
-    [Test]
     public void ConstructorShouldInvokeCreateIndexBufferWhenInvoked()
     {
         // Assert
@@ -145,13 +141,6 @@ public class SpriteDrawerTests
     {
         // Assert
         this.factory.Verify(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes), Times.Once);
-    }
-
-    [Test]
-    public void ConstructorShouldInvokeCreateVertexShaderWhenInvoked()
-    {
-        // Assert
-        this.factory.Verify(x => x.CreateShader(PipelineTarget.Vertex, It.IsAny<string>()), Times.Once);
     }
 
     [Test]
@@ -329,6 +318,19 @@ public class SpriteDrawerTests
         Assert.Throws<ObjectDisposedException>(this.drawer.End);
     }
 
+    [OneTimeSetUp]
+    public void OneTimeSetup()
+    {
+        this.vertexShader = new Mock<IShader>();
+        this.fragmentShader = new Mock<IShader>();
+        this.resourceLoader = new Mock<ResourceLoaderBase<IShader>>();
+
+        this.resourceLoader.Setup(x => x.LoadResource("Resources\\Shaders\\sprite-geometry.vert")).Returns(this.vertexShader.Object);
+        this.resourceLoader.Setup(x => x.LoadResource("Resources\\Shaders\\sprite-geometry.frag")).Returns(this.fragmentShader.Object);
+
+        ResourceManager.Instance.RegisterLoader(this.resourceLoader.Object);
+    }
+
     [Test]
     public void ProjectionSetShouldSetProjectionWhenInvoked()
     {
@@ -364,15 +366,11 @@ public class SpriteDrawerTests
         this.renderDevice.SetupGet(x => x.Rasterizer).Returns(this.rasterizer.Object);
         this.renderDevice.Setup(x => x.OutputMerger).Returns(this.outputMerger.Object);
 
-        this.vertexShader = new Mock<IShader>();
-        this.fragmentShader = new Mock<IShader>();
         this.shaderProgram = new Mock<IShaderProgram>();
         this.inputLayout = new Mock<IInputLayout>();
         this.vertexBuffer = new Mock<IVertexBuffer>();
         this.indexBuffer = new Mock<IIndexBuffer>();
 
-        this.factory.Setup(x => x.CreateShader(PipelineTarget.Vertex, It.IsAny<string>())).Returns(this.vertexShader.Object);
-        this.factory.Setup(x => x.CreateShader(PipelineTarget.Fragment, It.IsAny<string>())).Returns(this.fragmentShader.Object);
         this.factory.Setup(x => x.CreateShaderProgram(new[] { this.vertexShader.Object, this.fragmentShader.Object })).Returns(this.shaderProgram.Object);
         this.factory.Setup(x => x.CreateInputLayout(SpriteVertex.InputElements)).Returns(this.inputLayout.Object);
         this.factory.Setup(x => x.CreateVertexBuffer(BufferUsageType.Dynamic, It.IsAny<SpriteVertex[]>(), this.batcher.Object.MaxVertexCount * SpriteVertex.SizeInBytes, SpriteVertex.SizeInBytes)).Returns(this.vertexBuffer.Object);

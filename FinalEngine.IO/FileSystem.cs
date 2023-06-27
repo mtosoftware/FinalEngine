@@ -30,6 +30,11 @@ public class FileSystem : IFileSystem
     private readonly IFileInvoker file;
 
     /// <summary>
+    /// The path invoker.
+    /// </summary>
+    private readonly IPathInvoker path;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="FileSystem"/> class.
     /// </summary>
     /// <param name="file">
@@ -38,13 +43,17 @@ public class FileSystem : IFileSystem
     /// <param name="directory">
     /// Specifies an <see cref="IDirectoryInvoker"/> that represents the invoker used to handle directory operations.
     /// </param>
+    /// <param name="path">
+    /// Specifies an <see cref="IPathInvoker"/> that represents the invoker used to handle path operations.
+    /// </param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="file"/> or <paramref name="directory"/> parameter cannot be null.
     /// </exception>
-    public FileSystem(IFileInvoker file, IDirectoryInvoker directory)
+    public FileSystem(IFileInvoker file, IDirectoryInvoker directory, IPathInvoker path)
     {
         this.file = file ?? throw new ArgumentNullException(nameof(file));
         this.directory = directory ?? throw new ArgumentNullException(nameof(directory));
+        this.path = path ?? throw new ArgumentNullException(nameof(path));
     }
 
     /// <inheritdoc/>
@@ -425,6 +434,28 @@ public class FileSystem : IFileSystem
         }
 
         return this.file.Exists(path);
+    }
+
+    /// <summary>
+    /// Gets the extension from the file at the specified <paramref name="path" /> (including the period).
+    /// </summary>
+    /// <param name="path">
+    /// The path of the file.
+    /// </param>
+    /// <returns>
+    /// The extension of the file at the specified <paramref name="path" /> (including the period).
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    /// The specified <paramref name="path"/> parameter cannot be null, empty or consist of only whitespace characters.
+    /// </exception>
+    public string? GetExtension(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            throw new ArgumentException($"The specified {nameof(path)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(path));
+        }
+
+        return this.path.GetExtension(path);
     }
 
     /// <inheritdoc/>

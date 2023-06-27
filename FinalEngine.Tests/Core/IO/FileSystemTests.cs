@@ -21,13 +21,15 @@ public class FileSystemTests
 
     private FileSystem fileSystem;
 
+    private Mock<IPathInvoker> path;
+
     [Test]
     public void ConstructorShouldNotThrowExceptionWhenParametersArentNull()
     {
         // Arrange, act and assert
         Assert.DoesNotThrow(() =>
         {
-            new FileSystem(new Mock<IFileInvoker>().Object, new Mock<IDirectoryInvoker>().Object);
+            new FileSystem(new Mock<IFileInvoker>().Object, new Mock<IDirectoryInvoker>().Object, this.path.Object);
         });
     }
 
@@ -37,7 +39,7 @@ public class FileSystemTests
         // Arrange, act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new FileSystem(new Mock<IFileInvoker>().Object, null);
+            new FileSystem(new Mock<IFileInvoker>().Object, null, this.path.Object);
         });
     }
 
@@ -47,7 +49,17 @@ public class FileSystemTests
         // Arrange, act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new FileSystem(null, new Mock<IDirectoryInvoker>().Object);
+            new FileSystem(null, new Mock<IDirectoryInvoker>().Object, this.path.Object);
+        });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenPathIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new FileSystem(this.file.Object, this.directory.Object, null);
         });
     }
 
@@ -337,6 +349,36 @@ public class FileSystemTests
     }
 
     [Test]
+    public void GetExtensionShouldThrowArgumentExceptionWhenPathIsEmpty()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.fileSystem.GetExtension(string.Empty);
+        });
+    }
+
+    [Test]
+    public void GetExtensionShouldThrowArgumentExceptionWhenPathIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.fileSystem.GetExtension(null);
+        });
+    }
+
+    [Test]
+    public void GetExtensionShouldThrowArgumentExceptionWhenPathIsWhiteSpace()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.fileSystem.GetExtension("\r\t\n");
+        });
+    }
+
+    [Test]
     public void OpenFileShouldInvokeFileOpenReadAccessWhenModeIsNotFound()
     {
         // Arrange
@@ -430,6 +472,7 @@ public class FileSystemTests
         // Arrange
         this.file = new Mock<IFileInvoker>();
         this.directory = new Mock<IDirectoryInvoker>();
-        this.fileSystem = new FileSystem(this.file.Object, this.directory.Object);
+        this.path = new Mock<IPathInvoker>();
+        this.fileSystem = new FileSystem(this.file.Object, this.directory.Object, this.path.Object);
     }
 }
