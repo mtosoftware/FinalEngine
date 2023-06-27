@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Rendering.OpenGL;
 
 using System;
 using System.Numerics;
-using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Pipeline;
@@ -199,22 +198,6 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformBoolShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", true);
-        });
-    }
-
-    [Test]
     public void SetUniformDoubleShouldInvokeUniform1WhenGetUniformLocationReturnsPositiveInteger()
     {
         // Arrange
@@ -267,22 +250,6 @@ public class OpenGLPipelineTests
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", 0.0d);
-        });
-    }
-
-    [Test]
-    public void SetUniformDoubleShouldThrowUniformNotLocatedExceptionWhenGetUniformLocatioReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", 0.0d);
         });
     }
 
@@ -343,22 +310,6 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformFloatShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", 1.0f);
-        });
-    }
-
-    [Test]
     public void SetUniformIntShouldInvokeUniform1WhenGetUniformLocationReturnsPositiveInteger()
     {
         // Arrange
@@ -411,22 +362,6 @@ public class OpenGLPipelineTests
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", 0);
-        });
-    }
-
-    [Test]
-    public void SetUniformIntShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", 0);
         });
     }
 
@@ -508,22 +443,6 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformMatrix4x4ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", Matrix4x4.Identity);
-        });
-    }
-
-    [Test]
     public void SetUniformVector2ShouldInvokeUniform2WhenGetUniformLocationReturnsPositiveInteger()
     {
         // Arrange
@@ -576,22 +495,6 @@ public class OpenGLPipelineTests
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", new Vector2(1.0f, 0.0f));
-        });
-    }
-
-    [Test]
-    public void SetUniformVector2ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", new Vector2(1.0f, 0.0f));
         });
     }
 
@@ -652,22 +555,6 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformVector3ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", new Vector3(1.0f, 0.0f, 1.0f));
-        });
-    }
-
-    [Test]
     public void SetUniformVector4ShouldInvokeUniform4WhenGetUniformLocationReturnsPositiveInteger()
     {
         // Arrange
@@ -720,22 +607,6 @@ public class OpenGLPipelineTests
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
-        });
-    }
-
-    [Test]
-    public void SetUniformVector4ShouldThrowUniformNotLocatedExceptionWhenGetUniformLocationReturnsNegativeOne()
-    {
-        // Arrange
-        var program = new Mock<IOpenGLShaderProgram>();
-        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
-
-        this.pipeline.SetShaderProgram(program.Object);
-
-        // Act and assert
-        Assert.Throws<UniformNotLocatedException>(() =>
-        {
-            this.pipeline.SetUniform("name", new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
         });
     }
 

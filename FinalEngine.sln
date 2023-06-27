@@ -60,10 +60,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Audio", "FinalE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Audio.OpenAL", "FinalEngine.Audio.OpenAL\FinalEngine.Audio.OpenAL.csproj", "{D67794A8-89AC-46E0-B303-94110BB382F8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{63F84BC1-35E6-4ACB-9645-2255E8AFBC02}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Examples.HelloSponza", "FinalEngine.Examples.HelloSponza\FinalEngine.Examples.HelloSponza.csproj", "{E6C1C8B9-3C96-45FD-A87E-C96EB6F4333E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -138,10 +134,6 @@ Global
 		{D67794A8-89AC-46E0-B303-94110BB382F8}.Debug|x64.Build.0 = Debug|x64
 		{D67794A8-89AC-46E0-B303-94110BB382F8}.Release|x64.ActiveCfg = Release|x64
 		{D67794A8-89AC-46E0-B303-94110BB382F8}.Release|x64.Build.0 = Release|x64
-		{E6C1C8B9-3C96-45FD-A87E-C96EB6F4333E}.Debug|x64.ActiveCfg = Debug|x64
-		{E6C1C8B9-3C96-45FD-A87E-C96EB6F4333E}.Debug|x64.Build.0 = Debug|x64
-		{E6C1C8B9-3C96-45FD-A87E-C96EB6F4333E}.Release|x64.ActiveCfg = Release|Any CPU
-		{E6C1C8B9-3C96-45FD-A87E-C96EB6F4333E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,7 +156,6 @@ Global
 		{C80D0CB9-DB56-4039-8DB6-EABC624704DC} = {B08DA1A9-E4B4-43A7-B464-D17FCDE63C35}
 		{E153C9B7-F8A5-43B6-B112-84739E7E9224} = {B4084D99-8DC5-4E1C-B5BF-9C7351CE71B8}
 		{D67794A8-89AC-46E0-B303-94110BB382F8} = {B4084D99-8DC5-4E1C-B5BF-9C7351CE71B8}
-		{E6C1C8B9-3C96-45FD-A87E-C96EB6F4333E} = {63F84BC1-35E6-4ACB-9645-2255E8AFBC02}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}

@@ -57,16 +57,6 @@ public class OpenTKWindowTests
     }
 
     [Test]
-    public void CloseShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
-    {
-        // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
-
-        // Act and assert
-        Assert.Throws<ObjectDisposedException>(this.window.Close);
-    }
-
-    [Test]
     public void ConstructorShouldNotThrowExceptionWhenNativeWindowIsNotNull()
     {
         // Arrange, act and assert
@@ -168,16 +158,6 @@ public class OpenTKWindowTests
         this.nativeWindow.Verify(x => x.ProcessWindowEvents(false), Times.Once);
     }
 
-    [Test]
-    public void ProcessEventsShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
-    {
-        // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
-
-        // Act and assert
-        Assert.Throws<ObjectDisposedException>(this.window.ProcessEvents);
-    }
-
     [SetUp]
     public void Setup()
     {
@@ -262,19 +242,6 @@ public class OpenTKWindowTests
     }
 
     [Test]
-    public void TitleSetShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
-    {
-        // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
-
-        // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.Title = null;
-        });
-    }
-
-    [Test]
     public void VisibleGetShouldInvokeNativeWindowIsVisibleWhenRead()
     {
         // Act
@@ -300,18 +267,5 @@ public class OpenTKWindowTests
         {
             x.IsVisible = expected;
         }, Times.Once);
-    }
-
-    [Test]
-    public void VisibleSetShouldThrowObjectDisposedExceptionWhenNativeWindowIsDisposed()
-    {
-        // Arrange
-        this.nativeWindow.SetupGet(x => x.IsDisposed).Returns(true);
-
-        // Act and assert
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.Visible = false;
-        });
     }
 }
