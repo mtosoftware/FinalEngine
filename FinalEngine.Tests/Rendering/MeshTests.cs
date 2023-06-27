@@ -12,6 +12,7 @@ using FinalEngine.Rendering.Buffers;
 using Moq;
 using NUnit.Framework;
 
+[TestFixture]
 public sealed class MeshTests
 {
     private Mock<IGPUResourceFactory> factory;
