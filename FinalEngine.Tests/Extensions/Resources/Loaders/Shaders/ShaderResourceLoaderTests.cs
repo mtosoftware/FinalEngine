@@ -45,10 +45,40 @@ public sealed class ShaderResourceLoaderTests
     }
 
     [Test]
-    public void LoadResourceShouldInvokeCreateShaderWhenFileIsOpenedAndRead()
+    public void LoadResourceShouldInvokeCreateShaderFragmentWhenFileIsOpenedAndRead()
+    {
+        // Act
+        this.loader.LoadResource("test.frag");
+
+        // Assert
+        this.factory.Verify(x => x.CreateShader(PipelineTarget.Fragment, "test"), Times.Once);
+    }
+
+    [Test]
+    public void LoadResourceShouldInvokeCreateShaderFSWhenFileIsOpenedAndRead()
+    {
+        // Act
+        this.loader.LoadResource("test.fs");
+
+        // Assert
+        this.factory.Verify(x => x.CreateShader(PipelineTarget.Fragment, "test"), Times.Once);
+    }
+
+    [Test]
+    public void LoadResourceShouldInvokeCreateShaderVertexWhenFileIsOpenedAndRead()
     {
         // Act
         this.loader.LoadResource("test.vert");
+
+        // Assert
+        this.factory.Verify(x => x.CreateShader(PipelineTarget.Vertex, "test"), Times.Once);
+    }
+
+    [Test]
+    public void LoadResourceShouldInvokeCreateShaderVSWhenFileIsOpenedAndRead()
+    {
+        // Act
+        this.loader.LoadResource("test.vs");
 
         // Assert
         this.factory.Verify(x => x.CreateShader(PipelineTarget.Vertex, "test"), Times.Once);

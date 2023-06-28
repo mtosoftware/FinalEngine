@@ -110,6 +110,16 @@ public class OpenGLRenderContextTests
     }
 
     [Test]
+    public void SwapBuffersShouldThrowObjectDisposedExceptionWhenDisposed()
+    {
+        // Arrange
+        this.renderContext.Dispose();
+
+        // Act and assert
+        Assert.Throws<ObjectDisposedException>(this.renderContext.SwapBuffers);
+    }
+
+    [Test]
     public void SwapBuffersShouldThrowRenderContextExceptionWhenContextIsNotCurrent()
     {
         // Arrange

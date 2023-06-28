@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering.OpenGL;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using OpenTK;
@@ -43,6 +44,7 @@ public class OpenGLRenderContext : IRenderContext
     /// <param name="context">
     ///   Specifies an <see cref="IGraphicsContext"/> that represents the underlying rendering context.
     /// </param>
+    [ExcludeFromCodeCoverage]
     public OpenGLRenderContext(IBindingsContext bindings, IGraphicsContext context)
         : this(new OpenGLInvoker(), bindings, context)
     {

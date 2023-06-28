@@ -5,6 +5,7 @@
 namespace FinalEngine.IO;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FinalEngine.IO.Invocation;
 
@@ -37,6 +38,7 @@ public class FileSystem : IFileSystem
     /// <summary>
     /// Initializes a new instance of the <see cref="FileSystem"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public FileSystem()
         : this(new FileInvoker(), new DirectoryInvoker(), new PathInvoker())
     {

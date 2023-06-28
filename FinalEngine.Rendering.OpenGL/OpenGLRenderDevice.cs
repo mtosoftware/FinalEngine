@@ -6,6 +6,7 @@ namespace FinalEngine.Rendering.OpenGL;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.OpenGL.Invocation;
@@ -43,6 +44,7 @@ public class OpenGLRenderDevice : IRenderDevice
     /// <summary>
     /// Initializes a new instance of the <see cref="OpenGLRenderDevice"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public OpenGLRenderDevice()
         : this(new OpenGLInvoker())
     {

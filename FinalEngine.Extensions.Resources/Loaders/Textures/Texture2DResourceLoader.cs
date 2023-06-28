@@ -6,6 +6,7 @@ namespace FinalEngine.Extensions.Resources.Loaders.Textures;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.IO;
@@ -45,6 +46,7 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
     /// <param name="factory">
     ///   The GPU resource factory used to create a texture once it's been loaded.
     /// </param>
+    [ExcludeFromCodeCoverage]
     public Texture2DResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory)
         : this(fileSystem, factory, new ImageInvoker())
     {

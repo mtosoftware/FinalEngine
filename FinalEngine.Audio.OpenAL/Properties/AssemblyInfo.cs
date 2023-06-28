@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTitle("FinalEngine.Audio.OpenAL")]
 [assembly: AssemblyDescription("An OpenAL audio library used to handle audio for Final Engine games.")]

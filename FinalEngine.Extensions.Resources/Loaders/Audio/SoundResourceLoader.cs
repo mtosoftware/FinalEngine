@@ -5,9 +5,11 @@
 namespace FinalEngine.Extensions.Resources.Loaders.Audio;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FinalEngine.Audio;
 using FinalEngine.Audio.OpenAL;
+using FinalEngine.Extensions.Resources.Factories;
 using FinalEngine.IO;
 using FinalEngine.Resources;
 
@@ -17,6 +19,11 @@ using FinalEngine.Resources;
 public class SoundResourceLoader : ResourceLoaderBase<ISound>
 {
     /// <summary>
+    /// The CASL sound factory, used to load a CASL sound resource.
+    /// </summary>
+    private readonly ICASLSoundFactory factory;
+
+    /// <summary>
     /// The file system, used to load sound resources.
     /// </summary>
     private readonly IFileSystem fileSystem;
@@ -24,15 +31,29 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
     /// <summary>
     /// Initializes a new instance of the <see cref="SoundResourceLoader"/> class.
     /// </summary>
+    /// <param name="fileSystem">The file system.</param>
+    [ExcludeFromCodeCoverage]
+    public SoundResourceLoader(IFileSystem fileSystem)
+        : this(fileSystem, new CASLSoundFactory())
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SoundResourceLoader"/> class.
+    /// </summary>
     /// <param name="fileSystem">
     /// The file system, used to load sound resources.
+    /// </param>
+    /// <param name="factory">
+    /// The factory used to create an OpenAL sound.
     /// </param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="fileSystem"/> parameter cannot be null.
     /// </exception>
-    public SoundResourceLoader(IFileSystem fileSystem)
+    public SoundResourceLoader(IFileSystem fileSystem, ICASLSoundFactory factory)
     {
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+        this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
 
     /// <summary>
@@ -60,6 +81,6 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
             throw new FileNotFoundException($"The specified {nameof(filePath)} parameter cannot be located.", filePath);
         }
 
-        return new OpenALSound(filePath);
+        return new OpenALSound(this.factory.CreateSound(filePath));
     }
 }
