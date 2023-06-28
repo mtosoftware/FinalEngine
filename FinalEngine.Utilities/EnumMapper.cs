@@ -108,11 +108,6 @@ public class EnumMapper : IEnumMapper
             throw new ArgumentNullException(nameof(enumeration));
         }
 
-        if (map == null)
-        {
-            throw new ArgumentNullException(nameof(map));
-        }
-
         try
         {
             return (TResult)map[enumeration];
