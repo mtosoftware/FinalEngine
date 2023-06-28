@@ -407,7 +407,6 @@ public class OpenGLPipeline : IPipeline
 
             if (location == -1)
             {
-                //// TODO: Go back to throwing a UniformNotLocatedException once you sort out the issue in RenderingEngine.
                 return false;
             }
 
