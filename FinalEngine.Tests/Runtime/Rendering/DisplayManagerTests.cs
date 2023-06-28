@@ -148,7 +148,7 @@ public class DisplayManagerTests
         int expected = this.rasterizer.Object.GetViewport().Height;
 
         // Act
-        var actual = this.displayManager.DisplayHeight;
+        int actual = this.displayManager.DisplayHeight;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
