@@ -4,12 +4,10 @@
 
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("FinalEngine.Resources")]
-[assembly: AssemblyDescription("A resource management library for Final Engine games.")]
-[assembly: Guid("CB2BE28E-55C1-425E-9B14-31C0BE5D5813")]
-[assembly: InternalsVisibleTo("FinalEngine.Tests")]
+[assembly: AssemblyTitle("FinalEngine.Audio.OpenAL")]
+[assembly: AssemblyDescription("An OpenAL audio library used to handle audio for Final Engine games.")]
+[assembly: Guid("13D6A388-43BA-433F-A1CC-6D2C791E8D89")]
