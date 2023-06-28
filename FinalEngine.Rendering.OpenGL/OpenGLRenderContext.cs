@@ -37,6 +37,20 @@ public class OpenGLRenderContext : IRenderContext
     /// <summary>
     ///   Initializes a new instance of the <see cref="OpenGLRenderContext"/> class.
     /// </summary>
+    /// <param name="bindings">
+    ///   Specifies an <see cref="IBindingsContext"/> that represents the bindings context used to load the OpenGL bindings.
+    /// </param>
+    /// <param name="context">
+    ///   Specifies an <see cref="IGraphicsContext"/> that represents the underlying rendering context.
+    /// </param>
+    public OpenGLRenderContext(IBindingsContext bindings, IGraphicsContext context)
+        : this(new OpenGLInvoker(), bindings, context)
+    {
+    }
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="OpenGLRenderContext"/> class.
+    /// </summary>
     /// <param name="invoker">
     ///   Specifies an <see cref="IOpenGLInvoker"/> that represents the invoker used to invoke OpenGL calls.
     /// </param>

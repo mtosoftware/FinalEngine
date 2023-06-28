@@ -5,27 +5,22 @@
 namespace FinalEngine.Examples.Game;
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
-using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
 using FinalEngine.Extensions.Resources.Loaders.Shaders;
 using FinalEngine.Extensions.Resources.Loaders.Textures;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.IO;
-using FinalEngine.IO.Invocation;
 using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
-using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
-using FinalEngine.Runtime.Invocation;
 using FinalEngine.Runtime.Rendering;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -60,10 +55,7 @@ internal static class Program
         var nativeWindow = new NativeWindowInvoker(settings);
         var window = new OpenTKWindow(nativeWindow);
 
-        var file = new FileInvoker();
-        var directory = new DirectoryInvoker();
-        var path = new PathInvoker();
-        var fileSystem = new FileSystem(file, directory, path);
+        var fileSystem = new FileSystem();
 
         var keyboardDevice = new OpenTKKeyboardDevice(nativeWindow);
         var keyboard = new Keyboard(keyboardDevice);
@@ -71,22 +63,18 @@ internal static class Program
         var mouseDevice = new OpenTKMouseDevice(nativeWindow);
         var mouse = new Mouse(mouseDevice);
 
-        var opengl = new OpenGLInvoker();
         var bindings = new GLFWBindingsContext();
-
-        var renderContext = new OpenGLRenderContext(opengl, bindings, nativeWindow.Context);
-        var renderDevice = new OpenGLRenderDevice(opengl);
+        var renderContext = new OpenGLRenderContext(bindings, nativeWindow.Context);
+        var renderDevice = new OpenGLRenderDevice();
 
         var displayManager = new DisplayManager(renderDevice.Rasterizer, window);
         var resourceManager = ResourceManager.Instance;
 
-        var watch = new Stopwatch();
-        var watchInvoker = new StopwatchInvoker(watch);
-        var gameTime = new GameTime(watchInvoker, 120.0d);
+        var gameTime = new GameTime(120.0d);
 
         resourceManager.RegisterLoader(new SoundResourceLoader(fileSystem));
         resourceManager.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
-        resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
+        resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
 
         displayManager.ChangeResolution(DisplayResolution.HighDefinition);
 

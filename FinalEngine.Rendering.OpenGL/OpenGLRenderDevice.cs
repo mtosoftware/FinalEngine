@@ -41,6 +41,14 @@ public class OpenGLRenderDevice : IRenderDevice
     private readonly IEnumMapper mapper;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="OpenGLRenderDevice"/> class.
+    /// </summary>
+    public OpenGLRenderDevice()
+        : this(new OpenGLInvoker())
+    {
+    }
+
+    /// <summary>
     ///   Initializes a new instance of the <see cref="OpenGLRenderDevice"/> class.
     /// </summary>
     /// <param name="invoker">
