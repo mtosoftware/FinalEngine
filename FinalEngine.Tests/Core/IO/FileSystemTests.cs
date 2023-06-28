@@ -349,6 +349,19 @@ public class FileSystemTests
     }
 
     [Test]
+    public void GetExtensionShouldInvokePathGetExtensionWhenStringIsExtension()
+    {
+        // Arrange
+        string path = "path.txt";
+
+        // Act
+        _ = this.fileSystem.GetExtension(path);
+
+        // Assert
+        this.path.Verify(x => x.GetExtension("path.txt"), Times.Once);
+    }
+
+    [Test]
     public void GetExtensionShouldThrowArgumentExceptionWhenPathIsEmpty()
     {
         // Act and assert
