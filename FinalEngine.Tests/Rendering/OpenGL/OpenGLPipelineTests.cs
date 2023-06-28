@@ -172,7 +172,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
@@ -243,7 +243,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
@@ -314,7 +314,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
@@ -359,7 +359,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
@@ -430,7 +430,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
@@ -548,7 +548,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
@@ -619,7 +619,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
@@ -690,7 +690,7 @@ public class OpenGLPipelineTests
     {
         // Arrange
         var program = new Mock<IOpenGLShaderProgram>();
-        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        program.Setup(x => x.GetUniformLocation(It.IsAny<string>())).Returns(-1);
         this.pipeline.SetShaderProgram(program.Object);
 
         // Act
