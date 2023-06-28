@@ -5,7 +5,9 @@
 namespace FinalEngine.Audio.OpenAL;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using CASLSound = CASL.Sound;
+using ICASLSound = CASL.ISound;
 
 /// <summary>
 /// Provides an OpenAL implementation of an <see cref="ISound"/>.
@@ -16,17 +18,29 @@ public class OpenALSound : ISound
     /// <summary>
     /// The sound instance for this <see cref="OpenALSound"/>.
     /// </summary>
-    private CASLSound? sound;
+    private ICASLSound? sound;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OpenALSound"/> class.
     /// </summary>
     /// <param name="filePath">
-    /// The file path of the audio source.
+    /// The file path of the sound to use.
     /// </param>
+    [ExcludeFromCodeCoverage]
     public OpenALSound(string filePath)
+        : this(new CASLSound(filePath))
     {
-        this.sound = new CASLSound(filePath);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OpenALSound"/> class.
+    /// </summary>
+    /// <param name="sound">
+    /// The underlying sound instance to use.
+    /// </param>
+    public OpenALSound(ICASLSound sound)
+    {
+        this.sound = sound ?? throw new ArgumentNullException(nameof(sound));
     }
 
     /// <summary>
