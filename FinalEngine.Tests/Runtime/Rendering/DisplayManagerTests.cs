@@ -131,10 +131,64 @@ public class DisplayManagerTests
         });
     }
 
+    [Test]
+    public void DisplayHeightShouldInvokeRasterizerGetViewportWhenInvoked()
+    {
+        // Act
+        _ = this.displayManager.DisplayHeight;
+
+        // Assert
+        this.rasterizer.Verify(x => x.GetViewport(), Times.Once);
+    }
+
+    [Test]
+    public void DisplayHeightShouldReturnRasterizerGetViewportHeightWhenInvoked()
+    {
+        // Arrange
+        int expected = this.rasterizer.Object.GetViewport().Height;
+
+        // Act
+        var actual = this.displayManager.DisplayHeight;
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void DisplayWidthShouldInvokeRasterizerGetViewportWhenInvoked()
+    {
+        // Act
+        _ = this.displayManager.DisplayWidth;
+
+        // Assert
+        this.rasterizer.Verify(x => x.GetViewport(), Times.Once);
+    }
+
+    [Test]
+    public void DisplayWidthShouldReturnRasterizerGetViewportWidthWhenInvoked()
+    {
+        // Arrange
+        int expected = this.rasterizer.Object.GetViewport().Width;
+
+        // Act
+        int actual = this.displayManager.DisplayWidth;
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
     [SetUp]
     public void Setup()
     {
         this.rasterizer = new Mock<IRasterizer>();
+
+        this.rasterizer.Setup(x => x.GetViewport()).Returns(new Rectangle()
+        {
+            X = 0,
+            Y = 0,
+            Width = 1280,
+            Height = 720,
+        });
 
         this.window = new Mock<IWindow>();
         this.window.SetupAllProperties();
