@@ -5,7 +5,6 @@
 namespace FinalEngine.Runtime;
 
 using System;
-using System.Diagnostics;
 using FinalEngine.Runtime.Invocation;
 
 /// <summary>
@@ -41,7 +40,7 @@ public class GameTime : IGameTime
     /// The frame cap.
     /// </param>
     public GameTime(double frameCap)
-        : this(new StopwatchInvoker(new Stopwatch()), frameCap)
+        : this(new StopwatchInvoker(), frameCap)
     {
     }
 

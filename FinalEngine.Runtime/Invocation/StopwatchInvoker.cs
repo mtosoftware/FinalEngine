@@ -21,6 +21,14 @@ public class StopwatchInvoker : IStopwatchInvoker
     private readonly Stopwatch watch;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="StopwatchInvoker"/> class.
+    /// </summary>
+    public StopwatchInvoker()
+        : this(new Stopwatch())
+    {
+    }
+
+    /// <summary>
     ///   Initializes a new instance of the <see cref="StopwatchInvoker"/> class.
     /// </summary>
     /// <param name="watch">

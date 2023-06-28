@@ -37,6 +37,14 @@ public class FileSystem : IFileSystem
     /// <summary>
     /// Initializes a new instance of the <see cref="FileSystem"/> class.
     /// </summary>
+    public FileSystem()
+        : this(new FileInvoker(), new DirectoryInvoker(), new PathInvoker())
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FileSystem"/> class.
+    /// </summary>
     /// <param name="file">
     /// Specifies an <see cref="IFileInvoker"/> that represents the invoker used to handle file operations.
     /// </param>
