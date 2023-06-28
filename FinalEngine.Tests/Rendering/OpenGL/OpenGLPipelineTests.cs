@@ -168,6 +168,21 @@ public class OpenGLPipelineTests
     }
 
     [Test]
+    public void SetUniformBoolShouldNotInvokeUniform1WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", false);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+    }
+
+    [Test]
     public void SetUniformBoolShouldThrowArgumentExceptionWhenNameIsEmpty()
     {
         // Act and assert
@@ -221,6 +236,21 @@ public class OpenGLPipelineTests
 
         // Assert
         this.invoker.Verify(x => x.Uniform1(0, 0.0d), Times.Never);
+    }
+
+    [Test]
+    public void SetUniformDoubleShouldNotInvokeUniform1WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", 0.0d);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
     }
 
     [Test]
@@ -280,6 +310,21 @@ public class OpenGLPipelineTests
     }
 
     [Test]
+    public void SetUniformFloatShouldNotInvokeUniform1WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", 0.0f);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+    }
+
+    [Test]
     public void SetUniformFloatShouldThrowArgumentExceptionWhenNameIsEmpty()
     {
         // Act and assert
@@ -307,6 +352,21 @@ public class OpenGLPipelineTests
         {
             this.pipeline.SetUniform("\t\r\n", 1.0f);
         });
+    }
+
+    [Test]
+    public void SetUniformIntegerShouldNotInvokeUniform1WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", 0);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
     }
 
     [Test]
@@ -363,6 +423,21 @@ public class OpenGLPipelineTests
         {
             this.pipeline.SetUniform("\t\r\n", 0);
         });
+    }
+
+    [Test]
+    public void SetUniformMatrix4ShouldNotInvokeUniformMatrix4WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", Matrix4x4.Identity);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
     }
 
     [Test]
@@ -469,6 +544,21 @@ public class OpenGLPipelineTests
     }
 
     [Test]
+    public void SetUniformVector2ShouldNotInvokeUniform2WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", Vector2.Zero);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+    }
+
+    [Test]
     public void SetUniformVector2ShouldThrowArgumentExceptionWhenNameIsEmpty()
     {
         // Act and assert
@@ -525,6 +615,21 @@ public class OpenGLPipelineTests
     }
 
     [Test]
+    public void SetUniformVector3ShouldNotInvokeUniform3WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", Vector3.Zero);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+    }
+
+    [Test]
     public void SetUniformVector3ShouldThrowArgumentExceptionWhenNameIsEmpty()
     {
         // Act and assert
@@ -578,6 +683,21 @@ public class OpenGLPipelineTests
 
         // Assert
         this.invoker.Verify(x => x.Uniform4(0, 1.0f, 0.0f, 1.0f, 1.0f), Times.Never);
+    }
+
+    [Test]
+    public void SetUniformVector4ShouldNotInvokeUniform4WhenUniformLocationNotFound()
+    {
+        // Arrange
+        var program = new Mock<IOpenGLShaderProgram>();
+        this.invoker.Setup(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>())).Returns(-1);
+        this.pipeline.SetShaderProgram(program.Object);
+
+        // Act
+        this.pipeline.SetUniform("name", Vector4.Zero);
+
+        // Assert
+        this.invoker.Verify(x => x.GetUniformLocation(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
     }
 
     [Test]
