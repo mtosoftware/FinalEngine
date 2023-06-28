@@ -8,7 +8,6 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
-using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
 using FinalEngine.Extensions.Resources.Loaders.Shaders;
 using FinalEngine.Extensions.Resources.Loaders.Textures;
@@ -86,7 +85,7 @@ internal static class Program
 
         resourceManager.RegisterLoader(new SoundResourceLoader(fileSystem));
         resourceManager.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
-        resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
+        resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
 
         displayManager.ChangeResolution(DisplayResolution.HighDefinition);
 

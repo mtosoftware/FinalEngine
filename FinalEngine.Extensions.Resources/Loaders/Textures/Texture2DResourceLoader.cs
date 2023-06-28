@@ -37,6 +37,20 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
     private readonly IImageInvoker invoker;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="Texture2DResourceLoader"/> class.
+    /// </summary>
+    /// <param name="fileSystem">
+    ///   The file system used to open textures to load.
+    /// </param>
+    /// <param name="factory">
+    ///   The GPU resource factory used to create a texture once it's been loaded.
+    /// </param>
+    public Texture2DResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory)
+        : this(fileSystem, factory, new ImageInvoker())
+    {
+    }
+
+    /// <summary>
     ///   Initializes a new instance of the <see cref="Texture2DResourceLoader"/> class.
     /// </summary>
     /// <param name="fileSystem">
