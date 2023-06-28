@@ -18,6 +18,9 @@ using FinalEngine.Resources;
 /// </summary>
 public class SoundResourceLoader : ResourceLoaderBase<ISound>
 {
+    /// <summary>
+    /// The CASL sound factory, used to load a CASL sound resource.
+    /// </summary>
     private readonly ICASLSoundFactory factory;
 
     /// <summary>
