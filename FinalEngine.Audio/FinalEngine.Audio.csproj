@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,6 +8,14 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
+    <Title>FinalEngine.Audio</Title>
+    <Version>2023.4.0-pre</Version>
+    <Company>Software Antics</Company>
+    <Description>A core audio library used to handle audio for Final Engine games.</Description>
+    <Copyright>© Software Antics 2023</Copyright>
+    <PackageProjectUrl>https://www.github.com/softwareantics/FinalEngine</PackageProjectUrl>
+    <RepositoryUrl>https://www.github.com/softwareantics/FinalEngine</RepositoryUrl>
+    <PackageTags>game engine,engine,game,final,audio,abstraction</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
