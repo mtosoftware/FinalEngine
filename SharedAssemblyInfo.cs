@@ -10,7 +10,7 @@ using System.Reflection;
 [assembly: AssemblyTrademark("Software Antics™")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("2023.3.0.0442")]
-[assembly: AssemblyFileVersion("2023.1.571.0442")]
+[assembly: AssemblyFileVersion("2023.3.0.0442")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
