@@ -1,0 +1,132 @@
+<mah:MetroWindow x:Class="FinalEngine.Editor.Desktop.Views.MainView"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 Width="1280"
+                 Height="720"
+                 GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
+                 NonActiveGlowBrush="{DynamicResource MahApps.Brushes.Accent4}"
+                 BorderThickness="2"
+                 WindowStartupLocation="CenterScreen"
+                 WindowState="Maximized"
+                 Title="{Binding Title}"
+                 TitleAlignment="Right">
+
+    <!-- KEY BINDINGS -->
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewSceneCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding OpenProjectCommand}" />
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenSceneCommand}" />
+        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+P" Command="{Binding SettingsCommand}" />
+        <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
+        <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}" />
+        <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}" />
+        <KeyBinding Gesture="Ctrl+X" Command="{Binding CutCommand}" />
+        <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyCommand}" />
+        <KeyBinding Gesture="Ctrl+P" Command="{Binding PasteCommand}" />
+        <KeyBinding Gesture="Ctrl+D" Command="{Binding DuplicateCommand}" />
+        <KeyBinding Gesture="Del" Command="{Binding DeleteCommand}" />
+        <KeyBinding Gesture="Ctrl+A" Command="{Binding SelectAllCommand}" />
+        <KeyBinding Gesture="Ctrl+Alt+P" Command="{Binding TogglePaneCommand}" CommandParameter="ProjectExplorer" />
+        <KeyBinding Gesture="Ctrl+Alt+S" Command="{Binding TogglePaneCommand}" CommandParameter="SceneHierarchy" />
+        <KeyBinding Gesture="Ctrl+Alt+I" Command="{Binding TogglePaneCommand}" CommandParameter="PropertiesInspector" />
+        <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding TogglePaneCommand}" CommandParameter="ConsoleOutput" />
+        <KeyBinding Gesture="Ctrl+Alt+E" Command="{Binding TogglePaneCommand}" CommandParameter="EntitySystems" />
+        <KeyBinding Gesture="Ctrl+Alt+V" Command="{Binding TogglePaneCommand}" CommandParameter="SceneView" />
+        <KeyBinding Gesture="Ctrl+Alt+G" Command="{Binding TogglePaneCommand}" CommandParameter="GameView" />
+        <KeyBinding Gesture="Ctrl+Alt+R" Command="{Binding ImportResourceCommand}" />
+        <KeyBinding Gesture="Ctrl+E" Command="{Binding CreateEntityCommand}" />
+        <KeyBinding Gesture="F1" Command="{Binding GithubPagesCommand}" />
+    </Window.InputBindings>
+
+    <!-- MAIN MENU -->
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands ShowLastSeparator="False">
+            <Menu IsMainMenu="True">
+
+                <!-- FILE -->
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New">
+                        <MenuItem Header="_Project..." InputGestureText="Ctrl+Shift+N" Command="{Binding NewProjectCommand}" />
+                        <MenuItem Header="_Scene..." InputGestureText="Ctrl+N" Command="{Binding NewSceneCommand}" />
+                    </MenuItem>
+                    <MenuItem Header="_Open">
+                        <MenuItem Header="_Project..." InputGestureText="Ctrl+Shift+O" Command="{Binding OpenProjectCommand}" />
+                        <MenuItem Header="_Scene..." InputGestureText="Ctrl+O" Command="{Binding OpenSceneCommand}" />
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}" />
+                    <Separator />
+                    <MenuItem Header="Se_ttings" InputGestureText="Ctrl+Shift+P" Command="{Binding SettingsCommand}" />
+                    <Separator />
+                    <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
+                </MenuItem>
+
+                <!-- EDIT -->
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="_Undo" InputGestureText="Ctrl+Z" Command="{Binding UndoCommand}" />
+                    <MenuItem Header="_Redo" InputGestureText="Ctrl+Y" Command="{Binding RedoCommand}" />
+                    <Separator />
+                    <MenuItem Header="Cu_t" InputGestureText="Ctrl+X" Command="{Binding CutCommand}" />
+                    <MenuItem Header="_Copy" InputGestureText="Ctrl+C" Command="{Binding CopyCommand}" />
+                    <MenuItem Header="_Paste" InputGestureText="Ctrl+V" Command="{Binding PasteCommand}" />
+                    <MenuItem Header="Duplicat_e" InputGestureText="Ctrl+D" Command="{Binding DuplicateCommand}" />
+                    <Separator />
+                    <MenuItem Header="_Delete" InputGestureText="Del" Command="{Binding DeleteCommand}" />
+                    <Separator />
+                    <MenuItem Header="Select _All" InputGestureText="Ctrl+A" Command="{Binding SelectAllCommand}" />
+                </MenuItem>
+
+                <!-- VIEW -->
+                <MenuItem Header="_View">
+                    <MenuItem Header="Tools">
+                        <MenuItem Header="_Project Explorer" InputGestureText="Ctrl+Alt+P" Command="{Binding TogglePaneCommand}" CommandParameter="ProjectExplorer" />
+                        <MenuItem Header="_Scene Hierarchy" InputGestureText="Ctrl+Alt+S" Command="{Binding TogglePaneCommand}" CommandParameter="SceneHierarchy" />
+                        <MenuItem Header="Properties _Inspector" InputGestureText="Ctrl+Alt+I" Command="{Binding TogglePaneCommand}" CommandParameter="PropertiesInspector" />
+                        <MenuItem Header="_Console Output" InputGestureText="Ctrl+Alt+C" Command="{Binding TogglePaneCommand}" CommandParameter="ConsoleOutput" />
+                        <MenuItem Header="_Entity Systems" InputGestureText="Ctrl+Alt+E" Command="{Binding TogglePaneCommand}" CommandParameter="EntitySystems" />
+                    </MenuItem>
+                    <MenuItem Header="Panes">
+                        <MenuItem Header="_Scene View" InputGestureText="Ctrl+Alt+V" Command="{Binding TogglePaneCommand}" CommandParameter="SceneView" />
+                        <MenuItem Header="_Game View" InputGestureText="Ctrl+Alt+G" Command="{Binding TogglePaneCommand}" CommandParameter="GameView" />
+                    </MenuItem>
+                    <MenuItem Header="Toolbars">
+                        <MenuItem Header="_Standard" Command="{Binding ToggleToolbarCommand}" CommandParameter="Standard" />
+                    </MenuItem>
+                </MenuItem>
+
+                <!-- ASSETS -->
+                <MenuItem Header="_Assets">
+                    <MenuItem Header="_Create">
+                        <MenuItem Header="_Shader..." />
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Import Resource..." InputGestureText="Ctrl+Alt+R" Command="{Binding ImportResourceCommand}" />
+                </MenuItem>
+
+                <!-- Scene -->
+                <MenuItem Header="_Scene">
+                    <MenuItem Header="_Create">
+                        <MenuItem Header="Create _Entity" InputGestureText="Ctrl+E" Command="{Binding CreateEntityCommand}" />
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Settings..." Command="{Binding SceneSettingsCommand}" />
+                </MenuItem>
+
+                <!-- HELP -->
+                <MenuItem Header="_Help">
+                    <MenuItem Header="Github Pages..." InputGestureText="F1" Command="{Binding GithubPagesCommand}" />
+                    <MenuItem Header="About Final Engine" Command="{Binding AboutFinalEngineCommand}" />
+                </MenuItem>
+            </Menu>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <Grid>
+    </Grid>
+</mah:MetroWindow>

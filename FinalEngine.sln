@@ -62,7 +62,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Audio.OpenAL", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{C3EB22AD-1D4F-4270-B5D6-ABAFCC0558ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Examples.Game", "FinalEngine.Examples.Game\FinalEngine.Examples.Game.csproj", "{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Examples.Game", "FinalEngine.Examples.Game\FinalEngine.Examples.Game.csproj", "{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editor", "Editor", "{B5B867C6-C98E-4B4A-B22F-79FD4D9AD1E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Common", "FinalEngine.Editor.Common\FinalEngine.Editor.Common.csproj", "{6D71EA7D-8CF9-4681-9A56-46176126E3B9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.ViewModels", "FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj", "{EB642E3A-0C78-4CBB-A7D3-4C85B79F34FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Desktop", "FinalEngine.Editor.Desktop\FinalEngine.Editor.Desktop.csproj", "{0A324F2A-836E-4144-B5A0-B6E620DA7E67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,6 +150,18 @@ Global
 		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Debug|x64.Build.0 = Debug|x64
 		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Release|x64.ActiveCfg = Release|Any CPU
 		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Release|x64.Build.0 = Release|Any CPU
+		{6D71EA7D-8CF9-4681-9A56-46176126E3B9}.Debug|x64.ActiveCfg = Debug|x64
+		{6D71EA7D-8CF9-4681-9A56-46176126E3B9}.Debug|x64.Build.0 = Debug|x64
+		{6D71EA7D-8CF9-4681-9A56-46176126E3B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{6D71EA7D-8CF9-4681-9A56-46176126E3B9}.Release|x64.Build.0 = Release|Any CPU
+		{EB642E3A-0C78-4CBB-A7D3-4C85B79F34FD}.Debug|x64.ActiveCfg = Debug|x64
+		{EB642E3A-0C78-4CBB-A7D3-4C85B79F34FD}.Debug|x64.Build.0 = Debug|x64
+		{EB642E3A-0C78-4CBB-A7D3-4C85B79F34FD}.Release|x64.ActiveCfg = Release|Any CPU
+		{EB642E3A-0C78-4CBB-A7D3-4C85B79F34FD}.Release|x64.Build.0 = Release|Any CPU
+		{0A324F2A-836E-4144-B5A0-B6E620DA7E67}.Debug|x64.ActiveCfg = Debug|x64
+		{0A324F2A-836E-4144-B5A0-B6E620DA7E67}.Debug|x64.Build.0 = Debug|x64
+		{0A324F2A-836E-4144-B5A0-B6E620DA7E67}.Release|x64.ActiveCfg = Release|Any CPU
+		{0A324F2A-836E-4144-B5A0-B6E620DA7E67}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +185,9 @@ Global
 		{E153C9B7-F8A5-43B6-B112-84739E7E9224} = {B4084D99-8DC5-4E1C-B5BF-9C7351CE71B8}
 		{D67794A8-89AC-46E0-B303-94110BB382F8} = {B4084D99-8DC5-4E1C-B5BF-9C7351CE71B8}
 		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112} = {C3EB22AD-1D4F-4270-B5D6-ABAFCC0558ED}
+		{6D71EA7D-8CF9-4681-9A56-46176126E3B9} = {B5B867C6-C98E-4B4A-B22F-79FD4D9AD1E4}
+		{EB642E3A-0C78-4CBB-A7D3-4C85B79F34FD} = {B5B867C6-C98E-4B4A-B22F-79FD4D9AD1E4}
+		{0A324F2A-836E-4144-B5A0-B6E620DA7E67} = {B5B867C6-C98E-4B4A-B22F-79FD4D9AD1E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}
