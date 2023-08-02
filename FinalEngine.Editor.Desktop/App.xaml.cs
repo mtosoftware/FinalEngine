@@ -5,12 +5,10 @@
 namespace FinalEngine.Editor.Desktop;
 
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.ViewModels;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -26,7 +24,6 @@ public partial class App : Application
     public App()
     {
         AppHost = Host.CreateDefaultBuilder()
-            .ConfigureAppConfiguration(ConfigureAppConfiguration)
             .ConfigureServices(ConfigureServices)
             .Build();
     }
@@ -72,21 +69,11 @@ public partial class App : Application
         base.OnStartup(e);
     }
 
-    private static void ConfigureAppConfiguration(HostBuilderContext context, IConfigurationBuilder builder)
-    {
-        string environment = IsDebugMode ? "Development" : "Production";
-
-        builder
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile($"appsettings.{environment}.json");
-    }
-
     private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
-        services.AddLogging(x =>
+        services.AddLogging(loggingBuilder =>
         {
-            x.AddConsole()
-            x.SetMinimumLevel(IsDebugMode ? LogLevel.Debug : LogLevel.Information);
+            loggingBuilder.AddConsole().SetMinimumLevel(IsDebugMode ? LogLevel.Debug : LogLevel.Information);
         });
 
         services.AddSingleton<IApplicationContext, ApplicationContext>();

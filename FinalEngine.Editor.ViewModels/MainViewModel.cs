@@ -14,9 +14,9 @@ using Microsoft.Extensions.Logging;
 
 public sealed class MainViewModel : ObservableObject, IMainViewModel
 {
-    private ICommand? exitCommand;
+    private readonly ILogger<MainViewModel> logger;
 
-    private ILogger<MainViewModel> logger;
+    private ICommand? exitCommand;
 
     private string? title;
 
