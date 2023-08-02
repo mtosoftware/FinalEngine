@@ -188,16 +188,6 @@ public class OpenTKWindowTests
     }
 
     [Test]
-    public void ProcessEventsShouldInvokeProcessInputEventsWhenInvoked()
-    {
-        // Act
-        this.window.ProcessEvents();
-
-        // Assert
-        this.nativeWindow.Verify(x => x.ProcessInputEvents(), Times.Once);
-    }
-
-    [Test]
     public void ProcessEventsShouldInvokeProcessWindowEventsWhenInvoked()
     {
         // Act

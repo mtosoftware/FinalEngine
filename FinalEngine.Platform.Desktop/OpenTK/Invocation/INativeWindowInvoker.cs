@@ -72,9 +72,6 @@ public interface INativeWindowInvoker : IDisposable
     /// <inheritdoc cref="NativeWindow.Close"/>
     void Close();
 
-    /// <inheritdoc cref="NativeWindow.ProcessInputEvents"/>
-    void ProcessInputEvents();
-
     /// <inheritdoc cref="NativeWindow.ProcessWindowEvents(bool)"/>
     void ProcessWindowEvents(bool waitForEvents);
 }

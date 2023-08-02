@@ -210,7 +210,6 @@ public class OpenTKWindow : IWindow, IEventsProcessor
         }
 
         this.nativeWindow.ProcessWindowEvents(false);
-        this.nativeWindow.ProcessInputEvents();
     }
 
     /// <summary>
