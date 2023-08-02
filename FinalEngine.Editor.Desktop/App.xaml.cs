@@ -7,7 +7,9 @@ namespace FinalEngine.Editor.Desktop;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Desktop.Views;
+using FinalEngine.Editor.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,6 +39,11 @@ public partial class App : Application
     /// </value>
     private static IHost? AppHost { get; set; }
 
+    private static bool IsDebugMode
+    {
+        get { return Debugger.IsAttached; }
+    }
+
     /// <summary>
     /// Exits the main application, disposing of any existing resources.
     /// </summary>
@@ -53,7 +60,13 @@ public partial class App : Application
     {
         await AppHost!.StartAsync().ConfigureAwait(false);
 
-        var view = new MainView();
+        var viewModel = AppHost.Services.GetRequiredService<IMainViewModel>();
+
+        var view = new MainView()
+        {
+            DataContext = viewModel,
+        };
+
         view.ShowDialog();
 
         base.OnStartup(e);
@@ -61,7 +74,7 @@ public partial class App : Application
 
     private static void ConfigureAppConfiguration(HostBuilderContext context, IConfigurationBuilder builder)
     {
-        string environment = Debugger.IsAttached ? "Development" : "Production";
+        string environment = IsDebugMode ? "Development" : "Production";
 
         builder
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -70,11 +83,13 @@ public partial class App : Application
 
     private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
-        var configuration = context.Configuration;
-
-        services.AddLogging(builder =>
+        services.AddLogging(x =>
         {
-            builder.AddConsole();
+            x.AddConsole()
+            x.SetMinimumLevel(IsDebugMode ? LogLevel.Debug : LogLevel.Information);
         });
+
+        services.AddSingleton<IApplicationContext, ApplicationContext>();
+        services.AddTransient<IMainViewModel, MainViewModel>();
     }
 }
