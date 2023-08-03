@@ -21,20 +21,6 @@ public class ResourceManagerTests
     private ResourceManager resourceManager;
 
     [Test]
-    public void DisposeShouldInvokeResourceDisposeWhenInvoked()
-    {
-        // Arrange
-        this.resourceManager.RegisterLoader(this.resourceLoader.Object);
-        this.resourceManager.LoadResource<IResource>(FilePath);
-
-        // Act
-        this.resourceManager.Dispose();
-
-        // Assert
-        this.resource.Verify(x => x.Dispose(), Times.Once);
-    }
-
-    [Test]
     public void InstanceShouldReturnResourceManagerWhenInvoked()
     {
         // Arrange
@@ -192,38 +178,6 @@ public class ResourceManagerTests
     public void TearDown()
     {
         this.resourceManager.Dispose();
-    }
-
-    [Test]
-    public void UnloadResourceShouldCallResourceDisposeWhenReferencedOnce()
-    {
-        // Arrange
-        this.resourceManager.RegisterLoader(this.resourceLoader.Object);
-        this.resourceManager.LoadResource<IResource>(FilePath);
-
-        // Act
-        this.resourceManager.UnloadResource(this.resource.Object);
-
-        // Assert
-        this.resource.Verify(x => x.Dispose(), Times.Once);
-    }
-
-    [Test]
-    public void UnloadResourceShouldNotCallResourceDisposeWhenReferencedMoreThanOnce()
-    {
-        // Arrange
-        this.resourceManager.RegisterLoader(this.resourceLoader.Object);
-
-        for (int i = 0; i < 2; i++)
-        {
-            this.resourceManager.LoadResource<IResource>(FilePath);
-        }
-
-        // Act
-        this.resourceManager.UnloadResource(this.resource.Object);
-
-        // Assert
-        this.resource.Verify(x => x.Dispose(), Times.Never);
     }
 
     [Test]

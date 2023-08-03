@@ -13,7 +13,7 @@ using ICASLSound = CASL.ISound;
 /// Provides an OpenAL implementation of an <see cref="ISound"/>.
 /// </summary>
 /// <seealso cref="ISound" />
-public class OpenALSound : ISound
+public class OpenALSound : ISound, IDisposable
 {
     /// <summary>
     /// The sound instance for this <see cref="OpenALSound"/>.
