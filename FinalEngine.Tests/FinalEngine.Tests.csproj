@@ -40,6 +40,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+		<ProjectReference Include="..\FinalEngine.Editor.Common\FinalEngine.Editor.Common.csproj" />
+		<ProjectReference Include="..\FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj" />
 		<ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
 		<ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
 		<ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
