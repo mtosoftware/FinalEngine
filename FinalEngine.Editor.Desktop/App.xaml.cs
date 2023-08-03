@@ -18,6 +18,9 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 public partial class App : Application
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="App"/> class.
+    /// </summary>
     public App()
     {
         AppHost = Host.CreateDefaultBuilder()
@@ -25,14 +28,32 @@ public partial class App : Application
             .Build();
     }
 
+    /// <summary>
+    /// Gets or sets the application host.
+    /// </summary>
+    /// <value>
+    /// The application host.
+    /// </value>
     private static IHost? AppHost { get; set; }
 
+    /// <summary>
+    /// Exits the main application, disposing of any existing resources.
+    /// </summary>
+    /// <param name="e">
+    /// The <see cref="ExitEventArgs"/> instance containing the event data.
+    /// </param>
     protected override async void OnExit(ExitEventArgs e)
     {
         await AppHost!.StopAsync().ConfigureAwait(false);
         base.OnExit(e);
     }
 
+    /// <summary>
+    /// Starts up the main application on the current platform.
+    /// </summary>
+    /// <param name="e">
+    ///   A <see cref="StartupEventArgs"/> that contains the event data.
+    /// </param>
     protected override async void OnStartup(StartupEventArgs e)
     {
         await AppHost!.StartAsync().ConfigureAwait(false);
@@ -49,6 +70,15 @@ public partial class App : Application
         base.OnStartup(e);
     }
 
+    /// <summary>
+    /// Configures the services to be consumed by the application.
+    /// </summary>
+    /// <param name="context">
+    /// The application host builder context.
+    /// </param>
+    /// <param name="services">
+    /// The services to be consumed by the application.
+    /// </param>
     private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
         services.AddLogging(builder =>

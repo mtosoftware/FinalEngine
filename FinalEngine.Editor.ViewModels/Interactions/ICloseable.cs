@@ -4,7 +4,13 @@
 
 namespace FinalEngine.Editor.ViewModels.Interactions;
 
+/// <summary>
+/// Defines an interface that represents an interaction to close a view.
+/// </summary>
 public interface ICloseable
 {
+    /// <summary>
+    /// Closes the view.
+    /// </summary>
     void Close();
 }
