@@ -30,6 +30,11 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
     private readonly ITextureBinder binder;
 
     /// <summary>
+    ///   The fragment shader.
+    /// </summary>
+    private readonly IShader? fragmentShader;
+
+    /// <summary>
     ///   The input layout.
     /// </summary>
     private readonly IInputLayout inputLayout;
@@ -50,9 +55,9 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
     private readonly IRenderDevice renderDevice;
 
     /// <summary>
-    ///   The fragment shader.
+    ///   The vertex shader.
     /// </summary>
-    private IShader? fragmentShader;
+    private readonly IShader? vertexShader;
 
     /// <summary>
     ///   The index buffer.
@@ -68,11 +73,6 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
     ///   The vertex buffer.
     /// </summary>
     private IVertexBuffer? vertexBuffer;
-
-    /// <summary>
-    ///   The vertex shader.
-    /// </summary>
-    private IShader? vertexShader;
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="SpriteDrawer"/> class.
@@ -323,13 +323,11 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
             if (this.vertexShader != null)
             {
                 ResourceManager.Instance.UnloadResource(this.vertexShader);
-                this.vertexShader = null;
             }
 
             if (this.fragmentShader != null)
             {
                 ResourceManager.Instance.UnloadResource(this.fragmentShader);
-                this.fragmentShader = null;
             }
         }
 

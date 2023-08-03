@@ -19,7 +19,7 @@ using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
 /// </summary>
 /// <seealso cref="ITexture2D"/>
 /// <seealso cref="IOpenGLTexture"/>
-public class OpenGLTexture2D : ITexture2D, IOpenGLTexture
+public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
 {
     /// <summary>
     ///   The OpenGL invoker.

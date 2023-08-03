@@ -13,7 +13,7 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 ///   Provides an OpenGL implementation of an <see cref="IOpenGLShaderProgram"/>.
 /// </summary>
 /// <seealso cref="IOpenGLShaderProgram"/>
-public class OpenGLShaderProgram : IOpenGLShaderProgram
+public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
 {
     /// <summary>
     ///   The OpenGL invoker.

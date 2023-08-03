@@ -49,5 +49,5 @@ public interface IResourceManager : IDisposable
     /// <param name="resource">
     ///   The resource to unload.
     /// </param>
-    void UnloadResource(IResource resource);
+    void UnloadResource(IResource? resource);
 }

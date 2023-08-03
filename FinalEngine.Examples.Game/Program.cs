@@ -171,8 +171,10 @@ internal static class Program
         drawer.Dispose();
         mesh.Dispose();
         shaderProgram.Dispose();
-        fragmentShader.Dispose();
-        vertexShader.Dispose();
+
+        ResourceManager.Instance.UnloadResource(vertexShader);
+        ResourceManager.Instance.UnloadResource(fragmentShader);
+
         resourceManager.Dispose();
         renderContext.Dispose();
         mouse.Dispose();

@@ -13,6 +13,6 @@ using System;
 /// Implements this interface on resources that you wish to be managed by the <see cref="ResourceManager"/>.
 /// </remarks>
 /// <seealso cref="IDisposable"/>
-public interface IResource : IDisposable
+public interface IResource
 {
 }

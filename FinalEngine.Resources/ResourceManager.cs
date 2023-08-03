@@ -258,7 +258,7 @@ public class ResourceManager : IResourceManager
     /// }
     /// </code>
     /// </example>
-    public void UnloadResource(IResource resource)
+    public void UnloadResource(IResource? resource)
     {
         if (this.IsDisposed)
         {
@@ -281,7 +281,11 @@ public class ResourceManager : IResourceManager
 
                 if (resourceData.ReferenceCount == 0)
                 {
-                    resourceData.Reference.Dispose();
+                    if (resourceData.Reference is IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+
                     this.pathToResourceDataMap.Remove(resourceData.FilePath);
                 }
             }
@@ -310,7 +314,11 @@ public class ResourceManager : IResourceManager
                     var kvp = this.pathToResourceDataMap.ElementAt(i);
                     var resourceData = kvp.Value;
 
-                    resourceData.Reference.Dispose();
+                    if (resourceData.Reference is IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+
                     this.pathToResourceDataMap.Remove(resourceData.FilePath);
                 }
             }

@@ -15,7 +15,7 @@ using OpenTK.Graphics.OpenGL4;
 ///   Provides an OpenGL implementation of an <see cref="IOpenGLShader"/>.
 /// </summary>
 /// <seealso cref="IOpenGLShader"/>
-public class OpenGLShader : IOpenGLShader
+public class OpenGLShader : IOpenGLShader, IDisposable
 {
     /// <summary>
     ///   The OpenGL invoker.
