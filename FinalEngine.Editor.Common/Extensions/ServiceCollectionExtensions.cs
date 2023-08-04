@@ -1,0 +1,33 @@
+// <copyright file="ServiceCollectionExtensions.cs" company="Software Antics">
+// Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
+namespace FinalEngine.Editor.Common.Extensions;
+
+using System;
+using FinalEngine.Editor.Common.Services.Factories;
+using Microsoft.Extensions.DependencyInjection;
+
+public static class ServiceCollectionExtensions
+{
+    public static void AddFactory<TService, TImplementation>(this IServiceCollection services)
+        where TService : class
+        where TImplementation : class, TService
+    {
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
+
+        services.AddTransient<TService, TImplementation>();
+        services.AddSingleton<Func<TService>>(x =>
+        {
+            return () =>
+            {
+                return x.GetRequiredService<TService>();
+            };
+        });
+
+        services.AddSingleton<IFactory<TService>, Factory<TService>>();
+    }
+}

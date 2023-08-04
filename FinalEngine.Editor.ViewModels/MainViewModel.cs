@@ -5,10 +5,18 @@
 namespace FinalEngine.Editor.ViewModels;
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
+using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
+using FinalEngine.Editor.ViewModels.Docking.Tools;
+using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
+using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
+using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Interactions;
 using Microsoft.Extensions.Logging;
 
@@ -48,7 +56,13 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
-        IApplicationContext context)
+        IApplicationContext context,
+        IFactory<IProjectExplorerToolViewModel> projectExplorerFactory,
+        IFactory<ISceneHierarchyToolViewModel> sceneHierarchyFactory,
+        IFactory<IPropertiesToolViewModel> propertiesFactory,
+        IFactory<IConsoleToolViewModel> consoleFactory,
+        IFactory<IEntitySystemsToolViewModel> entitySystemsFactory,
+        IFactory<ISceneViewPaneViewModel> sceneViewFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
@@ -56,6 +70,50 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         {
             throw new ArgumentNullException(nameof(context));
         }
+
+        if (projectExplorerFactory == null)
+        {
+            throw new ArgumentNullException(nameof(projectExplorerFactory));
+        }
+
+        if (sceneHierarchyFactory == null)
+        {
+            throw new ArgumentNullException(nameof(sceneHierarchyFactory));
+        }
+
+        if (propertiesFactory == null)
+        {
+            throw new ArgumentNullException(nameof(propertiesFactory));
+        }
+
+        if (consoleFactory == null)
+        {
+            throw new ArgumentNullException(nameof(consoleFactory));
+        }
+
+        if (entitySystemsFactory == null)
+        {
+            throw new ArgumentNullException(nameof(entitySystemsFactory));
+        }
+
+        if (sceneViewFactory == null)
+        {
+            throw new ArgumentNullException(nameof(sceneViewFactory));
+        }
+
+        this.Tools = new List<IToolViewModel>()
+        {
+            projectExplorerFactory.Create(),
+            sceneHierarchyFactory.Create(),
+            propertiesFactory.Create(),
+            consoleFactory.Create(),
+            entitySystemsFactory.Create(),
+        };
+
+        this.Panes = new List<IPaneViewModel>()
+        {
+            sceneViewFactory.Create(),
+        };
 
         this.Title = context.Title;
     }
@@ -71,6 +129,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Close); }
     }
 
+    public IEnumerable<IPaneViewModel> Panes { get; }
+
     /// <summary>
     /// Gets the title of the application.
     /// </summary>
@@ -82,6 +142,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         get { return this.title ?? string.Empty; }
         private set { this.SetProperty(ref this.title, value); }
     }
+
+    public IEnumerable<IToolViewModel> Tools { get; }
 
     /// <summary>
     /// Closes the main view using the specified <paramref name="closeable"/> interaction.
