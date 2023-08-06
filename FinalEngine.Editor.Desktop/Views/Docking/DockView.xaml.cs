@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.Versioning;
 using System.Windows.Controls;
 using AvalonDock.Layout.Serialization;
+using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
 
 /// <summary>
@@ -22,6 +23,7 @@ public partial class DockView : UserControl, ILayoutSerializable
     public DockView()
     {
         this.InitializeComponent();
+        this.Dispatcher.ShutdownStarted += this.Dispatcher_ShutdownStarted;
     }
 
     public void Deserialize(string content)
@@ -42,5 +44,10 @@ public partial class DockView : UserControl, ILayoutSerializable
             serializer.Serialize(fs);
             return fs.ToString();
         }
+    }
+
+    private void Dispatcher_ShutdownStarted(object? sender, System.EventArgs e)
+    {
+        ((IDockViewModel)this.DataContext).SaveLayoutCommand.Execute(this);
     }
 }

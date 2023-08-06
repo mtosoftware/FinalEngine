@@ -16,11 +16,21 @@ public static class LoadLayoutBehaviour
         typeof(LoadLayoutBehaviour),
         new PropertyMetadata(null));
 
-    private static readonly DependencyProperty LoadLayoutCommandProperty = DependencyProperty.RegisterAttached(
-        "LoadLayoutCommand",
+    private static readonly DependencyProperty CommandProperty = DependencyProperty.RegisterAttached(
+        "Command",
         typeof(ICommand),
         typeof(LoadLayoutBehaviour),
-        new PropertyMetadata(null, OnLoadLayoutCommandChanged));
+        new PropertyMetadata(null, OnCommandChanged));
+
+    public static ICommand GetCommand(DependencyObject dependencyObject)
+    {
+        if (dependencyObject == null)
+        {
+            throw new ArgumentNullException(nameof(dependencyObject));
+        }
+
+        return (ICommand)dependencyObject.GetValue(CommandProperty);
+    }
 
     public static object GetCommandParameter(DependencyObject dependencyObject)
     {
@@ -32,14 +42,14 @@ public static class LoadLayoutBehaviour
         return dependencyObject.GetValue(CommandParameterProperty);
     }
 
-    public static ICommand GetLoadLayoutCommand(DependencyObject dependencyObject)
+    public static void SetCommand(DependencyObject dependencyObject, ICommand value)
     {
         if (dependencyObject == null)
         {
             throw new ArgumentNullException(nameof(dependencyObject));
         }
 
-        return (ICommand)dependencyObject.GetValue(LoadLayoutCommandProperty);
+        dependencyObject.SetValue(CommandProperty, value);
     }
 
     public static void SetCommandParameter(DependencyObject dependencyObject, object value)
@@ -52,34 +62,7 @@ public static class LoadLayoutBehaviour
         dependencyObject.SetValue(CommandParameterProperty, value);
     }
 
-    public static void SetLoadLayoutCommand(DependencyObject dependencyObject, ICommand value)
-    {
-        if (dependencyObject == null)
-        {
-            throw new ArgumentNullException(nameof(dependencyObject));
-        }
-
-        dependencyObject.SetValue(LoadLayoutCommandProperty, value);
-    }
-
-    private static void OnFrameworkElement_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is not FrameworkElement frameworkElement)
-        {
-            return;
-        }
-
-        var loadLayoutCommand = GetLoadLayoutCommand(frameworkElement);
-
-        if (loadLayoutCommand == null)
-        {
-            return;
-        }
-
-        loadLayoutCommand.Execute(GetCommandParameter(frameworkElement));
-    }
-
-    private static void OnLoadLayoutCommandChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+    private static void OnCommandChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
     {
         if (dependencyObject is not FrameworkElement framworkElement)
         {
@@ -92,5 +75,22 @@ public static class LoadLayoutBehaviour
         {
             framworkElement.Loaded += OnFrameworkElement_Loaded;
         }
+    }
+
+    private static void OnFrameworkElement_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (sender is not FrameworkElement frameworkElement)
+        {
+            return;
+        }
+
+        var command = GetCommand(frameworkElement);
+
+        if (command == null)
+        {
+            return;
+        }
+
+        command.Execute(GetCommandParameter(frameworkElement));
     }
 }

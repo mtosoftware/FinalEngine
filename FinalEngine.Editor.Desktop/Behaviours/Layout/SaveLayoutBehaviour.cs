@@ -19,11 +19,21 @@ public static class SaveLayoutBehaviour
         typeof(SaveLayoutBehaviour),
         new PropertyMetadata(null));
 
-    private static readonly DependencyProperty SaveLayoutCommandProperty = DependencyProperty.RegisterAttached(
-        "SaveLayoutCommand",
+    private static readonly DependencyProperty CommandProperty = DependencyProperty.RegisterAttached(
+        "Command",
         typeof(ICommand),
         typeof(SaveLayoutBehaviour),
-        new PropertyMetadata(null, OnSaveLayoutCommandChanged));
+        new PropertyMetadata(null, OnCommandChanged));
+
+    public static ICommand GetCommand(DependencyObject dependencyObject)
+    {
+        if (dependencyObject == null)
+        {
+            throw new ArgumentNullException(nameof(dependencyObject));
+        }
+
+        return (ICommand)dependencyObject.GetValue(CommandProperty);
+    }
 
     public static object GetCommandParameter(DependencyObject dependencyObject)
     {
@@ -35,14 +45,14 @@ public static class SaveLayoutBehaviour
         return dependencyObject.GetValue(CommandParameterProperty);
     }
 
-    public static ICommand GetSaveLayoutCommand(DependencyObject dependencyObject)
+    public static void SetCommand(DependencyObject dependencyObject, ICommand value)
     {
         if (dependencyObject == null)
         {
             throw new ArgumentNullException(nameof(dependencyObject));
         }
 
-        return (ICommand)dependencyObject.GetValue(SaveLayoutCommandProperty);
+        dependencyObject.SetValue(CommandProperty, value);
     }
 
     public static void SetCommandParameter(DependencyObject dependencyObject, object value)
@@ -55,34 +65,7 @@ public static class SaveLayoutBehaviour
         dependencyObject.SetValue(CommandParameterProperty, value);
     }
 
-    public static void SetSaveLayoutCommand(DependencyObject dependencyObject, ICommand value)
-    {
-        if (dependencyObject == null)
-        {
-            throw new ArgumentNullException(nameof(dependencyObject));
-        }
-
-        dependencyObject.SetValue(SaveLayoutCommandProperty, value);
-    }
-
-    private static void OnFrameworkElement_Saveed(object sender, RoutedEventArgs e)
-    {
-        if (sender is not DockingManager frameworkElement)
-        {
-            return;
-        }
-
-        var saveLayoutCommand = GetSaveLayoutCommand(frameworkElement);
-
-        if (saveLayoutCommand == null)
-        {
-            return;
-        }
-
-        saveLayoutCommand.Execute(GetCommandParameter(frameworkElement));
-    }
-
-    private static void OnSaveLayoutCommandChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+    private static void OnCommandChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
     {
         if (dependencyObject is not FrameworkElement framworkElement)
         {
@@ -95,5 +78,22 @@ public static class SaveLayoutBehaviour
         {
             framworkElement.Unloaded += OnFrameworkElement_Saveed;
         }
+    }
+
+    private static void OnFrameworkElement_Saveed(object sender, RoutedEventArgs e)
+    {
+        if (sender is not DockingManager frameworkElement)
+        {
+            return;
+        }
+
+        var command = GetCommand(frameworkElement);
+
+        if (command == null)
+        {
+            return;
+        }
+
+        command.Execute(GetCommandParameter(frameworkElement));
     }
 }

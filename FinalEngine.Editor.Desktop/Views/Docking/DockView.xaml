@@ -17,9 +17,9 @@
                         x:FieldModifier="private"
                         AnchorablesSource="{Binding Tools}"
                         DocumentsSource="{Binding Panes}"
-                        behaviours:LoadLayoutBehaviour.LoadLayoutCommand="{Binding LoadLayoutCommand}"
+                        behaviours:LoadLayoutBehaviour.Command="{Binding LoadLayoutCommand}"
                         behaviours:LoadLayoutBehaviour.CommandParameter="{Binding ElementName=dockView}"
-                        behaviours:SaveLayoutBehaviour.SaveLayoutCommand="{Binding SaveLayoutCommand}"
+                        behaviours:SaveLayoutBehaviour.Command="{Binding SaveLayoutCommand}"
                         behaviours:SaveLayoutBehaviour.CommandParameter="{Binding ElementName=dockView}">
 
             <!-- THEME -->

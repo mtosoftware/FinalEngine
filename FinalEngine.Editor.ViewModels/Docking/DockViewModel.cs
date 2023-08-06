@@ -10,7 +10,6 @@ using System.IO;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
@@ -27,14 +26,11 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
 
     private readonly IFileSystem fileSystem;
 
-    private readonly IMessenger messenger;
-
     private ICommand? loadLayoutCommand;
 
     private ICommand? saveLayoutCommand;
 
     public DockViewModel(
-        IMessenger messenger,
         IFileSystem fileSystem,
         IFactory<IProjectExplorerToolViewModel> projectExplorerFactory,
         IFactory<ISceneHierarchyToolViewModel> sceneHierarchyFactory,
@@ -43,7 +39,6 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
         IFactory<IEntitySystemsToolViewModel> entitySystemsFactory,
         IFactory<ISceneViewPaneViewModel> sceneViewFactory)
     {
-        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
 
         if (projectExplorerFactory == null)
@@ -100,10 +95,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
 
     public ICommand SaveLayoutCommand
     {
-        get
-        {
-            return this.saveLayoutCommand ??= new RelayCommand<ILayoutSerializable>(this.SaveLayout);
-        }
+        get { return this.saveLayoutCommand ??= new RelayCommand<ILayoutSerializable>(this.SaveLayout); }
     }
 
     public IEnumerable<IToolViewModel> Tools { get; }
@@ -138,7 +130,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
             throw new ArgumentNullException(nameof(serializable));
         }
 
-        using (var stream = this.fileSystem.OpenFile(LayoutFileName, FileAccessMode.ReadAndWrite))
+        using (var stream = this.fileSystem.CreateFile(LayoutFileName))
         {
             using (var writer = new StreamWriter(stream))
             {
