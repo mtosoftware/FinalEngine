@@ -5,7 +5,6 @@
 namespace FinalEngine.Editor.Desktop.Views.Docking;
 
 using System.IO;
-using System.Runtime.Versioning;
 using System.Windows.Controls;
 using AvalonDock.Layout.Serialization;
 using FinalEngine.Editor.ViewModels.Docking;
@@ -14,7 +13,6 @@ using FinalEngine.Editor.ViewModels.Interactions;
 /// <summary>
 /// Interaction logic for DockView.xaml.
 /// </summary>
-[SupportedOSPlatform("windows")]
 public partial class DockView : UserControl, ILayoutSerializable
 {
     /// <summary>

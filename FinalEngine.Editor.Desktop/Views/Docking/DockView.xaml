@@ -80,28 +80,6 @@
             <DockingManager.LayoutItemContainerStyleSelector>
                 <styles:PaneStyleSelector ToolStyle="{StaticResource ToolStyle}" PaneStyle="{StaticResource PaneStyle}" />
             </DockingManager.LayoutItemContainerStyleSelector>
-
-            <!-- LAYOUT ROOT -->
-            <LayoutRoot>
-                <LayoutPanel Orientation="Horizontal">
-                    <LayoutPanel Orientation="Vertical">
-
-                        <!-- DOCUMENTS -->
-                        <LayoutDocumentPane />
-                    </LayoutPanel>
-
-                    <LayoutAnchorablePaneGroup DockWidth="256" Orientation="Vertical">
-                        <LayoutAnchorablePane Name="SceneHierarchy" />
-                        <LayoutAnchorablePane Name="EntitySystems" />
-                        <LayoutAnchorablePane Name="Properties" />
-                    </LayoutAnchorablePaneGroup>
-
-                    <LayoutAnchorablePaneGroup DockHeight="256" Orientation="Horizontal">
-                        <LayoutAnchorablePane Name="Console" />
-                        <LayoutAnchorablePane Name="ProjectExplorer" />
-                    </LayoutAnchorablePaneGroup>
-                </LayoutPanel>
-            </LayoutRoot>
         </DockingManager>
     </Grid>
 </UserControl>

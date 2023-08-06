@@ -5,12 +5,10 @@
 namespace FinalEngine.Editor.Desktop.Behaviours.Layout;
 
 using System;
-using System.Runtime.Versioning;
 using System.Windows;
 using System.Windows.Input;
 using AvalonDock;
 
-[SupportedOSPlatform("windows")]
 public static class SaveLayoutBehaviour
 {
     private static readonly DependencyProperty CommandParameterProperty = DependencyProperty.RegisterAttached(
