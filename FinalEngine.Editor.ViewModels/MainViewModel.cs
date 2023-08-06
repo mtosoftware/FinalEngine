@@ -9,14 +9,12 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
-using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Interactions;
 using Microsoft.Extensions.Logging;
 
@@ -31,6 +29,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// The logger.
     /// </summary>
     private readonly ILogger<MainViewModel> logger;
+
+    private readonly IMessenger messenger;
 
     /// <summary>
     /// The exit command.
@@ -56,67 +56,29 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
+        IMessenger messenger,
         IApplicationContext context,
-        IFactory<IProjectExplorerToolViewModel> projectExplorerFactory,
-        IFactory<ISceneHierarchyToolViewModel> sceneHierarchyFactory,
-        IFactory<IPropertiesToolViewModel> propertiesFactory,
-        IFactory<IConsoleToolViewModel> consoleFactory,
-        IFactory<IEntitySystemsToolViewModel> entitySystemsFactory,
-        IFactory<ISceneViewPaneViewModel> sceneViewFactory)
+        IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
 
         if (context == null)
         {
             throw new ArgumentNullException(nameof(context));
         }
 
-        if (projectExplorerFactory == null)
+        if (dockViewModelFactory == null)
         {
-            throw new ArgumentNullException(nameof(projectExplorerFactory));
+            throw new ArgumentNullException(nameof(dockViewModelFactory));
         }
 
-        if (sceneHierarchyFactory == null)
-        {
-            throw new ArgumentNullException(nameof(sceneHierarchyFactory));
-        }
-
-        if (propertiesFactory == null)
-        {
-            throw new ArgumentNullException(nameof(propertiesFactory));
-        }
-
-        if (consoleFactory == null)
-        {
-            throw new ArgumentNullException(nameof(consoleFactory));
-        }
-
-        if (entitySystemsFactory == null)
-        {
-            throw new ArgumentNullException(nameof(entitySystemsFactory));
-        }
-
-        if (sceneViewFactory == null)
-        {
-            throw new ArgumentNullException(nameof(sceneViewFactory));
-        }
-
-        this.Tools = new List<IToolViewModel>()
-        {
-            projectExplorerFactory.Create(),
-            sceneHierarchyFactory.Create(),
-            propertiesFactory.Create(),
-            consoleFactory.Create(),
-            entitySystemsFactory.Create(),
-        };
-
-        this.Panes = new List<IPaneViewModel>()
-        {
-            sceneViewFactory.Create(),
-        };
+        this.DockViewModel = dockViewModelFactory.Create();
 
         this.Title = context.Title;
     }
+
+    public IDockViewModel DockViewModel { get; }
 
     /// <summary>
     /// Gets the exit command.

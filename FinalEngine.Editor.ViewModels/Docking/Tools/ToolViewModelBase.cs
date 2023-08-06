@@ -10,6 +10,8 @@ public abstract class ToolViewModelBase : PaneViewModelBase, IToolViewModel
 {
     private bool isVisible;
 
+    private PaneLocation location;
+
     protected ToolViewModelBase()
     {
         this.IsVisible = true;
@@ -19,5 +21,11 @@ public abstract class ToolViewModelBase : PaneViewModelBase, IToolViewModel
     {
         get { return this.isVisible; }
         set { this.SetProperty(ref this.isVisible, value); }
+    }
+
+    public PaneLocation PaneLocation
+    {
+        get { return this.location; }
+        set { this.SetProperty(ref location, value); }
     }
 }

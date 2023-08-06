@@ -4,16 +4,16 @@
 
 namespace FinalEngine.Editor.ViewModels;
 
-using System.Collections.Generic;
 using System.Windows.Input;
-using FinalEngine.Editor.ViewModels.Docking.Panes;
-using FinalEngine.Editor.ViewModels.Docking.Tools;
+using FinalEngine.Editor.ViewModels.Docking;
 
 /// <summary>
 /// Defines an interface that represents a model of the main view.
 /// </summary>
 public interface IMainViewModel
 {
+    IDockViewModel DockViewModel { get; }
+
     /// <summary>
     /// Gets the exit command.
     /// </summary>
@@ -22,8 +22,6 @@ public interface IMainViewModel
     /// </value>
     ICommand ExitCommand { get; }
 
-    IEnumerable<IPaneViewModel> Panes { get; }
-
     /// <summary>
     /// Gets the title.
     /// </summary>
@@ -31,6 +29,4 @@ public interface IMainViewModel
     /// The title.
     /// </value>
     string Title { get; }
-
-    IEnumerable<IToolViewModel> Tools { get; }
 }

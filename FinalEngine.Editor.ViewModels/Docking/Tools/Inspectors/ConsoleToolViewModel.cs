@@ -10,5 +10,6 @@ public sealed class ConsoleToolViewModel : ToolViewModelBase, IConsoleToolViewMo
     {
         this.Title = "Console";
         this.ContentID = "Console";
+        this.PaneLocation = PaneLocation.Bottom;
     }
 }

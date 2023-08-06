@@ -10,5 +10,6 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     {
         this.Title = "Properties";
         this.ContentID = "Properties";
+        this.PaneLocation = PaneLocation.Right;
     }
 }

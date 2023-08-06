@@ -10,5 +10,6 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
     {
         this.Title = "Scene Hierarchy";
         this.ContentID = "SceneHierarchy";
+        this.PaneLocation = PaneLocation.Left;
     }
 }

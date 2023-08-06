@@ -10,5 +10,6 @@ public sealed class ProjectExplorerToolViewModel : ToolViewModelBase, IProjectEx
     {
         this.Title = "Project Explorer";
         this.ContentID = "ProjectExplorer";
+        this.PaneLocation = PaneLocation.Bottom;
     }
 }
