@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Docking;
@@ -29,8 +28,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// The logger.
     /// </summary>
     private readonly ILogger<MainViewModel> logger;
-
-    private readonly IMessenger messenger;
 
     /// <summary>
     /// The exit command.
@@ -56,12 +53,10 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
-        IMessenger messenger,
         IApplicationContext context,
         IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
 
         if (context == null)
         {

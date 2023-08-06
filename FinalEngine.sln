@@ -66,11 +66,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Examples.Game",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editor", "Editor", "{A000B9CF-02DF-4BC6-9F88-36D723041F73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Editor.Common", "FinalEngine.Editor.Common\FinalEngine.Editor.Common.csproj", "{AF7D33F8-7581-4B2C-83A1-B78370C0C094}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Common", "FinalEngine.Editor.Common\FinalEngine.Editor.Common.csproj", "{AF7D33F8-7581-4B2C-83A1-B78370C0C094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Editor.ViewModels", "FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj", "{F3F731DE-A676-40E5-9308-4FBA387483E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.ViewModels", "FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj", "{F3F731DE-A676-40E5-9308-4FBA387483E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Editor.Desktop", "FinalEngine.Editor.Desktop\FinalEngine.Editor.Desktop.csproj", "{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Desktop", "FinalEngine.Editor.Desktop\FinalEngine.Editor.Desktop.csproj", "{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -148,20 +148,20 @@ Global
 		{D67794A8-89AC-46E0-B303-94110BB382F8}.Release|x64.Build.0 = Release|x64
 		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Debug|x64.ActiveCfg = Debug|x64
 		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Debug|x64.Build.0 = Debug|x64
-		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Release|x64.ActiveCfg = Release|Any CPU
-		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Release|x64.Build.0 = Release|Any CPU
+		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Release|x64.ActiveCfg = Release|x64
+		{5B492FC2-A4FD-4C2D-AD17-3F9699E5D112}.Release|x64.Build.0 = Release|x64
 		{AF7D33F8-7581-4B2C-83A1-B78370C0C094}.Debug|x64.ActiveCfg = Debug|x64
 		{AF7D33F8-7581-4B2C-83A1-B78370C0C094}.Debug|x64.Build.0 = Debug|x64
-		{AF7D33F8-7581-4B2C-83A1-B78370C0C094}.Release|x64.ActiveCfg = Release|Any CPU
-		{AF7D33F8-7581-4B2C-83A1-B78370C0C094}.Release|x64.Build.0 = Release|Any CPU
+		{AF7D33F8-7581-4B2C-83A1-B78370C0C094}.Release|x64.ActiveCfg = Release|x64
+		{AF7D33F8-7581-4B2C-83A1-B78370C0C094}.Release|x64.Build.0 = Release|x64
 		{F3F731DE-A676-40E5-9308-4FBA387483E8}.Debug|x64.ActiveCfg = Debug|x64
 		{F3F731DE-A676-40E5-9308-4FBA387483E8}.Debug|x64.Build.0 = Debug|x64
-		{F3F731DE-A676-40E5-9308-4FBA387483E8}.Release|x64.ActiveCfg = Release|Any CPU
-		{F3F731DE-A676-40E5-9308-4FBA387483E8}.Release|x64.Build.0 = Release|Any CPU
+		{F3F731DE-A676-40E5-9308-4FBA387483E8}.Release|x64.ActiveCfg = Release|x64
+		{F3F731DE-A676-40E5-9308-4FBA387483E8}.Release|x64.Build.0 = Release|x64
 		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Debug|x64.ActiveCfg = Debug|x64
 		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Debug|x64.Build.0 = Debug|x64
-		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Release|x64.ActiveCfg = Release|Any CPU
-		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Release|x64.Build.0 = Release|Any CPU
+		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Release|x64.ActiveCfg = Release|x64
+		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
