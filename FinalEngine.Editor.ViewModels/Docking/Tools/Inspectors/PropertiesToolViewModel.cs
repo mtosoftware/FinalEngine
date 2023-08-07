@@ -4,9 +4,12 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 
+using CommunityToolkit.Mvvm.Messaging;
+
 public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesToolViewModel
 {
-    public PropertiesToolViewModel()
+    public PropertiesToolViewModel(IMessenger messenger)
+        : base(messenger)
     {
         this.Title = "Properties";
         this.ContentID = "Properties";

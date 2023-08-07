@@ -4,9 +4,12 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 
+using CommunityToolkit.Mvvm.Messaging;
+
 public sealed class ProjectExplorerToolViewModel : ToolViewModelBase, IProjectExplorerToolViewModel
 {
-    public ProjectExplorerToolViewModel()
+    public ProjectExplorerToolViewModel(IMessenger messenger)
+        : base(messenger)
     {
         this.Title = "Project Explorer";
         this.ContentID = "ProjectExplorer";

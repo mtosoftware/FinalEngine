@@ -4,7 +4,10 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools;
 
+using System;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
+using FinalEngine.Editor.ViewModels.Messages.Docking;
 
 public abstract class ToolViewModelBase : PaneViewModelBase, IToolViewModel
 {
@@ -12,9 +15,16 @@ public abstract class ToolViewModelBase : PaneViewModelBase, IToolViewModel
 
     private PaneLocation location;
 
-    protected ToolViewModelBase()
+    protected ToolViewModelBase(IMessenger messenger)
     {
+        if (messenger == null)
+        {
+            throw new ArgumentNullException(nameof(messenger));
+        }
+
         this.IsVisible = true;
+
+        messenger.Register<ToggleToolWindowMessage>(this, this.ToggleToolWindow);
     }
 
     public bool IsVisible
@@ -27,5 +37,20 @@ public abstract class ToolViewModelBase : PaneViewModelBase, IToolViewModel
     {
         get { return this.location; }
         set { this.SetProperty(ref location, value); }
+    }
+
+    private void ToggleToolWindow(object recipient, ToggleToolWindowMessage message)
+    {
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
+
+        if (message.ContentID != this.ContentID)
+        {
+            return;
+        }
+
+        this.IsVisible = !this.IsVisible;
     }
 }

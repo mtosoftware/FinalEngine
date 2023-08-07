@@ -5,16 +5,16 @@
 namespace FinalEngine.Editor.ViewModels;
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
-using FinalEngine.Editor.ViewModels.Docking.Panes;
-using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Messages.Docking;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -30,14 +30,28 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private readonly ILogger<MainViewModel> logger;
 
     /// <summary>
+    /// The messenger.
+    /// </summary>
+    private readonly IMessenger messenger;
+
+    private readonly IViewPresenter viewPresenter;
+
+    /// <summary>
     /// The exit command.
     /// </summary>
     private ICommand? exitCommand;
+
+    private ICommand? saveWindowLayoutCommand;
 
     /// <summary>
     /// The title of the application.
     /// </summary>
     private string? title;
+
+    /// <summary>
+    /// The toggle tool window command.
+    /// </summary>
+    private ICommand? toggleToolWindowCommand;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -53,10 +67,14 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
+        IMessenger messenger,
+        IViewPresenter viewPresenter,
         IApplicationContext context,
         IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+        this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
 
         if (context == null)
         {
@@ -86,7 +104,10 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Close); }
     }
 
-    public IEnumerable<IPaneViewModel> Panes { get; }
+    public ICommand SaveWindowLayoutCommand
+    {
+        get { return this.saveWindowLayoutCommand ??= new RelayCommand(this.ShowSaveWindowLayoutView); }
+    }
 
     /// <summary>
     /// Gets the title of the application.
@@ -100,7 +121,10 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         private set { this.SetProperty(ref this.title, value); }
     }
 
-    public IEnumerable<IToolViewModel> Tools { get; }
+    public ICommand ToggleToolWindowCommand
+    {
+        get { return this.toggleToolWindowCommand = new RelayCommand<string>(this.ToggleToolWindow); }
+    }
 
     /// <summary>
     /// Closes the main view using the specified <paramref name="closeable"/> interaction.
@@ -121,5 +145,20 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.logger.LogDebug($"Closing {nameof(MainViewModel)}...");
 
         closeable.Close();
+    }
+
+    private void ShowSaveWindowLayoutView()
+    {
+        this.viewPresenter.ShowView<ISaveWindowLayoutViewModel>();
+    }
+
+    private void ToggleToolWindow(string? contentID)
+    {
+        if (string.IsNullOrWhiteSpace(contentID))
+        {
+            throw new ArgumentNullException(nameof(contentID));
+        }
+
+        this.messenger.Send(new ToggleToolWindowMessage(contentID));
     }
 }

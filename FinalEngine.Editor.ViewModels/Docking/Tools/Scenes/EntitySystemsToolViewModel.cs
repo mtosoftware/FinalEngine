@@ -4,9 +4,12 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 
+using CommunityToolkit.Mvvm.Messaging;
+
 public sealed class EntitySystemsToolViewModel : ToolViewModelBase, IEntitySystemsToolViewModel
 {
-    public EntitySystemsToolViewModel()
+    public EntitySystemsToolViewModel(IMessenger messenger)
+        : base(messenger)
     {
         this.Title = "Entity Systems";
         this.ContentID = "EntitySystems";

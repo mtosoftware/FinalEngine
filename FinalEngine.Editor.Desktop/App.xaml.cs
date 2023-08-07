@@ -6,15 +6,19 @@ namespace FinalEngine.Editor.Desktop;
 
 using System.Diagnostics;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Desktop.Views;
+using FinalEngine.Editor.Desktop.Views.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -93,6 +97,8 @@ public partial class App : Application
             builder.AddConsole().SetMinimumLevel(Debugger.IsAttached ? LogLevel.Debug : LogLevel.Information);
         });
 
+        services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
+
         services.AddSingleton<IFileSystem, FileSystem>();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();
@@ -102,8 +108,16 @@ public partial class App : Application
         services.AddFactory<IEntitySystemsToolViewModel, EntitySystemsToolViewModel>();
         services.AddFactory<ISceneViewPaneViewModel, SceneViewPaneViewModel>();
         services.AddFactory<IDockViewModel, DockViewModel>();
+        services.AddFactory<ISaveWindowLayoutViewModel, SaveWindowLayoutViewModel>();
+
+        services.AddSingleton<IViewPresenter>(x =>
+        {
+            return new ViewPresenter(x);
+        });
 
         services.AddSingleton<IApplicationContext, ApplicationContext>();
         services.AddTransient<IMainViewModel, MainViewModel>();
+
+        services.AddTransient<IViewable<ISaveWindowLayoutViewModel>, SaveWindowLayoutView>();
     }
 }

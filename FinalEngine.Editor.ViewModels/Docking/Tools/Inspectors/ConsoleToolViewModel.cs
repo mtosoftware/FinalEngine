@@ -4,9 +4,12 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 
+using CommunityToolkit.Mvvm.Messaging;
+
 public sealed class ConsoleToolViewModel : ToolViewModelBase, IConsoleToolViewModel
 {
-    public ConsoleToolViewModel()
+    public ConsoleToolViewModel(IMessenger messenger)
+        : base(messenger)
     {
         this.Title = "Console";
         this.ContentID = "Console";

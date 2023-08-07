@@ -7,7 +7,6 @@ namespace FinalEngine.Editor.Desktop.Views.Docking;
 using System.IO;
 using System.Windows.Controls;
 using AvalonDock.Layout.Serialization;
-using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
 
 /// <summary>
@@ -46,6 +45,6 @@ public partial class DockView : UserControl, ILayoutSerializable
 
     private void Dispatcher_ShutdownStarted(object? sender, System.EventArgs e)
     {
-        ((IDockViewModel)this.DataContext).SaveLayoutCommand.Execute(this);
+        //((IDockViewModel)this.DataContext).SaveLayoutCommand.Execute(this);
     }
 }
