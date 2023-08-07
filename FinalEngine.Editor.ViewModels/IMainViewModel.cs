@@ -22,8 +22,6 @@ public interface IMainViewModel
     /// </value>
     ICommand ExitCommand { get; }
 
-    ICommand SaveWindowLayoutCommand { get; }
-
     /// <summary>
     /// Gets the title.
     /// </summary>

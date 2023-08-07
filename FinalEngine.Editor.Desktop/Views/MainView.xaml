@@ -48,10 +48,6 @@
                         <MenuItem Header="_Properties" InputGestureText="Ctrl+Alt+P" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Properties" />
                         <MenuItem Header="_Console" InputGestureText="Ctrl+Alt+C" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Console" />
                     </MenuItem>
-
-                    <MenuItem Header="_Window">
-                        <MenuItem Header="_Save Window Layout" Command="{Binding SaveWindowLayoutCommand}" />
-                    </MenuItem>
                 </MenuItem>
             </Menu>
         </mah:WindowCommands>

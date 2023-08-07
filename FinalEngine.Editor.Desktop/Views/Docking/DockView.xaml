@@ -4,7 +4,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:behaviours="clr-namespace:FinalEngine.Editor.Desktop.Behaviours.Layout"
              xmlns:data="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Data.Docking.Panes"
              xmlns:styles="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Styles.Docking.Panes"
              xmlns:inspectors="clr-namespace:FinalEngine.Editor.Desktop.Views.Inspectors"
@@ -16,11 +15,7 @@
         <DockingManager x:Name="dockManager"
                         x:FieldModifier="private"
                         AnchorablesSource="{Binding Tools}"
-                        DocumentsSource="{Binding Panes}"
-                        behaviours:LoadLayoutBehaviour.Command="{Binding LoadLayoutCommand}"
-                        behaviours:LoadLayoutBehaviour.CommandParameter="{Binding ElementName=dockView}"
-                        behaviours:SaveLayoutBehaviour.Command="{Binding SaveLayoutCommand}"
-                        behaviours:SaveLayoutBehaviour.CommandParameter="{Binding ElementName=dockView}">
+                        DocumentsSource="{Binding Panes}">
 
             <!-- THEME -->
             <DockingManager.Theme>

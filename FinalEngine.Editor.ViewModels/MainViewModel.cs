@@ -11,7 +11,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
-using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Messages.Docking;
@@ -34,14 +33,10 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private readonly IMessenger messenger;
 
-    private readonly IViewPresenter viewPresenter;
-
     /// <summary>
     /// The exit command.
     /// </summary>
     private ICommand? exitCommand;
-
-    private ICommand? saveWindowLayoutCommand;
 
     /// <summary>
     /// The title of the application.
@@ -68,13 +63,11 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     public MainViewModel(
         ILogger<MainViewModel> logger,
         IMessenger messenger,
-        IViewPresenter viewPresenter,
         IApplicationContext context,
         IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
-        this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
 
         if (context == null)
         {
@@ -102,11 +95,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     public ICommand ExitCommand
     {
         get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Close); }
-    }
-
-    public ICommand SaveWindowLayoutCommand
-    {
-        get { return this.saveWindowLayoutCommand ??= new RelayCommand(this.ShowSaveWindowLayoutView); }
     }
 
     /// <summary>
@@ -145,11 +133,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.logger.LogDebug($"Closing {nameof(MainViewModel)}...");
 
         closeable.Close();
-    }
-
-    private void ShowSaveWindowLayoutView()
-    {
-        this.viewPresenter.ShowView<ISaveWindowLayoutViewModel>();
     }
 
     private void ToggleToolWindow(string? contentID)

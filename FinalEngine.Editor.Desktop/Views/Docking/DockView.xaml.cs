@@ -4,15 +4,14 @@
 
 namespace FinalEngine.Editor.Desktop.Views.Docking;
 
-using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using AvalonDock.Layout.Serialization;
-using FinalEngine.Editor.ViewModels.Interactions;
 
 /// <summary>
 /// Interaction logic for DockView.xaml.
 /// </summary>
-public partial class DockView : UserControl, ILayoutSerializable
+public partial class DockView : UserControl
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="DockView"/> class.
@@ -20,31 +19,13 @@ public partial class DockView : UserControl, ILayoutSerializable
     public DockView()
     {
         this.InitializeComponent();
-        this.Dispatcher.ShutdownStarted += this.Dispatcher_ShutdownStarted;
+
+        this.Loaded += this.DockView_Loaded;
     }
 
-    public void Deserialize(string content)
+    private void DockView_Loaded(object sender, RoutedEventArgs e)
     {
-        using (var reader = new StringReader(content))
-        {
-            var serializer = new XmlLayoutSerializer(this.dockManager);
-            serializer.Deserialize(reader);
-        }
-    }
-
-    public string Serialize()
-    {
-        using (var fs = new StringWriter())
-        {
-            var serializer = new XmlLayoutSerializer(this.dockManager);
-
-            serializer.Serialize(fs);
-            return fs.ToString();
-        }
-    }
-
-    private void Dispatcher_ShutdownStarted(object? sender, System.EventArgs e)
-    {
-        //((IDockViewModel)this.DataContext).SaveLayoutCommand.Execute(this);
+        var serializer = new XmlLayoutSerializer(this.dockManager);
+        serializer.Deserialize("Resources\\Layouts\\default.config");
     }
 }
