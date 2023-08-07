@@ -97,7 +97,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         }
 
         this.DockViewModel = dockViewModelFactory.Create();
-
         this.Title = applicationContext.Title;
     }
 

@@ -32,7 +32,7 @@ public partial class DockView : UserControl
 
     private void Dispatcher_ShutdownStarted(object? sender, EventArgs e)
     {
-        this.dockManager.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+        this.dockManager.RaiseEvent(new RoutedEventArgs(UnloadedEvent));
     }
 
     private void LoadLayout(object recipient, LoadWindowLayoutMessage message)
