@@ -11,9 +11,11 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Messages.Docking;
+using FinalEngine.Editor.ViewModels.Messages.Layout;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -23,6 +25,8 @@ using Microsoft.Extensions.Logging;
 /// <seealso cref="IMainViewModel" />
 public sealed class MainViewModel : ObservableObject, IMainViewModel
 {
+    private readonly IApplicationDataContext applicationDataContext;
+
     /// <summary>
     /// The logger.
     /// </summary>
@@ -34,9 +38,18 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private readonly IMessenger messenger;
 
     /// <summary>
+    /// The view presenter.
+    /// </summary>
+    private readonly IViewPresenter viewPresenter;
+
+    /// <summary>
     /// The exit command.
     /// </summary>
     private ICommand? exitCommand;
+
+    private ICommand? resetWindowLayoutCommand;
+
+    private ICommand? saveWindowLayoutCommand;
 
     /// <summary>
     /// The title of the application.
@@ -54,24 +67,28 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// <param name="logger">
     /// The logger.
     /// </param>
-    /// <param name="context">
+    /// <param name="applicationContext">
     /// The application context.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="logger"/> or <paramref name="context"/> parameter cannot be null.
+    /// The specified <paramref name="logger"/> or <paramref name="applicationContext"/> parameter cannot be null.
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
         IMessenger messenger,
-        IApplicationContext context,
+        IViewPresenter viewPresenter,
+        IApplicationContext applicationContext,
+        IApplicationDataContext applicationDataContext,
         IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+        this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
+        this.applicationDataContext = applicationDataContext ?? throw new ArgumentNullException(nameof(applicationDataContext));
 
-        if (context == null)
+        if (applicationContext == null)
         {
-            throw new ArgumentNullException(nameof(context));
+            throw new ArgumentNullException(nameof(applicationContext));
         }
 
         if (dockViewModelFactory == null)
@@ -81,7 +98,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
 
         this.DockViewModel = dockViewModelFactory.Create();
 
-        this.Title = context.Title;
+        this.Title = applicationContext.Title;
     }
 
     public IDockViewModel DockViewModel { get; }
@@ -95,6 +112,16 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     public ICommand ExitCommand
     {
         get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Close); }
+    }
+
+    public ICommand ResetWindowLayoutCommand
+    {
+        get { return this.resetWindowLayoutCommand ??= new RelayCommand(this.ResetWindowLayout); }
+    }
+
+    public ICommand SaveWindowLayoutCommand
+    {
+        get { return this.saveWindowLayoutCommand = new RelayCommand(this.ShowSaveWindowLayoutView); }
     }
 
     /// <summary>
@@ -133,6 +160,16 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.logger.LogDebug($"Closing {nameof(MainViewModel)}...");
 
         closeable.Close();
+    }
+
+    private void ResetWindowLayout()
+    {
+        this.messenger.Send<ResetWindowLayoutMessage>();
+    }
+
+    private void ShowSaveWindowLayoutView()
+    {
+        this.viewPresenter.ShowView<ISaveWindowLayoutViewModel>();
     }
 
     private void ToggleToolWindow(string? contentID)

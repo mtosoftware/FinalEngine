@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:eb="clr-namespace:EventBinder;assembly=EventBinder"
              xmlns:data="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Data.Docking.Panes"
              xmlns:styles="clr-namespace:FinalEngine.Editor.Desktop.Selectors.Styles.Docking.Panes"
              xmlns:inspectors="clr-namespace:FinalEngine.Editor.Desktop.Views.Inspectors"
@@ -15,7 +16,9 @@
         <DockingManager x:Name="dockManager"
                         x:FieldModifier="private"
                         AnchorablesSource="{Binding Tools}"
-                        DocumentsSource="{Binding Panes}">
+                        DocumentsSource="{Binding Panes}"
+                        Loaded="{eb:EventBinding LoadCommand.Execute, `null`}"
+                        Unloaded="{eb:EventBinding UnloadCommand.Execute, `null`}">
 
             <!-- THEME -->
             <DockingManager.Theme>

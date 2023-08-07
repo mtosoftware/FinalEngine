@@ -5,9 +5,7 @@
 namespace FinalEngine.Editor.Common.Services.Application;
 
 using System;
-using System.IO;
 using System.Reflection;
-using FinalEngine.IO;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IApplicationContext"/>.
@@ -15,28 +13,6 @@ using FinalEngine.IO;
 /// <seealso cref="IApplicationContext" />
 public sealed class ApplicationContext : IApplicationContext
 {
-    private readonly IFileSystem fileSystem;
-
-    public ApplicationContext(IFileSystem fileSystem)
-    {
-        this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-    }
-
-    public string DataDirectory
-    {
-        get
-        {
-            string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Final Engine");
-
-            if (!this.fileSystem.DirectoryExists(directory))
-            {
-                this.fileSystem.CreateDirectory(directory);
-            }
-
-            return directory;
-        }
-    }
-
     /// <inheritdoc/>
     public string Title
     {
