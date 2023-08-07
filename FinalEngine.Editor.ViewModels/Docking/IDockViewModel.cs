@@ -17,5 +17,7 @@ public interface IDockViewModel
 
     ICommand SaveLayoutCommand { get; }
 
+    ICommand ToggleToolWindowCommand { get; }
+
     IEnumerable<IToolViewModel> Tools { get; }
 }

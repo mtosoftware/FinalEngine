@@ -39,4 +39,10 @@
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Layouts\default.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

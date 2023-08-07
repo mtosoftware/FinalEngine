@@ -22,6 +22,11 @@
     <!-- KEY BINDINGS -->
     <Window.InputBindings>
         <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
+        <KeyBinding Gesture="Ctrl+Alt+E" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="ProjectExplorer" />
+        <KeyBinding Gesture="Ctrl+Alt+H" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="SceneHierarchy" />
+        <KeyBinding Gesture="Ctrl+Alt+S" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="EntitySystems" />
+        <KeyBinding Gesture="Ctrl+Alt+P" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="Properties" />
+        <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="Console" />
     </Window.InputBindings>
 
     <!-- MAIN MENU -->
@@ -32,6 +37,17 @@
                 <!-- FILE -->
                 <MenuItem Header="_File">
                     <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
+                </MenuItem>
+
+                <!-- VIEW -->
+                <MenuItem Header="_View">
+                    <MenuItem Header="Tool Windows">
+                        <MenuItem Header="Project _Explorer" InputGestureText="Ctrl+Alt+E" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="ProjectExplorer" />
+                        <MenuItem Header="Scene _Hierarchy" InputGestureText="Ctrl+Alt+H" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="SceneHierarchy" />
+                        <MenuItem Header="Entity _Systems" InputGestureText="Ctrl+Alt+S" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="EntitySystems" />
+                        <MenuItem Header="_Properties" InputGestureText="Ctrl+Alt+P" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="Properties" />
+                        <MenuItem Header="_Console" InputGestureText="Ctrl+Alt+C" Command="{Binding DockViewModel.ToggleToolWindowCommand}" CommandParameter="Console" />
+                    </MenuItem>
                 </MenuItem>
             </Menu>
         </mah:WindowCommands>

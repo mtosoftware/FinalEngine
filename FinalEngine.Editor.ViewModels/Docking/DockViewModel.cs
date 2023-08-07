@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.ViewModels.Docking;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,6 +30,8 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     private ICommand? loadLayoutCommand;
 
     private ICommand? saveLayoutCommand;
+
+    private ICommand? toggleToolWindowCommand;
 
     public DockViewModel(
         IFileSystem fileSystem,
@@ -98,6 +101,11 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
         get { return this.saveLayoutCommand ??= new RelayCommand<ILayoutSerializable>(this.SaveLayout); }
     }
 
+    public ICommand ToggleToolWindowCommand
+    {
+        get { return this.toggleToolWindowCommand = new RelayCommand<string>(this.ToggleToolWindow); }
+    }
+
     public IEnumerable<IToolViewModel> Tools { get; }
 
     private void LoadLayout(ILayoutSerializable? serializable)
@@ -107,13 +115,14 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
             throw new ArgumentNullException(nameof(serializable));
         }
 
-        // Hmm... this could be an issue...
-        if (!this.fileSystem.FileExists(LayoutFileName))
+        string layoutFilePath = LayoutFileName;
+
+        if (!this.fileSystem.FileExists(layoutFilePath))
         {
-            return;
+            layoutFilePath = "Resources\\Layouts\\default.config";
         }
 
-        using (var stream = this.fileSystem.OpenFile(LayoutFileName, FileAccessMode.Read))
+        using (var stream = this.fileSystem.OpenFile(layoutFilePath, FileAccessMode.Read))
         {
             using (var reader = new StreamReader(stream))
             {
@@ -137,5 +146,20 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
                 writer.WriteLine(serializable.Serialize());
             }
         }
+    }
+
+    private void ToggleToolWindow(string? contentID)
+    {
+        if (string.IsNullOrWhiteSpace(contentID))
+        {
+            throw new ArgumentNullException(nameof(contentID));
+        }
+
+        var toolWindow = this.Tools.FirstOrDefault(x =>
+        {
+            return x.ContentID == contentID;
+        }) ?? throw new ArgumentException($"The specified {nameof(contentID)} parameter does not match a {nameof(IToolViewModel)}.", nameof(contentID));
+
+        toolWindow.IsVisible = !toolWindow.IsVisible;
     }
 }
