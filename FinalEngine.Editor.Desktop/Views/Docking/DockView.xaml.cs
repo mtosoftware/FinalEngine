@@ -23,16 +23,20 @@ public partial class DockView : UserControl
     {
         this.InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<SaveWindowLayoutMessage>(this, this.SaveLayout);
-        WeakReferenceMessenger.Default.Register<LoadWindowLayoutMessage>(this, this.LoadLayout);
-        WeakReferenceMessenger.Default.Register<ResetWindowLayoutMessage>(this, this.ResetLayout);
-
+        this.Loaded += this.DockView_Loaded;
         this.Dispatcher.ShutdownStarted += this.Dispatcher_ShutdownStarted;
     }
 
     private void Dispatcher_ShutdownStarted(object? sender, EventArgs e)
     {
         this.dockManager.RaiseEvent(new RoutedEventArgs(UnloadedEvent));
+    }
+
+    private void DockView_Loaded(object sender, RoutedEventArgs e)
+    {
+        WeakReferenceMessenger.Default.Register<SaveWindowLayoutMessage>(this, this.SaveLayout);
+        WeakReferenceMessenger.Default.Register<LoadWindowLayoutMessage>(this, this.LoadLayout);
+        WeakReferenceMessenger.Default.Register<ResetWindowLayoutMessage>(this, this.ResetLayout);
     }
 
     private void LoadLayout(object recipient, LoadWindowLayoutMessage message)

@@ -10,7 +10,9 @@ using System.IO.Abstractions;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.ViewModels.Messages.Layout;
 
 public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWindowLayoutsViewModel
 {
@@ -18,23 +20,34 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
     private readonly IFileSystem fileSystem;
 
+    private IRelayCommand? applyCommand;
+
     private IRelayCommand? deleteCommand;
 
     private IEnumerable<string> layoutNames;
+
+    private IMessenger messenger;
 
     private string? selectedItem;
 
     private string? title;
 
     public ManageWindowLayoutsViewModel(
+        IMessenger messenger,
         IFileSystem fileSystem,
         IApplicationDataContext applicationData)
     {
+        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         this.applicationData = applicationData ?? throw new ArgumentNullException(nameof(applicationData));
 
         this.Title = "Manage Window Layouts";
         this.LayoutNames = this.applicationData.LoadLayoutNames();
+    }
+
+    public ICommand ApplyCommand
+    {
+        get { return this.applyCommand ??= new RelayCommand(this.Apply, this.CanApply); }
     }
 
     public ICommand DeleteCommand
@@ -58,7 +71,9 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         set
         {
             this.SetProperty(ref this.selectedItem, value);
+
             this.deleteCommand?.NotifyCanExecuteChanged();
+            this.applyCommand?.NotifyCanExecuteChanged();
         }
     }
 
@@ -66,6 +81,16 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     {
         get { return this.title ?? string.Empty; }
         private set { this.SetProperty(ref this.title, value); }
+    }
+
+    private void Apply()
+    {
+        this.messenger.Send(new LoadWindowLayoutMessage(this.applicationData.GetLayoutPath(this.SelectedItem!)));
+    }
+
+    private bool CanApply()
+    {
+        return this.SelectedItem != null;
     }
 
     private bool CanDelete()

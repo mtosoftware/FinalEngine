@@ -47,6 +47,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private ICommand? exitCommand;
 
+    private ICommand? manageWindowLayoutsCommand;
+
     private ICommand? resetWindowLayoutCommand;
 
     private ICommand? saveWindowLayoutCommand;
@@ -113,6 +115,11 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         get { return this.exitCommand ??= new RelayCommand<ICloseable>(this.Close); }
     }
 
+    public ICommand ManageWindowLayoutsCommand
+    {
+        get { return this.manageWindowLayoutsCommand ??= new RelayCommand(this.ShowManageWindowLayoutsView); }
+    }
+
     public ICommand ResetWindowLayoutCommand
     {
         get { return this.resetWindowLayoutCommand ??= new RelayCommand(this.ResetWindowLayout); }
@@ -164,6 +171,11 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private void ResetWindowLayout()
     {
         this.messenger.Send<ResetWindowLayoutMessage>();
+    }
+
+    private void ShowManageWindowLayoutsView()
+    {
+        this.viewPresenter.ShowView<IManageWindowLayoutsViewModel>();
     }
 
     private void ShowSaveWindowLayoutView()

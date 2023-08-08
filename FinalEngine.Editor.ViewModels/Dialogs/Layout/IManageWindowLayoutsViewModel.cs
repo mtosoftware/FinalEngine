@@ -9,6 +9,8 @@ using System.Windows.Input;
 
 public interface IManageWindowLayoutsViewModel
 {
+    ICommand ApplyCommand { get; }
+
     ICommand DeleteCommand { get; }
 
     IEnumerable<string> LayoutNames { get; }

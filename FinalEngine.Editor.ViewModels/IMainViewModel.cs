@@ -22,6 +22,8 @@ public interface IMainViewModel
     /// </value>
     ICommand ExitCommand { get; }
 
+    ICommand ManageWindowLayoutsCommand { get; }
+
     ICommand ResetWindowLayoutCommand { get; }
 
     ICommand SaveWindowLayoutCommand { get; }
