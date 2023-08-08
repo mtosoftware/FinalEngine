@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Messages.Layout;
 
 public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWindowLayoutsViewModel
@@ -19,6 +20,8 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     private readonly IApplicationDataContext applicationData;
 
     private readonly IFileSystem fileSystem;
+
+    private readonly IUserActionRequester userActionRequester;
 
     private IRelayCommand? applyCommand;
 
@@ -35,11 +38,13 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     public ManageWindowLayoutsViewModel(
         IMessenger messenger,
         IFileSystem fileSystem,
-        IApplicationDataContext applicationData)
+        IApplicationDataContext applicationData,
+        IUserActionRequester userActionRequester)
     {
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         this.applicationData = applicationData ?? throw new ArgumentNullException(nameof(applicationData));
+        this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
 
         this.Title = "Manage Window Layouts";
         this.LayoutNames = this.applicationData.LoadLayoutNames();
@@ -103,6 +108,13 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         if (!this.applicationData.ContainsLayout(this.SelectedItem!))
         {
             throw new Exception($"The specified {nameof(this.SelectedItem)} was not matched to the layout name: '{this.SelectedItem}'.");
+        }
+
+        if (!this.userActionRequester.RequestYesNo(
+            this.Title,
+            $"Are you sure you want to do delete the '{this.SelectedItem}' window layout?"))
+        {
+            return;
         }
 
         this.fileSystem.File.Delete(this.applicationData.GetLayoutPath(this.SelectedItem!));
