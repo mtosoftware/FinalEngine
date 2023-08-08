@@ -46,7 +46,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
         this.LayoutName = "Layout Name";
     }
 
-    [FileName(ErrorMessage = "You must provide a valid layout file name.")]
+    [FileName(ErrorMessage = "You must provide a valid layout name.")]
     public string LayoutName
     {
         get { return this.layoutName ?? string.Empty; }

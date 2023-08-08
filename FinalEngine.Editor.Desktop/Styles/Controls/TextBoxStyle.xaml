@@ -11,26 +11,12 @@
         <Setter Property="Margin" Value="5" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Validation.ErrorTemplate">
-            <Setter.Value>
-                <ControlTemplate>
-                    <StackPanel>
-                        <AdornedElementPlaceholder />
-                        <ItemsControl ItemsSource="{Binding}" Margin="0" Padding="0">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding (ValidationError.ErrorContent)}" Foreground="Red" Padding="0" Margin="0, 5, 0, 5" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="BorderBrush" Value="{StaticResource MahApps.Brushes.TextBox.Border}" />
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="True">
                 <Trigger.Setters>
-                    <Setter Property="Margin" Value="{Binding (Validation.Errors).Count, RelativeSource={RelativeSource Self}, Converter={StaticResource ErrorsToMarginConverter}}" />
+                    <Setter Property="BorderBrush" Value="DarkRed" />
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
                 </Trigger.Setters>
             </Trigger>
         </Style.Triggers>

@@ -11,6 +11,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\Splashes\splash.png" />
+  </ItemGroup>
   
   <ItemGroup>
     <AdditionalFiles Include="..\Styling\StyleCop\Other\stylecop.json" Link="stylecop.json" />
@@ -45,5 +49,9 @@
     <None Update="Resources\Layouts\default.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Resources\Images\Splashes\splash.png" />
   </ItemGroup>
 </Project>
