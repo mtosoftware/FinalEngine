@@ -6,13 +6,13 @@ namespace FinalEngine.Examples.Game;
 
 using System;
 using System.Drawing;
+using System.IO.Abstractions;
 using System.Numerics;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
 using FinalEngine.Extensions.Resources.Loaders.Shaders;
 using FinalEngine.Extensions.Resources.Loaders.Textures;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
-using FinalEngine.IO;
 using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;

@@ -6,10 +6,10 @@ namespace FinalEngine.Tests.Extensions.Resources.Loaders.Audio;
 
 using System;
 using System.IO;
+using System.IO.Abstractions.TestingHelpers;
 using FinalEngine.Audio.OpenAL;
 using FinalEngine.Extensions.Resources.Factories;
 using FinalEngine.Extensions.Resources.Loaders.Audio;
-using FinalEngine.IO;
 using Moq;
 using NUnit.Framework;
 using ICASLSound = CASL.ISound;
@@ -19,7 +19,7 @@ public sealed class SoundResourceLoaderTests
 {
     private Mock<ICASLSoundFactory> factory;
 
-    private Mock<IFileSystem> fileSystem;
+    private MockFileSystem fileSystem;
 
     private SoundResourceLoader loader;
 
@@ -29,7 +29,7 @@ public sealed class SoundResourceLoaderTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SoundResourceLoader(this.fileSystem.Object, null);
+            new SoundResourceLoader(this.fileSystem, null);
         });
     }
 
@@ -51,16 +51,6 @@ public sealed class SoundResourceLoaderTests
 
         // Assert
         this.factory.Verify(x => x.CreateSound("sound.mp3"), Times.Once);
-    }
-
-    [Test]
-    public void LoadResourceShouldInvokeFileSystemFileExistsWhenInvoked()
-    {
-        // Act
-        this.loader.LoadResource("sound.mp3");
-
-        // Assert
-        this.fileSystem.Verify(x => x.FileExists("sound.mp3"), Times.Once);
     }
 
     [Test]
@@ -106,13 +96,10 @@ public sealed class SoundResourceLoaderTests
     [Test]
     public void LoadResourceShouldThrowFileNotFoundExceptionWhenFileSystemFileExistsReturnsFalse()
     {
-        // Arrange
-        this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(false);
-
         // Act and assert
         Assert.Throws<FileNotFoundException>(() =>
         {
-            this.loader.LoadResource("sound.mp3");
+            this.loader.LoadResource("sound2.mp3");
         });
     }
 
@@ -121,9 +108,10 @@ public sealed class SoundResourceLoaderTests
     {
         this.factory = new Mock<ICASLSoundFactory>();
         this.factory.Setup(x => x.CreateSound(It.IsAny<string>())).Returns(Mock.Of<ICASLSound>());
-        this.fileSystem = new Mock<IFileSystem>();
-        this.fileSystem.Setup(x => x.FileExists("sound.mp3")).Returns(true);
 
-        this.loader = new SoundResourceLoader(this.fileSystem.Object, this.factory.Object);
+        this.fileSystem = new MockFileSystem();
+        this.fileSystem.AddEmptyFile("sound.mp3");
+
+        this.loader = new SoundResourceLoader(this.fileSystem, this.factory.Object);
     }
 }

@@ -8,8 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Abstractions;
 using FinalEngine.Extensions.Resources.Invocation;
-using FinalEngine.IO;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Settings;
 using FinalEngine.Rendering.Textures;
@@ -107,12 +107,12 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
             throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
         }
 
-        if (!this.fileSystem.FileExists(filePath))
+        if (!this.fileSystem.File.Exists(filePath))
         {
             throw new FileNotFoundException($"The specified {nameof(filePath)} parameter cannot be located.", filePath);
         }
 
-        using (var stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read))
+        using (var stream = this.fileSystem.File.OpenRead(filePath))
         {
             using (var image = this.invoker.Load<Rgba32>(stream))
             {
