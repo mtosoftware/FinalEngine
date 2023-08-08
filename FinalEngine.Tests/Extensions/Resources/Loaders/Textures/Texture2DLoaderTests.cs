@@ -6,9 +6,9 @@ namespace FinalEngine.Tests.Extensions.Resources.Loaders.Textures;
 
 using System;
 using System.IO;
+using System.IO.Abstractions.TestingHelpers;
 using FinalEngine.Extensions.Resources.Invocation;
 using FinalEngine.Extensions.Resources.Loaders.Textures;
-using FinalEngine.IO;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Textures;
 using Moq;
@@ -20,7 +20,7 @@ public class Texture2DLoaderTests
 {
     private Mock<IGPUResourceFactory> factory;
 
-    private Mock<IFileSystem> fileSystem;
+    private MockFileSystem fileSystem;
 
     private Image<Rgba32> image;
 
@@ -28,7 +28,7 @@ public class Texture2DLoaderTests
 
     private Texture2DResourceLoader loader;
 
-    private Mock<Stream> stream;
+    private MemoryStream stream;
 
     private Mock<ITexture2D> texture;
 
@@ -38,7 +38,7 @@ public class Texture2DLoaderTests
         // Arrange, act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new Texture2DResourceLoader(this.fileSystem.Object, null, this.invoker.Object);
+            new Texture2DResourceLoader(this.fileSystem, null, this.invoker.Object);
         });
     }
 
@@ -58,7 +58,7 @@ public class Texture2DLoaderTests
         // Arrange, act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, null);
+            new Texture2DResourceLoader(this.fileSystem, this.factory.Object, null);
         });
     }
 
@@ -74,26 +74,6 @@ public class Texture2DLoaderTests
             It.IsAny<byte[]>(),
             PixelFormat.Rgba,
             SizedFormat.Rgba8));
-    }
-
-    [Test]
-    public void LoadResourceShouldInvokeLoadWhenFileExists()
-    {
-        // Act
-        this.loader.LoadResource("texture");
-
-        // Assert
-        this.invoker.Verify(x => x.Load<Rgba32>(this.stream.Object));
-    }
-
-    [Test]
-    public void LoadResourceShouldInvokeOpenFileWhenFileExists()
-    {
-        // Act
-        this.loader.LoadResource("texture");
-
-        // Assert
-        this.fileSystem.Verify(x => x.OpenFile("texture", FileAccessMode.Read));
     }
 
     [Test]
@@ -139,13 +119,10 @@ public class Texture2DLoaderTests
     [Test]
     public void LoadResourceShouldThrowFileNotFoundExceptionWhenFileExistsReturnsFalse()
     {
-        // Arrange
-        this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(false);
-
         // Act and assert
         Assert.Throws<FileNotFoundException>(() =>
         {
-            this.loader.LoadResource("texture");
+            this.loader.LoadResource("texture2");
         });
     }
 
@@ -153,11 +130,12 @@ public class Texture2DLoaderTests
     public void Setup()
     {
         // Setup
-        this.fileSystem = new Mock<IFileSystem>();
-        this.stream = new Mock<Stream>();
+        this.fileSystem = new MockFileSystem();
+        this.stream = new MemoryStream();
 
-        this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(true);
-        this.fileSystem.Setup(x => x.OpenFile(It.IsAny<string>(), FileAccessMode.Read)).Returns(this.stream.Object);
+        this.fileSystem.AddFile("test", new MockFileData(this.stream.ToArray()));
+
+        this.fileSystem.AddFile(new MockFileInfo(this.fileSystem, "texture"), new MockFileData(this.stream.ToArray()));
 
         this.invoker = new Mock<IImageInvoker>();
 
@@ -173,7 +151,7 @@ public class Texture2DLoaderTests
             PixelFormat.Rgba,
             SizedFormat.Rgba8)).Returns(this.texture.Object);
 
-        this.loader = new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, this.invoker.Object);
+        this.loader = new Texture2DResourceLoader(this.fileSystem, this.factory.Object, this.invoker.Object);
     }
 
     [TearDown]

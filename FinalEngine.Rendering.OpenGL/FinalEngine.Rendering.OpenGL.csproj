@@ -41,7 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
     <ProjectReference Include="..\FinalEngine.Utilities\FinalEngine.Utilities.csproj" />
   </ItemGroup>

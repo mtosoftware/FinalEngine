@@ -6,8 +6,8 @@ namespace FinalEngine.Tests.Extensions.Resources.Loaders.Shaders;
 
 using System;
 using System.IO;
+using System.IO.Abstractions.TestingHelpers;
 using FinalEngine.Extensions.Resources.Loaders.Shaders;
-using FinalEngine.IO;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Pipeline;
 using Moq;
@@ -18,7 +18,7 @@ public sealed class ShaderResourceLoaderTests
 {
     private Mock<IGPUResourceFactory> factory;
 
-    private Mock<IFileSystem> fileSystem;
+    private MockFileSystem fileSystem;
 
     private ShaderResourceLoader loader;
 
@@ -30,7 +30,7 @@ public sealed class ShaderResourceLoaderTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ShaderResourceLoader(null, this.fileSystem.Object);
+            new ShaderResourceLoader(null, this.fileSystem);
         });
     }
 
@@ -51,7 +51,7 @@ public sealed class ShaderResourceLoaderTests
         this.loader.LoadResource("test.frag");
 
         // Assert
-        this.factory.Verify(x => x.CreateShader(PipelineTarget.Fragment, "test"), Times.Once);
+        this.factory.Verify(x => x.CreateShader(PipelineTarget.Fragment, string.Empty), Times.Once);
     }
 
     [Test]
@@ -61,7 +61,7 @@ public sealed class ShaderResourceLoaderTests
         this.loader.LoadResource("test.fs");
 
         // Assert
-        this.factory.Verify(x => x.CreateShader(PipelineTarget.Fragment, "test"), Times.Once);
+        this.factory.Verify(x => x.CreateShader(PipelineTarget.Fragment, string.Empty), Times.Once);
     }
 
     [Test]
@@ -71,7 +71,7 @@ public sealed class ShaderResourceLoaderTests
         this.loader.LoadResource("test.vert");
 
         // Assert
-        this.factory.Verify(x => x.CreateShader(PipelineTarget.Vertex, "test"), Times.Once);
+        this.factory.Verify(x => x.CreateShader(PipelineTarget.Vertex, string.Empty), Times.Once);
     }
 
     [Test]
@@ -81,27 +81,7 @@ public sealed class ShaderResourceLoaderTests
         this.loader.LoadResource("test.vs");
 
         // Assert
-        this.factory.Verify(x => x.CreateShader(PipelineTarget.Vertex, "test"), Times.Once);
-    }
-
-    [Test]
-    public void LoadResourceShouldInvokeFileSystemGetExtensionWhenFileExists()
-    {
-        // Act
-        this.loader.LoadResource("test.vs");
-
-        // Assert
-        this.fileSystem.Verify(x => x.GetExtension("test.vs"), Times.Once);
-    }
-
-    [Test]
-    public void LoadResourceShouldInvokeOpenFileWhenFileExists()
-    {
-        // Act
-        this.loader.LoadResource("test.vert");
-
-        // Assert
-        this.fileSystem.Verify(x => x.OpenFile("test.vert", FileAccessMode.Read), Times.Once);
+        this.factory.Verify(x => x.CreateShader(PipelineTarget.Vertex, string.Empty), Times.Once);
     }
 
     [Test]
@@ -137,9 +117,6 @@ public sealed class ShaderResourceLoaderTests
     [Test]
     public void LoadResourceShouldThrowFileNotFoundExceptionWhenFileExistsReturnsFalse()
     {
-        // Arrange
-        this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(false);
-
         // Act and assert
         Assert.Throws<FileNotFoundException>(() =>
         {
@@ -160,30 +137,18 @@ public sealed class ShaderResourceLoaderTests
     [SetUp]
     public void Setup()
     {
-        this.fileSystem = new Mock<IFileSystem>();
         this.factory = new Mock<IGPUResourceFactory>();
         this.shader = new Mock<IShader>();
+        this.fileSystem = new MockFileSystem();
 
-        this.fileSystem.Setup(x => x.GetExtension("test.vert")).Returns(".vert");
-        this.fileSystem.Setup(x => x.GetExtension("test.frag")).Returns(".frag");
-        this.fileSystem.Setup(x => x.GetExtension("test.vs")).Returns(".vs");
-        this.fileSystem.Setup(x => x.GetExtension("test.fs")).Returns(".fs");
-        this.fileSystem.Setup(x => x.FileExists(It.IsAny<string>())).Returns(true);
-        this.fileSystem.Setup(x => x.OpenFile(It.IsAny<string>(), FileAccessMode.Read)).Returns(() =>
-        {
-            var stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-
-            writer.Write("test");
-            writer.Flush();
-
-            stream.Position = 0;
-
-            return stream;
-        });
+        this.fileSystem.AddEmptyFile("test.vert");
+        this.fileSystem.AddEmptyFile("test.frag");
+        this.fileSystem.AddEmptyFile("test.vs");
+        this.fileSystem.AddEmptyFile("test.fs");
+        this.fileSystem.AddEmptyFile("test.txt");
 
         this.factory.Setup(x => x.CreateShader(It.IsAny<PipelineTarget>(), It.IsAny<string>())).Returns(this.shader.Object);
 
-        this.loader = new ShaderResourceLoader(this.factory.Object, this.fileSystem.Object);
+        this.loader = new ShaderResourceLoader(this.factory.Object, this.fileSystem);
     }
 }
