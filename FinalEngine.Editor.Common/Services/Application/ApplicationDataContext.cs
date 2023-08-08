@@ -19,20 +19,6 @@ public sealed class ApplicationDataContext : IApplicationDataContext
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
     }
 
-    public IEnumerable<string> LayoutNames
-    {
-        get
-        {
-            var directoryInfo = this.fileSystem.DirectoryInfo.New(this.LayoutDirectory);
-            var files = directoryInfo.GetFiles("*.config", SearchOption.TopDirectoryOnly);
-
-            return files.Select(x =>
-            {
-                return this.fileSystem.Path.GetFileNameWithoutExtension(x.Name);
-            }).ToArray();
-        }
-    }
-
     private string Directory
     {
         get
@@ -70,7 +56,7 @@ public sealed class ApplicationDataContext : IApplicationDataContext
             throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
         }
 
-        return this.LayoutNames.Contains(layoutName);
+        return this.LoadLayoutNames().Contains(layoutName);
     }
 
     public string GetLayoutPath(string layoutName)
@@ -81,5 +67,16 @@ public sealed class ApplicationDataContext : IApplicationDataContext
         }
 
         return this.fileSystem.Path.Combine(this.LayoutDirectory, $"{layoutName}.config");
+    }
+
+    public IEnumerable<string> LoadLayoutNames()
+    {
+        var directoryInfo = this.fileSystem.DirectoryInfo.New(this.LayoutDirectory);
+        var files = directoryInfo.GetFiles("*.config", SearchOption.TopDirectoryOnly);
+
+        return files.Select(x =>
+        {
+            return this.fileSystem.Path.GetFileNameWithoutExtension(x.Name);
+        }).ToArray();
     }
 }

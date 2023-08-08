@@ -34,7 +34,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         this.applicationData = applicationData ?? throw new ArgumentNullException(nameof(applicationData));
 
         this.Title = "Manage Window Layouts";
-        this.LayoutNames = this.applicationData.LayoutNames;
+        this.LayoutNames = this.applicationData.LoadLayoutNames();
     }
 
     public ICommand DeleteCommand
@@ -81,6 +81,8 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         }
 
         this.fileSystem.File.Delete(this.applicationData.GetLayoutPath(this.SelectedItem!));
-        this.LayoutNames = this.applicationData.LayoutNames;
+
+        //// TODO: Instead of re-loading layout names once one is removed, just remove it from the list.
+        this.LayoutNames = this.applicationData.LoadLayoutNames();
     }
 }
