@@ -11,6 +11,8 @@ using System;
 /// </summary>
 public interface IApplicationContext
 {
+    string DataDirectory { get; }
+
     /// <summary>
     /// Gets the title of the application.
     /// </summary>

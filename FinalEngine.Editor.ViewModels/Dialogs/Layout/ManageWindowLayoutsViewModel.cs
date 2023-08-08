@@ -10,16 +10,14 @@ using System.IO.Abstractions;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
-using FinalEngine.Editor.ViewModels.Messages.Layout;
 
 public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWindowLayoutsViewModel
 {
-    private readonly IApplicationDataContext applicationData;
-
     private readonly IFileSystem fileSystem;
+
+    private readonly ILayoutManager layoutManager;
 
     private readonly IUserActionRequester userActionRequester;
 
@@ -29,25 +27,27 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
     private IEnumerable<string> layoutNames;
 
-    private IMessenger messenger;
-
     private string? selectedItem;
 
     private string? title;
 
     public ManageWindowLayoutsViewModel(
-        IMessenger messenger,
         IFileSystem fileSystem,
-        IApplicationDataContext applicationData,
-        IUserActionRequester userActionRequester)
+        IUserActionRequester userActionRequester,
+        ILayoutManagerFactory layoutManagerFactory)
     {
-        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-        this.applicationData = applicationData ?? throw new ArgumentNullException(nameof(applicationData));
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
 
+        if (layoutManagerFactory == null)
+        {
+            throw new ArgumentNullException(nameof(layoutManagerFactory));
+        }
+
+        this.layoutManager = layoutManagerFactory.CreateManager();
+
         this.Title = "Manage Window Layouts";
-        this.LayoutNames = this.applicationData.LoadLayoutNames();
+        this.LayoutNames = this.layoutManager.LoadLayoutNames();
     }
 
     public ICommand ApplyCommand
@@ -90,7 +90,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
     private void Apply()
     {
-        this.messenger.Send(new LoadWindowLayoutMessage(this.applicationData.GetLayoutPath(this.SelectedItem!)));
+        this.layoutManager.LoadLayout(this.SelectedItem!);
     }
 
     private bool CanApply()
@@ -105,11 +105,6 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
     private void Delete()
     {
-        if (!this.applicationData.ContainsLayout(this.SelectedItem!))
-        {
-            throw new Exception($"The specified {nameof(this.SelectedItem)} was not matched to the layout name: '{this.SelectedItem}'.");
-        }
-
         if (!this.userActionRequester.RequestYesNo(
             this.Title,
             $"Are you sure you want to do delete the '{this.SelectedItem}' window layout?"))
@@ -117,9 +112,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
             return;
         }
 
-        this.fileSystem.File.Delete(this.applicationData.GetLayoutPath(this.SelectedItem!));
-
-        //// TODO: Instead of re-loading layout names once one is removed, just remove it from the list.
-        this.LayoutNames = this.applicationData.LoadLayoutNames();
+        this.layoutManager.DeleteLayout(this.SelectedItem!);
+        this.LayoutNames = this.layoutManager.LoadLayoutNames();
     }
 }

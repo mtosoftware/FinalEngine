@@ -8,20 +8,13 @@ using System;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
-using FinalEngine.Editor.ViewModels.Messages.Layout;
 using FinalEngine.Editor.ViewModels.Validation;
-using Microsoft.Extensions.Logging;
 
 public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindowLayoutViewModel
 {
-    private readonly IApplicationDataContext context;
-
-    private readonly ILogger<SaveWindowLayoutViewModel> logger;
-
-    private readonly IMessenger messenger;
+    private readonly ILayoutManager layoutManager;
 
     private readonly IUserActionRequester userActionRequester;
 
@@ -32,15 +25,17 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     private string? title;
 
     public SaveWindowLayoutViewModel(
-        ILogger<SaveWindowLayoutViewModel> logger,
-        IMessenger messenger,
-        IApplicationDataContext context,
+        ILayoutManagerFactory layoutManagerFactory,
         IUserActionRequester userActionRequester)
     {
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
+
+        if (layoutManagerFactory == null)
+        {
+            throw new ArgumentNullException(nameof(layoutManagerFactory));
+        }
+
+        this.layoutManager = layoutManagerFactory.CreateManager();
 
         this.Title = "Save Window Layout";
         this.LayoutName = "Layout Name";
@@ -77,7 +72,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
             throw new ArgumentNullException(nameof(closeable));
         }
 
-        if (this.context.ContainsLayout(this.LayoutName))
+        if (this.layoutManager.ContainsLayout(this.LayoutName))
         {
             if (!this.userActionRequester.RequestYesNo(
                 this.Title,
@@ -87,9 +82,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
             }
         }
 
-        string filePath = this.context.GetLayoutPath(this.LayoutName);
-        this.messenger.Send(new SaveWindowLayoutMessage(filePath));
-
+        this.layoutManager.SaveLayout(this.LayoutName);
         closeable.Close();
     }
 }

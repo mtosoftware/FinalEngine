@@ -9,8 +9,6 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
@@ -18,21 +16,18 @@ using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
-using FinalEngine.Editor.ViewModels.Messages.Layout;
+using FinalEngine.Editor.ViewModels.Factories;
 
 public sealed class DockViewModel : ObservableObject, IDockViewModel
 {
-    private readonly IApplicationDataContext context;
-
-    private readonly IMessenger messenger;
+    private readonly ILayoutManagerFactory layoutManagerFactory;
 
     private ICommand? loadCommand;
 
     private ICommand? unloadCommand;
 
     public DockViewModel(
-        IMessenger messenger,
-        IApplicationDataContext context,
+        ILayoutManagerFactory layoutManagerFactory,
         IFactory<IProjectExplorerToolViewModel> projectExplorerFactory,
         IFactory<ISceneHierarchyToolViewModel> sceneHierarchyFactory,
         IFactory<IPropertiesToolViewModel> propertiesFactory,
@@ -40,8 +35,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
         IFactory<IEntitySystemsToolViewModel> entitySystemsFactory,
         IFactory<ISceneViewPaneViewModel> sceneViewFactory)
     {
-        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
+        this.layoutManagerFactory = layoutManagerFactory ?? throw new ArgumentNullException(nameof(layoutManagerFactory));
 
         if (projectExplorerFactory == null)
         {
@@ -104,19 +98,19 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
 
     private void Load()
     {
-        // If it's the first time startup, use the default window layout.
-        if (!this.context.ContainsLayout("startup"))
+        var layoutManager = this.layoutManagerFactory.CreateManager();
+
+        if (!layoutManager.ContainsLayout("startup"))
         {
-            this.messenger.Send<ResetWindowLayoutMessage>();
+            layoutManager.ResetLayout();
             return;
         }
 
-        // Otherwise, let's get the last known layout.
-        this.messenger.Send(new LoadWindowLayoutMessage(this.context.GetLayoutPath("startup")));
+        layoutManager.LoadLayout("startup");
     }
 
     private void Unload()
     {
-        this.messenger.Send(new SaveWindowLayoutMessage(this.context.GetLayoutPath("startup")));
+        this.layoutManagerFactory.CreateManager().SaveLayout("startup");
     }
 }

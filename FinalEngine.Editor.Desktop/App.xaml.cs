@@ -10,6 +10,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.Desktop.Factories;
 using FinalEngine.Editor.Desktop.Interactions;
 using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.Desktop.Views.Dialogs.Layout;
@@ -20,6 +21,7 @@ using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -102,7 +104,6 @@ public partial class App : Application
 
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<IApplicationContext, ApplicationContext>();
-        services.AddSingleton<IApplicationDataContext, ApplicationDataContext>();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();
         services.AddFactory<ISceneHierarchyToolViewModel, SceneHierarchyToolViewModel>();
@@ -118,7 +119,9 @@ public partial class App : Application
         services.AddTransient<IViewable<ISaveWindowLayoutViewModel>, SaveWindowLayoutView>();
         services.AddTransient<IViewable<IManageWindowLayoutsViewModel>, ManageWindowLayoutsView>();
 
+        services.AddSingleton<ILayoutManagerFactory, LayoutManagerFactory>();
         services.AddSingleton<IUserActionRequester, UserActionRequester>();
+
         services.AddSingleton<IViewPresenter>(x =>
         {
             return new ViewPresenter(x);

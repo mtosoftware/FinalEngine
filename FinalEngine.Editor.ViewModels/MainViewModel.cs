@@ -13,9 +13,9 @@ using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
+using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Messages.Docking;
-using FinalEngine.Editor.ViewModels.Messages.Layout;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -25,7 +25,7 @@ using Microsoft.Extensions.Logging;
 /// <seealso cref="IMainViewModel" />
 public sealed class MainViewModel : ObservableObject, IMainViewModel
 {
-    private readonly IApplicationDataContext applicationDataContext;
+    private readonly ILayoutManagerFactory layoutManagerFactory;
 
     /// <summary>
     /// The logger.
@@ -80,13 +80,13 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         IMessenger messenger,
         IViewPresenter viewPresenter,
         IApplicationContext applicationContext,
-        IApplicationDataContext applicationDataContext,
+        ILayoutManagerFactory layoutManagerFactory,
         IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
-        this.applicationDataContext = applicationDataContext ?? throw new ArgumentNullException(nameof(applicationDataContext));
+        this.layoutManagerFactory = layoutManagerFactory ?? throw new ArgumentNullException(nameof(layoutManagerFactory));
 
         if (applicationContext == null)
         {
@@ -170,7 +170,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
 
     private void ResetWindowLayout()
     {
-        this.messenger.Send<ResetWindowLayoutMessage>();
+        this.layoutManagerFactory.CreateManager().ResetLayout();
     }
 
     private void ShowManageWindowLayoutsView()

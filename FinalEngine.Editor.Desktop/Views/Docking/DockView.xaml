@@ -13,8 +13,7 @@
              mc:Ignorable="d">
     <Grid>
         <!-- DOCKING MANAGERR -->
-        <DockingManager x:Name="dockManager"
-                        x:FieldModifier="private"
+        <DockingManager x:Name="DockManager"
                         AnchorablesSource="{Binding Tools}"
                         DocumentsSource="{Binding Panes}"
                         Loaded="{eb:EventBinding LoadCommand.Execute, `null`}"
