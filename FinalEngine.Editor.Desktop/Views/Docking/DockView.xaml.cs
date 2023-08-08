@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Editor.Desktop.Views.Docking;
 
+using System.Windows;
 using System.Windows.Controls;
 
 /// <summary>
@@ -17,5 +18,11 @@ public partial class DockView : UserControl
     public DockView()
     {
         this.InitializeComponent();
+        this.Dispatcher.ShutdownStarted += this.Dispatcher_ShutdownStarted;
+    }
+
+    private void Dispatcher_ShutdownStarted(object? sender, System.EventArgs e)
+    {
+        this.DockManager.RaiseEvent(new RoutedEventArgs(UnloadedEvent));
     }
 }

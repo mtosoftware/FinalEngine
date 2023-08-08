@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.Desktop.Factories;
 using System;
 using System.IO.Abstractions;
 using System.Windows;
+using AvalonDock;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Desktop.Interactions;
 using FinalEngine.Editor.Desktop.Views.Docking;
@@ -16,6 +17,9 @@ using MahApps.Metro.Controls;
 
 public sealed class LayoutManagerFactory : ILayoutManagerFactory
 {
+    // Easier to cache, plus when unloading the DockView MainWindow throws a NullReferenceException.
+    private static readonly DockingManager Instance = Application.Current.MainWindow.FindChild<DockView>().DockManager;
+
     private readonly IApplicationContext application;
 
     private readonly IFileSystem fileSystem;
@@ -28,6 +32,6 @@ public sealed class LayoutManagerFactory : ILayoutManagerFactory
 
     public ILayoutManager CreateManager()
     {
-        return new LayoutSerializer(Application.Current.MainWindow.FindChild<DockView>().DockManager, this.application, this.fileSystem);
+        return new LayoutSerializer(Instance, this.application, this.fileSystem);
     }
 }
