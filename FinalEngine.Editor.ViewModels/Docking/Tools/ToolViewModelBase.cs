@@ -36,7 +36,7 @@ public abstract class ToolViewModelBase : PaneViewModelBase, IToolViewModel
     public PaneLocation PaneLocation
     {
         get { return this.location; }
-        set { this.SetProperty(ref location, value); }
+        set { this.SetProperty(ref this.location, value); }
     }
 
     private void ToggleToolWindow(object recipient, ToggleToolWindowMessage message)

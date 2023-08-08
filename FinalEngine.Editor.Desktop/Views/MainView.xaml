@@ -53,6 +53,7 @@
                 <!-- WINDOW -->
                 <MenuItem Header="_Window">
                     <MenuItem Header="_Save Window Layout" Command="{Binding SaveWindowLayoutCommand}" />
+                    <MenuItem Header="_Manage Window Layouts" Click="MenuItem_Click" />
                     <MenuItem Header="_Reset Window Layout" Command="{Binding ResetWindowLayoutCommand}" />
                 </MenuItem>
             </Menu>

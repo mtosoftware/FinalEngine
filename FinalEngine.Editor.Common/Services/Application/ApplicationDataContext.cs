@@ -19,6 +19,20 @@ public sealed class ApplicationDataContext : IApplicationDataContext
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
     }
 
+    public IEnumerable<string> LayoutNames
+    {
+        get
+        {
+            var directoryInfo = this.fileSystem.DirectoryInfo.New(this.LayoutDirectory);
+            var files = directoryInfo.GetFiles("*.config", SearchOption.TopDirectoryOnly);
+
+            return files.Select(x =>
+            {
+                return this.fileSystem.Path.GetFileNameWithoutExtension(x.Name);
+            }).ToArray();
+        }
+    }
+
     private string Directory
     {
         get
@@ -46,20 +60,6 @@ public sealed class ApplicationDataContext : IApplicationDataContext
             }
 
             return directory;
-        }
-    }
-
-    private IEnumerable<string> LayoutNames
-    {
-        get
-        {
-            var directoryInfo = this.fileSystem.DirectoryInfo.New(this.LayoutDirectory);
-            var files = directoryInfo.GetFiles("*.config", SearchOption.TopDirectoryOnly);
-
-            return files.Select(x =>
-            {
-                return this.fileSystem.Path.GetFileNameWithoutExtension(x.Name);
-            }).ToArray();
         }
     }
 

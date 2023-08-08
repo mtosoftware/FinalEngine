@@ -3,12 +3,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="d">
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.VisualStudio}">
-        <Setter Property="MinWidth" Value="60" />
-        <Setter Property="MinHeight" Value="26" />
+    <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource MahApps.Styles.ListBox.VisualStudio}">
         <Setter Property="Margin" Value="5" />
-        <Setter Property="Padding" Value="5, 0, 5, 0" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="{StaticResource MahApps.Brushes.Border.Normal}" />
+        <Setter Property="BorderThickness" Value="1" />
     </Style>
 </ResourceDictionary>

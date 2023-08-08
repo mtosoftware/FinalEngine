@@ -1,4 +1,4 @@
-// <copyright file="ScenePaneViewModel.cs" company="Software Antics">
+// <copyright file="SceneViewPaneViewModel.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 

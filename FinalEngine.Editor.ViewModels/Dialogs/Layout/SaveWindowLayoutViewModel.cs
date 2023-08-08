@@ -43,6 +43,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
 
         this.Title = "Save Window Layout";
+        this.LayoutName = "Layout Name";
     }
 
     [FileName(ErrorMessage = "You must provide a valid layout file name.")]
