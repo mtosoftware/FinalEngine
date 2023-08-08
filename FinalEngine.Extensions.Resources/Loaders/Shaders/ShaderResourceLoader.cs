@@ -6,7 +6,7 @@ namespace FinalEngine.Extensions.Resources.Loaders.Shaders;
 
 using System;
 using System.IO;
-using FinalEngine.IO;
+using System.IO.Abstractions;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
@@ -66,14 +66,14 @@ public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
             throw new ArgumentNullException(nameof(filePath));
         }
 
-        if (!this.fileSystem.FileExists(filePath))
+        if (!this.fileSystem.File.Exists(filePath))
         {
             throw new FileNotFoundException($"The specified {nameof(filePath)} couldn't be located.", filePath);
         }
 
-        var target = this.GetPipelineTarget(this.fileSystem.GetExtension(filePath));
+        var target = this.GetPipelineTarget(this.fileSystem.Path.GetExtension(filePath));
 
-        using (var stream = this.fileSystem.OpenFile(filePath, FileAccessMode.Read))
+        using (var stream = this.fileSystem.File.OpenRead(filePath))
         {
             using (var reader = new StreamReader(stream))
             {

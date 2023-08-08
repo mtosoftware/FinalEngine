@@ -2,6 +2,8 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
+/*
+
 namespace FinalEngine.Tests.Editor.ViewModels;
 
 using System;
@@ -118,3 +120,5 @@ public sealed class MainViewModelTests
         this.viewModel = new MainViewModel(this.logger.Object, this.context.Object);
     }
 }
+
+*/

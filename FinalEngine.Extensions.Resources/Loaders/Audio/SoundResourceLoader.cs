@@ -7,10 +7,10 @@ namespace FinalEngine.Extensions.Resources.Loaders.Audio;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Abstractions;
 using FinalEngine.Audio;
 using FinalEngine.Audio.OpenAL;
 using FinalEngine.Extensions.Resources.Factories;
-using FinalEngine.IO;
 using FinalEngine.Resources;
 
 /// <summary>
@@ -76,7 +76,7 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
             throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
         }
 
-        if (!this.fileSystem.FileExists(filePath))
+        if (!this.fileSystem.File.Exists(filePath))
         {
             throw new FileNotFoundException($"The specified {nameof(filePath)} parameter cannot be located.", filePath);
         }

@@ -7,8 +7,8 @@ namespace FinalEngine.Editor.Common.Services.Application;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
-using FinalEngine.IO;
 
 public sealed class ApplicationDataContext : IApplicationDataContext
 {
@@ -23,11 +23,11 @@ public sealed class ApplicationDataContext : IApplicationDataContext
     {
         get
         {
-            string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Final Engine");
+            string directory = this.fileSystem.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Final Engine");
 
-            if (!this.fileSystem.DirectoryExists(directory))
+            if (!this.fileSystem.Directory.Exists(directory))
             {
-                this.fileSystem.CreateDirectory(directory);
+                this.fileSystem.Directory.CreateDirectory(directory);
             }
 
             return directory;
@@ -38,11 +38,11 @@ public sealed class ApplicationDataContext : IApplicationDataContext
     {
         get
         {
-            string directory = Path.Combine(this.Directory, "Layouts");
+            string directory = this.fileSystem.Path.Combine(this.Directory, "Layouts");
 
-            if (!this.fileSystem.DirectoryExists(directory))
+            if (!this.fileSystem.Directory.Exists(directory))
             {
-                this.fileSystem.CreateDirectory(directory);
+                this.fileSystem.Directory.CreateDirectory(directory);
             }
 
             return directory;
@@ -53,12 +53,12 @@ public sealed class ApplicationDataContext : IApplicationDataContext
     {
         get
         {
-            var directoryInfo = new DirectoryInfo(this.LayoutDirectory);
-            var files = directoryInfo.GetFiles();
+            var directoryInfo = this.fileSystem.DirectoryInfo.New(this.LayoutDirectory);
+            var files = directoryInfo.GetFiles("*.config", SearchOption.TopDirectoryOnly);
 
             return files.Select(x =>
             {
-                return Path.GetFileNameWithoutExtension(x.Name);
+                return this.fileSystem.Path.GetFileNameWithoutExtension(x.Name);
             }).ToArray();
         }
     }
@@ -80,6 +80,6 @@ public sealed class ApplicationDataContext : IApplicationDataContext
             throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
         }
 
-        return Path.Combine(this.LayoutDirectory, $"{layoutName}.config");
+        return this.fileSystem.Path.Combine(this.LayoutDirectory, $"{layoutName}.config");
     }
 }

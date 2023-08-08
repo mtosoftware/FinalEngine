@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.Desktop;
 
 using System.Diagnostics;
+using System.IO.Abstractions;
 using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Extensions;
@@ -20,7 +21,6 @@ using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Interactions;
-using FinalEngine.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
