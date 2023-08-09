@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.Common.Services.Application;
 using System;
 using System.IO.Abstractions;
 using System.Reflection;
+using FinalEngine.Editor.Common.Services.Environment;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IApplicationContext"/>.
@@ -14,18 +15,40 @@ using System.Reflection;
 /// <seealso cref="IApplicationContext" />
 public sealed class ApplicationContext : IApplicationContext
 {
+    /// <summary>
+    /// The environment service.
+    /// </summary>
+    private readonly IEnvironmentContext environment;
+
+    /// <summary>
+    /// The file system service.
+    /// </summary>
     private readonly IFileSystem fileSystem;
 
-    public ApplicationContext(IFileSystem fileSystem)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApplicationContext"/> class.
+    /// </summary>
+    /// <param name="fileSystem">
+    /// The file system service, used to create the required directories for <see cref="DataDirectory"/>, if required.
+    /// </param>
+    /// <param name="environment">
+    /// The environment, used to locate the application data folder for th roaming user.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// The specified <paramref name="fileSystem"/> or <paramref name="environment"/> parameter cannot be null.
+    /// </exception>
+    public ApplicationContext(IFileSystem fileSystem, IEnvironmentContext environment)
     {
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+        this.environment = environment ?? throw new ArgumentNullException(nameof(environment));
     }
 
+    /// <inheritdoc/>
     public string DataDirectory
     {
         get
         {
-            string directory = this.fileSystem.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Final Engine");
+            string directory = this.fileSystem.Path.Combine(this.environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Final Engine");
 
             if (!this.fileSystem.Directory.Exists(directory))
             {

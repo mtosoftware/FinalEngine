@@ -10,6 +10,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.Common.Services.Environment;
 using FinalEngine.Editor.Desktop.Factories;
 using FinalEngine.Editor.Desktop.Interactions;
 using FinalEngine.Editor.Desktop.Views;
@@ -104,6 +105,7 @@ public partial class App : Application
 
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<IApplicationContext, ApplicationContext>();
+        services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();
         services.AddFactory<ISceneHierarchyToolViewModel, SceneHierarchyToolViewModel>();
