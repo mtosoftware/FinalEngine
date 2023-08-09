@@ -7,7 +7,6 @@ namespace FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Factories;
@@ -45,19 +44,17 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         }
 
         this.layoutManager = layoutManagerFactory.CreateManager();
-
-        this.Title = "Manage Window Layouts";
         this.LayoutNames = this.layoutManager.LoadLayoutNames();
     }
 
-    public ICommand ApplyCommand
+    public IRelayCommand ApplyCommand
     {
-        get { return this.applyCommand ??= new RelayCommand(this.Apply, this.CanApply); }
+        get { return this.applyCommand ??= new RelayCommand(this.Apply, this.CanModify); }
     }
 
-    public ICommand DeleteCommand
+    public IRelayCommand DeleteCommand
     {
-        get { return this.deleteCommand ??= new RelayCommand(this.Delete, this.CanDelete); }
+        get { return this.deleteCommand ??= new RelayCommand(this.Delete, this.CanModify); }
     }
 
     public IEnumerable<string> LayoutNames
@@ -77,15 +74,14 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         {
             this.SetProperty(ref this.selectedItem, value);
 
-            this.deleteCommand?.NotifyCanExecuteChanged();
-            this.applyCommand?.NotifyCanExecuteChanged();
+            this.DeleteCommand.NotifyCanExecuteChanged();
+            this.ApplyCommand.NotifyCanExecuteChanged();
         }
     }
 
     public string Title
     {
-        get { return this.title ?? string.Empty; }
-        private set { this.SetProperty(ref this.title, value); }
+        get { return "Manage Window Layouts"; }
     }
 
     private void Apply()
@@ -93,14 +89,9 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         this.layoutManager.LoadLayout(this.SelectedItem!);
     }
 
-    private bool CanApply()
+    private bool CanModify()
     {
-        return this.SelectedItem != null;
-    }
-
-    private bool CanDelete()
-    {
-        return this.SelectedItem != null;
+        return !string.IsNullOrWhiteSpace(this.SelectedItem);
     }
 
     private void Delete()

@@ -5,9 +5,11 @@
 namespace FinalEngine.Editor.Common.Extensions;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Editor.Common.Services.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
+[ExcludeFromCodeCoverage(Justification = "Extensions")]
 public static class ServiceCollectionExtensions
 {
     public static void AddFactory<TService, TImplementation>(this IServiceCollection services)

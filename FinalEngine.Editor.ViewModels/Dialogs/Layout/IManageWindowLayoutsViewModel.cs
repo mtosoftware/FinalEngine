@@ -5,13 +5,13 @@
 namespace FinalEngine.Editor.ViewModels.Dialogs.Layout;
 
 using System.Collections.Generic;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 public interface IManageWindowLayoutsViewModel
 {
-    ICommand ApplyCommand { get; }
+    IRelayCommand ApplyCommand { get; }
 
-    ICommand DeleteCommand { get; }
+    IRelayCommand DeleteCommand { get; }
 
     IEnumerable<string> LayoutNames { get; }
 
