@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Interactions;
+namespace FinalEngine.Editor.ViewModels.Services.Actions;
 
 public interface IUserActionRequester
 {

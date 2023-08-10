@@ -8,7 +8,8 @@ using System;
 using System.Collections.Generic;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Factories;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Actions;
+using FinalEngine.Editor.ViewModels.Services.Layout;
 using Moq;
 using NUnit.Framework;
 

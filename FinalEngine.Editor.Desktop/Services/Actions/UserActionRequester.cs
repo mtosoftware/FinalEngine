@@ -2,10 +2,10 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.Desktop.Interactions;
+namespace FinalEngine.Editor.Desktop.Services.Actions;
 
 using System.Windows;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Actions;
 
 public sealed class UserActionRequester : IUserActionRequester
 {

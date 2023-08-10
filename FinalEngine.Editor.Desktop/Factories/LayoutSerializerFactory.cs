@@ -9,10 +9,10 @@ using System.IO.Abstractions;
 using System.Windows;
 using AvalonDock;
 using FinalEngine.Editor.Common.Services.Application;
-using FinalEngine.Editor.Desktop.Interactions;
+using FinalEngine.Editor.Desktop.Services.Layout;
 using FinalEngine.Editor.Desktop.Views.Docking;
 using FinalEngine.Editor.ViewModels.Factories;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Layout;
 using MahApps.Metro.Controls;
 
 public sealed class LayoutManagerFactory : ILayoutManagerFactory

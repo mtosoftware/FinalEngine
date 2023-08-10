@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.Desktop.Interactions;
+namespace FinalEngine.Editor.Desktop.Services.Layout;
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using AvalonDock;
 using AvalonDock.Layout.Serialization;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Layout;
 
 public sealed class LayoutManager : ILayoutManager
 {

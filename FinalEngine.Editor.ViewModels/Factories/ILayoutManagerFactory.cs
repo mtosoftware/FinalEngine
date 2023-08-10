@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Editor.ViewModels.Factories;
 
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Layout;
 
 public interface ILayoutManagerFactory
 {
