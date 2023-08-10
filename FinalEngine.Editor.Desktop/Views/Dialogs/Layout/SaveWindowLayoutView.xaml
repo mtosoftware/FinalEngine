@@ -23,11 +23,11 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0">Layout Name:</Label>
-        <TextBox Grid.Column="1" Grid.Row="0" MinWidth="250" Text="{Binding LayoutName, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox x:Name="textBoxLayoutName" Grid.Column="1" Grid.Row="0" MinWidth="250" Text="{Binding LayoutName, UpdateSourceTrigger=PropertyChanged}" />
 
         <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
-            <Button IsDefault="True" MinWidth="60" Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
-            <Button IsCancel="True" MinWidth="60" Content="Cancel" />
+            <Button IsDefault="True" Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
+            <Button IsCancel="True" Content="Cancel" />
         </WrapPanel>
     </Grid>
 </mah:MetroWindow>

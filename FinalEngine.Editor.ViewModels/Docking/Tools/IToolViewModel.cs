@@ -6,18 +6,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools;
 
 using FinalEngine.Editor.ViewModels.Docking.Panes;
 
-public enum PaneLocation
-{
-    Left,
-
-    Right,
-
-    Bottom,
-}
-
 public interface IToolViewModel : IPaneViewModel
 {
     bool IsVisible { get; set; }
-
-    PaneLocation PaneLocation { get; }
 }

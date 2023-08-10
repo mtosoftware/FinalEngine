@@ -12,9 +12,10 @@ using System.Linq;
 using AvalonDock;
 using AvalonDock.Layout.Serialization;
 using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Interactions;
 
-public sealed class LayoutSerializer : ILayoutManager
+public sealed class LayoutManager : ILayoutManager
 {
     private readonly IApplicationContext application;
 
@@ -24,7 +25,7 @@ public sealed class LayoutSerializer : ILayoutManager
 
     private readonly XmlLayoutSerializer serializer;
 
-    public LayoutSerializer(DockingManager dockManager, IApplicationContext application, IFileSystem fileSystem)
+    public LayoutManager(DockingManager dockManager, IApplicationContext application, IFileSystem fileSystem)
     {
         this.dockManager = dockManager ?? throw new ArgumentNullException(nameof(dockManager));
         this.application = application ?? throw new ArgumentNullException(nameof(application));
@@ -112,6 +113,21 @@ public sealed class LayoutSerializer : ILayoutManager
         }
 
         this.serializer.Serialize(this.GetLayoutPath(layoutName));
+    }
+
+    public void ToggleToolWindow(string contentID)
+    {
+        if (string.IsNullOrWhiteSpace(contentID))
+        {
+            throw new ArgumentException($"'{nameof(contentID)}' cannot be null or whitespace.", nameof(contentID));
+        }
+
+        var tool = this.dockManager.AnchorablesSource.Cast<IToolViewModel>().FirstOrDefault(x =>
+        {
+            return x.ContentID == contentID;
+        }) ?? throw new ArgumentException($"The specified {nameof(contentID)} couldn't be matched to a tool window.", nameof(contentID));
+
+        tool.IsVisible = !tool.IsVisible;
     }
 
     private string GetLayoutPath(string layoutName)

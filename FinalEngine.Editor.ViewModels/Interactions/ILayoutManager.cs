@@ -19,4 +19,6 @@ public interface ILayoutManager
     void ResetLayout();
 
     void SaveLayout(string layoutName);
+
+    void ToggleToolWindow(string contentID);
 }

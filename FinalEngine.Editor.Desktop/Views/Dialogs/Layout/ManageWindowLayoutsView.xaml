@@ -35,9 +35,13 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <WrapPanel Grid.Row="1" HorizontalAlignment="Right">
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Left">
             <Button Content="Apply" Command="{Binding ApplyCommand}" />
             <Button Content="Delete" Command="{Binding DeleteCommand}" />
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Right">
+            <Button IsCancel="True" Content="Close" />
         </WrapPanel>
     </Grid>
 </mah:MetroWindow>

@@ -8,14 +8,12 @@ using System;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
-using FinalEngine.Editor.ViewModels.Messages.Docking;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -31,11 +29,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// The logger.
     /// </summary>
     private readonly ILogger<MainViewModel> logger;
-
-    /// <summary>
-    /// The messenger.
-    /// </summary>
-    private readonly IMessenger messenger;
 
     /// <summary>
     /// The view presenter.
@@ -77,14 +70,12 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
-        IMessenger messenger,
         IViewPresenter viewPresenter,
         IApplicationContext applicationContext,
         ILayoutManagerFactory layoutManagerFactory,
         IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
         this.layoutManagerFactory = layoutManagerFactory ?? throw new ArgumentNullException(nameof(layoutManagerFactory));
 
@@ -187,9 +178,9 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     {
         if (string.IsNullOrWhiteSpace(contentID))
         {
-            throw new ArgumentNullException(nameof(contentID));
+            throw new ArgumentException($"'{nameof(contentID)}' cannot be null or whitespace.", nameof(contentID));
         }
 
-        this.messenger.Send(new ToggleToolWindowMessage(contentID));
+        this.layoutManagerFactory.CreateManager().ToggleToolWindow(contentID);
     }
 }

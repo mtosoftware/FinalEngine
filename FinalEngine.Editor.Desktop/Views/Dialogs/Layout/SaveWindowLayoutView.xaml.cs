@@ -16,5 +16,8 @@ public partial class SaveWindowLayoutView : MetroWindow, IViewable<ISaveWindowLa
     public SaveWindowLayoutView()
     {
         this.InitializeComponent();
+
+        //// TODO: Move this out of code behind.
+        this.textBoxLayoutName.Dispatcher.BeginInvoke(() => this.textBoxLayoutName.SelectAll());
     }
 }

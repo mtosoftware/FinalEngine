@@ -4,13 +4,13 @@
 
 namespace FinalEngine.Editor.ViewModels.Dialogs.Layout;
 
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 public interface ISaveWindowLayoutViewModel
 {
     string LayoutName { get; set; }
 
-    ICommand SaveCommand { get; }
+    IRelayCommand SaveCommand { get; }
 
     string Title { get; }
 }

@@ -32,6 +32,6 @@ public sealed class LayoutManagerFactory : ILayoutManagerFactory
 
     public ILayoutManager CreateManager()
     {
-        return new LayoutSerializer(Instance, this.application, this.fileSystem);
+        return new LayoutManager(Instance, this.application, this.fileSystem);
     }
 }

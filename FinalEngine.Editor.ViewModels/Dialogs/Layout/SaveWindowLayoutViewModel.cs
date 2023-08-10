@@ -5,7 +5,6 @@
 namespace FinalEngine.Editor.ViewModels.Dialogs.Layout;
 
 using System;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Factories;
@@ -20,9 +19,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
 
     private string? layoutName;
 
-    private ICommand? saveCommand;
-
-    private string? title;
+    private IRelayCommand? saveCommand;
 
     public SaveWindowLayoutViewModel(
         ILayoutManagerFactory layoutManagerFactory,
@@ -36,33 +33,43 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
         }
 
         this.layoutManager = layoutManagerFactory.CreateManager();
-
-        this.Title = "Save Window Layout";
         this.LayoutName = "Layout Name";
     }
 
     [FileName(ErrorMessage = "You must provide a valid layout name.")]
     public string LayoutName
     {
-        get { return this.layoutName ?? string.Empty; }
-        set { this.SetProperty(ref this.layoutName, value, true); }
+        get
+        {
+            return this.layoutName ?? string.Empty;
+        }
+
+        set
+        {
+            this.SetProperty(ref this.layoutName, value, true);
+            this.SaveCommand.NotifyCanExecuteChanged();
+        }
     }
 
-    public ICommand SaveCommand
+    public IRelayCommand SaveCommand
     {
         get
         {
             return this.saveCommand ??= new RelayCommand<ICloseable>(this.Save, (o) =>
             {
-                return !this.HasErrors;
+                return this.CanSave();
             });
         }
     }
 
     public string Title
     {
-        get { return this.title ?? string.Empty; }
-        private set { this.SetProperty(ref this.title, value); }
+        get { return "Save Window Layout"; }
+    }
+
+    private bool CanSave()
+    {
+        return !this.HasErrors;
     }
 
     private void Save(ICloseable? closeable)
@@ -76,7 +83,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
         {
             if (!this.userActionRequester.RequestYesNo(
                 this.Title,
-                $"A window layout named {this.LayoutName} already exists. Do you want to replace it?"))
+                $"A window layout named '{this.LayoutName}' already exists. Do you want to replace it?"))
             {
                 return;
             }
