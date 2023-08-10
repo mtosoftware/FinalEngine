@@ -7,18 +7,39 @@ namespace FinalEngine.Tests.Core.Resources;
 using System;
 using FinalEngine.Resources;
 using FinalEngine.Resources.Exceptions;
+using FinalEngine.Tests.Core.Resources.Mocks;
 using Moq;
 using NUnit.Framework;
 
 public class ResourceManagerTests
 {
+    private const string DisposableFilePath = "path/to/file/disposable";
+
     private const string FilePath = "path/to/file";
+
+    private MockDisposableResource disposableResource;
+
+    private Mock<ResourceLoaderBase<MockDisposableResource>> disposableResourceLoader;
 
     private Mock<IResource> resource;
 
     private Mock<ResourceLoaderBase<IResource>> resourceLoader;
 
     private ResourceManager resourceManager;
+
+    [Test]
+    public void DisposeShouldInvokeDisposeableResourceDisposeWhenInvoked()
+    {
+        // Arrange
+        this.resourceManager.RegisterLoader<MockDisposableResource>(this.disposableResourceLoader.Object);
+        _ = this.resourceManager.LoadResource<MockDisposableResource>(DisposableFilePath);
+
+        // Act
+        this.resourceManager.Dispose();
+
+        // Assert
+        Assert.That(this.disposableResource.IsDisposed, Is.True);
+    }
 
     [Test]
     public void InstanceShouldReturnResourceManagerWhenInvoked()
@@ -169,15 +190,32 @@ public class ResourceManagerTests
     {
         this.resourceManager = new ResourceManager();
         this.resourceLoader = new Mock<ResourceLoaderBase<IResource>>();
+        this.disposableResourceLoader = new Mock<ResourceLoaderBase<MockDisposableResource>>();
         this.resource = new Mock<IResource>();
+        this.disposableResource = new MockDisposableResource();
 
         this.resourceLoader.Setup(x => x.LoadResource(FilePath)).Returns(this.resource.Object);
+        this.disposableResourceLoader.Setup(x => x.LoadResource(DisposableFilePath)).Returns(this.disposableResource);
     }
 
     [TearDown]
     public void TearDown()
     {
         this.resourceManager.Dispose();
+    }
+
+    [Test]
+    public void UnloadResourceShouldInvokeDisposeWhenResourceImplementsIDisposable()
+    {
+        // Arrange
+        this.resourceManager.RegisterLoader<MockDisposableResource>(this.disposableResourceLoader.Object);
+        _ = this.resourceManager.LoadResource<MockDisposableResource>(DisposableFilePath);
+
+        // Act
+        this.resourceManager.UnloadResource(this.disposableResource);
+
+        // Assert
+        Assert.That(this.disposableResource.IsDisposed, Is.True);
     }
 
     [Test]
