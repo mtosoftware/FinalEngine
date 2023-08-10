@@ -117,7 +117,7 @@ public partial class App : Application
         services.AddFactory<IDockViewModel, DockViewModel>();
         services.AddFactory<ISaveWindowLayoutViewModel, SaveWindowLayoutViewModel>();
         services.AddFactory<IManageWindowLayoutsViewModel, ManageWindowLayoutsViewModel>();
-        services.AddTransient<IMainViewModel, MainViewModel>();
+        services.AddSingleton<IMainViewModel, MainViewModel>();
 
         services.AddTransient<IViewable<ISaveWindowLayoutViewModel>, SaveWindowLayoutView>();
         services.AddTransient<IViewable<IManageWindowLayoutsViewModel>, ManageWindowLayoutsView>();

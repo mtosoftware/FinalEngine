@@ -10,7 +10,9 @@
              xmlns:inspectors="clr-namespace:FinalEngine.Editor.Desktop.Views.Inspectors"
              xmlns:projects="clr-namespace:FinalEngine.Editor.Desktop.Views.Projects"
              xmlns:scenes="clr-namespace:FinalEngine.Editor.Desktop.Views.Scenes"
-             mc:Ignorable="d">
+             xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Docking;assembly=FinalEngine.Editor.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:DockViewModel}">
     <Grid>
         <!-- DOCKING MANAGERR -->
         <DockingManager x:Name="DockManager"

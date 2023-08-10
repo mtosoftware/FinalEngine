@@ -43,8 +43,10 @@
                 <MenuItem Header="_View">
                     <MenuItem Header="_Tool Windows">
                         <MenuItem Header="Project _Explorer" InputGestureText="Ctrl+Alt+E" Command="{Binding ToggleToolWindowCommand}" CommandParameter="ProjectExplorer" />
+                        <Separator />
                         <MenuItem Header="Scene _Hierarchy" InputGestureText="Ctrl+Alt+H" Command="{Binding ToggleToolWindowCommand}" CommandParameter="SceneHierarchy" />
                         <MenuItem Header="Entity _Systems" InputGestureText="Ctrl+Alt+S" Command="{Binding ToggleToolWindowCommand}" CommandParameter="EntitySystems" />
+                        <Separator />
                         <MenuItem Header="_Properties" InputGestureText="Ctrl+Alt+P" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Properties" />
                         <MenuItem Header="_Console" InputGestureText="Ctrl+Alt+C" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Console" />
                     </MenuItem>

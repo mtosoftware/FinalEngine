@@ -12,20 +12,54 @@ using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 
+/// <summary>
+/// Provides a standard implementation of an <see cref="IManageWindowLayoutsViewModel"/>.
+/// </summary>
+/// <seealso cref="ObservableObject" />
+/// <seealso cref="IManageWindowLayoutsViewModel" />
 public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWindowLayoutsViewModel
 {
+    /// <summary>
+    /// The layout manager, used to apply and delete the currently selected layout.
+    /// </summary>
     private readonly ILayoutManager layoutManager;
 
+    /// <summary>
+    /// The user action requester, used to query the user and determine whether they wish to delete the currently selected layout.
+    /// </summary>
     private readonly IUserActionRequester userActionRequester;
 
+    /// <summary>
+    /// The apply command.
+    /// </summary>
     private IRelayCommand? applyCommand;
 
+    /// <summary>
+    /// The delete command.
+    /// </summary>
     private IRelayCommand? deleteCommand;
 
+    /// <summary>
+    /// The layout names.
+    /// </summary>
     private IEnumerable<string>? layoutNames;
 
+    /// <summary>
+    /// The currently selected item.
+    /// </summary>
     private string? selectedItem;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ManageWindowLayoutsViewModel"/> class.
+    /// </summary>
+    /// <param name="userActionRequester">
+    /// The user action requester, used to query the user and determine whether they wish to delete the currently selected window layout.</param>
+    /// <param name="layoutManagerFactory">
+    /// The layout manager factory, used to apply and delete window layouts.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// The specified <paramref name="userActionRequester"/> or <paramref name="layoutManagerFactory"/> parameter cannot be null.
+    /// </exception>
     public ManageWindowLayoutsViewModel(
         IUserActionRequester userActionRequester,
         ILayoutManagerFactory layoutManagerFactory)
@@ -41,22 +75,26 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         this.LayoutNames = this.layoutManager.LoadLayoutNames();
     }
 
+    /// <inheritdoc/>
     public IRelayCommand ApplyCommand
     {
         get { return this.applyCommand ??= new RelayCommand(this.Apply, this.CanModify); }
     }
 
+    /// <inheritdoc/>
     public IRelayCommand DeleteCommand
     {
         get { return this.deleteCommand ??= new RelayCommand(this.Delete, this.CanModify); }
     }
 
+    /// <inheritdoc/>
     public IEnumerable<string> LayoutNames
     {
         get { return this.layoutNames ?? Array.Empty<string>(); }
         private set { this.SetProperty(ref this.layoutNames, value); }
     }
 
+    /// <inheritdoc/>
     public string? SelectedItem
     {
         get
@@ -73,21 +111,34 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
         }
     }
 
+    /// <inheritdoc/>
     public string Title
     {
         get { return "Manage Window Layouts"; }
     }
 
+    /// <summary>
+    /// Applies the currently selected window layout to the application.
+    /// </summary>
     private void Apply()
     {
         this.layoutManager.LoadLayout(this.SelectedItem!);
     }
 
+    /// <summary>
+    /// Determines whether the user has selected a window layout.
+    /// </summary>
+    /// <returns>
+    ///   <c>true</c> if the user has selected a window layout; otherwise, <c>false</c>.
+    /// </returns>
     private bool CanModify()
     {
         return !string.IsNullOrWhiteSpace(this.SelectedItem);
     }
 
+    /// <summary>
+    /// Deletes the currently selected window layout from the applications roaming data.
+    /// </summary>
     private void Delete()
     {
         if (!this.userActionRequester.RequestYesNo(

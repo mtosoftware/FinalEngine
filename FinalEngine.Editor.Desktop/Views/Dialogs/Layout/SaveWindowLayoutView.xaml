@@ -5,14 +5,16 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Dialogs.Layout;assembly=FinalEngine.Editor.ViewModels"
                  mc:Ignorable="d"
+                 d:DataContext="{d:DesignInstance Type=vm:SaveWindowLayoutViewModel}"
                  TitleCharacterCasing="Normal"
                  Title="{Binding Title}"
                  SizeToContent="WidthAndHeight"
                  WindowStartupLocation="CenterScreen"
                  ResizeMode="NoResize"
                  GlowBrush="{DynamicResource MahApps.Brushes.Accent2}">
-    <Grid Margin="15" FocusManager.FocusedElement="{Binding ElementName=textBoxLayoutName}">
+    <Grid Margin="15" FocusManager.FocusedElement="{Binding ElementName=textBox}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
@@ -22,8 +24,8 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0">Layout Name:</Label>
-        <TextBox x:Name="textBoxLayoutName" Grid.Column="1" Grid.Row="0" MinWidth="250" Text="{Binding LayoutName, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="0" Content="Layout Name:" />
+        <TextBox x:Name="textBox" Grid.Column="1" Grid.Row="0" MinWidth="250" Text="{Binding LayoutName, UpdateSourceTrigger=PropertyChanged}" />
 
         <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
             <Button IsDefault="True" Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />
