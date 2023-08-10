@@ -13,11 +13,11 @@ using MahApps.Metro.Controls;
 /// </summary>
 public partial class SaveWindowLayoutView : MetroWindow, IViewable<ISaveWindowLayoutViewModel>, ICloseable
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SaveWindowLayoutView"/> class.
+    /// </summary>
     public SaveWindowLayoutView()
     {
         this.InitializeComponent();
-
-        //// TODO: Move this out of code behind.
-        this.textBoxLayoutName.Dispatcher.BeginInvoke(() => this.textBoxLayoutName.SelectAll());
     }
 }
