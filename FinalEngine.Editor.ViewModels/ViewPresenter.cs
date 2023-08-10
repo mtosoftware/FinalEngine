@@ -7,7 +7,6 @@ namespace FinalEngine.Editor.ViewModels;
 using System;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
-using Microsoft.Extensions.DependencyInjection;
 
 public sealed class ViewPresenter : IViewPresenter
 {
@@ -20,7 +19,12 @@ public sealed class ViewPresenter : IViewPresenter
 
     public void ShowView<TViewModel>()
     {
-        this.ShowView(this.provider.GetRequiredService<IFactory<TViewModel>>().Create());
+        if (this.provider.GetService(typeof(IFactory<TViewModel>)) is not IFactory<TViewModel> factory)
+        {
+            throw new ArgumentException($"The specified {nameof(TViewModel)} has not been registered with an {nameof(IFactory<TViewModel>)}.");
+        }
+
+        this.ShowView(factory.Create());
     }
 
     public void ShowView<TViewModel>(TViewModel viewModel)
@@ -30,7 +34,11 @@ public sealed class ViewPresenter : IViewPresenter
             throw new ArgumentNullException(nameof(viewModel));
         }
 
-        var view = this.provider.GetRequiredService<IViewable<TViewModel>>();
+        if (this.provider.GetService(typeof(IViewable<TViewModel>)) is not IViewable<TViewModel> view)
+        {
+            throw new ArgumentException($"The specified {nameof(TViewModel)} couldn't be converted to an {nameof(IViewable<TViewModel>)}.");
+        }
+
         view.DataContext = viewModel;
 
         view.ShowDialog();

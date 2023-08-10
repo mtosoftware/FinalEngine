@@ -4,16 +4,29 @@
 
 namespace FinalEngine.Editor.ViewModels.Validation;
 
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
+using System.IO.Abstractions;
 
 public sealed class FileNameAttribute : ValidationAttribute
 {
+    private IFileSystem fileSystem;
+
+    public FileNameAttribute()
+        : this(new FileSystem())
+    {
+    }
+
+    public FileNameAttribute(IFileSystem fileSystem)
+    {
+        this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+    }
+
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         if (value == null)
         {
-            return null;
+            return new ValidationResult(this.ErrorMessage);
         }
 
         string? fileName = value.ToString();
@@ -23,7 +36,7 @@ public sealed class FileNameAttribute : ValidationAttribute
             return new ValidationResult(this.ErrorMessage);
         }
 
-        if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) < 0)
+        if (fileName.IndexOfAny(this.fileSystem.Path.GetInvalidFileNameChars()) < 0)
         {
             return ValidationResult.Success;
         }
