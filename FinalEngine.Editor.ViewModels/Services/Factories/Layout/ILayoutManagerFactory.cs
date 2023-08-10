@@ -1,4 +1,4 @@
-// <copyright file="ILayoutSerializerFactory.cs" company="Software Antics">
+// <copyright file="ILayoutManagerFactory.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 

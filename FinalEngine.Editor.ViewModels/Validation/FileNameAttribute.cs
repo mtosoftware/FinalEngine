@@ -10,8 +10,6 @@ using System.IO.Abstractions;
 
 public sealed class FileNameAttribute : ValidationAttribute
 {
-    private IFileSystem fileSystem;
-
     public FileNameAttribute()
         : this(new FileSystem())
     {
@@ -19,8 +17,10 @@ public sealed class FileNameAttribute : ValidationAttribute
 
     public FileNameAttribute(IFileSystem fileSystem)
     {
-        this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+        this.FileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
     }
+
+    public IFileSystem FileSystem { get; }
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
@@ -36,7 +36,7 @@ public sealed class FileNameAttribute : ValidationAttribute
             return new ValidationResult(this.ErrorMessage);
         }
 
-        if (fileName.IndexOfAny(this.fileSystem.Path.GetInvalidFileNameChars()) < 0)
+        if (fileName.IndexOfAny(this.FileSystem.Path.GetInvalidFileNameChars()) < 0)
         {
             return ValidationResult.Success;
         }

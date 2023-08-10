@@ -11,7 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 /// Provides a standard implementation of an <see cref="IEnvironmentContext"/>.
 /// </summary>
 /// <seealso cref="IEnvironmentContext" />
-[ExcludeFromCodeCoverage(Justification = "Invocation")]
+[ExcludeFromCodeCoverage]
 public sealed class EnvironmentContext : IEnvironmentContext
 {
     /// <inheritdoc/>

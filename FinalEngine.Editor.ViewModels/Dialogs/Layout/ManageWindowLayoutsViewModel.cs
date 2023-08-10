@@ -22,7 +22,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
     private IRelayCommand? deleteCommand;
 
-    private IEnumerable<string> layoutNames;
+    private IEnumerable<string>? layoutNames;
 
     private string? selectedItem;
 
@@ -53,7 +53,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
     public IEnumerable<string> LayoutNames
     {
-        get { return this.layoutNames; }
+        get { return this.layoutNames ?? Array.Empty<string>(); }
         private set { this.SetProperty(ref this.layoutNames, value); }
     }
 

@@ -7,7 +7,7 @@ namespace FinalEngine.Editor.Common.Services.Environment;
 using System;
 
 /// <summary>
-/// Defines an interface that provides methods for invocation of the <see cref="Environment"/> class.
+/// Defines an interface that provides information about the current environment and platform.
 /// </summary>
 public interface IEnvironmentContext
 {

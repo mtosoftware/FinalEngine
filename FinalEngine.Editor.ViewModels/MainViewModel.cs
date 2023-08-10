@@ -47,11 +47,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private ICommand? saveWindowLayoutCommand;
 
     /// <summary>
-    /// The title of the application.
-    /// </summary>
-    private string? title;
-
-    /// <summary>
     /// The toggle tool window command.
     /// </summary>
     private ICommand? toggleToolWindowCommand;

@@ -10,7 +10,7 @@ using System;
 /// Provides a standard implementation of an <see cref="IFactory{T}"/>.
 /// </summary>
 /// <typeparam name="T">
-/// The type of instance to crate.
+/// The type of instance to create.
 /// </typeparam>
 /// <seealso cref="IFactory{T}"/>
 public sealed class Factory<T> : IFactory<T>
