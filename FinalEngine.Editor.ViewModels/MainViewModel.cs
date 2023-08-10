@@ -12,8 +12,8 @@ using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
-using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -118,7 +118,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
 
     public ICommand SaveWindowLayoutCommand
     {
-        get { return this.saveWindowLayoutCommand = new RelayCommand(this.ShowSaveWindowLayoutView); }
+        get { return this.saveWindowLayoutCommand ??= new RelayCommand(this.ShowSaveWindowLayoutView); }
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
 
     public ICommand ToggleToolWindowCommand
     {
-        get { return this.toggleToolWindowCommand = new RelayCommand<string>(this.ToggleToolWindow); }
+        get { return this.toggleToolWindowCommand ??= new RelayCommand<string>(this.ToggleToolWindow); }
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
-using FinalEngine.Editor.ViewModels.Factories;
+using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using Moq;
 using NUnit.Framework;

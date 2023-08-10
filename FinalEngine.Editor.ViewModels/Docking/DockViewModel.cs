@@ -16,7 +16,7 @@ using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
-using FinalEngine.Editor.ViewModels.Factories;
+using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 
 public sealed class DockViewModel : ObservableObject, IDockViewModel
 {

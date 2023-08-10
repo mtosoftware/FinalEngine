@@ -8,8 +8,8 @@ using System;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Services.Actions;
+using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 
 public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWindowLayoutsViewModel

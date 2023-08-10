@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.Desktop.Factories;
+namespace FinalEngine.Editor.Desktop.Services.Factories.Layout;
 
 using System;
 using System.IO.Abstractions;
@@ -11,7 +11,7 @@ using AvalonDock;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Desktop.Services.Layout;
 using FinalEngine.Editor.Desktop.Views.Docking;
-using FinalEngine.Editor.ViewModels.Factories;
+using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using MahApps.Metro.Controls;
 
