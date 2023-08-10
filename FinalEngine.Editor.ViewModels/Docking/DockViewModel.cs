@@ -20,6 +20,7 @@ using FinalEngine.Editor.ViewModels.Factories;
 
 public sealed class DockViewModel : ObservableObject, IDockViewModel
 {
+    //// TODO: Check if I can just create the layout manager in the constructor.
     private readonly ILayoutManagerFactory layoutManagerFactory;
 
     private ICommand? loadCommand;
