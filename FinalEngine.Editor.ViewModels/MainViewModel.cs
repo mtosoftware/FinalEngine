@@ -127,11 +127,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// <value>
     /// The title of the application.
     /// </value>
-    public string Title
-    {
-        get { return this.title ?? string.Empty; }
-        private set { this.SetProperty(ref this.title, value); }
-    }
+    public string Title { get; }
 
     public ICommand ToggleToolWindowCommand
     {
