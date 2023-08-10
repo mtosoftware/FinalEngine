@@ -6,7 +6,6 @@ namespace FinalEngine.Editor.ViewModels.Dialogs.Layout;
 
 using System;
 using System.Collections.Generic;
-using System.IO.Abstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Factories;
@@ -14,8 +13,6 @@ using FinalEngine.Editor.ViewModels.Interactions;
 
 public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWindowLayoutsViewModel
 {
-    private readonly IFileSystem fileSystem;
-
     private readonly ILayoutManager layoutManager;
 
     private readonly IUserActionRequester userActionRequester;
@@ -28,14 +25,10 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
     private string? selectedItem;
 
-    private string? title;
-
     public ManageWindowLayoutsViewModel(
-        IFileSystem fileSystem,
         IUserActionRequester userActionRequester,
         ILayoutManagerFactory layoutManagerFactory)
     {
-        this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
 
         if (layoutManagerFactory == null)

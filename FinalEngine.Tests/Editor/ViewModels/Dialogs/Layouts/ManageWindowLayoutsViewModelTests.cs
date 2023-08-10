@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Editor.ViewModels.Dialogs.Layouts;
 
 using System;
 using System.Collections.Generic;
-using System.IO.Abstractions.TestingHelpers;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
@@ -16,8 +15,6 @@ using NUnit.Framework;
 [TestFixture]
 public sealed class ManageWindowLayoutsViewModelTests
 {
-    private MockFileSystem fileSystem;
-
     private Mock<ILayoutManager> layoutManager;
 
     private Mock<ILayoutManagerFactory> layoutManagerFactory;
@@ -81,22 +78,12 @@ public sealed class ManageWindowLayoutsViewModelTests
     }
 
     [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenFileSystemIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            new ManageWindowLayoutsViewModel(null, this.userActionRequester.Object, this.layoutManagerFactory.Object);
-        });
-    }
-
-    [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenLayoutManagerFactoryIsNull()
     {
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ManageWindowLayoutsViewModel(this.fileSystem, this.userActionRequester.Object, null);
+            new ManageWindowLayoutsViewModel(this.userActionRequester.Object, null);
         });
     }
 
@@ -106,7 +93,7 @@ public sealed class ManageWindowLayoutsViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ManageWindowLayoutsViewModel(this.fileSystem, null, this.layoutManagerFactory.Object);
+            new ManageWindowLayoutsViewModel(null, this.layoutManagerFactory.Object);
         });
     }
 
@@ -239,7 +226,6 @@ public sealed class ManageWindowLayoutsViewModelTests
         this.userActionRequester = new Mock<IUserActionRequester>();
         this.layoutManagerFactory = new Mock<ILayoutManagerFactory>();
         this.layoutManager = new Mock<ILayoutManager>();
-        this.fileSystem = new MockFileSystem();
 
         this.layoutNames = new List<string>()
         {
@@ -252,7 +238,7 @@ public sealed class ManageWindowLayoutsViewModelTests
 
         this.layoutManager.Setup(x => x.LoadLayoutNames()).Returns(this.layoutNames);
 
-        this.viewModel = new ManageWindowLayoutsViewModel(this.fileSystem, this.userActionRequester.Object, this.layoutManagerFactory.Object);
+        this.viewModel = new ManageWindowLayoutsViewModel(this.userActionRequester.Object, this.layoutManagerFactory.Object);
     }
 
     [Test]
