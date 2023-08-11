@@ -4,6 +4,9 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 
+using System;
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Provides a standard implementation of an <see cref="IConsoleToolViewModel"/>.
 /// </summary>
@@ -12,11 +15,21 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 public sealed class ConsoleToolViewModel : ToolViewModelBase, IConsoleToolViewModel
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConsoleToolViewModel"/> class.
+    /// Initializes a new instance of the <see cref="ConsoleToolViewModel" /> class.
     /// </summary>
-    public ConsoleToolViewModel()
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
+    public ConsoleToolViewModel(ILogger<ConsoleToolViewModel> logger)
     {
+        if (logger == null)
+        {
+            throw new ArgumentNullException(nameof(logger));
+        }
+
         this.Title = "Console";
         this.ContentID = "Console";
+
+        logger.LogDebug($"Initializing {this.Title}...");
     }
 }

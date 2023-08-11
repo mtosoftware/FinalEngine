@@ -15,6 +15,7 @@ using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Desktop.Exceptions.Layout;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Services.Layout;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="ILayoutManager"/>.
@@ -38,6 +39,11 @@ public sealed class LayoutManager : ILayoutManager
     private readonly IFileSystem fileSystem;
 
     /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<LayoutManager> logger;
+
+    /// <summary>
     /// The layout serializer, used to serialize and deserialize the window layouts where required.
     /// </summary>
     private readonly XmlLayoutSerializer serializer;
@@ -45,6 +51,9 @@ public sealed class LayoutManager : ILayoutManager
     /// <summary>
     /// Initializes a new instance of the <see cref="LayoutManager"/> class.
     /// </summary>
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
     /// <param name="dockManager">
     /// The dock manager, used to manage the current window layout.
     /// </param>
@@ -57,8 +66,13 @@ public sealed class LayoutManager : ILayoutManager
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="dockManager"/>, <paramref name="application"/> or <paramref name="fileSystem"/> parameter cannot be null.
     /// </exception>
-    public LayoutManager(DockingManager dockManager, IApplicationContext application, IFileSystem fileSystem)
+    public LayoutManager(
+        ILogger<LayoutManager> logger,
+        DockingManager dockManager,
+        IApplicationContext application,
+        IFileSystem fileSystem)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.dockManager = dockManager ?? throw new ArgumentNullException(nameof(dockManager));
         this.application = application ?? throw new ArgumentNullException(nameof(application));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
@@ -123,6 +137,8 @@ public sealed class LayoutManager : ILayoutManager
             throw new WindowLayoutNotFoundException(layoutName);
         }
 
+        this.logger.LogDebug($"Deleting window layout: '{layoutName}'.");
+
         this.fileSystem.File.Delete(this.GetLayoutPath(layoutName));
     }
 
@@ -145,6 +161,8 @@ public sealed class LayoutManager : ILayoutManager
             throw new WindowLayoutNotFoundException(layoutName);
         }
 
+        this.logger.LogDebug($"Loading window layout: '{layoutName}'.");
+
         this.serializer.Deserialize(this.GetLayoutPath(layoutName));
     }
 
@@ -163,6 +181,7 @@ public sealed class LayoutManager : ILayoutManager
     /// <inheritdoc/>
     public void ResetLayout()
     {
+        this.logger.LogDebug("Resting window layout to default layout.");
         this.serializer.Deserialize("Resources\\Layouts\\default.config");
     }
 
@@ -176,6 +195,8 @@ public sealed class LayoutManager : ILayoutManager
         {
             throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
         }
+
+        this.logger.LogDebug($"Saving window layout: '{layoutName}'.");
 
         this.serializer.Serialize(this.GetLayoutPath(layoutName));
     }
@@ -198,6 +219,8 @@ public sealed class LayoutManager : ILayoutManager
         {
             return x.ContentID == contentID;
         }) ?? throw new ToolPaneNotFoundException(contentID);
+
+        this.logger.LogDebug($"Toggling tool view visibility for view with ID: '{contentID}'");
 
         tool.IsVisible = !tool.IsVisible;
     }

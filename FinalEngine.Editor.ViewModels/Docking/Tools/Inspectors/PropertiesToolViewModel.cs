@@ -4,6 +4,9 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 
+using System;
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Provides a standard implementation of an <see cref="IPropertiesToolViewModel"/>.
 /// </summary>
@@ -14,9 +17,19 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     /// <summary>
     /// Initializes a new instance of the <see cref="PropertiesToolViewModel"/> class.
     /// </summary>
-    public PropertiesToolViewModel()
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
+    public PropertiesToolViewModel(ILogger<PropertiesToolViewModel> logger)
     {
+        if (logger == null)
+        {
+            throw new ArgumentNullException(nameof(logger));
+        }
+
         this.Title = "Properties";
         this.ContentID = "Properties";
+
+        logger.LogDebug($"Initializing {this.Title}...");
     }
 }

@@ -4,6 +4,9 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 
+using System;
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Provides a standard implementation of an <see cref="ISceneHierarchyToolViewModel"/>.
 /// </summary>
@@ -14,9 +17,19 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
     /// <summary>
     /// Initializes a new instance of the <see cref="SceneHierarchyToolViewModel"/> class.
     /// </summary>
-    public SceneHierarchyToolViewModel()
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
+    public SceneHierarchyToolViewModel(ILogger<SceneHierarchyToolViewModel> logger)
     {
+        if (logger == null)
+        {
+            throw new ArgumentNullException(nameof(logger));
+        }
+
         this.Title = "Scene Hierarchy";
         this.ContentID = "SceneHierarchy";
+
+        logger.LogDebug($"Initializing {this.Title}...");
     }
 }

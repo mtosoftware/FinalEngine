@@ -17,6 +17,7 @@ using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IDockViewModel"/>.
@@ -31,6 +32,11 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     private readonly ILayoutManagerFactory layoutManagerFactory;
 
     /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<DockViewModel> logger;
+
+    /// <summary>
     /// The load command.
     /// </summary>
     private ICommand? loadCommand;
@@ -43,6 +49,9 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// <summary>
     /// Initializes a new instance of the <see cref="DockViewModel"/> class.
     /// </summary>
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
     /// <param name="layoutManagerFactory">
     /// The layout manager factory, used to load and save layouts upon startup and shutdown of the application.
     /// </param>
@@ -68,6 +77,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// The specified <paramref name="layoutManagerFactory"/>, <paramref name="projectExplorerFactory"/>, <paramref name="sceneHierarchyFactory"/>, <paramref name="propertiesFactory"/>, <paramref name="consoleFactory"/>, <paramref name="entitySystemsFactory"/> or <paramref name="sceneViewFactory"/> parameter cannot be null.
     /// </exception>
     public DockViewModel(
+        ILogger<DockViewModel> logger,
         ILayoutManagerFactory layoutManagerFactory,
         IFactory<IProjectExplorerToolViewModel> projectExplorerFactory,
         IFactory<ISceneHierarchyToolViewModel> sceneHierarchyFactory,
@@ -76,6 +86,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
         IFactory<IEntitySystemsToolViewModel> entitySystemsFactory,
         IFactory<ISceneViewPaneViewModel> sceneViewFactory)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.layoutManagerFactory = layoutManagerFactory ?? throw new ArgumentNullException(nameof(layoutManagerFactory));
 
         if (projectExplorerFactory == null)
@@ -108,6 +119,8 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
             throw new ArgumentNullException(nameof(sceneViewFactory));
         }
 
+        this.logger.LogDebug("Creating tool views...");
+
         this.Tools = new List<IToolViewModel>()
         {
             projectExplorerFactory.Create(),
@@ -116,6 +129,8 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
             consoleFactory.Create(),
             entitySystemsFactory.Create(),
         };
+
+        this.logger.LogDebug("Creating pane views...");
 
         this.Panes = new List<IPaneViewModel>()
         {
@@ -146,11 +161,15 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// </summary>
     private void Load()
     {
+        this.logger.LogDebug("Loading the window layout...");
+
         var layoutManager = this.layoutManagerFactory.CreateManager();
 
         if (!layoutManager.ContainsLayout("startup"))
         {
+            this.logger.LogDebug("No startup window layout was found, resolving to default layout...");
             layoutManager.ResetLayout();
+
             return;
         }
 
@@ -162,6 +181,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// </summary>
     private void Unload()
     {
+        this.logger.LogDebug("Saving the startup window layout...");
         this.layoutManagerFactory.CreateManager().SaveLayout("startup");
     }
 }

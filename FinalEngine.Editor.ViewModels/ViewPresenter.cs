@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.ViewModels;
 using System;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Interactions;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IViewPresenter"/>.
@@ -15,6 +16,11 @@ using FinalEngine.Editor.ViewModels.Interactions;
 public sealed class ViewPresenter : IViewPresenter
 {
     /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<ViewPresenter> logger;
+
+    /// <summary>
     /// The service provider, used to request services required to show views.
     /// </summary>
     private readonly IServiceProvider provider;
@@ -22,6 +28,9 @@ public sealed class ViewPresenter : IViewPresenter
     /// <summary>
     /// Initializes a new instance of the <see cref="ViewPresenter"/> class.
     /// </summary>
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
     /// <param name="provider">The service provider, used to request services required to show views.</param>
     /// <exception cref="ArgumentNullException">
     /// THe specified <paramref name="provider"/> parameter cannot be null.
@@ -29,8 +38,9 @@ public sealed class ViewPresenter : IViewPresenter
     /// <remarks>
     /// The view presenter should be registered with the application inversion of control container and typically you should never need to instantiate this class manually.
     /// </remarks>
-    public ViewPresenter(IServiceProvider provider)
+    public ViewPresenter(ILogger<ViewPresenter> logger, IServiceProvider provider)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.provider = provider ?? throw new ArgumentNullException(nameof(provider));
     }
 
@@ -57,6 +67,8 @@ public sealed class ViewPresenter : IViewPresenter
     /// </exception>
     public void ShowView<TViewModel>(TViewModel viewModel)
     {
+        this.logger.LogDebug($"Showing dialog view for {typeof(TViewModel)}...");
+
         if (viewModel == null)
         {
             throw new ArgumentNullException(nameof(viewModel));
@@ -68,7 +80,6 @@ public sealed class ViewPresenter : IViewPresenter
         }
 
         view.DataContext = viewModel;
-
         view.ShowDialog();
     }
 }

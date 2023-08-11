@@ -202,6 +202,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </exception>
     private void ToggleToolWindow(string? contentID)
     {
+        this.logger.LogDebug($"Toggling tool view with ID: '{contentID}'...");
+
         if (string.IsNullOrWhiteSpace(contentID))
         {
             throw new ArgumentException($"'{nameof(contentID)}' cannot be null or whitespace.", nameof(contentID));

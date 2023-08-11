@@ -4,6 +4,9 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 
+using System;
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Provides a standard implementation of an <see cref="ISceneViewPaneViewModel"/>.
 /// </summary>
@@ -14,9 +17,19 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
     /// <summary>
     /// Initializes a new instance of the <see cref="SceneViewPaneViewModel"/> class.
     /// </summary>
-    public SceneViewPaneViewModel()
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
+    public SceneViewPaneViewModel(ILogger<SceneViewPaneViewModel> logger)
     {
+        if (logger == null)
+        {
+            throw new ArgumentNullException(nameof(logger));
+        }
+
         this.Title = "Scene View";
         this.ContentID = "SceneView";
+
+        logger.LogDebug($"Initializing {this.Title}...");
     }
 }

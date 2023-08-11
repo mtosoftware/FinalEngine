@@ -4,6 +4,9 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 
+using System;
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Provides a standard implementation of an <see cref="IProjectExplorerToolViewModel"/>.
 /// </summary>
@@ -14,9 +17,19 @@ public sealed class ProjectExplorerToolViewModel : ToolViewModelBase, IProjectEx
     /// <summary>
     /// Initializes a new instance of the <see cref="ProjectExplorerToolViewModel"/> class.
     /// </summary>
-    public ProjectExplorerToolViewModel()
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
+    public ProjectExplorerToolViewModel(ILogger<ProjectExplorerToolViewModel> logger)
     {
+        if (logger == null)
+        {
+            throw new ArgumentNullException(nameof(logger));
+        }
+
         this.Title = "Project Explorer";
         this.ContentID = "ProjectExplorer";
+
+        logger.LogDebug($"Initializing {this.Title}...");
     }
 }

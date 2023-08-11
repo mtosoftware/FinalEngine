@@ -4,6 +4,9 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 
+using System;
+using Microsoft.Extensions.Logging;
+
 /// <summary>
 /// Provides a standard implementation of an <see cref="IEntitySystemsToolViewModel"/>.
 /// </summary>
@@ -14,9 +17,19 @@ public sealed class EntitySystemsToolViewModel : ToolViewModelBase, IEntitySyste
     /// <summary>
     /// Initializes a new instance of the <see cref="EntitySystemsToolViewModel"/> class.
     /// </summary>
-    public EntitySystemsToolViewModel()
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
+    public EntitySystemsToolViewModel(ILogger<EntitySystemsToolViewModel> logger)
     {
+        if (logger == null)
+        {
+            throw new ArgumentNullException(nameof(logger));
+        }
+
         this.Title = "Entity Systems";
         this.ContentID = "EntitySystems";
+
+        logger.LogDebug($"Initializing {this.Title}...");
     }
 }

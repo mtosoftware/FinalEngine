@@ -12,6 +12,7 @@ using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using FinalEngine.Editor.ViewModels.Validation;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="ISaveWindowLayoutViewModel"/>.
@@ -24,6 +25,11 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     /// The layout manager, used to save the current window layout.
     /// </summary>
     private readonly ILayoutManager layoutManager;
+
+    /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<SaveWindowLayoutViewModel> logger;
 
     /// <summary>
     /// The user action requester, used to query the user and determine whether they wish to overwrite a layout that already exists.
@@ -43,6 +49,9 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     /// <summary>
     /// Initializes a new instance of the <see cref="SaveWindowLayoutViewModel"/> class.
     /// </summary>
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
     /// <param name="layoutManagerFactory">
     /// The layout manager factory, used to create an <see cref="ILayoutManager"/> to handle saving the current window layout.
     /// </param>
@@ -53,9 +62,11 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     /// The specified <paramref name="layoutManagerFactory"/> or <paramref name="userActionRequester"/> parameter cannot be null.
     /// </exception>
     public SaveWindowLayoutViewModel(
+        ILogger<SaveWindowLayoutViewModel> logger,
         ILayoutManagerFactory layoutManagerFactory,
         IUserActionRequester userActionRequester)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
 
         if (layoutManagerFactory == null)
@@ -123,19 +134,25 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     /// </exception>
     private void Save(ICloseable? closeable)
     {
+        this.logger.LogDebug("Saving current window layout...");
+
         if (closeable == null)
         {
             throw new ArgumentNullException(nameof(closeable));
         }
 
-        var requestMessage = $"A window layout named '{this.LayoutName}' already exists. Do you want to replace it?";
+        string requestMessage = $"A window layout named '{this.LayoutName}' already exists. Do you want to replace it?";
 
         if (this.layoutManager.ContainsLayout(this.LayoutName) && !this.userActionRequester.RequestYesNo(this.Title, requestMessage))
         {
+            this.logger.LogDebug("User or manager cancelled the save operation.");
             return;
         }
 
         this.layoutManager.SaveLayout(this.LayoutName);
+
+        this.logger.LogDebug($"Closing the {this.Title} view...");
+
         closeable.Close();
     }
 }

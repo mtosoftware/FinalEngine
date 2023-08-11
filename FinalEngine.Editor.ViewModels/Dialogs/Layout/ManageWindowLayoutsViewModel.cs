@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IManageWindowLayoutsViewModel"/>.
@@ -23,6 +24,11 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// The layout manager, used to apply and delete the currently selected layout.
     /// </summary>
     private readonly ILayoutManager layoutManager;
+
+    /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<ManageWindowLayoutsViewModel> logger;
 
     /// <summary>
     /// The user action requester, used to query the user and determine whether they wish to delete the currently selected layout.
@@ -52,6 +58,9 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// <summary>
     /// Initializes a new instance of the <see cref="ManageWindowLayoutsViewModel"/> class.
     /// </summary>
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
     /// <param name="userActionRequester">
     /// The user action requester, used to query the user and determine whether they wish to delete the currently selected window layout.</param>
     /// <param name="layoutManagerFactory">
@@ -61,9 +70,11 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// The specified <paramref name="userActionRequester"/> or <paramref name="layoutManagerFactory"/> parameter cannot be null.
     /// </exception>
     public ManageWindowLayoutsViewModel(
+        ILogger<ManageWindowLayoutsViewModel> logger,
         IUserActionRequester userActionRequester,
         ILayoutManagerFactory layoutManagerFactory)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
 
         if (layoutManagerFactory == null)
@@ -122,6 +133,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// </summary>
     private void Apply()
     {
+        this.logger.LogDebug($"Applying selected window layout...");
         this.layoutManager.LoadLayout(this.SelectedItem!);
     }
 
@@ -141,10 +153,13 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// </summary>
     private void Delete()
     {
+        this.logger.LogDebug("Deleting selected window layout...");
+
         if (!this.userActionRequester.RequestYesNo(
             this.Title,
             $"Are you sure you want to do delete the '{this.SelectedItem}' window layout?"))
         {
+            this.logger.LogDebug("User cancelled delete operation.");
             return;
         }
 
