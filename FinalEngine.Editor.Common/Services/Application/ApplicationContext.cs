@@ -51,7 +51,7 @@ public sealed class ApplicationContext : IApplicationContext
     {
         get
         {
-            string directory = this.fileSystem.Path.Combine(this.environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Final Engine");
+            string directory = this.fileSystem.Path.Combine(this.environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Final Engine");
 
             if (!this.fileSystem.Directory.Exists(directory))
             {
