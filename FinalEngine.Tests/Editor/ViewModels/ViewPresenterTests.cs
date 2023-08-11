@@ -9,12 +9,15 @@ using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
 [TestFixture]
 public sealed class ViewPresenterTests
 {
+    private Mock<ILogger<ViewPresenter>> logger;
+
     private ViewPresenter presenter;
 
     private Mock<IServiceProvider> provider;
@@ -26,18 +29,29 @@ public sealed class ViewPresenterTests
     private Mock<IFactory<IMainViewModel>> viewModelFactory;
 
     [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new ViewPresenter(null, this.provider.Object);
+        });
+    }
+
+    [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenProviderIsNull()
     {
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ViewPresenter(null);
+            new ViewPresenter(this.logger.Object, null);
         });
     }
 
     [SetUp]
     public void Setup()
     {
+        this.logger = new Mock<ILogger<ViewPresenter>>();
         this.provider = new Mock<IServiceProvider>();
         this.viewable = new Mock<IViewable<IMainViewModel>>();
         this.viewModel = new Mock<IMainViewModel>();
@@ -47,7 +61,7 @@ public sealed class ViewPresenterTests
         this.provider.Setup(x => x.GetService(typeof(IViewable<IMainViewModel>))).Returns(this.viewable.Object);
         this.provider.Setup(x => x.GetService(typeof(IFactory<IMainViewModel>))).Returns(this.viewModelFactory.Object);
 
-        this.presenter = new ViewPresenter(this.provider.Object);
+        this.presenter = new ViewPresenter(this.logger.Object, this.provider.Object);
     }
 
     [Test]

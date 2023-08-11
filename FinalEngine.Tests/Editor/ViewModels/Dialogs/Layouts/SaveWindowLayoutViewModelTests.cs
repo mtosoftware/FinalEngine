@@ -10,6 +10,7 @@ using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -22,6 +23,8 @@ public sealed class SaveWindowLayoutViewModelTests
 
     private Mock<ILayoutManagerFactory> layoutManagerFactory;
 
+    private Mock<ILogger<SaveWindowLayoutViewModel>> logger;
+
     private Mock<IUserActionRequester> userActionRequester;
 
     private SaveWindowLayoutViewModel viewModel;
@@ -32,7 +35,17 @@ public sealed class SaveWindowLayoutViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SaveWindowLayoutViewModel(null, this.userActionRequester.Object);
+            new SaveWindowLayoutViewModel(this.logger.Object, null, this.userActionRequester.Object);
+        });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new SaveWindowLayoutViewModel(null, this.layoutManagerFactory.Object, this.userActionRequester.Object);
         });
     }
 
@@ -42,7 +55,7 @@ public sealed class SaveWindowLayoutViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SaveWindowLayoutViewModel(this.layoutManagerFactory.Object, null);
+            new SaveWindowLayoutViewModel(this.logger.Object, this.layoutManagerFactory.Object, null);
         });
     }
 
@@ -217,6 +230,7 @@ public sealed class SaveWindowLayoutViewModelTests
     [SetUp]
     public void Setup()
     {
+        this.logger = new Mock<ILogger<SaveWindowLayoutViewModel>>();
         this.userActionRequester = new Mock<IUserActionRequester>();
         this.layoutManagerFactory = new Mock<ILayoutManagerFactory>();
         this.layoutManager = new Mock<ILayoutManager>();
@@ -224,7 +238,7 @@ public sealed class SaveWindowLayoutViewModelTests
 
         this.layoutManagerFactory.Setup(x => x.CreateManager()).Returns(this.layoutManager.Object);
 
-        this.viewModel = new SaveWindowLayoutViewModel(this.layoutManagerFactory.Object, this.userActionRequester.Object);
+        this.viewModel = new SaveWindowLayoutViewModel(this.logger.Object, this.layoutManagerFactory.Object, this.userActionRequester.Object);
     }
 
     [Test]

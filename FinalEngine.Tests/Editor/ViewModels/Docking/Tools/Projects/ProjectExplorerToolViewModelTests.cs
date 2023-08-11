@@ -4,22 +4,27 @@
 
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Projects;
 
+using System;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 [TestFixture]
 public sealed class ProjectExplorerToolViewModelTests
 {
+    private Mock<ILogger<ProjectExplorerToolViewModel>> logger;
+
+    private ProjectExplorerToolViewModel viewModel;
+
     [Test]
     public void ConstructorShouldSetContentIDToSceneViewWhenInvoked()
     {
         // Arrange
         const string expected = "ProjectExplorer";
 
-        var viewModel = new ProjectExplorerToolViewModel();
-
         // Act
-        string actual = viewModel.ContentID;
+        string actual = this.viewModel.ContentID;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
@@ -31,12 +36,27 @@ public sealed class ProjectExplorerToolViewModelTests
         // Arrange
         const string expected = "Project Explorer";
 
-        var viewModel = new ProjectExplorerToolViewModel();
-
         // Act
-        string actual = viewModel.Title;
+        string actual = this.viewModel.Title;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new ProjectExplorerToolViewModel(null);
+        });
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        this.logger = new Mock<ILogger<ProjectExplorerToolViewModel>>();
+        this.viewModel = new ProjectExplorerToolViewModel(this.logger.Object);
     }
 }

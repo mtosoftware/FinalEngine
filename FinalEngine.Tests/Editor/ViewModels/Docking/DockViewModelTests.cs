@@ -14,6 +14,7 @@ using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -31,6 +32,8 @@ public sealed class DockViewModelTests
     private Mock<ILayoutManager> layoutManager;
 
     private Mock<ILayoutManagerFactory> layoutManagerFactory;
+
+    private Mock<ILogger<DockViewModel>> logger;
 
     private Mock<IFactory<IProjectExplorerToolViewModel>> projectExplorerFactory;
 
@@ -99,6 +102,7 @@ public sealed class DockViewModelTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new DockViewModel(
+                this.logger.Object,
                 this.layoutManagerFactory.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
@@ -116,6 +120,7 @@ public sealed class DockViewModelTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new DockViewModel(
+                this.logger.Object,
                 this.layoutManagerFactory.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
@@ -133,7 +138,26 @@ public sealed class DockViewModelTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new DockViewModel(
+                this.logger.Object,
                 null,
+                this.projectExplorerFactory.Object,
+                this.sceneHierarchyFactory.Object,
+                this.propertiesFactory.Object,
+                this.consoleFactory.Object,
+                this.entitySystemsFactory.Object,
+                this.sceneViewFactory.Object);
+        });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new DockViewModel(
+                null,
+                this.layoutManagerFactory.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
                 this.propertiesFactory.Object,
@@ -150,6 +174,7 @@ public sealed class DockViewModelTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new DockViewModel(
+                this.logger.Object,
                 this.layoutManagerFactory.Object,
                 null,
                 this.sceneHierarchyFactory.Object,
@@ -167,6 +192,7 @@ public sealed class DockViewModelTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new DockViewModel(
+                this.logger.Object,
                 this.layoutManagerFactory.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
@@ -184,6 +210,7 @@ public sealed class DockViewModelTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new DockViewModel(
+                this.logger.Object,
                 this.layoutManagerFactory.Object,
                 this.projectExplorerFactory.Object,
                 null,
@@ -201,6 +228,7 @@ public sealed class DockViewModelTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new DockViewModel(
+                this.logger.Object,
                 this.layoutManagerFactory.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
@@ -274,6 +302,8 @@ public sealed class DockViewModelTests
     [SetUp]
     public void Setup()
     {
+        this.logger = new Mock<ILogger<DockViewModel>>();
+
         this.consoleFactory = new Mock<IFactory<IConsoleToolViewModel>>();
         this.entitySystemsFactory = new Mock<IFactory<IEntitySystemsToolViewModel>>();
         this.propertiesFactory = new Mock<IFactory<IPropertiesToolViewModel>>();
@@ -301,6 +331,7 @@ public sealed class DockViewModelTests
         this.layoutManagerFactory.Setup(x => x.CreateManager()).Returns(this.layoutManager.Object);
 
         this.viewModel = new DockViewModel(
+            this.logger.Object,
             this.layoutManagerFactory.Object,
             this.projectExplorerFactory.Object,
             this.sceneHierarchyFactory.Object,

@@ -48,7 +48,7 @@ public sealed class ApplicationContextTests
         _ = this.context.DataDirectory;
 
         // Assert
-        Assert.That(this.fileSystem.Directory.Exists("AppData\\FinalEngine"), Is.True);
+        Assert.That(this.fileSystem.Directory.Exists("LocalAppData\\Final Engine"), Is.True);
     }
 
     [Test]
@@ -58,14 +58,14 @@ public sealed class ApplicationContextTests
         _ = this.context.DataDirectory;
 
         // Assert
-        this.environment.Verify(x => x.GetFolderPath(Environment.SpecialFolder.ApplicationData), Times.Once);
+        this.environment.Verify(x => x.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Times.Once);
     }
 
     [Test]
     public void DataDirectoryShouldReturnDirectoryWhenDirectoryDoesNotExist()
     {
         // Arrange
-        const string expected = "AppData\\Final Engine";
+        const string expected = "LocalAppData\\Final Engine";
 
         // Act
         string actual = this.context.DataDirectory;
@@ -78,9 +78,9 @@ public sealed class ApplicationContextTests
     public void DataDirectoryShouldReturnDirectoryWhenDirectoryExists()
     {
         // Arrange
-        const string expected = "AppData\\Final Engine";
+        const string expected = "LocalAppData\\Final Engine";
 
-        this.fileSystem.Directory.CreateDirectory("AppData");
+        this.fileSystem.Directory.CreateDirectory("LocalAppData");
         this.fileSystem.Directory.CreateDirectory(expected);
 
         // Act
@@ -96,7 +96,7 @@ public sealed class ApplicationContextTests
         this.fileSystem = new MockFileSystem();
         this.environment = new Mock<IEnvironmentContext>();
 
-        this.environment.Setup(x => x.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Returns("AppData");
+        this.environment.Setup(x => x.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)).Returns("LocalAppData");
 
         this.context = new ApplicationContext(this.fileSystem, this.environment.Object);
     }

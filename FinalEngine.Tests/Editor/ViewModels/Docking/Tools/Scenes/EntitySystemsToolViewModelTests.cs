@@ -4,22 +4,27 @@
 
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Scenes;
 
+using System;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 [TestFixture]
 public sealed class EntitySystemsToolViewModelTests
 {
+    private Mock<ILogger<EntitySystemsToolViewModel>> logger;
+
+    private EntitySystemsToolViewModel viewModel;
+
     [Test]
     public void ConstructorShouldSetContentIDToSceneViewWhenInvoked()
     {
         // Arrange
         const string expected = "EntitySystems";
 
-        var viewModel = new EntitySystemsToolViewModel();
-
         // Act
-        string actual = viewModel.ContentID;
+        string actual = this.viewModel.ContentID;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
@@ -31,12 +36,27 @@ public sealed class EntitySystemsToolViewModelTests
         // Arrange
         const string expected = "Entity Systems";
 
-        var viewModel = new EntitySystemsToolViewModel();
-
         // Act
-        string actual = viewModel.Title;
+        string actual = this.viewModel.Title;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new EntitySystemsToolViewModel(null);
+        });
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        this.logger = new Mock<ILogger<EntitySystemsToolViewModel>>();
+        this.viewModel = new EntitySystemsToolViewModel(this.logger.Object);
     }
 }

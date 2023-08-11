@@ -4,22 +4,27 @@
 
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Inspectors;
 
+using System;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 [TestFixture]
 public sealed class ConsoleToolViewModelTests
 {
+    private Mock<ILogger<ConsoleToolViewModel>> logger;
+
+    private ConsoleToolViewModel viewModel;
+
     [Test]
     public void ConstructorShouldSetContentIDToSceneViewWhenInvoked()
     {
         // Arrange
         const string expected = "Console";
 
-        var viewModel = new ConsoleToolViewModel();
-
         // Act
-        string actual = viewModel.ContentID;
+        string actual = this.viewModel.ContentID;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
@@ -31,12 +36,27 @@ public sealed class ConsoleToolViewModelTests
         // Arrange
         const string expected = "Console";
 
-        var viewModel = new ConsoleToolViewModel();
-
         // Act
-        string actual = viewModel.Title;
+        string actual = this.viewModel.Title;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new ConsoleToolViewModel(null);
+        });
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        this.logger = new Mock<ILogger<ConsoleToolViewModel>>();
+        this.viewModel = new ConsoleToolViewModel(this.logger.Object);
     }
 }
