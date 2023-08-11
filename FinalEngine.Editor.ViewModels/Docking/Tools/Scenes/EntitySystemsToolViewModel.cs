@@ -30,6 +30,6 @@ public sealed class EntitySystemsToolViewModel : ToolViewModelBase, IEntitySyste
         this.Title = "Entity Systems";
         this.ContentID = "EntitySystems";
 
-        logger.LogDebug($"Initializing {this.Title}...");
+        logger.LogInformation($"Initializing {this.Title}...");
     }
 }

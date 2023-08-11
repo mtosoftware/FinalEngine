@@ -30,6 +30,6 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
         this.Title = "Scene Hierarchy";
         this.ContentID = "SceneHierarchy";
 
-        logger.LogDebug($"Initializing {this.Title}...");
+        logger.LogInformation($"Initializing {this.Title}...");
     }
 }

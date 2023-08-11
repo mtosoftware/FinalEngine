@@ -133,7 +133,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// </summary>
     private void Apply()
     {
-        this.logger.LogDebug($"Applying selected window layout...");
+        this.logger.LogInformation($"Applying selected window layout...");
         this.layoutManager.LoadLayout(this.SelectedItem!);
     }
 
@@ -153,13 +153,13 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// </summary>
     private void Delete()
     {
-        this.logger.LogDebug("Deleting selected window layout...");
+        this.logger.LogInformation("Deleting selected window layout...");
 
         if (!this.userActionRequester.RequestYesNo(
             this.Title,
             $"Are you sure you want to do delete the '{this.SelectedItem}' window layout?"))
         {
-            this.logger.LogDebug("User cancelled delete operation.");
+            this.logger.LogInformation("User cancelled delete operation.");
             return;
         }
 

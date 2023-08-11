@@ -127,7 +127,7 @@ public partial class App : Application
 
         services.AddSingleton<IViewPresenter>(x =>
         {
-            return new ViewPresenter(x);
+            return new ViewPresenter(x.GetRequiredService<ILogger<ViewPresenter>>(), x);
         });
     }
 }

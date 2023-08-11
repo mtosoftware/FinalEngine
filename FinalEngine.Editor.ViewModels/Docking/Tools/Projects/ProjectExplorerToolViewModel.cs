@@ -30,6 +30,6 @@ public sealed class ProjectExplorerToolViewModel : ToolViewModelBase, IProjectEx
         this.Title = "Project Explorer";
         this.ContentID = "ProjectExplorer";
 
-        logger.LogDebug($"Initializing {this.Title}...");
+        logger.LogInformation($"Initializing {this.Title}...");
     }
 }

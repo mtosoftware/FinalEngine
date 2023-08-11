@@ -134,7 +134,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     /// </exception>
     private void Save(ICloseable? closeable)
     {
-        this.logger.LogDebug("Saving current window layout...");
+        this.logger.LogInformation("Saving current window layout...");
 
         if (closeable == null)
         {
@@ -145,13 +145,13 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
 
         if (this.layoutManager.ContainsLayout(this.LayoutName) && !this.userActionRequester.RequestYesNo(this.Title, requestMessage))
         {
-            this.logger.LogDebug("User or manager cancelled the save operation.");
+            this.logger.LogInformation("User or manager cancelled the save operation.");
             return;
         }
 
         this.layoutManager.SaveLayout(this.LayoutName);
 
-        this.logger.LogDebug($"Closing the {this.Title} view...");
+        this.logger.LogInformation($"Closing the {this.Title} view...");
 
         closeable.Close();
     }

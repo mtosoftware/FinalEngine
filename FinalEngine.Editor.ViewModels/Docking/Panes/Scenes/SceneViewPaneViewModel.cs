@@ -30,6 +30,6 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
         this.Title = "Scene View";
         this.ContentID = "SceneView";
 
-        logger.LogDebug($"Initializing {this.Title}...");
+        logger.LogInformation($"Initializing {this.Title}...");
     }
 }

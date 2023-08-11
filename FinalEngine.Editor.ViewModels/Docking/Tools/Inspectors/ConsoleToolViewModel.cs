@@ -30,6 +30,6 @@ public sealed class ConsoleToolViewModel : ToolViewModelBase, IConsoleToolViewMo
         this.Title = "Console";
         this.ContentID = "Console";
 
-        logger.LogDebug($"Initializing {this.Title}...");
+        logger.LogInformation($"Initializing {this.Title}...");
     }
 }

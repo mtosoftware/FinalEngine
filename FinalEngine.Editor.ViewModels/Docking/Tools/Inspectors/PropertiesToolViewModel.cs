@@ -30,6 +30,6 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         this.Title = "Properties";
         this.ContentID = "Properties";
 
-        logger.LogDebug($"Initializing {this.Title}...");
+        logger.LogInformation($"Initializing {this.Title}...");
     }
 }

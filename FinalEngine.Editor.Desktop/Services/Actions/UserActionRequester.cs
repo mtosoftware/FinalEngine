@@ -37,14 +37,14 @@ public sealed class UserActionRequester : IUserActionRequester
     /// <inheritdoc/>
     public void RequestOk(string caption, string message)
     {
-        this.logger.LogDebug($"Requesting OK response from user for request: '{message}'.");
+        this.logger.LogInformation($"Requesting OK response from user for request: '{message}'.");
         MessageBox.Show(message, caption);
     }
 
     /// <inheritdoc/>
     public bool RequestYesNo(string caption, string message)
     {
-        this.logger.LogDebug($"Requesting YES/NO response from user for request: '{message}'.");
+        this.logger.LogInformation($"Requesting YES/NO response from user for request: '{message}'.");
         return MessageBox.Show(message, caption, MessageBoxButton.YesNo) == MessageBoxResult.Yes;
     }
 }

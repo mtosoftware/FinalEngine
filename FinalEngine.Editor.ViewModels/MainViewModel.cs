@@ -162,7 +162,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
             throw new ArgumentNullException(nameof(closeable));
         }
 
-        this.logger.LogDebug($"Closing {nameof(MainViewModel)}...");
+        this.logger.LogInformation($"Closing {nameof(MainViewModel)}...");
 
         closeable.Close();
     }
@@ -202,7 +202,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </exception>
     private void ToggleToolWindow(string? contentID)
     {
-        this.logger.LogDebug($"Toggling tool view with ID: '{contentID}'...");
+        this.logger.LogInformation($"Toggling tool view with ID: '{contentID}'...");
 
         if (string.IsNullOrWhiteSpace(contentID))
         {

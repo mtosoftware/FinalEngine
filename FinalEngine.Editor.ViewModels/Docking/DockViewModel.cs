@@ -119,7 +119,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
             throw new ArgumentNullException(nameof(sceneViewFactory));
         }
 
-        this.logger.LogDebug("Creating tool views...");
+        this.logger.LogInformation("Creating tool views...");
 
         this.Tools = new List<IToolViewModel>()
         {
@@ -130,7 +130,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
             entitySystemsFactory.Create(),
         };
 
-        this.logger.LogDebug("Creating pane views...");
+        this.logger.LogInformation("Creating pane views...");
 
         this.Panes = new List<IPaneViewModel>()
         {
@@ -161,13 +161,13 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// </summary>
     private void Load()
     {
-        this.logger.LogDebug("Loading the window layout...");
+        this.logger.LogInformation("Loading the window layout...");
 
         var layoutManager = this.layoutManagerFactory.CreateManager();
 
         if (!layoutManager.ContainsLayout("startup"))
         {
-            this.logger.LogDebug("No startup window layout was found, resolving to default layout...");
+            this.logger.LogInformation("No startup window layout was found, resolving to default layout...");
             layoutManager.ResetLayout();
 
             return;
@@ -181,7 +181,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// </summary>
     private void Unload()
     {
-        this.logger.LogDebug("Saving the startup window layout...");
+        this.logger.LogInformation("Saving the startup window layout...");
         this.layoutManagerFactory.CreateManager().SaveLayout("startup");
     }
 }

@@ -137,9 +137,11 @@ public sealed class LayoutManager : ILayoutManager
             throw new WindowLayoutNotFoundException(layoutName);
         }
 
-        this.logger.LogDebug($"Deleting window layout: '{layoutName}'.");
+        this.logger.LogInformation($"Deleting window layout: '{layoutName}'.");
 
         this.fileSystem.File.Delete(this.GetLayoutPath(layoutName));
+
+        this.logger.LogInformation($"Layout deleted.");
     }
 
     /// <inheritdoc/>
@@ -161,9 +163,11 @@ public sealed class LayoutManager : ILayoutManager
             throw new WindowLayoutNotFoundException(layoutName);
         }
 
-        this.logger.LogDebug($"Loading window layout: '{layoutName}'.");
+        this.logger.LogInformation($"Loading window layout: '{layoutName}'.");
 
         this.serializer.Deserialize(this.GetLayoutPath(layoutName));
+
+        this.logger.LogInformation("Layout loaded.");
     }
 
     /// <inheritdoc/>
@@ -181,8 +185,9 @@ public sealed class LayoutManager : ILayoutManager
     /// <inheritdoc/>
     public void ResetLayout()
     {
-        this.logger.LogDebug("Resting window layout to default layout.");
+        this.logger.LogInformation("Resting window layout to default layout...");
         this.serializer.Deserialize("Resources\\Layouts\\default.config");
+        this.logger.LogInformation("Layout reset.");
     }
 
     /// <inheritdoc/>
@@ -196,9 +201,11 @@ public sealed class LayoutManager : ILayoutManager
             throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
         }
 
-        this.logger.LogDebug($"Saving window layout: '{layoutName}'.");
+        this.logger.LogInformation($"Saving window layout: '{layoutName}'...");
 
         this.serializer.Serialize(this.GetLayoutPath(layoutName));
+
+        this.logger.LogInformation("Layout saved.");
     }
 
     /// <inheritdoc/>
@@ -220,7 +227,7 @@ public sealed class LayoutManager : ILayoutManager
             return x.ContentID == contentID;
         }) ?? throw new ToolPaneNotFoundException(contentID);
 
-        this.logger.LogDebug($"Toggling tool view visibility for view with ID: '{contentID}'");
+        this.logger.LogInformation($"Toggling tool view visibility for view with ID: '{contentID}'");
 
         tool.IsVisible = !tool.IsVisible;
     }

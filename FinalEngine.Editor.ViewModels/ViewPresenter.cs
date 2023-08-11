@@ -67,7 +67,7 @@ public sealed class ViewPresenter : IViewPresenter
     /// </exception>
     public void ShowView<TViewModel>(TViewModel viewModel)
     {
-        this.logger.LogDebug($"Showing dialog view for {typeof(TViewModel)}...");
+        this.logger.LogInformation($"Showing dialog view for {typeof(TViewModel)}...");
 
         if (viewModel == null)
         {
