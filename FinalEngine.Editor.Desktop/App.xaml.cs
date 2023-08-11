@@ -5,10 +5,26 @@
 namespace FinalEngine.Editor.Desktop;
 
 using System.Diagnostics;
+using System.IO.Abstractions;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
+using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Common.Services.Application;
+using FinalEngine.Editor.Common.Services.Environment;
+using FinalEngine.Editor.Desktop.Services.Actions;
+using FinalEngine.Editor.Desktop.Services.Factories.Layout;
 using FinalEngine.Editor.Desktop.Views;
+using FinalEngine.Editor.Desktop.Views.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Dialogs.Layout;
+using FinalEngine.Editor.ViewModels.Docking;
+using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
+using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
+using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
+using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Actions;
+using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -86,7 +102,32 @@ public partial class App : Application
             builder.AddConsole().SetMinimumLevel(Debugger.IsAttached ? LogLevel.Debug : LogLevel.Information);
         });
 
+        services.AddSingleton<IFileSystem, FileSystem>();
+
+        services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<IApplicationContext, ApplicationContext>();
-        services.AddTransient<IMainViewModel, MainViewModel>();
+        services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
+
+        services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();
+        services.AddFactory<ISceneHierarchyToolViewModel, SceneHierarchyToolViewModel>();
+        services.AddFactory<IPropertiesToolViewModel, PropertiesToolViewModel>();
+        services.AddFactory<IConsoleToolViewModel, ConsoleToolViewModel>();
+        services.AddFactory<IEntitySystemsToolViewModel, EntitySystemsToolViewModel>();
+        services.AddFactory<ISceneViewPaneViewModel, SceneViewPaneViewModel>();
+        services.AddFactory<IDockViewModel, DockViewModel>();
+        services.AddFactory<ISaveWindowLayoutViewModel, SaveWindowLayoutViewModel>();
+        services.AddFactory<IManageWindowLayoutsViewModel, ManageWindowLayoutsViewModel>();
+        services.AddSingleton<IMainViewModel, MainViewModel>();
+
+        services.AddTransient<IViewable<ISaveWindowLayoutViewModel>, SaveWindowLayoutView>();
+        services.AddTransient<IViewable<IManageWindowLayoutsViewModel>, ManageWindowLayoutsView>();
+
+        services.AddSingleton<ILayoutManagerFactory, LayoutManagerFactory>();
+        services.AddSingleton<IUserActionRequester, UserActionRequester>();
+
+        services.AddSingleton<IViewPresenter>(x =>
+        {
+            return new ViewPresenter(x.GetRequiredService<ILogger<ViewPresenter>>(), x);
+        });
     }
 }

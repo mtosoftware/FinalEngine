@@ -8,6 +8,13 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
+                <ResourceDictionary Source="Styles/Docking/Panes/PaneStyle.xaml" />
+                <ResourceDictionary Source="Styles/Docking/Tools/ToolStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/LabelStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/TextBoxStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/ButtonStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/ListBoxStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/ListBoxItemStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
