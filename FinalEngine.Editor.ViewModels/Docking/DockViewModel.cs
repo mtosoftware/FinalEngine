@@ -182,7 +182,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     }
 
     /// <summary>
-    /// Saves the current layout to the application roaming data to be used when the application is started once again.
+    /// Saves the current layout to the application local data to be used when the application is started once again.
     /// </summary>
     private void Unload()
     {

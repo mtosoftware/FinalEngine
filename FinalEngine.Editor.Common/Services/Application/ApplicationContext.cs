@@ -16,12 +16,12 @@ using FinalEngine.Editor.Common.Services.Environment;
 public sealed class ApplicationContext : IApplicationContext
 {
     /// <summary>
-    /// The environment service, used when locating the applications roaming data directory.
+    /// The environment service, used when locating the applications local data directory.
     /// </summary>
     private readonly IEnvironmentContext environment;
 
     /// <summary>
-    /// The file system service, used to potentially create the applications roaming data directory.
+    /// The file system service, used to potentially create the applications local data directory.
     /// </summary>
     private readonly IFileSystem fileSystem;
 
@@ -32,7 +32,7 @@ public sealed class ApplicationContext : IApplicationContext
     /// The file system service, used to create the required directories for <see cref="DataDirectory"/>, if required.
     /// </param>
     /// <param name="environment">
-    /// The environment, used to locate the application data folder for the roaming user.
+    /// The environment, used to locate the application data folder for the local user.
     /// </param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="fileSystem"/> or <paramref name="environment"/> parameter cannot be null.

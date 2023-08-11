@@ -30,7 +30,7 @@ public interface IManageWindowLayoutsViewModel
     /// The delete command.
     /// </value>
     /// <remarks>
-    /// The <see cref="DeleteCommand"/> is used to delete the current <see cref="SelectedItem"/> from the view and delete it from the applications roaming data.
+    /// The <see cref="DeleteCommand"/> is used to delete the current <see cref="SelectedItem"/> from the view and delete it from the applications local data.
     /// </remarks>
     IRelayCommand DeleteCommand { get; }
 
@@ -41,7 +41,7 @@ public interface IManageWindowLayoutsViewModel
     /// The layout names.
     /// </value>
     /// <remarks>
-    /// The <see cref="LayoutNames"/> property refers to a list of names for each window layout located in the applications roaming data.
+    /// The <see cref="LayoutNames"/> property refers to a list of names for each window layout located in the applications local data.
     /// </remarks>
     IEnumerable<string> LayoutNames { get; }
 

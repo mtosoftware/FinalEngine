@@ -149,7 +149,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     }
 
     /// <summary>
-    /// Deletes the currently selected window layout from the applications roaming data.
+    /// Deletes the currently selected window layout from the applications local data.
     /// </summary>
     private void Delete()
     {

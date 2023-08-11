@@ -124,7 +124,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     }
 
     /// <summary>
-    /// Saves the current layout using the <see cref="LayoutName"/> to applications roaming data.
+    /// Saves the current layout using the <see cref="LayoutName"/> to applications local data.
     /// </summary>
     /// <param name="closeable">
     /// The closeable, used to close the view once the operation has finished.

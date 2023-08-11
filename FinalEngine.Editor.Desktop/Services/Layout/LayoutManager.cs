@@ -87,7 +87,7 @@ public sealed class LayoutManager : ILayoutManager
     /// The layout directory.
     /// </value>
     /// <remarks>
-    /// If the layout directory doesn't exist on the file system, one will be created. The layout directory is stored the applications roaming data.
+    /// If the layout directory doesn't exist on the file system, one will be created. The layout directory is stored the applications local data.
     /// </remarks>
     private string LayoutDirectory
     {
