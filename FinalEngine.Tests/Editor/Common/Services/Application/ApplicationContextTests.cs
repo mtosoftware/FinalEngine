@@ -48,6 +48,7 @@ public sealed class ApplicationContextTests
         _ = this.context.DataDirectory;
 
         // Assert
+        Assert.That(this.fileSystem.Directory.Exists("AppData\\FinalEngine"), Is.True);
     }
 
     [Test]

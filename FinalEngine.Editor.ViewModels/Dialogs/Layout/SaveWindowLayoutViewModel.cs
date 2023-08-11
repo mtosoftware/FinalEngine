@@ -128,14 +128,11 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
             throw new ArgumentNullException(nameof(closeable));
         }
 
-        if (this.layoutManager.ContainsLayout(this.LayoutName))
+        var requestMessage = $"A window layout named '{this.LayoutName}' already exists. Do you want to replace it?";
+
+        if (this.layoutManager.ContainsLayout(this.LayoutName) && !this.userActionRequester.RequestYesNo(this.Title, requestMessage))
         {
-            if (!this.userActionRequester.RequestYesNo(
-                this.Title,
-                $"A window layout named '{this.LayoutName}' already exists. Do you want to replace it?"))
-            {
-                return;
-            }
+            return;
         }
 
         this.layoutManager.SaveLayout(this.LayoutName);

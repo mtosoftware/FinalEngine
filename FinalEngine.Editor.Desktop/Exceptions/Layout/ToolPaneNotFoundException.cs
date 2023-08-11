@@ -11,7 +11,8 @@ using System.Runtime.Serialization;
 /// Provides an exception when a tool pane cannot be located by it's content identifier.
 /// </summary>
 /// <seealso cref="Exception" />
-public sealed class ToolPaneNotFoundException : Exception
+[Serializable]
+public class ToolPaneNotFoundException : Exception
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolPaneNotFoundException"/> class.
@@ -35,20 +36,6 @@ public sealed class ToolPaneNotFoundException : Exception
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolPaneNotFoundException"/> class.
     /// </summary>
-    /// <param name="info">
-    /// The <see cref="SerializationInfo" /> that holds the serialized object data about the exception being thrown.
-    /// </param>
-    /// <param name="context">
-    /// The <see cref="StreamingContext" /> that contains contextual information about the source or destination.
-    /// </param>
-    public ToolPaneNotFoundException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ToolPaneNotFoundException"/> class.
-    /// </summary>
     /// <param name="message">
     /// The error message that explains the reason for the exception.
     /// </param>
@@ -57,6 +44,20 @@ public sealed class ToolPaneNotFoundException : Exception
     /// </param>
     public ToolPaneNotFoundException(string? message, Exception? innerException)
         : base(message, innerException)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ToolPaneNotFoundException"/> class.
+    /// </summary>
+    /// <param name="info">
+    /// The <see cref="SerializationInfo" /> that holds the serialized object data about the exception being thrown.
+    /// </param>
+    /// <param name="context">
+    /// The <see cref="StreamingContext" /> that contains contextual information about the source or destination.
+    /// </param>
+    protected ToolPaneNotFoundException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
     {
     }
 

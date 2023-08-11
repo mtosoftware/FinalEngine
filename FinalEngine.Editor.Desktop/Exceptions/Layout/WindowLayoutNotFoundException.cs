@@ -11,7 +11,8 @@ using System.Runtime.Serialization;
 /// Provides an exception that is thrown when a window layout could not be found.
 /// </summary>
 /// <seealso cref="Exception" />
-public sealed class WindowLayoutNotFoundException : Exception
+[Serializable]
+public class WindowLayoutNotFoundException : Exception
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="WindowLayoutNotFoundException"/> class.
@@ -35,20 +36,6 @@ public sealed class WindowLayoutNotFoundException : Exception
     /// <summary>
     /// Initializes a new instance of the <see cref="WindowLayoutNotFoundException"/> class.
     /// </summary>
-    /// <param name="info">
-    /// The <see cref="SerializationInfo" /> that holds the serialized object data about the exception being thrown.
-    /// </param>
-    /// <param name="context">
-    /// The <see cref="StreamingContext" /> that contains contextual information about the source or destination.
-    /// </param>
-    public WindowLayoutNotFoundException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="WindowLayoutNotFoundException"/> class.
-    /// </summary>
     /// <param name="message">
     /// The error message that explains the reason for the exception.
     /// </param>
@@ -57,6 +44,20 @@ public sealed class WindowLayoutNotFoundException : Exception
     /// </param>
     public WindowLayoutNotFoundException(string? message, Exception? innerException)
         : base(message, innerException)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WindowLayoutNotFoundException"/> class.
+    /// </summary>
+    /// <param name="info">
+    /// The <see cref="SerializationInfo" /> that holds the serialized object data about the exception being thrown.
+    /// </param>
+    /// <param name="context">
+    /// The <see cref="StreamingContext" /> that contains contextual information about the source or destination.
+    /// </param>
+    protected WindowLayoutNotFoundException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
     {
     }
 

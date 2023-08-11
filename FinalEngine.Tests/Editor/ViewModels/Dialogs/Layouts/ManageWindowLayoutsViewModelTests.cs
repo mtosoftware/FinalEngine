@@ -198,6 +198,20 @@ public sealed class ManageWindowLayoutsViewModelTests
     }
 
     [Test]
+    public void LayoutNamesShouldReturnEmptyArrayWhenLayoutManagerLoadLayoutNamesReturnsEmptyArray()
+    {
+        // Arrange
+        this.layoutManager.Setup(x => x.LoadLayoutNames()).Returns(Array.Empty<string>());
+        var viewModel = new ManageWindowLayoutsViewModel(this.userActionRequester.Object, this.layoutManagerFactory.Object);
+
+        // Act
+        var actual = viewModel.LayoutNames;
+
+        // Assert
+        Assert.That(actual, Is.Empty);
+    }
+
+    [Test]
     public void SelectedItemShouldReturnHelloWorldWhenSetToHelloWorld()
     {
         // Arrange
@@ -253,11 +267,5 @@ public sealed class ManageWindowLayoutsViewModelTests
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
-    }
-
-    [Test]
-    public void TitleShouldReturnStringEmptyWhenNull()
-    {
-        // Act
     }
 }
