@@ -176,7 +176,7 @@ public sealed class ManageWindowLayoutsViewModelTests
         this.viewModel.DeleteCommand.Execute(this.viewModel.SelectedItem);
 
         // Assert
-        this.userActionRequester.Verify(x => x.RequestYesNo(this.viewModel.Title, $"Are you sure you want to do delete the '{this.viewModel.SelectedItem}' window layout?"));
+        this.userActionRequester.Verify(x => x.RequestYesNo(this.viewModel.Title, $"Are you sure you want to delete the '{this.viewModel.SelectedItem}' window layout?"));
     }
 
     [Test]
