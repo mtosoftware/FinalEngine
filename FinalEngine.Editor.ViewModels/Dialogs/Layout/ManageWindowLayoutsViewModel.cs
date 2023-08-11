@@ -157,7 +157,7 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
 
         if (!this.userActionRequester.RequestYesNo(
             this.Title,
-            $"Are you sure you want to do delete the '{this.SelectedItem}' window layout?"))
+            $"Are you sure you want to delete the '{this.SelectedItem}' window layout?"))
         {
             this.logger.LogInformation("User cancelled delete operation.");
             return;
