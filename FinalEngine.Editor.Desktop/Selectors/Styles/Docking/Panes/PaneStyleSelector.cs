@@ -44,16 +44,11 @@ public sealed class PaneStyleSelector : StyleSelector
     /// </returns>
     public override Style? SelectStyle(object item, DependencyObject container)
     {
-        if (item is IToolViewModel)
+        return item switch
         {
-            return this.ToolStyle;
-        }
-
-        if (item is IPaneViewModel)
-        {
-            return this.PaneStyle;
-        }
-
-        return base.SelectStyle(item, container);
+            IToolViewModel => this.ToolStyle,
+            IPaneViewModel => this.PaneStyle,
+            _ => base.SelectStyle(item, container)
+        };
     }
 }

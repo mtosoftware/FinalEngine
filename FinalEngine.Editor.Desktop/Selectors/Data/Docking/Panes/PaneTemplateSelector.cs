@@ -79,36 +79,15 @@ public sealed class PaneTemplateSelector : DataTemplateSelector
     /// </returns>
     public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
-        if (item is IConsoleToolViewModel)
+        return item switch
         {
-            return this.ConsoleTemplate;
-        }
-
-        if (item is IEntitySystemsToolViewModel)
-        {
-            return this.EntitySystemsTemplate;
-        }
-
-        if (item is IProjectExplorerToolViewModel)
-        {
-            return this.ProjectExplorerTemplate;
-        }
-
-        if (item is IPropertiesToolViewModel)
-        {
-            return this.PropertiesTemplate;
-        }
-
-        if (item is ISceneHierarchyToolViewModel)
-        {
-            return this.SceneHierarchyTemplate;
-        }
-
-        if (item is ISceneViewPaneViewModel)
-        {
-            return this.SceneViewTemplate;
-        }
-
-        return base.SelectTemplate(item, container);
+            IConsoleToolViewModel => this.ConsoleTemplate,
+            IEntitySystemsToolViewModel => this.EntitySystemsTemplate,
+            IProjectExplorerToolViewModel => this.ProjectExplorerTemplate,
+            IPropertiesToolViewModel => this.PropertiesTemplate,
+            ISceneHierarchyToolViewModel => this.SceneHierarchyTemplate,
+            ISceneViewPaneViewModel => this.SceneViewTemplate,
+            _ => base.SelectTemplate(item, container)
+        };
     }
 }
