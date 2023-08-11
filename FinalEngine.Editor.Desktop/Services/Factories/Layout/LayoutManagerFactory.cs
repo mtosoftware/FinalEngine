@@ -1,4 +1,4 @@
-// <copyright file="LayoutSerializerFactory.cs" company="Software Antics">
+// <copyright file="LayoutManagerFactory.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -15,21 +15,49 @@ using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using MahApps.Metro.Controls;
 
+/// <summary>
+/// Provides a standard implementation of an <see cref="ILayoutManagerFactory"/>.
+/// </summary>
+/// <seealso cref="ILayoutManagerFactory" />
 public sealed class LayoutManagerFactory : ILayoutManagerFactory
 {
-    // Easier to cache, plus when unloading the DockView MainWindow throws a NullReferenceException.
+    /// <summary>
+    /// The cached instanced to the docking manager.
+    /// </summary>
+    /// <remarks>
+    /// The instance is cached to avoid a <see cref="NullReferenceException"/> when unloading the <see cref="DockView"/>.
+    /// </remarks>
     private static readonly DockingManager Instance = Application.Current.MainWindow.FindChild<DockView>().DockManager;
 
+    /// <summary>
+    /// The application context, used to instantiate the layout manager.
+    /// </summary>
     private readonly IApplicationContext application;
 
+    /// <summary>
+    /// The file system, used to instantiate the layout manager.
+    /// </summary>
     private readonly IFileSystem fileSystem;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LayoutManagerFactory"/> class.
+    /// </summary>
+    /// <param name="application">
+    /// The application context, used to instantiate the layout manager.
+    /// </param>
+    /// <param name="fileSystem">
+    /// The file system, used to instantiate the layout manager.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// The specified <paramref name="application"/> or <paramref name="fileSystem"/> parameter cannot be null.
+    /// </exception>
     public LayoutManagerFactory(IApplicationContext application, IFileSystem fileSystem)
     {
         this.application = application ?? throw new ArgumentNullException(nameof(application));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
     }
 
+    /// <inheritdoc/>
     public ILayoutManager CreateManager()
     {
         return new LayoutManager(Instance, this.application, this.fileSystem);

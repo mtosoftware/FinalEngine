@@ -48,7 +48,11 @@ public sealed class FactoryTests
     [SetUp]
     public void Setup()
     {
-        this.testFactory = new Func<FactoryTests>(() => new FactoryTests());
+        this.testFactory = new Func<FactoryTests>(() =>
+        {
+            return new FactoryTests();
+        });
+
         this.factory = new Factory<FactoryTests>(this.testFactory);
     }
 }

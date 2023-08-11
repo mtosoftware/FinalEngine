@@ -12,7 +12,7 @@ using System;
 public interface IApplicationContext
 {
     /// <summary>
-    /// Get the directory that serves as a common repository for Final Engine application-specific data for the current roaming user.
+    /// Gets the directory that serves as a common repository for Final Engine application-specific data for the current roaming user.
     /// </summary>
     /// <value>
     /// The directory that serves as a common repository for application-specific data for the current roaming user.

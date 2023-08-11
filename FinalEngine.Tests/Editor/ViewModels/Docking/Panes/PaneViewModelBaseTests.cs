@@ -77,7 +77,7 @@ public sealed class PaneViewModelBaseTests
         this.viewModel.IsSelected = true;
 
         // Act
-        var actual = this.viewModel.IsSelected;
+        bool actual = this.viewModel.IsSelected;
 
         // Assert
         Assert.That(actual, Is.True);

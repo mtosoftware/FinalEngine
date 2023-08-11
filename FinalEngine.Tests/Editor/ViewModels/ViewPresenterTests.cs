@@ -47,7 +47,7 @@ public sealed class ViewPresenterTests
         this.provider.Setup(x => x.GetService(typeof(IViewable<IMainViewModel>))).Returns(this.viewable.Object);
         this.provider.Setup(x => x.GetService(typeof(IFactory<IMainViewModel>))).Returns(this.viewModelFactory.Object);
 
-        this.presenter = new ViewPresenter(provider.Object);
+        this.presenter = new ViewPresenter(this.provider.Object);
     }
 
     [Test]

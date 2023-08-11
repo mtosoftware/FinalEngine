@@ -19,7 +19,7 @@ public sealed class ToolViewModelBaseTests
         this.viewModel.IsVisible = false;
 
         // Act
-        var actual = this.viewModel.IsVisible;
+        bool actual = this.viewModel.IsVisible;
 
         // Assert
         Assert.That(actual, Is.False);
