@@ -27,6 +27,11 @@ using Microsoft.Extensions.Logging;
 public sealed class DockViewModel : ObservableObject, IDockViewModel
 {
     /// <summary>
+    /// The name of the layout used when the user starts up the application after the first time.
+    /// </summary>
+    private const string StartupLayoutName = "startup";
+
+    /// <summary>
     /// The layout manager factory, used to load and save the window layout when the application starts and shuts down.
     /// </summary>
     private readonly ILayoutManagerFactory layoutManagerFactory;
@@ -165,7 +170,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
 
         var layoutManager = this.layoutManagerFactory.CreateManager();
 
-        if (!layoutManager.ContainsLayout("startup"))
+        if (!layoutManager.ContainsLayout(StartupLayoutName))
         {
             this.logger.LogInformation("No startup window layout was found, resolving to default layout...");
             layoutManager.ResetLayout();
@@ -173,7 +178,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
             return;
         }
 
-        layoutManager.LoadLayout("startup");
+        layoutManager.LoadLayout(StartupLayoutName);
     }
 
     /// <summary>
@@ -182,6 +187,6 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     private void Unload()
     {
         this.logger.LogInformation("Saving the startup window layout...");
-        this.layoutManagerFactory.CreateManager().SaveLayout("startup");
+        this.layoutManagerFactory.CreateManager().SaveLayout(StartupLayoutName);
     }
 }

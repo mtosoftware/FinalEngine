@@ -185,8 +185,10 @@ public sealed class LayoutManager : ILayoutManager
     /// <inheritdoc/>
     public void ResetLayout()
     {
+        const string defaultLayoutPath = "Resources\\Layouts\\default.config";
+
         this.logger.LogInformation("Resting window layout to default layout...");
-        this.serializer.Deserialize("Resources\\Layouts\\default.config");
+        this.serializer.Deserialize(defaultLayoutPath);
         this.logger.LogInformation("Layout reset.");
     }
 
