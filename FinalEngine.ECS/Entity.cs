@@ -23,10 +23,23 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <summary>
     ///   Initializes a new instance of the <see cref="Entity"/> class.
     /// </summary>
-    public Entity()
+    public Entity(string? tag = null)
     {
+        this.Tag = tag;
+        this.Id = Guid.NewGuid();
+
         this.typeToComponentMap = new Dictionary<Type, IComponent>();
     }
+
+    public Guid Id { get; }
+
+    /// <summary>
+    /// Gets or sets the tag for this <see cref="Entity"/>.
+    /// </summary>
+    /// <value>
+    /// The tag for this <see cref="Entity"/>.
+    /// </value>
+    public string? Tag { get; set; }
 
     /// <summary>
     ///   Gets or sets the event that occurs when a component is added or removed from this <see cref="Entity"/>.
@@ -273,6 +286,11 @@ public class Entity : DynamicObject, IReadOnlyEntity
         where TComponent : IComponent
     {
         this.RemoveComponent(typeof(TComponent));
+    }
+
+    public override string? ToString()
+    {
+        return this.Tag;
     }
 
     /// <summary>

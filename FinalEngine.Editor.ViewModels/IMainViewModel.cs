@@ -12,6 +12,8 @@ using FinalEngine.Editor.ViewModels.Docking;
 /// </summary>
 public interface IMainViewModel
 {
+    ICommand CreateEntityCommand { get; }
+
     /// <summary>
     /// Gets the dock view model.
     /// </summary>

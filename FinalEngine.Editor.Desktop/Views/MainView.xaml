@@ -50,6 +50,13 @@
                     </MenuItem>
                 </MenuItem>
 
+                <!-- SCENE -->
+                <MenuItem Header="_Scene">
+                    <MenuItem Header="_Create">
+                        <MenuItem Header="Entity" Command="{Binding CreateEntityCommand}" />
+                    </MenuItem>
+                </MenuItem>
+
                 <!-- WINDOW -->
                 <MenuItem Header="_Window">
                     <MenuItem Header="_Save Window Layout" Command="{Binding SaveWindowLayoutCommand}" />

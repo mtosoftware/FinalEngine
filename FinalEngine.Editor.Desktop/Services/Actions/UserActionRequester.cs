@@ -38,6 +38,7 @@ public sealed class UserActionRequester : IUserActionRequester
     public void RequestOk(string caption, string message)
     {
         this.logger.LogInformation($"Requesting OK response from user for request: '{message}'.");
+
         MessageBox.Show(message, caption);
     }
 

@@ -14,8 +14,10 @@ using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.Desktop.Services.Actions;
 using FinalEngine.Editor.Desktop.Services.Factories.Layout;
 using FinalEngine.Editor.Desktop.Views;
+using FinalEngine.Editor.Desktop.Views.Dialogs.Entities;
 using FinalEngine.Editor.Desktop.Views.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
@@ -104,6 +106,9 @@ public partial class App : Application
             builder.AddConsole().SetMinimumLevel(Debugger.IsAttached ? LogLevel.Debug : LogLevel.Information);
         });
 
+        //// TODO: Obviously change this when I implement saving and loading scenes but this is fine for now.
+        services.AddSingleton<Scene>();
+
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
 
         services.AddSingleton<IFileSystem, FileSystem>();
@@ -121,10 +126,12 @@ public partial class App : Application
         services.AddFactory<IDockViewModel, DockViewModel>();
         services.AddFactory<ISaveWindowLayoutViewModel, SaveWindowLayoutViewModel>();
         services.AddFactory<IManageWindowLayoutsViewModel, ManageWindowLayoutsViewModel>();
+        services.AddFactory<ICreateNewEntityViewModel, CreateNewEntityViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();
 
         services.AddTransient<IViewable<ISaveWindowLayoutViewModel>, SaveWindowLayoutView>();
         services.AddTransient<IViewable<IManageWindowLayoutsViewModel>, ManageWindowLayoutsView>();
+        services.AddTransient<IViewable<ICreateNewEntityViewModel>, CreateNewEntityView>();
 
         services.AddSingleton<ILayoutManagerFactory, LayoutManagerFactory>();
         services.AddSingleton<IUserActionRequester, UserActionRequester>();

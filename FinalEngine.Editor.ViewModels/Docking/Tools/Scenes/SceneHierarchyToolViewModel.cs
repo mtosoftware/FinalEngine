@@ -5,6 +5,9 @@
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 
 using System;
+using System.Collections.ObjectModel;
+using FinalEngine.ECS;
+using FinalEngine.Editor.Common.Services.Scenes;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -14,14 +17,18 @@ using Microsoft.Extensions.Logging;
 /// <seealso cref="ISceneHierarchyToolViewModel" />
 public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHierarchyToolViewModel
 {
+    private readonly Scene scene;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="SceneHierarchyToolViewModel"/> class.
     /// </summary>
     /// <param name="logger">
     /// The logger.
     /// </param>
-    public SceneHierarchyToolViewModel(ILogger<SceneHierarchyToolViewModel> logger)
+    public SceneHierarchyToolViewModel(ILogger<SceneHierarchyToolViewModel> logger, Scene scene)
     {
+        this.scene = scene ?? throw new ArgumentNullException(nameof(scene));
+
         if (logger == null)
         {
             throw new ArgumentNullException(nameof(logger));
@@ -31,5 +38,10 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
         this.ContentID = "SceneHierarchy";
 
         logger.LogInformation($"Initializing {this.Title}...");
+    }
+
+    public ReadOnlyObservableCollection<Entity> Entities
+    {
+        get { return this.scene.Entities; }
     }
 }
