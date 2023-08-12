@@ -44,7 +44,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj" />
-    <ProjectReference Include="..\FinalEngine.Extensions.Resources\FinalEngine.Extensions.Resources.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
   </ItemGroup>
 
