@@ -30,7 +30,7 @@ public sealed class ShaderResourceLoaderTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ShaderResourceLoader(null, this.fileSystem);
+            new ShaderResourceLoader(this.fileSystem, null);
         });
     }
 
@@ -40,7 +40,7 @@ public sealed class ShaderResourceLoaderTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ShaderResourceLoader(this.factory.Object, null);
+            new ShaderResourceLoader(null, this.factory.Object);
         });
     }
 
@@ -149,6 +149,6 @@ public sealed class ShaderResourceLoaderTests
 
         this.factory.Setup(x => x.CreateShader(It.IsAny<PipelineTarget>(), It.IsAny<string>())).Returns(this.shader.Object);
 
-        this.loader = new ShaderResourceLoader(this.factory.Object, this.fileSystem);
+        this.loader = new ShaderResourceLoader(this.fileSystem, this.factory.Object);
     }
 }

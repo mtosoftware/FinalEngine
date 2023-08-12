@@ -1,11 +1,24 @@
-<UserControl x:Class="FinalEngine.Editor.Desktop.Views.Scenes.SceneView"
+<UserControl x:Name="sceneView"
+             x:Class="FinalEngine.Editor.Desktop.Views.Scenes.SceneView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;assembly=FinalEngine.Editor.ViewModels"
+             xmlns:glwpf="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:SceneViewPaneViewModel}">
     <Grid>
+        <glwpf:GLWpfControl x:Name="glWpfControl"
+                            RegisterToEventsDirectly="False"
+                            CanInvokeOnHandledEvents="False">
+            <glwpf:GLWpfControl.Settings>
+                <glwpf:GLWpfControlSettings MajorVersion="4"
+                                            MinorVersion="5"
+                                            GraphicsContextFlags="ForwardCompatible"
+                                            GraphicsProfile="Core"
+                                            RenderContinuously="True" />
+            </glwpf:GLWpfControl.Settings>
+        </glwpf:GLWpfControl>
     </Grid>
 </UserControl>

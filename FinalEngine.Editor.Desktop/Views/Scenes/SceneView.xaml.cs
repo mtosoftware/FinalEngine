@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Editor.Desktop.Views.Scenes;
 
+using System.Diagnostics;
 using System.Windows.Controls;
 
 /// <summary>
@@ -11,11 +12,14 @@ using System.Windows.Controls;
 /// </summary>
 public partial class SceneView : UserControl
 {
+    private static readonly Stopwatch stopwatch = Stopwatch.StartNew();
+
     /// <summary>
     /// Initializes a new instance of the <see cref="SceneView"/> class.
     /// </summary>
     public SceneView()
     {
         this.InitializeComponent();
+        this.glWpfControl.Start();
     }
 }

@@ -30,4 +30,9 @@
     </PackageReference>
     <PackageReference Include="System.IO.Abstractions" Version="19.2.29" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
+  </ItemGroup>
 </Project>
