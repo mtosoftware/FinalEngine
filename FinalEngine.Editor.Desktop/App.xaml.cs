@@ -7,10 +7,10 @@ namespace FinalEngine.Editor.Desktop;
 using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Windows;
-using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Environment;
+using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.Desktop.Services.Actions;
 using FinalEngine.Editor.Desktop.Services.Factories.Layout;
 using FinalEngine.Editor.Desktop.Views;
@@ -25,6 +25,8 @@ using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
+using FinalEngine.Rendering;
+using FinalEngine.Rendering.OpenGL;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -102,11 +104,13 @@ public partial class App : Application
             builder.AddConsole().SetMinimumLevel(Debugger.IsAttached ? LogLevel.Debug : LogLevel.Information);
         });
 
+        services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
+
         services.AddSingleton<IFileSystem, FileSystem>();
 
-        services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<IApplicationContext, ApplicationContext>();
         services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
+        services.AddSingleton<ISceneRenderer, SceneRenderer>();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();
         services.AddFactory<ISceneHierarchyToolViewModel, SceneHierarchyToolViewModel>();

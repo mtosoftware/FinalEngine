@@ -5,6 +5,7 @@
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Panes.Scenes;
 
 using System;
+using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -14,6 +15,8 @@ using NUnit.Framework;
 public sealed class SceneViewPaneViewModelTests
 {
     private Mock<ILogger<SceneViewPaneViewModel>> logger;
+
+    private Mock<ISceneRenderer> sceneRenderer;
 
     private SceneViewPaneViewModel viewModel;
 
@@ -48,14 +51,34 @@ public sealed class SceneViewPaneViewModelTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SceneViewPaneViewModel(null);
+            new SceneViewPaneViewModel(null, this.sceneRenderer.Object);
         });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenSceneRendererIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new SceneViewPaneViewModel(this.logger.Object, null);
+        });
+    }
+
+    [Test]
+    public void RenderCommandExecuteShouldInvokeSceneRendererRenderWhenInvoked()
+    {
+        // Act
+        this.viewModel.RenderCommand.Execute(null);
+
+        // Assert
+        this.sceneRenderer.Verify(x => x.Render(), Times.Once);
     }
 
     [SetUp]
     public void Setup()
     {
         this.logger = new Mock<ILogger<SceneViewPaneViewModel>>();
-        this.viewModel = new SceneViewPaneViewModel(this.logger.Object);
+        this.sceneRenderer = new Mock<ISceneRenderer>();
+        this.viewModel = new SceneViewPaneViewModel(this.logger.Object, this.sceneRenderer.Object);
     }
 }

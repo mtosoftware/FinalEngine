@@ -17,5 +17,6 @@ public partial class SceneView : UserControl
     public SceneView()
     {
         this.InitializeComponent();
+        this.glWpfControl.Start();
     }
 }

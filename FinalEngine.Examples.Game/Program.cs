@@ -73,7 +73,7 @@ internal static class Program
         var gameTime = new GameTime(120.0d);
 
         resourceManager.RegisterLoader(new SoundResourceLoader(fileSystem));
-        resourceManager.RegisterLoader(new ShaderResourceLoader(renderDevice.Factory, fileSystem));
+        resourceManager.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice.Factory));
         resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
 
         displayManager.ChangeResolution(DisplayResolution.HighDefinition);
