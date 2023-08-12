@@ -25,12 +25,8 @@ using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
-using FinalEngine.Extensions.Resources.Loaders.Audio;
-using FinalEngine.Extensions.Resources.Loaders.Shaders;
-using FinalEngine.Extensions.Resources.Loaders.Textures;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
-using FinalEngine.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -109,25 +105,6 @@ public partial class App : Application
         });
 
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
-
-        services.AddSingleton<IGPUResourceFactory>(x =>
-        {
-            return x.GetRequiredService<IRenderDevice>().Factory;
-        });
-
-        services.AddSingleton<IResourceManager>(x =>
-        {
-            var resourceManager = ResourceManager.Instance;
-
-            var fileSystem = x.GetRequiredService<IFileSystem>();
-            var gpuFactory = x.GetRequiredService<IGPUResourceFactory>();
-
-            resourceManager.RegisterLoader(new SoundResourceLoader(fileSystem));
-            resourceManager.RegisterLoader(new Texture2DResourceLoader(fileSystem, gpuFactory));
-            resourceManager.RegisterLoader(new ShaderResourceLoader(fileSystem, gpuFactory));
-
-            return resourceManager;
-        });
 
         services.AddSingleton<IFileSystem, FileSystem>();
 

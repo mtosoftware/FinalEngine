@@ -4,7 +4,13 @@
 
 namespace FinalEngine.Editor.Common.Services.Scenes;
 
+/// <summary>
+/// Defines an interface that renders a scene.
+/// </summary>
 public interface ISceneRenderer
 {
+    /// <summary>
+    /// Renders the scene.
+    /// </summary>
     void Render();
 }

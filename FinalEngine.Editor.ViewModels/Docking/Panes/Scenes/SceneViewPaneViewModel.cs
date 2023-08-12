@@ -17,10 +17,14 @@ using Microsoft.Extensions.Logging;
 /// <seealso cref="ISceneViewPaneViewModel" />
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
-    private readonly ILogger<SceneViewPaneViewModel> logger;
-
+    /// <summary>
+    /// The scene renderer, used to render the current scene.
+    /// </summary>
     private readonly ISceneRenderer sceneRenderer;
 
+    /// <summary>
+    /// The render command, used to render the current scene.
+    /// </summary>
     private ICommand? renderCommand;
 
     /// <summary>
@@ -29,24 +33,35 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
     /// <param name="logger">
     /// The logger.
     /// </param>
+    /// <param name="sceneRenderer">
+    /// The scene renderer used to render the currently active scene.
+    /// </param>
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
         ISceneRenderer sceneRenderer)
     {
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        if (logger == null)
+        {
+            throw new ArgumentNullException(nameof(logger));
+        }
+
         this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
 
         this.Title = "Scene View";
         this.ContentID = "SceneView";
 
-        this.logger.LogInformation($"Initializing {this.Title}...");
+        logger.LogInformation($"Initializing {this.Title}...");
     }
 
+    /// <inheritdoc/>
     public ICommand RenderCommand
     {
         get { return this.renderCommand ??= new RelayCommand(this.Render); }
     }
 
+    /// <summary>
+    /// Renders the currently active scene.
+    /// </summary>
     private void Render()
     {
         this.sceneRenderer.Render();
