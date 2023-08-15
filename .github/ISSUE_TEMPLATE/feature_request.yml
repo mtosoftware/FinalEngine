@@ -3,7 +3,7 @@ name: ✨ Feature Request
 description: Suggest an idea for a new project feature
 title: "✨ New Feature"
 labels: ["✨ Feature"]
-projects: ["FinalEngine"]
+projects: ["Final Engine"]
 assignees:
   - softwareantics
   
@@ -24,6 +24,8 @@ body:
           required: true
         - label: "I have searched to make sure a issue for this feature request doesn't exist."
           required: true
+        - label: "For maintainers: I have updated the projects and milestones."
+          required: false
   
   - type: textarea
     id: description
