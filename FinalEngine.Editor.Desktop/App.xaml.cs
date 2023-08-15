@@ -14,7 +14,7 @@ using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Environment;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.Desktop.Services.Actions;
-using FinalEngine.Editor.Desktop.Services.Factories.Layout;
+using FinalEngine.Editor.Desktop.Services.Layout;
 using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.Desktop.Views.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels;
@@ -26,7 +26,7 @@ using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Actions;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
+using FinalEngine.Editor.ViewModels.Services.Layout;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
 using Microsoft.Extensions.DependencyInjection;
@@ -111,7 +111,7 @@ public partial class App : Application
 
         services.AddSingleton<IFileSystem, FileSystem>();
 
-        services.AddTransient<Scene>();
+        services.AddTransient<IScene, Scene>();
 
         services.AddSingleton<IApplicationContext, ApplicationContext>();
         services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
@@ -132,8 +132,8 @@ public partial class App : Application
         services.AddTransient<IViewable<ISaveWindowLayoutViewModel>, SaveWindowLayoutView>();
         services.AddTransient<IViewable<IManageWindowLayoutsViewModel>, ManageWindowLayoutsView>();
 
-        services.AddSingleton<ILayoutManagerFactory, LayoutManagerFactory>();
         services.AddSingleton<IUserActionRequester, UserActionRequester>();
+        services.AddSingleton<ILayoutManager, LayoutManager>();
 
         services.AddSingleton<IViewPresenter>(x =>
         {

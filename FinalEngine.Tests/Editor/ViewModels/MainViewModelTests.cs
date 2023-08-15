@@ -11,7 +11,6 @@ using FinalEngine.Editor.ViewModels;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -29,8 +28,6 @@ public sealed class MainViewModelTests
     private Mock<IFactory<IDockViewModel>> dockViewModelFactory;
 
     private Mock<ILayoutManager> layoutManager;
-
-    private Mock<ILayoutManagerFactory> layoutManagerFactory;
 
     private Mock<ILogger<MainViewModel>> logger;
 
@@ -62,7 +59,7 @@ public sealed class MainViewModelTests
                 this.logger.Object,
                 this.viewPresenter.Object,
                 null,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.dockViewModelFactory.Object);
         });
     }
@@ -77,13 +74,13 @@ public sealed class MainViewModelTests
                 this.logger.Object,
                 this.viewPresenter.Object,
                 this.applicationContext.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 null);
         });
     }
 
     [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenLayoutManagerFactoryIsNull()
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLayoutManagerIsNull()
     {
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
@@ -107,7 +104,7 @@ public sealed class MainViewModelTests
                 null,
                 this.viewPresenter.Object,
                 this.applicationContext.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.dockViewModelFactory.Object);
         });
     }
@@ -122,7 +119,7 @@ public sealed class MainViewModelTests
                 this.logger.Object,
                 null,
                 this.applicationContext.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.dockViewModelFactory.Object);
         });
     }
@@ -168,16 +165,6 @@ public sealed class MainViewModelTests
     }
 
     [Test]
-    public void ResetWindowLayoutCommandExecuteShouldInvokeLayoutManagerFactoryCreateManagerWhenInvoked()
-    {
-        // Act
-        this.viewModel.ResetWindowLayoutCommand.Execute(null);
-
-        // Assert
-        this.layoutManagerFactory.Verify(x => x.CreateManager(), Times.Once);
-    }
-
-    [Test]
     public void ResetWindowLayoutCommandExecuteShouldInvokeLayoutManagerResetLayoutWhenInvoked()
     {
         // Act
@@ -203,7 +190,6 @@ public sealed class MainViewModelTests
         this.logger = new Mock<ILogger<MainViewModel>>();
         this.viewPresenter = new Mock<IViewPresenter>();
         this.applicationContext = new Mock<IApplicationContext>();
-        this.layoutManagerFactory = new Mock<ILayoutManagerFactory>();
         this.dockViewModelFactory = new Mock<IFactory<IDockViewModel>>();
         this.dockViewModel = new Mock<IDockViewModel>();
         this.layoutManager = new Mock<ILayoutManager>();
@@ -211,13 +197,12 @@ public sealed class MainViewModelTests
 
         this.applicationContext.Setup(x => x.Title).Returns("Final Engine");
         this.dockViewModelFactory.Setup(x => x.Create()).Returns(this.dockViewModel.Object);
-        this.layoutManagerFactory.Setup(x => x.CreateManager()).Returns(this.layoutManager.Object);
 
         this.viewModel = new MainViewModel(
             this.logger.Object,
             this.viewPresenter.Object,
             this.applicationContext.Object,
-            this.layoutManagerFactory.Object,
+            this.layoutManager.Object,
             this.dockViewModelFactory.Object);
     }
 
@@ -262,15 +247,5 @@ public sealed class MainViewModelTests
         {
             this.viewModel.ToggleToolWindowCommand.Execute("\t\r\n ");
         });
-    }
-
-    [Test]
-    public void ToggleWindowCommandExecuteShouldInvokeLayoutManagerFactoryCreateManagerWhenInvoked()
-    {
-        // Act
-        this.viewModel.ToggleToolWindowCommand.Execute("Layout");
-
-        // Assert
-        this.layoutManagerFactory.Verify(x => x.CreateManager(), Times.Once);
     }
 }

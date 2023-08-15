@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Services.Actions;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using Microsoft.Extensions.Logging;
 
@@ -63,26 +62,21 @@ public sealed class ManageWindowLayoutsViewModel : ObservableObject, IManageWind
     /// </param>
     /// <param name="userActionRequester">
     /// The user action requester, used to query the user and determine whether they wish to delete the currently selected window layout.</param>
-    /// <param name="layoutManagerFactory">
-    /// The layout manager factory, used to apply and delete window layouts.
+    /// <param name="layoutManager">
+    /// The layout manager, used to apply and delete window layouts.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="userActionRequester"/> or <paramref name="layoutManagerFactory"/> parameter cannot be null.
+    /// The specified <paramref name="logger"/>, <paramref name="userActionRequester"/> or <paramref name="layoutManager"/> parameter cannot be null.
     /// </exception>
     public ManageWindowLayoutsViewModel(
         ILogger<ManageWindowLayoutsViewModel> logger,
         IUserActionRequester userActionRequester,
-        ILayoutManagerFactory layoutManagerFactory)
+        ILayoutManager layoutManager)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
+        this.layoutManager = layoutManager ?? throw new ArgumentNullException(nameof(layoutManager));
 
-        if (layoutManagerFactory == null)
-        {
-            throw new ArgumentNullException(nameof(layoutManagerFactory));
-        }
-
-        this.layoutManager = layoutManagerFactory.CreateManager();
         this.LayoutNames = this.layoutManager.LoadLayoutNames();
     }
 

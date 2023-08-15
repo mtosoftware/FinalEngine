@@ -9,12 +9,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Windows;
 using AvalonDock;
 using AvalonDock.Layout.Serialization;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Desktop.Exceptions.Layout;
+using FinalEngine.Editor.Desktop.Views.Docking;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Services.Layout;
+using MahApps.Metro.Controls;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -24,14 +27,17 @@ using Microsoft.Extensions.Logging;
 public sealed class LayoutManager : ILayoutManager
 {
     /// <summary>
+    /// The cached instanced to the docking manager.
+    /// </summary>
+    /// <remarks>
+    /// The instance is cached to avoid a <see cref="NullReferenceException"/> when unloading the <see cref="DockView"/>.
+    /// </remarks>
+    private static readonly DockingManager Instance = Application.Current.MainWindow.FindChild<DockView>().DockManager;
+
+    /// <summary>
     /// The application, used to resolve a directory where the window layouts are saved.
     /// </summary>
     private readonly IApplicationContext application;
-
-    /// <summary>
-    /// The docking manager, used to manage the current window layout.
-    /// </summary>
-    private readonly DockingManager dockManager;
 
     /// <summary>
     /// The file system, used to create the <see cref="LayoutDirectory"/> if one does not already exist.
@@ -44,18 +50,10 @@ public sealed class LayoutManager : ILayoutManager
     private readonly ILogger<LayoutManager> logger;
 
     /// <summary>
-    /// The layout serializer, used to serialize and deserialize the window layouts where required.
-    /// </summary>
-    private readonly XmlLayoutSerializer serializer;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="LayoutManager"/> class.
     /// </summary>
     /// <param name="logger">
     /// The logger.
-    /// </param>
-    /// <param name="dockManager">
-    /// The dock manager, used to manage the current window layout.
     /// </param>
     /// <param name="application">
     /// The application context, used to resolve a directory where window layouts are stored.
@@ -64,20 +62,16 @@ public sealed class LayoutManager : ILayoutManager
     /// The file system, used to create the <see cref="LayoutDirectory"/> if one does not already exist.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="dockManager"/>, <paramref name="application"/> or <paramref name="fileSystem"/> parameter cannot be null.
+    /// The specified <paramref name="application"/> or <paramref name="fileSystem"/> parameter cannot be null.
     /// </exception>
     public LayoutManager(
         ILogger<LayoutManager> logger,
-        DockingManager dockManager,
         IApplicationContext application,
         IFileSystem fileSystem)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.dockManager = dockManager ?? throw new ArgumentNullException(nameof(dockManager));
         this.application = application ?? throw new ArgumentNullException(nameof(application));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-
-        this.serializer = new XmlLayoutSerializer(this.dockManager);
     }
 
     /// <summary>
@@ -165,7 +159,8 @@ public sealed class LayoutManager : ILayoutManager
 
         this.logger.LogInformation($"Loading window layout: '{layoutName}'.");
 
-        this.serializer.Deserialize(this.GetLayoutPath(layoutName));
+        var serializer = new XmlLayoutSerializer(Instance);
+        serializer.Deserialize(this.GetLayoutPath(layoutName));
 
         this.logger.LogInformation("Layout loaded.");
     }
@@ -188,7 +183,10 @@ public sealed class LayoutManager : ILayoutManager
         const string defaultLayoutPath = "Resources\\Layouts\\default.config";
 
         this.logger.LogInformation("Resting window layout to default layout...");
-        this.serializer.Deserialize(defaultLayoutPath);
+
+        var serializer = new XmlLayoutSerializer(Instance);
+        serializer.Deserialize(defaultLayoutPath);
+
         this.logger.LogInformation("Layout reset.");
     }
 
@@ -205,7 +203,8 @@ public sealed class LayoutManager : ILayoutManager
 
         this.logger.LogInformation($"Saving window layout: '{layoutName}'...");
 
-        this.serializer.Serialize(this.GetLayoutPath(layoutName));
+        var serializer = new XmlLayoutSerializer(Instance);
+        serializer.Serialize(this.GetLayoutPath(layoutName));
 
         this.logger.LogInformation("Layout saved.");
     }
@@ -224,7 +223,7 @@ public sealed class LayoutManager : ILayoutManager
             throw new ArgumentException($"'{nameof(contentID)}' cannot be null or whitespace.", nameof(contentID));
         }
 
-        var tool = this.dockManager.AnchorablesSource.Cast<IToolViewModel>().FirstOrDefault(x =>
+        var tool = Instance.AnchorablesSource.Cast<IToolViewModel>().FirstOrDefault(x =>
         {
             return x.ContentID == contentID;
         }) ?? throw new ToolPaneNotFoundException(contentID);

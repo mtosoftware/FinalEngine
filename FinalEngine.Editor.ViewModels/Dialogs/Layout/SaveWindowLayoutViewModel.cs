@@ -9,7 +9,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.ViewModels.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Actions;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using FinalEngine.Editor.ViewModels.Validation;
 using Microsoft.Extensions.Logging;
@@ -52,29 +51,24 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
     /// <param name="logger">
     /// The logger.
     /// </param>
-    /// <param name="layoutManagerFactory">
-    /// The layout manager factory, used to create an <see cref="ILayoutManager"/> to handle saving the current window layout.
+    /// <param name="layoutManager">
+    /// The layout manager, used to handle saving the current window layout.
     /// </param>
     /// <param name="userActionRequester">
     /// The user action requester, used to query the user and determine whether they wish to overwrite a layout that already exists.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="layoutManagerFactory"/> or <paramref name="userActionRequester"/> parameter cannot be null.
+    /// The specified <paramref name="layoutManager"/> or <paramref name="userActionRequester"/> parameter cannot be null.
     /// </exception>
     public SaveWindowLayoutViewModel(
         ILogger<SaveWindowLayoutViewModel> logger,
-        ILayoutManagerFactory layoutManagerFactory,
+        ILayoutManager layoutManager,
         IUserActionRequester userActionRequester)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.userActionRequester = userActionRequester ?? throw new ArgumentNullException(nameof(userActionRequester));
+        this.layoutManager = layoutManager ?? throw new ArgumentNullException(nameof(layoutManager));
 
-        if (layoutManagerFactory == null)
-        {
-            throw new ArgumentNullException(nameof(layoutManagerFactory));
-        }
-
-        this.layoutManager = layoutManagerFactory.CreateManager();
         this.LayoutName = "Layout Name";
     }
 

@@ -12,7 +12,6 @@ using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -30,8 +29,6 @@ public sealed class DockViewModelTests
     private Mock<IEntitySystemsToolViewModel> entitySystemsToolViewModel;
 
     private Mock<ILayoutManager> layoutManager;
-
-    private Mock<ILayoutManagerFactory> layoutManagerFactory;
 
     private Mock<ILogger<DockViewModel>> logger;
 
@@ -103,7 +100,7 @@ public sealed class DockViewModelTests
         {
             new DockViewModel(
                 this.logger.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
                 this.propertiesFactory.Object,
@@ -121,7 +118,7 @@ public sealed class DockViewModelTests
         {
             new DockViewModel(
                 this.logger.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
                 this.propertiesFactory.Object,
@@ -132,7 +129,7 @@ public sealed class DockViewModelTests
     }
 
     [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenLayoutManagerFactoryIsNull()
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLayoutManagerIsNull()
     {
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
@@ -157,7 +154,7 @@ public sealed class DockViewModelTests
         {
             new DockViewModel(
                 null,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
                 this.propertiesFactory.Object,
@@ -175,7 +172,7 @@ public sealed class DockViewModelTests
         {
             new DockViewModel(
                 this.logger.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 null,
                 this.sceneHierarchyFactory.Object,
                 this.propertiesFactory.Object,
@@ -193,7 +190,7 @@ public sealed class DockViewModelTests
         {
             new DockViewModel(
                 this.logger.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
                 null,
@@ -211,7 +208,7 @@ public sealed class DockViewModelTests
         {
             new DockViewModel(
                 this.logger.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.projectExplorerFactory.Object,
                 null,
                 this.propertiesFactory.Object,
@@ -229,7 +226,7 @@ public sealed class DockViewModelTests
         {
             new DockViewModel(
                 this.logger.Object,
-                this.layoutManagerFactory.Object,
+                this.layoutManager.Object,
                 this.projectExplorerFactory.Object,
                 this.sceneHierarchyFactory.Object,
                 this.propertiesFactory.Object,
@@ -247,16 +244,6 @@ public sealed class DockViewModelTests
 
         // Assert
         this.layoutManager.Verify(x => x.ContainsLayout("startup"), Times.Once);
-    }
-
-    [Test]
-    public void LoadCommandExecuteShouldInvokeLayoutManagerFactoryCreateManagerWhenInvoked()
-    {
-        // Act
-        this.viewModel.LoadCommand.Execute(null);
-
-        // Assert
-        this.layoutManagerFactory.Verify(x => x.CreateManager(), Times.Once);
     }
 
     [Test]
@@ -318,7 +305,6 @@ public sealed class DockViewModelTests
         this.consoleToolViewModel = new Mock<IConsoleToolViewModel>();
         this.entitySystemsToolViewModel = new Mock<IEntitySystemsToolViewModel>();
 
-        this.layoutManagerFactory = new Mock<ILayoutManagerFactory>();
         this.layoutManager = new Mock<ILayoutManager>();
 
         this.consoleFactory.Setup(x => x.Create()).Returns(this.consoleToolViewModel.Object);
@@ -328,11 +314,10 @@ public sealed class DockViewModelTests
         this.sceneViewFactory.Setup(x => x.Create()).Returns(this.sceneViewPaneViewModel.Object);
         this.sceneHierarchyFactory.Setup(x => x.Create()).Returns(this.sceneHierarchyToolViewModel.Object);
         this.entitySystemsFactory.Setup(x => x.Create()).Returns(this.entitySystemsToolViewModel.Object);
-        this.layoutManagerFactory.Setup(x => x.CreateManager()).Returns(this.layoutManager.Object);
 
         this.viewModel = new DockViewModel(
             this.logger.Object,
-            this.layoutManagerFactory.Object,
+            this.layoutManager.Object,
             this.projectExplorerFactory.Object,
             this.sceneHierarchyFactory.Object,
             this.propertiesFactory.Object,
@@ -374,16 +359,6 @@ public sealed class DockViewModelTests
     {
         // Assert
         Assert.That(this.viewModel.Tools.ToList().Contains(this.sceneHierarchyToolViewModel.Object), Is.True);
-    }
-
-    [Test]
-    public void UnloadCommandExecuteShouldInvokeLayoutManagerFactoryCreateManagerWhenInvoked()
-    {
-        // Act
-        this.viewModel.UnloadCommand.Execute(null);
-
-        // Assert
-        this.layoutManagerFactory.Verify(x => x.CreateManager(), Times.Once);
     }
 
     [Test]

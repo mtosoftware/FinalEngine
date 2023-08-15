@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Services.Actions;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -18,8 +17,6 @@ using NUnit.Framework;
 public sealed class ManageWindowLayoutsViewModelTests
 {
     private Mock<ILayoutManager> layoutManager;
-
-    private Mock<ILayoutManagerFactory> layoutManagerFactory;
 
     private IList<string> layoutNames;
 
@@ -82,7 +79,7 @@ public sealed class ManageWindowLayoutsViewModelTests
     }
 
     [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenLayoutManagerFactoryIsNull()
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLayoutManagerIsNull()
     {
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
@@ -96,7 +93,7 @@ public sealed class ManageWindowLayoutsViewModelTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ManageWindowLayoutsViewModel(null, this.userActionRequester.Object, this.layoutManagerFactory.Object);
+            new ManageWindowLayoutsViewModel(null, this.userActionRequester.Object, this.layoutManager.Object);
         });
     }
 
@@ -106,7 +103,7 @@ public sealed class ManageWindowLayoutsViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ManageWindowLayoutsViewModel(this.logger.Object, null, this.layoutManagerFactory.Object);
+            new ManageWindowLayoutsViewModel(this.logger.Object, null, this.layoutManager.Object);
         });
     }
 
@@ -214,7 +211,7 @@ public sealed class ManageWindowLayoutsViewModelTests
     {
         // Arrange
         this.layoutManager.Setup(x => x.LoadLayoutNames()).Returns<IEnumerable<string>>(null);
-        var viewModel = new ManageWindowLayoutsViewModel(this.logger.Object, this.userActionRequester.Object, this.layoutManagerFactory.Object);
+        var viewModel = new ManageWindowLayoutsViewModel(this.logger.Object, this.userActionRequester.Object, this.layoutManager.Object);
 
         // Act
         var actual = viewModel.LayoutNames;
@@ -251,7 +248,6 @@ public sealed class ManageWindowLayoutsViewModelTests
     public void Setup()
     {
         this.userActionRequester = new Mock<IUserActionRequester>();
-        this.layoutManagerFactory = new Mock<ILayoutManagerFactory>();
         this.layoutManager = new Mock<ILayoutManager>();
         this.logger = new Mock<ILogger<ManageWindowLayoutsViewModel>>();
 
@@ -262,11 +258,9 @@ public sealed class ManageWindowLayoutsViewModelTests
             "Layout 3",
         };
 
-        this.layoutManagerFactory.Setup(x => x.CreateManager()).Returns(this.layoutManager.Object);
-
         this.layoutManager.Setup(x => x.LoadLayoutNames()).Returns(this.layoutNames);
 
-        this.viewModel = new ManageWindowLayoutsViewModel(this.logger.Object, this.userActionRequester.Object, this.layoutManagerFactory.Object);
+        this.viewModel = new ManageWindowLayoutsViewModel(this.logger.Object, this.userActionRequester.Object, this.layoutManager.Object);
     }
 
     [Test]

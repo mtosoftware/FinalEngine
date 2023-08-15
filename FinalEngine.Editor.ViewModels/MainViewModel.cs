@@ -13,7 +13,6 @@ using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using Microsoft.Extensions.Logging;
 
@@ -25,9 +24,9 @@ using Microsoft.Extensions.Logging;
 public sealed class MainViewModel : ObservableObject, IMainViewModel
 {
     /// <summary>
-    /// The layout manager factory, used to create an <see cref="ILayoutManager"/> to handle reseting the current window layout.
+    /// The layout manager, used to handle reseting the current window layout.
     /// </summary>
-    private readonly ILayoutManagerFactory layoutManagerFactory;
+    private readonly ILayoutManager layoutManager;
 
     /// <summary>
     /// The logger.
@@ -76,25 +75,25 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// <param name="applicationContext">
     /// The application context, used to get the title of the view.
     /// </param>
-    /// <param name="layoutManagerFactory">
+    /// <param name="layoutManager">
     /// The layout manager factory, used to create an <see cref="ILayoutManager"/> to handle reseting the current window layout.
     /// </param>
     /// <param name="dockViewModelFactory">
     /// The dock view model factory used to create an <see cref="IDockViewModel"/> to handle docking of tool and pane views.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="logger"/>, <paramref name="viewPresenter"/>, <paramref name="applicationContext"/>, <paramref name="layoutManagerFactory"/> or <paramref name="dockViewModelFactory"/> parameter cannot be null.
+    /// The specified <paramref name="logger"/>, <paramref name="viewPresenter"/>, <paramref name="applicationContext"/>, <paramref name="layoutManager"/> or <paramref name="dockViewModelFactory"/> parameter cannot be null.
     /// </exception>
     public MainViewModel(
         ILogger<MainViewModel> logger,
         IViewPresenter viewPresenter,
         IApplicationContext applicationContext,
-        ILayoutManagerFactory layoutManagerFactory,
+        ILayoutManager layoutManager,
         IFactory<IDockViewModel> dockViewModelFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
-        this.layoutManagerFactory = layoutManagerFactory ?? throw new ArgumentNullException(nameof(layoutManagerFactory));
+        this.layoutManager = layoutManager ?? throw new ArgumentNullException(nameof(layoutManager));
 
         if (applicationContext == null)
         {
@@ -172,7 +171,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private void ResetWindowLayout()
     {
-        this.layoutManagerFactory.CreateManager().ResetLayout();
+        this.layoutManager.ResetLayout();
     }
 
     /// <summary>
@@ -209,6 +208,6 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
             throw new ArgumentException($"'{nameof(contentID)}' cannot be null or whitespace.", nameof(contentID));
         }
 
-        this.layoutManagerFactory.CreateManager().ToggleToolWindow(contentID);
+        this.layoutManager.ToggleToolWindow(contentID);
     }
 }
