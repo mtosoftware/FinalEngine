@@ -4,6 +4,7 @@ about: Suggest an idea for a new project feature
 title: '✨ New Feature'
 labels: '✨ Feature'
 assignees: 'softwareantics'
+projects: 'Final Engine'
 ---
 
 ## Description
@@ -33,3 +34,10 @@ Highlight any foreseeable challenges or difficulties that might be encountered d
 ## Additional Context
 
 Provide any extra context, user scenarios, or visuals that might assist in understanding the feature request better.
+
+## Maintainer Checklist
+
+- [ ] The title has the ✨ emoji.
+- [ ] I have added appropriate labels.
+- [ ] I have set a priority label for this feature.
+- [ ] I have ensured any milestones and projects have been linked.
