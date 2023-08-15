@@ -19,7 +19,7 @@ body:
     description: "Please answer the following questions for yourself before submitting an issue:"
     options:
       - label: "I have verified that I am running the latest version."
-	      - required: true
+      - required: true
       - label: "I have checked the documentation and found no solution."
 	      - required: true
 	    - label: "I have ensured that this issue has not been previously filed."
