@@ -18,11 +18,4 @@ body:
       placeholder: "Tell us what new feature you'd like implemented"
     validations:
       required: true
-  - type: textarea
-    id: justification
-    attributes:
-      description: "Explain the significance and benefits of adding this feature."
-      placeholder: "Tell us why you'd like this feature implemented."
-    validations:
-      required: true
 ---
