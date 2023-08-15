@@ -4,7 +4,7 @@ about: Suggest an idea for a new project feature
 title: '✨ New Feature'
 labels: '✨ Feature'
 assignees: 'softwareantics'
-projects: 'Final Engine'
+projects: ["Final Engine"]
 ---
 
 ## Description
