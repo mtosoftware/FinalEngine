@@ -1,28 +1,35 @@
 ---
-name: Feature Request
-about: Suggest an idea for this project
-title: ''
-labels: enhancement
-assignees: ''
-
+name: ✨ Feature Request
+about: Suggest an idea for a new project feature
+title: '✨ New Feature'
+labels: '✨ Feature'
+assignees: 'softwareantics'
 ---
 
-# Description
+## Description
 
-Please provide a clear and concise description of the feature you'd like implemented.
+Briefly describe the proposed feature.
 
-## The Why
+## Justification
 
-Please explain _why_ this feature is necessary and should be implemented.
+Explain the significance and benefits of adding this feature.
 
-## The How
+## Approach
 
-If you can, provide some information on how you'd like this feature to be implemented. If this feature includes any API changes or implementation provide some pseudo code below.
+Outline a suggested approach for implementing the feature, including any relevant API changes or pseudocode if applicable.
 
 ## Requirements
 
-Please list any requirements that are necessary to implement this feature (this can include external libraries, the completion of other feature requests, etc).
+List any prerequisites for developing this feature, such as external libraries or dependencies on other repositories.
 
-## Possible Issues
+## Issue Dependencies
 
-Please list any possible issues that may arise when attempting to implement this feature.
+Specify any pre-requisite issues that need to be addressed before starting work on this feature.
+
+## Potential Challenges
+
+Highlight any foreseeable challenges or difficulties that might be encountered during the implementation of this feature.
+
+## Additional Context
+
+Provide any extra context, user scenarios, or visuals that might assist in understanding the feature request better.
