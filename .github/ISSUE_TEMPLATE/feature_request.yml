@@ -25,7 +25,7 @@ body:
       label: "Justification"
       description: "Explain the significance and benefits of adding this feature."
       placeholder: "Describe why you'd like this feature to be implemented."
-    validation:
+    validations:
       required: true
   - type: textarea
     id: approach
