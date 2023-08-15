@@ -1,10 +1,11 @@
 ---
-name: Bug report
-title: '🐛 Bug Report'
-about: 'A break in functionality.'
-labels: '🐛 bug'
-assignees: 'softwareantics'
-projects: 'softwareantics/2'
+name: 🐛 Bug Report
+description: Report a bug to be fixed.
+title: "✨ Bug Report"
+labels: ["🐛 Bug"]
+projects: ["softwareantics/2"]
+assignees:
+  - softwareantics
 
 body:
   - type: markdown
