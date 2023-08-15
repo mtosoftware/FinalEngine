@@ -64,15 +64,6 @@ body:
       required: false
   
   - type: textarea
-    id: challenges
-    attributes:
-      label: "Potential Challenges"
-      description: "Highlight any foreseeable challenges or difficulties that might be encountered during the implementation of this feature."
-      placeholder: "If you anticipate any challenges during development, please describe them."
-    validations:
-      required: false
-  
-  - type: textarea
     id: additional
     attributes:
       label: "Additional Information"
