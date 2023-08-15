@@ -1,4 +1,3 @@
----
 name: ✨ Feature Request
 description: Suggest an idea for a new project feature
 title: "✨ New Feature"
@@ -8,23 +7,22 @@ assignees:
   - softwareantics
   
 body:
-  
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out a feature request!
+        Thanks for taking the time to submit a feature request!
   
   - type: checkboxes
     id: checklist
     attributes:
       label: "Checklist"
-      description: "Please complete the below checklist before requesting a new feature."
+      description: "Please complete the following checklist before submitting your feature request."
       options:
         - label: "I have not removed the ✨ emoji from the title."
           required: true
-        - label: "I have searched to make sure a issue for this feature request doesn't exist."
+        - label: "I have searched to ensure that no existing issue covers this feature request."
           required: true
-        - label: "For maintainers: I have updated the projects and milestones."
+        - label: "For maintainers: I have updated the projects and milestones if needed."
           required: false
   
   - type: textarea
@@ -32,7 +30,7 @@ body:
     attributes: 
       label: "Description"
       description: "Briefly describe the proposed feature."
-      placeholder: "Tell us what new feature you'd like implemented"
+      placeholder: "Provide a concise description of the new feature you'd like to see."
     validations:
       required: true
   
@@ -41,7 +39,7 @@ body:
     attributes:
       label: "Justification"
       description: "Explain the significance and benefits of adding this feature."
-      placeholder: "Describe why you'd like this feature to be implemented."
+      placeholder: "Share why you believe this feature should be implemented."
     validations:
       required: true
   
@@ -49,8 +47,8 @@ body:
     id: approach
     attributes:
       label: "Implementation Approach"
-      description: "Outline a suggested approach for implementing the feature, including any relevant API changes or pseudocode if applicable."
-      placeholder: "If you can, provide how you'd like this feature to be implemented."
+      description: "Outline a suggested approach for implementing the feature, including relevant API changes or pseudocode if applicable."
+      placeholder: "If possible, describe how you envision this feature being implemented."
     validations:
       required: false
   
@@ -59,7 +57,7 @@ body:
     attributes:
       label: "Requirements"
       description: "List any prerequisites for developing this feature, such as external libraries or dependencies on other issues."
-      placeholder: "If you can, provide a list of requirements that must be met before this feature can be implemented."
+      placeholder: "Provide any specific requirements that must be met before implementing this feature."
     validations:
       required: false
   
@@ -68,7 +66,7 @@ body:
     attributes:
       label: "Potential Challenges"
       description: "Highlight any foreseeable challenges or difficulties that might be encountered during the implementation of this feature."
-      placeholder: "If you can, provide potential issues that can arise during development."
+      placeholder: "If you anticipate any challenges during development, please describe them."
     validations:
       required: false
   
@@ -76,8 +74,7 @@ body:
     id: context
     attributes:
       label: "Additional Context"
-      description: "Provide any extra context, user scenarios, or visuals that might assist in understanding the feature request better."
-      placeholder: "Is there any other information you can provide to speed up development?"
+      description: "Provide any extra context, user scenarios, or visuals that might help understand the feature request better."
+      placeholder: "Share any additional information that could facilitate development."
     validations:
       required: false
----
