@@ -28,38 +28,38 @@ body:
           required: false
   
   - type: textarea
-    id: description
+    id: current
     attributes: 
-      label: "Description"
-      description: "Briefly describe the proposed feature."
-      placeholder: "Provide a concise description of the new feature you'd like to see."
+      label: "Current Behaviour"
+      description: "A clear and concise description of what is currently happening."
+      placeholder: "Explain what is happening."
     validations:
       required: true
   
   - type: textarea
-    id: justification
+    id: expected
     attributes:
-      label: "Justification"
-      description: "Explain the significance and benefits of adding this feature."
-      placeholder: "Share why you believe this feature should be implemented."
+      label: "Expected Behaviour"
+      description: "A clear and concise description of what you expected to happen."
+      placeholder: "Explain what should have happened."
     validations:
       required: true
   
   - type: textarea
-    id: approach
+    id: context
     attributes:
-      label: "Implementation Approach"
-      description: "Outline a suggested approach for implementing the feature, including relevant API changes or pseudocode if applicable."
-      placeholder: "If possible, describe how you envision this feature being implemented."
+      label: "Context"
+      description: "Any relevant information about your setup (e.g., operating system, hardware, toolchain) that might help reproduce or diagnose the issue under specific conditions."
+      placeholder: "Operating system, hardware, toolchain, etc."
     validations:
-      required: false
+      required: true
   
   - type: textarea
-    id: requirements
+    id: logs
     attributes:
-      label: "Requirements"
-      description: "List any prerequisites for developing this feature, such as external libraries or dependencies on other issues."
-      placeholder: "Provide any specific requirements that must be met before implementing this feature."
+      label: "Failure Logs and Screenshots"
+      description: "If applicable, include any relevant log snippets, error messages, or screenshots that can provide insight into the issue."
+      placeholder: "Provide logs, messages, screenshots, etc."
     validations:
       required: false
   
@@ -73,10 +73,19 @@ body:
       required: false
   
   - type: textarea
-    id: context
+    id: additional
     attributes:
-      label: "Additional Context"
-      description: "Provide any extra context, user scenarios, or visuals that might help understand the feature request better."
-      placeholder: "Share any additional information that could facilitate development."
+      label: "Additional Information"
+      description: "Any additional context, observations, or details that you think might be helpful for diagnosing the issue."
+      placeholder: "Anything else you'd like to say?"
+    validations:
+      required: false
+
+  - type: textarea
+    id: related
+    attributes:
+      label: "Related Issues"
+      description: "If this issue is related to or duplicates any existing issues, please reference them here."
+      placeholder: "Please reference the issues in a list format."
     validations:
       required: false
