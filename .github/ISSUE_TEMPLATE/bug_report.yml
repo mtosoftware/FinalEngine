@@ -1,6 +1,7 @@
 ---
 name: Bug report
-title: '🐛 Bug that needs to be addressed.'
+title: '🐛 Bug Report'
+about: 'A break in functionality.'
 labels: '🐛 bug'
 assignees: 'softwareantics'
 projects: 'softwareantics/2'
