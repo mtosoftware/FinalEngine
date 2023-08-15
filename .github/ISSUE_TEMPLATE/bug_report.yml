@@ -17,6 +17,4 @@ body:
       label: "Current Behaviour"
       description: "A clear and concise description of what you expected to happen."
       placeholder: "Explain what is currently happening."
-    validations:
-      - required: true
 ---
