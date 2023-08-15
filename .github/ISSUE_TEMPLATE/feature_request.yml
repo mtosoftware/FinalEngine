@@ -14,6 +14,7 @@ body:
   - type: textarea
     id: description
     attributes: 
+      label: "Description"
       description: "Briefly describe the proposed feature."
       placeholder: "Tell us what new feature you'd like implemented"
     validations:
