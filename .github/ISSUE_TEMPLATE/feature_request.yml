@@ -11,6 +11,16 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out a feature request!
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      description: "Please complete the below checklist before requesting a new feature."
+      options:
+        label: "The title still contains the ✨ emoji."
+          required: true
+        label: "I searched whether or not a feature request already exists."
+          required: true
   - type: textarea
     id: description
     attributes: 
@@ -19,4 +29,44 @@ body:
       placeholder: "Tell us what new feature you'd like implemented"
     validations:
       required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: "Justification"
+      description: "Explain the significance and benefits of adding this feature."
+      placeholder: "Describe why you'd like this feature to be implemented."
+    validation:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: "Implementation Approach"
+      description: "Outline a suggested approach for implementing the feature, including any relevant API changes or pseudocode if applicable."
+      placeholder: "If you can, provide how you'd like this feature to be implemented."
+    validations:
+      required: false
+  - type: textarea
+    id: requirements
+    attributes:
+      label: "Requirements"
+      description: "List any prerequisites for developing this feature, such as external libraries or dependencies on other issues."
+      placeholder: "If you can, provide a list of requirements that must be met before this feature can be implemented."
+    validations:
+      required: false
+  - type: textarea
+    id: challenges
+    attributes:
+      label: "Potential Challenges"
+      description: "Highlight any foreseeable challenges or difficulties that might be encountered during the implementation of this feature."
+      placeholder: "If you can, provide potential issues that can arise during development."
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: "Additional Context"
+      description: "Provide any extra context, user scenarios, or visuals that might assist in understanding the feature request better."
+      placeholder: "Is there any other information you can provide to speed up development?"
+    validations:
+      required: false
 ---
