@@ -29,16 +29,16 @@ public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
     /// <summary>
     /// Initializes a new instance of the <see cref="ShaderResourceLoader"/> class.
     /// </summary>
-    /// <param name="factory">
-    /// The GPU resource factory, used to load shaders into memory.
-    /// </param>
     /// <param name="fileSystem">
     /// The file system, used to load shader source code into memory.
+    /// </param>
+    /// <param name="factory">
+    /// The GPU resource factory, used to load shaders into memory.
     /// </param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="factory"/> or <paramref name="fileSystem"/> parameter cannot be null.
     /// </exception>
-    public ShaderResourceLoader(IGPUResourceFactory factory, IFileSystem fileSystem)
+    public ShaderResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory)
     {
         this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));

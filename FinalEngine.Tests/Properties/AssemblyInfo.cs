@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTitle("FinalEngine.Tests")]
 [assembly: AssemblyDescription("A test library containing all unit tests pertaining to Final Engine.")]

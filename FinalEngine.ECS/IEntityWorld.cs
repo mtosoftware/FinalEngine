@@ -9,7 +9,7 @@ using System;
 /// <summary>
 ///   Defines an interface that creates the connection between <see cref="Entity"/> and <see cref="EntitySystemBase"/>.
 /// </summary>
-public interface IEntityWorld
+public interface IEntityWorld : IEntitySystemsProcessor
 {
     /// <summary>
     ///   Adds the specified <paramref name="entity"/> to this <see cref="IEntityWorld"/>.
