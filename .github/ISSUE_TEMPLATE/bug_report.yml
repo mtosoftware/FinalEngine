@@ -19,13 +19,13 @@ body:
       description: "Please complete the following checklist before submitting your bug report."
       options:
         - label: "I have verified that I am running the latest version."
-          required: true
+          - required: true
         - label: "I have checked the documentation and found no solution."
-          required: true
+          - required: true
         - label: "I have ensured that this issue has not been previously filed."
-          -required: true
+          - required: true
         - label: "For maintainers: I have updated the projects and milestones if needed."
-          required: false
+          - required: false
   
   - type: textarea
     id: description
