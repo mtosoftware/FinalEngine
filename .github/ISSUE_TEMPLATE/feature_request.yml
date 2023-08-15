@@ -10,14 +10,19 @@ body:
   - type: markdown
     attributes:
       value: |
-        "Thanks for taking the time to fill out a feature request!"
+        Thanks for taking the time to fill out a feature request!
   - type: textarea
     id: description
     attributes: 
-      label: "Briefly describe the proposed feature."
+      description: "Briefly describe the proposed feature."
       placeholder: "Tell us what new feature you'd like implemented"
     validations:
       required: true
-    
-
+  - type: textarea
+    id: justification
+    attributes:
+      description: "Explain the significance and benefits of adding this feature."
+      placeholder: "Tell us why you'd like this feature implemented."
+    validations:
+      required: true
 ---
