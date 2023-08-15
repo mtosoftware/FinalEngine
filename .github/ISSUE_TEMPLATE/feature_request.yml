@@ -16,6 +16,9 @@ body:
     attributes:
       label: "Checklist"
       description: "Please complete the below checklist before requesting a new feature."
+      options:
+        label: "Test"
+        label: "Other Test"
   - type: textarea
     id: description
     attributes: 
