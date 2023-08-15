@@ -11,6 +11,16 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out a feature request!
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      description: "Please complete the below checklist before requesting a new feature."
+      options:
+        label: "The title still contains the ✨ emoji."
+          required: true
+        label: "I searched whether or not a feature request already exists."
+          required: true
   - type: textarea
     id: description
     attributes: 
