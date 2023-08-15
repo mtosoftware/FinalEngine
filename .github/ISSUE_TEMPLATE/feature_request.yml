@@ -17,8 +17,10 @@ body:
       label: "Checklist"
       description: "Please complete the below checklist before requesting a new feature."
       options:
-        label: "Test"
-        label: "Other Test"
+        - label: "I have not removed the ✨ emoji from the title."
+          required: true
+        - label: "I have searched to make sure a issue for this feature request doesn't exist."
+          required: true
   - type: textarea
     id: description
     attributes: 
