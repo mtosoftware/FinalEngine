@@ -18,9 +18,11 @@ body:
       label: "Checklist"
       description: "Please complete the following checklist before submitting your feature request."
       options:
-        - label: "I have not removed the ✨ emoji from the title."
+        - label: "I have not removed the 🐛 emoji from the title."
           required: true
-        - label: "I have searched to ensure that no existing issue covers this feature request."
+        - label: "I have ensured that this issue has not been previously filed."
+          required: true
+        - label: "I have checked the documentation and found no solution."
           required: true
         - label: "For maintainers: I have updated the projects and milestones if needed."
           required: false
