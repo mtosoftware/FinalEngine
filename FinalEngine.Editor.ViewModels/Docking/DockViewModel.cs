@@ -16,7 +16,7 @@ using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
-using FinalEngine.Editor.ViewModels.Services.Factories.Layout;
+using FinalEngine.Editor.ViewModels.Services.Layout;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -32,9 +32,9 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     private const string StartupLayoutName = "startup";
 
     /// <summary>
-    /// The layout manager factory, used to load and save the window layout when the application starts and shuts down.
+    /// The layout manager, used to load and save the window layout when the application starts and shuts down.
     /// </summary>
-    private readonly ILayoutManagerFactory layoutManagerFactory;
+    private readonly ILayoutManager layoutManager;
 
     /// <summary>
     /// The logger.
@@ -57,8 +57,8 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// <param name="logger">
     /// The logger.
     /// </param>
-    /// <param name="layoutManagerFactory">
-    /// The layout manager factory, used to load and save layouts upon startup and shutdown of the application.
+    /// <param name="layoutManager">
+    /// The layout manager, used to load and save layouts upon startup and shutdown of the application.
     /// </param>
     /// <param name="projectExplorerFactory">
     /// The project explorer factory.
@@ -79,11 +79,11 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     /// The scene view factory.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="layoutManagerFactory"/>, <paramref name="projectExplorerFactory"/>, <paramref name="sceneHierarchyFactory"/>, <paramref name="propertiesFactory"/>, <paramref name="consoleFactory"/>, <paramref name="entitySystemsFactory"/> or <paramref name="sceneViewFactory"/> parameter cannot be null.
+    /// The specified <paramref name="layoutManager"/>, <paramref name="projectExplorerFactory"/>, <paramref name="sceneHierarchyFactory"/>, <paramref name="propertiesFactory"/>, <paramref name="consoleFactory"/>, <paramref name="entitySystemsFactory"/> or <paramref name="sceneViewFactory"/> parameter cannot be null.
     /// </exception>
     public DockViewModel(
         ILogger<DockViewModel> logger,
-        ILayoutManagerFactory layoutManagerFactory,
+        ILayoutManager layoutManager,
         IFactory<IProjectExplorerToolViewModel> projectExplorerFactory,
         IFactory<ISceneHierarchyToolViewModel> sceneHierarchyFactory,
         IFactory<IPropertiesToolViewModel> propertiesFactory,
@@ -92,7 +92,7 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
         IFactory<ISceneViewPaneViewModel> sceneViewFactory)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.layoutManagerFactory = layoutManagerFactory ?? throw new ArgumentNullException(nameof(layoutManagerFactory));
+        this.layoutManager = layoutManager ?? throw new ArgumentNullException(nameof(layoutManager));
 
         if (projectExplorerFactory == null)
         {
@@ -168,17 +168,15 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     {
         this.logger.LogInformation("Loading the window layout...");
 
-        var layoutManager = this.layoutManagerFactory.CreateManager();
-
-        if (!layoutManager.ContainsLayout(StartupLayoutName))
+        if (!this.layoutManager.ContainsLayout(StartupLayoutName))
         {
             this.logger.LogInformation("No startup window layout was found, resolving to default layout...");
-            layoutManager.ResetLayout();
+            this.layoutManager.ResetLayout();
 
             return;
         }
 
-        layoutManager.LoadLayout(StartupLayoutName);
+        this.layoutManager.LoadLayout(StartupLayoutName);
     }
 
     /// <summary>
@@ -187,6 +185,6 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
     private void Unload()
     {
         this.logger.LogInformation("Saving the startup window layout...");
-        this.layoutManagerFactory.CreateManager().SaveLayout(StartupLayoutName);
+        this.layoutManager.SaveLayout(StartupLayoutName);
     }
 }
