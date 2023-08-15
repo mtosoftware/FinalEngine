@@ -7,7 +7,9 @@ namespace FinalEngine.Editor.Desktop;
 using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Windows;
+using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Extensions;
+using FinalEngine.Editor.Common.Models.Scenes;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Environment;
 using FinalEngine.Editor.Common.Services.Scenes;
@@ -104,13 +106,17 @@ public partial class App : Application
             builder.AddConsole().SetMinimumLevel(Debugger.IsAttached ? LogLevel.Debug : LogLevel.Information);
         });
 
+        services.AddTransient<IEntityWorld, EntityWorld>();
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
 
         services.AddSingleton<IFileSystem, FileSystem>();
 
+        services.AddTransient<Scene>();
+
         services.AddSingleton<IApplicationContext, ApplicationContext>();
         services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
         services.AddSingleton<ISceneRenderer, SceneRenderer>();
+        services.AddSingleton<ISceneManager, SceneManager>();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();
         services.AddFactory<ISceneHierarchyToolViewModel, SceneHierarchyToolViewModel>();
