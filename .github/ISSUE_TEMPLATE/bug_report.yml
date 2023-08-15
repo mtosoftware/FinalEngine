@@ -2,14 +2,12 @@
 name: Bug report
 title: '🐛 Bug that needs to be addressed.'
 labels: '🐛 bug'
-assignees:
-  - 'softwareantics'
+assignees: 'softwareantics'
 projects: 'softwareantics/2'
 
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to submit a bug report!
-        
+        Thanks for taking the time to submit a bug report.
 ---
