@@ -16,6 +16,6 @@ body:
     label: "Prerequisites"
     description: "Please answer the following questions for yourself before submitting an issue:"
     options:
-      - label: "I have verified that I am running the latest version."
+      - label: "Testing"
         - required: true
 ---
