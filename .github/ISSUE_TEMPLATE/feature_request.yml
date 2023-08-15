@@ -3,7 +3,7 @@ name: ✨ Feature Request
 description: Suggest an idea for a new project feature
 title: "✨ New Feature"
 labels: ["✨ Feature"]
-projects: ["/2"]
+projects: ["FinalEngine"]
 assignees:
   - softwareantics
   
