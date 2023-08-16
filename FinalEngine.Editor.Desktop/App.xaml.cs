@@ -16,8 +16,10 @@ using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.Desktop.Services.Actions;
 using FinalEngine.Editor.Desktop.Services.Layout;
 using FinalEngine.Editor.Desktop.Views;
+using FinalEngine.Editor.Desktop.Views.Dialogs.Entities;
 using FinalEngine.Editor.Desktop.Views.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
@@ -127,10 +129,12 @@ public partial class App : Application
         services.AddFactory<IDockViewModel, DockViewModel>();
         services.AddFactory<ISaveWindowLayoutViewModel, SaveWindowLayoutViewModel>();
         services.AddFactory<IManageWindowLayoutsViewModel, ManageWindowLayoutsViewModel>();
+        services.AddFactory<ICreateEntityViewModel, CreateEntityViewModel>();
         services.AddSingleton<IMainViewModel, MainViewModel>();
 
         services.AddTransient<IViewable<ISaveWindowLayoutViewModel>, SaveWindowLayoutView>();
         services.AddTransient<IViewable<IManageWindowLayoutsViewModel>, ManageWindowLayoutsView>();
+        services.AddTransient<IViewable<ICreateEntityViewModel>, CreateEntityView>();
 
         services.AddSingleton<IUserActionRequester, UserActionRequester>();
         services.AddSingleton<ILayoutManager, LayoutManager>();

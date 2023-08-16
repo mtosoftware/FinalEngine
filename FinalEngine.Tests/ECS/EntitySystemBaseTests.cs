@@ -2,12 +2,12 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.ECS;
+namespace FinalEngine.Tests.ECS;
 
 using System;
 using System.Linq;
 using FinalEngine.ECS;
-using FinalEngine.Tests.Core.ECS.Mocks;
+using FinalEngine.Tests.ECS.Mocks;
 using NUnit.Framework;
 
 public class EntitySystemBaseTests

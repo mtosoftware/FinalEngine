@@ -13,6 +13,17 @@ using FinalEngine.Editor.ViewModels.Docking;
 public interface IMainViewModel
 {
     /// <summary>
+    /// Gets the create entity command.
+    /// </summary>
+    /// <value>
+    /// The create entity command.
+    /// </value>
+    /// <remarks>
+    /// The <see cref="CreateEntityCommand"/> is used to open the create entity view.
+    /// </remarks>
+    ICommand CreateEntityCommand { get; }
+
+    /// <summary>
     /// Gets the dock view model.
     /// </summary>
     /// <value>

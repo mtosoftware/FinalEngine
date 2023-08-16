@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
@@ -37,6 +38,11 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// The view presenter.
     /// </summary>
     private readonly IViewPresenter viewPresenter;
+
+    /// <summary>
+    /// The create entity command.
+    /// </summary>
+    private ICommand? createEntityCommand;
 
     /// <summary>
     /// The exit command.
@@ -110,6 +116,12 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     }
 
     /// <inheritdoc/>
+    public ICommand CreateEntityCommand
+    {
+        get { return this.createEntityCommand ??= new RelayCommand(this.CreateEntity); }
+    }
+
+    /// <inheritdoc/>
     public IDockViewModel DockViewModel { get; }
 
     /// <inheritdoc/>
@@ -164,6 +176,14 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.logger.LogInformation($"Closing {nameof(MainViewModel)}...");
 
         closeable.Close();
+    }
+
+    /// <summary>
+    /// Shows the create entity view.
+    /// </summary>
+    private void CreateEntity()
+    {
+        this.viewPresenter.ShowView<ICreateEntityViewModel>();
     }
 
     /// <summary>

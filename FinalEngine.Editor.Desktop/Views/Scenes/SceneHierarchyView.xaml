@@ -7,5 +7,27 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:SceneHierarchyToolViewModel}">
     <Grid>
+        <ListBox ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+            <ListBox.Style>
+                <Style TargetType="ListBox" BasedOn="{StaticResource MahApps.Styles.ListBox.VisualStudio}">
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </ListBox.Style>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding TagComponent.Tag}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

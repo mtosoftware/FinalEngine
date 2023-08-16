@@ -8,13 +8,17 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using FinalEngine.ECS;
+using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.Common.Models.Scenes;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
 [TestFixture]
 public sealed class SceneTests
 {
+    private Mock<ILogger<Scene>> logger;
+
     private Scene scene;
 
     private Mock<IEntityWorld> world;
@@ -22,36 +26,60 @@ public sealed class SceneTests
     [Test]
     public void AddEntityShouldAddEntityToEntitiesWhenInvoked()
     {
-        // Arrange
-        var entity = new Entity();
-
         // Act
-        this.scene.AddEntity(entity);
+        this.scene.AddEntity("Tag", Guid.Empty);
 
         // Assert
-        Assert.That(this.scene.Entities.FirstOrDefault(), Is.SameAs(entity));
+        Assert.That(this.scene.Entities.FirstOrDefault(), Is.Not.Null);
     }
 
     [Test]
-    public void AddEntityShouldAddEntityToEntityWorldWhenInvoked()
+    public void AddEntityShouldAddTagComponentToEntityWhenInvoked()
     {
-        // Arrange
-        var entity = new Entity();
-
         // Act
-        this.scene.AddEntity(entity);
+        this.scene.AddEntity("Tag", Guid.Empty);
 
         // Assert
-        this.world.Verify(x => x.AddEntity(entity), Times.Once);
+        Assert.That(this.scene.Entities.FirstOrDefault().GetComponent<TagComponent>().Tag, Is.EqualTo("Tag"));
     }
 
     [Test]
-    public void AddEntityShouldThrowArgumentNullExceptionWhenEntityIsNull()
+    public void AddEntityShouldInvokeWorldAddEntityWhenInvoked()
+    {
+        // Act
+        this.scene.AddEntity("Tag", Guid.Empty);
+
+        // Assert
+        this.world.Verify(x => x.AddEntity(this.scene.Entities.FirstOrDefault()), Times.Once);
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentExceptionWhenTagIsEmpty()
     {
         // Act and assert
-        Assert.Throws<ArgumentNullException>(() =>
+        Assert.Throws<ArgumentException>(() =>
         {
-            this.scene.AddEntity(null);
+            this.scene.AddEntity(string.Empty, Guid.Empty);
+        });
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentExceptionWhenTagIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.scene.AddEntity(null, Guid.Empty);
+        });
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentExceptionWhenTagIsWhitespace()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.scene.AddEntity("\t\r\n ", Guid.Empty);
         });
     }
 
@@ -61,7 +89,7 @@ public sealed class SceneTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new Scene(null);
+            new Scene(this.logger.Object, null);
         });
     }
 
@@ -98,7 +126,8 @@ public sealed class SceneTests
     [SetUp]
     public void Setup()
     {
+        this.logger = new Mock<ILogger<Scene>>();
         this.world = new Mock<IEntityWorld>();
-        this.scene = new Scene(this.world.Object);
+        this.scene = new Scene(this.logger.Object, this.world.Object);
     }
 }

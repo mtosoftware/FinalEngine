@@ -23,10 +23,22 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <summary>
     ///   Initializes a new instance of the <see cref="Entity"/> class.
     /// </summary>
-    public Entity()
+    /// <param name="uniqueID">
+    /// The unique identifier for this <see cref="Entity"/>.
+    /// </param>
+    public Entity(Guid? uniqueID = null)
     {
+        this.UniqueID = uniqueID ?? Guid.NewGuid();
         this.typeToComponentMap = new Dictionary<Type, IComponent>();
     }
+
+    /// <summary>
+    /// Gets the unique identifier.
+    /// </summary>
+    /// <value>
+    /// The unique identifier.
+    /// </value>
+    public Guid UniqueID { get; }
 
     /// <summary>
     ///   Gets or sets the event that occurs when a component is added or removed from this <see cref="Entity"/>.
@@ -328,6 +340,12 @@ public class Entity : DynamicObject, IReadOnlyEntity
 
             if (typeName.EndsWith("Component", StringComparison.CurrentCulture))
             {
+                if (typeName == memberName)
+                {
+                    result = kvp.Value;
+                    return true;
+                }
+
                 typeName = typeName.Remove(typeName.Length - "Component".Length);
             }
 

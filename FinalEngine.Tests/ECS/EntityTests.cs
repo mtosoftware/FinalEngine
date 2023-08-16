@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.ECS;
+namespace FinalEngine.Tests.ECS;
 
 using System;
 using System.Dynamic;
@@ -402,6 +402,22 @@ public class EntityTests
     }
 
     [Test]
+    public void TryGetMemberShouldNotBeSameWhenComponentTypeNameDoesMatchMemberNameIncludingComponent()
+    {
+        // Arrange
+        var binder = new GetMemberBinderMock("MockComponent");
+
+        this.entity.AddComponent<MockComponent>();
+        this.entity.AddComponent<MockComponentA>();
+
+        // Act
+        this.entity.TryGetMember(binder, out object actual);
+
+        // Assert
+        Assert.AreSame(actual, this.entity.GetComponent<MockComponent>());
+    }
+
+    [Test]
     public void TryGetMemberShouldOutComponentWhenComponentTypeNameDoesMatchMemberNameExcludingComponentIfEndsWithComponent()
     {
         // Arrange
@@ -416,38 +432,6 @@ public class EntityTests
 
         // Assert
         Assert.AreSame(expected, actual);
-    }
-
-    [Test]
-    public void TryGetMemberShouldOutNullWhenComponentTypeNameDoesMatchMemberNameIncludingComponent()
-    {
-        // Arrange
-        var binder = new GetMemberBinderMock("MockComponent");
-
-        this.entity.AddComponent<MockComponent>();
-        this.entity.AddComponent<MockComponentA>();
-
-        // Act
-        this.entity.TryGetMember(binder, out object actual);
-
-        // Assert
-        Assert.Null(actual);
-    }
-
-    [Test]
-    public void TryGetMemberShouldReturnFalseWhenComponentTypeNameDoesMatchMemberNameIncludingComponent()
-    {
-        // Arrange
-        var binder = new GetMemberBinderMock("MockComponent");
-
-        this.entity.AddComponent<MockComponent>();
-        this.entity.AddComponent<MockComponentA>();
-
-        // Act
-        bool result = this.entity.TryGetMember(binder, out _);
-
-        // Assert
-        Assert.False(result);
     }
 
     [Test]
@@ -467,6 +451,22 @@ public class EntityTests
     }
 
     [Test]
+    public void TryGetMemberShouldReturnTrueWhenComponentTypeNameDoesMatchMemberNameIncludingComponent()
+    {
+        // Arrange
+        var binder = new GetMemberBinderMock("MockComponent");
+
+        this.entity.AddComponent<MockComponent>();
+        this.entity.AddComponent<MockComponentA>();
+
+        // Act
+        bool result = this.entity.TryGetMember(binder, out _);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Test]
     public void TryGetMemberShouldThrowArgumentNullExceptionWhenBinderIsNull()
     {
         // Act and assert
@@ -474,6 +474,30 @@ public class EntityTests
         {
             this.entity.TryGetMember(null, out _);
         });
+    }
+
+    [Test]
+    public void UniqueIDShouldReturnExpectedGuidWhenInvoked()
+    {
+        // Arrange
+        var expected = Guid.NewGuid();
+        var entity = new Entity(expected);
+
+        // Act
+        var actual = entity.UniqueID;
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void UniqueIDShouldReturnGuidWhenInvoked()
+    {
+        // Act
+        var actual = this.entity.UniqueID;
+
+        // Assert
+        Assert.That(actual, Is.Not.Null);
     }
 
     private sealed class GetMemberBinderMock : GetMemberBinder
