@@ -37,7 +37,7 @@ jobs:
         dotnet-version: 7.0.x
 
     - name: Restore FinalEngine.Audio.OpenAL dependencies
-      run: dotnet restore ../FinalEngine.Audio.OpenAL/FinalEngine.Audio.OpenAL.csproj
+      run: dotnet restore FinalEngine.Audio.OpenAL/FinalEngine.Audio.OpenAL.csproj
 
     - name: Build FinalEngine.Audio.OpenAL
-      run: dotnet build ../FinalEngine.Audio.OpenAL/FinalEngine.Audio.OpenAL.csproj --no-restore
+      run: dotnet build FinalEngine.Audio.OpenAL/FinalEngine.Audio.OpenAL.csproj --no-restore
