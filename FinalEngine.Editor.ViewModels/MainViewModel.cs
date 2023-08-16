@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
@@ -182,6 +183,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private void CreateEntity()
     {
+        this.viewPresenter.ShowView<ICreateEntityViewModel>();
     }
 
     /// <summary>

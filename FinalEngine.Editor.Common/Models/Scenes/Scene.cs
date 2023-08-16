@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FinalEngine.ECS;
+using FinalEngine.ECS.Components.Core;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Represents a scene that contains a collection of entities and systems.
@@ -20,6 +22,11 @@ public sealed class Scene : IScene
     private readonly ObservableCollection<Entity> entities;
 
     /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<Scene> logger;
+
+    /// <summary>
     /// The underlying entity world that contains all the scenes entities and systems.
     /// </summary>
     private readonly IEntityWorld world;
@@ -27,14 +34,18 @@ public sealed class Scene : IScene
     /// <summary>
     /// Initializes a new instance of the <see cref="Scene"/> class.
     /// </summary>
+    /// <param name="logger">
+    /// The logger.
+    /// </param>
     /// <param name="world">
     /// The entity world to be associated with this scene.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="world"/> parameter cannot be null.
+    /// The specified <paramref name="logger"/> or <paramref name="world"/> parameter cannot be null.
     /// </exception>
-    public Scene(IEntityWorld world)
+    public Scene(ILogger<Scene> logger, IEntityWorld world)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.world = world ?? throw new ArgumentNullException(nameof(world));
         this.entities = new ObservableCollection<Entity>();
     }
@@ -46,18 +57,29 @@ public sealed class Scene : IScene
     }
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="entity"/> parameter cannot be null.
+    /// <exception cref="ArgumentException">
+    /// The specified <paramref name="tag"/> parameter cannot be null or whitespace.
     /// </exception>
-    public void AddEntity(Entity entity)
+    public void AddEntity(string tag, Guid uniqueID)
     {
-        if (entity == null)
+        this.logger.LogInformation($"Adding new {nameof(Entity)} to {nameof(Scene)} with ID: '{uniqueID}'.");
+
+        if (string.IsNullOrWhiteSpace(tag))
         {
-            throw new ArgumentNullException(nameof(entity));
+            throw new ArgumentException($"'{nameof(tag)}' cannot be null or whitespace.", nameof(tag));
         }
+
+        var entity = new Entity(uniqueID);
+
+        entity.AddComponent(new TagComponent()
+        {
+            Tag = tag,
+        });
 
         this.world.AddEntity(entity);
         this.entities.Add(entity);
+
+        this.logger.LogInformation($"Added {nameof(Entity)} to {nameof(Scene)} with ID: '{uniqueID}'.");
     }
 
     /// <inheritdoc/>
