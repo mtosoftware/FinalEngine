@@ -18,6 +18,11 @@ using Microsoft.Extensions.Logging;
 public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesToolViewModel
 {
     /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<PropertiesToolViewModel> logger;
+
+    /// <summary>
     /// The messenger.
     /// </summary>
     private readonly IMessenger messenger;
@@ -40,11 +45,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         ILogger<PropertiesToolViewModel> logger,
         IMessenger messenger)
     {
-        if (logger == null)
-        {
-            throw new ArgumentNullException(nameof(logger));
-        }
-
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
 
         this.Title = "Properties";
@@ -80,6 +81,8 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         {
             throw new ArgumentNullException(nameof(message));
         }
+
+        this.logger.LogInformation($"Changing properties view to: '{nameof(EntityComponentsViewModel)}'.");
 
         this.Title = "Entity Inspector";
         this.CurrentViewModel = new EntityComponentsViewModel();
