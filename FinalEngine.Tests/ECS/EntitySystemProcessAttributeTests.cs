@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.ECS;
+namespace FinalEngine.Tests.ECS;
 
 using FinalEngine.ECS;
 using NUnit.Framework;

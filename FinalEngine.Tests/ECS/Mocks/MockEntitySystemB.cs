@@ -1,15 +1,16 @@
-// <copyright file="MockEntitySystemA.cs" company="Software Antics">
+// <copyright file="MockEntitySystemB.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Core.ECS.Mocks;
+namespace FinalEngine.Tests.ECS.Mocks;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FinalEngine.ECS;
 
-public class MockEntitySystemA : EntitySystemBase
+[EntitySystemProcess(ExecutionType = GameLoopType.Render)]
+public class MockEntitySystemB : EntitySystemBase
 {
     public Predicate<IReadOnlyEntity> IsMatchFunction { get; set; }
 

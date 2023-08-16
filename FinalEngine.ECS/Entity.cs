@@ -26,9 +26,9 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <param name="uniqueID">
     /// The unique identifier for this <see cref="Entity"/>.
     /// </param>
-    public Entity(Guid uniqueID)
+    public Entity(Guid? uniqueID = null)
     {
-        this.UniqueID = uniqueID;
+        this.UniqueID = uniqueID ?? Guid.NewGuid();
         this.typeToComponentMap = new Dictionary<Type, IComponent>();
     }
 

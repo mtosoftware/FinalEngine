@@ -6,54 +6,20 @@ namespace FinalEngine.Tests.Editor.Common.Models.Scenes;
 
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Models.Scenes;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
 [TestFixture]
 public sealed class SceneTests
 {
+    private Mock<ILogger<Scene>> logger;
+
     private Scene scene;
 
     private Mock<IEntityWorld> world;
-
-    [Test]
-    public void AddEntityShouldAddEntityToEntitiesWhenInvoked()
-    {
-        // Arrange
-        var entity = new Entity();
-
-        // Act
-        this.scene.AddEntity(entity);
-
-        // Assert
-        Assert.That(this.scene.Entities.FirstOrDefault(), Is.SameAs(entity));
-    }
-
-    [Test]
-    public void AddEntityShouldAddEntityToEntityWorldWhenInvoked()
-    {
-        // Arrange
-        var entity = new Entity();
-
-        // Act
-        this.scene.AddEntity(entity);
-
-        // Assert
-        this.world.Verify(x => x.AddEntity(entity), Times.Once);
-    }
-
-    [Test]
-    public void AddEntityShouldThrowArgumentNullExceptionWhenEntityIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            this.scene.AddEntity(null);
-        });
-    }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenWorldIsNull()
@@ -61,7 +27,7 @@ public sealed class SceneTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new Scene(null);
+            new Scene(this.logger.Object, null);
         });
     }
 
@@ -98,7 +64,8 @@ public sealed class SceneTests
     [SetUp]
     public void Setup()
     {
+        this.logger = new Mock<ILogger<Scene>>();
         this.world = new Mock<IEntityWorld>();
-        this.scene = new Scene(this.world.Object);
+        this.scene = new Scene(this.logger.Object, this.world.Object);
     }
 }

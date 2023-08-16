@@ -5,6 +5,7 @@
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Scenes;
 
 using System;
+using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -14,6 +15,8 @@ using NUnit.Framework;
 public sealed class SceneHierarchyToolViewModelTests
 {
     private Mock<ILogger<SceneHierarchyToolViewModel>> logger;
+
+    private Mock<ISceneManager> sceneManager;
 
     private SceneHierarchyToolViewModel viewModel;
 
@@ -49,7 +52,7 @@ public sealed class SceneHierarchyToolViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SceneHierarchyToolViewModel(null);
+            new SceneHierarchyToolViewModel(null, this.sceneManager.Object);
         });
     }
 
@@ -57,6 +60,8 @@ public sealed class SceneHierarchyToolViewModelTests
     public void Setup()
     {
         this.logger = new Mock<ILogger<SceneHierarchyToolViewModel>>();
-        this.viewModel = new SceneHierarchyToolViewModel(this.logger.Object);
+        this.sceneManager = new Mock<ISceneManager>();
+
+        this.viewModel = new SceneHierarchyToolViewModel(this.logger.Object, this.sceneManager.Object);
     }
 }
