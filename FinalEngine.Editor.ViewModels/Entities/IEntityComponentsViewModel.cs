@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 /// <summary>
 /// Defines an interface that represents a model of an entity components view.
 /// </summary>
-[SuppressMessage("Design", "CA1040:Avoid empty interfaces", Justification = "Testing")]
+[SuppressMessage("Design", "CA1040:Avoid empty interfaces", Justification = "TODO")]
 public interface IEntityComponentsViewModel
 {
 }
