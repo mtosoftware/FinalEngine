@@ -20,10 +20,10 @@ jobs:
         dotnet-version: 7.0.x
 
     - name: Restore FinalEngine.Audio dependencies
-      run: dotnet restore ../FinalEngine.Audio/FinalEngine.Audio.csproj
+      run: dotnet restore softwareantics/FileEngine/FinalEngine.Audio/FinalEngine.Audio.csproj
 
     - name: Build FinalEngine.Audio
-      run: dotnet build ../FinalEngine.Audio/FinalEngine.Audio.csproj --no-restore
+      run: dotnet build FinalEngine.Audio/FinalEngine.Audio.csproj --no-restore
 
   # FinalEngine.Audio.OpenAL
   build_audio_openal:
