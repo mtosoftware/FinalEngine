@@ -8,23 +8,36 @@ on:
       branches: [ "master" ]
 
 jobs:
-  build_solution:
-
-    runs-on: windows-latest
+  # FinalEngine.Audio
+  build_audio:
+    runs-on: ubuntu-latest
 
     steps:
-
-    # Setup .NET
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
 
-    # Restore Dependencies
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Restore FinalEngine.Audio dependencies
+      run: dotnet restore ../FinalEngine.Audio/FinalEngine.Audio.csproj
 
-    # Build Solution
-    - name: Build
-      run: dotnet build --no-restore
+    - name: Build FinalEngine.Audio
+      run: dotnet build ../FinalEngine.Audio/FinalEngine.Audio.csproj --no-restore
+
+  # FinalEngine.Audio.OpenAL
+  build_audio_openal:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Restore FinalEngine.Audio.OpenAL dependencies
+      run: dotnet restore ../FinalEngine.Audio.OpenAL/FinalEngine.Audio.OpenAL.csproj
+
+    - name: Build FinalEngine.Audio.OpenAL
+      run: dotnet build ../FinalEngine.Audio.OpenAL/FinalEngine.Audio.OpenAL.csproj --no-restore
