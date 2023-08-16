@@ -1,0 +1,30 @@
+name: ✅ Build Status Check
+run-name: ✅ Build Status Check (${{ github.base_ref }} branch)
+
+on:
+    push:
+      branches: [ "master" ]
+    pull_request:
+      branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+
+    # Setup .NET
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    # Restore Dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build Solution
+    - name: Build
+      run: dotnet build --no-restore
