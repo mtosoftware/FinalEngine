@@ -8,15 +8,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
-    <Title>FinalEngine.Platform.Desktop</Title>
-    <Version>2023.4.0-pre</Version>
-    <Company>Software Antics</Company>
-    <Description>A desktop implementation of the FinalEngine.Platform abstractions used to handle desktop platform specific requirements.</Description>
-    <Copyright>© Software Antics 2023</Copyright>
-    <PackageProjectUrl>https://www.github.com/softwareantics/FinalEngine</PackageProjectUrl>
-    <RepositoryUrl>https://www.github.com/softwareantics/FinalEngine</RepositoryUrl>
-    <PackageTags>game engine,engine,game,final,platform,abstraction,PAL,windowing,events,event processing,desktop,OpenTK</PackageTags>
-	</PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
 
 	<ItemGroup>
 	  <AdditionalFiles Include="..\Styling\StyleCop\Other\stylecop.json" Link="stylecop.json" />

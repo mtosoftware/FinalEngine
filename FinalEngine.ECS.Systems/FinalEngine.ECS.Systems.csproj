@@ -8,14 +8,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
-    <Title>FinalEngine.ECS.Systems</Title>
-    <Version>2023.4.0-pre</Version>
-    <Company>Software Antics</Company>
-    <Description>A collection of entity systems for Final Engine games.</Description>
-    <Copyright>© Software Antics 2023</Copyright>
-    <PackageProjectUrl>https://www.github.com/softwareantics/FinalEngine</PackageProjectUrl>
-    <RepositoryUrl>https://www.github.com/softwareantics/FinalEngine</RepositoryUrl>
-    <PackageTags>game engine,engine,game,final,ecs,entity,component,system,entity component system</PackageTags>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
