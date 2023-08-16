@@ -10,7 +10,7 @@ using FinalEngine.ECS;
 /// <summary>
 /// Defines an interface that represents a model of a scene hierarchy tool view.
 /// </summary>
-/// <seealso cref="FinalEngine.Editor.ViewModels.Docking.Tools.IToolViewModel" />
+/// <seealso cref="IToolViewModel" />
 public interface ISceneHierarchyToolViewModel : IToolViewModel
 {
     /// <summary>
@@ -20,4 +20,12 @@ public interface ISceneHierarchyToolViewModel : IToolViewModel
     /// The entities within the active scene.
     /// </value>
     IReadOnlyCollection<Entity> Entities { get; }
+
+    /// <summary>
+    /// Gets or sets the selected entity.
+    /// </summary>
+    /// <value>
+    /// The selected entity.
+    /// </value>
+    Entity? SelectedEntity { get; set; }
 }
