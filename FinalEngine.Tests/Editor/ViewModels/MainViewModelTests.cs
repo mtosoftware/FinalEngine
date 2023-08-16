@@ -8,6 +8,7 @@ using System;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Interactions;
@@ -122,6 +123,16 @@ public sealed class MainViewModelTests
                 this.layoutManager.Object,
                 this.dockViewModelFactory.Object);
         });
+    }
+
+    [Test]
+    public void CreateEntityCommandExecuteShouldInvokeViewPresenterShowCreateEntityViewWhenInvoked()
+    {
+        // Act
+        this.viewModel.CreateEntityCommand.Execute(null);
+
+        // Assert
+        this.viewPresenter.Verify(x => x.ShowView<ICreateEntityViewModel>(), Times.Once);
     }
 
     [Test]

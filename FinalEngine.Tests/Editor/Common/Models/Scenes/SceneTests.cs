@@ -6,7 +6,9 @@ namespace FinalEngine.Tests.Editor.Common.Models.Scenes;
 
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using FinalEngine.ECS;
+using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.Common.Models.Scenes;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -20,6 +22,66 @@ public sealed class SceneTests
     private Scene scene;
 
     private Mock<IEntityWorld> world;
+
+    [Test]
+    public void AddEntityShouldAddEntityToEntitiesWhenInvoked()
+    {
+        // Act
+        this.scene.AddEntity("Tag", Guid.Empty);
+
+        // Assert
+        Assert.That(this.scene.Entities.FirstOrDefault(), Is.Not.Null);
+    }
+
+    [Test]
+    public void AddEntityShouldAddTagComponentToEntityWhenInvoked()
+    {
+        // Act
+        this.scene.AddEntity("Tag", Guid.Empty);
+
+        // Assert
+        Assert.That(this.scene.Entities.FirstOrDefault().GetComponent<TagComponent>().Tag, Is.EqualTo("Tag"));
+    }
+
+    [Test]
+    public void AddEntityShouldInvokeWorldAddEntityWhenInvoked()
+    {
+        // Act
+        this.scene.AddEntity("Tag", Guid.Empty);
+
+        // Assert
+        this.world.Verify(x => x.AddEntity(this.scene.Entities.FirstOrDefault()), Times.Once);
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentExceptionWhenTagIsEmpty()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.scene.AddEntity(string.Empty, Guid.Empty);
+        });
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentExceptionWhenTagIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.scene.AddEntity(null, Guid.Empty);
+        });
+    }
+
+    [Test]
+    public void AddEntityShouldThrowArgumentExceptionWhenTagIsWhitespace()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.scene.AddEntity("\t\r\n ", Guid.Empty);
+        });
+    }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenWorldIsNull()

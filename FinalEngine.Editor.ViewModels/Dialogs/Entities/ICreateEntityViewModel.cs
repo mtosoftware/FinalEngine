@@ -5,7 +5,7 @@
 namespace FinalEngine.Editor.ViewModels.Dialogs.Entities;
 
 using System;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 /// <summary>
 /// Defines an interface that represents a model of the create entity view.
@@ -21,7 +21,7 @@ public interface ICreateEntityViewModel
     /// <remarks>
     /// The <see cref="CreateCommand"/> creates a new entity and adds it to the current scene.
     /// </remarks>
-    ICommand CreateCommand { get; }
+    IRelayCommand CreateCommand { get; }
 
     /// <summary>
     /// Gets the entity unique identifier.

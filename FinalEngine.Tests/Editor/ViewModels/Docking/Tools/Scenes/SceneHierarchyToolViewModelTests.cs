@@ -5,6 +5,9 @@
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Scenes;
 
 using System;
+using System.Collections.Generic;
+using FinalEngine.ECS;
+using FinalEngine.Editor.Common.Models.Scenes;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 using Microsoft.Extensions.Logging;
@@ -14,7 +17,11 @@ using NUnit.Framework;
 [TestFixture]
 public sealed class SceneHierarchyToolViewModelTests
 {
+    private IList<Entity> entities;
+
     private Mock<ILogger<SceneHierarchyToolViewModel>> logger;
+
+    private Mock<IScene> scene;
 
     private Mock<ISceneManager> sceneManager;
 
@@ -56,11 +63,42 @@ public sealed class SceneHierarchyToolViewModelTests
         });
     }
 
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenSceneManagerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new SceneHierarchyToolViewModel(this.logger.Object, null);
+        });
+    }
+
+    [Test]
+    public void EntitiesShouldReturnActiveEntitiesWhenInvoked()
+    {
+        // Act
+        var actual = this.viewModel.Entities;
+
+        // Assert
+        Assert.That(actual, Is.SameAs(this.entities));
+    }
+
     [SetUp]
     public void Setup()
     {
         this.logger = new Mock<ILogger<SceneHierarchyToolViewModel>>();
         this.sceneManager = new Mock<ISceneManager>();
+        this.scene = new Mock<IScene>();
+
+        this.entities = new List<Entity>()
+        {
+            new Entity(),
+            new Entity(),
+            new Entity(),
+        };
+
+        this.sceneManager.SetupGet(x => x.ActiveScene).Returns(this.scene.Object);
+        this.scene.SetupGet(x => x.Entities).Returns((IReadOnlyCollection<Entity>)this.entities);
 
         this.viewModel = new SceneHierarchyToolViewModel(this.logger.Object, this.sceneManager.Object);
     }

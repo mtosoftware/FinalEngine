@@ -6,7 +6,6 @@ namespace FinalEngine.Editor.ViewModels.Dialogs.Entities;
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
@@ -36,11 +35,6 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
     private IRelayCommand? createCommand;
 
     /// <summary>
-    /// The entity unique identifier.
-    /// </summary>
-    private Guid? entityGuid;
-
-    /// <summary>
     /// The name of the entity to create.
     /// </summary>
     private string? entityName;
@@ -57,7 +51,9 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/> or <paramref name="sceneManager"/> parameter cannot be null.
     /// </exception>
-    public CreateEntityViewModel(ILogger<CreateEntityViewModel> logger, ISceneManager sceneManager)
+    public CreateEntityViewModel(
+        ILogger<CreateEntityViewModel> logger,
+        ISceneManager sceneManager)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
@@ -67,7 +63,7 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
     }
 
     /// <inheritdoc/>
-    public ICommand CreateCommand
+    public IRelayCommand CreateCommand
     {
         get
         {
@@ -79,11 +75,7 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
     }
 
     /// <inheritdoc/>
-    public Guid EntityGuid
-    {
-        get { return this.entityGuid ??= Guid.Empty; }
-        set { this.SetProperty(ref this.entityGuid, value); }
-    }
+    public Guid EntityGuid { get; }
 
     /// <inheritdoc/>
     [Required(ErrorMessage = "You must provide an entity name.")]
@@ -97,7 +89,7 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
         set
         {
             this.SetProperty(ref this.entityName, value, true);
-            this.createCommand?.NotifyCanExecuteChanged();
+            this.CreateCommand.NotifyCanExecuteChanged();
         }
     }
 
