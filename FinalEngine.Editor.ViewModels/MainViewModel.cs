@@ -39,6 +39,11 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private readonly IViewPresenter viewPresenter;
 
     /// <summary>
+    /// The create entity command.
+    /// </summary>
+    private ICommand? createEntityCommand;
+
+    /// <summary>
     /// The exit command.
     /// </summary>
     private ICommand? exitCommand;
@@ -110,6 +115,12 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     }
 
     /// <inheritdoc/>
+    public ICommand CreateEntityCommand
+    {
+        get { return this.createEntityCommand ??= new RelayCommand(this.CreateEntity); }
+    }
+
+    /// <inheritdoc/>
     public IDockViewModel DockViewModel { get; }
 
     /// <inheritdoc/>
@@ -164,6 +175,13 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.logger.LogInformation($"Closing {nameof(MainViewModel)}...");
 
         closeable.Close();
+    }
+
+    /// <summary>
+    /// Shows the create entity view.
+    /// </summary>
+    private void CreateEntity()
+    {
     }
 
     /// <summary>

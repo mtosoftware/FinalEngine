@@ -27,6 +27,7 @@
         <KeyBinding Gesture="Ctrl+Alt+S" Command="{Binding ToggleToolWindowCommand}" CommandParameter="EntitySystems" />
         <KeyBinding Gesture="Ctrl+Alt+P" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Properties" />
         <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Console" />
+        <KeyBinding Gesture="Ctrl+Shift+E" Command="{Binding CreateEntityCommand}" />
     </Window.InputBindings>
 
     <!-- MAIN MENU -->
@@ -48,6 +49,11 @@
                         <MenuItem Header="_Properties" InputGestureText="Ctrl+Alt+P" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Properties" />
                         <MenuItem Header="_Console" InputGestureText="Ctrl+Alt+C" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Console" />
                     </MenuItem>
+                </MenuItem>
+
+                <!-- SCENE -->
+                <MenuItem Header="_Scene">
+                    <MenuItem Header="Create _Entity" InputGestureText="Ctrl+Shift+E" Command="{Binding CreateEntityCommand}" />
                 </MenuItem>
 
                 <!-- WINDOW -->
