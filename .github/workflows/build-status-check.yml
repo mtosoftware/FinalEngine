@@ -76,23 +76,6 @@ jobs:
     - name: Build FinalEngine.ECS.Components
       run: dotnet build FinalEngine.ECS.Components/FinalEngine.ECS.Components.csproj --no-restore
 
-  # FinalEngine.ECS.Systems
-  build_ecs_systems:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-
-    - name: Restore FinalEngine.ECS.Systems dependencies
-      run: dotnet restore FinalEngine.ECS.Systems/FinalEngine.ECS.Systems.csproj
-
-    - name: Build FinalEngine.ECS.Systems
-      run: dotnet build FinalEngine.ECS.Systems/FinalEngine.ECS.Systems.csproj --no-restore
-
   # FinalEngine.Editor.Common
   build_editor_common:
     runs-on: ubuntu-latest
