@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Inspectors;
+namespace FinalEngine.Tests.Editor.ViewModels.Inspectors;
 
 using System;
 using CommunityToolkit.Mvvm.Messaging;
