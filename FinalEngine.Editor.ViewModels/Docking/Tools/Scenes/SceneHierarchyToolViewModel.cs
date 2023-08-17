@@ -6,6 +6,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 
 using System;
 using System.Collections.Generic;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Services.Scenes;
@@ -20,6 +21,11 @@ using Microsoft.Extensions.Logging;
 public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHierarchyToolViewModel
 {
     /// <summary>
+    /// The logger.
+    /// </summary>
+    private readonly ILogger<SceneHierarchyToolViewModel> logger;
+
+    /// <summary>
     /// The messenger.
     /// </summary>
     private readonly IMessenger messenger;
@@ -28,6 +34,11 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
     /// The scene manager.
     /// </summary>
     private readonly ISceneManager sceneManager;
+
+    /// <summary>
+    /// The delete entity command.
+    /// </summary>
+    private IRelayCommand? deleteEntityCommand;
 
     /// <summary>
     /// The selected entity, or <c>null</c> if one is not selected.
@@ -54,18 +65,20 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
         IMessenger messenger,
         ISceneManager sceneManager)
     {
-        if (logger == null)
-        {
-            throw new ArgumentNullException(nameof(logger));
-        }
-
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
 
         this.Title = "Scene Hierarchy";
         this.ContentID = "SceneHierarchy";
 
-        logger.LogInformation($"Initializing {this.Title}...");
+        this.logger.LogInformation($"Initializing {this.Title}...");
+    }
+
+    /// <inheritdoc/>
+    public IRelayCommand DeleteEntityCommand
+    {
+        get { return this.deleteEntityCommand ??= new RelayCommand(this.DeleteEntity, this.CanDeleteEntity); }
     }
 
     /// <inheritdoc/>
@@ -85,11 +98,36 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
         set
         {
             this.SetProperty(ref this.selectedEntity, value);
+            this.DeleteEntityCommand.NotifyCanExecuteChanged();
 
             if (this.SelectedEntity != null)
             {
                 this.messenger.Send(new EntitySelectedMessage(this.SelectedEntity));
             }
         }
+    }
+
+    /// <summary>
+    /// Determines whether the <see cref="DeleteEntityCommand"/> can execute and delete the <see cref="SelectedEntity"/>.
+    /// </summary>
+    /// <returns>
+    ///   <c>true</c> if the <see cref="DeleteEntityCommand"/> can execute and delete the <see cref="SelectedEntity"/>; otherwise, <c>false</c>.
+    /// </returns>
+    private bool CanDeleteEntity()
+    {
+        return this.SelectedEntity != null;
+    }
+
+    /// <summary>
+    /// Deletes the <see cref="SelectedEntity"/> from the scene.
+    /// </summary>
+    private void DeleteEntity()
+    {
+        if (this.SelectedEntity == null)
+        {
+            return;
+        }
+
+        this.sceneManager.ActiveScene.RemoveEntity(this.SelectedEntity.UniqueIdentifier);
     }
 }

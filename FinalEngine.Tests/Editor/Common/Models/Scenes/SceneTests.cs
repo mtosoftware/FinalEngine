@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
+using FinalEngine.Editor.Common.Exceptions.Entities;
 using FinalEngine.Editor.Common.Models.Scenes;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -111,6 +112,44 @@ public sealed class SceneTests
 
         // Assert
         Assert.That(actual, Is.InstanceOf<ObservableCollection<Entity>>());
+    }
+
+    [Test]
+    public void RemoveEntityShouldRemoveEntityFromCollectionWhenInvoked()
+    {
+        // Arrange
+        var uniqueIdentifier = Guid.NewGuid();
+        this.scene.AddEntity("Tag", uniqueIdentifier);
+
+        // Act
+        this.scene.RemoveEntity(uniqueIdentifier);
+
+        // Assert
+        Assert.That(this.scene.Entities.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void RemoveEntityShouldRemoveEntityFromWorldWhenInvoked()
+    {
+        // Arrange
+        var uniqueIdentifier = Guid.NewGuid();
+        this.scene.AddEntity("Tag", uniqueIdentifier);
+
+        // Act
+        this.scene.RemoveEntity(uniqueIdentifier);
+
+        // Assert
+        this.world.Verify(x => x.RemoveEntity(It.IsAny<Entity>()), Times.Once);
+    }
+
+    [Test]
+    public void RemoveEntityShouldThrowEntityNotFoundExceptionWhenNotInCollection()
+    {
+        // Act and assert
+        Assert.Throws<EntityNotFoundException>(() =>
+        {
+            this.scene.RemoveEntity(Guid.NewGuid());
+        });
     }
 
     [Test]

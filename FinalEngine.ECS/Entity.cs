@@ -28,7 +28,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// </param>
     public Entity(Guid? uniqueID = null)
     {
-        this.UniqueID = uniqueID ?? Guid.NewGuid();
+        this.UniqueIdentifier = uniqueID ?? Guid.NewGuid();
         this.typeToComponentMap = new Dictionary<Type, IComponent>();
     }
 
@@ -49,7 +49,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <value>
     /// The unique identifier.
     /// </value>
-    public Guid UniqueID { get; }
+    public Guid UniqueIdentifier { get; }
 
     /// <summary>
     ///   Gets or sets the event that occurs when a component is added or removed from this <see cref="Entity"/>.

@@ -97,7 +97,7 @@ public sealed class PropertiesToolViewModelTests
         WeakReferenceMessenger.Default.Send(new EntitySelectedMessage(entity));
 
         // Assert
-        Assert.That(this.viewModel.Title, Is.EqualTo("Entity Inspector - Tag"));
+        Assert.That(this.viewModel.Title, Is.EqualTo("Entity Inspector"));
     }
 
     [SetUp]
