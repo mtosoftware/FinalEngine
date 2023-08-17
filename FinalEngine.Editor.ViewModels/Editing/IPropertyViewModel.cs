@@ -26,5 +26,5 @@ public interface IPropertyViewModel<T>
     /// <value>
     /// The value of the property.
     /// </value>
-    T Value { get; set; }
+    T? Value { get; set; }
 }

@@ -514,15 +514,15 @@ public class EntityTests
         }
     }
 
-    private sealed class MockComponent : IComponent
+    private sealed class MockComponent : IEntityComponent
     {
     }
 
-    private sealed class MockComponentA : IComponent
+    private sealed class MockComponentA : IEntityComponent
     {
     }
 
-    private sealed class MockComponentB : IComponent
+    private sealed class MockComponentB : IEntityComponent
     {
     }
 }

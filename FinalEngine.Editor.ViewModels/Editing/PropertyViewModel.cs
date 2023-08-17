@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.ViewModels.Editing;
 
 using System;
+using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 /// <summary>
@@ -15,55 +16,54 @@ using CommunityToolkit.Mvvm.ComponentModel;
 /// </typeparam>
 /// <seealso cref="ObservableObject" />
 /// <seealso cref="IPropertyViewModel{T}"/>
-public sealed class PropertyViewModel<T> : ObservableObject, IPropertyViewModel<T>
+public abstract class PropertyViewModel<T> : ObservableObject, IPropertyViewModel<T>
 {
+    /// <summary>
+    /// The object that contains the property.
+    /// </summary>
+    private readonly object component;
+
     /// <summary>
     /// The function used to retrieve the property value.
     /// </summary>
-    private readonly Func<T> getValue;
+    private readonly Func<T?> getValue;
 
     /// <summary>
     /// The action used to set the property value.
     /// </summary>
-    private readonly Action<T> setValue;
+    private readonly Action<T?> setValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PropertyViewModel{T}"/> class.
     /// </summary>
-    /// <param name="name">
-    /// The name of the property.
-    /// </param>
-    /// <param name="getValue">
-    /// The function used to retrieve the property value.
-    /// </param>
-    /// <param name="setValue">
-    /// The function used to set the property value.
-    /// </param>
-    /// <exception cref="ArgumentException">
-    /// The specified <paramref name="name"/> parameter cannot be null or whitespace.
-    /// </exception>
-    /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="getValue"/> or <paramref name="setValue"/> parameter cannot be null.
-    /// </exception>
-    public PropertyViewModel(string name, Func<T> getValue, Action<T> setValue)
+    protected PropertyViewModel(object component, PropertyInfo property)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        if (property == null)
         {
-            throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
+            throw new ArgumentNullException(nameof(property));
         }
 
-        this.getValue = getValue ?? throw new ArgumentNullException(nameof(getValue));
-        this.setValue = setValue ?? throw new ArgumentNullException(nameof(setValue));
+        this.component = component ?? throw new ArgumentNullException(nameof(component));
 
-        this.Name = name;
-        this.Value = getValue();
+        this.getValue = new Func<T?>(() =>
+        {
+            return (T?)property.GetValue(this.component);
+        });
+
+        this.setValue = new Action<T?>(x =>
+        {
+            property.SetValue(this.component, x);
+        });
+
+        this.Name = property.Name;
+        this.Value = this.getValue();
     }
 
     /// <inheritdoc/>
     public string Name { get; }
 
     /// <inheritdoc/>
-    public T Value
+    public T? Value
     {
         get
         {

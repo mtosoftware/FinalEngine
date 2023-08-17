@@ -7,10 +7,11 @@ namespace FinalEngine.Editor.ViewModels.Inspectors;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FinalEngine.ECS;
-using FinalEngine.Editor.ViewModels.Editing;
+using FinalEngine.Editor.ViewModels.Editing.DataTypes;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IEntityComponentViewModel"/>.
@@ -19,11 +20,6 @@ using FinalEngine.Editor.ViewModels.Editing;
 /// <seealso cref="IEntityComponentViewModel" />
 public sealed class EntityComponentViewModel : ObservableObject, IEntityComponentViewModel
 {
-    /// <summary>
-    /// The component that is being modelled.
-    /// </summary>
-    private readonly IComponent component;
-
     /// <summary>
     /// The property view models associated with this component model.
     /// </summary>
@@ -38,9 +34,13 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="component"/> parameter cannot be null.
     /// </exception>
-    public EntityComponentViewModel(IComponent component)
+    public EntityComponentViewModel(IEntityComponent component)
     {
-        this.component = component ?? throw new ArgumentNullException(nameof(component));
+        if (component == null)
+        {
+            throw new ArgumentNullException(nameof(component));
+        }
+
         this.propertyViewModels = new ObservableCollection<ObservableObject>();
 
         this.Name = component.GetType().Name;
@@ -48,17 +48,22 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
         //// TODO: Only use public properties and also consider attributes (what if the user wants to use a private property or field).
         foreach (var property in component.GetType().GetProperties())
         {
-            string name = property.Name;
             var type = property.PropertyType;
+            var browsable = property.GetCustomAttribute<BrowsableAttribute>();
+
+            if (browsable != null && !browsable.Browsable)
+            {
+                continue;
+            }
 
             switch (type.Name.ToUpperInvariant())
             {
                 case "STRING":
-                    this.AddProperty<string?>(property);
+                    this.propertyViewModels.Add(new StringPropertyViewModel(component, property));
                     break;
 
                 default:
-                    //// TODO: Throw an exception or log?
+                    //// TODO: Log a warning message here.
                     break;
             }
         }
@@ -71,29 +76,5 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     public ICollection<ObservableObject> PropertyViewModels
     {
         get { return this.propertyViewModels; }
-    }
-
-    /// <summary>
-    /// Adds a <see cref="PropertyViewModel{T}"/> of type <typeparamref name="T"/>.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The type of property to add.
-    /// </typeparam>
-    /// <param name="property">
-    /// The property.
-    /// </param>
-    private void AddProperty<T>(PropertyInfo property)
-    {
-        var getValue = new Func<T?>(() =>
-        {
-            return (T?)property.GetValue(this.component);
-        });
-
-        var setValue = new Action<T?>(x =>
-        {
-            property.SetValue(this.component, x);
-        });
-
-        this.propertyViewModels.Add(new PropertyViewModel<T?>(property.Name, getValue, setValue));
     }
 }

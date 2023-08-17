@@ -20,7 +20,7 @@ public interface IReadOnlyEntity
     /// <returns>
     ///   <c>true</c> if the specified <paramref name="component"/> is contained within this <see cref="IReadOnlyEntity"/>; otherwise, <c>false</c>.
     /// </returns>
-    bool ContainsComponent(IComponent component);
+    bool ContainsComponent(IEntityComponent component);
 
     /// <summary>
     ///   Determines whether a component of the specified <paramref name="type"/> is contained within this <see cref="IReadOnlyEntity"/>.
@@ -43,5 +43,5 @@ public interface IReadOnlyEntity
     ///   <c>true</c> if a component of the specified <typeparamref name="TComponent"/> is contained within this <see cref="IReadOnlyEntity"/>; otherwise, <c>false</c>.
     /// </returns>
     bool ContainsComponent<TComponent>()
-        where TComponent : IComponent;
+        where TComponent : IEntityComponent;
 }

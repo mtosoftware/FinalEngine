@@ -14,10 +14,10 @@ using FinalEngine.ECS;
 public interface IEntityComponentViewModel
 {
     /// <summary>
-    /// Gets the name of the <see cref="IComponent"/>.
+    /// Gets the name of the <see cref="IEntityComponent"/>.
     /// </summary>
     /// <value>
-    /// The name of the <see cref="IComponent"/>.
+    /// The name of the <see cref="IEntityComponent"/>.
     /// </value>
     string Name { get; }
 

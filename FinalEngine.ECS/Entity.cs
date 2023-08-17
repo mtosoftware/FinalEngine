@@ -9,16 +9,16 @@ using System.Collections.Generic;
 using System.Dynamic;
 
 /// <summary>
-///   Provides a container for <see cref="IComponent"/> s that can be, added, removed or accessed during runtime through an <see cref="EntitySystemBase"/>.
+///   Provides a container for <see cref="IEntityComponent"/> s that can be, added, removed or accessed during runtime through an <see cref="EntitySystemBase"/>.
 /// </summary>
 /// <seealso cref="DynamicObject"/>
 /// <seealso cref="IReadOnlyEntity"/>
 public class Entity : DynamicObject, IReadOnlyEntity
 {
     /// <summary>
-    ///   Represents a type to <see cref="IComponent"/> map.
+    ///   Represents a type to <see cref="IEntityComponent"/> map.
     /// </summary>
-    private readonly IDictionary<Type, IComponent> typeToComponentMap;
+    private readonly IDictionary<Type, IEntityComponent> typeToComponentMap;
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Entity"/> class.
@@ -29,7 +29,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     public Entity(Guid? uniqueID = null)
     {
         this.UniqueIdentifier = uniqueID ?? Guid.NewGuid();
-        this.typeToComponentMap = new Dictionary<Type, IComponent>();
+        this.typeToComponentMap = new Dictionary<Type, IEntityComponent>();
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <value>
     /// The components attached to this <see cref="Entity"/>.
     /// </value>
-    public ICollection<IComponent> Components
+    public ICollection<IEntityComponent> Components
     {
         get { return this.typeToComponentMap.Values; }
     }
@@ -71,7 +71,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <exception cref="ArgumentException">
     ///   The specified <paramref name="component"/> parameters type has already been added to this entity.
     /// </exception>
-    public void AddComponent(IComponent component)
+    public void AddComponent(IEntityComponent component)
     {
         if (component == null)
         {
@@ -96,7 +96,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     ///   The type component to add to this <see cref="Entity"/>.
     /// </typeparam>
     public void AddComponent<TComponent>()
-        where TComponent : IComponent, new()
+        where TComponent : IEntityComponent, new()
     {
         this.AddComponent(Activator.CreateInstance<TComponent>());
     }
@@ -113,7 +113,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <exception cref="ArgumentNullException">
     ///   The specified <paramref name="component"/> parameter cannot be null.
     /// </exception>
-    public bool ContainsComponent(IComponent component)
+    public bool ContainsComponent(IEntityComponent component)
     {
         if (component == null)
         {
@@ -144,7 +144,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     ///   type - The specified <paramref name="type"/> parameter cannot be null.
     /// </exception>
     /// <exception cref="ArgumentException">
-    ///   The specified <paramref name="type"/> parameter does not implement <see cref="IComponent"/>.
+    ///   The specified <paramref name="type"/> parameter does not implement <see cref="IEntityComponent"/>.
     /// </exception>
     public bool ContainsComponent(Type type)
     {
@@ -153,8 +153,8 @@ public class Entity : DynamicObject, IReadOnlyEntity
             throw new ArgumentNullException(nameof(type));
         }
 
-        return !typeof(IComponent).IsAssignableFrom(type)
-            ? throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IComponent)}.", nameof(type))
+        return !typeof(IEntityComponent).IsAssignableFrom(type)
+            ? throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IEntityComponent)}.", nameof(type))
             : this.typeToComponentMap.ContainsKey(type);
     }
 
@@ -168,7 +168,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     ///   <c>true</c> if a component of the specified <typeparamref name="TComponent"/> is contained within this <see cref="Entity"/>; otherwise, <c>false</c>.
     /// </returns>
     public bool ContainsComponent<TComponent>()
-        where TComponent : IComponent
+        where TComponent : IEntityComponent
     {
         return this.ContainsComponent(typeof(TComponent));
     }
@@ -186,18 +186,18 @@ public class Entity : DynamicObject, IReadOnlyEntity
     ///   The specified <paramref name="type"/> parameter cannot be null.
     /// </exception>
     /// <exception cref="ArgumentException">
-    ///   The specified <paramref name="type"/> parameter does not implement <see cref="IComponent"/> or the specified <paramref name="type"/> parameter is not a component type that has been added to this <see cref="Entity"/>.
+    ///   The specified <paramref name="type"/> parameter does not implement <see cref="IEntityComponent"/> or the specified <paramref name="type"/> parameter is not a component type that has been added to this <see cref="Entity"/>.
     /// </exception>
-    public IComponent GetComponent(Type type)
+    public IEntityComponent GetComponent(Type type)
     {
         if (type == null)
         {
             throw new ArgumentNullException(nameof(type));
         }
 
-        if (!typeof(IComponent).IsAssignableFrom(type))
+        if (!typeof(IEntityComponent).IsAssignableFrom(type))
         {
-            throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IComponent)}.", nameof(type));
+            throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IEntityComponent)}.", nameof(type));
         }
 
         return !this.ContainsComponent(type)
@@ -218,7 +218,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     ///   The specified <typeparamref name="TComponent"/> parameter is not a component type that has been added to this <see cref="Entity"/>.
     /// </exception>
     public TComponent GetComponent<TComponent>()
-        where TComponent : IComponent
+        where TComponent : IEntityComponent
     {
         return (TComponent)this.GetComponent(typeof(TComponent));
     }
@@ -235,7 +235,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     /// <exception cref="ArgumentException">
     ///   The specified <paramref name="component"/> parameter has not been added to this entity.
     /// </exception>
-    public void RemoveComponent(IComponent component)
+    public void RemoveComponent(IEntityComponent component)
     {
         if (component == null)
         {
@@ -260,7 +260,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     ///   type - The specified <paramref name="type"/> parameter cannot be null.
     /// </exception>
     /// <exception cref="ArgumentException">
-    ///   The specified <paramref name="type"/> parameter does not implement <see cref="IComponent"/> or the specified <paramref name="type"/> parameter is not a component type that has been added to this entity.
+    ///   The specified <paramref name="type"/> parameter does not implement <see cref="IEntityComponent"/> or the specified <paramref name="type"/> parameter is not a component type that has been added to this entity.
     /// </exception>
     public void RemoveComponent(Type type)
     {
@@ -269,9 +269,9 @@ public class Entity : DynamicObject, IReadOnlyEntity
             throw new ArgumentNullException(nameof(type));
         }
 
-        if (!typeof(IComponent).IsAssignableFrom(type))
+        if (!typeof(IEntityComponent).IsAssignableFrom(type))
         {
-            throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IComponent)}.", nameof(type));
+            throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IEntityComponent)}.", nameof(type));
         }
 
         if (!this.ContainsComponent(type))
@@ -293,7 +293,7 @@ public class Entity : DynamicObject, IReadOnlyEntity
     ///   A component of the specified <typeparamref name="TComponent"/> parameter has not been added to this entity.
     /// </exception>
     public void RemoveComponent<TComponent>()
-        where TComponent : IComponent
+        where TComponent : IEntityComponent
     {
         this.RemoveComponent(typeof(TComponent));
     }
