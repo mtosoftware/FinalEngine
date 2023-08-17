@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 
 using System.Collections.Generic;
+using System.Windows.Input;
 using FinalEngine.ECS;
 
 /// <summary>
@@ -13,6 +14,17 @@ using FinalEngine.ECS;
 /// <seealso cref="IToolViewModel" />
 public interface ISceneHierarchyToolViewModel : IToolViewModel
 {
+    /// <summary>
+    /// Gets the delete entity command.
+    /// </summary>
+    /// <value>
+    /// The delete entity command.
+    /// </value>
+    /// <remarks>
+    /// Deletes the <see cref="SelectedEntity"/> from the hierarchy.
+    /// </remarks>
+    ICommand DeleteEntityCommand { get; }
+
     /// <summary>
     /// Gets the entities within the active scene.
     /// </summary>

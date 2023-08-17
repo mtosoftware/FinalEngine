@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.Common.Models.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using Microsoft.Extensions.Logging;
@@ -80,6 +81,25 @@ public sealed class Scene : IScene
         this.entities.Add(entity);
 
         this.logger.LogInformation($"Added {nameof(Entity)} to {nameof(Scene)} with ID: '{uniqueID}'.");
+    }
+
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException">
+    /// Failed to locate an <see cref="Entity"/> that matches the specified <paramref name="uniqueID"/>.
+    /// </exception>
+    public void RemoveEntity(Guid uniqueID)
+    {
+        this.logger.LogInformation($"Removing {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueID}'.");
+
+        var entity = this.entities.FirstOrDefault(x =>
+        {
+            return x.UniqueID == uniqueID;
+        }) ?? throw new ArgumentException($"Failed to locate an {nameof(Entity)} that matches the specified {nameof(uniqueID)}: '{uniqueID}'.");
+
+        this.world.RemoveEntity(entity);
+        this.entities.Remove(entity);
+
+        this.logger.LogInformation($"Removed {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueID}'.");
     }
 
     /// <inheritdoc/>
