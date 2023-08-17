@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
+using FinalEngine.Editor.Common.Exceptions.Entities;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -85,21 +86,27 @@ public sealed class Scene : IScene
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentException">
-    /// Failed to locate an <see cref="Entity"/> that matches the specified <paramref name="uniqueID"/>.
+    /// Failed to locate an <see cref="Entity"/> that matches the specified <paramref name="uniqueIdentifier"/>.
     /// </exception>
-    public void RemoveEntity(Guid uniqueID)
+    public void RemoveEntity(Guid uniqueIdentifier)
     {
-        this.logger.LogInformation($"Removing {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueID}'.");
+        this.logger.LogInformation($"Removing {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueIdentifier}'.");
 
         var entity = this.entities.FirstOrDefault(x =>
         {
-            return x.UniqueID == uniqueID;
-        }) ?? throw new ArgumentException($"Failed to locate an {nameof(Entity)} that matches the specified {nameof(uniqueID)}: '{uniqueID}'.");
+            return x.UniqueIdentifier == uniqueIdentifier;
+        });
+
+        if (entity == null)
+        {
+            this.logger.LogError($"Failed to locate entity with ID: '{uniqueIdentifier}'.");
+            throw new EntityNotFoundException(uniqueIdentifier);
+        }
 
         this.world.RemoveEntity(entity);
         this.entities.Remove(entity);
 
-        this.logger.LogInformation($"Removed {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueID}'.");
+        this.logger.LogInformation($"Removed {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueIdentifier}'.");
     }
 
     /// <inheritdoc/>

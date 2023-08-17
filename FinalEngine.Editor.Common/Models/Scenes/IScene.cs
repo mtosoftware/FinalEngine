@@ -33,12 +33,12 @@ public interface IScene
     void AddEntity(string tag, Guid uniqueID);
 
     /// <summary>
-    /// Removes an entity that matches the specified <paramref name="uniqueID"/> from this <see cref="IScene"/>.
+    /// Removes an entity that matches the specified <paramref name="uniqueIdentifier"/> from this <see cref="IScene"/>.
     /// </summary>
-    /// <param name="uniqueID">
+    /// <param name="uniqueIdentifier">
     /// The unique identifier of the <see cref="Entity"/> to remove.
     /// </param>
-    void RemoveEntity(Guid uniqueID);
+    void RemoveEntity(Guid uniqueIdentifier);
 
     /// <summary>
     /// Renders the scene, processing all rendering systems.

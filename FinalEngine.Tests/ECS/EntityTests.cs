@@ -484,7 +484,7 @@ public class EntityTests
         var entity = new Entity(expected);
 
         // Act
-        var actual = entity.UniqueID;
+        var actual = entity.UniqueIdentifier;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
@@ -494,7 +494,7 @@ public class EntityTests
     public void UniqueIDShouldReturnGuidWhenInvoked()
     {
         // Act
-        var actual = this.entity.UniqueID;
+        var actual = this.entity.UniqueIdentifier;
 
         // Assert
         Assert.That(actual, Is.Not.Null);

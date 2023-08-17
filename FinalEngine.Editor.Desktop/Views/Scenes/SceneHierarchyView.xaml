@@ -12,6 +12,10 @@
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedItem="{Binding SelectedEntity}">
 
+            <ListBox.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding DeleteEntityCommand}" />
+            </ListBox.InputBindings>
+
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Entity" Command="{Binding DeleteEntityCommand}" />
