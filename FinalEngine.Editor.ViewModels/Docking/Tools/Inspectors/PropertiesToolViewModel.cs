@@ -5,8 +5,9 @@
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 
 using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using FinalEngine.Editor.ViewModels.Entities;
+using FinalEngine.Editor.ViewModels.Inspectors;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +31,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     /// <summary>
     /// The current view model to be shown in the properties view.
     /// </summary>
-    private object? currentViewModel;
+    private ObservableObject? currentViewModel;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PropertiesToolViewModel"/> class.
@@ -57,7 +58,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     }
 
     /// <inheritdoc/>
-    public object? CurrentViewModel
+    public ObservableObject? CurrentViewModel
     {
         get { return this.currentViewModel; }
         private set { this.SetProperty(ref this.currentViewModel, value); }
@@ -82,9 +83,9 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
             throw new ArgumentNullException(nameof(message));
         }
 
-        this.logger.LogInformation($"Changing properties view to: '{nameof(EntityComponentsViewModel)}'.");
+        this.logger.LogInformation($"Changing properties view to: '{nameof(EntityInspectorViewModel)}'.");
 
         this.Title = "Entity Inspector";
-        this.CurrentViewModel = new EntityComponentsViewModel();
+        this.CurrentViewModel = new EntityInspectorViewModel();
     }
 }

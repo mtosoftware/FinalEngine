@@ -4,6 +4,8 @@
 
 namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 
+using CommunityToolkit.Mvvm.ComponentModel;
+
 /// <summary>
 /// Defines an interface that represents a model of a properties tool view.
 /// </summary>
@@ -16,5 +18,5 @@ public interface IPropertiesToolViewModel : IToolViewModel
     /// <value>
     /// The current view model.
     /// </value>
-    object? CurrentViewModel { get; }
+    ObservableObject? CurrentViewModel { get; }
 }
