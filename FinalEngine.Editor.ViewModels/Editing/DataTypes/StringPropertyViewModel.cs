@@ -5,7 +5,6 @@
 namespace FinalEngine.Editor.ViewModels.Editing.DataTypes;
 
 using System.Reflection;
-using FinalEngine.ECS;
 
 /// <summary>
 /// Provides an implementation of a <see cref="PropertyViewModel{T}"/> with a generic type of <c>string</c>.
@@ -13,7 +12,16 @@ using FinalEngine.ECS;
 /// <seealso cref="PropertyViewModel{T}"/>
 public sealed class StringPropertyViewModel : PropertyViewModel<string?>
 {
-    public StringPropertyViewModel(IEntityComponent component, PropertyInfo property)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StringPropertyViewModel"/> class.
+    /// </summary>
+    /// <param name="component">
+    /// The component.
+    /// </param>
+    /// <param name="property">
+    /// The property.
+    /// </param>
+    public StringPropertyViewModel(object component, PropertyInfo property)
         : base(component, property)
     {
     }

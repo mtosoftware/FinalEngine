@@ -36,6 +36,12 @@ public abstract class PropertyViewModel<T> : ObservableObject, IPropertyViewMode
     /// <summary>
     /// Initializes a new instance of the <see cref="PropertyViewModel{T}"/> class.
     /// </summary>
+    /// <param name="component">
+    /// The object that contains the property.
+    /// </param>
+    /// <param name="property">
+    /// The property.
+    /// </param>
     protected PropertyViewModel(object component, PropertyInfo property)
     {
         if (property == null)
