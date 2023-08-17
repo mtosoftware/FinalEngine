@@ -45,7 +45,6 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
 
         this.Name = component.GetType().Name;
 
-        //// TODO: Only use public properties and also consider attributes (what if the user wants to use a private property or field).
         foreach (var property in component.GetType().GetProperties())
         {
             var type = property.PropertyType;
