@@ -26,10 +26,10 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="GUID:" />
-        <TextBox Grid.Column="1" Grid.Row="0" MinWidth="250" IsEnabled="False" Text="{Binding EntityGuid, Mode=OneWay}" />
+        <TextBox Grid.Column="1" Grid.Row="0" IsEnabled="False" Text="{Binding EntityGuid, Mode=OneWay}" />
 
         <Label Grid.Row="1" Content="Entity Name:" />
-        <TextBox x:Name="textBox" Grid.Column="1" Grid.Row="1" MinWidth="250" Text="{Binding EntityName, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox x:Name="textBox" Grid.Column="1" Grid.Row="1" Text="{Binding EntityName, UpdateSourceTrigger=PropertyChanged}" />
 
         <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
             <Button IsDefault="True" Content="Create" Command="{Binding CreateCommand}" CommandParameter="{Binding ElementName=Window}" />

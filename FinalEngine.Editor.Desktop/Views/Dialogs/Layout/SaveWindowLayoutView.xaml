@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="Layout Name:" />
-        <TextBox x:Name="textBox" Grid.Column="1" Grid.Row="0" MinWidth="250" Text="{Binding LayoutName, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox x:Name="textBox" Grid.Column="1" Grid.Row="0" Text="{Binding LayoutName, UpdateSourceTrigger=PropertyChanged}" />
 
         <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
             <Button IsDefault="True" Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=Window}" />

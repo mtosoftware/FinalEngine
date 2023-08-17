@@ -6,6 +6,7 @@ namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Scenes;
 
 using System;
 using System.Collections.Generic;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Models.Scenes;
 using FinalEngine.Editor.Common.Services.Scenes;
@@ -20,6 +21,8 @@ public sealed class SceneHierarchyToolViewModelTests
     private IList<Entity> entities;
 
     private Mock<ILogger<SceneHierarchyToolViewModel>> logger;
+
+    private Mock<IMessenger> messenger;
 
     private Mock<IScene> scene;
 
@@ -59,7 +62,17 @@ public sealed class SceneHierarchyToolViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SceneHierarchyToolViewModel(null, this.sceneManager.Object);
+            new SceneHierarchyToolViewModel(null, WeakReferenceMessenger.Default, this.sceneManager.Object);
+        });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenMessengerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new SceneHierarchyToolViewModel(this.logger.Object, null, this.sceneManager.Object);
         });
     }
 
@@ -69,7 +82,7 @@ public sealed class SceneHierarchyToolViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SceneHierarchyToolViewModel(this.logger.Object, null);
+            new SceneHierarchyToolViewModel(this.logger.Object, WeakReferenceMessenger.Default, null);
         });
     }
 
@@ -83,12 +96,37 @@ public sealed class SceneHierarchyToolViewModelTests
         Assert.That(actual, Is.SameAs(this.entities));
     }
 
+    [Test]
+    public void SelectedEntityShouldReturnEntityWhenSetToEntity()
+    {
+        // Arrange
+        var expected = new Entity();
+        this.viewModel.SelectedEntity = expected;
+
+        // Act
+        var actual = this.viewModel.SelectedEntity;
+
+        // Assert
+        Assert.That(actual, Is.SameAs(expected));
+    }
+
+    [Test]
+    public void SelectedEntityShouldReturnNullWhenNotSet()
+    {
+        // Act
+        var actual = this.viewModel.SelectedEntity;
+
+        // Assert
+        Assert.That(actual, Is.Null);
+    }
+
     [SetUp]
     public void Setup()
     {
         this.logger = new Mock<ILogger<SceneHierarchyToolViewModel>>();
         this.sceneManager = new Mock<ISceneManager>();
         this.scene = new Mock<IScene>();
+        this.messenger = new Mock<IMessenger>();
 
         this.entities = new List<Entity>()
         {
@@ -100,6 +138,6 @@ public sealed class SceneHierarchyToolViewModelTests
         this.sceneManager.SetupGet(x => x.ActiveScene).Returns(this.scene.Object);
         this.scene.SetupGet(x => x.Entities).Returns((IReadOnlyCollection<Entity>)this.entities);
 
-        this.viewModel = new SceneHierarchyToolViewModel(this.logger.Object, this.sceneManager.Object);
+        this.viewModel = new SceneHierarchyToolViewModel(this.logger.Object, this.messenger.Object, this.sceneManager.Object);
     }
 }

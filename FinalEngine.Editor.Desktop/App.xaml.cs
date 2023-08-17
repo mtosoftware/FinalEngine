@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.Desktop;
 using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Common.Models.Scenes;
@@ -107,6 +108,8 @@ public partial class App : Application
         {
             builder.AddConsole().SetMinimumLevel(Debugger.IsAttached ? LogLevel.Debug : LogLevel.Information);
         });
+
+        services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
         services.AddTransient<IEntityWorld, EntityWorld>();
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();

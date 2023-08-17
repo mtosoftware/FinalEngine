@@ -9,7 +9,8 @@
     <Grid>
         <ListBox ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 SelectedItem="{Binding SelectedEntity}">
 
             <ListBox.Style>
                 <Style TargetType="ListBox" BasedOn="{StaticResource MahApps.Styles.ListBox.VisualStudio}">
