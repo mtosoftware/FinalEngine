@@ -4,12 +4,19 @@
 
 namespace FinalEngine.Editor.ViewModels.Inspectors;
 
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.ObjectModel;
+using FinalEngine.Editor.ViewModels.Components;
 
 /// <summary>
 /// Defines an interface that represents a model of the entity inspector view.
 /// </summary>
-[SuppressMessage("Design", "CA1040:Avoid empty interfaces", Justification = "TODO")]
 public interface IEntityInspectorViewModel
 {
+    /// <summary>
+    /// Gets the component view models for the entity.
+    /// </summary>
+    /// <value>
+    /// The component view models for the entity.
+    /// </value>
+    ObservableCollection<IEntityComponentViewModel> ComponentViewModels { get; }
 }

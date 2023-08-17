@@ -33,6 +33,17 @@ public class Entity : DynamicObject, IReadOnlyEntity
     }
 
     /// <summary>
+    /// Gets the components attached to this <see cref="Entity"/>.
+    /// </summary>
+    /// <value>
+    /// The components attached to this <see cref="Entity"/>.
+    /// </value>
+    public ICollection<IComponent> Components
+    {
+        get { return this.typeToComponentMap.Values; }
+    }
+
+    /// <summary>
     /// Gets the unique identifier.
     /// </summary>
     /// <value>

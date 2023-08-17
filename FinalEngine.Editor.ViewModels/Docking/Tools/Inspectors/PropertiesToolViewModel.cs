@@ -84,6 +84,6 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         var entity = message.Entity;
 
         this.Title = $"Entity Inspector - {entity.GetComponent<TagComponent>().Tag}";
-        this.CurrentViewModel = new EntityInspectorViewModel();
+        this.CurrentViewModel = new EntityInspectorViewModel(message.Entity);
     }
 }
