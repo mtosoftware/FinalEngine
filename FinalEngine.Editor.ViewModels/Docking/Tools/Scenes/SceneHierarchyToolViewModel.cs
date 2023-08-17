@@ -6,7 +6,6 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
@@ -77,7 +76,7 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
     }
 
     /// <inheritdoc/>
-    public ICommand DeleteEntityCommand
+    public IRelayCommand DeleteEntityCommand
     {
         get { return this.deleteEntityCommand ??= new RelayCommand(this.DeleteEntity, this.CanDeleteEntity); }
     }
@@ -99,7 +98,7 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
         set
         {
             this.SetProperty(ref this.selectedEntity, value);
-            this.deleteEntityCommand?.NotifyCanExecuteChanged();
+            this.DeleteEntityCommand.NotifyCanExecuteChanged();
 
             if (this.SelectedEntity != null)
             {

@@ -87,6 +87,52 @@ public sealed class SceneHierarchyToolViewModelTests
     }
 
     [Test]
+    public void DeleteEntityCommandCanExecuteShouldReturnFalseWhenSelectedEntityIsNull()
+    {
+        // Act
+        bool actual = this.viewModel.DeleteEntityCommand.CanExecute(null);
+
+        // Assert
+        Assert.That(actual, Is.False);
+    }
+
+    [Test]
+    public void DeleteEntityCommandCanExecuteShouldReturnTrueWhenSelectedEntityIsNotNull()
+    {
+        // Arrange
+        this.viewModel.SelectedEntity = new Entity();
+
+        // Act
+        bool actual = this.viewModel.DeleteEntityCommand.CanExecute(null);
+
+        // Assert
+        Assert.That(actual, Is.True);
+    }
+
+    [Test]
+    public void DeleteEntityCommandShouldInvokeSceneRemoveEntityWhenSelectedEntityIsNotNull()
+    {
+        // Arrange
+        this.viewModel.SelectedEntity = new Entity();
+
+        // Act
+        this.viewModel.DeleteEntityCommand.Execute(null);
+
+        // Assert
+        this.scene.Verify(x => x.RemoveEntity(this.viewModel.SelectedEntity.UniqueIdentifier), Times.Once);
+    }
+
+    [Test]
+    public void DeleteEntityCommandShouldNotInvokeSceneRemoveEntityWhenSelectedEntityIsNull()
+    {
+        // Act
+        this.viewModel.DeleteEntityCommand.Execute(null);
+
+        // Assert
+        this.scene.Verify(x => x.RemoveEntity(It.IsAny<Guid>()), Times.Never);
+    }
+
+    [Test]
     public void EntitiesShouldReturnActiveEntitiesWhenInvoked()
     {
         // Act

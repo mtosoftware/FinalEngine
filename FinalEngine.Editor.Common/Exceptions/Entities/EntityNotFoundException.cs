@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.Common.Exceptions.Entities;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using FinalEngine.ECS;
 
@@ -12,6 +13,7 @@ using FinalEngine.ECS;
 /// Provides an exception that is thrown when an entity couldn't be found.
 /// </summary>
 /// <seealso cref="Exception" />
+[ExcludeFromCodeCoverage(Justification = "Exception")]
 public sealed class EntityNotFoundException : Exception
 {
     /// <summary>
