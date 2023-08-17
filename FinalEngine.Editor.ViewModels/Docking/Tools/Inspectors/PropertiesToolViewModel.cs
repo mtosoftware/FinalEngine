@@ -7,6 +7,7 @@ namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.ViewModels.Inspectors;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;
@@ -83,9 +84,11 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
             throw new ArgumentNullException(nameof(message));
         }
 
+        var entity = message.Entity;
+
         this.logger.LogInformation($"Changing properties view to: '{nameof(EntityInspectorViewModel)}'.");
 
-        this.Title = "Entity Inspector";
+        this.Title = $"Entity Inspector - {entity.GetComponent<TagComponent>().Tag}";
         this.CurrentViewModel = new EntityInspectorViewModel();
     }
 }

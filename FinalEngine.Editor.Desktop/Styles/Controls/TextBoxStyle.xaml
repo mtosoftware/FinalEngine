@@ -6,6 +6,7 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MahApps.Styles.TextBox.VisualStudio}">
         <Setter Property="Margin" Value="5" />
         <Setter Property="MinHeight" Value="25" />
+        <Setter Property="MinWidth" Value="250" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="BorderBrush" Value="{StaticResource MahApps.Brushes.TextBox.Border}" />
         <Style.Triggers>
