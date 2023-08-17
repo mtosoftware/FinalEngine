@@ -11,11 +11,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
-using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+using FinalEngine.Editor.ViewModels.Inspectors;
+using FinalEngine.Editor.ViewModels.Projects;
+using FinalEngine.Editor.ViewModels.Scenes;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using Microsoft.Extensions.Logging;
 

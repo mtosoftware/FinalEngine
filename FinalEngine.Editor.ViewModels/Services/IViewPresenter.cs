@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels;
+namespace FinalEngine.Editor.ViewModels.Services;
 
 /// <summary>
 /// Defines an interface that provides methods to create a view from a view model.

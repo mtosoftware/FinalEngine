@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+namespace FinalEngine.Editor.ViewModels.Scenes;
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Services.Scenes;
+using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;
 

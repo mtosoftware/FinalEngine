@@ -2,12 +2,13 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
+namespace FinalEngine.Editor.ViewModels.Scenes;
 
 using System;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
 using Microsoft.Extensions.Logging;
 
 /// <summary>

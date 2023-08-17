@@ -1,27 +1,27 @@
-// <copyright file="EntitySystemsToolViewModelTests.cs" company="Software Antics">
+// <copyright file="ConsoleToolViewModelTests.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Scenes;
+namespace FinalEngine.Tests.Editor.ViewModels.Inspectors;
 
 using System;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+using FinalEngine.Editor.ViewModels.Inspectors;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
 [TestFixture]
-public sealed class EntitySystemsToolViewModelTests
+public sealed class ConsoleToolViewModelTests
 {
-    private Mock<ILogger<EntitySystemsToolViewModel>> logger;
+    private Mock<ILogger<ConsoleToolViewModel>> logger;
 
-    private EntitySystemsToolViewModel viewModel;
+    private ConsoleToolViewModel viewModel;
 
     [Test]
     public void ConstructorShouldSetContentIDToSceneViewWhenInvoked()
     {
         // Arrange
-        const string expected = "EntitySystems";
+        const string expected = "Console";
 
         // Act
         string actual = this.viewModel.ContentID;
@@ -34,7 +34,7 @@ public sealed class EntitySystemsToolViewModelTests
     public void ConstructorShouldSetTitleToSceneViewWhenInvoked()
     {
         // Arrange
-        const string expected = "Entity Systems";
+        const string expected = "Console";
 
         // Act
         string actual = this.viewModel.Title;
@@ -49,14 +49,14 @@ public sealed class EntitySystemsToolViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new EntitySystemsToolViewModel(null);
+            new ConsoleToolViewModel(null);
         });
     }
 
     [SetUp]
     public void Setup()
     {
-        this.logger = new Mock<ILogger<EntitySystemsToolViewModel>>();
-        this.viewModel = new EntitySystemsToolViewModel(this.logger.Object);
+        this.logger = new Mock<ILogger<ConsoleToolViewModel>>();
+        this.viewModel = new ConsoleToolViewModel(this.logger.Object);
     }
 }

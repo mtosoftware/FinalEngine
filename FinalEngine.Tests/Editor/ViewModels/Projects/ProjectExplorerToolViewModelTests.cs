@@ -1,27 +1,27 @@
-// <copyright file="ConsoleToolViewModelTests.cs" company="Software Antics">
+// <copyright file="ProjectExplorerToolViewModelTests.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Inspectors;
+namespace FinalEngine.Tests.Editor.ViewModels.Projects;
 
 using System;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
+using FinalEngine.Editor.ViewModels.Projects;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
 [TestFixture]
-public sealed class ConsoleToolViewModelTests
+public sealed class ProjectExplorerToolViewModelTests
 {
-    private Mock<ILogger<ConsoleToolViewModel>> logger;
+    private Mock<ILogger<ProjectExplorerToolViewModel>> logger;
 
-    private ConsoleToolViewModel viewModel;
+    private ProjectExplorerToolViewModel viewModel;
 
     [Test]
     public void ConstructorShouldSetContentIDToSceneViewWhenInvoked()
     {
         // Arrange
-        const string expected = "Console";
+        const string expected = "ProjectExplorer";
 
         // Act
         string actual = this.viewModel.ContentID;
@@ -34,7 +34,7 @@ public sealed class ConsoleToolViewModelTests
     public void ConstructorShouldSetTitleToSceneViewWhenInvoked()
     {
         // Arrange
-        const string expected = "Console";
+        const string expected = "Project Explorer";
 
         // Act
         string actual = this.viewModel.Title;
@@ -49,14 +49,14 @@ public sealed class ConsoleToolViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new ConsoleToolViewModel(null);
+            new ProjectExplorerToolViewModel(null);
         });
     }
 
     [SetUp]
     public void Setup()
     {
-        this.logger = new Mock<ILogger<ConsoleToolViewModel>>();
-        this.viewModel = new ConsoleToolViewModel(this.logger.Object);
+        this.logger = new Mock<ILogger<ProjectExplorerToolViewModel>>();
+        this.viewModel = new ProjectExplorerToolViewModel(this.logger.Object);
     }
 }

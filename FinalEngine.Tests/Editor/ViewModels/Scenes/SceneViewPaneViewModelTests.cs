@@ -2,11 +2,11 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Editor.ViewModels.Docking.Panes.Scenes;
+namespace FinalEngine.Tests.Editor.ViewModels.Scenes;
 
 using System;
 using FinalEngine.Editor.Common.Services.Scenes;
-using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
+using FinalEngine.Editor.ViewModels.Scenes;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;

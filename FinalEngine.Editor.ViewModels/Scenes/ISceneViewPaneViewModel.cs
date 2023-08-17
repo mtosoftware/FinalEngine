@@ -2,9 +2,10 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
+namespace FinalEngine.Editor.ViewModels.Scenes;
 
 using System.Windows.Input;
+using FinalEngine.Editor.ViewModels.Docking.Panes;
 
 /// <summary>
 /// Defines an interface that represents a model of the scene view pane.

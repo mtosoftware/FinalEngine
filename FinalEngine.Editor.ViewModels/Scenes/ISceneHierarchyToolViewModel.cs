@@ -2,11 +2,12 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+namespace FinalEngine.Editor.ViewModels.Scenes;
 
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.ECS;
+using FinalEngine.Editor.ViewModels.Docking.Tools;
 
 /// <summary>
 /// Defines an interface that represents a model of a scene hierarchy tool view.

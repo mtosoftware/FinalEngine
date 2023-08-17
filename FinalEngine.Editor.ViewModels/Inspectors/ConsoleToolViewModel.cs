@@ -2,9 +2,10 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
+namespace FinalEngine.Editor.ViewModels.Inspectors;
 
 using System;
+using FinalEngine.Editor.ViewModels.Docking.Tools;
 using Microsoft.Extensions.Logging;
 
 /// <summary>

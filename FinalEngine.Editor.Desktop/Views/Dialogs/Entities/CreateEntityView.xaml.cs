@@ -5,7 +5,7 @@
 namespace FinalEngine.Editor.Desktop.Views.Dialogs.Entities;
 
 using FinalEngine.Editor.ViewModels.Dialogs.Entities;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Interactions;
 using MahApps.Metro.Controls;
 
 /// <summary>
