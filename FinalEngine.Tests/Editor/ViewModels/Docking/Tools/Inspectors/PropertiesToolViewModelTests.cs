@@ -5,7 +5,12 @@
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Inspectors;
 
 using System;
+using CommunityToolkit.Mvvm.Messaging;
+using FinalEngine.ECS;
+using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
+using FinalEngine.Editor.ViewModels.Inspectors;
+using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -49,14 +54,56 @@ public sealed class PropertiesToolViewModelTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new PropertiesToolViewModel(null);
+            new PropertiesToolViewModel(null, WeakReferenceMessenger.Default);
         });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenMessengerIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new PropertiesToolViewModel(this.logger.Object, null);
+        });
+    }
+
+    [Test]
+    public void MessengerPubilshShouldSetCurrentViewToEntityInspectorViewModelWhenInvoked()
+    {
+        // Arrange
+        var entity = new Entity();
+        entity.AddComponent<TagComponent>();
+
+        // Act
+        WeakReferenceMessenger.Default.Send(new EntitySelectedMessage(entity));
+
+        // Assert
+        Assert.That(this.viewModel.CurrentViewModel, Is.TypeOf<EntityInspectorViewModel>());
+    }
+
+    [Test]
+    public void MessengerPubilshShouldSetTitleToEntityInspectorWhenInvoked()
+    {
+        // Arrange
+        var entity = new Entity();
+
+        entity.AddComponent(new TagComponent()
+        {
+            Tag = "Tag",
+        });
+
+        // Act
+        WeakReferenceMessenger.Default.Send(new EntitySelectedMessage(entity));
+
+        // Assert
+        Assert.That(this.viewModel.Title, Is.EqualTo("Entity Inspector - Tag"));
     }
 
     [SetUp]
     public void Setup()
     {
         this.logger = new Mock<ILogger<PropertiesToolViewModel>>();
-        this.viewModel = new PropertiesToolViewModel(this.logger.Object);
+        this.viewModel = new PropertiesToolViewModel(this.logger.Object, WeakReferenceMessenger.Default);
     }
 }

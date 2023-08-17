@@ -79,14 +79,9 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     /// </exception>
     private void HandleEntitySelected(object recipient, EntitySelectedMessage message)
     {
-        if (message == null)
-        {
-            throw new ArgumentNullException(nameof(message));
-        }
+        this.logger.LogInformation($"Changing properties view to: '{nameof(EntityInspectorViewModel)}'.");
 
         var entity = message.Entity;
-
-        this.logger.LogInformation($"Changing properties view to: '{nameof(EntityInspectorViewModel)}'.");
 
         this.Title = $"Entity Inspector - {entity.GetComponent<TagComponent>().Tag}";
         this.CurrentViewModel = new EntityInspectorViewModel();
