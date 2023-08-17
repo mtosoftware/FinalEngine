@@ -2,12 +2,12 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
+namespace FinalEngine.Editor.ViewModels.Inspectors;
 
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using FinalEngine.Editor.ViewModels.Inspectors;
+using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -73,7 +73,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     /// <param name="message">
     /// The message.
     /// </param>
-    /// <exception cref="System.ArgumentNullException">
+    /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="message"/> parameter cannot be null.
     /// </exception>
     private void HandleEntitySelected(object recipient, EntitySelectedMessage message)

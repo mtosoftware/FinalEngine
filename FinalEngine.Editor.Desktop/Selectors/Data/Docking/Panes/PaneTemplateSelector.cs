@@ -6,10 +6,9 @@ namespace FinalEngine.Editor.Desktop.Selectors.Data.Docking.Panes;
 
 using System.Windows;
 using System.Windows.Controls;
-using FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Scenes;
+using FinalEngine.Editor.ViewModels.Inspectors;
+using FinalEngine.Editor.ViewModels.Projects;
+using FinalEngine.Editor.ViewModels.Scenes;
 
 /// <summary>
 /// Provides a data template selectors for panes and tool views.

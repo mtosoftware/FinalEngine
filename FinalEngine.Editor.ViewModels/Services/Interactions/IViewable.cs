@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels.Interactions;
+namespace FinalEngine.Editor.ViewModels.Services.Interactions;
 
 /// <summary>
 /// Defines an interface that represents a relationship between a view and it's view model.

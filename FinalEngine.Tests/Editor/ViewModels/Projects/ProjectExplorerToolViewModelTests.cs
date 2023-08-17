@@ -5,7 +5,7 @@
 namespace FinalEngine.Tests.Editor.ViewModels.Docking.Tools.Projects;
 
 using System;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Projects;
+using FinalEngine.Editor.ViewModels.Projects;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;

@@ -8,7 +8,7 @@ using System;
 using FinalEngine.Editor.Common.Models.Scenes;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Dialogs.Entities;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Interactions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;

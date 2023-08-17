@@ -8,7 +8,6 @@ using System;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
-using FinalEngine.Editor.ViewModels.Docking.Tools.Inspectors;
 using FinalEngine.Editor.ViewModels.Inspectors;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;

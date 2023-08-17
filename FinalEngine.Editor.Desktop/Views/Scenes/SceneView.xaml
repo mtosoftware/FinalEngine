@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:eb="clr-namespace:EventBinder;assembly=EventBinder"
-             xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Docking.Panes.Scenes;assembly=FinalEngine.Editor.ViewModels"
+             xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Scenes;assembly=FinalEngine.Editor.ViewModels"
              xmlns:glwpf="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:SceneViewPaneViewModel}">

@@ -2,11 +2,11 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.ViewModels;
+namespace FinalEngine.Editor.ViewModels.Services;
 
 using System;
 using FinalEngine.Editor.Common.Services.Factories;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Interactions;
 using Microsoft.Extensions.Logging;
 
 /// <summary>

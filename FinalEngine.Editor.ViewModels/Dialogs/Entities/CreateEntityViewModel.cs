@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services.Interactions;
 using Microsoft.Extensions.Logging;
 
 /// <summary>

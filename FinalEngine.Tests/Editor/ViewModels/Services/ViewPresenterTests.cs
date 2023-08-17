@@ -2,13 +2,14 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Editor.ViewModels;
+namespace FinalEngine.Tests.Editor.ViewModels.Services;
 
 using System;
 using FinalEngine.Editor.Common.Services.Factories;
 using FinalEngine.Editor.ViewModels;
 using FinalEngine.Editor.ViewModels.Docking;
-using FinalEngine.Editor.ViewModels.Interactions;
+using FinalEngine.Editor.ViewModels.Services;
+using FinalEngine.Editor.ViewModels.Services.Interactions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
