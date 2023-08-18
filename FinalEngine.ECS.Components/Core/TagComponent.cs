@@ -11,10 +11,10 @@ namespace FinalEngine.ECS.Components.Core;
 public sealed class TagComponent : IEntityComponent
 {
     /// <summary>
-    /// Gets or sets another tag.
+    /// Gets or sets the tag.
     /// </summary>
     /// <value>
-    /// Another tag.
+    /// The tag.
     /// </value>
     public string? Tag { get; set; }
 }

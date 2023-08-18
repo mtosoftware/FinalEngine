@@ -16,7 +16,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 /// </typeparam>
 /// <seealso cref="ObservableObject" />
 /// <seealso cref="IPropertyViewModel{T}"/>
-public abstract class PropertyViewModel<T> : ObservableObject, IPropertyViewModel<T>
+public class PropertyViewModel<T> : ObservableObject, IPropertyViewModel<T>
 {
     /// <summary>
     /// The object that contains the property.
@@ -42,7 +42,7 @@ public abstract class PropertyViewModel<T> : ObservableObject, IPropertyViewMode
     /// <param name="property">
     /// The property.
     /// </param>
-    protected PropertyViewModel(object component, PropertyInfo property)
+    public PropertyViewModel(object component, PropertyInfo property)
     {
         if (property == null)
         {
