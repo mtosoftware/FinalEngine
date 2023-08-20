@@ -52,7 +52,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         this.Title = "Properties";
         this.ContentID = "Properties";
 
-        logger.LogInformation($"Initializing {this.Title}...");
+        this.logger.LogInformation($"Initializing {this.Title}...");
 
         this.messenger.Register<EntitySelectedMessage>(this, this.HandleEntitySelected);
     }

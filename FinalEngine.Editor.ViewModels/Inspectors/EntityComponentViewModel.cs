@@ -12,6 +12,7 @@ using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FinalEngine.ECS;
 using FinalEngine.Editor.ViewModels.Editing.DataTypes;
+using FinalEngine.Editor.ViewModels.Exceptions.Inspectors;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IEntityComponentViewModel"/>.
@@ -62,8 +63,7 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
                     break;
 
                 default:
-                    //// TODO: Log a warning message here.
-                    break;
+                    throw new PropertyTypeNotFoundException(this.Name);
             }
         }
     }
