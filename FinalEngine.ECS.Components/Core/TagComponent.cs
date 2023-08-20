@@ -7,8 +7,8 @@ namespace FinalEngine.ECS.Components.Core;
 /// <summary>
 /// Provides a component that represents a name or tag for an <see cref="Entity"/>.
 /// </summary>
-/// <seealso cref="IComponent" />
-public sealed class TagComponent : IComponent
+/// <seealso cref="IEntityComponent" />
+public sealed class TagComponent : IEntityComponent
 {
     /// <summary>
     /// Gets or sets the tag.
