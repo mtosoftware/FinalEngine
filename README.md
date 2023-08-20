@@ -14,7 +14,7 @@
     <a href="https://discord.gg/edCTVFVwnV">
         <img alt="Discord" src="https://img.shields.io/discord/1085050447410241556?style=flat&logo=discord&label=discord">
     </a>
-    <a href="">
+    <a href="https://github.com/softwareantics/FinalEngine/issues?q=is%3Aopen+is%3Aissue+label%3A%22%F0%9F%8F%81+Good+First+Issue%22">
         <img alt="GitHub issues" src="https://img.shields.io/github/issues/softwareantics/FinalEngine/🏁%20Good%20First%20Issue?color=7057ff&label=Good%20First%20Issues">
     </a>
 </p>
