@@ -5,13 +5,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:v="clr-namespace:FinalEngine.Editor.Desktop.Views.Inspectors"
              xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Inspectors;assembly=FinalEngine.Editor.ViewModels"
-             d:DataContext="{x:Type vm:EntityInspectorViewModel}"
+             d:DataContext="{d:DesignInstance Type=vm:EntityInspectorViewModel}"
              mc:Ignorable="d">
 
     <Grid>
         <ListBox ItemsSource="{Binding ComponentViewModels}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.CanContentScroll="False">
 
             <ListBox.Style>
                 <StaticResource ResourceKey="TransparentListBoxStyle" />

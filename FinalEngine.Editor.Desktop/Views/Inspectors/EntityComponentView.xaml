@@ -7,16 +7,17 @@
              xmlns:dtv="clr-namespace:FinalEngine.Editor.Desktop.Views.Editing.DataTypes"
              xmlns:dt="clr-namespace:FinalEngine.Editor.ViewModels.Editing.DataTypes;assembly=FinalEngine.Editor.ViewModels"
              xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Inspectors;assembly=FinalEngine.Editor.ViewModels"
-             d:DataContext="{x:Type vm:EntityComponentViewModel}"
+             d:DataContext="{d:DesignInstance Type=vm:EntityComponentViewModel}"
              mc:Ignorable="d">
     <Grid Margin="5">
         <StackPanel>
             <ToggleButton Content="{Binding Name}" Command="{Binding ToggleCommand}" />
 
-            <ListBox x:Name="ItemsListBox" ItemsSource="{Binding PropertyViewModels, UpdateSourceTrigger=PropertyChanged}"
+            <ListBox ItemsSource="{Binding PropertyViewModels, UpdateSourceTrigger=PropertyChanged}"
+                     Visibility="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     Visibility="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
+                     ScrollViewer.CanContentScroll="False">
 
                 <ListBox.Style>
                     <StaticResource ResourceKey="TransparentListBoxStyle" />
