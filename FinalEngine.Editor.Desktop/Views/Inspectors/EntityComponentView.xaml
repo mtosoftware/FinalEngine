@@ -8,7 +8,6 @@
              xmlns:dt="clr-namespace:FinalEngine.Editor.ViewModels.Editing.DataTypes;assembly=FinalEngine.Editor.ViewModels"
              xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Inspectors;assembly=FinalEngine.Editor.ViewModels"
              d:DataContext="{x:Type vm:EntityComponentViewModel}"
-             KeyboardNavigation.TabNavigation="Local"
              mc:Ignorable="d">
     <Grid Margin="5">
         <StackPanel>
