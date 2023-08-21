@@ -10,7 +10,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FinalEngine.ECS;
 using FinalEngine.Editor.ViewModels.Editing.DataTypes;
 using FinalEngine.Editor.ViewModels.Exceptions.Inspectors;
@@ -26,6 +28,16 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     /// The property view models associated with this component model.
     /// </summary>
     private readonly ObservableCollection<ObservableObject> propertyViewModels;
+
+    /// <summary>
+    /// Indicates whether the components properties are visible.
+    /// </summary>
+    private bool isVisible;
+
+    /// <summary>
+    /// The toggle command.
+    /// </summary>
+    private ICommand? toggleCommand;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EntityComponentViewModel"/> class.
@@ -46,12 +58,18 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
         this.propertyViewModels = new ObservableCollection<ObservableObject>();
 
         this.Name = component.GetType().Name;
+        this.IsVisible = true;
 
         foreach (var property in component.GetType().GetProperties().OrderBy(x =>
         {
             return x.Name;
         }))
         {
+            if (property.GetSetMethod() == null || property.GetGetMethod() == null)
+            {
+                continue;
+            }
+
             var type = property.PropertyType;
             var browsable = property.GetCustomAttribute<BrowsableAttribute>();
 
@@ -101,11 +119,32 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     }
 
     /// <inheritdoc/>
+    public bool IsVisible
+    {
+        get { return this.isVisible; }
+        private set { this.SetProperty(ref this.isVisible, value); }
+    }
+
+    /// <inheritdoc/>
     public string Name { get; }
 
     /// <inheritdoc/>
     public ICollection<ObservableObject> PropertyViewModels
     {
         get { return this.propertyViewModels; }
+    }
+
+    /// <inheritdoc/>
+    public ICommand ToggleCommand
+    {
+        get { return this.toggleCommand ??= new RelayCommand(this.Toggle); }
+    }
+
+    /// <summary>
+    /// Toggles the visibility of the components properties.
+    /// </summary>
+    private void Toggle()
+    {
+        this.IsVisible = !this.IsVisible;
     }
 }

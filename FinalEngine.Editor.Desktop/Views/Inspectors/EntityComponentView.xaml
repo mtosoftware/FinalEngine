@@ -11,13 +11,12 @@
              mc:Ignorable="d">
     <Grid Margin="5">
         <StackPanel>
-            <ToggleButton x:Name="CollapseExpandButton" Content="{Binding Name}"
-                          Click="CollapseExpandButton_Click" />
+            <ToggleButton Content="{Binding Name}" Command="{Binding ToggleCommand}" />
 
             <ListBox x:Name="ItemsListBox" ItemsSource="{Binding PropertyViewModels, UpdateSourceTrigger=PropertyChanged}"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     Visibility="Visible">
+                     Visibility="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                 <ListBox.Style>
                     <StaticResource ResourceKey="TransparentListBoxStyle" />
