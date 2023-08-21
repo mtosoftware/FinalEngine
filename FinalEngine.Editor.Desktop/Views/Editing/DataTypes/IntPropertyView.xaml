@@ -16,6 +16,6 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="{Binding Name, Mode=OneWay}" />
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" />
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>
