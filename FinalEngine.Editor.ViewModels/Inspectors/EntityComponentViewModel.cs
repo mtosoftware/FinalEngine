@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FinalEngine.ECS;
@@ -46,7 +47,10 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
 
         this.Name = component.GetType().Name;
 
-        foreach (var property in component.GetType().GetProperties())
+        foreach (var property in component.GetType().GetProperties().OrderBy(x =>
+        {
+            return x.Name;
+        }))
         {
             var type = property.PropertyType;
             var browsable = property.GetCustomAttribute<BrowsableAttribute>();
@@ -60,6 +64,14 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
             {
                 case "STRING":
                     this.propertyViewModels.Add(new StringPropertyViewModel(component, property));
+                    break;
+
+                case "BOOLEAN":
+                    this.propertyViewModels.Add(new BoolPropertyViewModel(component, property));
+                    break;
+
+                case "INT32":
+                    this.propertyViewModels.Add(new IntPropertyViewModel(component, property));
                     break;
 
                 default:

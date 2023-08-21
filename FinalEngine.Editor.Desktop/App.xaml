@@ -15,6 +15,9 @@
                 <ResourceDictionary Source="Styles/Controls/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Styles/Controls/ListBoxStyle.xaml" />
                 <ResourceDictionary Source="Styles/Controls/ListBoxItemStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/ToggleButtonStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/TransparentListBoxStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/TransparentListBoxItemStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

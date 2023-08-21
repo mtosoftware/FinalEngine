@@ -13,7 +13,6 @@
             <Trigger Property="Validation.HasError" Value="True">
                 <Trigger.Setters>
                     <Setter Property="BorderBrush" Value="DarkRed" />
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
                 </Trigger.Setters>
             </Trigger>
         </Style.Triggers>
