@@ -50,6 +50,8 @@ _Final Engine_ incorporates a straightforward and user-friendly _Resource Manage
 
 We're actively developing an editor application for creating games using _Final Engine_. This editor will grant users the ability to craft entities, components, systems, manage projects, scenes, and resources. Our goal is to offer a preview of the editor by 2024.
 
+![image](https://github.com/softwareantics/FinalEngine/assets/50978201/82814656-ce31-46b6-b05e-38134eae90e4)
+
 ## Getting Started
 
 Below are the prerequisites and instructions for building the engine.
