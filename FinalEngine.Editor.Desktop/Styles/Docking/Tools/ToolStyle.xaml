@@ -14,7 +14,5 @@
         <Setter Property="ContentId" Value="{Binding Model.ContentID}" />
         <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
         <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
     </Style>
 </ResourceDictionary>
