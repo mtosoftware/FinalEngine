@@ -31,14 +31,7 @@ public sealed class IntPropertyViewModel : PropertyViewModel<int>
     [Range(0, int.MaxValue, ErrorMessage = "You must enter a valid integer.")]
     public override int Value
     {
-        get
-        {
-            return base.Value;
-        }
-
-        set
-        {
-            base.Value = value;
-        }
+        get { return base.Value; }
+        set { base.Value = value; }
     }
 }

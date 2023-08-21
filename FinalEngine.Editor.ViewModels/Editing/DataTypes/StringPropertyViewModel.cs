@@ -25,11 +25,4 @@ public sealed class StringPropertyViewModel : PropertyViewModel<string>
         : base(component, property)
     {
     }
-
-    /// <inheritdoc/>
-    public override string? Value
-    {
-        get { return base.Value; }
-        set { base.Value = value; }
-    }
 }
