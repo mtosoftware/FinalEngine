@@ -47,6 +47,24 @@
                                 <dtv:IntPropertyView />
                             </DataTemplate>
                         </selectors:PropertyTemplateSelector.IntPropertyTemplate>
+
+                        <selectors:PropertyTemplateSelector.FloatPropertyTemplate>
+                            <DataTemplate DataType="{x:Type dt:FloatPropertyViewModel}">
+                                <dtv:FloatPropertyView />
+                            </DataTemplate>
+                        </selectors:PropertyTemplateSelector.FloatPropertyTemplate>
+
+                        <selectors:PropertyTemplateSelector.DoublePropertyTemplate>
+                            <DataTemplate DataType="{x:Type dt:DoublePropertyViewModel}">
+                                <dtv:DoublePropertyView />
+                            </DataTemplate>
+                        </selectors:PropertyTemplateSelector.DoublePropertyTemplate>
+
+                        <selectors:PropertyTemplateSelector.Vector2PropertyTemplate>
+                            <DataTemplate DataType="{x:Type dt:Vector2PropertyViewModel}">
+                                <dtv:Vector2PropertyView />
+                            </DataTemplate>
+                        </selectors:PropertyTemplateSelector.Vector2PropertyTemplate>
                     </selectors:PropertyTemplateSelector>
                 </ListBox.ItemTemplateSelector>
             </ListBox>

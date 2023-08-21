@@ -23,6 +23,22 @@ public sealed class PropertyTemplateSelector : DataTemplateSelector
     public DataTemplate? BoolPropertyTemplate { get; set; }
 
     /// <summary>
+    /// Gets or sets the double property template.
+    /// </summary>
+    /// <value>
+    /// The double property template.
+    /// </value>
+    public DataTemplate? DoublePropertyTemplate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the float property template.
+    /// </summary>
+    /// <value>
+    /// The float property template.
+    /// </value>
+    public DataTemplate? FloatPropertyTemplate { get; set; }
+
+    /// <summary>
     /// Gets or sets the int property template.
     /// </summary>
     /// <value>
@@ -37,6 +53,14 @@ public sealed class PropertyTemplateSelector : DataTemplateSelector
     /// The string property template.
     /// </value>
     public DataTemplate? StringPropertyTemplate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the vector2 property template.
+    /// </summary>
+    /// <value>
+    /// The vector2 property template.
+    /// </value>
+    public DataTemplate? Vector2PropertyTemplate { get; set; }
 
     /// <summary>
     /// Selects the data template.
@@ -57,6 +81,9 @@ public sealed class PropertyTemplateSelector : DataTemplateSelector
             StringPropertyViewModel => this.StringPropertyTemplate,
             BoolPropertyViewModel => this.BoolPropertyTemplate,
             IntPropertyViewModel => this.IntPropertyTemplate,
+            DoublePropertyViewModel => this.DoublePropertyTemplate,
+            FloatPropertyViewModel => this.FloatPropertyTemplate,
+            Vector2PropertyViewModel => this.Vector2PropertyTemplate,
             _ => base.SelectTemplate(item, container),
         };
     }

@@ -74,8 +74,20 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
                     this.propertyViewModels.Add(new IntPropertyViewModel(component, property));
                     break;
 
+                case "DOUBLE":
+                    this.propertyViewModels.Add(new DoublePropertyViewModel(component, property));
+                    break;
+
+                case "SINGLE":
+                    this.propertyViewModels.Add(new FloatPropertyViewModel(component, property));
+                    break;
+
+                case "VECTOR2":
+                    this.propertyViewModels.Add(new Vector2PropertyViewModel(component, property));
+                    break;
+
                 default:
-                    throw new PropertyTypeNotFoundException(this.Name);
+                    throw new PropertyTypeNotFoundException(type.Name);
             }
         }
     }

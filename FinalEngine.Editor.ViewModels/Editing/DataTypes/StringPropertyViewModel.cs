@@ -4,7 +4,6 @@
 
 namespace FinalEngine.Editor.ViewModels.Editing.DataTypes;
 
-using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 /// <summary>
@@ -28,7 +27,6 @@ public sealed class StringPropertyViewModel : PropertyViewModel<string>
     }
 
     /// <inheritdoc/>
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Lol you gotta do this.")]
     public override string? Value
     {
         get { return base.Value; }

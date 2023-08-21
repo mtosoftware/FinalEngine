@@ -79,6 +79,7 @@ public sealed class Scene : IScene
         });
 
         entity.AddComponent(new CharacterComponent());
+        entity.AddComponent(new TestingComponent());
 
         this.world.AddEntity(entity);
         this.entities.Add(entity);

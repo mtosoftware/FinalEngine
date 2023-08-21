@@ -28,7 +28,7 @@ public sealed class IntPropertyViewModel : PropertyViewModel<int>
     }
 
     /// <inheritdoc/>
-    [Range(0, int.MaxValue, ErrorMessage = "Please enter a valid integer.")]
+    [Range(0, int.MaxValue, ErrorMessage = "You must enter a valid integer.")]
     public override int Value
     {
         get
