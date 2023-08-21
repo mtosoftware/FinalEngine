@@ -23,6 +23,7 @@
 - [ ] **XAML Structure:**
    - [ ] Is the XAML well-structured with appropriate grouping of controls?
    - [ ] Are resources like styles, templates, and converters properly utilized?
+   - [ ] Is the `DataContext` design instance set (ie; `d:DataContext="{x:Type vm:MyViewModel}"`
 
 - [ ] **Data Binding:**
    - [ ] Are ViewModel properties correctly bound to the corresponding UI elements?
