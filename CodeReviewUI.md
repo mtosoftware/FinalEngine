@@ -3,6 +3,7 @@
    - [ ] Are the ViewModel classes separate from the View and Model classes?
    - [ ] Are the responsibilities of the ViewModel clear and focused?
    - [ ] Have you attempted to minimize usage of the weak reference messenger?
+   - [ ] Have you attempted to minimize the amount of code-beind in the views?
 
 - [ ] **Data Binding:**
    - [ ] Are proper INotifyPropertyChanged implementations used for properties that need to notify the UI of changes?
