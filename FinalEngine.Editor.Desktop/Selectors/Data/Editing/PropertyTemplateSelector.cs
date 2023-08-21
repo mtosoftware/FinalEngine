@@ -63,6 +63,22 @@ public sealed class PropertyTemplateSelector : DataTemplateSelector
     public DataTemplate? Vector2PropertyTemplate { get; set; }
 
     /// <summary>
+    /// Gets or sets the vector3 property template.
+    /// </summary>
+    /// <value>
+    /// The vector3 property template.
+    /// </value>
+    public DataTemplate? Vector3PropertyTemplate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the vector4 property template.
+    /// </summary>
+    /// <value>
+    /// The vector4 property template.
+    /// </value>
+    public DataTemplate? Vector4PropertyTemplate { get; set; }
+
+    /// <summary>
     /// Selects the data template.
     /// </summary>
     /// <param name="item">
@@ -84,6 +100,8 @@ public sealed class PropertyTemplateSelector : DataTemplateSelector
             DoublePropertyViewModel => this.DoublePropertyTemplate,
             FloatPropertyViewModel => this.FloatPropertyTemplate,
             Vector2PropertyViewModel => this.Vector2PropertyTemplate,
+            Vector3PropertyViewModel => this.Vector3PropertyTemplate,
+            Vector4PropertyViewModel => this.Vector4PropertyTemplate,
             _ => base.SelectTemplate(item, container),
         };
     }

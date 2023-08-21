@@ -14,5 +14,9 @@ public class TestingComponent : IEntityComponent
 
     public bool IsTesting { get; set; }
 
+    public Vector3 Vector3Test { get; set; }
+
+    public Vector4 Vector4Test { get; set; }
+
     public Vector2 VectorTest { get; set; }
 }

@@ -86,6 +86,14 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
                     this.propertyViewModels.Add(new Vector2PropertyViewModel(component, property));
                     break;
 
+                case "VECTOR3":
+                    this.propertyViewModels.Add(new Vector3PropertyViewModel(component, property));
+                    break;
+
+                case "VECTOR4":
+                    this.propertyViewModels.Add(new Vector4PropertyViewModel(component, property));
+                    break;
+
                 default:
                     throw new PropertyTypeNotFoundException(type.Name);
             }

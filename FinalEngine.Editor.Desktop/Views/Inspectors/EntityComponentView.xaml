@@ -65,6 +65,18 @@
                                 <dtv:Vector2PropertyView />
                             </DataTemplate>
                         </selectors:PropertyTemplateSelector.Vector2PropertyTemplate>
+
+                        <selectors:PropertyTemplateSelector.Vector3PropertyTemplate>
+                            <DataTemplate DataType="{x:Type dt:Vector3PropertyViewModel}">
+                                <dtv:Vector3PropertyView />
+                            </DataTemplate>
+                        </selectors:PropertyTemplateSelector.Vector3PropertyTemplate>
+
+                        <selectors:PropertyTemplateSelector.Vector4PropertyTemplate>
+                            <DataTemplate DataType="{x:Type dt:Vector4PropertyViewModel}">
+                                <dtv:Vector4PropertyView />
+                            </DataTemplate>
+                        </selectors:PropertyTemplateSelector.Vector4PropertyTemplate>
                     </selectors:PropertyTemplateSelector>
                 </ListBox.ItemTemplateSelector>
             </ListBox>
