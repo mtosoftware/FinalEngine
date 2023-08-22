@@ -76,6 +76,12 @@
                                 <dtv:Vector4PropertyView />
                             </DataTemplate>
                         </selectors:PropertyTemplateSelector.Vector4PropertyTemplate>
+
+                        <selectors:PropertyTemplateSelector.QuaternionPropertyTemplate>
+                            <DataTemplate DataType="{x:Type dt:QuaternionPropertyViewModel}">
+                                <dtv:QuaternionPropertyView />
+                            </DataTemplate>
+                        </selectors:PropertyTemplateSelector.QuaternionPropertyTemplate>
                     </selectors:PropertyTemplateSelector>
                 </ListBox.ItemTemplateSelector>
             </ListBox>
