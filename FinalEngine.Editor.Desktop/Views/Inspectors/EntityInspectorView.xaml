@@ -3,7 +3,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:v="clr-namespace:FinalEngine.Editor.Desktop.Views.Inspectors"
+             xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Inspectors;assembly=FinalEngine.Editor.ViewModels"
+             d:DataContext="{d:DesignInstance Type=vm:EntityInspectorViewModel}"
              mc:Ignorable="d">
+
     <Grid>
+        <ListBox ItemsSource="{Binding ComponentViewModels}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.CanContentScroll="False">
+
+            <ListBox.Style>
+                <StaticResource ResourceKey="TransparentListBoxStyle" />
+            </ListBox.Style>
+
+            <ListBox.ItemContainerStyle>
+                <StaticResource ResourceKey="TransparentListBoxItemStyle" />
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:EntityComponentViewModel}">
+                    <v:EntityComponentView />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

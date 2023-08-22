@@ -10,13 +10,13 @@ using System.Reflection;
 /// Provides an implementation of a <see cref="PropertyViewModel{T}"/> with a generic type of <c>string</c>.
 /// </summary>
 /// <seealso cref="PropertyViewModel{T}"/>
-public sealed class StringPropertyViewModel : PropertyViewModel<string?>
+public sealed class StringPropertyViewModel : PropertyViewModel<string>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="StringPropertyViewModel"/> class.
     /// </summary>
     /// <param name="component">
-    /// The component.
+    /// The object that contains the property.
     /// </param>
     /// <param name="property">
     /// The property.
