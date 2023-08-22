@@ -22,6 +22,20 @@ public sealed class PropertiesToolViewModelTests
     private PropertiesToolViewModel viewModel;
 
     [Test]
+    public void COnstructorShouldRegisterEntityDeletedMessageWhenInvoked()
+    {
+        // Assert
+        Assert.That(WeakReferenceMessenger.Default.IsRegistered<EntityDeletedMessage>(this.viewModel), Is.True);
+    }
+
+    [Test]
+    public void ConstructorShouldRegisterEntitySelectedMessageWhenInvoked()
+    {
+        // Assert
+        Assert.That(WeakReferenceMessenger.Default.IsRegistered<EntitySelectedMessage>(this.viewModel), Is.True);
+    }
+
+    [Test]
     public void ConstructorShouldSetContentIDToSceneViewWhenInvoked()
     {
         // Arrange
@@ -97,6 +111,26 @@ public sealed class PropertiesToolViewModelTests
 
         // Assert
         Assert.That(this.viewModel.Title, Is.EqualTo("Entity Inspector"));
+    }
+
+    [Test]
+    public void MessengerSendEntityDeletedMessageShouldResetCurrentViewModelWhenInvoked()
+    {
+        // Act
+        WeakReferenceMessenger.Default.Send(new EntityDeletedMessage());
+
+        // Assert
+        Assert.That(this.viewModel.CurrentViewModel, Is.Null);
+    }
+
+    [Test]
+    public void MessengerSendEntityDeletedMessageShouldResetTitleToPropertiesWhenInvoked()
+    {
+        // Act
+        WeakReferenceMessenger.Default.Send(new EntityDeletedMessage());
+
+        // Assert
+        Assert.That(this.viewModel.Title, Is.EqualTo("Properties"));
     }
 
     [SetUp]

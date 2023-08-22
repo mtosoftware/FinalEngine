@@ -55,6 +55,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         this.logger.LogInformation($"Initializing {this.Title}...");
 
         this.messenger.Register<EntitySelectedMessage>(this, this.HandleEntitySelected);
+        this.messenger.Register<EntityDeletedMessage>(this, this.HandleEntityDeleted);
     }
 
     /// <inheritdoc/>
@@ -62,6 +63,20 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     {
         get { return this.currentViewModel; }
         private set { this.SetProperty(ref this.currentViewModel, value); }
+    }
+
+    /// <summary>
+    /// Handles the <see cref="EntityDeletedMessage"/> and resets the view.
+    /// </summary>
+    /// <param name="recipient">
+    /// The recipient.
+    /// </param>
+    /// <param name="message">
+    /// The message.
+    /// </param>
+    private void HandleEntityDeleted(object recipient, EntityDeletedMessage message)
+    {
+        this.ResetCurrentViewModel();
     }
 
     /// <summary>
@@ -82,5 +97,16 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
 
         this.Title = "Entity Inspector";
         this.CurrentViewModel = new EntityInspectorViewModel(message.Entity);
+    }
+
+    /// <summary>
+    /// Resets the current view model.
+    /// </summary>
+    private void ResetCurrentViewModel()
+    {
+        this.logger.LogInformation($"Reseting the properties view to: `{nameof(PropertiesToolViewModel)}`.");
+
+        this.Title = "Properties";
+        this.CurrentViewModel = null;
     }
 }
