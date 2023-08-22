@@ -4,12 +4,10 @@
 
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTitle("FinalEngine.ECS.Systems")]
 [assembly: AssemblyDescription("A library containing entity system for Final Engine games.")]
-[assembly: Guid("5CBABE50-F541-4FED-A313-7C5D7A4A79C2")]
-[assembly: InternalsVisibleTo("FinalEngine.Tests")]
+[assembly: Guid("B1D520B9-1EB4-49B2-9E58-1D32105F0B5C")]
