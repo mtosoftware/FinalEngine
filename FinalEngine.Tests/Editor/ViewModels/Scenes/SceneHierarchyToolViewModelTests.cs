@@ -6,11 +6,14 @@ namespace FinalEngine.Tests.Editor.ViewModels.Scenes;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Models.Scenes;
 using FinalEngine.Editor.Common.Services.Scenes;
+using FinalEngine.Editor.ViewModels.Messages.Entities;
 using FinalEngine.Editor.ViewModels.Scenes;
+using FinalEngine.Tests.Editor.ViewModels.Messages;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -110,6 +113,19 @@ public sealed class SceneHierarchyToolViewModelTests
     }
 
     [Test]
+    public void DeleteEntityCommandShouldInvokeMessengerSendEntityDeletedMessageWhenInvoked()
+    {
+        // Arrange
+        this.viewModel.SelectedEntity = this.entities.First();
+
+        // Act
+        this.viewModel.DeleteEntityCommand.Execute(null);
+
+        // Assert
+        this.messenger.Verify(x => x.Send(It.IsAny<EntityDeletedMessage>(), It.IsAny<IsAnyToken>()), Times.Once);
+    }
+
+    [Test]
     public void DeleteEntityCommandShouldInvokeSceneRemoveEntityWhenSelectedEntityIsNotNull()
     {
         // Arrange
@@ -140,6 +156,19 @@ public sealed class SceneHierarchyToolViewModelTests
 
         // Assert
         Assert.That(actual, Is.SameAs(this.entities));
+    }
+
+    [Test]
+    public void SelectedEntityShouldInvokeMessengerSendEntitySelectedMessageWhenEntityChanged()
+    {
+        // Arrange
+        var entity = new Entity();
+
+        // Act
+        this.viewModel.SelectedEntity = entity;
+
+        // Assert
+        this.messenger.Verify(x => x.Send(It.IsAny<EntitySelectedMessage>(), It.IsAny<IsAnyToken>()), Times.Once);
     }
 
     [Test]
