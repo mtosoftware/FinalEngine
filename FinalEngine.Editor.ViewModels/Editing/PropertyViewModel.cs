@@ -16,7 +16,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 /// </typeparam>
 /// <seealso cref="ObservableObject" />
 /// <seealso cref="IPropertyViewModel{T}"/>
-public class PropertyViewModel<T> : ObservableObject, IPropertyViewModel<T>
+public class PropertyViewModel<T> : ObservableValidator, IPropertyViewModel<T>
 {
     /// <summary>
     /// The object that contains the property.
@@ -69,7 +69,7 @@ public class PropertyViewModel<T> : ObservableObject, IPropertyViewModel<T>
     public string Name { get; }
 
     /// <inheritdoc/>
-    public T? Value
+    public virtual T? Value
     {
         get
         {
@@ -81,6 +81,7 @@ public class PropertyViewModel<T> : ObservableObject, IPropertyViewModel<T>
             this.OnPropertyChanging(nameof(this.Value));
             this.setValue(value);
             this.OnPropertyChanged(nameof(this.Value));
+            this.ValidateProperty(this.Value, nameof(this.Value));
         }
     }
 }

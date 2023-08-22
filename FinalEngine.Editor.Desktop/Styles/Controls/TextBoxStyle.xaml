@@ -6,14 +6,13 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MahApps.Styles.TextBox.VisualStudio}">
         <Setter Property="Margin" Value="5" />
         <Setter Property="MinHeight" Value="25" />
-        <Setter Property="MinWidth" Value="250" />
+        <Setter Property="MinWidth" Value="200" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="BorderBrush" Value="{StaticResource MahApps.Brushes.TextBox.Border}" />
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="True">
                 <Trigger.Setters>
                     <Setter Property="BorderBrush" Value="DarkRed" />
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
                 </Trigger.Setters>
             </Trigger>
         </Style.Triggers>

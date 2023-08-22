@@ -49,12 +49,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Layouts\default.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <SplashScreen Include="Resources\Images\Splashes\splash.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <SplashScreen Include="Resources\Images\Splashes\splash.png" />
+    <None Update="Resources\Layouts\default.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
