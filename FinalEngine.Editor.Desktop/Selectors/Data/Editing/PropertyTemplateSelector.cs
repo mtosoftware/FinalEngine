@@ -47,6 +47,14 @@ public sealed class PropertyTemplateSelector : DataTemplateSelector
     public DataTemplate? IntPropertyTemplate { get; set; }
 
     /// <summary>
+    /// Gets or sets the quaternion property template.
+    /// </summary>
+    /// <value>
+    /// The quaternion property template.
+    /// </value>
+    public DataTemplate? QuaternionPropertyTemplate { get; set; }
+
+    /// <summary>
     /// Gets or sets the string property template.
     /// </summary>
     /// <value>
@@ -102,6 +110,7 @@ public sealed class PropertyTemplateSelector : DataTemplateSelector
             Vector2PropertyViewModel => this.Vector2PropertyTemplate,
             Vector3PropertyViewModel => this.Vector3PropertyTemplate,
             Vector4PropertyViewModel => this.Vector4PropertyTemplate,
+            QuaternionPropertyViewModel => this.QuaternionPropertyTemplate,
             _ => base.SelectTemplate(item, container),
         };
     }

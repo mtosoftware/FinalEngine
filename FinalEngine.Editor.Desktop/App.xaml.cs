@@ -112,6 +112,8 @@ public partial class App : Application
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
         services.AddTransient<IEntityWorld, EntityWorld>();
+
+        services.AddSingleton<IRenderPipeline, OpenGLRenderPipeline>();
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
 
         services.AddSingleton<IFileSystem, FileSystem>();

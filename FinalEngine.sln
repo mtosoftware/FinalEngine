@@ -64,6 +64,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.ViewMode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.Desktop", "FinalEngine.Editor.Desktop\FinalEngine.Editor.Desktop.csproj", "{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.ECS.Systems", "FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj", "{5D804836-3BEF-45DA-8640-F98F156F55A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -142,6 +144,10 @@ Global
 		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Debug|x64.Build.0 = Debug|x64
 		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Release|x64.ActiveCfg = Release|x64
 		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC}.Release|x64.Build.0 = Release|x64
+		{5D804836-3BEF-45DA-8640-F98F156F55A9}.Debug|x64.ActiveCfg = Debug|x64
+		{5D804836-3BEF-45DA-8640-F98F156F55A9}.Debug|x64.Build.0 = Debug|x64
+		{5D804836-3BEF-45DA-8640-F98F156F55A9}.Release|x64.ActiveCfg = Release|Any CPU
+		{5D804836-3BEF-45DA-8640-F98F156F55A9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +171,7 @@ Global
 		{AF7D33F8-7581-4B2C-83A1-B78370C0C094} = {A000B9CF-02DF-4BC6-9F88-36D723041F73}
 		{F3F731DE-A676-40E5-9308-4FBA387483E8} = {A000B9CF-02DF-4BC6-9F88-36D723041F73}
 		{4CFA5490-082F-46F5-9CBB-3A3318FCE5FC} = {A000B9CF-02DF-4BC6-9F88-36D723041F73}
+		{5D804836-3BEF-45DA-8640-F98F156F55A9} = {015D5E9E-7510-446B-90A8-895B7FD6DFA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}

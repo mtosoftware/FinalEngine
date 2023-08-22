@@ -20,13 +20,26 @@ public sealed class SceneRenderer : ISceneRenderer
     private readonly IRenderDevice renderDevice;
 
     /// <summary>
+    /// The render pipeline.
+    /// </summary>
+    private readonly IRenderPipeline renderPipeline;
+
+    /// <summary>
     /// The scene manager, used to retrieve and render the currently active scene.
     /// </summary>
     private readonly ISceneManager sceneManager;
 
     /// <summary>
+    /// Indicates whether the renderer is initialized.
+    /// </summary>
+    private bool isInitialized;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="SceneRenderer"/> class.
     /// </summary>
+    /// <param name="renderPipeline">
+    /// The render pipeline, used to initialize the GPU for rendering tasks.
+    /// </param>
     /// <param name="renderDevice">
     /// The render device.
     /// </param>
@@ -36,8 +49,9 @@ public sealed class SceneRenderer : ISceneRenderer
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="renderDevice"/> parameter cannot be null.
     /// </exception>
-    public SceneRenderer(IRenderDevice renderDevice, ISceneManager sceneManager)
+    public SceneRenderer(IRenderPipeline renderPipeline, IRenderDevice renderDevice, ISceneManager sceneManager)
     {
+        this.renderPipeline = renderPipeline ?? throw new ArgumentNullException(nameof(renderPipeline));
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
     }
@@ -45,7 +59,24 @@ public sealed class SceneRenderer : ISceneRenderer
     /// <inheritdoc/>
     public void Render()
     {
+        this.Initialize();
+
         this.renderDevice.Clear(Color.FromArgb(255, 30, 30, 30));
         this.sceneManager.ActiveScene.Render();
+    }
+
+    /// <summary>
+    /// Initializes the renderer.
+    /// </summary>
+    private void Initialize()
+    {
+        if (this.isInitialized)
+        {
+            return;
+        }
+
+        this.renderPipeline.Initialize();
+
+        this.isInitialized = true;
     }
 }

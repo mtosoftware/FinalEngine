@@ -78,6 +78,8 @@ public sealed class Scene : IScene
             Tag = tag,
         });
 
+        entity.AddComponent(new TransformComponent());
+
         this.world.AddEntity(entity);
         this.entities.Add(entity);
 
