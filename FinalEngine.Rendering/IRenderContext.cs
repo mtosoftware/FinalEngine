@@ -4,13 +4,12 @@
 
 namespace FinalEngine.Rendering;
 
-using System;
 using FinalEngine.Rendering.Exceptions;
 
 /// <summary>
 ///   Defines an interface that represents a rendering context.
 /// </summary>
-public interface IRenderContext : IDisposable
+public interface IRenderContext
 {
     /// <summary>
     ///   Swaps the front and back buffers, displaying the rendered scene to the user.
