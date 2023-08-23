@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html ><html lang="en-US"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="shortcut icon" href="../icons/favicon.ico" /><link rel="stylesheet" href="../css/bulma.css" /><link rel="stylesheet" href="../css/font-awesome.min.css" /><link rel="stylesheet" href="../css/presentationStyle.css" /><link rel="stylesheet" href="../css/vs.min.css" /><script src="../scripts/jquery-3.5.1.min.js"></script><script src="../scripts/clipboard.min.js"></script><script src="../scripts/highlight.min.js"></script><script src="../scripts/presentationStyle.js"></script><title>ISound.Pause Method</title><meta name="Title" content="Pause" /><meta name="Help.Id" content="M:FinalEngine.Audio.ISound.Pause" /><meta name="Help.ContentType" content="Reference" /><meta name="container" content="FinalEngine.Audio" /><meta name="guid" content="7d7398ab-9794-7b1c-b824-22ebf11aea3c" /><meta name="Description" content="Pauses playback of this ." /><meta name="tocFile" content="../toc/IDBAAC.xml" /></head><body><div class="fixedLayout"><div id="Header" class="fixedHeader"><div class="pageHeader level mb-0 py-2 px-4"><div id="TitleContainer" class="level-left"><div class="level-item"><img src="../icons/Help.png" /></div><div id="DocumentationTitle" class="level-item">Final Engine Documentation</div></div><div id="LangFilterSearchContainer" class="level-right"><div class="level-item"><div class="dropdown is-hoverable"><div class="dropdown-trigger"><button class="button" aria-haspopup="true" aria-controls="dropdown-menu"><span id="CurrentLanguage"></span><span class="icon is-small"><i class="fa fa-angle-down" aria-hidden="true"></i></span></button></div><div class="dropdown-menu" role="menu"><div id="LanguageSelections" class="dropdown-content"><a class="dropdown-item languageFilterItem" data-languageId="cs">C#</a><a class="dropdown-item languageFilterItem" data-languageId="vb">VB</a></div></div></div></div><div class="level-item"><form id="SearchForm" action="#" onsubmit="TransferToSearchPage(); return false;"><div class="field"><div class="control has-icons-left"><input id="SearchTerms" class="input" type="text" maxlength="200" placeholder="Search" /><span class="icon is-small is-left"><i class="fa fa-search"></i></span><button id="SearchButton" type="submit" class="is-hidden"></button></div></div></form></div></div></div></div><div class="fixedContent"><nav class="breadcrumb my-1 px-2 border-bottom" role="navigation"><ul id="TopicBreadcrumbs" /></nav><div id="ContentContainer" class="columns pl-5 pr-5 fixedContent"><div id="ShowHideTOCColumn" class="column is-hidden-tablet"><a id="ShowHideTOC">Show/Hide TOC</a></div><div id="TOCColumn" class="column is-hidden-mobile"><nav class="toc"><ul id="TableOfContents" class="toc-menu" /></nav></div><div id="Resizer" class="is-hidden"></div><div id="TopicContent" class="column content is-7"><h1>ISound<span id="LSTFF93699E_0" data-languageSpecificText="cpp=::|nu=."></span>Pause Method</h1><div class="summary">
+             Pauses playback of this <a href="f2f928da-2303-46ae-8d39-062ac69ac41b.htm">ISound</a>.
+             </div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="224ba724-8005-ca24-9d3d-6d630f4de982.htm">FinalEngine.Audio</a><br /><strong>Assembly:</strong> FinalEngine.Audio (in FinalEngine.Audio.dll) Version: 2023.3.4069.0 (2023.3.4066.0)<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">void</span> <span class="identifier">Pause</span>()</code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="vb"><div class="codeHeader"><span class="codeHeaderTitle">VB</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-vb"><span class="keyword">Sub</span> <span class="identifier">Pause</span></code></pre></div></div></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Remarks</h2><div id="IDBCSection">
+             When the <span class="selflink">Pause<span id="LSTFF93699E_1" data-languageSpecificText="cs=()|vb=|cpp=()|nu=()|fs=()"></span></span> method is implemented, it should halt audio playback while retaining the current position. Resuming playback through <a href="e81fa959-8f48-abe9-e64d-f558dbf92d0c.htm">Play<span id="LSTFF93699E_2" data-languageSpecificText="cs=()|vb=|cpp=()|nu=()|fs=()"></span></a> should continue from where the sound was paused.
+             </div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Example</h2><div id="IDCCSection">
+             Below you'll find an example showing how to <span class="selflink">Pause<span id="LSTFF93699E_3" data-languageSpecificText="cs=()|vb=|cpp=()|nu=()|fs=()"></span></span> an <a href="f2f928da-2303-46ae-8d39-062ac69ac41b.htm">ISound</a> instance. This example assumes that the following criteria has been met:
+            
+             <ul><li>
+                     The user intends to use the singleton implementation of <span class="noLink">IResourceManager</span> (see <span class="noLink">Instance</span>).
+                 </li><li>
+                     A <span class="noLink">ResourceLoaderBase</span> has been implemented for the <a href="f2f928da-2303-46ae-8d39-062ac69ac41b.htm">ISound</a> resource type and registered to the <span class="noLink">Instance</span>.
+                 </li></ul><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs">// Load the resource via the resource manager.
+// This is how you should typically instantiate implementations that implement IResource.
+ISound sound = ResourceManager.Instance.LoadResource&lt;ISound&gt;("sound.mp3");
+
+// Play the sound.
+sound.Play();
+
+var watch = new Stopwatch();
+watch.Start();
+
+// Wait 10 seconds, then pause the sound.
+while (watch.ElapsedMilliseconds &lt; 10000)
+{
+    continue;
+}
+
+sound.Pause();
+
+// Wait another 5 seconds, then resume playback.
+while (watch.ElapsedMilliseconds &lt; 15000)
+{
+    continue;
+}
+
+sound.Play();</code></pre></div></div></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>See Also</h2><div id="seeAlsoSection"><h4>Reference</h4><div><a href="f2f928da-2303-46ae-8d39-062ac69ac41b.htm">ISound Interface</a></div><div><a href="224ba724-8005-ca24-9d3d-6d630f4de982.htm">FinalEngine.Audio Namespace</a></div></div></div><div id="InThisArticleColumn" class="column is-hidden-mobile"><nav class="menu sticky is-hidden"><p class="menu-label"><strong>In This Article</strong></p><ul id="InThisArticleMenu" class="menu-list"><li><a class="quickLink">Definition</a></li><li><a class="quickLink">Remarks</a></li><li><a class="quickLink">Example</a></li><li><a class="quickLink">See Also</a></li></ul></nav></div></div></div><footer id="PageFooter" class="footer border-top py-3 fixedFooter"><div class="columns"><div class="column"><p>© Software Antics 2024</p> 
+				</div><div class="column"> 
+				</div></div></footer></div><script>$(function(){
+SetDefaultLanguage("cs");
+LoadTocFile(null, null);
+InitializeQuickLinks();
+
+$(".toggleSection" ).click(function () {
+    SectionExpandCollapse(this);
+});
+
+$(".toggleSection").keypress(function () {
+    SectionExpandCollapseCheckKey(this, event)
+});
+hljs.highlightAll();
+});</script></body></html>
