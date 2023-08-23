@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>FinalEngine.Audio</name>
+  </assembly>
+  <members>
+    <member name="T:FinalEngine.Audio.ISound">
+      <summary>
+             Represents an interface that defines a sound or audio source.
+             </summary>
+      <remarks>
+             The <see cref="T:FinalEngine.Audio.ISound" /> interface expands upon the capabilities of <see cref="T:FinalEngine.Resources.IResource" />, empowering developers with enhanced control over sound instantiation through <see cref="T:FinalEngine.Resources.IResourceManager" /> instances.
+             </remarks>
+      <example>
+             Below you'll find an example showing how to typically instantiate an instance of <see cref="T:FinalEngine.Audio.ISound" />. This example assumes that the following criteria has been met:
+            
+             <list type="bullet"><item>
+                     The user intends to use the singleton implementation of <see cref="T:FinalEngine.Resources.IResourceManager" /> (see <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />).
+                 </item><item>
+                     A <see cref="T:FinalEngine.Resources.ResourceLoaderBase`1" /> has been implemented for the <see cref="T:FinalEngine.Audio.ISound" /> resource type and registered to the <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />.
+                 </item></list><code>
+             // Load the resource via the resource manager.
+             // This is how you should typically instantiate implementations that implement IResource.
+             ISound sound = ResourceManager.Instance.LoadResource&lt;ISound&gt;("sound.mp3");
+            
+             // Now, we can adjust the volume (range is between 0-100).
+             sound.Volume = 80.0f;
+            
+             // We can also set whether the audio should loop (false, by default).
+             sound.IsLooping = true;
+            
+             // Finally, let's play the sound.
+             sound.Play();
+             </code></example>
+      <seealso cref="T:FinalEngine.Resources.IResource" />
+    </member>
+    <member name="P:FinalEngine.Audio.ISound.IsLooping">
+      <summary>
+             Gets or sets a value indicating whether this <see cref="T:FinalEngine.Audio.ISound" /> is set to loop.
+             </summary>
+      <value>
+        <c>true</c> if this <see cref="T:FinalEngine.Audio.ISound" /> is set to loop; otherwise, <c>false</c>.
+             </value>
+      <remarks>
+             The <see cref="P:FinalEngine.Audio.ISound.IsLooping" /> property determines whether the implementation should restart playback from the beginning once it reaches the end.
+             </remarks>
+      <example>
+             Below you'll find an example showing how to instantiate and loop an <see cref="T:FinalEngine.Audio.ISound" /> instance. This example assumes that the following criteria has been met:
+            
+             <list type="bullet"><item>
+                     The user intends to use the singleton implementation of <see cref="T:FinalEngine.Resources.IResourceManager" /> (see <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />).
+                 </item><item>
+                     A <see cref="T:FinalEngine.Resources.ResourceLoaderBase`1" /> has been implemented for the <see cref="T:FinalEngine.Audio.ISound" /> resource type and registered to the <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />.
+                 </item></list><code>
+             // Load the resource via the resource manager.
+             // This is how you should typically instantiate implementations that implement IResource.
+             ISound sound = ResourceManager.Instance.LoadResource&lt;ISound&gt;("sound.mp3");
+            
+             // Modify the property to ensure that the sound will loop.
+             sound.IsLooping = true;
+            
+             // Play the sound
+             sound.Play();
+             </code></example>
+    </member>
+    <member name="P:FinalEngine.Audio.ISound.Volume">
+      <summary>
+             Gets or sets a <see cref="T:System.Single" /> value representing the volume of this <see cref="T:FinalEngine.Audio.ISound" />.
+             </summary>
+      <value>
+             A <see cref="T:System.Single" /> value representing the volume of this <see cref="T:FinalEngine.Audio.ISound" />.
+             </value>
+      <remarks>
+             The <see cref="P:FinalEngine.Audio.ISound.Volume" /> property's implementation should handle values within the range of 0 to 100. Values outside this range should be adjusted to fit within it.
+             </remarks>
+      <example>
+             Below you'll find an example showing how to adjust the <see cref="P:FinalEngine.Audio.ISound.Volume" /> of an <see cref="T:FinalEngine.Audio.ISound" /> instance. This example assumes that the following criteria has been met:
+            
+             <list type="bullet"><item>
+                     The user intends to use the singleton implementation of <see cref="T:FinalEngine.Resources.IResourceManager" /> (see <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />).
+                 </item><item>
+                     A <see cref="T:FinalEngine.Resources.ResourceLoaderBase`1" /> has been implemented for the <see cref="T:FinalEngine.Audio.ISound" /> resource type and registered to the <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />.
+                 </item></list><code>
+             // Load the resource via the resource manager.
+             // This is how you should typically instantiate implementations that implement IResource.
+             ISound sound = ResourceManager.Instance.LoadResource&lt;ISound&gt;("sound.mp3");
+            
+             // Adjust the volume to be 50%.
+             sound.Volume = 50.0f;
+            
+             // Play the sound.
+             sound.Play();
+             </code></example>
+    </member>
+    <member name="M:FinalEngine.Audio.ISound.Pause">
+      <summary>
+             Pauses playback of this <see cref="T:FinalEngine.Audio.ISound" />.
+             </summary>
+      <remarks>
+             When the <see cref="M:FinalEngine.Audio.ISound.Pause" /> method is implemented, it should halt audio playback while retaining the current position. Resuming playback through <see cref="M:FinalEngine.Audio.ISound.Play" /> should continue from where the sound was paused.
+             </remarks>
+      <example>
+             Below you'll find an example showing how to <see cref="M:FinalEngine.Audio.ISound.Pause" /> an <see cref="T:FinalEngine.Audio.ISound" /> instance. This example assumes that the following criteria has been met:
+            
+             <list type="bullet"><item>
+                     The user intends to use the singleton implementation of <see cref="T:FinalEngine.Resources.IResourceManager" /> (see <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />).
+                 </item><item>
+                     A <see cref="T:FinalEngine.Resources.ResourceLoaderBase`1" /> has been implemented for the <see cref="T:FinalEngine.Audio.ISound" /> resource type and registered to the <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />.
+                 </item></list><code>
+             // Load the resource via the resource manager.
+             // This is how you should typically instantiate implementations that implement IResource.
+             ISound sound = ResourceManager.Instance.LoadResource&lt;ISound&gt;("sound.mp3");
+            
+             // Play the sound.
+             sound.Play();
+            
+             var watch = new Stopwatch();
+             watch.Start();
+            
+             // Wait 10 seconds, then pause the sound.
+             while (watch.ElapsedMilliseconds &lt; 10000)
+             {
+                 continue;
+             }
+            
+             sound.Pause();
+            
+             // Wait another 5 seconds, then resume playback.
+             while (watch.ElapsedMilliseconds &lt; 15000)
+             {
+                 continue;
+             }
+            
+             sound.Play();
+             </code></example>
+    </member>
+    <member name="M:FinalEngine.Audio.ISound.Play">
+      <summary>
+             Starts or resumes playback of this <see cref="T:FinalEngine.Audio.ISound" />.
+             </summary>
+      <remarks>
+             The <see cref="M:FinalEngine.Audio.ISound.Play" /> method's implementation should initiate or resume audio playback from its current position. If the sound was previously paused using the <see cref="M:FinalEngine.Audio.ISound.Pause" /> method, invoking <see cref="M:FinalEngine.Audio.ISound.Play" /> should continue playback from where it was paused.
+             </remarks>
+      <example>
+             Below you'll find an example showing how to <see cref="M:FinalEngine.Audio.ISound.Play" /> an <see cref="T:FinalEngine.Audio.ISound" /> instance. This example assumes that the following criteria has been met:
+            
+             <list type="bullet"><item>
+                     The user intends to use the singleton implementation of <see cref="T:FinalEngine.Resources.IResourceManager" /> (see <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />).
+                 </item><item>
+                     A <see cref="T:FinalEngine.Resources.ResourceLoaderBase`1" /> has been implemented for the <see cref="T:FinalEngine.Audio.ISound" /> resource type and registered to the <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />.
+                 </item></list><code>
+             // Load the resource via the resource manager.
+             // This is how you should typically instantiate implementations that implement IResource.
+             ISound sound = ResourceManager.Instance.LoadResource&lt;ISound&gt;("sound.mp3");
+            
+             // Play the sound.
+             sound.Play();
+             </code></example>
+    </member>
+    <member name="M:FinalEngine.Audio.ISound.Stop">
+      <summary>
+             Stops playback of this <see cref="T:FinalEngine.Audio.ISound" /> and resets its position to the beginning.
+             </summary>
+      <remarks>
+             The <see cref="M:FinalEngine.Audio.ISound.Stop" /> method's implementation should halt audio playback and reset its position to the beginning. Subsequent calls to the <see cref="M:FinalEngine.Audio.ISound.Play" /> method should cause the sound to begin playing from the start.
+             </remarks>
+      <example>
+             Below you'll find an example showing how to <see cref="M:FinalEngine.Audio.ISound.Stop" /> an <see cref="T:FinalEngine.Audio.ISound" /> instance. This example assumes that the following criteria has been met:
+            
+             <list type="bullet"><item>
+                     The user intends to use the singleton implementation of <see cref="T:FinalEngine.Resources.IResourceManager" /> (see <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />).
+                 </item><item>
+                     A <see cref="T:FinalEngine.Resources.ResourceLoaderBase`1" /> has been implemented for the <see cref="T:FinalEngine.Audio.ISound" /> resource type and registered to the <see cref="P:FinalEngine.Resources.ResourceManager.Instance" />.
+                 </item></list><code>
+             // Load the resource via the resource manager.
+             // This is how you should typically instantiate implementations that implement IResource.
+             ISound sound = ResourceManager.Instance.LoadResource&lt;ISound&gt;("sound.mp3");
+            
+             // Play the sound.
+             sound.Play();
+            
+             var watch = new Stopwatch();
+             watch.Start();
+            
+             // Wait 10 seconds, then stop the sound.
+             while (watch.ElapsedMilliseconds &lt; 10000)
+             {
+                 continue;
+             }
+            
+             sound.Stop();
+             </code></example>
+    </member>
+    <member name="N:FinalEngine.Audio">
+      <summary>Serves as a foundational framework for creating audio-related functionality within the engine. It defines a set of interfaces that developers can utilize to manage and manipulate audio resources and playback. These interfaces offer a standardized way to interact with audio elements, providing methods and properties to control playback, adjust volume, manage looping, and more.</summary>
+    </member>
+  </members>
+</doc>
