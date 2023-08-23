@@ -120,7 +120,7 @@ public sealed class OpenALSoundTests
     public void StartShouldInvokeCASLSoundPauseWhenInvoked()
     {
         // Act
-        this.sound.Start();
+        this.sound.Play();
 
         // Assert
         this.caslSound.Verify(x => x.Play(), Times.Once);
@@ -133,7 +133,7 @@ public sealed class OpenALSoundTests
         this.sound.Dispose();
 
         // Act and assert
-        Assert.Throws<ObjectDisposedException>(this.sound.Start);
+        Assert.Throws<ObjectDisposedException>(this.sound.Play);
     }
 
     [Test]

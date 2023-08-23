@@ -149,7 +149,7 @@ public class OpenALSound : ISound, IDisposable
     /// <exception cref="ObjectDisposedException">
     /// The underlying native sound is disposed.
     /// </exception>
-    public void Start()
+    public void Play()
     {
         if (this.IsDisposed)
         {
