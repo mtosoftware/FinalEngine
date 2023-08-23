@@ -1,5 +1,5 @@
 // <copyright file="MathHelper.cs" company="Software Antics">
-//     Copyright (c) Software Antics. All rights reserved.
+// Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Maths;
@@ -7,35 +7,63 @@ namespace FinalEngine.Maths;
 using System;
 
 /// <summary>
-/// Provides helpful math functions.
+/// Provides utility methods for mathematical operations and conversions.
 /// </summary>
 public static class MathHelper
 {
     /// <summary>
-    /// Converts the specified <paramref name="angle"/> (in degrees) to radians.
+    /// Converts an angle in degrees to radians.
     /// </summary>
+    ///
     /// <param name="angle">
-    /// The angle (in degrees) to convert to radians.
+    /// A <see cref="float"/> that represents the angle in degrees to be converted to radians.
     /// </param>
+    ///
     /// <returns>
-    /// The specified <paramref name="angle"/>, converted to radians.
+    /// The equivalent angle in radians.
     /// </returns>
+    ///
+    /// <example>
+    /// The following code demonstrates how to use the <see cref="DegreesToRadians(float)"/> method:
+    ///
+    /// <code>
+    /// float degrees = 45.0f;
+    /// float radians = MathHelper.DegreesToRadians(degrees);
+    ///
+    /// // Output: 0.7853982
+    /// Console.WriteLine($"Equivalent angle in radians: {radians}");
+    /// </code>
+    /// </example>
     public static float DegreesToRadians(float angle)
     {
         return (float)Math.PI / 180.0f * angle;
     }
 
     /// <summary>
-    /// Converts the specified <paramref name="radians"/> to degrees.
+    /// Converts an angle in radians to degrees.
     /// </summary>
-    /// <param name="radians">
-    /// The radians to convert to degrees.
+    ///
+    /// <param name="angle">
+    /// A <see cref="float"/> that represents the angle in radians to be converted to degrees.
     /// </param>
+    ///
     /// <returns>
-    /// The specified <paramref name="radians"/>, converted to degrees.
+    /// The equivalent angle in degrees.
     /// </returns>
-    public static float RadiansToDegrees(float radians)
+    ///
+    /// <example>
+    /// The following code demonstrates how to use the <see cref="RadiansToDegrees(float)"/> method:
+    ///
+    /// <code>
+    /// float radians = 1.5708f; // 90 degrees in radians
+    /// float degrees = MathHelper.RadiansToDegrees(radians);
+    ///
+    /// // Output: 90
+    /// Console.WriteLine($"Equivalent angle in degrees: {degrees}");
+    /// </code>
+    /// </example>
+    public static float RadiansToDegrees(float angle)
     {
-        return 180.0f / (float)Math.PI * radians;
+        return 180.0f / (float)Math.PI * angle;
     }
 }
