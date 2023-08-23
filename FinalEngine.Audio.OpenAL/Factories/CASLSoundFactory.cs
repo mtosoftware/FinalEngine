@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Extensions.Resources.Factories;
+namespace FinalEngine.Audio.OpenAL.Factories;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -14,7 +14,7 @@ using ICASLSound = CASL.ISound;
 /// </summary>
 /// <seealso cref="ICASLSoundFactory" />
 [ExcludeFromCodeCoverage]
-public sealed class CASLSoundFactory : ICASLSoundFactory
+internal sealed class CASLSoundFactory : ICASLSoundFactory
 {
     /// <summary>
     /// Creates an <see cref="ICASLSound"/> by loading it from the specified <paramref name="filePath"/>.

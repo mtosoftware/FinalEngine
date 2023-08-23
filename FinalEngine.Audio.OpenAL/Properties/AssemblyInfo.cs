@@ -4,6 +4,7 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(false)]
@@ -11,3 +12,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FinalEngine.Audio.OpenAL")]
 [assembly: AssemblyDescription("An OpenAL audio library used to handle audio for Final Engine games.")]
 [assembly: Guid("13D6A388-43BA-433F-A1CC-6D2C791E8D89")]
+[assembly: InternalsVisibleTo("FinalEngine.Tests")]

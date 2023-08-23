@@ -35,6 +35,8 @@
       <DocumentationSource sourceFile="..\FinalEngine.Audio\bin\x64\Debug\net7.0\FinalEngine.Audio.dll" xmlns="" />
       <DocumentationSource sourceFile="..\FinalEngine.Maths\bin\x64\Debug\net7.0\FinalEngine.Maths.xml" />
       <DocumentationSource sourceFile="..\FinalEngine.Maths\bin\x64\Debug\net7.0\FinalEngine.Maths.dll" />
+      <DocumentationSource sourceFile="..\FinalEngine.Audio.OpenAL\bin\x64\Debug\net7.0\FinalEngine.Audio.OpenAL.xml" />
+      <DocumentationSource sourceFile="..\FinalEngine.Audio.OpenAL\bin\x64\Debug\net7.0\FinalEngine.Audio.OpenAL.dll" />
     </DocumentationSources>
     <HelpFileFormat>Website</HelpFileFormat>
     <SyntaxFilters>C#, Visual Basic</SyntaxFilters>
@@ -62,6 +64,8 @@
       <NamespaceSummaryItem name="FinalEngine.Maths" isDocumented="True">Provides utility classes and functions that assist in various mathematical operations commonly used throughout the framework.</NamespaceSummaryItem>
     </NamespaceSummaries>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
+    <PlugInConfigurations>
+    </PlugInConfigurations>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -97,6 +101,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CASL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Users\Mathew\.nuget\packages\kinsondigital.casl\1.0.0-preview.15\lib\net7.0\CASL.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TestableIO.System.IO.Abstractions">
+      <HintPath>..\..\..\Users\Mathew\.nuget\packages\testableio.system.io.abstractions\19.2.51\lib\net7.0\TestableIO.System.IO.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <!-- Import the common build targets during NuGet restore because before the packages are being installed, $(SHFBROOT) is not set yet -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="'$(MSBuildRestoreSessionId)' != ''" />

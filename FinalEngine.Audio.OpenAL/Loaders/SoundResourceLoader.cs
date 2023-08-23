@@ -2,15 +2,13 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Extensions.Resources.Loaders.Audio;
+namespace FinalEngine.Audio.OpenAL.Loaders;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Abstractions;
-using FinalEngine.Audio;
-using FinalEngine.Audio.OpenAL;
-using FinalEngine.Extensions.Resources.Factories;
+using FinalEngine.Audio.OpenAL.Factories;
 using FinalEngine.Resources;
 
 /// <summary>
@@ -50,7 +48,7 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="fileSystem"/> parameter cannot be null.
     /// </exception>
-    public SoundResourceLoader(IFileSystem fileSystem, ICASLSoundFactory factory)
+    internal SoundResourceLoader(IFileSystem fileSystem, ICASLSoundFactory factory)
     {
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
