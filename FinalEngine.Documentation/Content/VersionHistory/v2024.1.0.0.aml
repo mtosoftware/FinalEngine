@@ -18,6 +18,12 @@
                             Added <codeEntityReference linkText="FinalEngine.Audio">N:FinalEngine.Audio</codeEntityReference> source documentation.
                         </para>
                     </listItem>
+
+                    <listItem>
+                        <para>
+                            Added <codeEntityReference linkText="FinalEngine.Maths">N:FinalEngine.Maths</codeEntityReference> source documentation.
+                        </para>
+                    </listItem>
                 </list>
             </content>
         </section>
