@@ -107,17 +107,8 @@ public sealed class OpenALSoundTests
         Assert.Throws<ObjectDisposedException>(this.sound.Pause);
     }
 
-    [SetUp]
-    public void Setup()
-    {
-        this.caslSound = new Mock<ICASLSound>();
-        this.caslSound.SetupAllProperties();
-
-        this.sound = new OpenALSound(this.caslSound.Object);
-    }
-
     [Test]
-    public void StartShouldInvokeCASLSoundPauseWhenInvoked()
+    public void PlayShouldInvokeCASLSoundPauseWhenInvoked()
     {
         // Act
         this.sound.Play();
@@ -127,13 +118,22 @@ public sealed class OpenALSoundTests
     }
 
     [Test]
-    public void StartShouldThrowObjectDisposedExceptionWhenDisposed()
+    public void PlayShouldThrowObjectDisposedExceptionWhenDisposed()
     {
         // Arrange
         this.sound.Dispose();
 
         // Act and assert
         Assert.Throws<ObjectDisposedException>(this.sound.Play);
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        this.caslSound = new Mock<ICASLSound>();
+        this.caslSound.SetupAllProperties();
+
+        this.sound = new OpenALSound(this.caslSound.Object);
     }
 
     [Test]
