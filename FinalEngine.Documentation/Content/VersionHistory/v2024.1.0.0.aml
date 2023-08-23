@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="7381af94-6b74-494d-904b-f5cdd6cb678d" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                Version 2024.1.0.0 was released 01/01/2024.
+            </para>
+        </introduction>
+
+        <section>
+            <title>Changes in This Release</title>
+            <content>
+
+                <list class="bullet">
+
+                    <listItem>
+                        <para>
+                            Added <codeEntityReference linkText="FinalEngine.Audio">N:FinalEngine.Audio</codeEntityReference> source documentation.
+                        </para>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+
+        <relatedTopics>
+            <link xlink:href="effd0747-3cc8-4109-bc15-1bc3a4e52727" />
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>
