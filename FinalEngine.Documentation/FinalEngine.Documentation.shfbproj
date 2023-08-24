@@ -65,7 +65,7 @@
     <NamingMethod>Guid</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceContainer>True</RootNamespaceContainer>
-    <NamespaceGrouping>True</NamespaceGrouping>
+    <NamespaceGrouping>False</NamespaceGrouping>
     <MaximumGroupParts>10</MaximumGroupParts>
     <Preliminary>False</Preliminary>
     <CopyrightText>&amp;#169%3b Software Antics 2024</CopyrightText>
