@@ -50,7 +50,9 @@ Here's a defined sequence for arranging documentation tags:
 - [ ] Begin interface descriptions with the boilerplate statement: "_Represents an interface that defines [x]._"
   - [ ] Start implementation descriptions with the boilerplate text: "_Provides an implementation of an `<see cref="IInterface"/>` that [x]._"
 - [ ] Introduce other classes (e.g., `static` classes) with the boilerplate introduction: "_Provides [x]._"
-- [ ] Precede parameters with the standardized introduction: "_Specifies a `<see cref="type"/>` that represents [x]._"
+- [ ] Precede parameters and property summaries with the standardized introduction: "_Specifies a `<see cref="type"/>` that represents [x]._"
+- [ ] Precede property summaries with the standardized introduction: "_Gets (or sets) a `<see cref="type"/>` that represents [x]._"
+  - [ ] For boolean properties use "_Gets (or sets) a value indicating whether [x]"_
 - [ ] Prefix return descriptions with the common phrase: "_Returns [x]._"
 - [ ] When appropriate, include remarks to offer additional context beyond the summary.
 - [ ] Utilize `<see cref=""/>` to reference relevant types, methods, and elements.
