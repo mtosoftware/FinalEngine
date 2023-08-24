@@ -16,7 +16,7 @@ public static class MathHelper
     /// </summary>
     ///
     /// <param name="angle">
-    /// A <see cref="float"/> that represents the angle in degrees to be converted to radians.
+    /// Specifies a <see cref="float"/> that represents the angle in degrees to be converted to radians.
     /// </param>
     ///
     /// <returns>
@@ -44,7 +44,7 @@ public static class MathHelper
     /// </summary>
     ///
     /// <param name="angle">
-    /// A <see cref="float"/> that represents the angle in radians to be converted to degrees.
+    /// Specifies a <see cref="float"/> that represents the angle in radians to be converted to degrees.
     /// </param>
     ///
     /// <returns>

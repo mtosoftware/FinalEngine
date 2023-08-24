@@ -7,16 +7,18 @@ namespace FinalEngine.Audio.OpenAL.Factories;
 using ICASLSound = CASL.ISound;
 
 /// <summary>
-/// Defines an interface that provides a method to load an <see cref="ICASLSound"/>.
+/// Represents an interface that defines a method to load an <see cref="ICASLSound"/>.
 /// </summary>
 internal interface ICASLSoundFactory
 {
     /// <summary>
     /// Creates an <see cref="ICASLSound"/> by loading it from the specified <paramref name="filePath"/>.
     /// </summary>
+    ///
     /// <param name="filePath">
     /// The file path of the sound to load.
     /// </param>
+    ///
     /// <returns>
     /// The newly created <see cref="ICASLSound"/>.
     /// </returns>

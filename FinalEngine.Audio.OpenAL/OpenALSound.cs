@@ -16,6 +16,19 @@ using ICASLSound = CASL.ISound;
 /// </summary>
 /// <remarks>
 /// The <see cref="OpenALSound" /> implementation expands upon the capabilities of <see cref="IResource" />, empowering developers with enhanced control over sound instantiation through <see cref="IResourceManager" /> instances.
+///
+/// Furthermore, the following coding formats are supported by the <see cref="OpenALSound"/> implementation:
+///
+/// <list type="bullet">
+///     <item>
+///         .MP3 (MPEG Audio Layer III)
+///     </item>
+///     <item>
+///         .OGG (Ogg Vorbis Compressed Audio File)
+///     </item>
+/// </list>
+///
+/// If you require support for other formats we recommend either rolling your own <see cref="ISound"/> implementation and associated <see cref="ResourceLoaderBase{TResource}"/> - or - converting the audio file(s) you have to one of the supported coding formats.
 /// </remarks>
 ///
 /// <example>
@@ -64,16 +77,12 @@ public sealed class OpenALSound : ISound, IDisposable
     /// </summary>
     ///
     /// <param name="filePath">
-    /// The file path of the sound to load.
+    /// Specifies a <see cref="string"/> that represents the file path of the sound to load.
     /// </param>
     ///
     /// <exception cref="ArgumentException">
     /// The specified <paramref name="filePath"/> parameter cannot be null or whitespace.
     /// </exception>
-    ///
-    /// <remarks>
-    /// TODO: Add remarks pertaining to what file types are currently supported.
-    /// </remarks>
     [ExcludeFromCodeCoverage]
     public OpenALSound(string filePath)
         : this(new CASLSound(filePath))
@@ -89,7 +98,7 @@ public sealed class OpenALSound : ISound, IDisposable
     /// </summary>
     ///
     /// <param name="sound">
-    /// The CASL sound instance to use.
+    /// Specifies <see cref="ICASLSound"/> that represents the CASL sound instance to use.
     /// </param>
     ///
     /// <exception cref="ArgumentNullException">
@@ -164,11 +173,11 @@ public sealed class OpenALSound : ISound, IDisposable
     }
 
     /// <summary>
-    /// Gets or sets a <see cref="float"/> value representing the volume of this <see cref="OpenALSound"/>.
+    /// Gets or sets a <see cref="float"/> that represents the volume of this <see cref="OpenALSound"/>.
     /// </summary>
     ///
     /// <value>
-    /// A <see cref="float"/> value representing the volume of this <see cref="OpenALSound"/>.
+    /// A <see cref="float"/> that represents the volume of this <see cref="OpenALSound"/>.
     /// </value>
     ///
     /// <exception cref="ObjectDisposedException">

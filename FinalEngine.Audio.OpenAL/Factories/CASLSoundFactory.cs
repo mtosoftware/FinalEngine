@@ -17,22 +17,25 @@ using ICASLSound = CASL.ISound;
 internal sealed class CASLSoundFactory : ICASLSoundFactory
 {
     /// <summary>
-    /// Creates an <see cref="ICASLSound"/> by loading it from the specified <paramref name="filePath"/>.
+    /// Creates an <see cref="ICASLSound" /> by loading it from the specified <paramref name="filePath" />.
     /// </summary>
+    ///
     /// <param name="filePath">
-    /// The file path of the sound to load.
+    /// Specifies a <see cref="string"/> that represents the file path of the sound to load.
     /// </param>
-    /// <returns>
-    /// The newly created <see cref="ICASLSound"/>.
-    /// </returns>
+    ///
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="filePath"/> parameter cannot be null, empty or consist of only whitespace characters.
+    /// The specified <paramref name="filePath"/> parameter cannot be null or whitespace.
     /// </exception>
+    ///
+    /// <returns>
+    /// An <see cref="ICASLSound"/> that represents the CASL sound implementation.
+    /// </returns>
     public ICASLSound CreateSound(string filePath)
     {
         if (string.IsNullOrWhiteSpace(filePath))
         {
-            throw new ArgumentNullException(nameof(filePath));
+            throw new ArgumentException($"'{nameof(filePath)}' cannot be null or whitespace.", nameof(filePath));
         }
 
         return new CASLSound(filePath);
