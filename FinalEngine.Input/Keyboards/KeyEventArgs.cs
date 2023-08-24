@@ -15,6 +15,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets a value indicating whether the (left or right) alt key was held down when this event was raised.
     /// </summary>
+    ///
     /// <value>
     /// <c>true</c> if the (left or right) alt key was held down; otherwise, <c>false</c>.
     /// </value>
@@ -26,6 +27,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets a value indicating whether the caps-lock key was locked when this event was raised.
     /// </summary>
+    ///
     /// <value>
     /// <c>true</c> if the caps-lock key is locked; otherwise, <c>false</c>.
     /// </value>
@@ -37,6 +39,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets a value indicating whether the (left or right) control key was held down when this event was raised.
     /// </summary>
+    ///
     /// <value>
     /// <c>true</c> if the (left or right) control key was held down; otherwise, <c>false</c>.
     /// </value>
@@ -48,6 +51,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets the key that raised this event.
     /// </summary>
+    ///
     /// <value>
     /// The key that raised this event.
     /// </value>
@@ -56,6 +60,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets the modifiers that were pressed (or locked) when this event was raised.
     /// </summary>
+    ///
     /// <value>
     /// The modifiers that were pressed (or locked).
     /// </value>
@@ -64,6 +69,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets a value indicating whether the num-lock key was locked when this event was raised.
     /// </summary>
+    ///
     /// <value>
     /// <c>true</c> if the num-lock key is locked; otherwise, <c>false</c>.
     /// </value>
@@ -75,6 +81,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets a value indicating whether the (left or right) shift key was held down when this event was raised.
     /// </summary>
+    ///
     /// <value>
     /// <c>true</c> if the (left or right) shift key was held down; otherwise, <c>false</c>.
     /// </value>
@@ -86,6 +93,7 @@ public class KeyEventArgs : EventArgs
     /// <summary>
     /// Gets a value indicating whether any super keys were held down when this event was raised.
     /// </summary>
+    ///
     /// <value>
     /// <c>true</c> if any of the super keys were held down; otherwise, <c>false</c>.
     /// </value>

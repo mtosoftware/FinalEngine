@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 /// <summary>
 /// Enumerates the available key codes and modifiers on a standard US keyboard.
 /// </summary>
+///
 /// <remarks>
 /// The values of each enumeration corresponds to OpenTK's Keys enumeration.
 /// </remarks>
