@@ -49,16 +49,16 @@ public class KeyEventArgs : EventArgs
     }
 
     /// <summary>
-    /// Gets the key that raised this event.
+    /// Gets the <see cref="FinalEngine.Input.Keyboards.Key"/> that raised this event.
     /// </summary>
     ///
     /// <value>
-    /// The key that raised this event.
+    /// The <see cref="FinalEngine.Input.Keyboards.Key"/> that raised this event.
     /// </value>
     public Key Key { get; init; }
 
     /// <summary>
-    /// Gets the modifiers that were pressed (or locked) when this event was raised.
+    /// Gets the <see cref="KeyModifiers"/> that were pressed (or locked) when this event was raised.
     /// </summary>
     ///
     /// <value>
