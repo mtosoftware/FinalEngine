@@ -19,10 +19,6 @@ public static class MathHelper
     /// Specifies a <see cref="float"/> that represents the angle in degrees to be converted to radians.
     /// </param>
     ///
-    /// <returns>
-    /// The equivalent angle in radians.
-    /// </returns>
-    ///
     /// <example>
     /// The following code demonstrates how to use the <see cref="DegreesToRadians(float)"/> method:
     ///
@@ -34,6 +30,10 @@ public static class MathHelper
     /// Console.WriteLine($"Equivalent angle in radians: {radians}");
     /// </code>
     /// </example>
+    ///
+    /// <returns>
+    /// Returns the equivalent specified <paramref name="angle"/> in radians.
+    /// </returns>
     public static float DegreesToRadians(float angle)
     {
         return (float)Math.PI / 180.0f * angle;
@@ -47,10 +47,6 @@ public static class MathHelper
     /// Specifies a <see cref="float"/> that represents the angle in radians to be converted to degrees.
     /// </param>
     ///
-    /// <returns>
-    /// The equivalent angle in degrees.
-    /// </returns>
-    ///
     /// <example>
     /// The following code demonstrates how to use the <see cref="RadiansToDegrees(float)"/> method:
     ///
@@ -62,6 +58,10 @@ public static class MathHelper
     /// Console.WriteLine($"Equivalent angle in degrees: {degrees}");
     /// </code>
     /// </example>
+    ///
+    /// <returns>
+    /// Returns the equivalent specified <paramref name="angle"/> in degrees.
+    /// </returns>
     public static float RadiansToDegrees(float angle)
     {
         return 180.0f / (float)Math.PI * angle;

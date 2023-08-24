@@ -14,6 +14,7 @@ using ICASLSound = CASL.ISound;
 /// <summary>
 /// Provides a standard implementation of an <see cref="ISound"/> using the OpenAL framework.
 /// </summary>
+///
 /// <remarks>
 /// The <see cref="OpenALSound" /> implementation expands upon the capabilities of <see cref="IResource" />, empowering developers with enhanced control over sound instantiation through <see cref="IResourceManager" /> instances. Furthermore, the following coding formats are supported by the <see cref="OpenALSound"/> implementation:
 ///
@@ -96,7 +97,7 @@ public sealed class OpenALSound : ISound, IDisposable
     /// </summary>
     ///
     /// <param name="sound">
-    /// Specifies <see cref="ICASLSound"/> that represents the CASL sound instance to use.
+    /// Specifies an <see cref="ICASLSound"/> that represents the CASL sound instance to use.
     /// </param>
     ///
     /// <exception cref="ArgumentNullException">
@@ -114,10 +115,6 @@ public sealed class OpenALSound : ISound, IDisposable
     /// <value>
     /// <c>true</c> if this <see cref="OpenALSound" /> is set to loop; otherwise, <c>false</c>.
     /// </value>
-    ///
-    /// <exception cref="ObjectDisposedException">
-    /// The <see cref="OpenALSound"/> instance has been disposed.
-    /// </exception>
     ///
     /// <remarks>
     /// The <see cref="IsLooping" /> property determines whether the <see cref="OpenALSound"/> should restart playback from the beginning once it reaches the end.
@@ -147,6 +144,10 @@ public sealed class OpenALSound : ISound, IDisposable
     /// sound.Play();
     /// </code>
     /// </example>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="OpenALSound"/> instance has been disposed.
+    /// </exception>
     public bool IsLooping
     {
         get
@@ -178,10 +179,6 @@ public sealed class OpenALSound : ISound, IDisposable
     /// A <see cref="float"/> that represents the volume of this <see cref="OpenALSound"/>.
     /// </value>
     ///
-    /// <exception cref="ObjectDisposedException">
-    /// The <see cref="OpenALSound"/> instance has been disposed.
-    /// </exception>
-    ///
     /// <remarks>
     /// The <see cref="Volume"/> property handles values within the range of 0 to 100. Values outside this range should are adjusted to fit within it.
     /// </remarks>
@@ -210,6 +207,10 @@ public sealed class OpenALSound : ISound, IDisposable
     /// sound.Play();
     /// </code>
     /// </example>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="OpenALSound"/> instance has been disposed.
+    /// </exception>
     public float Volume
     {
         get
@@ -256,10 +257,6 @@ public sealed class OpenALSound : ISound, IDisposable
     /// Pauses playback of this <see cref="OpenALSound"/>.
     /// </summary>
     ///
-    /// <exception cref="ObjectDisposedException">
-    /// The <see cref="OpenALSound"/> instance has been disposed.
-    /// </exception>
-    ///
     /// <remarks>
     /// The <see cref="Pause"/> method halts audio playback while retaining the current position. Resuming playback through <see cref="Play"/> will continue from where the sound was paused.
     /// </remarks>
@@ -304,6 +301,10 @@ public sealed class OpenALSound : ISound, IDisposable
     /// sound.Play();
     /// </code>
     /// </example>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="OpenALSound"/> instance has been disposed.
+    /// </exception>
     public void Pause()
     {
         if (this.isDisposed)
@@ -317,10 +318,6 @@ public sealed class OpenALSound : ISound, IDisposable
     /// <summary>
     /// Starts or resumes playback of this <see cref="OpenALSound"/>.
     /// </summary>
-    ///
-    /// <exception cref="ObjectDisposedException">
-    /// The <see cref="OpenALSound"/> instance has been disposed.
-    /// </exception>
     ///
     /// <remarks>
     /// The <see cref="Play"/> initiates or resumes audio playback from its current position. If the sound was previously paused using the <see cref="Pause"/> method, invoking <see cref="Play"/> will continue playback from where it was paused.
@@ -347,6 +344,10 @@ public sealed class OpenALSound : ISound, IDisposable
     /// sound.Play();
     /// </code>
     /// </example>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="OpenALSound"/> instance has been disposed.
+    /// </exception>
     public void Play()
     {
         if (this.isDisposed)
@@ -360,10 +361,6 @@ public sealed class OpenALSound : ISound, IDisposable
     /// <summary>
     /// Stops playback of this <see cref="OpenALSound"/> and resets its position to the beginning.
     /// </summary>
-    ///
-    /// <exception cref="ObjectDisposedException">
-    /// The <see cref="OpenALSound"/> instance has been disposed.
-    /// </exception>
     ///
     /// <remarks>
     /// The <see cref="Stop"/> will halt audio playback and reset its position to the beginning. Subsequent calls to the <see cref="Play"/> method will cause the sound to begin playing from the start.
@@ -401,6 +398,10 @@ public sealed class OpenALSound : ISound, IDisposable
     /// sound.Stop();
     /// </code>
     /// </example>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="OpenALSound"/> instance has been disposed.
+    /// </exception>
     public void Stop()
     {
         if (this.isDisposed)

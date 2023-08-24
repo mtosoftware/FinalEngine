@@ -29,7 +29,7 @@ internal sealed class CASLSoundFactory : ICASLSoundFactory
     /// </exception>
     ///
     /// <returns>
-    /// An <see cref="ICASLSound"/> that represents the CASL sound implementation.
+    /// Returns <see cref="ICASLSound"/> that represents the CASL sound implementation.
     /// </returns>
     public ICASLSound CreateSound(string filePath)
     {

@@ -119,18 +119,6 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
     /// Please note that you should use an instance of an <see cref="IResourceManager"/> (such as <see cref="ResourceManager.Instance"/> and not load resources directly; unless you wish to take control of the life-cycle of the resource.
     /// </remarks>
     ///
-    /// <returns>
-    /// An <see cref="ISound"/> that represents the newly loaded resource.
-    /// </returns>
-    ///
-    /// <exception cref="ArgumentException">
-    /// The specified <paramref name="filePath"/> parameter cannot be null or whitespace.
-    /// </exception>
-    ///
-    /// <exception cref="FileNotFoundException">
-    /// The specified <paramref name="filePath"/> parameter cannot be located.
-    /// </exception>
-    ///
     /// <example>
     /// Below you'll find an example showing how to load a sound resource using the <see cref="SoundResourceLoader"/>.
     ///
@@ -145,6 +133,18 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
     /// sound.Play();
     /// </code>
     /// </example>
+    ///
+    /// <exception cref="ArgumentException">
+    /// The specified <paramref name="filePath"/> parameter cannot be null or whitespace.
+    /// </exception>
+    ///
+    /// <exception cref="FileNotFoundException">
+    /// The specified <paramref name="filePath"/> parameter cannot be located.
+    /// </exception>
+    ///
+    /// <returns>
+    /// Returns an <see cref="ISound"/> instance that represents the newly loaded resource.
+    /// </returns>
     public override ISound LoadResource(string filePath)
     {
         if (string.IsNullOrWhiteSpace(filePath))

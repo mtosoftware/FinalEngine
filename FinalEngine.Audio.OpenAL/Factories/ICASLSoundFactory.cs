@@ -20,7 +20,7 @@ internal interface ICASLSoundFactory
     /// </param>
     ///
     /// <returns>
-    /// The newly created <see cref="ICASLSound"/>.
+    /// Returns the newly created <see cref="ICASLSound"/>.
     /// </returns>
     ICASLSound CreateSound(string filePath);
 }
