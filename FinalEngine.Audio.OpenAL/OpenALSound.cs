@@ -15,9 +15,7 @@ using ICASLSound = CASL.ISound;
 /// Provides a standard implementation of an <see cref="ISound"/> using the OpenAL framework.
 /// </summary>
 /// <remarks>
-/// The <see cref="OpenALSound" /> implementation expands upon the capabilities of <see cref="IResource" />, empowering developers with enhanced control over sound instantiation through <see cref="IResourceManager" /> instances.
-///
-/// Furthermore, the following coding formats are supported by the <see cref="OpenALSound"/> implementation:
+/// The <see cref="OpenALSound" /> implementation expands upon the capabilities of <see cref="IResource" />, empowering developers with enhanced control over sound instantiation through <see cref="IResourceManager" /> instances. Furthermore, the following coding formats are supported by the <see cref="OpenALSound"/> implementation:
 ///
 /// <list type="bullet">
 ///     <item>

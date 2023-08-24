@@ -115,6 +115,10 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
     /// Specifies a <see cref="string"/> that represents the file path of the sound resource to load.
     /// </param>
     ///
+    /// <remarks>
+    /// Please note that you should use an instance of an <see cref="IResourceManager"/> (such as <see cref="ResourceManager.Instance"/> and not load resources directly; unless you wish to take control of the life-cycle of the resource.
+    /// </remarks>
+    ///
     /// <returns>
     /// An <see cref="ISound"/> that represents the newly loaded resource.
     /// </returns>
@@ -126,6 +130,21 @@ public class SoundResourceLoader : ResourceLoaderBase<ISound>
     /// <exception cref="FileNotFoundException">
     /// The specified <paramref name="filePath"/> parameter cannot be located.
     /// </exception>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to load a sound resource using the <see cref="SoundResourceLoader"/>.
+    ///
+    /// <code>
+    /// var loader = new SoundResourceLoader();
+    ///
+    /// // You should typically use an instance of an IResourceManager to load resources
+    /// // However, there may be instances where you'd like to take control of the life-cycle of the resource.
+    /// ISound sound = loader.LoadResource&lt;ISound&gt;("sound.mp3");
+    ///
+    /// // Finally, let's play the sound.
+    /// sound.Play();
+    /// </code>
+    /// </example>
     public override ISound LoadResource(string filePath)
     {
         if (string.IsNullOrWhiteSpace(filePath))

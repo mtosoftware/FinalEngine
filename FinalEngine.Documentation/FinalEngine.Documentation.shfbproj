@@ -22,13 +22,26 @@
     <HtmlHelpName>FinalEngine.Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
-      <Argument Key="logoFile" Value="Help.png" xmlns="" />
-      <Argument Key="logoHeight" Value="" xmlns="" />
-      <Argument Key="logoWidth" Value="" xmlns="" />
-      <Argument Key="logoAltText" Value="" xmlns="" />
-      <Argument Key="logoPlacement" Value="left" xmlns="" />
-      <Argument Key="logoAlignment" Value="left" xmlns="" />
-      <Argument Key="maxVersionParts" Value="" xmlns="" />
+      <Argument Key="RobotsMetadata" Value="" />
+      <Argument Key="BibliographyDataFile" Value="" />
+      <Argument Key="RootBreadcrumbTitleText" Value="Docs" />
+      <Argument Key="ResizableTocColumn" Value="True" />
+      <Argument Key="CollapsibleSections" Value="True" />
+      <Argument Key="LogoFile" Value="Help.png" />
+      <Argument Key="LogoHeight" Value="" />
+      <Argument Key="LogoWidth" Value="" />
+      <Argument Key="LogoAltText" Value="" />
+      <Argument Key="LogoPlacement" Value="left" />
+      <Argument Key="LogoAlignment" Value="left" />
+      <Argument Key="LogoUrl" Value="" />
+      <Argument Key="MaxVersionParts" Value="" />
+      <Argument Key="DefaultLanguage" Value="cs" />
+      <Argument Key="IncludeEnumValues" Value="True" />
+      <Argument Key="EnumMemberSortOrder" Value="Value" />
+      <Argument Key="FlagsEnumValueFormat" Value="IntegerValue" />
+      <Argument Key="FlagsEnumSeparatorSize" Value="0" />
+      <Argument Key="BaseSourceCodeUrl" Value="" />
+      <Argument Key="RequestExampleUrl" Value="" />
     </TransformComponentArguments>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FinalEngine.Audio\bin\x64\Debug\net7.0\FinalEngine.Audio.xml" xmlns="" />
@@ -52,17 +65,20 @@
     <NamingMethod>Guid</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceContainer>True</RootNamespaceContainer>
-    <NamespaceGrouping>False</NamespaceGrouping>
-    <MaximumGroupParts>2</MaximumGroupParts>
+    <NamespaceGrouping>True</NamespaceGrouping>
+    <MaximumGroupParts>10</MaximumGroupParts>
     <Preliminary>False</Preliminary>
     <CopyrightText>&amp;#169%3b Software Antics 2024</CopyrightText>
     <SdkLinkTarget>Blank</SdkLinkTarget>
-    <MissingTags>Summary, Parameter, Returns, Value, AutoDocumentCtors, Namespace, TypeParameter, AutoDocumentDispose</MissingTags>
+    <MissingTags>Summary, Parameter, Returns, Value, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <RootNamespaceTitle>API Reference</RootNamespaceTitle>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="FinalEngine.Audio" isDocumented="True">Serves as a foundational framework for creating audio-related functionality within the engine. It defines a set of interfaces that developers can utilize to manage and manipulate audio resources and playback. These interfaces offer a standardized way to interact with audio elements, providing methods and properties to control playback, adjust volume, manage looping, and more.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="FinalEngine.Maths" isDocumented="True">Provides utility classes and functions that assist in various mathematical operations commonly used throughout the framework.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+<NamespaceSummaryItem name="FinalEngine.Maths" isDocumented="True">Provides utility classes and functions that assist in various mathematical operations commonly used throughout the framework.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FinalEngine.Audio (Group)" isGroup="True" isDocumented="True" />
+<NamespaceSummaryItem name="FinalEngine.Audio.OpenAL (Group)" isGroup="True" isDocumented="True" />
+<NamespaceSummaryItem name="FinalEngine.Audio.OpenAL" isDocumented="True" />
+<NamespaceSummaryItem name="FinalEngine.Audio.OpenAL.Loaders" isDocumented="True" /></NamespaceSummaries>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <PlugInConfigurations>
     </PlugInConfigurations>
