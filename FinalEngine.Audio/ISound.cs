@@ -83,11 +83,11 @@ public interface ISound : IResource
     bool IsLooping { get; set; }
 
     /// <summary>
-    /// Gets or sets a <see cref="float"/> value representing the volume of this <see cref="ISound"/>.
+    /// Gets or sets a <see cref="float"/> that represents the volume of this <see cref="ISound"/>.
     /// </summary>
     ///
     /// <value>
-    /// A <see cref="float"/> value representing the volume of this <see cref="ISound"/>.
+    /// A <see cref="float"/> value that represents the volume of this <see cref="ISound"/>.
     /// </value>
     ///
     /// <remarks>
