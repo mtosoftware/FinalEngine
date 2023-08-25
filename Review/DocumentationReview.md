@@ -1,4 +1,3 @@
-
 ## Documentation Style Guide
 
 ### Tag Sequence
