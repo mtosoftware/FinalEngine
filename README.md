@@ -74,12 +74,4 @@ Feel free to reach out to us on [Discord](https://discord.gg/edCTVFVwnV) if you 
 
 ## Contributing
 
-To ensure the success of your pull request (PR), please follow the steps below:
-
-1. Install [Git](https://git-scm.com/downloads) and the [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0).
-2. [Fork](https://github.com/softwareantics/FinalEngine/fork) the repository.
-3. Create a descriptive new branch based on `master` in your fork.
-4. Begin your work with an empty commit: `git commit --allow-empty -m "[WIP] Descriptive task name"`.
-5. Create a Pull Request with `[WIP]` in the title, following the provided template. Do this **before** you start working.
-6. Commit your changes in small, incremental steps.
-7. Notify a maintainer when you're ready for your PR to be merged (don't forget about unit tests!).
+Follow our contribution guidelines [here](https://github.com/softwareantics/FinalEngine/blob/master/.github/CONTRIBUTING.md) if you wish to contribute to the project.
