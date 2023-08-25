@@ -96,6 +96,19 @@ Commit your changes in small, incremental steps so that the maintainers can revi
 
 Notify a maintainer when you're ready for your PR to be reviewed and merged. Please note that we have a strict PR review process, especially around _documentation_ and _styling_. If the PR does not meet the requirements you'll likely need to make some changes to merge your feature. You can find more information on our review process [here](https://github.com/softwareantics/FinalEngine/tree/master/Review).
 
+<h2 style="border:0;font-weight:bold" align="center">Recommended Extensions</h2>
+
+The maintainers of _Final Engine_ use _Visual Studio_ and highly encourage installing the following extensions to make your life easier.
+
+- [CodeMaid](www.codemaid.net)
+- [Code Cleanup on Save](https://github.com/madskristensen/CodeCleanupOnSave)
+- [Collapse Comments](https://github.com/mrlacey/CollapseComments)
+- [Visual Studio Spell Checker](https://ewsoftware.github.io/VSSpellChecker)
+- [Final Code Coverage](https://marketplace.visualstudio.com/items?itemName=FortuneNgwenya.FineCodeCoverage)
+- [GhostDoc Community](submain.com/products/ghostdoc.aspx)
+
+Whilst it is not a _requirement_ to install these extensions and use them in your workflow you'll likely find that installing them will make your development process move smoothly and much more quickly.
+
 <h2 style="border:0;font-weight:bold" align="center">"Help wanted" & "Good first issue"</h2>
 
 <img alt="GitHub issues" src="https://img.shields.io/github/issues/softwareantics/FinalEngine/🏁%20Good%20First%20Issue?color=7057ff&label=Good%20First%20Issues">
