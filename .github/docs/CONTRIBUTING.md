@@ -94,7 +94,7 @@ Commit your changes in small, incremental steps so that the maintainers can revi
 
 #### **7. Notify a Maintainer for Review**
 
-Notify a maintainer when you're ready for your PR to be reviewed and merged. Please note that we have a strict PR review process, especially around _documentation_ and _styling_. If the PR does not meet the requirements you'll likely need to make some changes to merge your feature. You can find more information on our review process [here]().
+Notify a maintainer when you're ready for your PR to be reviewed and merged. Please note that we have a strict PR review process, especially around _documentation_ and _styling_. If the PR does not meet the requirements you'll likely need to make some changes to merge your feature. You can find more information on our review process [here](https://github.com/softwareantics/FinalEngine/tree/master/Review).
 
 <h2 style="border:0;font-weight:bold" align="center">"Help wanted" & "Good first issue"</h2>
 
