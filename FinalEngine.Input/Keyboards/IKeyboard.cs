@@ -180,7 +180,7 @@ public interface IKeyboard
     /// </param>
     ///
     /// <example>
-    /// Below you'll find an example showing how to check if a key has been released during the current iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    /// Below you'll find an example showing how to check if a key has been released since the previous iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
     ///
     /// <code>
     /// if (keyboard.IsKeyReleased(Key.F))
