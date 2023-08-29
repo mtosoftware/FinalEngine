@@ -195,7 +195,7 @@ public sealed class Mouse : IMouse, IDisposable
     /// </example>
     ///
     /// <returns>
-    /// <c>true</c> if the specified <paramref name="button"/> is down during the current iteration; otherwise, <c>false</c>.
+    /// Returns <c>true</c> if the specified <paramref name="button"/> is down during the current iteration; otherwise, <c>false</c>.
     /// </returns>
     public bool IsButtonDown(MouseButton button)
     {
@@ -224,7 +224,7 @@ public sealed class Mouse : IMouse, IDisposable
     /// </example>
     ///
     /// <returns>
-    /// <c>true</c> if the specified <paramref name="button"/> has been pressed this iteration; otherwise, <c>false</c>.
+    /// Returns <c>true</c> if the specified <paramref name="button"/> has been pressed this iteration; otherwise, <c>false</c>.
     /// </returns>
     public bool IsButtonPressed(MouseButton button)
     {
@@ -253,7 +253,7 @@ public sealed class Mouse : IMouse, IDisposable
     /// </example>
     ///
     /// <returns>
-    /// <c>true</c> if the specified <paramref name="button"/> has been released since the previous iteration; otherwise, <c>false</c>.
+    /// Returns <c>true</c> if the specified <paramref name="button"/> has been released since the previous iteration; otherwise, <c>false</c>.
     /// </returns>
     public bool IsButtonReleased(MouseButton button)
     {

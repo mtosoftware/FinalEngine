@@ -78,7 +78,7 @@ public interface IMouse
     /// </example>
     ///
     /// <returns>
-    /// <c>true</c> if the specified <paramref name="button"/> is down during the current iteration; otherwise, <c>false</c>.
+    /// Returns <c>true</c> if the specified <paramref name="button"/> is down during the current iteration; otherwise, <c>false</c>.
     /// </returns>
     bool IsButtonDown(MouseButton button);
 
@@ -104,7 +104,7 @@ public interface IMouse
     /// </example>
     ///
     /// <returns>
-    /// <c>true</c> if the specified <paramref name="button"/> has been pressed this iteration; otherwise, <c>false</c>.
+    /// Returns <c>true</c> if the specified <paramref name="button"/> has been pressed this iteration; otherwise, <c>false</c>.
     /// </returns>
     bool IsButtonPressed(MouseButton button);
 
@@ -130,7 +130,7 @@ public interface IMouse
     /// </example>
     ///
     /// <returns>
-    /// <c>true</c> if the specified <paramref name="button"/> has been released since the previous iteration; otherwise, <c>false</c>.
+    /// Returns <c>true</c> if the specified <paramref name="button"/> has been released since the previous iteration; otherwise, <c>false</c>.
     /// </returns>
     bool IsButtonReleased(MouseButton button);
 
