@@ -6,82 +6,56 @@ namespace FinalEngine.Input.Keyboards;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 /// <summary>
-/// Provides a standard implementation of an <see cref="IKeyboard" />, that interfaces with an <see cref="IKeyboardDevice" />.
+/// Provides a standard implementation of an <see cref="IKeyboard"/> that allows the user to handle real time keyboard events.
 /// </summary>
-/// <remarks>
-/// In almost all cases, you should never need to instantiate a <see cref="Keyboard"/>. Generally speaking, you should use the <see cref="IKeyboard"/> interface provided to you via the runtime factory. The only instance where you should instantiate a <see cref="Keyboard"/> is if you choose to roll your own game class and not use the one provided by the runtime library; an example of this might be if you were to implement your own runtime for the engine.
-/// </remarks>
+///
 /// <example>
-/// Below you'll find an example of how to handle input state changes with the <see cref="Keyboard"/> class. Please note that you should generally use the <see cref="IKeyboard"/> interface via dependency injection and this example is just to showcase the bare minimum required to use this implementation.
-/// <code title="InputExample.cs">
-/// namespace MyInputExample;
+/// Below you'll find an example showing you how to instantiate an instance of the <see cref="Keyboard"/> implementation. This example assumes that the following criteria has been met:
 ///
-/// using System;
-/// using FinalEngine.Input.Keyboards;
+/// <list type="bullet">
+///     <item>
+///         An implementation of an <see cref="IKeyboardDevice"/> has been instantiated; likely through use of an IoC container - or - manually instantiated if the user chose to roll their own implementation.
+///     </item>
+/// </list>
 ///
-/// public class InputExample
+/// <code>
+/// // One implementation that is provided by default in a separate assembly can be instantiated here for simplicity.
+/// // The standard implementation of IKeyboardDevice relies on the OpenTK platform back-end.
+/// // This code would be place somewhere in your games initialization stage.
+/// var keyboardDevice = new OpenTKKeyboardDevice(nativeWindow);
+/// var keyboard = new Keyboard(keyboardDevice);
+///
+/// // Later on, in the game loop, we can poll for input.
+/// if (keyboard.IsKeyDown(Key.Escape)
 /// {
-///     private readonly Keyboard keyboard;
+///     Console.WriteLine("The escape key was pressed.");
+/// }
 ///
-///     public InputExample(Keyboard keyboard)
-///     {
-///         // Generally speaking you should inject the IKeyboard interface.
-///         this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
-///     }
-///
-///     public void HandleInput()
-///     {
-///         // Check if a key is being held down.
-///         if (this.keyboard.IsKeyDown(Key.A))
-///         {
-///             Console.WriteLine("The A key is being held down.");
-///         }
-///
-///         // Check if a key has been pressed.
-///         if (this.keyboard.IsKeyPressed(Key.B))
-///         {
-///             Console.WriteLine("The B key has been pressed.");
-///         }
-///
-///         // Check if a key has been released.
-///         if (this.keyboard.IsKeyReleased(Key.Space))
-///         {
-///             Console.WriteLine("The space bar key has been released.");
-///         }
-///
-///         // Also check for lockable keys.
-///         if (this.keyboard.IsCapsLocked &amp;&amp; this.keyboard.IsKeyReleased(Key.F))
-///         {
-///             Console.WriteLine("Wow, the caps lock key is locked AND you pressed the F key!");
-///         }
-///
-///         // Lastly, there is also modifier keys that can be checked via properties as well.
-///         if (this.keyboard.IsAltDown &amp;&amp; this.keyboard.IsKeyPressed(Key.F4))
-///         {
-///             Environment.Exit(0);
-///         }
-///
-///         // If you're using a GameContainerBase implementation you won't need to invoke this method.
-///         // But, if you aren't you will need to invoke the method after handling input state changes.
-///         this.keyboard.Update();
-///     }
-/// }</code>
+/// // Don't forget, if you're not using the engines main loop you'll need to invoke the Update method AFTER polling for input state changes.
+/// // Odd and inconsistent behaviour will occur if you poll for input after invoking this method.
+/// keyboard.Update();
+/// </code>
 /// </example>
 /// <seealso cref="IKeyboard" />
-public class Keyboard : IKeyboard, IDisposable
+/// <seealso cref="IDisposable" />
+public sealed class Keyboard : IKeyboard, IDisposable
 {
     /// <summary>
     /// The physical keyboard device.
     /// </summary>
-    private readonly IKeyboardDevice? device;
+    private readonly IKeyboardDevice device;
 
     /// <summary>
     /// The keys down during the current frame.
     /// </summary>
     private readonly IList<Key> keysDown;
+
+    /// <summary>
+    /// Indicates whether this instance is disposed.
+    /// </summary>
+    private bool isDisposed;
 
     /// <summary>
     /// The keys down during the previous frame.
@@ -91,110 +65,150 @@ public class Keyboard : IKeyboard, IDisposable
     /// <summary>
     /// Initializes a new instance of the <see cref="Keyboard"/> class.
     /// </summary>
+    ///
     /// <param name="device">
-    /// Specifies an <see cref="IKeyboardDevice"/> that represents the keyboard device to listen to.
+    /// The physical keyboard device to handle in real time.
     /// </param>
-    /// <remarks>
-    /// The <paramref name="device"/> parameter is nullable, when set to <c>null</c> the events are not hooked and therefore the object will not listen out for keyboard events. This can be useful in situations where the end-user might not have a keyboard or require a keyboard on the underlying platform (for example, a mobile device).
-    /// </remarks>
-    public Keyboard(IKeyboardDevice? device)
+    ///
+    /// <exception cref="ArgumentNullException">
+    /// The specified <paramref name="device"/> parameter cannot be null.
+    /// </exception>
+    public Keyboard(IKeyboardDevice device)
     {
-        this.device = device;
+        this.device = device ?? throw new ArgumentNullException(nameof(device));
 
         this.keysDown = new List<Key>();
         this.keysDownLast = new List<Key>();
 
-        if (this.device != null)
-        {
-            this.device.KeyDown += this.Device_KeyDown;
-            this.device.KeyUp += this.Device_KeyUp;
-        }
+        this.device.KeyDown += this.Device_KeyDown;
+        this.device.KeyUp += this.Device_KeyUp;
     }
 
     /// <summary>
-    /// Finalizes an instance of the <see cref="Keyboard"/> class.
+    /// Gets a value indicating whether the <see cref="Key.LeftAlt"/> or <see cref="Key.RightAlt"/> key is down during the current iteration.
     /// </summary>
-    [ExcludeFromCodeCoverage]
-    ~Keyboard()
-    {
-        this.Dispose(false);
-    }
-
-    /// <inheritdoc/>
+    ///
+    /// <value>
+    /// <c>true</c> if the <see cref="Key.LeftAlt"/> or <see cref="Key.RightAlt"/> key is down during the current iteration; otherwise, <c>false</c>.
+    /// </value>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if the <see cref="Key.LeftAlt"/> or <see cref="Key.RightAlt"/> key is down during the current iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// bool isDown = keyboard.IsAltDown;
+    ///
+    /// while (isDown)
+    /// {
+    ///     Console.WriteLine("The left or right ALT key is currently held down.");
+    /// }
+    /// </code>
+    /// </example>
     public bool IsAltDown
     {
         get { return this.keysDown.Contains(Key.LeftAlt) || this.keysDown.Contains(Key.RightAlt); }
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets a value indicating whether the <see cref="Key.CapsLock"/> key is currently locked.
+    /// </summary>
+    ///
+    /// <value>
+    /// <c>true</c> if the <see cref="Key.CapsLock"/> key is currently locked; otherwise, <c>false</c>.
+    /// </value>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if the CAPS LOCK key is currently in a locked state. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// bool isLocked = keyboard.IsCapsLocked;
+    ///
+    /// if (isLocked)
+    /// {
+    ///     Console.WriteLine("The CAPS LOCK key is currently in a locked state.");
+    /// }
+    /// </code>
+    /// </example>
     public bool IsCapsLocked { get; private set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets a value indicating whether the <see cref="Key.LeftControl"/> or <see cref="Key.RightControl"/> key is down during the current iteration.
+    /// </summary>
+    ///
+    /// <value>
+    /// <c>true</c> if the <see cref="Key.LeftControl"/> or <see cref="Key.RightControl"/> key is down during the current iteration; otherwise, <c>false</c>.
+    /// </value>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if the <see cref="Key.LeftControl"/> or <see cref="Key.RightControl"/> key is down during the current iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// bool isDown = keyboard.IsControlDown;
+    ///
+    /// while (isDown)
+    /// {
+    ///     Console.WriteLine("The left or right CONTROL key is currently held down.");
+    /// }
+    /// </code>
+    /// </example>
     public bool IsControlDown
     {
         get { return this.keysDown.Contains(Key.LeftControl) || this.keysDown.Contains(Key.RightControl); }
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets a value indicating whether the <see cref="Key.NumLock"/> key is currently locked.
+    /// </summary>
+    ///
+    /// <value>
+    /// <c>true</c> if the <see cref="Key.NumLock"/> key is currently locked; otherwise, <c>false</c>.
+    /// </value>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if the NUM LOCK key is currently in a locked state. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// bool isLocked = keyboard.IsNumLocked;
+    ///
+    /// if (isLocked)
+    /// {
+    ///     Console.WriteLine("The NUM LOCK key is currently in a locked state.");
+    /// }
+    /// </code>
+    /// </example>
     public bool IsNumLocked { get; private set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets a value indicating whether the <see cref="Key.LeftShift"/> or <see cref="Key.RightShift"/> key is down during the current iteration.
+    /// </summary>
+    ///
+    /// <value>
+    /// <c>true</c> if the <see cref="Key.LeftShift"/> or <see cref="Key.RightShift"/> key is down during the current iteration; otherwise, <c>false</c>.
+    /// </value>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if the <see cref="Key.LeftShift"/> or <see cref="Key.RightShift"/> key is down during the current iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// bool isDown = keyboard.IsShiftDown;
+    ///
+    /// while (isDown)
+    /// {
+    ///     Console.WriteLine("The left or right SHIFT key is currently held down.");
+    /// }
+    /// </code>
+    /// </example>
     public bool IsShiftDown
     {
         get { return this.keysDown.Contains(Key.LeftShift) || this.keysDown.Contains(Key.RightShift); }
     }
 
     /// <summary>
-    /// Gets a value indicating whether this instance is disposed.
-    /// </summary>
-    /// <value>
-    /// <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
-    /// </value>
-    protected bool IsDisposed { get; private set; }
-
-    /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     public void Dispose()
     {
-        this.Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    /// <inheritdoc/>
-    public bool IsKeyDown(Key key)
-    {
-        return this.keysDown.Contains(key);
-    }
-
-    /// <inheritdoc/>
-    public bool IsKeyPressed(Key key)
-    {
-        return this.keysDown.Contains(key) && !this.keysDownLast.Contains(key);
-    }
-
-    /// <inheritdoc/>
-    public bool IsKeyReleased(Key key)
-    {
-        return !this.keysDown.Contains(key) && this.keysDownLast.Contains(key);
-    }
-
-    /// <inheritdoc/>
-    /// <remarks>
-    /// Please note that you should not need to invoke this function if you're using a game container as the base implementation takes care of it for you.
-    /// </remarks>
-    public void Update()
-    {
-        this.keysDownLast = new List<Key>(this.keysDown);
-    }
-
-    /// <summary>
-    /// Releases unmanaged and - optionally - managed resources.
-    /// </summary>
-    /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-    protected virtual void Dispose(bool disposing)
-    {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -205,18 +219,114 @@ public class Keyboard : IKeyboard, IDisposable
             this.device.KeyUp -= this.Device_KeyUp;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
+    }
+
+    /// <summary>
+    /// Determines whether the specified <paramref name="key"/> is down during the current iteration.
+    /// </summary>
+    ///
+    /// <param name="key">
+    /// Specifies a <see cref="Key"/> that represents the key to check.
+    /// </param>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if a key is down during the current iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// if (keyboard.IsKeyDown(Key.F))
+    /// {
+    ///     Console.WriteLine("The F key is currently held down.");
+    /// }
+    /// </code>
+    /// </example>
+    ///
+    /// <returns>
+    /// Returns <c>true</c> if the specified <paramref name="key"/> is down during the current iteration; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsKeyDown(Key key)
+    {
+        return this.keysDown.Contains(key);
+    }
+
+    /// <summary>
+    /// Determines whether the specified <paramref name="key"/> has been pressed this iteration.
+    /// </summary>
+    ///
+    /// <param name="key">
+    /// Specifies a <see cref="Key"/> that represents the key to check.
+    /// </param>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if a key has been pressed during the current iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// if (keyboard.IsKeyPressed(Key.F))
+    /// {
+    ///     Console.WriteLine("The F key has been pressed.");
+    /// }
+    /// </code>
+    /// </example>
+    ///
+    /// <returns>
+    /// Returns <c>true</c> if the specified <paramref name="key"/> has been pressed during this iteration; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsKeyPressed(Key key)
+    {
+        return this.keysDown.Contains(key) && !this.keysDownLast.Contains(key);
+    }
+
+    /// <summary>
+    /// Determines whether the specified <paramref name="key"/> has been released since the previous iteration.
+    /// </summary>
+    ///
+    /// <param name="key">
+    /// Specifies a <see cref="Key"/> that represents the key to check.
+    /// </param>
+    ///
+    /// <example>
+    /// Below you'll find an example showing how to check if a key has been released during the current iteration. This example assumes that an implementation of <see cref="IKeyboard"/> has been provided, such as <see cref="Keyboard"/>.
+    ///
+    /// <code>
+    /// if (keyboard.IsKeyReleased(Key.F))
+    /// {
+    ///     Console.WriteLine("The F key has been released.");
+    /// }
+    /// </code>
+    /// </example>
+    ///
+    /// <returns>
+    /// Returns <c>true</c> if the specified <paramref name="key"/> has been released since the previous iteration; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsKeyReleased(Key key)
+    {
+        return !this.keysDown.Contains(key) && this.keysDownLast.Contains(key);
+    }
+
+    /// <summary>
+    /// Updates this <see cref="IKeyboard"/>.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// This should only be called after the user has checked for input state changes.
+    /// </remarks>
+    public void Update()
+    {
+        this.keysDownLast = new List<Key>(this.keysDown);
     }
 
     /// <summary>
     /// Handles the <see cref="IKeyboardDevice.KeyDown"/> event.
     /// </summary>
+    ///
     /// <param name="sender">
     /// Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
+    ///
     /// <param name="e">
     /// Specifies a <see cref="KeyEventArgs"/> containing the event data.
     /// </param>
+    ///
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="e"/> parameter cannot be null.
     /// </exception>
@@ -236,12 +346,15 @@ public class Keyboard : IKeyboard, IDisposable
     /// <summary>
     /// Handles the <see cref="IKeyboardDevice.KeyUp"/> event.
     /// </summary>
+    ///
     /// <param name="sender">
     /// Specifies an <see cref="object"/> that represents the instance that raised the event.
     /// </param>
+    ///
     /// <param name="e">
     /// Specifies a <see cref="KeyEventArgs"/> containing the event data.
     /// </param>
+    ///
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="e"/> parameter cannot be null.
     /// </exception>

@@ -44,13 +44,14 @@
       <Argument Key="RequestExampleUrl" Value="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\FinalEngine.Audio\bin\x64\Debug\net7.0\FinalEngine.Audio.xml" xmlns="" />
-      <DocumentationSource sourceFile="..\FinalEngine.Audio\bin\x64\Debug\net7.0\FinalEngine.Audio.dll" xmlns="" />
-      <DocumentationSource sourceFile="..\FinalEngine.Maths\bin\x64\Debug\net7.0\FinalEngine.Maths.xml" />
-      <DocumentationSource sourceFile="..\FinalEngine.Maths\bin\x64\Debug\net7.0\FinalEngine.Maths.dll" />
-      <DocumentationSource sourceFile="..\FinalEngine.Audio.OpenAL\bin\x64\Debug\net7.0\FinalEngine.Audio.OpenAL.xml" />
-      <DocumentationSource sourceFile="..\FinalEngine.Audio.OpenAL\bin\x64\Debug\net7.0\FinalEngine.Audio.OpenAL.dll" />
-    </DocumentationSources>
+      <DocumentationSource sourceFile="..\FinalEngine.Audio\bin\x64\Debug\net7.0\FinalEngine.Audio.xml" />
+<DocumentationSource sourceFile="..\FinalEngine.Audio\bin\x64\Debug\net7.0\FinalEngine.Audio.dll" />
+<DocumentationSource sourceFile="..\FinalEngine.Maths\bin\x64\Debug\net7.0\FinalEngine.Maths.xml" />
+<DocumentationSource sourceFile="..\FinalEngine.Maths\bin\x64\Debug\net7.0\FinalEngine.Maths.dll" />
+<DocumentationSource sourceFile="..\FinalEngine.Audio.OpenAL\bin\x64\Debug\net7.0\FinalEngine.Audio.OpenAL.xml" />
+<DocumentationSource sourceFile="..\FinalEngine.Audio.OpenAL\bin\x64\Debug\net7.0\FinalEngine.Audio.OpenAL.dll" />
+<DocumentationSource sourceFile="..\FinalEngine.Input\bin\x64\Debug\net7.0\FinalEngine.Input.xml" />
+<DocumentationSource sourceFile="..\FinalEngine.Input\bin\x64\Debug\net7.0\FinalEngine.Input.dll" /></DocumentationSources>
     <HelpFileFormat>Website</HelpFileFormat>
     <SyntaxFilters>C#, Visual Basic</SyntaxFilters>
     <PresentationStyle>Default2022</PresentationStyle>
@@ -74,11 +75,12 @@
     <RootNamespaceTitle>API Reference</RootNamespaceTitle>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="FinalEngine.Audio" isDocumented="True">Serves as a foundational framework for creating audio-related functionality within the engine. It defines a set of interfaces that developers can utilize to manage and manipulate audio resources and playback. These interfaces offer a standardized way to interact with audio elements, providing methods and properties to control playback, adjust volume, manage looping, and more.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FinalEngine.Maths" isDocumented="True">Provides utility classes and functions that assist in various mathematical operations commonly used throughout the framework.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FinalEngine.Audio (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="FinalEngine.Audio.OpenAL (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="FinalEngine.Audio.OpenAL" isDocumented="True" />
-<NamespaceSummaryItem name="FinalEngine.Audio.OpenAL.Loaders" isDocumented="True" /></NamespaceSummaries>
+      <NamespaceSummaryItem name="FinalEngine.Maths" isDocumented="True">Provides utility classes and functions that assist in various mathematical operations commonly used throughout the framework.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="FinalEngine.Audio (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="FinalEngine.Audio.OpenAL (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="FinalEngine.Audio.OpenAL" isDocumented="True" />
+      <NamespaceSummaryItem name="FinalEngine.Audio.OpenAL.Loaders" isDocumented="True" />
+    </NamespaceSummaries>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <PlugInConfigurations>
     </PlugInConfigurations>

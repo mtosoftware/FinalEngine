@@ -9,6 +9,7 @@ using System;
 /// <summary>
 /// Enumerates the available key modifiers, such as Shift or Control.
 /// </summary>
+///
 /// <remarks>
 /// The values of each enumeration corresponds to OpenTK's KeyModifiers enumeration.
 /// </remarks>

@@ -13,10 +13,11 @@ using System;
 public class MouseButtonEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the button that raised this event.
+    /// Gets the <see cref="MouseButton"/> that represents the button that raised this event.
     /// </summary>
+    ///
     /// <value>
-    /// The button that raised this event.
+    /// The <see cref="MouseButton"/> that represents the button that raised this event.
     /// </value>
     public MouseButton Button { get; init; }
 }
