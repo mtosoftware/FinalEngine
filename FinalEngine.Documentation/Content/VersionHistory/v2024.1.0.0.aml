@@ -30,6 +30,12 @@
                             Added <codeEntityReference linkText="FinalEngine.Audio.OpenAL">N:FinalEngine.Audio.OpenAL</codeEntityReference> source documentation.
                         </para>
                     </listItem>
+
+                    <listItem>
+                        <para>
+                            Added <codeEntityReference linkText="FinalEngine.Input">N:FinalEngine.Input</codeEntityReference> source documentation.
+                        </para>
+                    </listItem>
                 </list>
             </content>
         </section>
