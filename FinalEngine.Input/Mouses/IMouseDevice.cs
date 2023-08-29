@@ -8,8 +8,12 @@ using System;
 using System.Drawing;
 
 /// <summary>
-///   Represents an interface that defines methods and events that provides access to common mouse device operations.
+/// Represents an interface that defines methods and events that provides access to common mouse device operations.
 /// </summary>
+///
+/// <remarks>
+/// The <see cref="IMouseDevice"/> interface provides events that allow developers to respond to mouse events.
+/// </remarks>
 public interface IMouseDevice
 {
     /// <summary>

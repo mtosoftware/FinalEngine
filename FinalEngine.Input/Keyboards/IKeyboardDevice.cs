@@ -9,6 +9,7 @@ using System;
 /// <summary>
 /// Represents an interface that defines methods to provide access to common keyboard device operations.
 /// </summary>
+///
 /// <remarks>
 ///   The <see cref="IKeyboardDevice"/> interface provides events that allow developers to respond to key presses and releases.
 /// </remarks>
