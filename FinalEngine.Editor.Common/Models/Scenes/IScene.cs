@@ -22,15 +22,12 @@ public interface IScene
     IReadOnlyCollection<Entity> Entities { get; }
 
     /// <summary>
-    /// Adds an entity with the specified <paramref name="tag"/> and <paramref name="uniqueID"/> to this <see cref="IScene"/>.
+    /// Adds the specified <paramref name="entity"/> to this <see cref="IScene"/>.
     /// </summary>
-    /// <param name="tag">
-    /// The name/tag of the entity to create and add to this <see cref="IScene"/>.
+    /// <param name="entity">
+    /// The entity to add to this <see cref="IScene"/>.
     /// </param>
-    /// <param name="uniqueID">
-    /// The unique identifier of the entity to create and add to this <see cref="IScene"/>.
-    /// </param>
-    void AddEntity(string tag, Guid uniqueID);
+    void AddEntity(Entity entity);
 
     /// <summary>
     /// Removes an entity that matches the specified <paramref name="uniqueIdentifier"/> from this <see cref="IScene"/>.

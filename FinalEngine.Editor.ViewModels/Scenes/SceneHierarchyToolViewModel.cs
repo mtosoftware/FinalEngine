@@ -10,6 +10,8 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Services.Scenes;
+using FinalEngine.Editor.ViewModels.Commands;
+using FinalEngine.Editor.ViewModels.Commands.Entities;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;
@@ -21,6 +23,8 @@ using Microsoft.Extensions.Logging;
 /// <seealso cref="ISceneHierarchyToolViewModel" />
 public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHierarchyToolViewModel
 {
+    private readonly IMementoCaretaker caretaker;
+
     /// <summary>
     /// The logger.
     /// </summary>
@@ -58,17 +62,20 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
     /// <param name="sceneManager">
     /// The scene manager.
     /// </param>
+    /// <param name="caretaker"></param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/>, <paramref name="messenger"/> or <paramref name="sceneManager"/> parameter cannot be null.
     /// </exception>
     public SceneHierarchyToolViewModel(
         ILogger<SceneHierarchyToolViewModel> logger,
         IMessenger messenger,
-        ISceneManager sceneManager)
+        ISceneManager sceneManager,
+        IMementoCaretaker caretaker)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
+        this.caretaker = caretaker ?? throw new ArgumentNullException(nameof(caretaker));
 
         this.Title = "Scene Hierarchy";
         this.ContentID = "SceneHierarchy";
@@ -129,7 +136,11 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
             return;
         }
 
-        this.sceneManager.ActiveScene.RemoveEntity(this.SelectedEntity.UniqueIdentifier);
-        this.messenger.Send(new EntityDeletedMessage());
+        var memento = new DeleteEntityMementoCommand(
+            this.SelectedEntity,
+            this.messenger,
+            this.sceneManager);
+
+        this.caretaker.Apply(memento);
     }
 }

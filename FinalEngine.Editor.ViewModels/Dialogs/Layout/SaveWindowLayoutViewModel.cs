@@ -139,7 +139,7 @@ public sealed class SaveWindowLayoutViewModel : ObservableValidator, ISaveWindow
 
         if (this.layoutManager.ContainsLayout(this.LayoutName) && !this.userActionRequester.RequestYesNo(this.Title, requestMessage))
         {
-            this.logger.LogInformation("User or manager cancelled the save operation.");
+            this.logger.LogInformation("User or manager canceled the save operation.");
             return;
         }
 

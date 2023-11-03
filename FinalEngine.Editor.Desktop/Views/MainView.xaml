@@ -19,6 +19,12 @@
                  Title="{Binding Title}"
                  TitleAlignment="Right">
 
+    <!-- RESOURCES -->
+    <Window.Resources>
+        <Image x:Key="Icon_Undo_16x" Source="pack://application:,,,/FinalEngine.Editor.Desktop;component/Resources/Images/Icons/Undo_16x.png" />
+        <Image x:Key="Icon_Redo_16x" Source="pack://application:,,,/FinalEngine.Editor.Desktop;component/Resources/Images/Icons/Redo_16x.png" />
+    </Window.Resources>
+
     <!-- KEY BINDINGS -->
     <Window.InputBindings>
         <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
@@ -28,6 +34,8 @@
         <KeyBinding Gesture="Ctrl+Alt+P" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Properties" />
         <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding ToggleToolWindowCommand}" CommandParameter="Console" />
         <KeyBinding Gesture="Ctrl+Shift+E" Command="{Binding CreateEntityCommand}" />
+        <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}" />
+        <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}" />
     </Window.InputBindings>
 
     <!-- MAIN MENU -->
@@ -38,6 +46,11 @@
                 <!-- FILE -->
                 <MenuItem Header="_File">
                     <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" />
+                </MenuItem>
+
+                <MenuItem Header="_Edit">
+                    <MenuItem Icon="{StaticResource Icon_Undo_16x}" Header="{Binding UndoText,UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+Z" Command="{Binding UndoCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    <MenuItem Icon="{StaticResource Icon_Redo_16x}" Header="{Binding RedoText,UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+Y" Command="{Binding RedoCommand, UpdateSourceTrigger=PropertyChanged}" />
                 </MenuItem>
 
                 <!-- VIEW -->

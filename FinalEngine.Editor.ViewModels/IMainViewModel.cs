@@ -53,6 +53,8 @@ public interface IMainViewModel
     /// </remarks>
     ICommand ManageWindowLayoutsCommand { get; }
 
+    ICommand RedoCommand { get; }
+
     /// <summary>
     /// Gets the reset window layout command.
     /// </summary>
@@ -93,4 +95,6 @@ public interface IMainViewModel
     /// The <see cref="ToggleToolWindowCommand"/> is used to toggle the visiblity of a tool view.
     /// </remarks>
     ICommand ToggleToolWindowCommand { get; }
+
+    ICommand UndoCommand { get; }
 }

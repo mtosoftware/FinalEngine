@@ -8,7 +8,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Editor.Common.Services.Scenes;
+using FinalEngine.Editor.ViewModels.Commands;
+using FinalEngine.Editor.ViewModels.Commands.Entities;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using Microsoft.Extensions.Logging;
 
@@ -19,10 +22,17 @@ using Microsoft.Extensions.Logging;
 /// <seealso cref="ICreateEntityViewModel" />
 public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityViewModel
 {
+    private readonly IMementoCaretaker caretaker;
+
     /// <summary>
     /// The logger.
     /// </summary>
     private readonly ILogger<CreateEntityViewModel> logger;
+
+    /// <summary>
+    /// The messenger.
+    /// </summary>
+    private readonly IMessenger messenger;
 
     /// <summary>
     /// The scene manager, used to create a new entity and add it to the active scene.
@@ -42,21 +52,27 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateEntityViewModel"/> class.
     /// </summary>
+    /// <param name="messenger"></param>
     /// <param name="logger">
     /// The logger.
     /// </param>
     /// <param name="sceneManager">
     /// The scene manager, used to create a new entity and add it to the active scene.
     /// </param>
+    /// <param name="caretaker"></param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/> or <paramref name="sceneManager"/> parameter cannot be null.
     /// </exception>
     public CreateEntityViewModel(
+        IMessenger messenger,
         ILogger<CreateEntityViewModel> logger,
-        ISceneManager sceneManager)
+        ISceneManager sceneManager,
+        IMementoCaretaker caretaker)
     {
+        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
+        this.caretaker = caretaker ?? throw new ArgumentNullException(nameof(caretaker));
 
         this.EntityName = "Entity";
         this.EntityGuid = Guid.NewGuid();
@@ -117,8 +133,13 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
             throw new ArgumentNullException(nameof(closeable));
         }
 
-        var scene = this.sceneManager.ActiveScene;
-        scene.AddEntity(this.EntityName, this.EntityGuid);
+        var memento = new CreateEntityMementoCommand(
+            this.messenger,
+            this.sceneManager,
+            this.EntityName,
+            this.EntityGuid);
+
+        this.caretaker.Apply(memento);
 
         this.logger.LogInformation($"Entity with ID: '{this.EntityGuid}' created!");
 

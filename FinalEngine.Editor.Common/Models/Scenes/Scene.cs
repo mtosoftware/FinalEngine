@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using FinalEngine.ECS;
-using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.Common.Exceptions.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -59,26 +58,19 @@ public sealed class Scene : IScene
     }
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentException">
-    /// The specified <paramref name="tag"/> parameter cannot be null or whitespace.
+    /// <exception cref="ArgumentNullException">
+    /// The specified <paramref name="entity"/> parameter cannot be null.
     /// </exception>
-    public void AddEntity(string tag, Guid uniqueID)
+    public void AddEntity(Entity entity)
     {
-        this.logger.LogInformation($"Adding new {nameof(Entity)} to {nameof(Scene)} with ID: '{uniqueID}'.");
-
-        if (string.IsNullOrWhiteSpace(tag))
+        if (entity == null)
         {
-            throw new ArgumentException($"'{nameof(tag)}' cannot be null or whitespace.", nameof(tag));
+            throw new ArgumentNullException(nameof(entity));
         }
 
-        var entity = new Entity(uniqueID);
+        var uniqueID = entity.UniqueIdentifier;
 
-        entity.AddComponent(new TagComponent()
-        {
-            Tag = tag,
-        });
-
-        entity.AddComponent(new TransformComponent());
+        this.logger.LogInformation($"Adding new {nameof(Entity)} to {nameof(Scene)} with ID: '{uniqueID}'.");
 
         this.world.AddEntity(entity);
         this.entities.Add(entity);

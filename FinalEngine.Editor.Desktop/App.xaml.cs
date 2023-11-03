@@ -20,6 +20,7 @@ using FinalEngine.Editor.Desktop.Views;
 using FinalEngine.Editor.Desktop.Views.Dialogs.Entities;
 using FinalEngine.Editor.Desktop.Views.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels;
+using FinalEngine.Editor.ViewModels.Commands;
 using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
@@ -143,6 +144,7 @@ public partial class App : Application
 
         services.AddSingleton<IUserActionRequester, UserActionRequester>();
         services.AddSingleton<ILayoutManager, LayoutManager>();
+        services.AddSingleton<IMementoCaretaker, MementoCaretaker>();
 
         services.AddSingleton<IViewPresenter>(x =>
         {

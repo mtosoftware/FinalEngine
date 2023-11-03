@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.ViewModels.Commands;
 using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
@@ -25,6 +26,8 @@ using Microsoft.Extensions.Logging;
 /// <seealso cref="IMainViewModel" />
 public sealed class MainViewModel : ObservableObject, IMainViewModel
 {
+    private readonly IMementoCaretaker caretaker;
+
     /// <summary>
     /// The layout manager, used to handle reseting the current window layout.
     /// </summary>
@@ -55,6 +58,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private ICommand? manageWindowLayoutsCommand;
 
+    private IRelayCommand? redoCommand;
+
     /// <summary>
     /// The reset window layout command.
     /// </summary>
@@ -69,6 +74,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// The toggle tool window command.
     /// </summary>
     private ICommand? toggleToolWindowCommand;
+
+    private IRelayCommand? undoCommand;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -88,6 +95,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     /// <param name="dockViewModelFactory">
     /// The dock view model factory used to create an <see cref="IDockViewModel"/> to handle docking of tool and pane views.
     /// </param>
+    /// <param name="caretaker"></param>
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="logger"/>, <paramref name="viewPresenter"/>, <paramref name="applicationContext"/>, <paramref name="layoutManager"/> or <paramref name="dockViewModelFactory"/> parameter cannot be null.
     /// </exception>
@@ -96,11 +104,13 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         IViewPresenter viewPresenter,
         IApplicationContext applicationContext,
         ILayoutManager layoutManager,
-        IFactory<IDockViewModel> dockViewModelFactory)
+        IFactory<IDockViewModel> dockViewModelFactory,
+        IMementoCaretaker caretaker)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
         this.layoutManager = layoutManager ?? throw new ArgumentNullException(nameof(layoutManager));
+        this.caretaker = caretaker ?? throw new ArgumentNullException(nameof(caretaker));
 
         if (applicationContext == null)
         {
@@ -138,6 +148,14 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     }
 
     /// <inheritdoc/>
+    public ICommand RedoCommand
+    {
+        get { return this.redoCommand ??= new RelayCommand(this.Redo); }
+    }
+
+    public string RedoText { get; }
+
+    /// <inheritdoc/>
     public ICommand ResetWindowLayoutCommand
     {
         get { return this.resetWindowLayoutCommand ??= new RelayCommand(this.ResetWindowLayout); }
@@ -157,6 +175,14 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     {
         get { return this.toggleToolWindowCommand ??= new RelayCommand<string>(this.ToggleToolWindow); }
     }
+
+    /// <inheritdoc/>
+    public ICommand UndoCommand
+    {
+        get { return this.undoCommand ??= new RelayCommand(this.Undo); }
+    }
+
+    public string UndoText { get; }
 
     /// <summary>
     /// Closes the main view using the specified <paramref name="closeable"/> interaction.
@@ -185,6 +211,12 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private void CreateEntity()
     {
         this.viewPresenter.ShowView<ICreateEntityViewModel>();
+    }
+
+    private void Redo()
+    {
+        this.caretaker.Redo();
+        this.redoCommand?.NotifyCanExecuteChanged();
     }
 
     /// <summary>
@@ -230,5 +262,11 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         }
 
         this.layoutManager.ToggleToolWindow(contentID);
+    }
+
+    private void Undo()
+    {
+        this.caretaker.Undo();
+        this.undoCommand?.NotifyCanExecuteChanged();
     }
 }
