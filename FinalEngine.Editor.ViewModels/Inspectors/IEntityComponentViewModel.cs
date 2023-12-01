@@ -48,4 +48,6 @@ public interface IEntityComponentViewModel
     /// The <see cref="ToggleCommand"/> is used to toggle the visibility of the components properties.
     /// </remarks>
     ICommand ToggleCommand { get; }
+
+    ICommand RemoveCommand { get; }
 }

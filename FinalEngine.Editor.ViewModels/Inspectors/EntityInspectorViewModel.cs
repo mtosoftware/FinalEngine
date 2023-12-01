@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
+using FinalEngine.Editor.ViewModels.Messages.Entities;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IEntityInspectorViewModel"/>.
@@ -17,6 +19,8 @@ using FinalEngine.ECS;
 /// <seealso cref="IEntityInspectorViewModel" />
 public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspectorViewModel
 {
+    private readonly IMessenger messenger;
+
     /// <summary>
     /// The component view models.
     /// </summary>
@@ -36,20 +40,45 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="entity"/> parameter cannot be null.
     /// </exception>
-    public EntityInspectorViewModel(Entity entity)
+    public EntityInspectorViewModel(IMessenger messenger, Entity entity)
     {
+        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.entity = entity ?? throw new ArgumentNullException(nameof(entity));
         this.componentViewModels = new ObservableCollection<IEntityComponentViewModel>();
 
-        foreach (var component in this.entity.Components)
-        {
-            this.componentViewModels.Add(new EntityComponentViewModel(component));
-        }
+        this.messenger.Register<EntityModifiedMessage>(this, this.HandleEntityModified);
+
+        this.InitializeEntityComponents();
     }
 
     /// <inheritdoc/>
     public ICollection<IEntityComponentViewModel> ComponentViewModels
     {
         get { return this.componentViewModels; }
+    }
+
+    private void InitializeEntityComponents()
+    {
+        this.componentViewModels.Clear();
+
+        foreach (var component in this.entity.Components)
+        {
+            this.componentViewModels.Add(new EntityComponentViewModel(this.messenger, this.entity, component));
+        }
+    }
+
+    private void HandleEntityModified(object recipient, EntityModifiedMessage message)
+    {
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
+
+        if (!ReferenceEquals(this.entity, message.Entity))
+        {
+            return;
+        }
+
+        this.InitializeEntityComponents();
     }
 }

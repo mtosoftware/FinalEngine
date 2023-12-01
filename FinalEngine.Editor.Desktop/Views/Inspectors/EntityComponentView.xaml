@@ -7,11 +7,27 @@
              xmlns:dtv="clr-namespace:FinalEngine.Editor.Desktop.Views.Editing.DataTypes"
              xmlns:dt="clr-namespace:FinalEngine.Editor.ViewModels.Editing.DataTypes;assembly=FinalEngine.Editor.ViewModels"
              xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Inspectors;assembly=FinalEngine.Editor.ViewModels"
+             xmlns:c="clr-namespace:FinalEngine.Editor.Desktop.Controls.Common"
              d:DataContext="{d:DesignInstance Type=vm:EntityComponentViewModel}"
              mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <BitmapImage x:Key="Icon_Settings" UriSource="/Resources/Images/Icons/Settings.png"/>
+    </UserControl.Resources>
+
     <Grid Margin="5">
         <StackPanel>
-            <ToggleButton Content="{Binding Name}" Command="{Binding ToggleCommand}" />
+
+            <DockPanel>
+                <ToggleButton DockPanel.Dock="Left" HorizontalAlignment="Left" Content="{Binding Name}" Command="{Binding ToggleCommand}" />
+                <c:IconButton DockPanel.Dock="Right" HorizontalAlignment="Right" UriSource="{StaticResource Icon_Settings}">
+                    <c:IconButton.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Remove Component" Command="{Binding RemoveCommand}"/>
+                        </ContextMenu>
+                    </c:IconButton.ContextMenu>
+                </c:IconButton>
+            </DockPanel>
 
             <ListBox ItemsSource="{Binding PropertyViewModels, UpdateSourceTrigger=PropertyChanged}"
                      Visibility="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"

@@ -13,9 +13,12 @@ using System.Reflection;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
+using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.ViewModels.Editing.DataTypes;
 using FinalEngine.Editor.ViewModels.Exceptions.Inspectors;
+using FinalEngine.Editor.ViewModels.Messages.Entities;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IEntityComponentViewModel"/>.
@@ -24,6 +27,12 @@ using FinalEngine.Editor.ViewModels.Exceptions.Inspectors;
 /// <seealso cref="IEntityComponentViewModel" />
 public sealed class EntityComponentViewModel : ObservableObject, IEntityComponentViewModel
 {
+    private readonly IMessenger messenger;
+
+    private readonly Entity entity;
+
+    private readonly IEntityComponent component;
+
     /// <summary>
     /// The property view models associated with this component model.
     /// </summary>
@@ -39,6 +48,8 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     /// </summary>
     private ICommand? toggleCommand;
 
+    private ICommand? removeCommand;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="EntityComponentViewModel"/> class.
     /// </summary>
@@ -48,12 +59,11 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     /// <exception cref="ArgumentNullException">
     /// The specified <paramref name="component"/> parameter cannot be null.
     /// </exception>
-    public EntityComponentViewModel(IEntityComponent component)
+    public EntityComponentViewModel(IMessenger messenger, Entity entity, IEntityComponent component)
     {
-        if (component == null)
-        {
-            throw new ArgumentNullException(nameof(component));
-        }
+        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+        this.entity = entity ?? throw new ArgumentNullException(nameof(entity));
+        this.component = component ?? throw new ArgumentNullException(nameof(component));
 
         this.propertyViewModels = new ObservableCollection<ObservableObject>();
 
@@ -144,11 +154,27 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
         get { return this.toggleCommand ??= new RelayCommand(this.Toggle); }
     }
 
+    public ICommand RemoveCommand
+    {
+        get { return this.removeCommand ??= new RelayCommand(this.Remove, this.CanRemove); }
+    }
+
     /// <summary>
     /// Toggles the visibility of the components properties.
     /// </summary>
     private void Toggle()
     {
         this.IsVisible = !this.IsVisible;
+    }
+
+    private bool CanRemove()
+    {
+        return this.component.GetType() != typeof(TagComponent);
+    }
+
+    private void Remove()
+    {
+        this.entity.RemoveComponent(this.component);
+        this.messenger.Send(new EntityModifiedMessage(this.entity));
     }
 }
