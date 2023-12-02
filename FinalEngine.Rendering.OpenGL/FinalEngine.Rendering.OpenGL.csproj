@@ -24,7 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenTK.Core" Version="4.8.0" />
+    <PackageReference Include="OpenTK.Core" Version="4.8.1" />
     <PackageReference Include="OpenTK.Graphics" Version="4.8.0" />
     <PackageReference Include="OpenTK.Windowing.Common" Version="4.8.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
