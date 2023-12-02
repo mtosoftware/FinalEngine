@@ -1,5 +1,5 @@
 // <copyright file="EntityComponentViewModel.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Editor.ViewModels.Inspectors;
@@ -21,43 +21,43 @@ using FinalEngine.Editor.ViewModels.Exceptions.Inspectors;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 
 /// <summary>
-/// Provides a standard implementation of an <see cref="IEntityComponentViewModel"/>.
+///   Provides a standard implementation of an <see cref="IEntityComponentViewModel"/>.
 /// </summary>
-/// <seealso cref="ObservableObject" />
-/// <seealso cref="IEntityComponentViewModel" />
+/// <seealso cref="ObservableObject"/>
+/// <seealso cref="IEntityComponentViewModel"/>
 public sealed class EntityComponentViewModel : ObservableObject, IEntityComponentViewModel
 {
-    private readonly IMessenger messenger;
+    private readonly IEntityComponent component;
 
     private readonly Entity entity;
 
-    private readonly IEntityComponent component;
+    private readonly IMessenger messenger;
 
     /// <summary>
-    /// The property view models associated with this component model.
+    ///   The property view models associated with this component model.
     /// </summary>
     private readonly ObservableCollection<ObservableObject> propertyViewModels;
 
     /// <summary>
-    /// Indicates whether the components properties are visible.
+    ///   Indicates whether the components properties are visible.
     /// </summary>
     private bool isVisible;
-
-    /// <summary>
-    /// The toggle command.
-    /// </summary>
-    private ICommand? toggleCommand;
 
     private ICommand? removeCommand;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EntityComponentViewModel"/> class.
+    ///   The toggle command.
+    /// </summary>
+    private ICommand? toggleCommand;
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="EntityComponentViewModel"/> class.
     /// </summary>
     /// <param name="component">
-    /// The component to be modelled.
+    ///   The component to be modeled.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="component"/> parameter cannot be null.
+    ///   The specified <paramref name="component"/> parameter cannot be null.
     /// </exception>
     public EntityComponentViewModel(IMessenger messenger, Entity entity, IEntityComponent component)
     {
@@ -148,23 +148,15 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
         get { return this.propertyViewModels; }
     }
 
-    /// <inheritdoc/>
-    public ICommand ToggleCommand
-    {
-        get { return this.toggleCommand ??= new RelayCommand(this.Toggle); }
-    }
-
     public ICommand RemoveCommand
     {
         get { return this.removeCommand ??= new RelayCommand(this.Remove, this.CanRemove); }
     }
 
-    /// <summary>
-    /// Toggles the visibility of the components properties.
-    /// </summary>
-    private void Toggle()
+    /// <inheritdoc/>
+    public ICommand ToggleCommand
     {
-        this.IsVisible = !this.IsVisible;
+        get { return this.toggleCommand ??= new RelayCommand(this.Toggle); }
     }
 
     private bool CanRemove()
@@ -174,7 +166,20 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
 
     private void Remove()
     {
+        if (!this.entity.ContainsComponent(this.component))
+        {
+            throw new InvalidOperationException($"The {nameof(Entity)} provided to this instance does not contain an {nameof(IEntityComponent)} of type: '{this.component.GetType()}'");
+        }
+
         this.entity.RemoveComponent(this.component);
         this.messenger.Send(new EntityModifiedMessage(this.entity));
+    }
+
+    /// <summary>
+    ///   Toggles the visibility of the components properties.
+    /// </summary>
+    private void Toggle()
+    {
+        this.IsVisible = !this.IsVisible;
     }
 }

@@ -1,5 +1,5 @@
 // <copyright file="PropertiesToolViewModelTests.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Editor.ViewModels.Inspectors;
@@ -22,7 +22,7 @@ public sealed class PropertiesToolViewModelTests
     private PropertiesToolViewModel viewModel;
 
     [Test]
-    public void COnstructorShouldRegisterEntityDeletedMessageWhenInvoked()
+    public void ConstructorShouldRegisterEntityDeletedMessageWhenInvoked()
     {
         // Assert
         Assert.That(WeakReferenceMessenger.Default.IsRegistered<EntityDeletedMessage>(this.viewModel), Is.True);
@@ -82,7 +82,7 @@ public sealed class PropertiesToolViewModelTests
     }
 
     [Test]
-    public void MessengerPubilshShouldSetCurrentViewToEntityInspectorViewModelWhenInvoked()
+    public void MessengerPublishShouldSetCurrentViewToEntityInspectorViewModelWhenInvoked()
     {
         // Arrange
         var entity = new Entity();
@@ -96,7 +96,7 @@ public sealed class PropertiesToolViewModelTests
     }
 
     [Test]
-    public void MessengerPubilshShouldSetTitleToEntityInspectorWhenInvoked()
+    public void MessengerPublishShouldSetTitleToEntityInspectorWhenInvoked()
     {
         // Arrange
         var entity = new Entity();

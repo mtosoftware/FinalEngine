@@ -51,7 +51,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\Icons\Settings.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 

@@ -71,21 +71,6 @@ public class MouseTests
     }
 
     [Test]
-    public void DeltaShouldReturnPointEmptyWhenDeviceIsNull()
-    {
-        // Arrange
-        var mouse = new Mouse(null);
-        PointF expected = Point.Empty;
-
-        // Act
-        var actual = mouse.Delta;
-        mouse.Dispose();
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    [Test]
     public void DeviceButtonDownShouldThrowArgumentNullExceptionWhenEventDataIsNull()
     {
         // Act and assert

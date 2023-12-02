@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{14909D16-2584-4EB6-8656-7DA0C1DD540F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		CodeReview.md = CodeReview.md
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject

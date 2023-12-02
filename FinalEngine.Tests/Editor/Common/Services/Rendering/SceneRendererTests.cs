@@ -1,5 +1,5 @@
 // <copyright file="SceneRendererTests.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Editor.Common.Services.Rendering;
@@ -15,6 +15,8 @@ using NUnit.Framework;
 [TestFixture]
 public sealed class SceneRendererTests
 {
+    private Mock<IRenderPipeline> pipeline;
+
     private Mock<IRenderDevice> renderDevice;
 
     private Mock<IScene> scene;
@@ -24,12 +26,22 @@ public sealed class SceneRendererTests
     private SceneRenderer sceneRenderer;
 
     [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenPipelineIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new SceneRenderer(null, this.renderDevice.Object, this.sceneManager.Object);
+        });
+    }
+
+    [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenRenderDeviceIsNull()
     {
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SceneRenderer(null, this.sceneManager.Object);
+            new SceneRenderer(this.pipeline.Object, null, this.sceneManager.Object);
         });
     }
 
@@ -39,7 +51,7 @@ public sealed class SceneRendererTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SceneRenderer(this.renderDevice.Object, null);
+            new SceneRenderer(this.pipeline.Object, this.renderDevice.Object, null);
         });
     }
 
@@ -51,6 +63,27 @@ public sealed class SceneRendererTests
 
         // Assert
         this.scene.Verify(x => x.Render(), Times.Once);
+    }
+
+    [Test]
+    public void RenderShouldInvokePipelineInitializedOnceWhenInvokedMoreThanOnce()
+    {
+        // Act
+        this.sceneRenderer.Render();
+        this.sceneRenderer.Render();
+
+        // Assert
+        this.pipeline.Verify(x => x.Initialize(), Times.Once);
+    }
+
+    [Test]
+    public void RenderShouldInvokePipelineInitializedWhenInvoked()
+    {
+        // Act
+        this.sceneRenderer.Render();
+
+        // Assert
+        this.pipeline.Verify(x => x.Initialize(), Times.Once);
     }
 
     [Test]
@@ -68,10 +101,12 @@ public sealed class SceneRendererTests
     {
         this.sceneManager = new Mock<ISceneManager>();
         this.renderDevice = new Mock<IRenderDevice>();
+        this.pipeline = new Mock<IRenderPipeline>();
+
         this.scene = new Mock<IScene>();
 
         this.sceneManager.SetupGet(x => x.ActiveScene).Returns(this.scene.Object);
 
-        this.sceneRenderer = new SceneRenderer(this.renderDevice.Object, this.sceneManager.Object);
+        this.sceneRenderer = new SceneRenderer(this.pipeline.Object, this.renderDevice.Object, this.sceneManager.Object);
     }
 }

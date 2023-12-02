@@ -1,5 +1,5 @@
 // <copyright file="EntityInspectorViewModel.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Editor.ViewModels.Inspectors;
@@ -13,32 +13,32 @@ using FinalEngine.ECS;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 
 /// <summary>
-/// Provides a standard implementation of an <see cref="IEntityInspectorViewModel"/>.
+///   Provides a standard implementation of an <see cref="IEntityInspectorViewModel"/>.
 /// </summary>
-/// <seealso cref="ObservableObject" />
-/// <seealso cref="IEntityInspectorViewModel" />
+/// <seealso cref="ObservableObject"/>
+/// <seealso cref="IEntityInspectorViewModel"/>
 public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspectorViewModel
 {
-    private readonly IMessenger messenger;
-
     /// <summary>
-    /// The component view models.
+    ///   The component view models.
     /// </summary>
     private readonly ObservableCollection<IEntityComponentViewModel> componentViewModels;
 
     /// <summary>
-    /// The entity being inspected.
+    ///   The entity being inspected.
     /// </summary>
     private readonly Entity entity;
 
+    private readonly IMessenger messenger;
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="EntityInspectorViewModel"/> class.
+    ///   Initializes a new instance of the <see cref="EntityInspectorViewModel"/> class.
     /// </summary>
     /// <param name="entity">
-    /// The entity to be inspected.
+    ///   The entity to be inspected.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="entity"/> parameter cannot be null.
+    ///   The specified <paramref name="entity"/> parameter cannot be null.
     /// </exception>
     public EntityInspectorViewModel(IMessenger messenger, Entity entity)
     {
@@ -57,6 +57,16 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         get { return this.componentViewModels; }
     }
 
+    private void HandleEntityModified(object recipient, EntityModifiedMessage message)
+    {
+        if (!ReferenceEquals(this.entity, message.Entity))
+        {
+            return;
+        }
+
+        this.InitializeEntityComponents();
+    }
+
     private void InitializeEntityComponents()
     {
         this.componentViewModels.Clear();
@@ -65,20 +75,5 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         {
             this.componentViewModels.Add(new EntityComponentViewModel(this.messenger, this.entity, component));
         }
-    }
-
-    private void HandleEntityModified(object recipient, EntityModifiedMessage message)
-    {
-        if (message == null)
-        {
-            throw new ArgumentNullException(nameof(message));
-        }
-
-        if (!ReferenceEquals(this.entity, message.Entity))
-        {
-            return;
-        }
-
-        this.InitializeEntityComponents();
     }
 }

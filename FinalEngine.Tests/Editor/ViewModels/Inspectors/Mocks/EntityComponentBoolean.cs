@@ -6,7 +6,7 @@ namespace FinalEngine.Tests.Editor.ViewModels.Inspectors.Mocks;
 
 using FinalEngine.ECS;
 
-public sealed class EntityComponenBoolean : IEntityComponent
+public sealed class EntityComponentBoolean : IEntityComponent
 {
     public bool Test { get; set; }
 }
