@@ -96,7 +96,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         this.logger.LogInformation($"Changing properties view to: '{nameof(EntityInspectorViewModel)}'.");
 
         this.Title = "Entity Inspector";
-        this.CurrentViewModel = new EntityInspectorViewModel(message.Entity);
+        this.CurrentViewModel = new EntityInspectorViewModel(this.messenger, message.Entity);
     }
 
     /// <summary>

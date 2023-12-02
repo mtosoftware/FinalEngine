@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="Styles/Controls/ToggleButtonStyle.xaml" />
                 <ResourceDictionary Source="Styles/Controls/TransparentListBoxStyle.xaml" />
                 <ResourceDictionary Source="Styles/Controls/TransparentListBoxItemStyle.xaml" />
+                <ResourceDictionary Source="Styles/Controls/IconButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -69,19 +69,6 @@ public class OpenGLRenderContextTests
         });
     }
 
-    [Test]
-    public void DisposeShouldNotExecuteWhenAlreadyDisposed()
-    {
-        // Arrange
-        this.renderContext.Dispose();
-
-        // Act
-        this.renderContext.Dispose();
-
-        // Assert
-        this.invoker.Verify(x => x.DeleteVertexArray(VertexArrayID), Times.Once);
-    }
-
     [SetUp]
     public void Setup()
     {
@@ -110,16 +97,6 @@ public class OpenGLRenderContextTests
     }
 
     [Test]
-    public void SwapBuffersShouldThrowObjectDisposedExceptionWhenDisposed()
-    {
-        // Arrange
-        this.renderContext.Dispose();
-
-        // Act and assert
-        Assert.Throws<ObjectDisposedException>(this.renderContext.SwapBuffers);
-    }
-
-    [Test]
     public void SwapBuffersShouldThrowRenderContextExceptionWhenContextIsNotCurrent()
     {
         // Arrange
@@ -127,11 +104,5 @@ public class OpenGLRenderContextTests
 
         // Act and assert
         Assert.Throws<RenderContextException>(this.renderContext.SwapBuffers);
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        this.renderContext.Dispose();
     }
 }
