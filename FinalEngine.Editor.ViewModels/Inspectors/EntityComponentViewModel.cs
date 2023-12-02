@@ -27,10 +27,19 @@ using FinalEngine.Editor.ViewModels.Messages.Entities;
 /// <seealso cref="IEntityComponentViewModel"/>
 public sealed class EntityComponentViewModel : ObservableObject, IEntityComponentViewModel
 {
+    /// <summary>
+    ///   The component to model.
+    /// </summary>
     private readonly IEntityComponent component;
 
+    /// <summary>
+    ///   The entity that contains the component to be modeled.
+    /// </summary>
     private readonly Entity entity;
 
+    /// <summary>
+    ///   The messenger, used to notify other views when the entity has been modified.
+    /// </summary>
     private readonly IMessenger messenger;
 
     /// <summary>
@@ -43,6 +52,9 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     /// </summary>
     private bool isVisible;
 
+    /// <summary>
+    ///   The remove command, used to remove the component from the entity.
+    /// </summary>
     private ICommand? removeCommand;
 
     /// <summary>
@@ -53,11 +65,17 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
     /// <summary>
     ///   Initializes a new instance of the <see cref="EntityComponentViewModel"/> class.
     /// </summary>
+    /// <param name="messenger">
+    ///   The messenger.
+    /// </param>
     /// <param name="component">
     ///   The component to be modeled.
     /// </param>
+    /// <param name="entity">
+    ///   The entity that contains the specified <paramref name="component"/>.
+    /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="component"/> parameter cannot be null.
+    ///   The specified <paramref name="messenger"/>, <paramref name="entity"/> or <paramref name="component"/> parameter cannot be null.
     /// </exception>
     public EntityComponentViewModel(IMessenger messenger, Entity entity, IEntityComponent component)
     {
@@ -148,6 +166,7 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
         get { return this.propertyViewModels; }
     }
 
+    /// <inheritdoc/>
     public ICommand RemoveCommand
     {
         get { return this.removeCommand ??= new RelayCommand(this.Remove, this.CanRemove); }
@@ -159,11 +178,23 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
         get { return this.toggleCommand ??= new RelayCommand(this.Toggle); }
     }
 
+    /// <summary>
+    ///   Determines whether the component can be removed from the entity.
+    /// </summary>
+    /// <returns>
+    ///   <c>true</c> if the component can be removed from the entity; otherwise, <c>false</c>.
+    /// </returns>
     private bool CanRemove()
     {
         return this.component.GetType() != typeof(TagComponent);
     }
 
+    /// <summary>
+    ///   Removes the component from the entity and notifies other views that the entity has been modified.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    ///   The <see cref="Entity"/> provided to this instance does not contain an <see cref="IEntityComponent"/> of the required type.
+    /// </exception>
     private void Remove()
     {
         if (!this.entity.ContainsComponent(this.component))

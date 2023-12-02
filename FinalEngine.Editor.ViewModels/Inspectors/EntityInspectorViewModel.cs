@@ -29,11 +29,17 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
     /// </summary>
     private readonly Entity entity;
 
+    /// <summary>
+    ///   The messenger.
+    /// </summary>
     private readonly IMessenger messenger;
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="EntityInspectorViewModel"/> class.
     /// </summary>
+    /// <param name="messenger">
+    ///   The messenger.
+    /// </param>
     /// <param name="entity">
     ///   The entity to be inspected.
     /// </param>
@@ -57,6 +63,15 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         get { return this.componentViewModels; }
     }
 
+    /// <summary>
+    ///   Handles the <see cref="EntityModifiedMessage"/> and initializes the entity component view models.
+    /// </summary>
+    /// <param name="recipient">
+    ///   The recipient.
+    /// </param>
+    /// <param name="message">
+    ///   The message.
+    /// </param>
     private void HandleEntityModified(object recipient, EntityModifiedMessage message)
     {
         if (!ReferenceEquals(this.entity, message.Entity))
@@ -67,6 +82,9 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         this.InitializeEntityComponents();
     }
 
+    /// <summary>
+    ///   Initializes the entity component view models for the <see cref="Entity"/>.
+    /// </summary>
     private void InitializeEntityComponents()
     {
         this.componentViewModels.Clear();

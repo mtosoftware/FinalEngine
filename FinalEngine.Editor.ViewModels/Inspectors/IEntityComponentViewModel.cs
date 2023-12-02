@@ -1,5 +1,5 @@
 // <copyright file="IEntityComponentViewModel.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Editor.ViewModels.Inspectors;
@@ -10,12 +10,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FinalEngine.ECS;
 
 /// <summary>
-/// Defines an interface that represents a model of an entity component view.
+///   Defines an interface that represents a model of an entity component view.
 /// </summary>
 public interface IEntityComponentViewModel
 {
     /// <summary>
-    /// Gets a value indicating whether the components properties are visible.
+    ///   Gets a value indicating whether the components properties are visible.
     /// </summary>
     /// <value>
     ///   <c>true</c> if the components properties are visible; otherwise, <c>false</c>.
@@ -23,31 +23,40 @@ public interface IEntityComponentViewModel
     bool IsVisible { get; }
 
     /// <summary>
-    /// Gets the name of the <see cref="IEntityComponent"/>.
+    ///   Gets the name of the <see cref="IEntityComponent"/>.
     /// </summary>
     /// <value>
-    /// The name of the <see cref="IEntityComponent"/>.
+    ///   The name of the <see cref="IEntityComponent"/>.
     /// </value>
     string Name { get; }
 
     /// <summary>
-    /// Gets the property view models.
+    ///   Gets the property view models.
     /// </summary>
     /// <value>
-    /// The property view models.
+    ///   The property view models.
     /// </value>
     ICollection<ObservableObject> PropertyViewModels { get; }
 
     /// <summary>
-    /// Gets the toggle command.
+    ///   Gets the remove command.
     /// </summary>
     /// <value>
-    /// The toggle command.
+    ///   The remove command.
     /// </value>
     /// <remarks>
-    /// The <see cref="ToggleCommand"/> is used to toggle the visibility of the components properties.
+    ///   The <see cref="RemoveCommand"/> is used to remove an <see cref="IEntityComponent"/> from an <see cref="Entity"/>.
+    /// </remarks>
+    ICommand RemoveCommand { get; }
+
+    /// <summary>
+    ///   Gets the toggle command.
+    /// </summary>
+    /// <value>
+    ///   The toggle command.
+    /// </value>
+    /// <remarks>
+    ///   The <see cref="ToggleCommand"/> is used to toggle the visibility of the components properties.
     /// </remarks>
     ICommand ToggleCommand { get; }
-
-    ICommand RemoveCommand { get; }
 }
