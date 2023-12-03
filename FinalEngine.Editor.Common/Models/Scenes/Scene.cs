@@ -1,5 +1,5 @@
 // <copyright file="Scene.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Editor.Common.Models.Scenes;
@@ -8,42 +8,78 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.Common.Exceptions.Entities;
 using Microsoft.Extensions.Logging;
 
+public class SomeComponent : IEntityComponent
+{
+    public string Float { get; set; }
+
+    public string Float2 { get; set; }
+
+    public Vector2 Vector10 { get; set; }
+
+    public Vector2 Vector11 { get; set; }
+
+    public Vector2 Vector12 { get; set; }
+
+    public Vector2 Vector13 { get; set; }
+
+    public Vector2 Vector14 { get; set; }
+
+    public Vector2 Vector15 { get; set; }
+
+    public Vector2 Vector2 { get; set; }
+
+    public Vector2 Vector3 { get; set; }
+
+    public Vector2 Vector4 { get; set; }
+
+    public Vector2 Vector5 { get; set; }
+
+    public Vector2 Vector6 { get; set; }
+
+    public Vector2 Vector7 { get; set; }
+
+    public Vector2 Vector8 { get; set; }
+
+    public Vector2 Vector9 { get; set; }
+}
+
 /// <summary>
-/// Represents a scene that contains a collection of entities and systems.
+///   Represents a scene that contains a collection of entities and systems.
 /// </summary>
 public sealed class Scene : IScene
 {
     /// <summary>
-    /// The entities contained within the scene.
+    ///   The entities contained within the scene.
     /// </summary>
     private readonly ObservableCollection<Entity> entities;
 
     /// <summary>
-    /// The logger.
+    ///   The logger.
     /// </summary>
     private readonly ILogger<Scene> logger;
 
     /// <summary>
-    /// The underlying entity world that contains all the scenes entities and systems.
+    ///   The underlying entity world that contains all the scenes entities and systems.
     /// </summary>
     private readonly IEntityWorld world;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Scene"/> class.
+    ///   Initializes a new instance of the <see cref="Scene"/> class.
     /// </summary>
     /// <param name="logger">
-    /// The logger.
+    ///   The logger.
     /// </param>
     /// <param name="world">
-    /// The entity world to be associated with this scene.
+    ///   The entity world to be associated with this scene.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="logger"/> or <paramref name="world"/> parameter cannot be null.
+    ///   The specified <paramref name="logger"/> or <paramref name="world"/> parameter cannot be null.
     /// </exception>
     public Scene(ILogger<Scene> logger, IEntityWorld world)
     {
@@ -60,7 +96,7 @@ public sealed class Scene : IScene
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentException">
-    /// The specified <paramref name="tag"/> parameter cannot be null or whitespace.
+    ///   The specified <paramref name="tag"/> parameter cannot be null or whitespace.
     /// </exception>
     public void AddEntity(string tag, Guid uniqueID)
     {
@@ -79,6 +115,7 @@ public sealed class Scene : IScene
         });
 
         entity.AddComponent(new TransformComponent());
+        entity.AddComponent(new SomeComponent());
 
         this.world.AddEntity(entity);
         this.entities.Add(entity);
@@ -88,7 +125,7 @@ public sealed class Scene : IScene
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentException">
-    /// Failed to locate an <see cref="Entity"/> that matches the specified <paramref name="uniqueIdentifier"/>.
+    ///   Failed to locate an <see cref="Entity"/> that matches the specified <paramref name="uniqueIdentifier"/>.
     /// </exception>
     public void RemoveEntity(Guid uniqueIdentifier)
     {

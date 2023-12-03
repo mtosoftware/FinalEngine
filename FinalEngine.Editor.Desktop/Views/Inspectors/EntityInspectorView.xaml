@@ -8,28 +8,8 @@
              d:DataContext="{d:DesignInstance Type=vm:EntityInspectorViewModel}"
              mc:Ignorable="d">
 
-    <StackPanel Orientation="Vertical">
-        <ListBox ItemsSource="{Binding ComponentViewModels}"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ScrollViewer.CanContentScroll="False">
-
-            <ListBox.Style>
-                <StaticResource ResourceKey="TransparentListBoxStyle" />
-            </ListBox.Style>
-
-            <ListBox.ItemContainerStyle>
-                <StaticResource ResourceKey="TransparentListBoxItemStyle" />
-            </ListBox.ItemContainerStyle>
-
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type vm:EntityComponentViewModel}">
-                    <v:EntityComponentView />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-        <Button Margin="15" Content="Add Component">
+    <DockPanel LastChildFill="True">
+        <Button DockPanel.Dock="Bottom" Margin="15" Content="Add Component">
             <Button.Resources>
                 <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem.VisualStudio}" x:Key="MenuItemStyle">
                     <Setter Property="Header" Value="{Binding Name}" />
@@ -50,5 +30,26 @@
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>
-    </StackPanel>
+
+        <ListBox DockPanel.Dock="Top"
+                 ItemsSource="{Binding ComponentViewModels}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.CanContentScroll="False">
+
+            <ListBox.Style>
+                <StaticResource ResourceKey="TransparentListBoxStyle" />
+            </ListBox.Style>
+
+            <ListBox.ItemContainerStyle>
+                <StaticResource ResourceKey="TransparentListBoxItemStyle" />
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:EntityComponentViewModel}">
+                    <v:EntityComponentView />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
 </UserControl>
