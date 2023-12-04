@@ -1,4 +1,4 @@
-// <copyright file="EntityComponentTypeRetriever.cs" company="Software Antics">
+// <copyright file="EntityComponentTypeResolver.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Reflection;
 using FinalEngine.ECS;
 
-public sealed class EntityComponentTypeRetriever : IEntityComponentTypeRetriever
+public sealed class EntityComponentTypeResolver : IEntityComponentTypeResolver
 {
     public IReadOnlyDictionary<string, List<Type>> GetCategorizedTypes(Assembly assembly)
     {

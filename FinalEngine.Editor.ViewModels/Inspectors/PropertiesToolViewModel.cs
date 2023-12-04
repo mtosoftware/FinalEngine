@@ -29,7 +29,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     /// </summary>
     private readonly IMessenger messenger;
 
-    private readonly IEntityComponentTypeRetriever typeRetriever;
+    private readonly IEntityComponentTypeResolver typeResolver;
 
     /// <summary>
     ///   The current view model to be shown in the properties view.
@@ -47,11 +47,11 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
     /// </param>
     public PropertiesToolViewModel(
         ILogger<PropertiesToolViewModel> logger,
-        IEntityComponentTypeRetriever typeRetriever,
+        IEntityComponentTypeResolver typeResolver,
         IMessenger messenger)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.typeRetriever = typeRetriever ?? throw new ArgumentNullException(nameof(typeRetriever));
+        this.typeResolver = typeResolver ?? throw new ArgumentNullException(nameof(typeResolver));
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
 
         this.Title = "Properties";
@@ -101,7 +101,7 @@ public sealed class PropertiesToolViewModel : ToolViewModelBase, IPropertiesTool
         this.logger.LogInformation($"Changing properties view to: '{nameof(EntityInspectorViewModel)}'.");
 
         this.Title = "Entity Inspector";
-        this.CurrentViewModel = new EntityInspectorViewModel(this.messenger, this.typeRetriever, message.Entity);
+        this.CurrentViewModel = new EntityInspectorViewModel(this.messenger, this.typeResolver, message.Entity);
     }
 
     /// <summary>

@@ -22,14 +22,22 @@ public sealed class EntityComponentTypeViewModel : ObservableObject, IEntityComp
 
     private ICommand? addCommand;
 
-    private string? name;
-
     public EntityComponentTypeViewModel(IMessenger messenger, Entity entity, Type type)
     {
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.entity = entity ?? throw new ArgumentNullException(nameof(entity));
-        this.type = type ?? throw new ArgumentNullException(nameof(type));
 
+        if (type == null)
+        {
+            throw new ArgumentNullException(nameof(type));
+        }
+
+        if (!typeof(IEntityComponent).IsAssignableFrom(type))
+        {
+            throw new ArgumentException($"The specified {nameof(type)} parameter does not implement {nameof(IEntityComponent)}.");
+        }
+
+        this.type = type;
         this.Name = this.type.Name;
     }
 
@@ -38,22 +46,24 @@ public sealed class EntityComponentTypeViewModel : ObservableObject, IEntityComp
         get { return this.addCommand ??= new RelayCommand(this.AddComponent, this.CanAddComponent); }
     }
 
-    public string Name
-    {
-        get { return this.name ?? string.Empty; }
-        private set { this.SetProperty(ref this.name, value); }
-    }
+    public string Name { get; }
 
     private void AddComponent()
     {
-        //// TODO: Throw exception for non-parameterless constructors.
-        object? instance = Activator.CreateInstance(this.type);
+        object? instance = Activator.CreateInstance(this.type) ?? throw new InvalidOperationException($"The entity component couldn't be instantiated for the specified type: '{this.type}'. Please ensure the component contains a default empty constructor.");
 
-        if (instance is not null and IEntityComponent component)
+        if (instance is not IEntityComponent component)
         {
-            this.entity.AddComponent(component);
-            this.messenger.Send(new EntityModifiedMessage(this.entity));
+            throw new InvalidCastException($"The created instance of type '{instance.GetType()}' does not implement the {nameof(IEntityComponent)} interface.");
         }
+
+        if (this.entity.ContainsComponent(this.type))
+        {
+            return;
+        }
+
+        this.entity.AddComponent(component);
+        this.messenger.Send(new EntityModifiedMessage(this.entity));
     }
 
     private bool CanAddComponent()

@@ -8,46 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Numerics;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.Common.Exceptions.Entities;
 using Microsoft.Extensions.Logging;
-
-public class SomeComponent : IEntityComponent
-{
-    public string Float { get; set; }
-
-    public string Float2 { get; set; }
-
-    public Vector2 Vector10 { get; set; }
-
-    public Vector2 Vector11 { get; set; }
-
-    public Vector2 Vector12 { get; set; }
-
-    public Vector2 Vector13 { get; set; }
-
-    public Vector2 Vector14 { get; set; }
-
-    public Vector2 Vector15 { get; set; }
-
-    public Vector2 Vector2 { get; set; }
-
-    public Vector2 Vector3 { get; set; }
-
-    public Vector2 Vector4 { get; set; }
-
-    public Vector2 Vector5 { get; set; }
-
-    public Vector2 Vector6 { get; set; }
-
-    public Vector2 Vector7 { get; set; }
-
-    public Vector2 Vector8 { get; set; }
-
-    public Vector2 Vector9 { get; set; }
-}
 
 /// <summary>
 ///   Represents a scene that contains a collection of entities and systems.
@@ -115,7 +79,6 @@ public sealed class Scene : IScene
         });
 
         entity.AddComponent(new TransformComponent());
-        entity.AddComponent(new SomeComponent());
 
         this.world.AddEntity(entity);
         this.entities.Add(entity);

@@ -142,7 +142,7 @@ public partial class App : Application
         services.AddTransient<IViewable<IManageWindowLayoutsViewModel>, ManageWindowLayoutsView>();
         services.AddTransient<IViewable<ICreateEntityViewModel>, CreateEntityView>();
 
-        services.AddSingleton<IEntityComponentTypeRetriever, EntityComponentTypeRetriever>();
+        services.AddSingleton<IEntityComponentTypeResolver, EntityComponentTypeResolver>();
 
         services.AddSingleton<IUserActionRequester, UserActionRequester>();
         services.AddSingleton<ILayoutManager, LayoutManager>();

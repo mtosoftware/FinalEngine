@@ -10,19 +10,18 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 public sealed class EntityComponentCategoryViewModel : ObservableObject, IEntityComponentCategoryViewModel
 {
-    private string? name;
-
     public EntityComponentCategoryViewModel(string name, IEnumerable<IEntityComponentTypeViewModel> componentTypes)
     {
-        this.Name = name ?? throw new ArgumentNullException(nameof(name));
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
+        }
+
+        this.Name = name;
         this.ComponentTypes = componentTypes ?? throw new ArgumentNullException(nameof(componentTypes));
     }
 
     public IEnumerable<IEntityComponentTypeViewModel> ComponentTypes { get; }
 
-    public string Name
-    {
-        get { return this.name ?? string.Empty; }
-        private set { this.SetProperty(ref this.name, value); }
-    }
+    public string Name { get; }
 }
