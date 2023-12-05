@@ -8,8 +8,31 @@
              d:DataContext="{d:DesignInstance Type=vm:EntityInspectorViewModel}"
              mc:Ignorable="d">
 
-    <Grid>
-        <ListBox ItemsSource="{Binding ComponentViewModels}"
+    <DockPanel LastChildFill="True">
+        <Button DockPanel.Dock="Bottom" Margin="15" Content="Add Component">
+            <Button.Resources>
+                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem.VisualStudio}" x:Key="MenuItemStyle">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="ItemsSource" Value="{Binding ComponentTypes}" />
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Header" Value="{Binding Name}" />
+                                <Setter Property="Command" Value="{Binding AddCommand}" />
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+
+            <Button.ContextMenu>
+                <ContextMenu ItemsSource="{Binding CategorizedComponentTypes}" ItemContainerStyle="{StaticResource MenuItemStyle}">
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+
+        <ListBox DockPanel.Dock="Top"
+                 ItemsSource="{Binding ComponentViewModels}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ScrollViewer.CanContentScroll="False">
@@ -28,5 +51,5 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </Grid>
+    </DockPanel>
 </UserControl>

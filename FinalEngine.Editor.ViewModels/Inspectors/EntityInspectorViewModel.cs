@@ -7,10 +7,14 @@ namespace FinalEngine.Editor.ViewModels.Inspectors;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
+using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
+using FinalEngine.Editor.ViewModels.Services.Entities;
 
 /// <summary>
 ///   Provides a standard implementation of an <see cref="IEntityInspectorViewModel"/>.
@@ -19,6 +23,8 @@ using FinalEngine.Editor.ViewModels.Messages.Entities;
 /// <seealso cref="IEntityInspectorViewModel"/>
 public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspectorViewModel
 {
+    private readonly ObservableCollection<IEntityComponentCategoryViewModel> categorizedComponentTypes;
+
     /// <summary>
     ///   The component view models.
     /// </summary>
@@ -34,6 +40,8 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
     /// </summary>
     private readonly IMessenger messenger;
 
+    private readonly IEntityComponentTypeResolver typeResolver;
+
     /// <summary>
     ///   Initializes a new instance of the <see cref="EntityInspectorViewModel"/> class.
     /// </summary>
@@ -46,15 +54,25 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
     /// <exception cref="ArgumentNullException">
     ///   The specified <paramref name="entity"/> parameter cannot be null.
     /// </exception>
-    public EntityInspectorViewModel(IMessenger messenger, Entity entity)
+    public EntityInspectorViewModel(IMessenger messenger, IEntityComponentTypeResolver typeResolver, Entity entity)
     {
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+        this.typeResolver = typeResolver ?? throw new ArgumentNullException(nameof(typeResolver));
         this.entity = entity ?? throw new ArgumentNullException(nameof(entity));
+
         this.componentViewModels = new ObservableCollection<IEntityComponentViewModel>();
+        this.categorizedComponentTypes = new ObservableCollection<IEntityComponentCategoryViewModel>();
 
         this.messenger.Register<EntityModifiedMessage>(this, this.HandleEntityModified);
 
         this.InitializeEntityComponents();
+        this.IntializeComponentTypes();
+    }
+
+    /// <inheritdoc/>
+    public ICollection<IEntityComponentCategoryViewModel> CategorizedComponentTypes
+    {
+        get { return this.categorizedComponentTypes; }
     }
 
     /// <inheritdoc/>
@@ -80,6 +98,7 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         }
 
         this.InitializeEntityComponents();
+        this.IntializeComponentTypes();
     }
 
     /// <summary>
@@ -92,6 +111,25 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         foreach (var component in this.entity.Components)
         {
             this.componentViewModels.Add(new EntityComponentViewModel(this.messenger, this.entity, component));
+        }
+    }
+
+    private void IntializeComponentTypes()
+    {
+        this.categorizedComponentTypes.Clear();
+
+        var assembly = Assembly.GetAssembly(typeof(TagComponent)) ?? throw new TypeAccessException("Failed to initialize core engine components.");
+
+        var categoryToTypeMap = this.typeResolver.GetCategorizedTypes(assembly);
+
+        foreach (var kvp in categoryToTypeMap)
+        {
+            var typeViewModels = kvp.Value.Select(x =>
+            {
+                return new EntityComponentTypeViewModel(this.messenger, this.entity, x);
+            });
+
+            this.categorizedComponentTypes.Add(new EntityComponentCategoryViewModel(kvp.Key, typeViewModels));
         }
     }
 }
