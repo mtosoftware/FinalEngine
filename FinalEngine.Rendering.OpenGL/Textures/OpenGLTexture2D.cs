@@ -14,47 +14,12 @@ using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
 using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
 using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
 
-/// <summary>
-///   Provides an OpenGL implementation of an <see cref="ITexture2D"/> and <see cref="IOpenGLTexture"/>.
-/// </summary>
-/// <seealso cref="ITexture2D"/>
-/// <seealso cref="IOpenGLTexture"/>
 public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
 {
-    /// <summary>
-    ///   The OpenGL invoker.
-    /// </summary>
     private readonly IOpenGLInvoker invoker;
 
-    /// <summary>
-    ///   The OpenGL renderer identifier.
-    /// </summary>
     private int rendererID;
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="OpenGLTexture2D"/> class.
-    /// </summary>
-    /// <param name="invoker">
-    ///   Specifies an <see cref="IOpenGLInvoker"/> that represents the invoker used to invoke OpenGL calls.
-    /// </param>
-    /// <param name="mapper">
-    ///   Specifies an <see cref="IEnumMapper"/> that represents the enumeration mapper used to map OpenGL enumerations to the rendering APIs equivalent.
-    /// </param>
-    /// <param name="description">
-    ///   Specifies a <see cref="Texture2DDescription"/> that represents the properties used when creating this <see cref="OpenGLTexture2D"/>.
-    /// </param>
-    /// <param name="format">
-    ///   Specifies a <see cref="PixelFormat"/> that represents the format of this <see cref="OpenGLTexture2D"/>.
-    /// </param>
-    /// <param name="internalFormat">
-    ///   Specifies a <see cref="SizedFormat"/> that represents the internal format of this <see cref="OpenGLTexture2D"/>.
-    /// </param>
-    /// <param name="data">
-    ///   Specifies a <see cref="IntPtr"/> that represents the data this <see cref="OpenGLTexture2D"/> will contain.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="invoker"/> or <paramref name="mapper"/> parameter is null.
-    /// </exception>
     public OpenGLTexture2D(
         IOpenGLInvoker invoker,
         IEnumMapper mapper,
@@ -63,12 +28,9 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
         SizedFormat internalFormat,
         IntPtr data)
     {
-        this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
+        ArgumentNullException.ThrowIfNull(mapper, nameof(mapper));
 
-        if (mapper == null)
-        {
-            throw new ArgumentNullException(nameof(mapper));
-        }
+        this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
         this.rendererID = invoker.CreateTexture(TextureTarget.Texture2D);
 
@@ -106,102 +68,37 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
         }
     }
 
-    /// <summary>
-    ///   Finalizes an instance of the <see cref="OpenGLTexture2D"/> class.
-    /// </summary>
     ~OpenGLTexture2D()
     {
         this.Dispose(false);
     }
 
-    /// <summary>
-    ///   Gets the description that describes the properties of this <see cref="OpenGLTexture2D"/>.
-    /// </summary>
-    /// <value>
-    ///   The description that describes the properties of this <see cref="OpenGLTexture2D"/>.
-    /// </value>
     public Texture2DDescription Description { get; }
 
-    /// <summary>
-    ///   Gets the format of this <see cref="OpenGLTexture2D"/>.
-    /// </summary>
-    /// <value>
-    ///   The format of this <see cref="OpenGLTexture2D"/>.
-    /// </value>
     public PixelFormat Format { get; }
 
-    /// <summary>
-    ///   Gets the internal format of this <see cref="OpenGLTexture2D"/>.
-    /// </summary>
-    /// <value>
-    ///   The internal format of this <see cref="OpenGLTexture2D"/>.
-    /// </value>
     public SizedFormat InternalFormat { get; }
 
-    /// <summary>
-    ///   Gets a value indicating whether this <see cref="OpenGLTexture2D"/> is disposed.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this <see cref="OpenGLTexture2D"/> is disposed; otherwise, <c>false</c>.
-    /// </value>
     protected bool IsDisposed { get; private set; }
 
-    /// <summary>
-    /// Attaches this texture to the specified <paramref name="framebuffer" />.
-    /// </summary>
-    /// <param name="type">
-    /// The type of attachment.
-    /// </param>
-    /// <param name="framebuffer">
-    /// The OpenGL Framebuffer.
-    /// </param>
-    /// <exception cref="ObjectDisposedException">
-    /// The <see cref="OpenGLTexture2D"/> has been disposed.
-    /// </exception>
     public void Attach(FramebufferAttachment type, int framebuffer)
     {
-        if (this.IsDisposed)
-        {
-            throw new ObjectDisposedException(nameof(OpenGLTexture2D));
-        }
-
+        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
         this.invoker.NamedFramebufferTexture(framebuffer, type, this.rendererID, 0);
     }
 
-    /// <summary>
-    ///   Binds this <see cref="IOpenGLTexture"/> to the graphics processing unit.
-    /// </summary>
-    /// <param name="unit">
-    ///   Specifies an <see cref="int"/> that represents which texture slot to activate.
-    /// </param>
-    /// <exception cref="ObjectDisposedException">
-    ///   The <see cref="OpenGLTexture2D"/> has been disposed.
-    /// </exception>
     public void Bind(int unit)
     {
-        if (this.IsDisposed)
-        {
-            throw new ObjectDisposedException(nameof(OpenGLTexture2D));
-        }
-
+        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
         this.invoker.BindTextureUnit(unit, this.rendererID);
     }
 
-    /// <summary>
-    ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-    /// </summary>
     public void Dispose()
     {
         this.Dispose(true);
         GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    ///   Releases unmanaged and - optionally - managed resources.
-    /// </summary>
-    /// <param name="disposing">
-    ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-    /// </param>
     protected virtual void Dispose(bool disposing)
     {
         if (this.IsDisposed)

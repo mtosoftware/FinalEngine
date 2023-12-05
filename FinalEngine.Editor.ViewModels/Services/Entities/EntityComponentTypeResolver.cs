@@ -15,10 +15,7 @@ public sealed class EntityComponentTypeResolver : IEntityComponentTypeResolver
 {
     public IReadOnlyDictionary<string, List<Type>> GetCategorizedTypes(Assembly assembly)
     {
-        if (assembly == null)
-        {
-            throw new ArgumentNullException(nameof(assembly));
-        }
+        ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
 
         var categoryToTypeMap = new Dictionary<string, List<Type>>();
 
@@ -35,7 +32,7 @@ public sealed class EntityComponentTypeResolver : IEntityComponentTypeResolver
 
             if (!categoryToTypeMap.TryGetValue(category, out var types))
             {
-                types = new List<Type>();
+                types = [];
                 categoryToTypeMap.Add(category, types);
             }
 

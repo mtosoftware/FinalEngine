@@ -14,59 +14,22 @@ using FinalEngine.Rendering;
 using FinalEngine.Rendering.Settings;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-/// <summary>
-///   Provides a resource loader for loading textures from a file system.
-/// </summary>
 public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
 {
-    /// <summary>
-    ///   The GPU resource factory.
-    /// </summary>
     private readonly IGPUResourceFactory factory;
 
-    /// <summary>
-    ///   The file system.
-    /// </summary>
     private readonly IFileSystem fileSystem;
 
-    /// <summary>
-    ///   The image invoker.
-    /// </summary>
     private readonly IImageInvoker invoker;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Texture2DResourceLoader"/> class.
-    /// </summary>
-    /// <param name="fileSystem">
-    ///   The file system used to open textures to load.
-    /// </param>
-    /// <param name="factory">
-    ///   The GPU resource factory used to create a texture once it's been loaded.
-    /// </param>
     [ExcludeFromCodeCoverage]
     public Texture2DResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory)
         : this(fileSystem, factory, new ImageInvoker())
     {
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="Texture2DResourceLoader"/> class.
-    /// </summary>
-    /// <param name="fileSystem">
-    ///   The file system used to open textures to load.
-    /// </param>
-    /// <param name="factory">
-    ///   The GPU resource factory used to create a texture once it's been loaded.
-    /// </param>
-    /// <param name="invoker">
-    ///   The image invoker used to handle <see cref="Image"/> manipulation.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="fileSystem"/>, <paramref name="factory"/> or <paramref name="invoker"/> parameter is null.
-    /// </exception>
     public Texture2DResourceLoader(
         IFileSystem fileSystem,
         IGPUResourceFactory factory,
@@ -77,35 +40,11 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
     }
 
-    /// <summary>
-    /// Gets or sets the texture quality settings.
-    /// </summary>
-    /// <value>
-    /// The texture quality settings.
-    /// </value>
     public TextureQualitySettings TextureQualitySettings { get; set; }
 
-    /// <summary>
-    ///   Loads the texture from the specified <paramref name="filePath"/>.
-    /// </summary>
-    /// <param name="filePath">
-    ///   The file path of the texture to load.
-    /// </param>
-    /// <returns>
-    ///   The newly loaded texture resource.
-    /// </returns>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="filePath"/> parameter is null.
-    /// </exception>
-    /// <exception cref="FileNotFoundException">
-    ///   The specified <paramref name="filePath"/> parameter cannot be located by the file system.
-    /// </exception>
     public override ITexture2D LoadResource(string filePath)
     {
-        if (string.IsNullOrWhiteSpace(filePath))
-        {
-            throw new ArgumentException($"The specified {nameof(filePath)} parameter cannot be null, empty or consist of only whitespace characters.", nameof(filePath));
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));
 
         if (!this.fileSystem.File.Exists(filePath))
         {

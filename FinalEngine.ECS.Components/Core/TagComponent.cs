@@ -6,29 +6,13 @@ namespace FinalEngine.ECS.Components.Core;
 
 using System.ComponentModel;
 
-/// <summary>
-///   Provides a component that represents a name or tag for an <see cref="Entity"/>.
-/// </summary>
-/// <seealso cref="IEntityComponent"/>
 [Category("Core")]
 public sealed class TagComponent : IEntityComponent, INotifyPropertyChanged
 {
-    /// <summary>
-    ///   The tag.
-    /// </summary>
     private string? tag;
 
-    /// <summary>
-    ///   Occurs when a property value changes.
-    /// </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    /// <summary>
-    ///   Gets or sets the tag.
-    /// </summary>
-    /// <value>
-    ///   The tag.
-    /// </value>
     public string? Tag
     {
         get

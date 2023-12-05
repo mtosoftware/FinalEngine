@@ -12,10 +12,7 @@ public sealed class EntityComponentCategoryViewModel : ObservableObject, IEntity
 {
     public EntityComponentCategoryViewModel(string name, IEnumerable<IEntityComponentTypeViewModel> componentTypes)
     {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
         this.Name = name;
         this.ComponentTypes = componentTypes ?? throw new ArgumentNullException(nameof(componentTypes));

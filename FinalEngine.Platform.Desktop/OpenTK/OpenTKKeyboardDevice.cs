@@ -9,44 +9,20 @@ using FinalEngine.Input.Keyboards;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using global::OpenTK.Windowing.Common;
 
-/// <summary>
-///   Provides an OpenTK implementation of an <see cref="IKeyboardDevice"/>.
-/// </summary>
-/// <seealso cref="IKeyboardDevice"/>
 public class OpenTKKeyboardDevice : IKeyboardDevice
 {
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="OpenTKKeyboardDevice"/> class.
-    /// </summary>
-    /// <param name="nativeWindow">
-    ///   Specifies a <see cref="INativeWindowInvoker"/> that represents the underlying native window used to hook onto keyboard events.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="nativeWindow"/> parameter is null.
-    /// </exception>
     public OpenTKKeyboardDevice(INativeWindowInvoker nativeWindow)
     {
-        if (nativeWindow == null)
-        {
-            throw new ArgumentNullException(nameof(nativeWindow));
-        }
+        ArgumentNullException.ThrowIfNull(nativeWindow, nameof(nativeWindow));
 
         nativeWindow.KeyUp += this.NativeWindow_KeyUp;
         nativeWindow.KeyDown += this.NativeWindow_KeyDown;
     }
 
-    /// <inheritdoc/>
     public event EventHandler<KeyEventArgs>? KeyDown;
 
-    /// <inheritdoc/>
     public event EventHandler<KeyEventArgs>? KeyUp;
 
-    /// <summary>
-    ///   Handles the <see cref="INativeWindowInvoker.KeyDown"/> event.
-    /// </summary>
-    /// <param name="args">
-    ///   The <see cref="KeyboardKeyEventArgs"/> instance containing the event data.
-    /// </param>
     private void NativeWindow_KeyDown(KeyboardKeyEventArgs args)
     {
         this.KeyDown?.Invoke(this, new KeyEventArgs()
@@ -56,12 +32,6 @@ public class OpenTKKeyboardDevice : IKeyboardDevice
         });
     }
 
-    /// <summary>
-    ///   Handles the <see cref="INativeWindowInvoker.KeyUp"/> event.
-    /// </summary>
-    /// <param name="args">
-    ///   The <see cref="KeyboardKeyEventArgs"/> instance containing the event data.
-    /// </param>
     private void NativeWindow_KeyUp(KeyboardKeyEventArgs args)
     {
         this.KeyUp?.Invoke(this, new KeyEventArgs()

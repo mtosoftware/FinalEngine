@@ -22,43 +22,18 @@ using TKBlendEquationMode = OpenTK.Graphics.OpenGL4.BlendEquationMode;
 using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
 using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
 
-/// <summary>
-///   Provides an OpenGL implementation of an <see cref="IRenderDevice"/>.
-/// </summary>
-/// <seealso cref="IRenderDevice"/>
 public class OpenGLRenderDevice : IRenderDevice
 {
-    /// <summary>
-    ///   The OpenGL invoker.
-    /// </summary>
     private readonly IOpenGLInvoker invoker;
 
-    /// <summary>
-    ///   The OpenGL-to-FinalEngine enumeration mapper.
-    /// </summary>
-    /// <remarks>
-    ///   Used to map OpenGL enumerations to the rendering APIs equivalent.
-    /// </remarks>
-    private readonly IEnumMapper mapper;
+    private readonly EnumMapper mapper;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="OpenGLRenderDevice"/> class.
-    /// </summary>
     [ExcludeFromCodeCoverage]
     public OpenGLRenderDevice()
         : this(new OpenGLInvoker())
     {
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="OpenGLRenderDevice"/> class.
-    /// </summary>
-    /// <param name="invoker">
-    ///   Specifies an <see cref="IOpenGLInvoker"/> that represents the invoker used to invoke OpenGL calls.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="invoker"/> parameter is null.
-    /// </exception>
     public OpenGLRenderDevice(IOpenGLInvoker invoker)
     {
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
@@ -142,58 +117,16 @@ public class OpenGLRenderDevice : IRenderDevice
         this.Rasterizer = new OpenGLRasterizer(invoker, this.mapper);
     }
 
-    /// <summary>
-    ///   Gets an <see cref="IGPUResourceFactory"/> that represents the factory used to create resources for this <see cref="IRenderDevice"/>.
-    /// </summary>
-    /// <value>
-    ///   The factory used to create resources for this <see cref="IRenderDevice"/>.
-    /// </value>
     public IGPUResourceFactory Factory { get; }
 
-    /// <summary>
-    ///   Gets an <see cref="IInputAssembler"/> that represents the input-assembly stage of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </summary>
-    /// <value>
-    ///   The input-assembly stage of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </value>
     public IInputAssembler InputAssembler { get; }
 
-    /// <summary>
-    ///   Gets an <see cref="IOutputMerger"/> that represents the output-merging stage of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </summary>
-    /// <value>
-    ///   The output-merging stage of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </value>
     public IOutputMerger OutputMerger { get; }
 
-    /// <summary>
-    ///   Gets an <see cref="IPipeline"/> that represents the CPU-to-GPU connection of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </summary>
-    /// <value>
-    ///   The CPU-to-GPU connection of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </value>
     public IPipeline Pipeline { get; }
 
-    /// <summary>
-    ///   Gets an <see cref="IRasterizer"/> that represents the rasterization stage of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </summary>
-    /// <value>
-    ///   The rasterization stage of a rendering pipeline for this <see cref="IRenderDevice"/>.
-    /// </value>
     public IRasterizer Rasterizer { get; }
 
-    /// <summary>
-    ///   Clears the currently bound target to the specified <paramref name="color"/>, <paramref name="depth"/> and <paramref name="stencil"/> values.
-    /// </summary>
-    /// <param name="color">
-    ///   Specifies a <see cref="Color"/> that represents the clear value for the color buffer of the currently bound target.
-    /// </param>
-    /// <param name="depth">
-    ///   Specifies a <see cref="float"/> that represents the clear value for the depth buffer of the currently bound target.
-    /// </param>
-    /// <param name="stencil">
-    ///   Specifies an <see cref="int"/> that represents the clear value for the stencil buffer of currently bound target.
-    /// </param>
     public void Clear(Color color, float depth = 1, int stencil = 0)
     {
         this.invoker.ClearColor(color);
@@ -202,18 +135,6 @@ public class OpenGLRenderDevice : IRenderDevice
         this.invoker.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
     }
 
-    /// <summary>
-    ///   Draws indexed, non-instanced primitives, of the specified <paramref name="topology"/>, starting at the specified <paramref name="first"/> location and drawing a total number of <paramref name="count"/> primitives.
-    /// </summary>
-    /// <param name="topology">
-    ///   Specifies a <see cref="PrimitiveTopology"/> that represents the topology used to draw the indexed primitives.
-    /// </param>
-    /// <param name="first">
-    ///   Specifies an <see cref="int"/> that represents the first index to draw from.
-    /// </param>
-    /// <param name="count">
-    ///   Specifies an <see cref="int"/> that represents the total number of indices to draw.
-    /// </param>
     public void DrawIndices(PrimitiveTopology topology, int first, int count)
     {
         this.invoker.DrawElements(this.mapper.Forward<PrimitiveType>(topology), count, DrawElementsType.UnsignedInt, first);

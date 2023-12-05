@@ -7,18 +7,7 @@ namespace FinalEngine.Input.Mouses;
 using System;
 using System.Drawing;
 
-/// <summary>
-/// Provides event data for the <see cref="IMouseDevice.Move"/> event.
-/// </summary>
-/// <seealso cref="EventArgs"/>
 public class MouseMoveEventArgs : EventArgs
 {
-    /// <summary>
-    /// Gets a <see cref="PointF"/> that represents the location of the mouse in window pixel coordinates.
-    /// </summary>
-    ///
-    /// <value>
-    /// The <see cref="PointF"/> that represents the location of the mouse in window pixel coordinates.
-    /// </value>
     public PointF Location { get; init; }
 }

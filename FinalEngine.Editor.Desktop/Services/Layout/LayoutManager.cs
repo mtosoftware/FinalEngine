@@ -1,5 +1,5 @@
 // <copyright file="LayoutManager.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Editor.Desktop.Services.Layout;
@@ -20,50 +20,16 @@ using FinalEngine.Editor.ViewModels.Services.Layout;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.Logging;
 
-/// <summary>
-/// Provides a standard implementation of an <see cref="ILayoutManager"/>.
-/// </summary>
-/// <seealso cref="ILayoutManager" />
 public sealed class LayoutManager : ILayoutManager
 {
-    /// <summary>
-    /// The cached instanced to the docking manager.
-    /// </summary>
-    /// <remarks>
-    /// The instance is cached to avoid a <see cref="NullReferenceException"/> when unloading the <see cref="DockView"/>.
-    /// </remarks>
     private static readonly DockingManager Instance = Application.Current.MainWindow.FindChild<DockView>().DockManager;
 
-    /// <summary>
-    /// The application, used to resolve a directory where the window layouts are saved.
-    /// </summary>
     private readonly IApplicationContext application;
 
-    /// <summary>
-    /// The file system, used to create the <see cref="LayoutDirectory"/> if one does not already exist.
-    /// </summary>
     private readonly IFileSystem fileSystem;
 
-    /// <summary>
-    /// The logger.
-    /// </summary>
     private readonly ILogger<LayoutManager> logger;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LayoutManager"/> class.
-    /// </summary>
-    /// <param name="logger">
-    /// The logger.
-    /// </param>
-    /// <param name="application">
-    /// The application context, used to resolve a directory where window layouts are stored.
-    /// </param>
-    /// <param name="fileSystem">
-    /// The file system, used to create the <see cref="LayoutDirectory"/> if one does not already exist.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    /// The specified <paramref name="application"/> or <paramref name="fileSystem"/> parameter cannot be null.
-    /// </exception>
     public LayoutManager(
         ILogger<LayoutManager> logger,
         IApplicationContext application,
@@ -74,15 +40,6 @@ public sealed class LayoutManager : ILayoutManager
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
     }
 
-    /// <summary>
-    /// Gets the layout directory.
-    /// </summary>
-    /// <value>
-    /// The layout directory.
-    /// </value>
-    /// <remarks>
-    /// If the layout directory doesn't exist on the file system, one will be created. The layout directory is stored the applications local data.
-    /// </remarks>
     private string LayoutDirectory
     {
         get
@@ -98,33 +55,15 @@ public sealed class LayoutManager : ILayoutManager
         }
     }
 
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentException">
-    /// <paramref name="layoutName"/> cannot be null or whitespace.
-    /// </exception>
     public bool ContainsLayout(string layoutName)
     {
-        if (string.IsNullOrWhiteSpace(layoutName))
-        {
-            throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
-        }
-
+        ArgumentException.ThrowIfNullOrWhiteSpace(layoutName, nameof(layoutName));
         return this.LoadLayoutNames().Contains(layoutName);
     }
 
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentException">
-    /// <paramref name="layoutName"/> cannot be null or whitespace.
-    /// </exception>
-    /// <exception cref="WindowLayoutNotFoundException">
-    /// The specified <paramref name="layoutName"/> could not be matched to a save window layout.
-    /// </exception>
     public void DeleteLayout(string layoutName)
     {
-        if (string.IsNullOrWhiteSpace(layoutName))
-        {
-            throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(layoutName, nameof(layoutName));
 
         if (!this.ContainsLayout(layoutName))
         {
@@ -138,19 +77,9 @@ public sealed class LayoutManager : ILayoutManager
         this.logger.LogInformation($"Layout deleted.");
     }
 
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentException">
-    /// <paramref name="layoutName"/> cannot be null or whitespace.
-    /// </exception>
-    /// <exception cref="WindowLayoutNotFoundException">
-    /// The specified <paramref name="layoutName"/> could not be matched to a save window layout.
-    /// </exception>
     public void LoadLayout(string layoutName)
     {
-        if (string.IsNullOrWhiteSpace(layoutName))
-        {
-            throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(layoutName, nameof(layoutName));
 
         if (!this.ContainsLayout(layoutName))
         {
@@ -165,7 +94,6 @@ public sealed class LayoutManager : ILayoutManager
         this.logger.LogInformation("Layout loaded.");
     }
 
-    /// <inheritdoc/>
     public IEnumerable<string> LoadLayoutNames()
     {
         var directoryInfo = this.fileSystem.DirectoryInfo.New(this.LayoutDirectory);
@@ -177,7 +105,6 @@ public sealed class LayoutManager : ILayoutManager
         }).ToArray();
     }
 
-    /// <inheritdoc/>
     public void ResetLayout()
     {
         const string defaultLayoutPath = "Resources\\Layouts\\default.config";
@@ -190,16 +117,9 @@ public sealed class LayoutManager : ILayoutManager
         this.logger.LogInformation("Layout reset.");
     }
 
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentException">
-    /// <paramref name="layoutName"/> cannot be null or whitespace.
-    /// </exception>
     public void SaveLayout(string layoutName)
     {
-        if (string.IsNullOrWhiteSpace(layoutName))
-        {
-            throw new ArgumentException($"'{nameof(layoutName)}' cannot be null or whitespace.", nameof(layoutName));
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(layoutName, nameof(layoutName));
 
         this.logger.LogInformation($"Saving window layout: '{layoutName}'...");
 
@@ -209,19 +129,9 @@ public sealed class LayoutManager : ILayoutManager
         this.logger.LogInformation("Layout saved.");
     }
 
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentException">
-    /// <paramref name="contentID"/> cannot be null or whitespace.
-    /// </exception>
-    /// <exception cref="ToolPaneNotFoundException">
-    /// The <paramref name="contentID"/> parameter could not be matched to a tool pane.
-    /// </exception>
     public void ToggleToolWindow(string contentID)
     {
-        if (string.IsNullOrWhiteSpace(contentID))
-        {
-            throw new ArgumentException($"'{nameof(contentID)}' cannot be null or whitespace.", nameof(contentID));
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(contentID, nameof(contentID));
 
         var tool = Instance.AnchorablesSource.Cast<IToolViewModel>().FirstOrDefault(x =>
         {
@@ -233,15 +143,6 @@ public sealed class LayoutManager : ILayoutManager
         tool.IsVisible = !tool.IsVisible;
     }
 
-    /// <summary>
-    /// Gets the layout file path of the specified <paramref name="layoutName"/>.
-    /// </summary>
-    /// <param name="layoutName">
-    /// The name of the layout.
-    /// </param>
-    /// <returns>
-    /// The file path of window layout that matches the specified <paramref name="layoutName"/>.
-    /// </returns>
     private string GetLayoutPath(string layoutName)
     {
         return this.fileSystem.Path.Combine(this.LayoutDirectory, $"{layoutName}.config");

@@ -24,13 +24,10 @@ public sealed class EntityComponentTypeViewModel : ObservableObject, IEntityComp
 
     public EntityComponentTypeViewModel(IMessenger messenger, Entity entity, Type type)
     {
+        ArgumentNullException.ThrowIfNull(type, nameof(type));
+
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.entity = entity ?? throw new ArgumentNullException(nameof(entity));
-
-        if (type == null)
-        {
-            throw new ArgumentNullException(nameof(type));
-        }
 
         if (!typeof(IEntityComponent).IsAssignableFrom(type))
         {

@@ -7,14 +7,9 @@ namespace FinalEngine.Runtime.Invocation;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-/// <summary>
-///   Provides a standard implementation of an <see cref="IRuntimeInformationInvoker"/>.
-/// </summary>
-/// <seealso cref="IRuntimeInformationInvoker"/>
-[ExcludeFromCodeCoverage]
+[ExcludeFromCodeCoverage(Justification = "Invocation")]
 public class RuntimeInformationInvoker : IRuntimeInformationInvoker
 {
-    /// <inheritdoc/>
     public bool IsOSPlatform(OSPlatform platform)
     {
         return RuntimeInformation.IsOSPlatform(platform);

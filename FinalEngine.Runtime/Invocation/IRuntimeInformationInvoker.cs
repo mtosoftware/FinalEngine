@@ -6,11 +6,7 @@ namespace FinalEngine.Runtime.Invocation;
 
 using System.Runtime.InteropServices;
 
-/// <summary>
-///   Defines an interface that provides methods for of the <see cref="RuntimeInformation"/> class.
-/// </summary>
 public interface IRuntimeInformationInvoker
 {
-    /// <inheritdoc cref="RuntimeInformation.IsOSPlatform(OSPlatform)"/>
     bool IsOSPlatform(OSPlatform platform);
 }

@@ -10,24 +10,11 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using FinalEngine.Rendering.Buffers;
 
-/// <summary>
-///   Represents a sprite vertex, generally used alongside with <see cref="SpriteBatcher"/>.
-/// </summary>
-/// <seealso cref="IEquatable{SpriteVertex}"/>
 [StructLayout(LayoutKind.Sequential)]
 public struct SpriteVertex : IEquatable<SpriteVertex>
 {
-    /// <summary>
-    ///   The size in bytes of a <see cref="SpriteVertex"/>.
-    /// </summary>
     public static readonly int SizeInBytes = Marshal.SizeOf<SpriteVertex>();
 
-    /// <summary>
-    ///   Gets the input elements required to create an <see cref="IInputLayout"/> for use with a <see cref="SpriteVertex"/>.
-    /// </summary>
-    /// <value>
-    ///   The input elements.
-    /// </value>
     public static IReadOnlyCollection<InputElement> InputElements
     {
         get
@@ -42,82 +29,25 @@ public struct SpriteVertex : IEquatable<SpriteVertex>
         }
     }
 
-    /// <summary>
-    ///   Gets or sets the position.
-    /// </summary>
-    /// <value>
-    ///   The position.
-    /// </value>
     public Vector2 Position { get; set; }
 
-    /// <summary>
-    ///   Gets or sets the color.
-    /// </summary>
-    /// <value>
-    ///   The color.
-    /// </value>
     public Vector4 Color { get; set; }
 
-    /// <summary>
-    ///   Gets or sets the texture coordinate.
-    /// </summary>
-    /// <value>
-    ///   The texture coordinate.
-    /// </value>
     public Vector2 TextureCoordinate { get; set; }
 
-    /// <summary>
-    ///   Gets or sets the index of the texture slot.
-    /// </summary>
-    /// <value>
-    ///   The index of the texture slot.
-    /// </value>
     public float TextureSlotIndex { get; set; }
 
-    /// <summary>
-    ///   Implements the operator ==.
-    /// </summary>
-    /// <param name="left">
-    ///   The left operand.
-    /// </param>
-    /// <param name="right">
-    ///   The right operand.
-    /// </param>
-    /// <returns>
-    ///   The result of the operator.
-    /// </returns>
     public static bool operator ==(SpriteVertex left, SpriteVertex right)
     {
         return left.Equals(right);
     }
 
-    /// <summary>
-    ///   Implements the operator !=.
-    /// </summary>
-    /// <param name="left">
-    ///   The left operand.
-    /// </param>
-    /// <param name="right">
-    ///   The right operand.
-    /// </param>
-    /// <returns>
-    ///   The result of the operator.
-    /// </returns>
     public static bool operator !=(SpriteVertex left, SpriteVertex right)
     {
         return !(left == right);
     }
 
-    /// <summary>
-    ///   Indicates whether the current object is equal to another object of the same type.
-    /// </summary>
-    /// <param name="other">
-    ///   An object to compare with this object.
-    /// </param>
-    /// <returns>
-    ///   <see langword="true"/> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <see langword="false"/>.
-    /// </returns>
-    public bool Equals(SpriteVertex other)
+    public readonly bool Equals(SpriteVertex other)
     {
         return this.Position == other.Position &&
                this.Color == other.Color &&
@@ -125,27 +55,12 @@ public struct SpriteVertex : IEquatable<SpriteVertex>
                this.TextureSlotIndex == other.TextureSlotIndex;
     }
 
-    /// <summary>
-    ///   Indicates whether this instance and a specified object are equal.
-    /// </summary>
-    /// <param name="obj">
-    ///   The object to compare with the current instance.
-    /// </param>
-    /// <returns>
-    ///   <see langword="true"/> if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, <see langword="false"/>.
-    /// </returns>
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is SpriteVertex vertex && this.Equals(vertex);
     }
 
-    /// <summary>
-    ///   Returns a hash code for this instance.
-    /// </summary>
-    /// <returns>
-    ///   A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
-    /// </returns>
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         const int accumulator = 17;
 

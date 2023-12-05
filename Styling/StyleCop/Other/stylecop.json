@@ -3,8 +3,11 @@
   "settings": {
     "documentationRules": {
       "companyName": "Software Antics",
-      "documentPrivateElements": true,
-      "documentPrivateFields": true
+      "documentPrivateElements": false,
+      "documentPrivateFields": false,
+      "documentExposedElements": false,
+      "documentInterfaces": false,
+      "documentInternalElements": false
     }
   }
 }

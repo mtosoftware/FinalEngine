@@ -1,14 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <LangVersion>11.0</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
 	  <AnalysisMode>All</AnalysisMode>
+    <NoWarn>SA0001</NoWarn>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.3">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -27,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
 
@@ -52,6 +51,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties resources_4shaders_4forward-point_1fesp__JsonSchema="https://appliedengdesign.github.io/cnccodes-json-schema/draft/2022-07/schema" /></VisualStudio></ProjectExtensions>
 </Project>

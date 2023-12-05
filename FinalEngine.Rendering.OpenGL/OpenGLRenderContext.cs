@@ -11,76 +11,29 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using OpenTK;
 using OpenTK.Windowing.Common;
 
-/// <summary>
-///   Provides an OpenGL implementation of an <see cref="IRenderContext"/>.
-/// </summary>
-/// <seealso cref="IRenderContext"/>
 public class OpenGLRenderContext : IRenderContext
 {
-    /// <summary>
-    ///   The underlying OpenGL rendering context.
-    /// </summary>
     private readonly IGraphicsContext context;
 
-    /// <summary>
-    ///   The OpenGL invoker.
-    /// </summary>
     private readonly IOpenGLInvoker invoker;
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="OpenGLRenderContext"/> class.
-    /// </summary>
-    /// <param name="bindings">
-    ///   Specifies an <see cref="IBindingsContext"/> that represents the bindings context used to load the OpenGL bindings.
-    /// </param>
-    /// <param name="context">
-    ///   Specifies an <see cref="IGraphicsContext"/> that represents the underlying rendering context.
-    /// </param>
     [ExcludeFromCodeCoverage]
     public OpenGLRenderContext(IBindingsContext bindings, IGraphicsContext context)
         : this(new OpenGLInvoker(), bindings, context)
     {
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="OpenGLRenderContext"/> class.
-    /// </summary>
-    /// <param name="invoker">
-    ///   Specifies an <see cref="IOpenGLInvoker"/> that represents the invoker used to invoke OpenGL calls.
-    /// </param>
-    /// <param name="bindings">
-    ///   Specifies an <see cref="IBindingsContext"/> that represents the bindings context used to load the OpenGL bindings.
-    /// </param>
-    /// <param name="context">
-    ///   Specifies an <see cref="IGraphicsContext"/> that represents the underlying rendering context.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="invoker"/>, <paramref name="bindings"/> or <paramref name="context"/> parameter is null.
-    /// </exception>
     public OpenGLRenderContext(IOpenGLInvoker invoker, IBindingsContext bindings, IGraphicsContext context)
     {
+        ArgumentNullException.ThrowIfNull(bindings, nameof(bindings));
+
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
-
-        if (bindings == null)
-        {
-            throw new ArgumentNullException(nameof(bindings));
-        }
-
         this.context = context ?? throw new ArgumentNullException(nameof(context));
 
         context.MakeCurrent();
         invoker.LoadBindings(bindings);
     }
 
-    /// <summary>
-    ///   Swaps the front and back buffers, displaying the rendered scene to the user.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">
-    ///   The <see cref="IRenderContext"/> has been disposed.
-    /// </exception>
-    /// <exception cref="RenderContextException">
-    ///   The <see cref="IRenderContext"/> is not current on the calling thread.
-    /// </exception>
     public void SwapBuffers()
     {
         if (!this.context.IsCurrent)

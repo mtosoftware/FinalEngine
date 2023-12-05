@@ -16,52 +16,26 @@ using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using FinalEngine.Editor.ViewModels.Services.Entities;
 
-/// <summary>
-///   Provides a standard implementation of an <see cref="IEntityInspectorViewModel"/>.
-/// </summary>
-/// <seealso cref="ObservableObject"/>
-/// <seealso cref="IEntityInspectorViewModel"/>
 public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspectorViewModel
 {
     private readonly ObservableCollection<IEntityComponentCategoryViewModel> categorizedComponentTypes;
 
-    /// <summary>
-    ///   The component view models.
-    /// </summary>
     private readonly ObservableCollection<IEntityComponentViewModel> componentViewModels;
 
-    /// <summary>
-    ///   The entity being inspected.
-    /// </summary>
     private readonly Entity entity;
 
-    /// <summary>
-    ///   The messenger.
-    /// </summary>
     private readonly IMessenger messenger;
 
     private readonly IEntityComponentTypeResolver typeResolver;
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="EntityInspectorViewModel"/> class.
-    /// </summary>
-    /// <param name="messenger">
-    ///   The messenger.
-    /// </param>
-    /// <param name="entity">
-    ///   The entity to be inspected.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="entity"/> parameter cannot be null.
-    /// </exception>
     public EntityInspectorViewModel(IMessenger messenger, IEntityComponentTypeResolver typeResolver, Entity entity)
     {
         this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.typeResolver = typeResolver ?? throw new ArgumentNullException(nameof(typeResolver));
         this.entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-        this.componentViewModels = new ObservableCollection<IEntityComponentViewModel>();
-        this.categorizedComponentTypes = new ObservableCollection<IEntityComponentCategoryViewModel>();
+        this.componentViewModels = [];
+        this.categorizedComponentTypes = [];
 
         this.messenger.Register<EntityModifiedMessage>(this, this.HandleEntityModified);
 
@@ -69,27 +43,16 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         this.IntializeComponentTypes();
     }
 
-    /// <inheritdoc/>
     public ICollection<IEntityComponentCategoryViewModel> CategorizedComponentTypes
     {
         get { return this.categorizedComponentTypes; }
     }
 
-    /// <inheritdoc/>
     public ICollection<IEntityComponentViewModel> ComponentViewModels
     {
         get { return this.componentViewModels; }
     }
 
-    /// <summary>
-    ///   Handles the <see cref="EntityModifiedMessage"/> and initializes the entity component view models.
-    /// </summary>
-    /// <param name="recipient">
-    ///   The recipient.
-    /// </param>
-    /// <param name="message">
-    ///   The message.
-    /// </param>
     private void HandleEntityModified(object recipient, EntityModifiedMessage message)
     {
         if (!ReferenceEquals(this.entity, message.Entity))
@@ -101,9 +64,6 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         this.IntializeComponentTypes();
     }
 
-    /// <summary>
-    ///   Initializes the entity component view models for the <see cref="Entity"/>.
-    /// </summary>
     private void InitializeEntityComponents()
     {
         this.componentViewModels.Clear();
