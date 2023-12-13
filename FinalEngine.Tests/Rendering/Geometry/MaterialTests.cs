@@ -2,10 +2,11 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering;
+namespace FinalEngine.Tests.Rendering.Geometry;
 
 using System;
 using FinalEngine.Rendering;
+using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using Moq;

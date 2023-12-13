@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering;
+namespace FinalEngine.Rendering.Geometry;
 
 using System;
 using System.Collections.Generic;
@@ -64,9 +64,9 @@ public struct SpriteVertex : IEquatable<SpriteVertex>
     {
         const int accumulator = 17;
 
-        return (this.Position.GetHashCode() * accumulator) +
-               (this.Color.GetHashCode() * accumulator) +
-               (this.TextureCoordinate.GetHashCode() * accumulator) +
-               (this.TextureSlotIndex.GetHashCode() * accumulator);
+        return this.Position.GetHashCode() * accumulator +
+               this.Color.GetHashCode() * accumulator +
+               this.TextureCoordinate.GetHashCode() * accumulator +
+               this.TextureSlotIndex.GetHashCode() * accumulator;
     }
 }

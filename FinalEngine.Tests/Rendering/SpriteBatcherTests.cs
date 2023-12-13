@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Numerics;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.Geometry;
 using Moq;
 using NUnit.Framework;
 

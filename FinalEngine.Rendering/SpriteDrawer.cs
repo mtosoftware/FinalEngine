@@ -8,6 +8,7 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;

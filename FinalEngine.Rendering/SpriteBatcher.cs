@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.Geometry;
 
 public class SpriteBatcher : ISpriteBatcher
 {

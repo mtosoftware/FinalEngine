@@ -2,12 +2,12 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering;
+namespace FinalEngine.Tests.Rendering.Geometry;
 
 using System.Collections.Generic;
 using System.Numerics;
-using FinalEngine.Rendering;
 using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.Geometry;
 using NUnit.Framework;
 
 public class SpriteVertexTests
