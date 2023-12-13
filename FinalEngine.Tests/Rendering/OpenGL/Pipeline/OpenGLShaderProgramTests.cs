@@ -143,22 +143,22 @@ public class OpenGLShaderProgramTests
     }
 
     [Test]
-    public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.program.GetUniformLocation(null);
-        });
-    }
-
-    [Test]
     public void GetUniformLocationShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.program.GetUniformLocation("\t\r\n");
+        });
+    }
+
+    [Test]
+    public void GetUniformLocationShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.program.GetUniformLocation(null);
         });
     }
 

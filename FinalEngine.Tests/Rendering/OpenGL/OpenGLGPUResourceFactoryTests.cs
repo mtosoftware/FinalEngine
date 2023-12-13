@@ -146,22 +146,22 @@ public class OpenGLGPUResourceFactoryTests
     }
 
     [Test]
-    public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.factory.CreateShader(PipelineTarget.Vertex, null);
-        });
-    }
-
-    [Test]
     public void CreateShaderShouldThrowArgumentExceptionWhenSourceCodeIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.factory.CreateShader(PipelineTarget.Vertex, "\r\n\t");
+        });
+    }
+
+    [Test]
+    public void CreateShaderShouldThrowArgumentNullExceptionWhenSourceCodeIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.factory.CreateShader(PipelineTarget.Vertex, null);
         });
     }
 

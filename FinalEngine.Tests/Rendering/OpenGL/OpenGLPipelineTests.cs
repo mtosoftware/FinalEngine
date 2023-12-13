@@ -193,22 +193,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformBoolShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, true);
-        });
-    }
-
-    [Test]
     public void SetUniformBoolShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", true);
+        });
+    }
+
+    [Test]
+    public void SetUniformBoolShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, true);
         });
     }
 
@@ -264,22 +264,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformDoubleShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, 0.0d);
-        });
-    }
-
-    [Test]
     public void SetUniformDoubleShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", 0.0d);
+        });
+    }
+
+    [Test]
+    public void SetUniformDoubleShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, 0.0d);
         });
     }
 
@@ -335,22 +335,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformFloatShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, 1.0f);
-        });
-    }
-
-    [Test]
     public void SetUniformFloatShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", 1.0f);
+        });
+    }
+
+    [Test]
+    public void SetUniformFloatShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, 1.0f);
         });
     }
 
@@ -406,22 +406,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformIntShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, 0);
-        });
-    }
-
-    [Test]
     public void SetUniformIntShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", 0);
+        });
+    }
+
+    [Test]
+    public void SetUniformIntShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, 0);
         });
     }
 
@@ -498,22 +498,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformMatrix4x4ShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, Matrix4x4.Identity);
-        });
-    }
-
-    [Test]
     public void SetUniformMatrix4x4ShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", Matrix4x4.Identity);
+        });
+    }
+
+    [Test]
+    public void SetUniformMatrix4x4ShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, Matrix4x4.Identity);
         });
     }
 
@@ -569,22 +569,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformVector2ShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, new Vector2(1.0f, 0.0f));
-        });
-    }
-
-    [Test]
     public void SetUniformVector2ShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", new Vector2(1.0f, 0.0f));
+        });
+    }
+
+    [Test]
+    public void SetUniformVector2ShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, new Vector2(1.0f, 0.0f));
         });
     }
 
@@ -640,22 +640,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformVector3ShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, new Vector3(1.0f, 0.0f, 1.0f));
-        });
-    }
-
-    [Test]
     public void SetUniformVector3ShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", new Vector3(1.0f, 0.0f, 1.0f));
+        });
+    }
+
+    [Test]
+    public void SetUniformVector3ShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, new Vector3(1.0f, 0.0f, 1.0f));
         });
     }
 
@@ -711,22 +711,22 @@ public class OpenGLPipelineTests
     }
 
     [Test]
-    public void SetUniformVector4ShouldThrowArgumentExceptionWhenNameIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.pipeline.SetUniform(null, new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
-        });
-    }
-
-    [Test]
     public void SetUniformVector4ShouldThrowArgumentExceptionWhenNameIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.pipeline.SetUniform("\t\r\n", new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
+        });
+    }
+
+    [Test]
+    public void SetUniformVector4ShouldThrowArgumentNullExceptionWhenNameIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.pipeline.SetUniform(null, new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
         });
     }
 

@@ -26,16 +26,6 @@ public class ResourceLoaderBaseTests
     }
 
     [Test]
-    public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null);
-        });
-    }
-
-    [Test]
     public void LoadResourceInternalShouldThrowArgumentExceptionWhenFilePathIsStringEmpty()
     {
         // Act and assert
@@ -52,6 +42,16 @@ public class ResourceLoaderBaseTests
         Assert.Throws<ArgumentException>(() =>
         {
             (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource("\t\r\n");
+        });
+    }
+
+    [Test]
+    public void LoadResourceInternalShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null);
         });
     }
 

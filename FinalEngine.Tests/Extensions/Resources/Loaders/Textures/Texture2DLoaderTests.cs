@@ -97,22 +97,22 @@ public class Texture2DLoaderTests
     }
 
     [Test]
-    public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.loader.LoadResource(null);
-        });
-    }
-
-    [Test]
     public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.loader.LoadResource("\t\n\r");
+        });
+    }
+
+    [Test]
+    public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.loader.LoadResource(null);
         });
     }
 

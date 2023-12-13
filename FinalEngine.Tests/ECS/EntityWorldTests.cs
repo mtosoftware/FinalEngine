@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FinalEngine.ECS;
+using FinalEngine.ECS.Exceptions;
 using FinalEngine.Tests.ECS.Mocks;
 using NUnit.Framework;
 
@@ -202,20 +203,6 @@ public class EntityWorldTests
     }
 
     [Test]
-    public void EntityOnComponentsChangedShouldThrowArgumentNullExceptionWhenSenderIsNull()
-    {
-        // Arrange
-        var entity = new Entity();
-        this.world.AddEntity(entity);
-
-        // Act
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            entity.OnComponentsChanged.Invoke(null, EventArgs.Empty);
-        });
-    }
-
-    [Test]
     public void ProcessAllShouldInvokeSystemProcessWhenInvoked()
     {
         // Arrange
@@ -293,6 +280,16 @@ public class EntityWorldTests
     }
 
     [Test]
+    public void RemoveEntityShouldEntityNotFoundExceptionWhenEntityIsNotAdded()
+    {
+        // Act and assert
+        Assert.Throws<EntityNotFoundException>(() =>
+        {
+            this.world.RemoveEntity(new Entity());
+        });
+    }
+
+    [Test]
     public void RemoveEntityShouldInvokeSystemAddOrRemoveByAspectWhenInvoked()
     {
         // Arrange
@@ -318,16 +315,6 @@ public class EntityWorldTests
 
         // Act
         this.world.RemoveEntity(entity);
-    }
-
-    [Test]
-    public void RemoveEntityShouldThrowArgumentExceptionWhenEntityIsNotAdded()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.world.RemoveEntity(new Entity());
-        });
     }
 
     [Test]
