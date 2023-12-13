@@ -10,7 +10,7 @@ This is a copy of Final Engine that will be used to setup the new rendering engi
 
 ### Geometry and Models
 
-- [ ] Mesh Rendering
+- [x] Mesh Rendering
 - [ ] Terrain Rendering
 - [ ] Model Loading
 - [ ] Level of Detail (LOD)
