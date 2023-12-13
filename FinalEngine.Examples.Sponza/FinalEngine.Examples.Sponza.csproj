@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Abstractions" Version="20.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj" />
+    <ProjectReference Include="..\FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj" />
+    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+    <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
+    <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
+    <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
+  </ItemGroup>
+
+</Project>
