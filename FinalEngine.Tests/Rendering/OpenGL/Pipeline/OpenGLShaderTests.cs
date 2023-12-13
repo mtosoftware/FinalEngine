@@ -95,16 +95,6 @@ public class OpenGLShaderTests
     }
 
     [Test]
-    public void ConstructorShouldThrowArgumentExceptionWhenSourceCodeIsNull()
-    {
-        // Arrange, act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, null);
-        });
-    }
-
-    [Test]
     public void ConstructorShouldThrowArgumentExceptionWhenSourceCodeIsWhitespace()
     {
         // Arrange, act and assert
@@ -131,6 +121,16 @@ public class OpenGLShaderTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             new OpenGLShader(this.invoker.Object, null, ShaderType.VertexShader, this.sourceCode);
+        });
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenSourceCodeIsNull()
+    {
+        // Arrange, act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            new OpenGLShader(this.invoker.Object, this.mapper.Object, ShaderType.VertexShader, null);
         });
     }
 

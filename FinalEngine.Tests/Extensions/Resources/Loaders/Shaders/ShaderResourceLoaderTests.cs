@@ -1,5 +1,5 @@
 // <copyright file="ShaderResourceLoaderTests.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Extensions.Resources.Loaders.Shaders;
@@ -85,12 +85,22 @@ public sealed class ShaderResourceLoaderTests
     }
 
     [Test]
-    public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsEmpty()
+    public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsEmpty()
     {
         // Act and assert
-        Assert.Throws<ArgumentNullException>(() =>
+        Assert.Throws<ArgumentException>(() =>
         {
             this.loader.LoadResource(string.Empty);
+        });
+    }
+
+    [Test]
+    public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsWhitespace()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            this.loader.LoadResource("\t\n\r ");
         });
     }
 
@@ -101,16 +111,6 @@ public sealed class ShaderResourceLoaderTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             this.loader.LoadResource(null);
-        });
-    }
-
-    [Test]
-    public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsWhitespace()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            this.loader.LoadResource("\t\n\r ");
         });
     }
 

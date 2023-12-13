@@ -106,22 +106,22 @@ public class ResourceManagerTests
     }
 
     [Test]
-    public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsNull()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            this.resourceManager.LoadResource<IResource>(null);
-        });
-    }
-
-    [Test]
     public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsWhitespace()
     {
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
             this.resourceManager.LoadResource<IResource>("\t\r\n");
+        });
+    }
+
+    [Test]
+    public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+    {
+        // Act and assert
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            this.resourceManager.LoadResource<IResource>(null);
         });
     }
 
