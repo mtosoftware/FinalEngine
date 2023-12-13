@@ -32,6 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj" />
     <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+    <ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
   </ItemGroup>
 
 </Project>
