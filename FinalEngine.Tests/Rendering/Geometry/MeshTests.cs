@@ -2,13 +2,14 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Rendering;
+namespace FinalEngine.Tests.Rendering.Geometry;
 
 using System;
 using System.Collections.Generic;
 using System.Numerics;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.Geometry;
 using Moq;
 using NUnit.Framework;
 
@@ -257,8 +258,8 @@ public sealed class MeshTests
 
         this.indexBuffer.Setup(x => x.Length).Returns(this.indices.Length);
 
-        this.factory.Setup(x => x.CreateIndexBuffer<int>(It.IsAny<BufferUsageType>(), It.IsAny<IReadOnlyCollection<int>>(), It.IsAny<int>())).Returns(this.indexBuffer.Object);
-        this.factory.Setup(x => x.CreateVertexBuffer<MeshVertex>(It.IsAny<BufferUsageType>(), It.IsAny<IReadOnlyCollection<MeshVertex>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(this.vertexBuffer.Object);
+        this.factory.Setup(x => x.CreateIndexBuffer(It.IsAny<BufferUsageType>(), It.IsAny<IReadOnlyCollection<int>>(), It.IsAny<int>())).Returns(this.indexBuffer.Object);
+        this.factory.Setup(x => x.CreateVertexBuffer(It.IsAny<BufferUsageType>(), It.IsAny<IReadOnlyCollection<MeshVertex>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(this.vertexBuffer.Object);
         this.factory.Setup(x => x.CreateInputLayout(It.IsAny<IReadOnlyCollection<InputElement>>())).Returns(this.inputLayout.Object);
 
         this.mesh = new Mesh(this.factory.Object, this.vertices, this.indices);
