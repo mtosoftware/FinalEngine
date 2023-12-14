@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
     <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
     <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering.Vapor\FinalEngine.Rendering.Vapor.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
     <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
     <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />

@@ -6,6 +6,25 @@ namespace FinalEngine.Rendering;
 
 using System;
 
+public enum StencilOperation
+{
+    Keep,
+
+    Zero,
+
+    Replace,
+
+    Increment,
+
+    IncrementWrap,
+
+    Decrement,
+
+    DecrementWrap,
+
+    Invert,
+}
+
 public struct StencilStateDescription : IEquatable<StencilStateDescription>
 {
     private ComparisonMode? comparisonMode;

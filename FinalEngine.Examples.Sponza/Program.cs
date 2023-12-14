@@ -10,13 +10,13 @@ using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
-using FinalEngine.Rendering.Geometry;
-using FinalEngine.Rendering.Loaders.Invocation;
-using FinalEngine.Rendering.Loaders.Shaders;
-using FinalEngine.Rendering.Loaders.Textures;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
+using FinalEngine.Rendering.Vapor.Geometry;
+using FinalEngine.Rendering.Vapor.Loaders.Shaders;
+using FinalEngine.Rendering.Vapor.Loaders.Textures;
+using FinalEngine.Rendering.Vapor.Primitives;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -73,7 +73,7 @@ internal class Program
         renderPipeline.Initialize();
 
         ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice.Factory));
-        ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory, new ImageInvoker()));
+        ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
 
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);

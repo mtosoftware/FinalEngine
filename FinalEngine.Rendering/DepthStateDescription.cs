@@ -6,6 +6,25 @@ namespace FinalEngine.Rendering;
 
 using System;
 
+public enum ComparisonMode
+{
+    Never,
+
+    Less,
+
+    Equal,
+
+    LessEqual,
+
+    Greater,
+
+    NotEqual,
+
+    GreaterEqual,
+
+    Always,
+}
+
 public struct DepthStateDescription : IEquatable<DepthStateDescription>
 {
     private ComparisonMode? comparisonMode;

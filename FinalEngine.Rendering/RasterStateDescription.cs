@@ -6,6 +6,27 @@ namespace FinalEngine.Rendering;
 
 using System;
 
+public enum FaceCullMode
+{
+    Front,
+
+    Back,
+}
+
+public enum RasterMode
+{
+    Solid,
+
+    Wireframe,
+}
+
+public enum WindingDirection
+{
+    Clockwise,
+
+    CounterClockwise,
+}
+
 public struct RasterStateDescription : IEquatable<RasterStateDescription>
 {
     private FaceCullMode? cullMode;

@@ -7,6 +7,42 @@ namespace FinalEngine.Rendering;
 using System;
 using System.Drawing;
 
+public enum BlendEquationMode
+{
+    Add,
+
+    Subtract,
+
+    ReverseSubtract,
+
+    Min,
+
+    Max,
+}
+
+public enum BlendMode
+{
+    Zero,
+
+    One,
+
+    SourceColor,
+
+    OneMinusSourceColor,
+
+    DestinationColor,
+
+    OneMinusDestinationColor,
+
+    SourceAlpha,
+
+    OneMinusSourceAlpha,
+
+    DestinationAlpha,
+
+    OneMinusDestinationAlpha,
+}
+
 public struct BlendStateDescription : IEquatable<BlendStateDescription>
 {
     private Color? color;

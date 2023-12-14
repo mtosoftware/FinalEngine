@@ -5,7 +5,7 @@
 namespace FinalEngine.ECS.Components.Core;
 
 using System.ComponentModel;
-using FinalEngine.Rendering.Core;
+using FinalEngine.Rendering.Vapor.Core;
 
 [Category("Core")]
 public sealed class TransformComponent : Transform, IEntityComponent

@@ -5,7 +5,7 @@
 namespace FinalEngine.ECS.Components.Rendering.Cameras;
 
 using System.ComponentModel;
-using FinalEngine.Rendering.Core.Cameras;
+using FinalEngine.Rendering.Vapor.Cameras;
 
 [Category("Cameras")]
 public sealed class PerspectiveCameraComponent : PerspectiveCamera, IEntityComponent

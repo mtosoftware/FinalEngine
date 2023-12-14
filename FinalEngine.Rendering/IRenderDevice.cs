@@ -6,6 +6,17 @@ namespace FinalEngine.Rendering;
 
 using System.Drawing;
 
+public enum PrimitiveTopology
+{
+    Line,
+
+    LineStrip,
+
+    Triangle,
+
+    TriangleStrip,
+}
+
 public interface IRenderDevice
 {
     IGPUResourceFactory Factory { get; }
