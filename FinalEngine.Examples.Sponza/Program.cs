@@ -157,6 +157,7 @@ internal class Program
         });
 
         world.AddEntity(entity);
+        world.RemoveSystem(typeof(MeshRenderEntitySystem));
 
         bool isRunning = true;
 

@@ -47,6 +47,11 @@ public abstract class EntitySystemBase
         }
     }
 
+    internal void RemoveAllEntities()
+    {
+        this.entities.Clear();
+    }
+
     protected abstract bool IsMatch([NotNull] IReadOnlyEntity entity);
 
     protected abstract void Process([NotNull] IEnumerable<Entity> entities);

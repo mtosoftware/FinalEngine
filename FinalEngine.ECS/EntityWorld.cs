@@ -91,6 +91,9 @@ public class EntityWorld : IEntityWorld
         {
             if (this.systems[i].GetType() == type)
             {
+                var system = this.systems[i];
+
+                system.RemoveAllEntities();
                 this.systems.RemoveAt(i);
 
                 return;
