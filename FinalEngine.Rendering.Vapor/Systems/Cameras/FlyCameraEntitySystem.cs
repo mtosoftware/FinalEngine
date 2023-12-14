@@ -2,20 +2,20 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.ECS.Systems.Rendering.Cameras;
+namespace FinalEngine.Rendering.Vapor.Systems.Cameras;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Numerics;
+using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
-using FinalEngine.ECS.Components.Rendering.Cameras;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.Maths;
+using FinalEngine.Rendering.Vapor.Components.Cameras;
 
-[EntitySystemProcess(ExecutionType = GameLoopType.Update)]
 public sealed class FlyCameraEntitySystem : EntitySystemBase
 {
     private readonly IKeyboard keyboard;
@@ -32,7 +32,7 @@ public sealed class FlyCameraEntitySystem : EntitySystemBase
     {
         return entity.ContainsComponent<TransformComponent>() &&
                entity.ContainsComponent<VelocityComponent>() &&
-               entity.ContainsComponent<PerspectiveCameraComponent>();
+               entity.ContainsComponent<CameraComponent>();
     }
 
     protected override void Process([NotNull] IEnumerable<Entity> entities)
@@ -41,7 +41,7 @@ public sealed class FlyCameraEntitySystem : EntitySystemBase
         {
             var transform = entity.GetComponent<TransformComponent>();
             var velocity = entity.GetComponent<VelocityComponent>();
-            var camera = entity.GetComponent<PerspectiveCameraComponent>();
+            var camera = entity.GetComponent<CameraComponent>();
 
             if (!camera.IsEnabled)
             {
@@ -53,7 +53,7 @@ public sealed class FlyCameraEntitySystem : EntitySystemBase
         }
     }
 
-    private void HandleKeyboard(TransformComponent transform, VelocityComponent velocity, PerspectiveCameraComponent camera)
+    private void HandleKeyboard(TransformComponent transform, VelocityComponent velocity, CameraComponent camera)
     {
         float moveAmount = velocity.Speed;
 
@@ -83,7 +83,7 @@ public sealed class FlyCameraEntitySystem : EntitySystemBase
         }
     }
 
-    private void HandleMouse(TransformComponent transform, VelocityComponent velocity, PerspectiveCameraComponent camera)
+    private void HandleMouse(TransformComponent transform, VelocityComponent velocity, CameraComponent camera)
     {
         var viewport = camera.Viewport;
         var centerPosition = new Vector2(viewport.Width / 2, viewport.Height / 2);

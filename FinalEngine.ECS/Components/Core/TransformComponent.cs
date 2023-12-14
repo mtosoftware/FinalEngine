@@ -1,14 +1,16 @@
-// <copyright file="Transform.cs" company="Software Antics">
+// <copyright file="TransformComponent.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Vapor.Core;
+namespace FinalEngine.ECS.Components.Core;
 
+using System.ComponentModel;
 using System.Numerics;
 
-public class Transform
+[Category("Core")]
+public sealed class TransformComponent : IEntityComponent
 {
-    public Transform()
+    public TransformComponent()
     {
         this.Position = Vector3.Zero;
         this.Rotation = Quaternion.Identity;

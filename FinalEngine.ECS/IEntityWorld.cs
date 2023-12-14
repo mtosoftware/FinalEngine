@@ -6,7 +6,7 @@ namespace FinalEngine.ECS;
 
 using System;
 
-public interface IEntityWorld : IEntitySystemsProcessor
+public interface IEntityWorld
 {
     void AddEntity(Entity entity);
 

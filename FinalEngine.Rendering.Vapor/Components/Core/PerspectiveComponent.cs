@@ -1,31 +1,22 @@
-// <copyright file="PerspectiveCamera.cs" company="Software Antics">
+// <copyright file="PerspectiveComponent.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Vapor.Cameras;
+namespace FinalEngine.Rendering.Vapor.Components.Core;
 
-using System.Drawing;
 using System.Numerics;
+using FinalEngine.ECS;
 using FinalEngine.Maths;
 
-public class PerspectiveCamera : IPerspectiveCamera
+public sealed class PerspectiveComponent : IEntityComponent
 {
-    public PerspectiveCamera()
-    {
-        this.IsEnabled = true;
-    }
-
     public float AspectRatio { get; set; }
 
     public float FarPlaneDistance { get; set; }
 
     public float FieldOfView { get; set; }
 
-    public bool IsEnabled { get; set; }
-
     public float NearPlaneDistance { get; set; }
-
-    public Rectangle Viewport { get; set; }
 
     public Matrix4x4 CreateProjectionMatrix()
     {

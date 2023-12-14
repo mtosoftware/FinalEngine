@@ -40,7 +40,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\FinalEngine.Audio.OpenAL\FinalEngine.Audio.OpenAL.csproj" />
-		<ProjectReference Include="..\FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj" />
 		<ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
 		<ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
 		<ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />

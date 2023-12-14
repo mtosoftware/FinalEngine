@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO.Abstractions;
 using System.Numerics;
 using FinalEngine.ECS;
-using FinalEngine.ECS.Systems.Rendering.Cameras;
+using FinalEngine.ECS.Components.Core;
 using FinalEngine.Examples.Sponza.Entities;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
@@ -13,10 +13,14 @@ using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
+using FinalEngine.Rendering.Vapor;
+using FinalEngine.Rendering.Vapor.Components.Geometry;
 using FinalEngine.Rendering.Vapor.Geometry;
 using FinalEngine.Rendering.Vapor.Loaders.Shaders;
 using FinalEngine.Rendering.Vapor.Loaders.Textures;
 using FinalEngine.Rendering.Vapor.Primitives;
+using FinalEngine.Rendering.Vapor.Systems.Cameras;
+using FinalEngine.Rendering.Vapor.Systems.Geometry;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -79,15 +83,6 @@ internal class Program
         var watchInvoker = new StopwatchInvoker(watch);
         var gameTime = new GameTime(watchInvoker, 120.0d);
 
-        var world = new EntityWorld();
-
-        var entityFactory = new CameraEntityFactory(window.ClientSize.Width, window.ClientSize.Height);
-        dynamic camera = entityFactory.CreateEntity();
-        world.AddEntity(camera);
-
-        var cameraSystem = new FlyCameraEntitySystem(keyboard, mouse);
-        world.AddSystem(cameraSystem);
-
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
 
@@ -139,6 +134,30 @@ internal class Program
         var mesh = new Mesh(renderDevice.Factory, vertices, indices);
         var material = new Material();
 
+        var world = new EntityWorld();
+
+        var entityFactory = new CameraEntityFactory(window.ClientSize.Width, window.ClientSize.Height);
+        dynamic camera = entityFactory.CreateEntity();
+        world.AddEntity(camera);
+
+        var cameraSystem = new FlyCameraEntitySystem(keyboard, mouse);
+        world.AddSystem(cameraSystem);
+
+        var geometryRenderSystem = new MeshRenderEntitySystem(renderDevice);
+        world.AddSystem(geometryRenderSystem);
+
+        var renderingEngine = new RenderingEngine(renderDevice, geometryRenderSystem);
+
+        var entity = new Entity();
+        entity.AddComponent(new TransformComponent());
+        entity.AddComponent(new ModelComponent()
+        {
+            Mesh = mesh,
+            Material = material,
+        });
+
+        world.AddEntity(entity);
+
         bool isRunning = true;
 
         while (isRunning)
@@ -150,21 +169,19 @@ internal class Program
 
             window.Title = $"{GameTime.FrameRate}";
 
-            world.ProcessAll(GameLoopType.Update);
+            cameraSystem.Process();
 
             keyboard.Update();
             mouse.Update();
 
             renderDevice.Clear(Color.CornflowerBlue);
 
-            renderDevice.Pipeline.SetUniform("u_projection", camera.PerspectiveCamera.CreateProjectionMatrix());
+            //// TODO: Multiple cameras
+            renderDevice.Pipeline.SetUniform("u_projection", camera.Perspective.CreateProjectionMatrix());
             renderDevice.Pipeline.SetUniform("u_view", camera.Transform.CreateViewMatrix(Vector3.UnitY));
             renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.Identity);
 
-            material.Bind(renderDevice.Pipeline);
-            mesh.Bind(renderDevice.InputAssembler);
-            mesh.Draw(renderDevice);
-
+            renderingEngine.Render();
             renderContext.SwapBuffers();
             window.ProcessEvents();
         }

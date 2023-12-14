@@ -12,8 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.ECS.Components\FinalEngine.ECS.Components.csproj" />
-    <ProjectReference Include="..\FinalEngine.ECS.Systems\FinalEngine.ECS.Systems.csproj" />
     <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
     <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
