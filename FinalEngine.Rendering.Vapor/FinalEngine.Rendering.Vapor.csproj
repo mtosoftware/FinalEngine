@@ -40,6 +40,12 @@
     <None Update="Resources\Shaders\forward-geometry.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Shaders\Lighting\lighting-directional.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Lighting\lighting-directional.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Shaders\sprite-geometry.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -3,24 +3,20 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO.Abstractions;
 using System.Numerics;
-using FinalEngine.ECS;
-using FinalEngine.ECS.Components.Core;
-using FinalEngine.Examples.Sponza.Entities;
+using FinalEngine.Examples.Sponza;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
+using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
-using FinalEngine.Rendering.Vapor;
-using FinalEngine.Rendering.Vapor.Components.Geometry;
+using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
 using FinalEngine.Rendering.Vapor.Loaders.Shaders;
 using FinalEngine.Rendering.Vapor.Loaders.Textures;
 using FinalEngine.Rendering.Vapor.Primitives;
-using FinalEngine.Rendering.Vapor.Systems.Cameras;
-using FinalEngine.Rendering.Vapor.Systems.Geometry;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -125,41 +121,18 @@ internal class Program
             3
         ];
 
-        var vertexShader = renderDevice.Factory.CreateShader(PipelineTarget.Vertex, fileSystem.File.ReadAllText("Resources\\Shaders\\forward-geometry.vert"));
-        var fragmentShader = renderDevice.Factory.CreateShader(PipelineTarget.Fragment, fileSystem.File.ReadAllText("Resources\\Shaders\\forward-geometry.frag"));
+        var vertexShader = renderDevice.Factory.CreateShader(PipelineTarget.Vertex, fileSystem.File.ReadAllText("Resources\\Shaders\\Lighting\\lighting-directional.vert"));
+        var fragmentShader = renderDevice.Factory.CreateShader(PipelineTarget.Fragment, fileSystem.File.ReadAllText("Resources\\Shaders\\Lighting\\lighting-directional.frag"));
         var shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, fragmentShader });
 
         renderDevice.Pipeline.SetShaderProgram(shaderProgram);
 
-        var mesh = new Mesh(renderDevice.Factory, vertices, indices);
+        var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
         var material = new Material();
 
-        var world = new EntityWorld();
-
-        var entityFactory = new CameraEntityFactory(window.ClientSize.Width, window.ClientSize.Height);
-        dynamic camera = entityFactory.CreateEntity();
-        world.AddEntity(camera);
-
-        var cameraSystem = new FlyCameraEntitySystem(keyboard, mouse);
-        world.AddSystem(cameraSystem);
-
-        var geometryRenderSystem = new MeshRenderEntitySystem(renderDevice);
-        world.AddSystem(geometryRenderSystem);
-
-        var renderingEngine = new RenderingEngine(renderDevice, geometryRenderSystem);
-
-        var entity = new Entity();
-        entity.AddComponent(new TransformComponent());
-        entity.AddComponent(new ModelComponent()
-        {
-            Mesh = mesh,
-            Material = material,
-        });
-
-        world.AddEntity(entity);
-        world.RemoveSystem(typeof(MeshRenderEntitySystem));
-
         bool isRunning = true;
+
+        var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
 
         while (isRunning)
         {
@@ -170,19 +143,26 @@ internal class Program
 
             window.Title = $"{GameTime.FrameRate}";
 
-            cameraSystem.Process();
+            camera.Update(renderDevice.Pipeline, keyboard, mouse);
 
             keyboard.Update();
             mouse.Update();
 
             renderDevice.Clear(Color.CornflowerBlue);
 
-            //// TODO: Multiple cameras
-            renderDevice.Pipeline.SetUniform("u_projection", camera.Perspective.CreateProjectionMatrix());
-            renderDevice.Pipeline.SetUniform("u_view", camera.Transform.CreateViewMatrix(Vector3.UnitY));
+            var t = new Transform();
+            t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
+
+            renderDevice.Pipeline.SetUniform("u_light.direction", t.Forward);
+            renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.5f, 0.0f, 0.0f));
+            renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0, 0, 1.0f));
+
             renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.Identity);
 
-            renderingEngine.Render();
+            material.Bind(renderDevice.Pipeline);
+            mesh.Bind(renderDevice.InputAssembler);
+            mesh.Draw(renderDevice);
+
             renderContext.SwapBuffers();
             window.ProcessEvents();
         }
