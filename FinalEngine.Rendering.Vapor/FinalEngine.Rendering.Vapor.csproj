@@ -30,8 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
-    <ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
   </ItemGroup>
 
