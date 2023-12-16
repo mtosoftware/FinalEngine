@@ -7,19 +7,20 @@ namespace FinalEngine.Rendering.Vapor.Loaders.Shaders;
 using System;
 using System.IO;
 using System.IO.Abstractions;
+using System.Text;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 
 public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
 {
-    private readonly IGPUResourceFactory factory;
-
     private readonly IFileSystem fileSystem;
 
-    public ShaderResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory)
+    private readonly IRenderDevice renderDevice;
+
+    public ShaderResourceLoader(IFileSystem fileSystem, IRenderDevice renderDevice)
     {
-        this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
     }
 
@@ -38,7 +39,7 @@ public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
         {
             using (var reader = new StreamReader(stream))
             {
-                return this.factory.CreateShader(target, reader.ReadToEnd());
+                return this.renderDevice.Factory.CreateShader(target, this.LoadShaderSource(reader.ReadToEnd()));
             }
         }
     }
@@ -51,5 +52,42 @@ public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
             ".fs" or ".frag" => PipelineTarget.Fragment,
             _ => throw new NotSupportedException($"The specified {nameof(extension)} is not supported by the {nameof(ShaderResourceLoader)}."),
         };
+    }
+
+    private string LoadShaderSource(string sourceCode)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(sourceCode, nameof(sourceCode));
+
+        var sb = new StringBuilder();
+
+        using (var reader = new StringReader(sourceCode))
+        {
+            string? line = null;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.StartsWith("#include", StringComparison.InvariantCulture))
+                {
+                    string includeName = line.Replace("#include", string.Empty, StringComparison.InvariantCulture)
+                                             .Replace("<", string.Empty, StringComparison.InvariantCulture)
+                                             .Replace(">", string.Empty, StringComparison.InvariantCulture)
+                                             .Replace("\"", string.Empty, StringComparison.InvariantCulture)
+                                             .Trim();
+
+                    sb.AppendLine(this.LoadShaderSource(this.renderDevice.Pipeline.GetShaderHeader(includeName)));
+                }
+                else
+                {
+                    sb.AppendLine(line);
+                }
+            }
+        }
+
+        var coneteent = sb.ToString();
+
+        Console.WriteLine("===============================================================================");
+        Console.WriteLine(coneteent);
+
+        return sb.ToString();
     }
 }

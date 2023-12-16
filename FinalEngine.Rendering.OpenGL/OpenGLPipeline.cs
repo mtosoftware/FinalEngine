@@ -20,6 +20,8 @@ public class OpenGLPipeline : IPipeline
 
     private readonly IOpenGLInvoker invoker;
 
+    private readonly Dictionary<string, string> nameToHeaderMap;
+
     private readonly Dictionary<string, int> uniformLocations;
 
     private IOpenGLShaderProgram? boundProgram;
@@ -28,11 +30,37 @@ public class OpenGLPipeline : IPipeline
     {
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         this.uniformLocations = new Dictionary<string, int>(InitialSizeCapacity);
+        this.nameToHeaderMap = new Dictionary<string, string>();
     }
 
     public int MaxTextureSlots
     {
         get { return this.invoker.GetInteger(GetPName.MaxTextureImageUnits); }
+    }
+
+    public void AddShaderHeader(string name, string content)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(content, nameof(content));
+
+        if (this.nameToHeaderMap.ContainsKey(name))
+        {
+            throw new ArgumentException($"A shader header with name: '{name}' has already been added to this {nameof(OpenGLPipeline)}");
+        }
+
+        this.nameToHeaderMap.Add(name, content);
+    }
+
+    public string GetShaderHeader(string name)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+
+        if (!this.nameToHeaderMap.TryGetValue(name, out string? content))
+        {
+            throw new ArgumentException($"A shader header with name: '{name}' has not been added to this {nameof(OpenGLPipeline)}");
+        }
+
+        return content;
     }
 
     public void SetShaderProgram(IShaderProgram program)

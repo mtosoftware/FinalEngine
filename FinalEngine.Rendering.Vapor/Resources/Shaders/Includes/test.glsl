@@ -1,7 +1,21 @@
+#version 460
+
 #ifndef LIGHTING_GLSL
 #define LIGHTING_GLSL
 
-#include "material"
+#ifndef MATERIAL_GLSL
+#define MATERIAL_GLSL
+
+struct Material
+{
+    sampler2D diffuseTexture;
+    sampler2D specularTexture;
+    sampler2D normalTexture;
+    float shininess;
+};
+
+#endif // MATERIAL_GLSL
+
 
 struct LightBase
 {
@@ -114,3 +128,18 @@ vec3 CalculateNormal(mat3 tbnMatrix, sampler2D normalTexture, vec2 texCoord)
 }
 
 #endif // LIGHTING_GLSL
+
+
+layout (location = 0) in vec3 in_position;
+layout (location = 1) in vec4 in_color;
+layout (location = 2) in vec2 in_texCoord;
+
+layout (location = 0) out vec4 out_color;
+
+uniform Material u_material;
+uniform AmbientLight u_light;
+
+void main()
+{
+    out_color = vec4(CalculateAmbientLight(u_light, u_material, in_texCoord), 1.0);
+}

@@ -34,16 +34,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Shaders\forward-geometry.frag">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="Resources\Shaders\Includes\lighting.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\forward-geometry.vert">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="Resources\Shaders\Includes\material.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Lighting\lighting-ambient.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Shaders\Lighting\lighting-directional.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\Lighting\lighting-directional.vert">
+    <None Update="Resources\Shaders\Lighting\lighting-main.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Lighting\lighting-point.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Lighting\lighting-spot.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Lighting\lighting.point.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Shaders\sprite-geometry.frag">

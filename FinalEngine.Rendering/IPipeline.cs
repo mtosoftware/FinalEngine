@@ -12,6 +12,10 @@ public interface IPipeline
 {
     int MaxTextureSlots { get; }
 
+    void AddShaderHeader(string name, string content);
+
+    string GetShaderHeader(string name);
+
     void SetShaderProgram(IShaderProgram program);
 
     void SetTexture(ITexture texture, int slot = 0);

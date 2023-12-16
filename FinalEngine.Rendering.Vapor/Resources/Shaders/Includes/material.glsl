@@ -9,10 +9,4 @@ struct Material
     float shininess;
 };
 
-struct Scene
-{
-    float ambientStrength;
-    vec3 ambientColor;
-};
-
 #endif // MATERIAL_GLSL
