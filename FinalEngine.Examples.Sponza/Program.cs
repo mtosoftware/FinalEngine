@@ -126,10 +126,13 @@ internal class Program
         var renderingEngine = new RenderingEngine(renderDevice, fileSystem);
 
         var vertexShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-main.vert");
-        var fragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-spot.frag");
-        var shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, fragmentShader });
+        var dirFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-directional.frag");
+        var pointFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-point.frag");
+        var spotFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-spot.frag");
 
-        renderDevice.Pipeline.SetShaderProgram(shaderProgram);
+        var dirShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, dirFragmentShader });
+        var pointShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, pointFragmentShader });
+        var spotShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, spotFragmentShader });
 
         var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
         var material = new Material()
@@ -162,22 +165,32 @@ internal class Program
             var t = new Transform();
             t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
 
-            renderDevice.Pipeline.SetUniform("u_light.base.intensity", 1.0f);
-            renderDevice.Pipeline.SetUniform("u_light.base.color", new Vector3(1.0f, 0.0f, 0.0f));
-            //renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
+            renderDevice.Pipeline.SetShaderProgram(dirShaderProgram);
 
-            //renderDevice.Pipeline.SetUniform("u_light.position", new Vector3(0, 0, 0));
+            renderDevice.Pipeline.SetUniform("u_light.base.intensity", 0.4f);
+            renderDevice.Pipeline.SetUniform("u_light.base.color", new Vector3(1.0f));
+            renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
+
+            //renderDevice.Pipeline.SetShaderProgram(pointShaderProgram);
+
+            //renderDevice.Pipeline.SetUniform("u_light.base.intensity", 0.8f);
+            //renderDevice.Pipeline.SetUniform("u_light.base.color", new Vector3(0.5f, 0.0f, 0.5f));
+            //renderDevice.Pipeline.SetUniform("u_light.position", new Vector3(0, 1, 0));
             //renderDevice.Pipeline.SetUniform("u_light.attenuation.constant", 1.0f);
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.09f);
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.032f);
+            //renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.014f);
+            //renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0007f);
 
-            renderDevice.Pipeline.SetUniform("u_light.position", camera.Transform.Position);
-            renderDevice.Pipeline.SetUniform("u_light.direction", camera.Transform.Forward);
-            renderDevice.Pipeline.SetUniform("u_light.radius", MathF.Cos(MathHelper.DegreesToRadians(12.5f)));
-            renderDevice.Pipeline.SetUniform("u_light.outerRadius", MathF.Cos(MathHelper.DegreesToRadians(17.5f)));
-            renderDevice.Pipeline.SetUniform("u_light.attenuation.constant", 1.0f);
-            renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.014f);
-            renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0007f);
+            //renderDevice.Pipeline.SetShaderProgram(spotShaderProgram);
+
+            //renderDevice.Pipeline.SetUniform("u_light.base.intensity", 0.8f);
+            //renderDevice.Pipeline.SetUniform("u_light.base.color", new Vector3(0.5f, 0.0f, 0.5f));
+            //renderDevice.Pipeline.SetUniform("u_light.position", camera.Transform.Position);
+            //renderDevice.Pipeline.SetUniform("u_light.direction", camera.Transform.Forward);
+            //renderDevice.Pipeline.SetUniform("u_light.radius", MathF.Cos(MathHelper.DegreesToRadians(12.5f)));
+            //renderDevice.Pipeline.SetUniform("u_light.outerRadius", MathF.Cos(MathHelper.DegreesToRadians(17.5f)));
+            //renderDevice.Pipeline.SetUniform("u_light.attenuation.constant", 1.0f);
+            //renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.014f);
+            //renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0007f);
 
             renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateTranslation(0, -5, 0));
 

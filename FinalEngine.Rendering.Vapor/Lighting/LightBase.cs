@@ -4,13 +4,17 @@
 
 namespace FinalEngine.Rendering.Vapor.Lighting;
 
-using System.Numerics;
+using System.Drawing;
 
 public abstract class LightBase
 {
-    public Vector3 AmbientColor { get; set; }
+    protected LightBase()
+    {
+        this.Color = Color.White;
+        this.Intensity = 0.4f;
+    }
 
-    public Vector3 DiffuseColor { get; set; }
+    public Color Color { get; set; }
 
-    public Vector3 SpecularColor { get; set; }
+    public float Intensity { get; set; }
 }
