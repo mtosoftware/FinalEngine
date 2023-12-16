@@ -164,6 +164,16 @@ internal class Program
             renderDevice.Pipeline.SetUniform("u_plight.attenuation.linear", 0.09f);
             renderDevice.Pipeline.SetUniform("u_plight.attenuation.quadratic", 0.032f);
 
+            renderDevice.Pipeline.SetUniform("u_slight.position", camera.Transform.Position);
+            renderDevice.Pipeline.SetUniform("u_slight.direction", camera.Transform.Forward);
+            renderDevice.Pipeline.SetUniform("u_slight.base.diffuseColor", new Vector3(1.0f, 0.0f, 1.0f));
+            renderDevice.Pipeline.SetUniform("u_slight.base.specularColor", new Vector3(1.0f, 0.2f, 0.5f));
+            renderDevice.Pipeline.SetUniform("u_slight.radius", MathF.Cos(MathHelper.DegreesToRadians(12.5f)));
+            renderDevice.Pipeline.SetUniform("u_slight.outerRadius", MathF.Cos(MathHelper.DegreesToRadians(17.5f)));
+            renderDevice.Pipeline.SetUniform("u_slight.attenuation.constant", 1.0f);
+            renderDevice.Pipeline.SetUniform("u_slight.attenuation.linear", 0.09f);
+            renderDevice.Pipeline.SetUniform("u_slight.attenuation.quadratic", 0.032f);
+
             renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateTranslation(0, -2, 0));
 
             material.Bind(renderDevice.Pipeline);

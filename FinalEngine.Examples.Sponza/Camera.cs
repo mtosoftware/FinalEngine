@@ -17,8 +17,6 @@ public sealed class Camera
 
     private float speed = 0.4f;
 
-    private Transform transform;
-
     private float width;
 
     public Camera(int width, int height)
@@ -26,9 +24,11 @@ public sealed class Camera
         this.width = width;
         this.height = height;
 
-        this.transform = new Transform();
-        this.transform.Position = new Vector3(0, 10, 0);
-        this.transform.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
+        this.Transform = new Transform
+        {
+            Position = new Vector3(0, 10, 0)
+        };
+        this.Transform.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
         this.isLocked = true;
     }
 
@@ -37,33 +37,35 @@ public sealed class Camera
         get { return Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(70.0f), this.width / this.height, 0.1f, 1000.0f); }
     }
 
+    public Transform Transform { get; }
+
     public void Update(IPipeline pipeline, IKeyboard keyboard, IMouse mouse)
     {
         float moveAmount = speed;
 
         if (keyboard.IsKeyDown(Key.W))
         {
-            transform.Translate(transform.Forward, moveAmount);
+            Transform.Translate(Transform.Forward, moveAmount);
         }
 
         if (keyboard.IsKeyDown(Key.S))
         {
-            transform.Translate(transform.Forward, -moveAmount);
+            Transform.Translate(Transform.Forward, -moveAmount);
         }
 
         if (keyboard.IsKeyDown(Key.A))
         {
-            transform.Translate(transform.Left, -moveAmount);
+            Transform.Translate(Transform.Left, -moveAmount);
         }
 
         if (keyboard.IsKeyDown(Key.D))
         {
-            transform.Translate(transform.Left, moveAmount);
+            Transform.Translate(Transform.Left, moveAmount);
         }
 
         if (keyboard.IsKeyReleased(Key.Escape))
         {
-            Console.WriteLine(this.transform.Position);
+            Console.WriteLine(this.Transform.Position);
             isLocked = false;
         }
 
@@ -86,12 +88,12 @@ public sealed class Camera
 
             if (canRotateX)
             {
-                transform.Rotate(transform.Left, -MathHelper.DegreesToRadians(deltaPosition.Y * speed));
+                Transform.Rotate(Transform.Left, -MathHelper.DegreesToRadians(deltaPosition.Y * speed));
             }
 
             if (canRotateY)
             {
-                transform.Rotate(Vector3.UnitY, -MathHelper.DegreesToRadians(deltaPosition.X * speed));
+                Transform.Rotate(Vector3.UnitY, -MathHelper.DegreesToRadians(deltaPosition.X * speed));
             }
 
             if (canRotateX || canRotateY)
@@ -102,8 +104,8 @@ public sealed class Camera
             }
         }
 
-        pipeline.SetUniform("u_viewPosition", transform.Position);
+        pipeline.SetUniform("u_viewPosition", Transform.Position);
         pipeline.SetUniform("u_projection", Projection);
-        pipeline.SetUniform("u_view", transform.CreateViewMatrix(Vector3.UnitY));
+        pipeline.SetUniform("u_view", Transform.CreateViewMatrix(Vector3.UnitY));
     }
 }
