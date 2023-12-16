@@ -22,7 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Textures\wood.png">
+    <None Update="Resources\Textures\bricks_diffuse.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\bricks_normal.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

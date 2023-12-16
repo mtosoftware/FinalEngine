@@ -46,7 +46,7 @@ internal class Program
 
             StartVisible = true,
 
-            NumberOfSamples = 16,
+            NumberOfSamples = 8,
         };
 
         var nativeWindow = new NativeWindowInvoker(settings);
@@ -131,7 +131,8 @@ internal class Program
         var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
         var material = new Material()
         {
-            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\wood.png"),
+            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_diffuse.jpg"),
+            NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_normal.jpg"),
             Shininess = 16.0f,
         };
 
@@ -158,9 +159,9 @@ internal class Program
             var t = new Transform();
             t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
 
-            //renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
-            //renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.1f, 0.1f, 0.1f));
-            //renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.1f, 0.1f, 0.1f));
+            renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
+            renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.1f, 0.1f, 0.1f));
+            renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.1f, 0.1f, 0.1f));
 
             renderDevice.Pipeline.SetUniform("u_plight.position", new Vector3(0, 0, 0));
             renderDevice.Pipeline.SetUniform("u_plight.base.diffuseColor", new Vector3(0.4f, 0.4f, 0.4f));

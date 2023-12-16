@@ -4,6 +4,7 @@ struct Material
 {
     sampler2D diffuseTexture;
     sampler2D specularTexture;
+    sampler2D normalTexture;
     float shininess;
 };
 
@@ -101,10 +102,16 @@ vec3 CalculateSpotLight(SpotLight light, Material material, vec3 normal, vec3 vi
     return lightColor * attenuation * intensity;
 }
 
+vec3 CalculateNormal(mat3 tbnMatrix, sampler2D normalTexture, vec2 texCoord)
+{
+    // Take the TBN matrix and transform the normal to world space.
+    return normalize(tbnMatrix * (2.0 * texture(normalTexture, texCoord).rgb - 1.0));
+}
+
 layout (location = 0) in vec4 in_color;
 layout (location = 1) in vec2 in_texCoord;
-layout (location = 2) in vec3 in_normal;
-layout (location = 3) in vec3 in_fragPos;
+layout (location = 2) in vec3 in_fragPos;
+layout (location = 3) in mat3 in_tbnMatrix;
 
 layout (location = 0) out vec4 out_color;
 
@@ -116,12 +123,14 @@ uniform SpotLight u_slight;
 
 void main()
 {
+    vec3 normal = CalculateNormal(in_tbnMatrix, u_material.normalTexture, in_texCoord);
+
     vec3 ambient = 0.05 * texture(u_material.diffuseTexture, in_texCoord).rgb;
 
     vec3 lightColor = CalculateDirectionalLight(
         u_light,
         u_material,
-        in_normal,
+        normal,
         u_viewPosition,
         in_fragPos,
         in_texCoord);
@@ -129,7 +138,7 @@ void main()
     vec3 pColor = CalculatePointLight(
         u_plight,
         u_material,
-        in_normal,
+        normal,
         u_viewPosition,
         in_fragPos,
         in_texCoord);
@@ -137,10 +146,10 @@ void main()
     vec3 sLight = CalculateSpotLight(
         u_slight,
         u_material,
-        in_normal,
+        normal,
         u_viewPosition,
         in_fragPos,
         in_texCoord);
 
-    out_color = vec4(ambient + pColor, 1.0);
+    out_color = vec4(ambient + lightColor + pColor + sLight, 1.0);
 }

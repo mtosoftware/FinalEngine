@@ -19,7 +19,7 @@ public sealed class Mesh : IMesh
 
     private IVertexBuffer? vertexBuffer;
 
-    public Mesh(IGPUResourceFactory factory, MeshVertex[] vertices, int[] indices, bool calculateNormals = true)
+    public Mesh(IGPUResourceFactory factory, MeshVertex[] vertices, int[] indices, bool calculateNormals = true, bool calculateTangents = true)
     {
         ArgumentNullException.ThrowIfNull(factory, nameof(factory));
         ArgumentNullException.ThrowIfNull(vertices, nameof(vertices));
@@ -28,6 +28,11 @@ public sealed class Mesh : IMesh
         if (calculateNormals)
         {
             CalculateNormals(vertices, indices);
+        }
+
+        if (calculateTangents)
+        {
+            CalculateTangents(vertices, indices);
         }
 
         this.vertexBuffer = factory.CreateVertexBuffer(
@@ -90,10 +95,35 @@ public sealed class Mesh : IMesh
             vertices[i1].Normal = normal;
             vertices[i2].Normal = normal;
         }
+    }
 
-        for (int i = 0; i < vertices.Length; i++)
+    private static void CalculateTangents(MeshVertex[] vertices, int[] indices)
+    {
+        for (int i = 0; i < indices.Length; i += 3)
         {
-            vertices[i].Normal = Vector3.Normalize(vertices[i].Normal);
+            int i0 = indices[i];
+            int i1 = indices[i + 1];
+            int i2 = indices[i + 2];
+
+            var edge1 = vertices[i1].Position - vertices[i0].Position;
+            var edge2 = vertices[i2].Position - vertices[i0].Position;
+
+            float deltaU1 = vertices[i1].TextureCoordinate.X - vertices[i0].TextureCoordinate.X;
+            float deltaU2 = vertices[i2].TextureCoordinate.X - vertices[i0].TextureCoordinate.X;
+            float deltaV1 = vertices[i1].TextureCoordinate.Y - vertices[i0].TextureCoordinate.Y;
+            float deltaV2 = vertices[i2].TextureCoordinate.Y - vertices[i0].TextureCoordinate.Y;
+
+            float dividend = (deltaU1 * deltaV2) - (deltaU2 * deltaV1);
+            float f = dividend == 0.0f ? 0.0f : 1.0f / dividend;
+
+            var tangent = new Vector3(
+                f * ((deltaV2 * edge1.X) - (deltaV1 * edge2.X)),
+                f * ((deltaV2 * edge1.Y) - (deltaV1 * edge2.Y)),
+                f * ((deltaV2 * edge1.Z) - (deltaV1 * edge2.Z)));
+
+            vertices[i0].Tangent = tangent;
+            vertices[i1].Tangent = tangent;
+            vertices[i2].Tangent = tangent;
         }
     }
 
