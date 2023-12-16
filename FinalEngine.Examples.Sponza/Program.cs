@@ -154,8 +154,15 @@ internal class Program
             t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
 
             renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
-            renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.5f, 0.5f, 0.5f));
-            renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.5f, 0.5f, 0.5f));
+            renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.1f, 0.1f, 0.1f));
+            renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.1f, 0.1f, 0.1f));
+
+            renderDevice.Pipeline.SetUniform("u_plight.position", new Vector3(-1, 3, -1));
+            renderDevice.Pipeline.SetUniform("u_plight.base.diffuseColor", new Vector3(0.0f, 0.0f, 0.5f));
+            renderDevice.Pipeline.SetUniform("u_plight.base.specularColor", new Vector3(1.0f, 0.2f, 0.5f));
+            renderDevice.Pipeline.SetUniform("u_plight.attenuation.constant", 1.0f);
+            renderDevice.Pipeline.SetUniform("u_plight.attenuation.linear", 0.09f);
+            renderDevice.Pipeline.SetUniform("u_plight.attenuation.quadratic", 0.032f);
 
             renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateTranslation(0, -2, 0));
 

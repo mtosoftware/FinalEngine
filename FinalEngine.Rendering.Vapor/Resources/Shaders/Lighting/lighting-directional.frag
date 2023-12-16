@@ -19,6 +19,20 @@ struct DirectionalLight
     vec3 direction;
 };
 
+struct Attenuation
+{
+    float constant;
+    float linear;
+    float quadratic;
+};
+
+struct PointLight
+{
+    LightBase base;
+    Attenuation attenuation;
+    vec3 position;
+};
+
 vec3 CalculateLight(LightBase light, Material material, vec3 direction, vec3 normal, vec3 viewPosition, vec3 fragPosition, vec2 texCoord)
 {
     normal = normalize(normal);
@@ -44,6 +58,25 @@ vec3 CalculateLight(LightBase light, Material material, vec3 direction, vec3 nor
     return diffuseColor + specularColor;
 }
 
+vec3 CalculateDirectionalLight(DirectionalLight light, Material material, vec3 normal, vec3 viewPosition, vec3 fragPosition, vec2 texCoord)
+{
+    return CalculateLight(light.base, material, -light.direction, normal, viewPosition, fragPosition, texCoord);
+}
+
+float CalculateAttenuation(Attenuation attenuation, vec3 position, vec3 fragPosition)
+{
+    float dist = length(position - fragPosition);
+    return 1.0 / (attenuation.constant + attenuation.linear * dist + attenuation.quadratic * (dist * dist));
+}
+
+vec3 CalculatePointLight(PointLight light, Material material, vec3 normal, vec3 viewPosition, vec3 fragPosition, vec2 texCoord)
+{
+    float attenuation = CalculateAttenuation(light.attenuation, light.position, fragPosition);
+    vec3 lightColor = CalculateLight(light.base, material, light.position - fragPosition, normal, viewPosition, fragPosition, texCoord);
+
+    return lightColor * attenuation;
+}
+
 layout (location = 0) in vec4 in_color;
 layout (location = 1) in vec2 in_texCoord;
 layout (location = 2) in vec3 in_normal;
@@ -54,17 +87,25 @@ layout (location = 0) out vec4 out_color;
 uniform vec3 u_viewPosition;
 uniform DirectionalLight u_light;
 uniform Material u_material;
+uniform PointLight u_plight;
 
 void main()
 {
-    vec3 lightColor = CalculateLight(
-        u_light.base,
+    vec3 lightColor = CalculateDirectionalLight(
+        u_light,
         u_material,
-        -u_light.direction,
         in_normal,
         u_viewPosition,
         in_fragPos,
         in_texCoord);
 
-    out_color = vec4(lightColor, 1.0);
+    vec3 pColor = CalculatePointLight(
+        u_plight,
+        u_material,
+        in_normal,
+        u_viewPosition,
+        in_fragPos,
+        in_texCoord);
+
+    out_color = vec4(lightColor + pColor, 1.0);
 }
