@@ -12,6 +12,7 @@ using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
+using FinalEngine.Rendering.Textures;
 using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
 using FinalEngine.Rendering.Vapor.Loaders.Shaders;
@@ -128,7 +129,11 @@ internal class Program
         renderDevice.Pipeline.SetShaderProgram(shaderProgram);
 
         var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
-        var material = new Material();
+        var material = new Material()
+        {
+            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\wood.png"),
+            Shininess = 16.0f,
+        };
 
         bool isRunning = true;
 
@@ -148,18 +153,18 @@ internal class Program
             keyboard.Update();
             mouse.Update();
 
-            renderDevice.Clear(Color.CornflowerBlue);
+            renderDevice.Clear(Color.FromArgb(255, (int)(0.1f * 255.0f), (int)(0.1f * 255.0f), (int)(0.1f * 255.0f)));
 
             var t = new Transform();
             t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
 
-            renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
-            renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.1f, 0.1f, 0.1f));
-            renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.1f, 0.1f, 0.1f));
+            //renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
+            //renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.1f, 0.1f, 0.1f));
+            //renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.1f, 0.1f, 0.1f));
 
-            renderDevice.Pipeline.SetUniform("u_plight.position", new Vector3(-1, 3, -1));
-            renderDevice.Pipeline.SetUniform("u_plight.base.diffuseColor", new Vector3(0.0f, 0.0f, 0.5f));
-            renderDevice.Pipeline.SetUniform("u_plight.base.specularColor", new Vector3(1.0f, 0.2f, 0.5f));
+            renderDevice.Pipeline.SetUniform("u_plight.position", new Vector3(0, 0, 0));
+            renderDevice.Pipeline.SetUniform("u_plight.base.diffuseColor", new Vector3(0.4f, 0.4f, 0.4f));
+            renderDevice.Pipeline.SetUniform("u_plight.base.specularColor", new Vector3(0.3f, 0.3f, 0.3f));
             renderDevice.Pipeline.SetUniform("u_plight.attenuation.constant", 1.0f);
             renderDevice.Pipeline.SetUniform("u_plight.attenuation.linear", 0.09f);
             renderDevice.Pipeline.SetUniform("u_plight.attenuation.quadratic", 0.032f);
@@ -174,7 +179,7 @@ internal class Program
             renderDevice.Pipeline.SetUniform("u_slight.attenuation.linear", 0.09f);
             renderDevice.Pipeline.SetUniform("u_slight.attenuation.quadratic", 0.032f);
 
-            renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateTranslation(0, -2, 0));
+            renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateTranslation(0, -5, 0));
 
             material.Bind(renderDevice.Pipeline);
             mesh.Bind(renderDevice.InputAssembler);

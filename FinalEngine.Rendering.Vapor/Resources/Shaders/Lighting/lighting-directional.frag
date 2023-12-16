@@ -52,17 +52,13 @@ vec3 CalculateLight(LightBase light, Material material, vec3 direction, vec3 nor
     float diffuseShading = max(dot(direction, normal), 0.0);
     vec3 diffuseColor = diffuseShading * light.diffuseColor * texture(material.diffuseTexture, texCoord).rgb;
 
-    // Calculate the view direction and reflect the light direction around the normal.
+    // Now let's measure the angle between the normal and halfway point of the light and view direction.
     vec3 viewDirection = normalize(viewPosition - fragPosition);
-
-    // Reverse light direction: light source to fragment.
-    // Then get the reflection vector.
-    vec3 inverseDirection = -direction;
-    vec3 reflectDirection = reflect(inverseDirection, normal);
+    vec3 halfWayDirection = normalize(direction + viewDirection);
 
     // As the angle widens, specular shading decreases.
     // This is why we raise to the power of shininess.
-    float specularShading = pow(max(dot(viewDirection, reflectDirection), 0.0), material.shininess);
+    float specularShading = pow(max(dot(normal, halfWayDirection), 0.0), material.shininess);
     vec3 specularColor = specularShading * light.specularColor * texture(material.specularTexture, texCoord).rgb;
 
     return diffuseColor + specularColor;
@@ -75,7 +71,10 @@ vec3 CalculateDirectionalLight(DirectionalLight light, Material material, vec3 n
 
 float CalculateAttenuation(Attenuation attenuation, vec3 position, vec3 fragPosition)
 {
+    // The distance between the light and the fragment position.
     float dist = length(position - fragPosition);
+
+    // Use the quadratic equation to determine the lights attenuation over the distance.
     return 1.0 / (attenuation.constant + attenuation.linear * dist + attenuation.quadratic * (dist * dist));
 }
 
@@ -117,6 +116,8 @@ uniform SpotLight u_slight;
 
 void main()
 {
+    vec3 ambient = 0.05 * texture(u_material.diffuseTexture, in_texCoord).rgb;
+
     vec3 lightColor = CalculateDirectionalLight(
         u_light,
         u_material,
@@ -141,5 +142,5 @@ void main()
         in_fragPos,
         in_texCoord);
 
-    out_color = vec4(lightColor + pColor + sLight, 1.0);
+    out_color = vec4(ambient + pColor, 1.0);
 }
