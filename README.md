@@ -24,24 +24,26 @@ This is a copy of Final Engine that will be used to setup the new rendering engi
 ### Material and Shading
 
 - [ ] Material System
-  - [ ] Normal Mapping
+  - [x] Diffuse Mapping
+  - [x] Specular Mapping
+  - [x] Normal Mapping
+  - [ ] Emissive Mapping
   - [ ] Parallax Mapping
-  - [ ] Texture Mapping
   - [ ] Physically Based Rendering (PBR)
 
 ### Lighting and Shadows
 
-- [ ] Lighting
-  - [ ] Blinn-Phong Lighting Model
+- [x] Lighting
+  - [x] Blinn-Phong Lighting Model
   - [ ] Physical-based Lighting
   - [ ] Image-Based Lighting (IBL)
-- [ ] Light Sources
-  - [ ] Directional
-  - [ ] Point
-  - [ ] Spot
+- [x] Light Sources
+  - [x] Directional
+  - [x] Point
+  - [x] Spot
   - [ ] Area
   - [ ] Volumetric
-- [ ] Global Illumination
+- [x] Global Illumination (Ambient Lighting)
 - [ ] Shadow Mapping
 - [ ] Ambient Occlusion
 
