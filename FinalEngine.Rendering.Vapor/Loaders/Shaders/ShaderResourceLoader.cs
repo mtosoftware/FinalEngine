@@ -83,11 +83,6 @@ public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
             }
         }
 
-        var coneteent = sb.ToString();
-
-        Console.WriteLine("===============================================================================");
-        Console.WriteLine(coneteent);
-
         return sb.ToString();
     }
 }

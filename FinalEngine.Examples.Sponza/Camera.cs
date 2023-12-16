@@ -1,6 +1,5 @@
 namespace FinalEngine.Examples.Sponza;
 
-using System;
 using System.Drawing;
 using System.Numerics;
 using FinalEngine.Input.Keyboards;
@@ -9,7 +8,7 @@ using FinalEngine.Maths;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Vapor.Core;
 
-public sealed class Camera
+public sealed class Camera : ICamera
 {
     private float height;
 
@@ -39,6 +38,11 @@ public sealed class Camera
 
     public Transform Transform { get; }
 
+    public Matrix4x4 View
+    {
+        get { return this.Transform.CreateViewMatrix(Vector3.UnitY); }
+    }
+
     public void Update(IPipeline pipeline, IKeyboard keyboard, IMouse mouse)
     {
         float moveAmount = speed;
@@ -65,7 +69,6 @@ public sealed class Camera
 
         if (keyboard.IsKeyReleased(Key.Escape))
         {
-            Console.WriteLine(this.Transform.Position);
             isLocked = false;
         }
 
@@ -103,9 +106,5 @@ public sealed class Camera
                     centerPosition.Y);
             }
         }
-
-        pipeline.SetUniform("u_viewPosition", Transform.Position);
-        pipeline.SetUniform("u_projection", Projection);
-        pipeline.SetUniform("u_view", Transform.CreateViewMatrix(Vector3.UnitY));
     }
 }

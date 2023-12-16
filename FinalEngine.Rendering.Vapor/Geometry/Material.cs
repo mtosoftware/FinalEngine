@@ -51,11 +51,6 @@ public sealed class Material : IMaterial
     {
         ArgumentNullException.ThrowIfNull(pipeline, nameof(pipeline));
 
-        pipeline.SetUniform("u_material.diffuseTexture", 0);
-        pipeline.SetUniform("u_material.specularTexture", 1);
-        pipeline.SetUniform("u_material.normalTexture", 2);
-        pipeline.SetUniform("u_material.shininess", this.Shininess);
-
         pipeline.SetTexture(this.DiffuseTexture, 0);
         pipeline.SetTexture(this.SpecularTexture, 1);
         pipeline.SetTexture(this.NormalTexture, 2);

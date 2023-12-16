@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Vapor.Core;
 
 using System.Numerics;
 
-public sealed class Transform
+public class Transform
 {
     public Transform()
     {

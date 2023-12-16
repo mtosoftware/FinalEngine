@@ -1,12 +1,11 @@
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO.Abstractions;
 using System.Numerics;
+using FinalEngine.ECS;
 using FinalEngine.Examples.Sponza;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
-using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
@@ -14,11 +13,12 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Rendering.Vapor;
-using FinalEngine.Rendering.Vapor.Core;
+using FinalEngine.Rendering.Vapor.Components;
 using FinalEngine.Rendering.Vapor.Geometry;
 using FinalEngine.Rendering.Vapor.Loaders.Shaders;
 using FinalEngine.Rendering.Vapor.Loaders.Textures;
 using FinalEngine.Rendering.Vapor.Primitives;
+using FinalEngine.Rendering.Vapor.Systems;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -77,6 +77,9 @@ internal class Program
         ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
 
+        renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
+        renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
+
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);
         var gameTime = new GameTime(watchInvoker, 120.0d);
@@ -119,8 +122,6 @@ internal class Program
             3
         ];
 
-        var renderingEngine = new RenderingEngine(renderDevice, fileSystem);
-
         var vertexShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-main.vert");
         var dirFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-directional.frag");
         var pointFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-point.frag");
@@ -143,10 +144,30 @@ internal class Program
 
         var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
 
-        renderDevice.OutputMerger.SetDepthState(new FinalEngine.Rendering.DepthStateDescription()
+        var renderingEngine = new RenderingEngine(renderDevice)
         {
-            ReadEnabled = true,
+            Camera = camera
+        };
+
+        var world = new EntityWorld();
+
+        var meshRenderSystem = new MeshRenderEntitySystem(renderingEngine);
+        world.AddSystem(meshRenderSystem);
+
+        var entity = new Entity();
+
+        entity.AddComponent(new TransformComponent()
+        {
+            Scale = new Vector3(2, 0, 2),
         });
+
+        entity.AddComponent(new ModelComponent()
+        {
+            Mesh = mesh,
+            Material = material,
+        });
+
+        world.AddEntity(entity);
 
         while (isRunning)
         {
@@ -158,46 +179,17 @@ internal class Program
             window.Title = $"{GameTime.FrameRate}";
 
             camera.Update(renderDevice.Pipeline, keyboard, mouse);
+            meshRenderSystem.Process();
 
             keyboard.Update();
             mouse.Update();
-
-            renderDevice.Clear(Color.FromArgb(255, (int)(0.1f * 255.0f), (int)(0.1f * 255.0f), (int)(0.1f * 255.0f)));
-
-            var t = new Transform();
-            t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
 
             renderDevice.Pipeline.SetShaderProgram(ambientShaderProgram);
 
             renderDevice.Pipeline.SetUniform("u_light.base.intensity", 1.0f);
             renderDevice.Pipeline.SetUniform("u_light.base.color", Vector3.One);
 
-            //renderDevice.Pipeline.SetShaderProgram(pointShaderProgram);
-
-            //renderDevice.Pipeline.SetUniform("u_light.base.intensity", 0.8f);
-            //renderDevice.Pipeline.SetUniform("u_light.base.color", new Vector3(0.5f, 0.0f, 0.5f));
-            //renderDevice.Pipeline.SetUniform("u_light.position", new Vector3(0, 1, 0));
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.constant", 1.0f);
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.014f);
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0007f);
-
-            //renderDevice.Pipeline.SetShaderProgram(spotShaderProgram);
-
-            //renderDevice.Pipeline.SetUniform("u_light.base.intensity", 0.8f);
-            //renderDevice.Pipeline.SetUniform("u_light.base.color", new Vector3(0.5f, 0.0f, 0.5f));
-            //renderDevice.Pipeline.SetUniform("u_light.position", camera.Transform.Position);
-            //renderDevice.Pipeline.SetUniform("u_light.direction", camera.Transform.Forward);
-            //renderDevice.Pipeline.SetUniform("u_light.radius", MathF.Cos(MathHelper.DegreesToRadians(12.5f)));
-            //renderDevice.Pipeline.SetUniform("u_light.outerRadius", MathF.Cos(MathHelper.DegreesToRadians(17.5f)));
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.constant", 1.0f);
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.014f);
-            //renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0007f);
-
-            renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateScale(1.0f));
-
-            material.Bind(renderDevice.Pipeline);
-            mesh.Bind(renderDevice.InputAssembler);
-            mesh.Draw(renderDevice);
+            renderingEngine.Render();
 
             renderContext.SwapBuffers();
             window.ProcessEvents();

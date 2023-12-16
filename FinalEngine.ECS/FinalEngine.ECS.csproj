@@ -29,4 +29,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Core\" />
+  </ItemGroup>
+
 </Project>

@@ -36,14 +36,17 @@ public abstract class EntitySystemBase
         if (forceRemove && isAdded)
         {
             this.entities.Remove(entity);
+            this.OnEntityRemoved(entity);
         }
         else if (isMatch && !isAdded)
         {
             this.entities.Add(entity);
+            this.OnEntityAdded(entity);
         }
         else if (!isMatch && isAdded)
         {
             this.entities.Remove(entity);
+            this.OnEntityRemoved(entity);
         }
     }
 
@@ -54,5 +57,15 @@ public abstract class EntitySystemBase
 
     protected abstract bool IsMatch([NotNull] IReadOnlyEntity entity);
 
-    protected abstract void Process([NotNull] IEnumerable<Entity> entities);
+    protected virtual void OnEntityAdded(Entity entity)
+    {
+    }
+
+    protected virtual void OnEntityRemoved(Entity entity)
+    {
+    }
+
+    protected virtual void Process([NotNull] IEnumerable<Entity> entities)
+    {
+    }
 }
