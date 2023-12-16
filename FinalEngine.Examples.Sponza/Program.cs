@@ -88,28 +88,24 @@ internal class Program
             new MeshVertex()
             {
                 Position = new Vector3(-fieldWidth, 0.0f, -fieldDepth),
-                Color = Vector4.One,
                 TextureCoordinate = new Vector2(0.0f),
             },
 
             new MeshVertex()
             {
                 Position = new Vector3(-fieldWidth, 0.0f, fieldDepth * 3),
-                Color = Vector4.One,
                 TextureCoordinate = new Vector2(0.0f, 1.0f),
             },
 
             new MeshVertex()
             {
                 Position = new Vector3(fieldWidth * 3, 0.0f, -fieldDepth),
-                Color = Vector4.One,
                 TextureCoordinate = new Vector2(1.0f, 0.0f),
             },
 
             new MeshVertex()
             {
                 Position = new Vector3(fieldWidth * 3, 0.0f, fieldDepth * 3),
-                Color = Vector4.One,
                 TextureCoordinate = new Vector2(1.0f, 1.0f),
             },
         ];
@@ -129,15 +125,16 @@ internal class Program
         var dirFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-directional.frag");
         var pointFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-point.frag");
         var spotFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-spot.frag");
+        var ambientFragmentSahder = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-ambient.frag");
 
         var dirShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, dirFragmentShader });
         var pointShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, pointFragmentShader });
         var spotShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, spotFragmentShader });
+        var ambientShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, ambientFragmentSahder });
 
         var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
         var material = new Material()
         {
-            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_diffuse.jpg"),
             NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_normal.jpg"),
             Shininess = 16.0f,
         };
@@ -145,6 +142,11 @@ internal class Program
         bool isRunning = true;
 
         var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
+
+        renderDevice.OutputMerger.SetDepthState(new FinalEngine.Rendering.DepthStateDescription()
+        {
+            ReadEnabled = true,
+        });
 
         while (isRunning)
         {
@@ -165,11 +167,10 @@ internal class Program
             var t = new Transform();
             t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
 
-            renderDevice.Pipeline.SetShaderProgram(dirShaderProgram);
+            renderDevice.Pipeline.SetShaderProgram(ambientShaderProgram);
 
-            renderDevice.Pipeline.SetUniform("u_light.base.intensity", 0.4f);
-            renderDevice.Pipeline.SetUniform("u_light.base.color", new Vector3(1.0f));
-            renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
+            renderDevice.Pipeline.SetUniform("u_light.base.intensity", 1.0f);
+            renderDevice.Pipeline.SetUniform("u_light.base.color", Vector3.One);
 
             //renderDevice.Pipeline.SetShaderProgram(pointShaderProgram);
 
@@ -192,7 +193,7 @@ internal class Program
             //renderDevice.Pipeline.SetUniform("u_light.attenuation.linear", 0.014f);
             //renderDevice.Pipeline.SetUniform("u_light.attenuation.quadratic", 0.0007f);
 
-            renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateTranslation(0, -5, 0));
+            renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateScale(1.0f));
 
             material.Bind(renderDevice.Pipeline);
             mesh.Bind(renderDevice.InputAssembler);

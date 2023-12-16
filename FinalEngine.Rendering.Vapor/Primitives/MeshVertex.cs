@@ -22,17 +22,14 @@ public struct MeshVertex : IEquatable<MeshVertex>
             return new InputElement[]
             {
                 new (0, 3, InputElementType.Float, 0),
-                new (1, 4, InputElementType.Float, 3 * sizeof(float)),
-                new (2, 2, InputElementType.Float, 7 * sizeof(float)),
+                new (1, 2, InputElementType.Float, 3 * sizeof(float)),
+                new (2, 3, InputElementType.Float, 7 * sizeof(float)),
                 new (3, 3, InputElementType.Float, 9 * sizeof(float)),
-                new (4, 3, InputElementType.Float, 12 * sizeof(float)),
             };
         }
     }
 
     public Vector3 Position { get; set; }
-
-    public Vector4 Color { get; set; }
 
     public Vector2 TextureCoordinate { get; set; }
 
@@ -53,7 +50,6 @@ public struct MeshVertex : IEquatable<MeshVertex>
     public readonly bool Equals(MeshVertex other)
     {
         return this.Position == other.Position &&
-               this.Color == other.Color &&
                this.TextureCoordinate == other.TextureCoordinate &&
                this.Normal == other.Normal &&
                this.Tangent == other.Tangent;
@@ -69,7 +65,6 @@ public struct MeshVertex : IEquatable<MeshVertex>
         const int accumulator = 17;
 
         return (this.Position.GetHashCode() * accumulator) +
-               (this.Color.GetHashCode() * accumulator) +
                (this.TextureCoordinate.GetHashCode() * accumulator) +
                (this.Normal.GetHashCode() * accumulator) +
                (this.Tangent.GetHashCode() * accumulator);
