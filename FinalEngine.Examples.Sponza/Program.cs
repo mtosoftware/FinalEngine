@@ -153,11 +153,11 @@ internal class Program
             var t = new Transform();
             t.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
 
-            renderDevice.Pipeline.SetUniform("u_light.direction", t.Forward);
-            renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.5f, 0.0f, 0.0f));
-            renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0, 0, 1.0f));
+            renderDevice.Pipeline.SetUniform("u_light.direction", new Vector3(-1, -1, -1));
+            renderDevice.Pipeline.SetUniform("u_light.base.diffuseColor", new Vector3(0.5f, 0.5f, 0.5f));
+            renderDevice.Pipeline.SetUniform("u_light.base.specularColor", new Vector3(0.5f, 0.5f, 0.5f));
 
-            renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.Identity);
+            renderDevice.Pipeline.SetUniform("u_transform", Matrix4x4.CreateTranslation(0, -2, 0));
 
             material.Bind(renderDevice.Pipeline);
             mesh.Bind(renderDevice.InputAssembler);

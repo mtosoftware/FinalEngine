@@ -57,10 +57,6 @@ uniform Material u_material;
 
 void main()
 {
-    // Simulate global illumination
-    float ambientStrength = 0.4;
-    vec3 ambientColor = vec3(0.8) * ambientStrength;
-
     vec3 lightColor = CalculateLight(
         u_light.base,
         u_material,
@@ -70,5 +66,5 @@ void main()
         in_fragPos,
         in_texCoord);
 
-    out_color = vec4(ambientColor * lightColor, 1.0);
+    out_color = vec4(lightColor, 1.0);
 }
