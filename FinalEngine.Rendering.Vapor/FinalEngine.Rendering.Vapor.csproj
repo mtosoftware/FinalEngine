@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+    <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
   </ItemGroup>
 
@@ -50,17 +51,29 @@
     <None Update="Resources\Shaders\Lighting\lighting-main.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Shaders\Lighting\lighting-directional.fesp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\Lighting\lighting-point.fesp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Shaders\Lighting\lighting-point.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Shaders\Lighting\lighting-spot.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Shaders\Lighting\lighting.point.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Shaders\sprite-geometry.fesp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Shaders\sprite-geometry.frag">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Shaders\sprite-geometry.vert">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Textures\default_diffuse.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

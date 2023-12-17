@@ -19,8 +19,6 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
     private readonly ITextureBinder binder;
 
-    private readonly IShader? fragmentShader;
-
     private readonly IInputLayout inputLayout;
 
     private readonly int projectionHeight;
@@ -28,8 +26,6 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
     private readonly int projectionWidth;
 
     private readonly IRenderDevice renderDevice;
-
-    private readonly IShader? vertexShader;
 
     private IIndexBuffer? indexBuffer;
 
@@ -43,10 +39,6 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
         this.batcher = batcher ?? throw new ArgumentNullException(nameof(batcher));
         this.binder = binder ?? throw new ArgumentNullException(nameof(binder));
 
-        this.vertexShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\sprite-geometry.vert");
-        this.fragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\sprite-geometry.frag");
-
-        this.shaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { this.vertexShader, this.fragmentShader });
         this.inputLayout = renderDevice.Factory.CreateInputLayout(SpriteVertex.InputElements);
 
         this.vertexBuffer = renderDevice.Factory.CreateVertexBuffer(
@@ -95,11 +87,16 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
     protected bool IsDisposed { get; private set; }
 
+    private IShaderProgram ShaderProgram
+    {
+        get { return this.shaderProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\Batching\\sprite-geometry.fesp"); }
+    }
+
     public void Begin()
     {
         ObjectDisposedException.ThrowIf(this.IsDisposed, this);
 
-        this.renderDevice.Pipeline.SetShaderProgram(this.shaderProgram!);
+        this.renderDevice.Pipeline.SetShaderProgram(this.ShaderProgram!);
 
         this.renderDevice.Pipeline.SetUniform("u_projection", this.Projection);
         this.renderDevice.Pipeline.SetUniform("u_transform", this.Transform);
@@ -169,22 +166,6 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
             {
                 this.vertexBuffer.Dispose();
                 this.vertexBuffer = null;
-            }
-
-            if (this.shaderProgram != null)
-            {
-                this.shaderProgram.Dispose();
-                this.shaderProgram = null;
-            }
-
-            if (this.vertexShader != null)
-            {
-                ResourceManager.Instance.UnloadResource(this.vertexShader);
-            }
-
-            if (this.fragmentShader != null)
-            {
-                ResourceManager.Instance.UnloadResource(this.fragmentShader);
             }
         }
 

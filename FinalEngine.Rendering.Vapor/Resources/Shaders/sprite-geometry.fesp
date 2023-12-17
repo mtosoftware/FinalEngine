@@ -1,0 +1,4 @@
+{
+    "Vertex": "sprite-geometry.vert",
+    "Fragment": "sprite-geometry.frag"
+}

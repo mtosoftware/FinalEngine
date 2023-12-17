@@ -11,10 +11,10 @@ using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
-using FinalEngine.Rendering.Textures;
 using FinalEngine.Rendering.Vapor;
 using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
+using FinalEngine.Rendering.Vapor.Lighting;
 using FinalEngine.Rendering.Vapor.Loaders.Shaders;
 using FinalEngine.Rendering.Vapor.Loaders.Textures;
 using FinalEngine.Rendering.Vapor.Primitives;
@@ -76,6 +76,7 @@ internal class Program
 
         ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
+        ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(ResourceManager.Instance, renderDevice, fileSystem));
 
         renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
         renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
@@ -136,7 +137,6 @@ internal class Program
         var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
         var material = new Material()
         {
-            NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_normal.jpg"),
             Shininess = 16.0f,
         };
 
@@ -145,7 +145,9 @@ internal class Program
         var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
 
         var geometryRenderer = new GeometryRenderer(renderDevice);
-        var renderingEngine = new RenderingEngine(geometryRenderer);
+        var lightRenderer = new LightRenderer(renderDevice.Pipeline);
+
+        var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer);
 
         while (isRunning)
         {
@@ -163,15 +165,6 @@ internal class Program
 
             renderDevice.Clear(Color.Black);
 
-            renderDevice.Pipeline.SetShaderProgram(ambientShaderProgram);
-
-            renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
-            renderDevice.Pipeline.SetUniform("u_view", camera.View);
-            renderDevice.Pipeline.SetUniform("u_viewPosition", camera.Transform.Position);
-
-            renderDevice.Pipeline.SetUniform("u_light.base.intensity", 1.0f);
-            renderDevice.Pipeline.SetUniform("u_light.base.color", Vector3.One);
-
             for (int i = 0; i < 100; i++)
             {
                 for (int j = 0; j < 100; j++)
@@ -187,6 +180,12 @@ internal class Program
                     });
                 }
             }
+
+            renderingEngine.Enqueue(new Light()
+            {
+                Type = LightType.Directional,
+                Direction = new Vector3(1, 1, 1),
+            });
 
             renderingEngine.Render(camera);
 

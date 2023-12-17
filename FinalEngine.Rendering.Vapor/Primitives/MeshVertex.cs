@@ -23,8 +23,8 @@ public struct MeshVertex : IEquatable<MeshVertex>
             {
                 new (0, 3, InputElementType.Float, 0),
                 new (1, 2, InputElementType.Float, 3 * sizeof(float)),
-                new (2, 3, InputElementType.Float, 7 * sizeof(float)),
-                new (3, 3, InputElementType.Float, 9 * sizeof(float)),
+                new (2, 3, InputElementType.Float, 5 * sizeof(float)),
+                new (3, 3, InputElementType.Float, 8 * sizeof(float)),
             };
         }
     }
