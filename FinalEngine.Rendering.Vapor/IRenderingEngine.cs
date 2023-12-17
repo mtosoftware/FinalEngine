@@ -4,17 +4,12 @@
 
 namespace FinalEngine.Rendering.Vapor;
 
-using System;
 using FinalEngine.Rendering.Vapor.Core;
-using FinalEngine.Rendering.Vapor.Data;
+using FinalEngine.Rendering.Vapor.Geometry;
 
 public interface IRenderingEngine
 {
-    ICamera? Camera { get; set; }
+    void Enqueue(Model model, Transform transform);
 
-    void AddModel(Model model);
-
-    void RemoveModel(Guid entityId);
-
-    void Render();
+    void Render(ICamera camera);
 }

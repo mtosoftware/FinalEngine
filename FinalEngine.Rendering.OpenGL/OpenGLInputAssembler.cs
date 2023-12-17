@@ -11,25 +11,36 @@ using FinalEngine.Rendering.OpenGL.Buffers;
 
 public class OpenGLInputAssembler : IInputAssembler
 {
+    private IOpenGLIndexBuffer? boundIndexBuffer;
+
     private IOpenGLInputLayout? boundLayout;
+
+    private IOpenGLVertexBuffer? boundVertexBuffer;
 
     public void SetIndexBuffer(IIndexBuffer buffer)
     {
         ArgumentNullException.ThrowIfNull(buffer, nameof(buffer));
+
+        if (this.boundIndexBuffer == buffer)
+        {
+            return;
+        }
 
         if (buffer is not IOpenGLIndexBuffer glIndexBuffer)
         {
             throw new ArgumentException($"The specified {nameof(buffer)} parameter is not of type {nameof(IOpenGLIndexBuffer)}.", nameof(buffer));
         }
 
-        glIndexBuffer.Bind();
+        this.boundIndexBuffer = glIndexBuffer;
+        this.boundIndexBuffer.Bind();
     }
 
     public void SetInputLayout(IInputLayout? layout)
     {
-        if (layout == null)
+        ArgumentNullException.ThrowIfNull(layout, nameof(layout));
+
+        if (this.boundLayout == layout)
         {
-            this.boundLayout?.Unbind();
             return;
         }
 
@@ -38,9 +49,7 @@ public class OpenGLInputAssembler : IInputAssembler
             throw new ArgumentException($"The specified {nameof(layout)} parameter is not of type {nameof(IOpenGLInputLayout)}.", nameof(layout));
         }
 
-        this.boundLayout?.Unbind();
         this.boundLayout = glInputLayout;
-
         this.boundLayout.Bind();
     }
 
@@ -48,12 +57,18 @@ public class OpenGLInputAssembler : IInputAssembler
     {
         ArgumentNullException.ThrowIfNull(buffer, nameof(buffer));
 
+        if (this.boundVertexBuffer == buffer)
+        {
+            return;
+        }
+
         if (buffer is not IOpenGLVertexBuffer glVertexBuffer)
         {
             throw new ArgumentException($"The specified {nameof(buffer)} parameter is not of type {nameof(IOpenGLVertexBuffer)}.", nameof(buffer));
         }
 
-        glVertexBuffer.Bind();
+        this.boundVertexBuffer = glVertexBuffer;
+        this.boundVertexBuffer.Bind();
     }
 
     public void UpdateIndexBuffer<T>(IIndexBuffer buffer, IReadOnlyCollection<T> data)

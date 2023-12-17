@@ -6,109 +6,42 @@ namespace FinalEngine.Rendering.Vapor;
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using FinalEngine.Rendering.Vapor.Core;
-using FinalEngine.Rendering.Vapor.Data;
 using FinalEngine.Rendering.Vapor.Geometry;
+using FinalEngine.Rendering.Vapor.Renderers;
 
 public sealed class RenderingEngine : IRenderingEngine
 {
-    private readonly List<Model> models;
+    private readonly IGeometryRenderer geometryRenderer;
 
-    private readonly IRenderDevice renderDevice;
+    private readonly Dictionary<Model, IEnumerable<Transform>> modelToTransformationMap;
 
-    public RenderingEngine(IRenderDevice renderDevice)
+    public RenderingEngine(IGeometryRenderer geometryRenderer)
     {
-        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
-
-        this.models = [];
-
-        this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-        {
-            ReadEnabled = true,
-        });
-
-        this.renderDevice.Rasterizer.SetRasterState(new RasterStateDescription()
-        {
-            CullEnabled = true,
-            CullMode = FaceCullMode.Back,
-            WindingDirection = WindingDirection.CounterClockwise,
-            FillMode = RasterMode.Solid,
-            MultiSamplingEnabled = true,
-            ScissorEnabled = false,
-        });
+        this.geometryRenderer = geometryRenderer ?? throw new ArgumentNullException(nameof(geometryRenderer));
+        this.modelToTransformationMap = [];
     }
 
-    public ICamera? Camera { get; set; }
-
-    public void AddModel(Model model)
+    public void Enqueue(Model model, Transform transform)
     {
         ArgumentNullException.ThrowIfNull(model, nameof(model));
-        this.models.Add(model);
+        ArgumentNullException.ThrowIfNull(transform, nameof(transform));
 
-        Console.WriteLine(this.models.Count.ToString());
-    }
-
-    public void RemoveModel(Guid entityId)
-    {
-        var model = this.models.FirstOrDefault(x =>
+        if (!this.modelToTransformationMap.TryGetValue(model, out var batch))
         {
-            return x.EntityId == entityId;
-        }) ?? throw new ArgumentException($"Failed to locate model from entity with ID: '{entityId}'.", nameof(entityId));
-
-        this.models.Remove(model);
-    }
-
-    public void Render()
-    {
-        this.renderDevice.Clear(Color.Black);
-
-        this.RenderScene();
-    }
-
-    private void RenderScene()
-    {
-        if (this.Camera == null)
-        {
-            return;
+            batch = new List<Transform>();
+            this.modelToTransformationMap.Add(model, batch);
         }
 
-        foreach (var model in this.models)
-        {
-            this.UpdateUniforms(model.Transform, model.Material);
-
-            var mesh = model.Mesh;
-            var material = model.Material;
-
-            if (mesh == null)
-            {
-                continue;
-            }
-
-            material.Bind(this.renderDevice.Pipeline);
-            mesh.Bind(this.renderDevice.InputAssembler);
-            mesh.Draw(this.renderDevice);
-        }
+        ((IList<Transform>)batch).Add(transform);
     }
 
-    private void UpdateUniforms(Transform transform, IMaterial material)
+    public void Render(ICamera camera)
     {
-        var pipeline = this.renderDevice.Pipeline;
+        ArgumentNullException.ThrowIfNull(camera, nameof(camera));
 
-        if (this.Camera == null)
-        {
-            return;
-        }
+        this.geometryRenderer.Render(this.modelToTransformationMap);
 
-        pipeline.SetUniform("u_projection", this.Camera.Projection);
-        pipeline.SetUniform("u_view", this.Camera.View);
-        pipeline.SetUniform("u_transform", transform.CreateTransformationMatrix());
-        pipeline.SetUniform("u_viewPosition", this.Camera.Transform.Position);
-
-        pipeline.SetUniform("u_material.diffuseTexture", 0);
-        pipeline.SetUniform("u_material.specularTexture", 1);
-        pipeline.SetUniform("u_material.normalTexture", 2);
-        pipeline.SetUniform("u_material.shininess", material.Shininess);
+        this.modelToTransformationMap.Clear();
     }
 }

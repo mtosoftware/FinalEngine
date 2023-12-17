@@ -26,11 +26,13 @@ public class OpenGLPipeline : IPipeline
 
     private IOpenGLShaderProgram? boundProgram;
 
+    private IOpenGLTexture? boundTexture;
+
     public OpenGLPipeline(IOpenGLInvoker invoker)
     {
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         this.uniformLocations = new Dictionary<string, int>(InitialSizeCapacity);
-        this.nameToHeaderMap = new Dictionary<string, string>();
+        this.nameToHeaderMap = [];
     }
 
     public int MaxTextureSlots
@@ -67,6 +69,11 @@ public class OpenGLPipeline : IPipeline
     {
         ArgumentNullException.ThrowIfNull(program, nameof(program));
 
+        if (this.boundProgram == program)
+        {
+            return;
+        }
+
         if (program is not IOpenGLShaderProgram glProgram)
         {
             throw new ArgumentException($"The specified {nameof(program)} parameter is not of type {nameof(IOpenGLShaderProgram)}.", nameof(program));
@@ -82,12 +89,18 @@ public class OpenGLPipeline : IPipeline
     {
         ArgumentNullException.ThrowIfNull(texture, nameof(texture));
 
+        if (this.boundTexture == texture)
+        {
+            return;
+        }
+
         if (texture is not IOpenGLTexture glTexture)
         {
             throw new ArgumentException($"The specified {nameof(texture)} parameter is not of type {nameof(IOpenGLTexture)}.", nameof(texture));
         }
 
-        glTexture.Bind(slot);
+        this.boundTexture = glTexture;
+        this.boundTexture.Bind(slot);
     }
 
     public void SetUniform(string name, int value)

@@ -1,13 +1,10 @@
-// <copyright file="ModelComponent.cs" company="Software Antics">
+// <copyright file="Model.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Vapor.Components;
+namespace FinalEngine.Rendering.Vapor.Geometry;
 
-using FinalEngine.ECS;
-using FinalEngine.Rendering.Vapor.Geometry;
-
-public sealed class ModelComponent : IEntityComponent
+public sealed class Model
 {
     private IMaterial? material;
 

@@ -1,8 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO.Abstractions;
 using System.Numerics;
-using FinalEngine.ECS;
 using FinalEngine.Examples.Sponza;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
@@ -13,12 +13,12 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Rendering.Vapor;
-using FinalEngine.Rendering.Vapor.Components;
+using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
 using FinalEngine.Rendering.Vapor.Loaders.Shaders;
 using FinalEngine.Rendering.Vapor.Loaders.Textures;
 using FinalEngine.Rendering.Vapor.Primitives;
-using FinalEngine.Rendering.Vapor.Systems;
+using FinalEngine.Rendering.Vapor.Renderers;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -144,30 +144,8 @@ internal class Program
 
         var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
 
-        var renderingEngine = new RenderingEngine(renderDevice)
-        {
-            Camera = camera
-        };
-
-        var world = new EntityWorld();
-
-        var meshRenderSystem = new MeshRenderEntitySystem(renderingEngine);
-        world.AddSystem(meshRenderSystem);
-
-        var entity = new Entity();
-
-        entity.AddComponent(new TransformComponent()
-        {
-            Scale = new Vector3(2, 0, 2),
-        });
-
-        entity.AddComponent(new ModelComponent()
-        {
-            Mesh = mesh,
-            Material = material,
-        });
-
-        world.AddEntity(entity);
+        var geometryRenderer = new GeometryRenderer(renderDevice);
+        var renderingEngine = new RenderingEngine(geometryRenderer);
 
         while (isRunning)
         {
@@ -179,17 +157,38 @@ internal class Program
             window.Title = $"{GameTime.FrameRate}";
 
             camera.Update(renderDevice.Pipeline, keyboard, mouse);
-            meshRenderSystem.Process();
 
             keyboard.Update();
             mouse.Update();
 
+            renderDevice.Clear(Color.Black);
+
             renderDevice.Pipeline.SetShaderProgram(ambientShaderProgram);
+
+            renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
+            renderDevice.Pipeline.SetUniform("u_view", camera.View);
+            renderDevice.Pipeline.SetUniform("u_viewPosition", camera.Transform.Position);
 
             renderDevice.Pipeline.SetUniform("u_light.base.intensity", 1.0f);
             renderDevice.Pipeline.SetUniform("u_light.base.color", Vector3.One);
 
-            renderingEngine.Render();
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    renderingEngine.Enqueue(new Model()
+                    {
+                        Mesh = mesh,
+                        Material = material,
+                    },
+                    new Transform()
+                    {
+                        Position = new Vector3(i * 40, 0, j * 40),
+                    });
+                }
+            }
+
+            renderingEngine.Render(camera);
 
             renderContext.SwapBuffers();
             window.ProcessEvents();
