@@ -107,7 +107,10 @@ public sealed class LightRenderer : ILightRenderer
         this.pipeline.SetShaderProgram(this.SpotProgram);
 
         this.RenderAttenuation(light);
+
         this.pipeline.SetUniform("u_light.position", light.Position);
         this.pipeline.SetUniform("u_light.direction", light.Direction);
+        this.pipeline.SetUniform("u_light.radius", light.Radius);
+        this.pipeline.SetUniform("u_light.outerRadius", light.OuterRadius);
     }
 }

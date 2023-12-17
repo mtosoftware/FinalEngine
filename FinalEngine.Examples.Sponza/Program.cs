@@ -10,7 +10,7 @@ using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
-using FinalEngine.Rendering.Pipeline;
+using FinalEngine.Rendering.Textures;
 using FinalEngine.Rendering.Vapor;
 using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
@@ -123,19 +123,12 @@ internal class Program
             3
         ];
 
-        var vertexShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-main.vert");
-        var dirFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-directional.frag");
-        var pointFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-point.frag");
-        var spotFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-spot.frag");
-
-        var dirShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, dirFragmentShader });
-        var pointShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, pointFragmentShader });
-        var spotShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, spotFragmentShader });
-
         var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
 
         var material = new Material()
         {
+            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_diffuse.jpg"),
+            NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_normal.jpg"),
             Shininess = 16.0f,
         };
 
@@ -179,7 +172,7 @@ internal class Program
                 {
                     renderingEngine.Enqueue(new Light()
                     {
-                        Intensity = 0.3f,
+                        Intensity = 0.4f,
                         Type = LightType.Point,
                         Position = new Vector3(i * 20, 3, j * 20),
                     });
@@ -190,7 +183,7 @@ internal class Program
             {
                 Type = LightType.Ambient,
                 Color = Vector3.One,
-                Intensity = 0.5f,
+                Intensity = 0.1f,
             });
 
             renderingEngine.Enqueue(new Light()
@@ -199,7 +192,7 @@ internal class Program
                 Position = camera.Transform.Position,
                 Direction = camera.Transform.Forward,
                 Color = new Vector3(1.0f, 0.0f, 0.0f),
-                Intensity = 0.4f,
+                Intensity = 0.8f,
             });
 
             renderingEngine.Render(camera);
