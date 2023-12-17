@@ -22,13 +22,13 @@ public sealed class Camera : ICamera
     {
         this.width = width;
         this.height = height;
-
-        this.Transform = new Transform
+        this.Transform = new Transform()
         {
-            Position = new Vector3(0, 10, 0)
+            Position = new Vector3(0, 50, 0),
+            Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(45.0f)),
         };
-        this.Transform.Rotate(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f));
-        this.isLocked = true;
+
+        this.isLocked = false;
     }
 
     public Matrix4x4 Projection
@@ -65,6 +65,16 @@ public sealed class Camera : ICamera
         if (keyboard.IsKeyDown(Key.D))
         {
             Transform.Translate(Transform.Left, moveAmount);
+        }
+
+        if (keyboard.IsKeyDown(Key.Z))
+        {
+            Transform.Translate(Transform.Up, moveAmount);
+        }
+
+        if (keyboard.IsKeyDown(Key.X))
+        {
+            Transform.Translate(Transform.Down, moveAmount);
         }
 
         if (keyboard.IsKeyReleased(Key.Escape))

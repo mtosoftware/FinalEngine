@@ -12,7 +12,7 @@ public sealed class Material : IMaterial
 {
     private static readonly ITexture2D DefaultDiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_diffuse.png");
 
-    private static readonly ITexture2D DefaultNormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_normal.png");
+    private static readonly ITexture2D DefaultNormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_normal.jpg");
 
     private static readonly ITexture2D DefaultSpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_specular.png");
 
@@ -50,6 +50,11 @@ public sealed class Material : IMaterial
     public void Bind(IPipeline pipeline)
     {
         ArgumentNullException.ThrowIfNull(pipeline, nameof(pipeline));
+
+        pipeline.SetUniform("u_material.diffuseTexture", 0);
+        pipeline.SetUniform("u_material.specularTexture", 1);
+        pipeline.SetUniform("u_material.normalTexture", 2);
+        pipeline.SetUniform("u_material.shininess", this.Shininess);
 
         pipeline.SetTexture(this.DiffuseTexture, 0);
         pipeline.SetTexture(this.SpecularTexture, 1);

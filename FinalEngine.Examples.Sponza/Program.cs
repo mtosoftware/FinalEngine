@@ -127,14 +127,13 @@ internal class Program
         var dirFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-directional.frag");
         var pointFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-point.frag");
         var spotFragmentShader = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-spot.frag");
-        var ambientFragmentSahder = ResourceManager.Instance.LoadResource<IShader>("Resources\\Shaders\\Lighting\\lighting-ambient.frag");
 
         var dirShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, dirFragmentShader });
         var pointShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, pointFragmentShader });
         var spotShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, spotFragmentShader });
-        var ambientShaderProgram = renderDevice.Factory.CreateShaderProgram(new[] { vertexShader, ambientFragmentSahder });
 
         var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
+
         var material = new Material()
         {
             Shininess = 16.0f,
@@ -146,7 +145,6 @@ internal class Program
 
         var geometryRenderer = new GeometryRenderer(renderDevice);
         var lightRenderer = new LightRenderer(renderDevice.Pipeline);
-
         var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer);
 
         while (isRunning)
@@ -165,30 +163,46 @@ internal class Program
 
             renderDevice.Clear(Color.Black);
 
-            for (int i = 0; i < 100; i++)
+            renderingEngine.Enqueue(new Model()
             {
-                for (int j = 0; j < 100; j++)
+                Mesh = mesh,
+                Material = material,
+            },
+            new Transform()
+            {
+                Scale = new Vector3(5),
+            });
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
                 {
-                    renderingEngine.Enqueue(new Model()
+                    renderingEngine.Enqueue(new Light()
                     {
-                        Mesh = mesh,
-                        Material = material,
-                    },
-                    new Transform()
-                    {
-                        Position = new Vector3(i * 40, 0, j * 40),
+                        Intensity = 0.3f,
+                        Type = LightType.Point,
+                        Position = new Vector3(i * 20, 3, j * 20),
                     });
                 }
             }
 
             renderingEngine.Enqueue(new Light()
             {
-                Type = LightType.Directional,
-                Direction = new Vector3(1, 1, 1),
+                Type = LightType.Ambient,
+                Color = Vector3.One,
+                Intensity = 0.5f,
+            });
+
+            renderingEngine.Enqueue(new Light()
+            {
+                Type = LightType.Spot,
+                Position = camera.Transform.Position,
+                Direction = camera.Transform.Forward,
+                Color = new Vector3(1.0f, 0.0f, 0.0f),
+                Intensity = 0.4f,
             });
 
             renderingEngine.Render(camera);
-
             renderContext.SwapBuffers();
             window.ProcessEvents();
         }

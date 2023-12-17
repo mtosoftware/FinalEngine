@@ -10,6 +10,8 @@ using FinalEngine.Maths;
 
 public enum LightType
 {
+    Ambient,
+
     Directional,
 
     Point,
@@ -25,8 +27,8 @@ public class Light
         this.Intensity = 1.0f;
         this.Type = LightType.Point;
         this.Attenuation = new Attenuation();
-        this.Radius = MathF.Cos(MathHelper.DegreesToRadians(17.5f));
-        this.OuterRadius = MathF.Cos(MathHelper.DegreesToRadians(12.5f));
+        this.Radius = MathF.Cos(MathHelper.DegreesToRadians(12.5f));
+        this.OuterRadius = MathF.Cos(MathHelper.DegreesToRadians(17.5f));
         this.Direction = new Vector3(1, 0, 1);
     }
 

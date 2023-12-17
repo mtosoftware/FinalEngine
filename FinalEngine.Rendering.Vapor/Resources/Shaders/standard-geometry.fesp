@@ -1,0 +1,4 @@
+{
+    "Vertex": "standard-geometry.vert",
+    "Fragment": "standard-geometry.frag"
+}

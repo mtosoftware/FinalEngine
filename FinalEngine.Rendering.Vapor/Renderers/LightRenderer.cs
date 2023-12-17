@@ -13,6 +13,8 @@ public sealed class LightRenderer : ILightRenderer
 {
     private readonly IPipeline pipeline;
 
+    private IShaderProgram? ambientProgram;
+
     private IShaderProgram? directionalProgram;
 
     private IShaderProgram? pointProgram;
@@ -22,6 +24,11 @@ public sealed class LightRenderer : ILightRenderer
     public LightRenderer(IPipeline pipeline)
     {
         this.pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+    }
+
+    private IShaderProgram AmbientProgram
+    {
+        get { return this.ambientProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\Lighting\\lighting-ambient.fesp"); }
     }
 
     private IShaderProgram DirectionalProgram
@@ -57,12 +64,21 @@ public sealed class LightRenderer : ILightRenderer
                 this.RenderSpotLight(light);
                 break;
 
+            case LightType.Ambient:
+                this.RenderAmbientLight();
+                break;
+
             default:
                 throw new NotSupportedException($"The specified {nameof(light)} is not supported by the {nameof(LightRenderer)}.");
         }
 
         this.pipeline.SetUniform("u_light.base.color", light.Color);
         this.pipeline.SetUniform("u_light.base.intensity", light.Intensity);
+    }
+
+    private void RenderAmbientLight()
+    {
+        this.pipeline.SetShaderProgram(this.AmbientProgram);
     }
 
     private void RenderAttenuation(Light light)
