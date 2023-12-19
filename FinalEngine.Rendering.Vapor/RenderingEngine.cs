@@ -7,6 +7,7 @@ namespace FinalEngine.Rendering.Vapor;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
@@ -26,6 +27,8 @@ public sealed class RenderingEngine : IRenderingEngine
 
     private readonly IRenderDevice renderDevice;
 
+    private Light ambientLight;
+
     private IShaderProgram? geometryProgram;
 
     public RenderingEngine(IRenderDevice renderDevice, IGeometryRenderer geometryRenderer, ILightRenderer lightRenderer)
@@ -36,9 +39,15 @@ public sealed class RenderingEngine : IRenderingEngine
 
         this.modelToTransformationMap = [];
         this.lightTypeToLightMap = [];
+
+        this.ambientLight = new Light()
+        {
+            Type = LightType.Ambient,
+            Intensity = 0.1f,
+        };
     }
 
-    public IShaderProgram GeometryProgram
+    private IShaderProgram GeometryProgram
     {
         get { return this.geometryProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\standard-geometry.fesp"); }
     }
@@ -76,8 +85,10 @@ public sealed class RenderingEngine : IRenderingEngine
 
         this.renderDevice.Clear(Color.Black);
 
-        this.renderDevice.Pipeline.SetShaderProgram(this.GeometryProgram);
-        this.geometryRenderer.Render(this.modelToTransformationMap);
+        this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
+        {
+            ReadEnabled = true,
+        });
 
         this.renderDevice.Rasterizer.SetRasterState(new RasterStateDescription()
         {
@@ -87,38 +98,50 @@ public sealed class RenderingEngine : IRenderingEngine
             MultiSamplingEnabled = true,
         });
 
-        this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
+        if (this.lightTypeToLightMap.Count <= 0)
         {
-            Enabled = true,
-            SourceMode = BlendMode.One,
-            DestinationMode = BlendMode.One,
-        });
+            this.renderDevice.Pipeline.SetShaderProgram(this.GeometryProgram);
+            this.RenderScene(camera);
+        }
+        else
+        {
+            this.lightRenderer.Render(this.ambientLight);
+            this.RenderScene(camera);
 
-        this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-        {
-            WriteEnabled = false,
-            ComparisonMode = ComparisonMode.Equal,
-        });
-
-        foreach (var lightType in this.lightTypeToLightMap.Keys)
-        {
-            if (!this.lightTypeToLightMap.TryGetValue(lightType, out var batch))
+            foreach (var kvp in this.lightTypeToLightMap)
             {
-                continue;
+                var type = kvp.Key;
+                var batch = kvp.Value;
+
+                this.PrepareLightingPass();
+
+                foreach (var light in batch)
+                {
+                    if (light.Type == LightType.Ambient)
+                    {
+                        continue;
+                    }
+
+                    this.lightRenderer.Render(light);
+                    this.RenderScene(camera);
+                }
             }
 
-            foreach (var light in batch)
-            {
-                this.lightRenderer.Render(light);
-
-                this.renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
-                this.renderDevice.Pipeline.SetUniform("u_view", camera.View);
-                this.renderDevice.Pipeline.SetUniform("u_viewPosition", camera.Transform.Position);
-
-                this.geometryRenderer.Render(this.modelToTransformationMap);
-            }
+            this.FinalizeLightingPass();
         }
 
+        this.lightTypeToLightMap.Clear();
+        this.modelToTransformationMap.Clear();
+    }
+
+    public void SetAmbientLight(Vector3 color, float intensity)
+    {
+        this.ambientLight.Color = color;
+        this.ambientLight.Intensity = intensity;
+    }
+
+    private void FinalizeLightingPass()
+    {
         this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
         {
             Enabled = false,
@@ -130,8 +153,35 @@ public sealed class RenderingEngine : IRenderingEngine
             ComparisonMode = ComparisonMode.Less,
             WriteEnabled = true,
         });
+    }
 
-        this.lightTypeToLightMap.Clear();
-        this.modelToTransformationMap.Clear();
+    private void PrepareLightingPass()
+    {
+        this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
+        {
+            Enabled = true,
+            SourceMode = BlendMode.One,
+            DestinationMode = BlendMode.One,
+        });
+
+        this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
+        {
+            ReadEnabled = true,
+            WriteEnabled = false,
+            ComparisonMode = ComparisonMode.Equal,
+        });
+    }
+
+    private void RenderScene(ICamera camera)
+    {
+        this.UpdateCamera(camera);
+        this.geometryRenderer.Render(this.modelToTransformationMap);
+    }
+
+    private void UpdateCamera(ICamera camera)
+    {
+        this.renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
+        this.renderDevice.Pipeline.SetUniform("u_view", camera.View);
+        this.renderDevice.Pipeline.SetUniform("u_viewPosition", camera.Transform.Position);
     }
 }

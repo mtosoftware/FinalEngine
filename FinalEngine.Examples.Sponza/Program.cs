@@ -1,16 +1,16 @@
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO.Abstractions;
 using System.Numerics;
 using FinalEngine.Examples.Sponza;
+using FinalEngine.Examples.Sponza.Loaders;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
+using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
-using FinalEngine.Rendering.Textures;
 using FinalEngine.Rendering.Vapor;
 using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
@@ -77,13 +77,14 @@ internal class Program
         ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
         ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(ResourceManager.Instance, renderDevice, fileSystem));
+        ResourceManager.Instance.RegisterLoader(new ModelResourceLoader(renderDevice, fileSystem));
 
         renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
         renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
 
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);
-        var gameTime = new GameTime(watchInvoker, 120.0d);
+        var gameTime = new GameTime(watchInvoker, 120.0f);
 
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -127,8 +128,6 @@ internal class Program
 
         var material = new Material()
         {
-            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_diffuse.jpg"),
-            NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\bricks_normal.jpg"),
             Shininess = 16.0f,
         };
 
@@ -139,6 +138,30 @@ internal class Program
         var geometryRenderer = new GeometryRenderer(renderDevice);
         var lightRenderer = new LightRenderer(renderDevice.Pipeline);
         var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer);
+
+        var light1 = new Light()
+        {
+            Color = new Vector3(1.0f, 0.0f, 0.0f),
+        };
+
+        var light2 = new Light()
+        {
+            Color = new Vector3(0.0f, 1.0f, 0.0f),
+        };
+
+        var light3 = new Light()
+        {
+            Color = new Vector3(0.0f, 0.0f, 1.0f),
+        };
+
+        var light4 = new Light()
+        {
+            Color = new Vector3(1.0f, 0.0f, 1.0f),
+        };
+
+        float move = 0.0f;
+
+        var modelResource = ResourceManager.Instance.LoadResource<ModelResource>("Resources\\Models\\Dabrovic\\Sponza.obj");
 
         while (isRunning)
         {
@@ -154,46 +177,50 @@ internal class Program
             keyboard.Update();
             mouse.Update();
 
-            renderDevice.Clear(Color.Black);
-
-            renderingEngine.Enqueue(new Model()
+            foreach (var model in modelResource.Models)
             {
-                Mesh = mesh,
-                Material = material,
-            },
-            new Transform()
-            {
-                Scale = new Vector3(5),
-            });
-
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 10; j++)
+                renderingEngine.Enqueue(model, new Transform()
                 {
-                    renderingEngine.Enqueue(new Light()
-                    {
-                        Intensity = 0.4f,
-                        Type = LightType.Point,
-                        Position = new Vector3(i * 20, 3, j * 20),
-                    });
-                }
+                    Scale = new Vector3(5),
+                });
             }
 
-            renderingEngine.Enqueue(new Light()
-            {
-                Type = LightType.Ambient,
-                Color = Vector3.One,
-                Intensity = 0.1f,
-            });
+            //renderingEngine.Enqueue(new Model()
+            //{
+            //    Mesh = mesh,
+            //    Material = material,
+            //}, new Transform()
+            //{
+            //    Scale = new Vector3(20, 20, 20),
+            //});
 
             renderingEngine.Enqueue(new Light()
             {
                 Type = LightType.Spot,
+                Color = new Vector3(1.0f),
+                Intensity = 0.8f,
                 Position = camera.Transform.Position,
                 Direction = camera.Transform.Forward,
-                Color = new Vector3(1.0f, 0.0f, 0.0f),
-                Intensity = 0.8f,
+                Attenuation = new Attenuation()
+                {
+                    Linear = 0.014f,
+                    Quadratic = 0.0007f,
+                }
             });
+
+            move += 0.4f;
+
+            float cos = MathF.Cos(MathHelper.DegreesToRadians(move));
+
+            light1.Position = new Vector3(cos * 40, 10, -cos * 40);
+            light2.Position = new Vector3(-cos * 40, 10, cos * 40);
+            light3.Position = new Vector3(-cos * 40, 10, -cos * 40);
+            light4.Position = new Vector3(cos * 40, 10, cos * 40);
+
+            renderingEngine.Enqueue(light1);
+            renderingEngine.Enqueue(light2);
+            renderingEngine.Enqueue(light3);
+            renderingEngine.Enqueue(light4);
 
             renderingEngine.Render(camera);
             renderContext.SwapBuffers();

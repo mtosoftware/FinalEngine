@@ -14,7 +14,7 @@ public sealed class Camera : ICamera
 
     private bool isLocked;
 
-    private float speed = 0.4f;
+    private float speed = 0.5f;
 
     private float width;
 
