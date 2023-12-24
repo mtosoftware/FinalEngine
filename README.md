@@ -6,14 +6,12 @@ This is a copy of Final Engine that will be used to setup the new rendering engi
 
 - [x] Pipeline
   - [x] Forward Rendering
-  - [ ] Deferred Rendering
 
 ### Geometry and Models
 
 - [x] Mesh Rendering
 - [ ] Terrain Rendering
 - [ ] Model Loading
-- [ ] Level of Detail (LOD)
 
 ### Camera and View Optimization
 
@@ -29,23 +27,18 @@ This is a copy of Final Engine that will be used to setup the new rendering engi
   - [x] Normal Mapping
   - [ ] Emissive Mapping
   - [ ] Parallax Mapping
-  - [ ] Physically Based Rendering (PBR)
 
 ### Lighting and Shadows
 
 - [x] Lighting
   - [x] Blinn-Phong Lighting Model
-  - [ ] Physical-based Lighting
-  - [ ] Image-Based Lighting (IBL)
 - [x] Light Sources
   - [x] Directional
   - [x] Point
   - [x] Spot
-  - [ ] Area
   - [ ] Volumetric
 - [x] Global Illumination (Ambient Lighting)
 - [ ] Shadow Mapping
-- [ ] Ambient Occlusion
 
 ### Visual Effects
 
