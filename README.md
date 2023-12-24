@@ -4,8 +4,8 @@ This is a copy of Final Engine that will be used to setup the new rendering engi
 
 ### Rendering Techniques
 
-- [ ] Pipeline
-  - [ ] Forward Rendering
+- [x] Pipeline
+  - [x] Forward Rendering
   - [ ] Deferred Rendering
 
 ### Geometry and Models
