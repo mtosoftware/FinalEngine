@@ -17,7 +17,7 @@ This is a copy of Final Engine that will be used to setup the new rendering engi
 
 ### Camera and View Optimization
 
-- [ ] Camera System
+- [x] Camera System
 - [ ] View Frustum Culling
 - [ ] Occlusion Culling
 
