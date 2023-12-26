@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering;
 
 using System.Numerics;
+using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 
@@ -35,4 +36,5 @@ public interface IPipeline
     void SetUniform(string name, Vector4 value);
 
     void SetUniform(string name, Matrix4x4 value);
+    void SetFrameBuffer(IFrameBuffer frameBuffer);
 }

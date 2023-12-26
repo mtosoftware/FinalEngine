@@ -7,12 +7,14 @@ namespace FinalEngine.Rendering.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using FinalEngine.Rendering.OpenGL.Buffers;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Pipeline;
 using FinalEngine.Rendering.OpenGL.Textures;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using OpenTK.Graphics.OpenGL4;
+using Rendering.Buffers;
 
 public class OpenGLPipeline : IPipeline
 {
@@ -217,6 +219,15 @@ public class OpenGLPipeline : IPipeline
         ];
 
         this.invoker.UniformMatrix4(location, 1, false, values);
+    }
+
+    public void SetFrameBuffer(IFrameBuffer frameBuffer)
+    {
+        if (frameBuffer is not IOpenGLFrameBuffer glFrameBuffer)
+        {
+            throw new ArgumentException($"The specified {nameof(frameBuffer)} parameter is not of type {nameof(IOpenGLFrameBuffer)}.", nameof(frameBuffer));
+        }
+        glFrameBuffer.Bind();
     }
 
     private bool TryGetUniformLocation(string name, out int location)
