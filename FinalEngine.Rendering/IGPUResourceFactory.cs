@@ -25,5 +25,5 @@ public interface IGPUResourceFactory
     IVertexBuffer CreateVertexBuffer<T>(BufferUsageType type, IReadOnlyCollection<T> data, int sizeInBytes, int stride)
         where T : struct;
 
-    IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D> colorTargets, ITexture2D? depthTarget);
+    IFrameBuffer CreateFrameBuffer(IReadOnlyList<ITexture2D> colorTargets, ITexture2D? depthTarget);
 }

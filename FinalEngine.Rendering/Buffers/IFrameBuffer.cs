@@ -7,8 +7,10 @@ public interface IFrameBuffer : IDisposable
 {
     ITexture2D? DepthTarget { get; }
 
-    IReadOnlyCollection<ITexture2D> ColorTargets { get; }
+    IReadOnlyList<ITexture2D> ColorTargets { get; }
 
     int Width { get; }
     int Height { get; }
+
+    int ActualUsefulAttachmentCount { get; }
 }

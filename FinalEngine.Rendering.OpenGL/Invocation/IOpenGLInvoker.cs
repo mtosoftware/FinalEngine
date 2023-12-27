@@ -166,5 +166,5 @@ public interface IOpenGLInvoker
 
     void Viewport(Rectangle rectangle);
 
-    void DrawBuffers(int n, ref DrawBuffersEnum bufs);
+    void NamedFramebufferDrawBuffers(int fb, int n, ref DrawBuffersEnum bufs);
 }

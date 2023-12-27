@@ -79,7 +79,7 @@ public class OpenGLGPUResourceFactory : IGPUResourceFactory
         return new OpenGLVertexBuffer<T>(this.invoker, this.mapper, this.mapper.Forward<BufferUsageHint>(type), data, sizeInBytes, stride);
     }
 
-    public IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D> colorTargets, ITexture2D? depthTarget)
+    public IFrameBuffer CreateFrameBuffer(IReadOnlyList<ITexture2D> colorTargets, ITexture2D? depthTarget)
     {
         ArgumentNullException.ThrowIfNull(colorTargets, nameof(colorTargets));
         return new OpenGLFrameBuffer(this.invoker, this.mapper, colorTargets, depthTarget);

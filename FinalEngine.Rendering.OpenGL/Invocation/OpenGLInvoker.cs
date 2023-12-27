@@ -422,10 +422,11 @@ public class OpenGLInvoker : IOpenGLInvoker
         GL.Viewport(rectangle);
     }
 
-    public void DrawBuffers(int n, ref DrawBuffersEnum bufs)
+    public void NamedFramebufferDrawBuffers(int fb, int n, ref DrawBuffersEnum bufs)
     {
-        GL.DrawBuffers(n, ref bufs);
+        GL.NamedFramebufferDrawBuffers(fb,n,ref bufs);
     }
+
 
     private static void DebugCallback(
         DebugSource source,
