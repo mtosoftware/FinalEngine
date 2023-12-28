@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Exceptions;
+using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.OpenGL.Buffers;
 using FinalEngine.Rendering.OpenGL.Invocation;
