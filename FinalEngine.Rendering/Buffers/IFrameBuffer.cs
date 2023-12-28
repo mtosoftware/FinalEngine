@@ -11,6 +11,4 @@ public interface IFrameBuffer : IDisposable
 
     int Width { get; }
     int Height { get; }
-
-    int ActualUsefulAttachmentCount { get; }
 }

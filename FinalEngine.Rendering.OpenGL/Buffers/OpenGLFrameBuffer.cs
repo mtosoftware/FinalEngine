@@ -18,10 +18,6 @@ public class OpenGLFrameBuffer : IOpenGLFrameBuffer
     public int Width { get; }
     public int Height { get; }
 
-    public int ActualUsefulAttachmentCount
-    {
-        get {return Math.Min(this.ColorTargets.Count, this.invoker.GetInteger(GetPName.MaxColorAttachments)); }
-    }
 
     protected bool IsDisposed { get; private set; }
 
@@ -49,8 +45,8 @@ public class OpenGLFrameBuffer : IOpenGLFrameBuffer
         this.ColorTargets = colorTargets;
         this.rendererID = invoker.CreateFramebuffer();
 
-        int attachmentCount = this.ActualUsefulAttachmentCount;
         // Color 
+        int attachmentCount = colorTargets.Count;
         for (int i = 0; i < attachmentCount; i++)
         {
             ((IOpenGLTexture)colorTargets[i]).Attach(FramebufferAttachment.ColorAttachment0 + i, this.rendererID);
