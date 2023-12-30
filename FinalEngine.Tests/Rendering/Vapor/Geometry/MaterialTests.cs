@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Rendering.Vapor.Geometry;
 
 using System;
 using FinalEngine.Rendering;
-using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using Moq;

@@ -6,7 +6,6 @@ namespace FinalEngine.Tests.Rendering.Vapor.Primitives;
 
 using System.Collections.Generic;
 using System.Numerics;
-using FinalEngine.Rendering;
 using FinalEngine.Rendering.Buffers;
 using NUnit.Framework;
 

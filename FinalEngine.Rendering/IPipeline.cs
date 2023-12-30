@@ -12,11 +12,12 @@ using FinalEngine.Rendering.Textures;
 public interface IPipeline
 {
     int MaxTextureSlots { get; }
-    int MaxColorAttachments { get; }
 
     void AddShaderHeader(string name, string content);
 
     string GetShaderHeader(string name);
+
+    void SetFrameBuffer(IFrameBuffer? frameBuffer);
 
     void SetShaderProgram(IShaderProgram program);
 
@@ -37,6 +38,4 @@ public interface IPipeline
     void SetUniform(string name, Vector4 value);
 
     void SetUniform(string name, Matrix4x4 value);
-
-    void SetFrameBuffer(IFrameBuffer? frameBuffer);
 }

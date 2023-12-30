@@ -8,7 +8,6 @@ using System;
 using System.IO;
 using System.IO.Abstractions.TestingHelpers;
 using FinalEngine.Rendering;
-using FinalEngine.Rendering.Loaders.Shaders;
 using FinalEngine.Rendering.Pipeline;
 using Moq;
 using NUnit.Framework;

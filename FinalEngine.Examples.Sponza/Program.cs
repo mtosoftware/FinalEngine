@@ -11,6 +11,7 @@ using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.Textures;
 using FinalEngine.Rendering.Vapor;
 using FinalEngine.Rendering.Vapor.Core;
 using FinalEngine.Rendering.Vapor.Geometry;
@@ -163,6 +164,23 @@ internal class Program
 
         var modelResource = ResourceManager.Instance.LoadResource<ModelResource>("Resources\\Models\\Dabrovic\\Sponza.obj");
 
+        var colorTarget = renderDevice.Factory.CreateTexture2D<byte>(
+            new Texture2DDescription()
+            {
+                GenerateMipmaps = false,
+                Height = window.ClientSize.Height,
+                Width = window.ClientSize.Width,
+                MinFilter = TextureFilterMode.Linear,
+                MagFilter = TextureFilterMode.Linear,
+                PixelType = PixelType.Byte,
+                WrapS = TextureWrapMode.Clamp,
+                WrapT = TextureWrapMode.Clamp,
+            },
+            null);
+
+        var renderTarget = renderDevice.Factory.CreateFrameBuffer(
+            new[] { colorTarget });
+
         while (isRunning)
         {
             if (!gameTime.CanProcessNextFrame())
@@ -176,6 +194,8 @@ internal class Program
 
             keyboard.Update();
             mouse.Update();
+
+            //renderDevice.Pipeline.SetFrameBuffer(renderTarget);
 
             foreach (var model in modelResource.Models)
             {
@@ -223,6 +243,20 @@ internal class Program
             renderingEngine.Enqueue(light4);
 
             renderingEngine.Render(camera);
+
+            //renderDevice.Pipeline.SetFrameBuffer(null);
+
+            //renderingEngine.Enqueue(new Model()
+            //{
+            //    Mesh = mesh,
+            //    Material = new Material()
+            //    {
+            //        DiffuseTexture = renderTarget.ColorTargets.FirstOrDefault(),
+            //    },
+            //}, new Transform());
+
+            //renderingEngine.Render(camera);
+
             renderContext.SwapBuffers();
             window.ProcessEvents();
         }

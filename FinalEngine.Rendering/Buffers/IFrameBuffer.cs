@@ -1,14 +1,15 @@
+// <copyright file="IFrameBuffer.cs" company="Software Antics">
+//     Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
 namespace FinalEngine.Rendering.Buffers;
-using System;
+
 using System.Collections.Generic;
 using FinalEngine.Rendering.Textures;
 
-public interface IFrameBuffer : IDisposable
+public interface IFrameBuffer
 {
+    IEnumerable<ITexture2D> ColorTargets { get; }
+
     ITexture2D? DepthTarget { get; }
-
-    IReadOnlyList<ITexture2D> ColorTargets { get; }
-
-    int Width { get; }
-    int Height { get; }
 }

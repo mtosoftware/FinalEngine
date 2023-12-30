@@ -16,7 +16,7 @@ public interface IOpenGLInvoker
 
     void BindBuffer(BufferTarget target, int buffer);
 
-    void Bindframebuffer(FramebufferTarget target, int framebuffers);
+    void BindFramebuffer(FramebufferTarget target, int framebuffers);
 
     void BindTexture(TextureTarget target, int texture);
 
@@ -119,6 +119,8 @@ public interface IOpenGLInvoker
     void NamedBufferSubData<T3>(int buffer, IntPtr offset, int size, T3[] data)
         where T3 : struct;
 
+    void NamedFramebufferDrawBuffers(int fb, int n, ref DrawBuffersEnum bufs);
+
     void NamedFramebufferTexture(int framebuffer, FramebufferAttachment attachment, int texture, int level);
 
     void PolygonMode(MaterialFace face, PolygonMode mode);
@@ -165,6 +167,4 @@ public interface IOpenGLInvoker
     void VertexAttribFormat(int attribindex, int size, VertexAttribType type, bool normalized, int relativeoffset);
 
     void Viewport(Rectangle rectangle);
-
-    void NamedFramebufferDrawBuffers(int fb, int n, ref DrawBuffersEnum bufs);
 }

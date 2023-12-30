@@ -11,8 +11,10 @@ using FinalEngine.Rendering.Textures;
 
 public interface IGPUResourceFactory
 {
+    IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D> colorTargets, ITexture2D? depthTarget = null);
+
     IIndexBuffer CreateIndexBuffer<T>(BufferUsageType type, IReadOnlyCollection<T> data, int sizeInBytes)
-        where T : struct;
+            where T : struct;
 
     IInputLayout CreateInputLayout(IReadOnlyCollection<InputElement> elements);
 
@@ -24,6 +26,4 @@ public interface IGPUResourceFactory
 
     IVertexBuffer CreateVertexBuffer<T>(BufferUsageType type, IReadOnlyCollection<T> data, int sizeInBytes, int stride)
         where T : struct;
-
-    IFrameBuffer CreateFrameBuffer(IReadOnlyList<ITexture2D> colorTargets, ITexture2D? depthTarget);
 }

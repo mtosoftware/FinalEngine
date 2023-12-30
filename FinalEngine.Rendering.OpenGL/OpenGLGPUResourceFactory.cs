@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.OpenGL.Buffers;
 using FinalEngine.Rendering.OpenGL.Invocation;
@@ -32,8 +31,20 @@ public class OpenGLGPUResourceFactory : IGPUResourceFactory
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
+    public IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D> colorTargets, ITexture2D? depthTarget = null)
+    {
+        ArgumentNullException.ThrowIfNull(colorTargets, nameof(colorTargets));
+
+        if (depthTarget is not null and not IOpenGLTexture)
+        {
+            throw new ArgumentException($"The specified {nameof(depthTarget)} parameter is not of type {nameof(IOpenGLTexture)}.", nameof(depthTarget));
+        }
+
+        return new OpenGLFrameBuffer(this.invoker, colorTargets.Cast<IOpenGLTexture>().ToList().AsReadOnly(), (IOpenGLTexture?)depthTarget);
+    }
+
     public IIndexBuffer CreateIndexBuffer<T>(BufferUsageType type, IReadOnlyCollection<T> data, int sizeInBytes)
-        where T : struct
+            where T : struct
     {
         ArgumentNullException.ThrowIfNull(data, nameof(data));
         return new OpenGLIndexBuffer<T>(this.invoker, this.mapper, this.mapper.Forward<BufferUsageHint>(type), data, sizeInBytes);
@@ -78,15 +89,5 @@ public class OpenGLGPUResourceFactory : IGPUResourceFactory
     {
         ArgumentNullException.ThrowIfNull(data, nameof(data));
         return new OpenGLVertexBuffer<T>(this.invoker, this.mapper, this.mapper.Forward<BufferUsageHint>(type), data, sizeInBytes, stride);
-    }
-
-    public IFrameBuffer CreateFrameBuffer(IReadOnlyList<ITexture2D> colorTargets, ITexture2D? depthTarget)
-    {
-        ArgumentNullException.ThrowIfNull(colorTargets, nameof(colorTargets));
-        if (colorTargets.Count > this.invoker.GetInteger(GetPName.MaxColorAttachments))
-        {
-            throw new FrameBufferTargetException($"The number of {nameof(colorTargets)} should not exceed the maximum number of max colorAttachments.");
-        }
-        return new OpenGLFrameBuffer(this.invoker, this.mapper, colorTargets, depthTarget);
     }
 }
