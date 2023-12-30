@@ -165,4 +165,6 @@ public interface IOpenGLInvoker
     void VertexAttribFormat(int attribindex, int size, VertexAttribType type, bool normalized, int relativeoffset);
 
     void Viewport(Rectangle rectangle);
+
+    void NamedFramebufferDrawBuffers(int fb, int n, ref DrawBuffersEnum bufs);
 }

@@ -7,12 +7,14 @@ namespace FinalEngine.Rendering.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using FinalEngine.Rendering.OpenGL.Buffers;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Pipeline;
 using FinalEngine.Rendering.OpenGL.Textures;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using OpenTK.Graphics.OpenGL4;
+using FinalEngine.Rendering.Buffers;
 
 public class OpenGLPipeline : IPipeline
 {
@@ -23,6 +25,7 @@ public class OpenGLPipeline : IPipeline
     private readonly Dictionary<string, string> nameToHeaderMap;
 
     private readonly Dictionary<string, int> uniformLocations;
+    private IOpenGLFrameBuffer? currentFrameBuffer;
 
     private IOpenGLShaderProgram? boundProgram;
 
@@ -38,6 +41,11 @@ public class OpenGLPipeline : IPipeline
     public int MaxTextureSlots
     {
         get { return this.invoker.GetInteger(GetPName.MaxTextureImageUnits); }
+    }
+
+    public int MaxColorAttachments
+    {
+        get { return this.invoker.GetInteger(GetPName.MaxColorAttachments); }
     }
 
     public void AddShaderHeader(string name, string content)
@@ -217,6 +225,28 @@ public class OpenGLPipeline : IPipeline
         ];
 
         this.invoker.UniformMatrix4(location, 1, false, values);
+    }
+
+    public void SetFrameBuffer(IFrameBuffer? frameBuffer)
+    {
+        if (this.currentFrameBuffer == frameBuffer)
+        {
+            return;
+        }
+
+        if (frameBuffer == null)
+        {
+            this.invoker.Bindframebuffer(FramebufferTarget.Framebuffer, 0);
+            return;
+        }
+
+        if (frameBuffer is not IOpenGLFrameBuffer glFrameBuffer)
+        {
+            throw new ArgumentException($"The specified {nameof(frameBuffer)} parameter is not of type {nameof(IOpenGLFrameBuffer)}.", nameof(frameBuffer));
+        }
+
+        this.currentFrameBuffer = glFrameBuffer;
+        this.currentFrameBuffer.Bind();
     }
 
     private bool TryGetUniformLocation(string name, out int location)
