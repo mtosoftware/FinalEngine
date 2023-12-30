@@ -55,6 +55,7 @@ This is a copy of Final Engine that will be used to setup the new rendering engi
 - [ ] Animation
   - [ ] Skeletal Animation
 - [ ] Post Processing
+  - [ ] Gamma Correction
   - [ ] High Dynamic Range (HDR)
   - [ ] Bloom
   - [ ] Motion Blur
