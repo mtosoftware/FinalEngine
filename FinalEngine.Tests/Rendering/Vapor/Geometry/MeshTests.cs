@@ -1,5 +1,5 @@
 // <copyright file="MeshTests.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Rendering.Vapor.Geometry;
@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Numerics;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Buffers;
-using FinalEngine.Rendering.Geometry;
 using Moq;
 using NUnit.Framework;
 

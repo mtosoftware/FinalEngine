@@ -17,6 +17,8 @@ using FinalEngine.Resources;
 
 public sealed class RenderingEngine : IRenderingEngine
 {
+    private readonly Light ambientLight;
+
     private readonly IGeometryRenderer geometryRenderer;
 
     private readonly ILightRenderer lightRenderer;
@@ -26,8 +28,6 @@ public sealed class RenderingEngine : IRenderingEngine
     private readonly Dictionary<Model, IEnumerable<Transform>> modelToTransformationMap;
 
     private readonly IRenderDevice renderDevice;
-
-    private Light ambientLight;
 
     private IShaderProgram? geometryProgram;
 

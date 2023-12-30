@@ -34,7 +34,7 @@ public class OpenGLInvoker : IOpenGLInvoker
         GL.BindBuffer(target, buffer);
     }
 
-    public void Bindframebuffer(FramebufferTarget target, int framebuffers)
+    public void BindFramebuffer(FramebufferTarget target, int framebuffers)
     {
         GL.BindFramebuffer(target, framebuffers);
     }
@@ -420,6 +420,11 @@ public class OpenGLInvoker : IOpenGLInvoker
     public void Viewport(Rectangle rectangle)
     {
         GL.Viewport(rectangle);
+    }
+
+    public void NamedFramebufferDrawBuffers(int fb, int n, ref DrawBuffersEnum bufs)
+    {
+        GL.NamedFramebufferDrawBuffers(fb, n, ref bufs);
     }
 
     private static void DebugCallback(

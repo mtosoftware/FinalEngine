@@ -7,6 +7,8 @@ namespace FinalEngine.Rendering.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.OpenGL.Buffers;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Pipeline;
 using FinalEngine.Rendering.OpenGL.Textures;
@@ -23,6 +25,8 @@ public class OpenGLPipeline : IPipeline
     private readonly Dictionary<string, string> nameToHeaderMap;
 
     private readonly Dictionary<string, int> uniformLocations;
+
+    private IOpenGLFrameBuffer? boundFrameBuffer;
 
     private IOpenGLShaderProgram? boundProgram;
 
@@ -63,6 +67,28 @@ public class OpenGLPipeline : IPipeline
         }
 
         return content;
+    }
+
+    public void SetFrameBuffer(IFrameBuffer? frameBuffer)
+    {
+        if (this.boundFrameBuffer == frameBuffer)
+        {
+            return;
+        }
+
+        if (frameBuffer == null)
+        {
+            this.invoker.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            return;
+        }
+
+        if (frameBuffer is not IOpenGLFrameBuffer glFrameBuffer)
+        {
+            throw new ArgumentException($"The specified {nameof(frameBuffer)} parameter is not of type {nameof(IOpenGLFrameBuffer)}.", nameof(frameBuffer));
+        }
+
+        this.boundFrameBuffer = glFrameBuffer;
+        this.boundFrameBuffer.Bind();
     }
 
     public void SetShaderProgram(IShaderProgram program)

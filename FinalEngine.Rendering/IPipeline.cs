@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering;
 
 using System.Numerics;
+using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 
@@ -15,6 +16,8 @@ public interface IPipeline
     void AddShaderHeader(string name, string content);
 
     string GetShaderHeader(string name);
+
+    void SetFrameBuffer(IFrameBuffer? frameBuffer);
 
     void SetShaderProgram(IShaderProgram program);
 
