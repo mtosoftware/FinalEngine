@@ -23,10 +23,10 @@ public sealed class TagComponentTests
     {
         // Arrange
         string expected = "Hello, World!";
-        this.component.Tag = expected;
+        this.component.Name = expected;
 
         // Act
-        string actual = this.component.Tag;
+        string actual = this.component.Name;
 
         // Assert
         Assert.That(actual, Is.EqualTo(expected));
@@ -36,7 +36,7 @@ public sealed class TagComponentTests
     public void TagShouldReturnNullWhenNotSet()
     {
         // Act
-        string actual = this.component.Tag;
+        string actual = this.component.Name;
 
         // Assert
         Assert.That(actual, Is.Null);

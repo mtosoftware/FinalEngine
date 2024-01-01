@@ -7,12 +7,12 @@ using System.IO.Abstractions;
 using System.Numerics;
 using Assimp;
 using FinalEngine.Rendering;
+using FinalEngine.Rendering.Geometry;
+using FinalEngine.Rendering.Primitives;
 using FinalEngine.Rendering.Textures;
-using FinalEngine.Rendering.Vapor.Geometry;
-using FinalEngine.Rendering.Vapor.Primitives;
 using FinalEngine.Resources;
-using Material = Rendering.Vapor.Geometry.Material;
-using Mesh = Rendering.Vapor.Geometry.Mesh;
+using Material = Rendering.Geometry.Material;
+using Mesh = Rendering.Geometry.Mesh;
 
 public class ModelResource : IResource
 {

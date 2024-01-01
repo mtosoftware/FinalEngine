@@ -1,11 +1,11 @@
 // <copyright file="TextureQualitySettingsTests.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Rendering.Settings;
 
-using FinalEngine.Rendering.Settings;
 using FinalEngine.Rendering.Textures;
+using FinalEngine.Rendering.Vapor.Settings;
 using NUnit.Framework;
 
 [TestFixture]

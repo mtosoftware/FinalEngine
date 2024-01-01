@@ -9,26 +9,26 @@ using System.ComponentModel;
 [Category("Core")]
 public sealed class TagComponent : IEntityComponent, INotifyPropertyChanged
 {
-    private string? tag;
+    private string? name;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public string? Tag
+    public string? Name
     {
         get
         {
-            return this.tag;
+            return this.name;
         }
 
         set
         {
-            if (this.tag == value)
+            if (this.name == value)
             {
                 return;
             }
 
-            this.tag = value;
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Tag)));
+            this.name = value;
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Name)));
         }
     }
 }

@@ -1,10 +1,11 @@
 // <copyright file="EntitySystemProcessAttributeTests.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.ECS;
 
 using FinalEngine.ECS;
+using FinalEngine.ECS.Attributes;
 using NUnit.Framework;
 
 [TestFixture]
