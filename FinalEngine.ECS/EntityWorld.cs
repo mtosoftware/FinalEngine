@@ -6,6 +6,8 @@ namespace FinalEngine.ECS;
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using FinalEngine.ECS.Attributes;
 using FinalEngine.ECS.Exceptions;
 
 public class EntityWorld : IEntityWorld
@@ -57,6 +59,27 @@ public class EntityWorld : IEntityWorld
         }
 
         this.systems.Add(system);
+    }
+
+    public void ProcessAll(GameLoopType type)
+    {
+        foreach (var system in this.systems)
+        {
+            var loopType = GameLoopType.Update;
+            var attribute = system.GetType().GetCustomAttribute<EntitySystemProcessAttribute>();
+
+            if (attribute != null)
+            {
+                loopType = attribute.ExecutionType;
+            }
+
+            if (loopType != type)
+            {
+                continue;
+            }
+
+            system.Process();
+        }
     }
 
     public void RemoveEntity(Entity entity)
