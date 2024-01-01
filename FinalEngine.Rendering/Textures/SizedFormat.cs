@@ -13,4 +13,10 @@ public enum SizedFormat
     Rgb8,
 
     Rgba8,
+
+    Depth,
+
+    Depth24Stencil8,
+
+    Depth32fStencil8
 }

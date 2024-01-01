@@ -14,4 +14,6 @@ public enum PixelType
     Byte,
 
     Short,
+
+    Float,
 }

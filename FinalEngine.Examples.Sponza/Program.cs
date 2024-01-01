@@ -138,6 +138,7 @@ internal class Program
         var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer);
 
         var modelResource = ResourceManager.Instance.LoadResource<ModelResource>("Resources\\Models\\Dabrovic\\Sponza.obj");
+        var modelResource2 = ResourceManager.Instance.LoadResource<ModelResource>("Resources\\Models\\nanosuit\\nanosuit.obj");
 
         while (isRunning)
         {
@@ -160,7 +161,15 @@ internal class Program
                     Scale = new Vector3(5),
                 });
             }
-
+            foreach (var model in modelResource2.Models)
+            {
+                
+                renderingEngine.Enqueue(model, new Transform()
+                {
+                    Scale = new Vector3(1),
+                    Position = new Vector3(-20,80,-23)
+                });
+            }
             renderingEngine.Render(camera);
 
             renderContext.SwapBuffers();

@@ -13,6 +13,7 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Textures;
 using FinalEngine.Rendering.Textures;
 using OpenTK.Graphics.OpenGL4;
+using PixelFormat = Rendering.Textures.PixelFormat;
 
 public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer, IDisposable
 {
@@ -51,7 +52,16 @@ public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer, IDisposable
         }
 
         this.invoker.NamedFramebufferDrawBuffers(this.rendererID, attachmentCount, ref bufs[0]);
-        depthTarget?.Attach(FramebufferAttachment.DepthStencilAttachment, this.rendererID);
+        if (depthTarget != null)
+        {
+            var framebufferAttachment = FramebufferAttachment.DepthAttachment;
+            if (depthTarget is { Format: PixelFormat.DepthAndStencil })
+            {
+                framebufferAttachment = FramebufferAttachment.DepthStencilAttachment;
+            }
+            depthTarget.Attach(framebufferAttachment, this.rendererID);
+        }
+        
 
         var status = invoker.CheckNamedFramebufferStatus(this.rendererID, FramebufferTarget.Framebuffer);
 
