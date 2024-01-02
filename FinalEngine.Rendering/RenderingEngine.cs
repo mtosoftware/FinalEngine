@@ -8,11 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Core;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Renderers;
+using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 
 public sealed class RenderingEngine : IRenderingEngine
@@ -31,6 +33,12 @@ public sealed class RenderingEngine : IRenderingEngine
 
     private IShaderProgram? geometryProgram;
 
+
+    // TODO :need move to ShadowmapRender
+    //  Shadowmap test
+    private readonly Light sunLight;
+    private IShaderProgram? shadowMapProgram;
+    private IFrameBuffer depthFrameBuffer;
     public RenderingEngine(IRenderDevice renderDevice, IGeometryRenderer geometryRenderer, ILightRenderer lightRenderer)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
@@ -45,8 +53,34 @@ public sealed class RenderingEngine : IRenderingEngine
             Type = LightType.Ambient,
             Intensity = 0.1f,
         };
+
+        // TODO :need move
+        this.sunLight = new Light()
+        {
+            Intensity = 3f,
+            Type = LightType.Directional,
+            Color = new Vector3(0.9f, 0.9f, 0.9f),
+            Direction = new Vector3(0, -1f, 0.3f),
+            Position = new Vector3(0, 1000, 0)
+        };
+        var colorTarget =
+            renderDevice.Factory.CreateTexture2D<byte>(new Texture2DDescription() { Width = 1024, Height = 1024 },
+                null);
+        var depthTarget = renderDevice.Factory.CreateTexture2D<float>(
+            new Texture2DDescription() { Width = 1024, Height = 1024, PixelType = PixelType.Float }, null,
+            PixelFormat.Depth, SizedFormat.Depth);
+        this.depthFrameBuffer = renderDevice.Factory.CreateFrameBuffer(new[] { colorTarget }, depthTarget);
     }
 
+    // TODO :need move
+    private IShaderProgram ShadowMapProgram
+    {
+        get
+        {
+            return this.shadowMapProgram ??=
+                ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\shadowMap.fesp");
+        }
+    }
     private IShaderProgram GeometryProgram
     {
         get { return this.geometryProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\standard-geometry.fesp"); }
@@ -81,9 +115,10 @@ public sealed class RenderingEngine : IRenderingEngine
 
     public void Render(ICamera camera)
     {
-        ArgumentNullException.ThrowIfNull(camera, nameof(camera));
+        //todo : need to get from lightTypeToLightMap,here is test 
+        this.Enqueue(this.sunLight);
 
-        this.renderDevice.Clear(Color.Black);
+        ArgumentNullException.ThrowIfNull(camera, nameof(camera));
 
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
         {
@@ -97,7 +132,23 @@ public sealed class RenderingEngine : IRenderingEngine
             WindingDirection = WindingDirection.CounterClockwise,
             MultiSamplingEnabled = true,
         });
+        // shadowmap
+        var oldViewport = this.renderDevice.Rasterizer.GetViewport();
+        this.renderDevice.Pipeline.SetFrameBuffer(this.depthFrameBuffer);
+        this.renderDevice.Clear(Color.Black);
+        this.renderDevice.Pipeline.SetShaderProgram(this.ShadowMapProgram);
+        this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, 1024, 1024));
 
+        var lightView = Matrix4x4.CreateLookTo(this.sunLight.Position, this.sunLight.Direction, Vector3.UnitY);
+        var lightProjection = Matrix4x4.CreateOrthographicOffCenter(-1000, 1000, -1000, 1000, 1, 75000f);
+        this.renderDevice.Pipeline.SetUniform("u_lightProjection", lightProjection);
+        this.renderDevice.Pipeline.SetUniform("u_lightView", lightView);
+        this.geometryRenderer.Render(this.modelToTransformationMap);
+
+        // ...
+        this.renderDevice.Pipeline.SetFrameBuffer(null);
+        this.renderDevice.Rasterizer.SetViewport(oldViewport);
+        this.renderDevice.Clear(Color.Black);
         if (this.lightTypeToLightMap.Count <= 0)
         {
             this.renderDevice.Pipeline.SetShaderProgram(this.GeometryProgram);
@@ -121,7 +172,12 @@ public sealed class RenderingEngine : IRenderingEngine
                     {
                         continue;
                     }
-
+                    if (light.Type == LightType.Directional)
+                    {
+                        this.renderDevice.Pipeline.SetUniform("u_lightProjection", lightProjection);
+                        this.renderDevice.Pipeline.SetUniform("u_lightView", lightView);
+                        this.renderDevice.Pipeline.SetTexture(this.depthFrameBuffer.DepthTarget!, 3);
+                    }
                     this.lightRenderer.Render(light);
                     this.RenderScene(camera);
                 }
