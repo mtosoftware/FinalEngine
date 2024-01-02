@@ -94,6 +94,7 @@ public class OpenGLRenderDevice : IRenderDevice
             { PixelType.Byte,  TKPixelType.UnsignedByte },
             { PixelType.Int, TKPixelType.UnsignedInt },
             { PixelType.Short, TKPixelType.UnsignedShort },
+            { PixelType.Float, TKPixelType.Float },
             { PixelFormat.R, TKPixelForamt.Red },
             { PixelFormat.Rg, TKPixelForamt.Rg },
             { PixelFormat.Rgb, TKPixelForamt.Rgb },
@@ -104,6 +105,9 @@ public class OpenGLRenderDevice : IRenderDevice
             { SizedFormat.Rg8, SizedInternalFormat.Rg8 },
             { SizedFormat.Rgb8, All.Rgb8 },
             { SizedFormat.Rgba8, SizedInternalFormat.Rgba8 },
+            { SizedFormat.Depth, SizedInternalFormat.DepthComponent32f },
+            { SizedFormat.Depth24Stencil8, SizedInternalFormat.Depth24Stencil8 },
+            { SizedFormat.Depth32fStencil8, SizedInternalFormat.Depth32fStencil8 },
             { BufferUsageType.Static, BufferUsageHint.StaticDraw },
             { BufferUsageType.Dynamic, BufferUsageHint.DynamicDraw },
         };
