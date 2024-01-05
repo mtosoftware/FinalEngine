@@ -113,8 +113,6 @@ public sealed class RenderingEngine : IRenderingEngine
                 var type = kvp.Key;
                 var batch = kvp.Value;
 
-                this.PrepareLightingPass();
-
                 foreach (var light in batch)
                 {
                     if (light.Type == LightType.Ambient)
@@ -122,6 +120,7 @@ public sealed class RenderingEngine : IRenderingEngine
                         continue;
                     }
 
+                    this.PrepareLightingPass();
                     this.lightRenderer.Render(light);
                     this.RenderScene(camera);
                 }

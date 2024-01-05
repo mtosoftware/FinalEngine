@@ -11,6 +11,7 @@ using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Core;
 using FinalEngine.Rendering.Geometry;
+using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Loaders.Shaders;
 using FinalEngine.Rendering.Loaders.Textures;
 using FinalEngine.Rendering.OpenGL;
@@ -160,6 +161,14 @@ internal class Program
                     Scale = new Vector3(5),
                 });
             }
+
+            renderingEngine.Enqueue(new Light()
+            {
+                Type = LightType.Directional,
+                Direction = new Vector3(-1),
+                Intensity = 0.4f,
+                Position = new Vector3(5),
+            });
 
             renderingEngine.Render(camera);
 
