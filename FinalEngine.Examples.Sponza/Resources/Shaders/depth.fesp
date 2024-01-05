@@ -1,0 +1,4 @@
+{
+    "Vertex": "depth.vert",
+    "Fragment": "depth.frag"
+}

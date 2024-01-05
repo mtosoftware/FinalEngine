@@ -1,25 +1,28 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO.Abstractions;
 using System.Numerics;
 using FinalEngine.Examples.Sponza;
 using FinalEngine.Examples.Sponza.Loaders;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
+using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
-using FinalEngine.Rendering;
-using FinalEngine.Rendering.Core;
+using FinalEngine.Rendering.Batching;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Loaders.Shaders;
 using FinalEngine.Rendering.Loaders.Textures;
 using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
+using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Primitives;
-using FinalEngine.Rendering.Renderers;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -34,7 +37,7 @@ internal class Program
             APIVersion = new Version(4, 6),
 
             Flags = ContextFlags.ForwardCompatible,
-            Profile = ContextProfile.Core,
+            Profile = ContextProfile.Compatability,
 
             AutoLoadBindings = false,
 
@@ -84,8 +87,8 @@ internal class Program
         var watchInvoker = new StopwatchInvoker(watch);
         var gameTime = new GameTime(watchInvoker, 120.0f);
 
-        float fieldDepth = 10.0f;
-        float fieldWidth = 10.0f;
+        float fieldDepth = 5.0f;
+        float fieldWidth = 5.0f;
 
         MeshVertex[] vertices = [
             new MeshVertex()
@@ -133,11 +136,120 @@ internal class Program
 
         var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
 
-        var geometryRenderer = new GeometryRenderer(renderDevice);
-        var lightRenderer = new LightRenderer(renderDevice.Pipeline);
-        var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer);
+        MeshVertex[] cubeVertices = {
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2( -1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2( -1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2( -1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2( -1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2( -1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2( -1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2(  1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2(  1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2(  1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2(  1.0f,  0.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f, -1.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f, -1.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f, -1.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f, -1.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f, -1.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f, -1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f, -1.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  1.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f , 1.0f), TextureCoordinate = new Vector2(  0.0f,  1.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  1.0f)},
+            new MeshVertex() { Position = new Vector3( 1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  1.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f, -1.0f), TextureCoordinate = new Vector2(  0.0f,  1.0f)},
+            new MeshVertex() { Position = new Vector3(-1.0f,  1.0f,  1.0f), TextureCoordinate = new Vector2(  0.0f,  1.0f)},
+        };
 
-        var modelResource = ResourceManager.Instance.LoadResource<ModelResource>("Resources\\Models\\Dabrovic\\Sponza.obj");
+        var cubeIndices = new List<int>();
+
+        for (var i = 0; i < cubeIndices.Count; i++)
+        {
+            cubeIndices.Add(i);
+        }
+
+        var cubeMesh = new Mesh(renderDevice.Factory, cubeVertices, [.. cubeIndices]);
+
+        const int ShadowResolution = 1024;
+
+        int fbo = GL.GenFramebuffer();
+        int tex = GL.GenTexture();
+
+        GL.BindTexture(TextureTarget.Texture2D, tex);
+        GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.DepthComponent, ShadowResolution, ShadowResolution, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+
+        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
+        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
+        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.Repeat);
+        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.Repeat);
+
+        GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
+        GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, tex, 0);
+
+        GL.DrawBuffer(DrawBufferMode.None);
+        GL.ReadBuffer(ReadBufferMode.None);
+
+        GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+
+        var lightPos = new Vector3(-10000.0f, 400.0f, -10000.0f);
+
+        void Render()
+        {
+            var model = Matrix4x4.CreateTranslation(Vector3.Zero);
+
+            renderDevice.Pipeline.SetUniform("u_transform", model);
+            renderDevice.Pipeline.SetUniform("model", model);
+
+            material.Bind(renderDevice.Pipeline);
+            mesh.Bind(renderDevice.InputAssembler);
+            mesh.Draw(renderDevice);
+
+            model = Matrix4x4.CreateTranslation(0, 5, 0) * Matrix4x4.CreateRotationX(MathHelper.DegreesToRadians(45.0f)) * Matrix4x4.CreateScale(0.25f);
+
+            renderDevice.Pipeline.SetUniform("u_transform", model);
+            renderDevice.Pipeline.SetUniform("model", model);
+
+            mesh.Draw(renderDevice);
+        }
+
+        var binder = new TextureBinder(renderDevice.Pipeline);
+        var batcher = new SpriteBatcher(renderDevice.InputAssembler);
+        var drawer = new SpriteDrawer(renderDevice, batcher, binder, window.ClientSize.Width, window.ClientSize.Height);
+
+        var depthShader = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\depth.fesp");
+        var standardShader = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\standard-geometry.fesp");
+        var debugShader = ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\debug.fesp");
+
+        GL.Enable(EnableCap.DepthTest);
+
+        MeshVertex[] quadVertices =
+        {
+            new MeshVertex() { Position = new Vector3( 0.5f,  0.5f, 0.0f), TextureCoordinate = new Vector2(   1.0f, 1.0f) },   // top right
+            new MeshVertex() { Position = new Vector3( 0.5f, -0.5f, 0.0f), TextureCoordinate = new Vector2(   1.0f, 0.0f) },   // bottom right
+            new MeshVertex() { Position = new Vector3(-0.5f, -0.5f, 0.0f), TextureCoordinate = new Vector2(   0.0f, 0.0f) },   // bottom left
+            new MeshVertex() { Position = new Vector3(-0.5f,  0.5f, 0.0f), TextureCoordinate = new Vector2(   0.0f, 1.0f) },   // top left
+        };
+
+        int[] quadIndices =
+        {
+            0, 1, 3, 1, 2, 3,
+        };
+
+        var quadMesh = new Mesh(renderDevice.Factory, quadVertices, quadIndices, false, false);
 
         while (isRunning)
         {
@@ -153,15 +265,43 @@ internal class Program
             keyboard.Update();
             mouse.Update();
 
-            foreach (var model in modelResource.Models)
-            {
-                renderingEngine.Enqueue(model, new Transform()
-                {
-                    Scale = new Vector3(5),
-                });
-            }
+            GL.ClearColor(Color.Blue);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            renderingEngine.Render(camera);
+            var lightProjection = camera.Projection; //Matrix4x4.CreateOrthographicOffCenter(-100000.0f, 100000.0f, -100000.0f, 100000.0f, 1.0f, 7.5f);
+            var lightView = camera.Transform.CreateViewMatrix(Vector3.UnitY);
+            var lightSpace = lightProjection * lightView;
+
+            renderDevice.Pipeline.SetShaderProgram(depthShader);
+            renderDevice.Pipeline.SetUniform("lightSpaceMatrix", lightSpace);
+
+            GL.Viewport(0, 0, ShadowResolution, ShadowResolution);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
+            GL.Clear(ClearBufferMask.DepthBufferBit);
+
+            Render();
+
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            GL.ClearColor(Color.Black);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Viewport(0, 0, window.ClientSize.Width, window.ClientSize.Height);
+
+            renderDevice.Pipeline.SetShaderProgram(standardShader);
+
+            renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
+            renderDevice.Pipeline.SetUniform("u_view", camera.View);
+
+            Render();
+
+            renderDevice.Pipeline.SetShaderProgram(debugShader);
+
+            renderDevice.Pipeline.SetUniform("depthMap", 0);
+
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
+
+            quadMesh.Bind(renderDevice.InputAssembler);
+            quadMesh.Draw(renderDevice);
 
             renderContext.SwapBuffers();
             window.ProcessEvents();

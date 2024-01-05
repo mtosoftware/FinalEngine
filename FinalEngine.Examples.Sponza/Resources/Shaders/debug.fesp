@@ -1,0 +1,4 @@
+{
+    "Vertex": "debug.vert",
+    "Fragment": "debug.frag"
+}

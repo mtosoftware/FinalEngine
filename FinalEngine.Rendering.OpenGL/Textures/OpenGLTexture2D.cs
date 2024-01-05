@@ -20,6 +20,15 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
 
     private int rendererID;
 
+    private bool test = false;
+
+    public OpenGLTexture2D(IOpenGLInvoker invoker, int rendererID)
+    {
+        test = true;
+        this.invoker = invoker;
+        this.rendererID = rendererID;
+    }
+
     public OpenGLTexture2D(
         IOpenGLInvoker invoker,
         IEnumMapper mapper,
