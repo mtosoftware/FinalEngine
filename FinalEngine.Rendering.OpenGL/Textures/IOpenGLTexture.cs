@@ -9,6 +9,8 @@ using OpenTK.Graphics.OpenGL4;
 
 public interface IOpenGLTexture : ITexture
 {
+    // TODO : delete? 
+    int RenderId { get; }
     void Attach(FramebufferAttachment type, int framebuffer);
 
     void Bind(int unit);

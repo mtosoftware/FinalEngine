@@ -81,6 +81,14 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
 
     protected bool IsDisposed { get; private set; }
 
+    public int RenderId
+    {
+        get
+        {
+            return this.rendererID;
+        }
+    }
+
     public void Attach(FramebufferAttachment type, int framebuffer)
     {
         ObjectDisposedException.ThrowIf(this.IsDisposed, this);

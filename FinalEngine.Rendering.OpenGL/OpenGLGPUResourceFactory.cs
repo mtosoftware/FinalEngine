@@ -17,6 +17,7 @@ using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
 
 public class OpenGLGPUResourceFactory : IGPUResourceFactory
@@ -84,6 +85,12 @@ public class OpenGLGPUResourceFactory : IGPUResourceFactory
         return result;
     }
 
+    public ICubeTexture CreateCubeTexture(CubeTextureDescription description, ITexture2D right, ITexture2D left, ITexture2D top,
+        ITexture2D bottom, ITexture2D back, ITexture2D front, SizedFormat internalFormat = SizedFormat.Rgba8)
+    {
+        var cubeFaces = new List<ITexture2D>(){right,left,top,bottom,front,back};
+        return new OpenglCubeTexture(this.invoker, this.mapper, description, internalFormat, cubeFaces.Cast<IOpenGLTexture>().ToArray());
+    }
     public IVertexBuffer CreateVertexBuffer<T>(BufferUsageType type, IReadOnlyCollection<T> data, int sizeInBytes, int stride)
         where T : struct
     {
