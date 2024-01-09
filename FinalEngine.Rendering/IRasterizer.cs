@@ -8,6 +8,8 @@ using System.Drawing;
 
 public interface IRasterizer
 {
+    RasterStateDescription GetRasterState();
+
     Rectangle GetViewport();
 
     void SetRasterState(RasterStateDescription description);

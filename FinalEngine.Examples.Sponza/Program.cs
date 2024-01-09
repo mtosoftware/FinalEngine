@@ -18,7 +18,6 @@ using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Primitives;
 using FinalEngine.Rendering.Renderers;
-using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -76,7 +75,7 @@ internal class Program
         renderPipeline.Initialize();
 
         ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice));
-        ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
+        ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(ResourceManager.Instance, renderDevice, fileSystem));
 
         renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
@@ -128,9 +127,7 @@ internal class Program
 
         var material = new Material()
         {
-            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_diffuse.tga"),
-            NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_normal.tga"),
-            SpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_specular.tga"),
+            Shininess = 16.0f,
         };
 
         bool isRunning = true;
@@ -146,8 +143,8 @@ internal class Program
         var light = new Light()
         {
             Type = LightType.Directional,
-            Intensity = 0.4f,
-            Color = new Vector3(0.6f, 0.4f, 0.2f),
+            Intensity = 0.5f,
+            Color = new Vector3(1f),
             Transform = new Transform()
             {
                 Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f)),

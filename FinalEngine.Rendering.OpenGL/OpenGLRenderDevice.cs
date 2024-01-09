@@ -104,6 +104,7 @@ public class OpenGLRenderDevice : IRenderDevice
             { SizedFormat.Rg8, SizedInternalFormat.Rg8 },
             { SizedFormat.Rgb8, All.Rgb8 },
             { SizedFormat.Rgba8, SizedInternalFormat.Rgba8 },
+            { SizedFormat.Srgba, SizedInternalFormat.Srgb8Alpha8 },
             { BufferUsageType.Static, BufferUsageHint.StaticDraw },
             { BufferUsageType.Dynamic, BufferUsageHint.DynamicDraw },
         };
@@ -138,5 +139,16 @@ public class OpenGLRenderDevice : IRenderDevice
     public void DrawIndices(PrimitiveTopology topology, int first, int count)
     {
         this.invoker.DrawElements(this.mapper.Forward<PrimitiveType>(topology), count, DrawElementsType.UnsignedInt, first);
+    }
+
+    public void Initialize()
+    {
+        this.Rasterizer.SetRasterState(default);
+
+        this.OutputMerger.SetStencilState(default);
+        this.OutputMerger.SetDepthState(default);
+        this.OutputMerger.SetBlendState(default);
+
+        this.Pipeline.SetFrameBuffer(null);
     }
 }

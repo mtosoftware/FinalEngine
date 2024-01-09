@@ -6,52 +6,56 @@ namespace FinalEngine.Rendering.OpenGL.Buffers;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Textures;
-using FinalEngine.Rendering.Textures;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer, IDisposable
+public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
 {
     private readonly IOpenGLInvoker invoker;
 
     private int rendererID;
 
-    public OpenGLFrameBuffer(IOpenGLInvoker invoker, IReadOnlyList<IOpenGLTexture> colorTargets, IOpenGLTexture? depthTarget)
+    public OpenGLFrameBuffer(IOpenGLInvoker invoker, IReadOnlyList<IOpenGLTexture>? colorTargets, IOpenGLTexture? depthTarget)
     {
-        ArgumentNullException.ThrowIfNull(colorTargets, nameof(colorTargets));
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
         int maximumColorAttachments = this.invoker.GetInteger(GetPName.MaxColorAttachments);
+        int colorAttachmentCount = colorTargets?.Count ?? 0;
 
-        if (colorTargets.Count > maximumColorAttachments)
+        if (colorAttachmentCount > maximumColorAttachments)
         {
             throw new FrameBufferTargetException($"The number of {nameof(colorTargets)} should not exceed the maximum number of color attachmemts: '{maximumColorAttachments}'.");
         }
 
-        this.DepthTarget = (ITexture2D?)depthTarget;
-        this.ColorTargets = colorTargets.Cast<ITexture2D>();
         this.rendererID = invoker.CreateFramebuffer();
 
-        int attachmentCount = colorTargets.Count;
-
-        for (int i = 0; i < attachmentCount; i++)
+        for (int i = 0; i < colorAttachmentCount; i++)
         {
-            colorTargets[i].Attach(FramebufferAttachment.ColorAttachment0 + i, this.rendererID);
+            colorTargets![i].Attach(FramebufferAttachment.ColorAttachment0 + i, this.rendererID);
         }
 
-        Span<DrawBuffersEnum> bufs = stackalloc DrawBuffersEnum[attachmentCount];
-
-        for (int i = 0; i < attachmentCount; i++)
+        if (colorAttachmentCount > 0)
         {
-            bufs[i] = DrawBuffersEnum.ColorAttachment0 + i;
+            Span<DrawBuffersEnum> bufs = stackalloc DrawBuffersEnum[colorAttachmentCount];
+
+            for (int i = 0; i < colorAttachmentCount; i++)
+            {
+                bufs[i] = DrawBuffersEnum.ColorAttachment0 + i;
+            }
+
+            this.invoker.NamedFramebufferDrawBuffers(this.rendererID, colorAttachmentCount, ref bufs[0]);
         }
 
-        this.invoker.NamedFramebufferDrawBuffers(this.rendererID, attachmentCount, ref bufs[0]);
         depthTarget?.Attach(FramebufferAttachment.DepthStencilAttachment, this.rendererID);
+
+        if (colorAttachmentCount <= 0)
+        {
+            this.invoker.NamedFramebufferDrawBuffer(this.rendererID, DrawBufferMode.None);
+            this.invoker.NamedFramebufferReadBuffer(this.rendererID, ReadBufferMode.None);
+        }
 
         var status = invoker.CheckNamedFramebufferStatus(this.rendererID, FramebufferTarget.Framebuffer);
 
@@ -65,10 +69,6 @@ public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer, IDisposable
     {
         this.Dispose(false);
     }
-
-    public IEnumerable<ITexture2D> ColorTargets { get; }
-
-    public ITexture2D? DepthTarget { get; }
 
     protected bool IsDisposed { get; private set; }
 

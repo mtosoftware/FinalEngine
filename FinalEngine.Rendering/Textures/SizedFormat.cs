@@ -13,4 +13,6 @@ public enum SizedFormat
     Rgb8,
 
     Rgba8,
+
+    Srgba,
 }

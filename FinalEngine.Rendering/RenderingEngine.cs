@@ -45,6 +45,8 @@ public sealed class RenderingEngine : IRenderingEngine
             Type = LightType.Ambient,
             Intensity = 0.1f,
         };
+
+        this.renderDevice.Initialize();
     }
 
     private IShaderProgram GeometryProgram
