@@ -91,7 +91,7 @@ public sealed class LightRenderer : ILightRenderer
     private void RenderDirectionalLight(Light light)
     {
         this.pipeline.SetShaderProgram(this.DirectionalProgram);
-        this.pipeline.SetUniform("u_light.direction", light.Direction);
+        this.pipeline.SetUniform("u_light.direction", light.Transform.Forward);
     }
 
     private void RenderPointLight(Light light)
@@ -99,7 +99,7 @@ public sealed class LightRenderer : ILightRenderer
         this.pipeline.SetShaderProgram(this.PointProgram);
 
         this.RenderAttenuation(light);
-        this.pipeline.SetUniform("u_light.position", light.Position);
+        this.pipeline.SetUniform("u_light.position", light.Transform.Position);
     }
 
     private void RenderSpotLight(Light light)
@@ -108,8 +108,8 @@ public sealed class LightRenderer : ILightRenderer
 
         this.RenderAttenuation(light);
 
-        this.pipeline.SetUniform("u_light.position", light.Position);
-        this.pipeline.SetUniform("u_light.direction", light.Direction);
+        this.pipeline.SetUniform("u_light.position", light.Transform.Position);
+        this.pipeline.SetUniform("u_light.direction", light.Transform.Forward);
         this.pipeline.SetUniform("u_light.radius", light.Radius);
         this.pipeline.SetUniform("u_light.outerRadius", light.OuterRadius);
     }

@@ -7,6 +7,7 @@ namespace FinalEngine.Rendering.Lighting;
 using System;
 using System.Numerics;
 using FinalEngine.Maths;
+using FinalEngine.Rendering.Core;
 
 public enum LightType
 {
@@ -29,22 +30,20 @@ public class Light
         this.Attenuation = new Attenuation();
         this.Radius = MathF.Cos(MathHelper.DegreesToRadians(12.5f));
         this.OuterRadius = MathF.Cos(MathHelper.DegreesToRadians(17.5f));
-        this.Direction = new Vector3(1, 0, 1);
+        this.Transform = new Transform();
     }
 
     public Attenuation Attenuation { get; set; }
 
     public Vector3 Color { get; set; }
 
-    public Vector3 Direction { get; set; }
-
     public float Intensity { get; set; }
 
     public float OuterRadius { get; set; }
 
-    public Vector3 Position { get; set; }
-
     public float Radius { get; set; }
+
+    public Transform Transform { get; set; }
 
     public LightType Type { get; set; }
 }

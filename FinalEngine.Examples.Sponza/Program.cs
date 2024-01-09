@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Numerics;
 using FinalEngine.Examples.Sponza;
-using FinalEngine.Examples.Sponza.Loaders;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
+using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
@@ -18,9 +18,11 @@ using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Primitives;
 using FinalEngine.Rendering.Renderers;
+using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
+using ImGuiNET;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -76,7 +78,6 @@ internal class Program
         ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice.Factory));
         ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(ResourceManager.Instance, renderDevice, fileSystem));
-        ResourceManager.Instance.RegisterLoader(new ModelResourceLoader(renderDevice, fileSystem));
 
         renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
         renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
@@ -127,7 +128,9 @@ internal class Program
 
         var material = new Material()
         {
-            Shininess = 16.0f,
+            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_diffuse.tga"),
+            NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_normal.tga"),
+            SpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_specular.tga"),
         };
 
         bool isRunning = true;
@@ -138,7 +141,18 @@ internal class Program
         var lightRenderer = new LightRenderer(renderDevice.Pipeline);
         var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer);
 
-        var modelResource = ResourceManager.Instance.LoadResource<ModelResource>("Resources\\Models\\Dabrovic\\Sponza.obj");
+        var controller = new ImGuiController(window.ClientSize.Width, window.ClientSize.Height);
+
+        var light = new Light()
+        {
+            Type = LightType.Directional,
+            Intensity = 0.4f,
+            Color = new Vector3(0.6f, 0.4f, 0.2f),
+            Transform = new Transform()
+            {
+                Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f)),
+            },
+        };
 
         while (isRunning)
         {
@@ -151,26 +165,24 @@ internal class Program
 
             camera.Update(renderDevice.Pipeline, keyboard, mouse);
 
+            controller.Update(keyboard, mouse, GameTime.Delta);
+
             keyboard.Update();
             mouse.Update();
 
-            foreach (var model in modelResource.Models)
+            renderingEngine.Enqueue(new Model()
             {
-                renderingEngine.Enqueue(model, new Transform()
-                {
-                    Scale = new Vector3(5),
-                });
-            }
+                Mesh = mesh,
+                Material = material,
+            }, new Transform());
 
-            renderingEngine.Enqueue(new Light()
-            {
-                Type = LightType.Directional,
-                Direction = new Vector3(-1),
-                Intensity = 0.4f,
-                Position = new Vector3(5),
-            });
+            renderingEngine.Enqueue(light);
 
             renderingEngine.Render(camera);
+
+            ImGui.End();
+
+            controller.Render();
 
             renderContext.SwapBuffers();
             window.ProcessEvents();
