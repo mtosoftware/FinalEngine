@@ -4,9 +4,10 @@
 
 namespace FinalEngine.Rendering.Textures;
 
+using System;
 using FinalEngine.Resources;
 
-public interface ITexture : IResource
+public interface ITexture : IResource, IDisposable
 {
     PixelFormat Format { get; }
 

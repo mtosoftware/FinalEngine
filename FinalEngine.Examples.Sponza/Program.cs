@@ -18,6 +18,7 @@ using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.Primitives;
 using FinalEngine.Rendering.Renderers;
+using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
@@ -123,7 +124,14 @@ internal class Program
             3
         ];
 
-        var mesh = new Mesh(renderDevice.Factory, vertices, indices, true);
+        var mesh = new Mesh<MeshVertex>(
+            renderDevice.Factory,
+            vertices,
+            indices,
+            MeshVertex.InputElements,
+            MeshVertex.SizeInBytes,
+            MeshVertex.CalculateNormals,
+            MeshVertex.CalculateTangents);
 
         var material = new Material()
         {
@@ -138,6 +146,30 @@ internal class Program
         var lightRenderer = new LightRenderer(renderDevice.Pipeline);
         var skyboxRenderer = new SkyboxRenderer(renderDevice);
         var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer, skyboxRenderer);
+
+        var right = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_right.png");
+        var left = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_left.png");
+        var top = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_top.png");
+        var bottom = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_bottom.png");
+        var front = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_front.png");
+        var back = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_back.png");
+
+        var cubeTexture = renderDevice.Factory.CreateCubeTexture(new TextureCubeDescription()
+        {
+            Width = right.Description.Width,
+            Height = right.Description.Height,
+            WrapR = TextureWrapMode.Clamp,
+            WrapS = TextureWrapMode.Clamp,
+            WrapT = TextureWrapMode.Clamp,
+        },
+           right,
+           left,
+           top,
+           bottom,
+           back,
+           front);
+
+        renderingEngine.SetSkybox(cubeTexture);
 
         var controller = new ImGuiController(window.ClientSize.Width, window.ClientSize.Height);
 

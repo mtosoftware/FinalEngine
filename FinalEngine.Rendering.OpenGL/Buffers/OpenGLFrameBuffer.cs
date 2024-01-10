@@ -11,7 +11,6 @@ using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Textures;
 using OpenTK.Graphics.OpenGL4;
-using PixelFormat = Rendering.Textures.PixelFormat;
 
 public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
 {

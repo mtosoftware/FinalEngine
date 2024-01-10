@@ -8,14 +8,15 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Core;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Renderers;
-using FinalEngine.Resources;
 using FinalEngine.Rendering.Textures;
+using FinalEngine.Resources;
+
+//// TODO: Consider storing caches lights and geometry in ILightRenderer and IGeometryRenderer and just providing properties to retrieve read only collections for them.
 
 public sealed class RenderingEngine : IRenderingEngine
 {
@@ -24,7 +25,6 @@ public sealed class RenderingEngine : IRenderingEngine
     private readonly IGeometryRenderer geometryRenderer;
 
     private readonly ILightRenderer lightRenderer;
-    private readonly ISkyboxRenderer skyboxRenderer;
 
     private readonly Dictionary<LightType, IEnumerable<Light>> lightTypeToLightMap;
 
@@ -32,16 +32,18 @@ public sealed class RenderingEngine : IRenderingEngine
 
     private readonly IRenderDevice renderDevice;
 
+    private readonly ISkyboxRenderer skyboxRenderer;
+
     private IShaderProgram? geometryProgram;
 
-    private ICubeTexture cubeTexture;
+    private ITextureCube? skyboxTexture;
 
-    public RenderingEngine(IRenderDevice renderDevice, IGeometryRenderer geometryRenderer, ILightRenderer lightRenderer,ISkyboxRenderer skyboxRenderer)
+    public RenderingEngine(IRenderDevice renderDevice, IGeometryRenderer geometryRenderer, ILightRenderer lightRenderer, ISkyboxRenderer skyboxRenderer)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.geometryRenderer = geometryRenderer ?? throw new ArgumentNullException(nameof(geometryRenderer));
         this.lightRenderer = lightRenderer ?? throw new ArgumentNullException(nameof(lightRenderer));
-        this.skyboxRenderer = skyboxRenderer;
+        this.skyboxRenderer = skyboxRenderer ?? throw new ArgumentNullException(nameof(skyboxRenderer));
 
         this.modelToTransformationMap = [];
         this.lightTypeToLightMap = [];
@@ -51,17 +53,6 @@ public sealed class RenderingEngine : IRenderingEngine
             Type = LightType.Ambient,
             Intensity = 0.1f,
         };
-
-        // Todo input from other project
-        var right = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/right.png");
-        var left = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/left.png");
-        var top = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/top.png");
-        var bottom = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/bottom.png");
-        var front = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/front.png");
-        var back = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/back.png");
-        this.cubeTexture =
-            renderDevice.Factory.CreateCubeTexture(new CubeTextureDescription(){Width = right.Description.Width, Height = right.Description.Height, WrapR = TextureWrapMode.Clamp,WrapS = TextureWrapMode.Clamp, WrapT = TextureWrapMode.Clamp },
-                right, left, top, bottom, back, front);
 
         this.renderDevice.Initialize();
     }
@@ -107,8 +98,6 @@ public sealed class RenderingEngine : IRenderingEngine
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
         {
             ReadEnabled = true,
-            WriteEnabled = true,
-            ComparisonMode = ComparisonMode.Less
         });
 
         this.renderDevice.Rasterizer.SetRasterState(new RasterStateDescription()
@@ -144,13 +133,16 @@ public sealed class RenderingEngine : IRenderingEngine
                     this.PrepareLightingPass();
                     this.lightRenderer.Render(light);
                     this.RenderScene(camera);
+                    this.FinalizeLightingPass();
                 }
             }
-
-            this.FinalizeLightingPass();
         }
 
-        this.skyboxRenderer.Render(this.cubeTexture, camera);
+        if (this.skyboxTexture != null)
+        {
+            this.skyboxRenderer.Render(this.skyboxTexture, camera);
+        }
+
         this.lightTypeToLightMap.Clear();
         this.modelToTransformationMap.Clear();
     }
@@ -159,6 +151,11 @@ public sealed class RenderingEngine : IRenderingEngine
     {
         this.ambientLight.Color = color;
         this.ambientLight.Intensity = intensity;
+    }
+
+    public void SetSkybox(ITextureCube? skyboxTexture)
+    {
+        this.skyboxTexture = skyboxTexture;
     }
 
     private void FinalizeLightingPass()

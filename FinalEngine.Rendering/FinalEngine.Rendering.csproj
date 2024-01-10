@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Skybox\**" />
+    <EmbeddedResource Remove="Skybox\**" />
+    <None Remove="Skybox\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\Styling\StyleCop\Other\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
@@ -73,13 +79,13 @@
     <None Update="Resources\Shaders\Lighting\lighting.point.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\skybox.fesp">
+    <None Update="Resources\Shaders\Skybox\standard-skybox.fesp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\skybox.frag">
+    <None Update="Resources\Shaders\Skybox\standard-skybox.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\skybox.vert">
+    <None Update="Resources\Shaders\Skybox\standard-skybox.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Shaders\Batching\sprite-geometry.fesp">
@@ -109,27 +115,23 @@
     <None Update="Resources\Textures\default_specular.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Textures\skybox\back.png">
+    <None Update="Resources\Textures\Skybox\default_back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Textures\skybox\bottom.png">
+    <None Update="Resources\Textures\Skybox\default_bottom.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Textures\skybox\front.png">
+    <None Update="Resources\Textures\Skybox\default_front.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Textures\skybox\left.png">
+    <None Update="Resources\Textures\Skybox\default_left.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Textures\skybox\right.png">
+    <None Update="Resources\Textures\Skybox\default_right.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Textures\skybox\top.png">
+    <None Update="Resources\Textures\Skybox\default_top.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Skybox\" />
   </ItemGroup>
 </Project>

@@ -53,7 +53,7 @@ public struct RasterStateDescription : IEquatable<RasterStateDescription>
 
     public bool GammaCorrectionEnabled
     {
-        readonly get { return this.gammaCorrectionEnabled ?? true; }
+        readonly get { return this.gammaCorrectionEnabled ?? false; }
         set { this.gammaCorrectionEnabled = value; }
     }
 

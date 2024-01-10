@@ -4,8 +4,9 @@
 
 namespace FinalEngine.Rendering.Pipeline;
 
+using System;
 using FinalEngine.Resources;
 
-public interface IShaderProgram : IResource
+public interface IShaderProgram : IResource, IDisposable
 {
 }

@@ -241,12 +241,6 @@ public class OpenGLInvoker : IOpenGLInvoker
         return GL.GenVertexArray();
     }
 
-    public void GetActiveUniform(int program, int index, int bufSize, out int length, out int size,
-        out ActiveUniformType type, out string name)
-    {
-        GL.GetActiveUniform(program, index, bufSize, out length, out size, out type, out name);
-    }
-
     public void GetInteger(GetIndexedPName target, int index, int[] data)
     {
         GL.GetInteger(target, index, data);
@@ -358,14 +352,13 @@ public class OpenGLInvoker : IOpenGLInvoker
         GL.TextureStorage2D(texture, levels, internalFormat, width, height);
     }
 
-    public void TextureSubImage2D(int texture, int level, int xoffset, int yoffset, int width, int height,
-        PixelFormat format, PixelType type, IntPtr pixels)
+    public void TextureSubImage2D(int texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, IntPtr pixels)
     {
         GL.TextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, type, pixels);
     }
 
-
-    public void CopyImageSubData(int srcName,
+    public void CopyImageSubData(
+        int srcName,
         ImageTarget srcTarget,
         int srcLevel,
         int srcX,
@@ -381,8 +374,7 @@ public class OpenGLInvoker : IOpenGLInvoker
         int srcHeight,
         int srcDepth)
     {
-        GL.CopyImageSubData(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY,
-            dstZ, srcWidth, srcHeight, srcDepth);
+        GL.CopyImageSubData(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
     }
 
     public void Uniform1(int location, int x)
@@ -435,8 +427,7 @@ public class OpenGLInvoker : IOpenGLInvoker
         GL.VertexAttribBinding(attribindex, bindingindex);
     }
 
-    public void VertexAttribFormat(int attribindex, int size, VertexAttribType type, bool normalized,
-        int relativeoffset)
+    public void VertexAttribFormat(int attribindex, int size, VertexAttribType type, bool normalized, int relativeoffset)
     {
         GL.VertexAttribFormat(attribindex, size, type, normalized, relativeoffset);
     }

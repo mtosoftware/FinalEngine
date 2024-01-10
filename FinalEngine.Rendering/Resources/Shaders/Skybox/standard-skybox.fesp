@@ -1,0 +1,4 @@
+{
+    "Vertex": "standard-skybox.vert",
+    "Fragment": "standard-skybox.frag"
+}

@@ -5,5 +5,5 @@ using Textures;
 
 public interface ISkyboxRenderer
 {
-    void Render(ICubeTexture texture, ICamera camera);
+    void Render(ITextureCube texture, ICamera camera);
 }

@@ -48,6 +48,23 @@ public interface IOpenGLInvoker
 
     void CompileShader(int shader);
 
+    void CopyImageSubData(
+        int srcName,
+        ImageTarget srcTarget,
+        int srcLevel,
+        int srcX,
+        int srcY,
+        int srcZ,
+        int dstName,
+        ImageTarget dstTarget,
+        int dstLevel,
+        int dstX,
+        int dstY,
+        int dstZ,
+        int srcWidth,
+        int srcHeight,
+        int srcDepth);
+
     int CreateBuffer();
 
     int CreateFramebuffer();
@@ -93,8 +110,6 @@ public interface IOpenGLInvoker
     void GenerateTextureMipmap(int texture);
 
     int GenVertexArray();
-
-    void GetActiveUniform(int program, int index, int bufSize, out int length, out int size, out ActiveUniformType type, out string name);
 
     void GetInteger(GetIndexedPName target, int index, int[] data);
 
@@ -147,22 +162,6 @@ public interface IOpenGLInvoker
     void TextureStorage2D(int texture, int levels, SizedInternalFormat internalFormat, int width, int height);
 
     void TextureSubImage2D(int texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, IntPtr pixels);
-
-    void CopyImageSubData(int srcName,
-        ImageTarget srcTarget,
-        int srcLevel,
-        int srcX,
-        int srcY,
-        int srcZ,
-        int dstName,
-        ImageTarget dstTarget,
-        int dstLevel,
-        int dstX,
-        int dstY,
-        int dstZ,
-        int srcWidth,
-        int srcHeight,
-        int srcDepth);
 
     void Uniform1(int location, int x);
 

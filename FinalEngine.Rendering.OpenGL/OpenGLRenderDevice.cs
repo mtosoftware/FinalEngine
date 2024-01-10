@@ -105,7 +105,7 @@ public class OpenGLRenderDevice : IRenderDevice
             { SizedFormat.Rg8, SizedInternalFormat.Rg8 },
             { SizedFormat.Rgb8, All.Rgb8 },
             { SizedFormat.Rgba8, SizedInternalFormat.Rgba8 },
-            { SizedFormat.Depth, SizedInternalFormat.DepthComponent32f },
+            { SizedFormat.Depth, SizedInternalFormat.DepthComponent16 },
             { SizedFormat.Srgba, SizedInternalFormat.Srgb8Alpha8 },
             { BufferUsageType.Static, BufferUsageHint.StaticDraw },
             { BufferUsageType.Dynamic, BufferUsageHint.DynamicDraw },

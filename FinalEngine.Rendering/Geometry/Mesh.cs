@@ -5,11 +5,11 @@
 namespace FinalEngine.Rendering.Geometry;
 
 using System;
-using System.Numerics;
+using System.Collections.Generic;
 using FinalEngine.Rendering.Buffers;
-using FinalEngine.Rendering.Primitives;
 
-public sealed class Mesh : IMesh
+public sealed class Mesh<TVertex> : IMesh
+    where TVertex : struct
 {
     private readonly IInputLayout inputLayout;
 
@@ -19,40 +19,45 @@ public sealed class Mesh : IMesh
 
     private IVertexBuffer? vertexBuffer;
 
-    public Mesh(IGPUResourceFactory factory, MeshVertex[] vertices, int[] indices, bool calculateNormals = true, bool calculateTangents = true)
+    public Mesh(
+        IGPUResourceFactory factory,
+        TVertex[] vertices,
+        int[] indices,
+        IReadOnlyCollection<InputElement> inputElements,
+        int vertexStride,
+        CalculateNormals? calculateNormals = null,
+        CalculateTangents? calculateTangents = null)
     {
         ArgumentNullException.ThrowIfNull(factory, nameof(factory));
         ArgumentNullException.ThrowIfNull(vertices, nameof(vertices));
         ArgumentNullException.ThrowIfNull(indices, nameof(indices));
+        ArgumentNullException.ThrowIfNull(inputElements, nameof(inputElements));
 
-        if (calculateNormals)
-        {
-            CalculateNormals(vertices, indices);
-        }
-
-        if (calculateTangents)
-        {
-            CalculateTangents(vertices, indices);
-        }
+        calculateNormals?.Invoke(vertices, indices);
+        calculateTangents?.Invoke(vertices, indices);
 
         this.vertexBuffer = factory.CreateVertexBuffer(
             BufferUsageType.Static,
             vertices,
-            vertices.Length * MeshVertex.SizeInBytes,
-            MeshVertex.SizeInBytes);
+            vertices.Length * vertexStride,
+            vertexStride);
 
         this.indexBuffer = factory.CreateIndexBuffer(
             BufferUsageType.Static,
             indices,
             indices.Length * sizeof(int));
 
-        this.inputLayout = factory.CreateInputLayout(MeshVertex.InputElements);
+        this.inputLayout = factory.CreateInputLayout(inputElements);
     }
 
     ~Mesh()
     {
         this.Dispose(false);
     }
+
+    public delegate void CalculateNormals(TVertex[] vertices, int[] indices);
+
+    public delegate void CalculateTangents(TVertex[] vertices, int[] indices);
 
     public void Bind(IInputAssembler inputAssembler)
     {
@@ -76,55 +81,6 @@ public sealed class Mesh : IMesh
         ArgumentNullException.ThrowIfNull(renderDevice, nameof(renderDevice));
 
         renderDevice.DrawIndices(PrimitiveTopology.Triangle, 0, this.indexBuffer!.Length);
-    }
-
-    private static void CalculateNormals(MeshVertex[] vertices, int[] indices)
-    {
-        for (int i = 0; i < indices.Length; i += 3)
-        {
-            int i0 = indices[i];
-            int i1 = indices[i + 1];
-            int i2 = indices[i + 2];
-
-            var v1 = vertices[i1].Position - vertices[i0].Position;
-            var v2 = vertices[i2].Position - vertices[i0].Position;
-
-            var normal = Vector3.Normalize(Vector3.Cross(v1, v2));
-
-            vertices[i0].Normal = normal;
-            vertices[i1].Normal = normal;
-            vertices[i2].Normal = normal;
-        }
-    }
-
-    private static void CalculateTangents(MeshVertex[] vertices, int[] indices)
-    {
-        for (int i = 0; i < indices.Length; i += 3)
-        {
-            int i0 = indices[i];
-            int i1 = indices[i + 1];
-            int i2 = indices[i + 2];
-
-            var edge1 = vertices[i1].Position - vertices[i0].Position;
-            var edge2 = vertices[i2].Position - vertices[i0].Position;
-
-            float deltaU1 = vertices[i1].TextureCoordinate.X - vertices[i0].TextureCoordinate.X;
-            float deltaU2 = vertices[i2].TextureCoordinate.X - vertices[i0].TextureCoordinate.X;
-            float deltaV1 = vertices[i1].TextureCoordinate.Y - vertices[i0].TextureCoordinate.Y;
-            float deltaV2 = vertices[i2].TextureCoordinate.Y - vertices[i0].TextureCoordinate.Y;
-
-            float dividend = (deltaU1 * deltaV2) - (deltaU2 * deltaV1);
-            float f = dividend == 0.0f ? 0.0f : 1.0f / dividend;
-
-            var tangent = new Vector3(
-                f * ((deltaV2 * edge1.X) - (deltaV1 * edge2.X)),
-                f * ((deltaV2 * edge1.Y) - (deltaV1 * edge2.Y)),
-                f * ((deltaV2 * edge1.Z) - (deltaV1 * edge2.Z)));
-
-            vertices[i0].Tangent = tangent;
-            vertices[i1].Tangent = tangent;
-            vertices[i2].Tangent = tangent;
-        }
     }
 
     private void Dispose(bool disposing)

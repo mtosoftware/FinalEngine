@@ -9,9 +9,19 @@ using OpenTK.Graphics.OpenGL4;
 
 public interface IOpenGLTexture : ITexture
 {
-    // TODO : delete? 
-    int RenderId { get; }
     void Attach(FramebufferAttachment type, int framebuffer);
 
     void Bind(int unit);
+
+    void CopyImageSubData(
+        int srcLevel,
+        int srcX,
+        int srcY,
+        int srcZ,
+        int dstName,
+        ImageTarget dstTarget,
+        int dstLevel,
+        int dstX,
+        int dstY,
+        int dstZ);
 }

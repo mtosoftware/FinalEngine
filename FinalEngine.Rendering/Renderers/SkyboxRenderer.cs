@@ -1,96 +1,103 @@
+// <copyright file="SkyboxRenderer.cs" company="Software Antics">
+//     Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
 namespace FinalEngine.Rendering.Renderers;
+
+//// TODO: Add an issue to create a resource loader for skyboxes(can just load in a zip file of textures for now)
+//// TODO: Add an issue to explain an exception should be thrown in OpenGLTextureCube if all textures do not match - how though?
+//// TODO: Add an issue to add support to Attach function OpenGLTextureCube - this can likely be done with: NamedFramebufferTextureLayer
+//// TODO: Fix up skybox vertices and indices by removing duplicate vertices and updating the corresponding indices.
+
+using System;
 using System.Numerics;
 using FinalEngine.Rendering.Core;
-using FinalEngine.Rendering.Buffers;
+using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Pipeline;
-using FinalEngine.Resources;
+using FinalEngine.Rendering.Primitives;
 using FinalEngine.Rendering.Textures;
-using SixLabors.ImageSharp;
+using FinalEngine.Resources;
 
-public class SkyboxRenderer : ISkyboxRenderer
+public sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
 {
     private readonly IRenderDevice renderDevice;
+
+    private bool isDisposed;
+
+    private Mesh<SkyboxVertex>? mesh;
+
     private IShaderProgram? skyboxProgram;
-    private readonly IInputLayout skyboxLayout;
-    private readonly IVertexBuffer skyboxVertexBuffer;
-    private readonly IIndexBuffer skyboxIndexBuffer;
 
-    private readonly float[] skyboxVertices =
+    public SkyboxRenderer(IRenderDevice renderDevice)
     {
-        // Top
-        -1.0f, 1.0f, -1.0f,
-        1.0f, 1.0f, -1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        // Bottom                                                             
-        -1.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-        // Left                                                               
-        -1.0f, 1.0f, -1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f,
-        // Right                                                              
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, 1.0f,
-        // Back                                                               
-        1.0f, 1.0f, -1.0f,
-        -1.0f, 1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        // Front                                                              
-        -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-    };
+        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
 
-    private readonly uint[] skyboxIndices =
-    {
-        0, 1, 2, 0, 2, 3,
-        4, 5, 6, 4, 6, 7,
-        8, 9, 10, 8, 10, 11,
-        12, 13, 14, 12, 14, 15,
-        16, 17, 18, 16, 18, 19,
-        20, 21, 22, 20, 22, 23, };
+        SkyboxVertex[] vertices =
+        {
+            new () { Position = new Vector3(-1.0f, 1.0f, -1.0f) },
+            new () { Position = new Vector3(1.0f, 1.0f, -1.0f) },
+            new () { Position = new Vector3(1.0f, 1.0f, 1.0f) },
+            new () { Position = new Vector3(-1.0f, 1.0f, 1.0f) },
+            new () { Position = new Vector3(-1.0f, -1.0f, 1.0f) },
+            new () { Position = new Vector3(1.0f, -1.0f, 1.0f) },
+            new () { Position = new Vector3(1.0f, -1.0f, -1.0f) },
+            new () { Position = new Vector3(-1.0f, -1.0f, -1.0f) },
+            new () { Position = new Vector3(-1.0f, 1.0f, -1.0f) },
+            new () { Position = new Vector3(-1.0f, 1.0f, 1.0f) },
+            new () { Position = new Vector3(-1.0f, -1.0f, 1.0f) },
+            new () { Position = new Vector3(-1.0f, -1.0f, -1.0f) },
+            new () { Position = new Vector3(1.0f, 1.0f, 1.0f) },
+            new () { Position = new Vector3(1.0f, 1.0f, -1.0f) },
+            new () { Position = new Vector3(1.0f, -1.0f, -1.0f) },
+            new () { Position = new Vector3(1.0f, -1.0f, 1.0f) },
+            new () { Position = new Vector3(1.0f, 1.0f, -1.0f) },
+            new () { Position = new Vector3(-1.0f, 1.0f, -1.0f) },
+            new () { Position = new Vector3(-1.0f, -1.0f, -1.0f) },
+            new () { Position = new Vector3(1.0f, -1.0f, -1.0f) },
+            new () { Position = new Vector3(-1.0f, 1.0f, 1.0f) },
+            new () { Position = new Vector3(1.0f, 1.0f, 1.0f) },
+            new () { Position = new Vector3(1.0f, -1.0f, 1.0f) },
+            new () { Position = new Vector3(-1.0f, -1.0f, 1.0f) },
+        };
+
+        int[] indices =
+        {
+            0, 1, 2, 0, 2, 3,
+            4, 5, 6, 4, 6, 7,
+            8, 9, 10, 8, 10, 11,
+            12, 13, 14, 12, 14, 15,
+            16, 17, 18, 16, 18, 19,
+            20, 21, 22, 20, 22, 23,
+        };
+
+        this.mesh = new Mesh<SkyboxVertex>(this.renderDevice.Factory, vertices, indices, SkyboxVertex.InputElements, SkyboxVertex.SizeInBytes);
+    }
 
     private IShaderProgram SkyboxProgram
     {
-        get
-        {
-            return this.skyboxProgram ??=
-                ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\skybox.fesp");
-        }
-    }
-    public SkyboxRenderer(IRenderDevice renderDevice)
-    {
-        this.renderDevice = renderDevice;
-
-        this.skyboxLayout =
-            this.renderDevice.Factory.CreateInputLayout(new InputElement[]
-            {
-                new InputElement(0, 3, InputElementType.Float, 0)
-            });
-
-        this.skyboxVertexBuffer = this.renderDevice.Factory.CreateVertexBuffer(BufferUsageType.Static,
-            this.skyboxVertices,
-            this.skyboxVertices.Length * sizeof(float), 3 * sizeof(float));
-        this.skyboxIndexBuffer = this.renderDevice.Factory.CreateIndexBuffer(BufferUsageType.Static, this.skyboxIndices,
-            this.skyboxIndices.Length * sizeof(uint));
+        get { return this.skyboxProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\Skybox\\standard-skybox.fesp"); }
     }
 
-    public void Render(ICubeTexture texture, ICamera camera)
+    public void Dispose()
     {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    public void Render(ITextureCube texture, ICamera camera)
+    {
+        ArgumentNullException.ThrowIfNull(texture, nameof(texture));
+        ArgumentNullException.ThrowIfNull(camera, nameof(camera));
+
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
+
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
         {
             WriteEnabled = true,
             ReadEnabled = true,
-            ComparisonMode = ComparisonMode.LessEqual
+            ComparisonMode = ComparisonMode.LessEqual,
         });
+
         this.renderDevice.Rasterizer.SetRasterState(new RasterStateDescription()
         {
             CullEnabled = true,
@@ -98,17 +105,39 @@ public class SkyboxRenderer : ISkyboxRenderer
             WindingDirection = WindingDirection.CounterClockwise,
             MultiSamplingEnabled = true,
         });
+
         this.renderDevice.Pipeline.SetShaderProgram(this.SkyboxProgram);
         this.renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
 
-        var view = camera.View; // remove translation from the view matrix
+        // Remove translation from the view matrix
+        var view = camera.View;
         Matrix4x4.Decompose(view, out var scale, out var rotation, out _);
+
         var viewNoTranslation = Matrix4x4.CreateScale(scale) * Matrix4x4.CreateFromQuaternion(rotation);
+
         this.renderDevice.Pipeline.SetUniform("u_view", viewNoTranslation);
         this.renderDevice.Pipeline.SetTexture(texture, 0);
-        this.renderDevice.InputAssembler.SetInputLayout(this.skyboxLayout);
-        this.renderDevice.InputAssembler.SetVertexBuffer(this.skyboxVertexBuffer);
-        this.renderDevice.InputAssembler.SetIndexBuffer(this.skyboxIndexBuffer);
-        this.renderDevice.DrawIndices(PrimitiveTopology.Triangle, 0, this.skyboxIndices.Length);
+
+        this.mesh!.Bind(this.renderDevice.InputAssembler);
+        this.mesh.Draw(this.renderDevice);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (this.isDisposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            if (this.mesh != null)
+            {
+                this.mesh.Dispose();
+                this.mesh = null;
+            }
+        }
+
+        this.isDisposed = true;
     }
 }

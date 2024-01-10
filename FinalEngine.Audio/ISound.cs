@@ -4,9 +4,10 @@
 
 namespace FinalEngine.Audio;
 
+using System;
 using FinalEngine.Resources;
 
-public interface ISound : IResource
+public interface ISound : IResource, IDisposable
 {
     bool IsLooping { get; set; }
 

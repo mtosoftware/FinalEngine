@@ -15,6 +15,6 @@ public enum SizedFormat
     Rgba8,
 
     Depth,
-    
+
     Srgba,
 }
