@@ -136,7 +136,8 @@ internal class Program
 
         var geometryRenderer = new GeometryRenderer(renderDevice);
         var lightRenderer = new LightRenderer(renderDevice.Pipeline);
-        var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer);
+        var skyboxRenderer = new SkyboxRenderer(renderDevice);
+        var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer, skyboxRenderer);
 
         var controller = new ImGuiController(window.ClientSize.Width, window.ClientSize.Height);
 
