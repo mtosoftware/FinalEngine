@@ -4,12 +4,8 @@
 
 namespace FinalEngine.Rendering.Buffers;
 
-using System.Collections.Generic;
-using FinalEngine.Rendering.Textures;
+using System;
 
-public interface IFrameBuffer
+public interface IFrameBuffer : IDisposable
 {
-    IEnumerable<ITexture2D> ColorTargets { get; }
-
-    ITexture2D? DepthTarget { get; }
 }

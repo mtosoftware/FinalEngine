@@ -32,16 +32,14 @@ public class OpenGLGPUResourceFactory : IGPUResourceFactory
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D> colorTargets, ITexture2D? depthTarget = null)
+    public IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D>? colorTargets, ITexture2D? depthTarget = null)
     {
-        ArgumentNullException.ThrowIfNull(colorTargets, nameof(colorTargets));
-
         if (depthTarget is not null and not IOpenGLTexture)
         {
             throw new ArgumentException($"The specified {nameof(depthTarget)} parameter is not of type {nameof(IOpenGLTexture)}.", nameof(depthTarget));
         }
 
-        return new OpenGLFrameBuffer(this.invoker, colorTargets.Cast<IOpenGLTexture>().ToList().AsReadOnly(), (IOpenGLTexture?)depthTarget);
+        return new OpenGLFrameBuffer(this.invoker, colorTargets?.Cast<IOpenGLTexture>().ToList().AsReadOnly(), (IOpenGLTexture?)depthTarget);
     }
 
     public IIndexBuffer CreateIndexBuffer<T>(BufferUsageType type, IReadOnlyCollection<T> data, int sizeInBytes)

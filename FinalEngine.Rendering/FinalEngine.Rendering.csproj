@@ -82,13 +82,13 @@
     <None Update="Resources\Shaders\skybox.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\sprite-geometry.fesp">
+    <None Update="Resources\Shaders\Batching\sprite-geometry.fesp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\sprite-geometry.frag">
+    <None Update="Resources\Shaders\Batching\sprite-geometry.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Shaders\sprite-geometry.vert">
+    <None Update="Resources\Shaders\Batching\sprite-geometry.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Shaders\standard-geometry.fesp">

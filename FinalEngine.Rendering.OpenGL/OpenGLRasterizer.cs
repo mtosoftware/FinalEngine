@@ -16,10 +16,17 @@ public class OpenGLRasterizer : IRasterizer
 
     private readonly IEnumMapper mapper;
 
+    private RasterStateDescription currentDescription;
+
     public OpenGLRasterizer(IOpenGLInvoker invoker, IEnumMapper mapper)
     {
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+    }
+
+    public RasterStateDescription GetRasterState()
+    {
+        return this.currentDescription;
     }
 
     public Rectangle GetViewport()
@@ -38,12 +45,20 @@ public class OpenGLRasterizer : IRasterizer
 
     public void SetRasterState(RasterStateDescription description)
     {
+        if (this.currentDescription == description)
+        {
+            return;
+        }
+
         this.invoker.Cap(EnableCap.CullFace, description.CullEnabled);
         this.invoker.Cap(EnableCap.ScissorTest, description.ScissorEnabled);
         this.invoker.Cap(EnableCap.Multisample, description.MultiSamplingEnabled);
+        this.invoker.Cap(EnableCap.FramebufferSrgb, description.GammaCorrectionEnabled);
         this.invoker.CullFace(this.mapper.Forward<CullFaceMode>(description.CullMode));
         this.invoker.FrontFace(this.mapper.Forward<FrontFaceDirection>(description.WindingDirection));
         this.invoker.PolygonMode(MaterialFace.FrontAndBack, this.mapper.Forward<PolygonMode>(description.FillMode));
+
+        this.currentDescription = description;
     }
 
     public void SetScissor(Rectangle rectangle)

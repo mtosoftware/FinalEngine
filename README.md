@@ -38,6 +38,21 @@ Built using C# 11 and .NET 7.0, the engine boasts excellent cross-platform compa
 
 _Final Engine_ offers a meticulously designed, feature-rich rendering abstraction layer built over OpenGL (with plans to support additional backends like Direct3D and Vulkan in the future). This API empowers users to engage directly with the graphics card while also providing systems and features for easily rendering meshes and sprites within scenes.
 
+### Rendering Engine
+
+_Final Engine_ has a powerful forward rendering engine that encapsulates a blend of simplicity and robust capabilities. Continuously evolving through active development, the current feature set includes:
+
+- **Forward Rendering**: Embraces a classical rendering pipeline for efficient processing.
+- **Mesh Rendering**: Empowers diverse rendering of intricate mesh structures.
+- **Camera System**: Orchestrates scene views and perspectives seamlessly.
+- **Material System**: Enables the utilization of Diffuse, Specular, and Normal Mapping for versatile surface aesthetics.
+- **Lighting**: Embodies the esteemed Blinn-Phong Lighting Model for lifelike illumination.
+- **Light Sources**: Encompasses Directional, Point, and Spot lights for scene ambiance.
+- **Global Illumination**: Augments scene realism through ambient lighting.
+- **Post Processing**: Introduces Gamma Correction, elevating the visual output quality.
+
+More rendering features are constantly being added to _Final Engine_.
+
 ### Entity-Component-System (ECS) Architecture
 
 Driven by the ECS architectural pattern, _Final Engine_ employs the entity-component-system model to power its core functionality. Learn more about ECS [here](https://en.wikipedia.org/wiki/Entity_component_system). This architectural choice serves as the foundation of the engine, enabling swift game design while maintaining a clear separation of concerns.
@@ -46,7 +61,7 @@ Driven by the ECS architectural pattern, _Final Engine_ employs the entity-compo
 
 _Final Engine_ incorporates a straightforward and user-friendly _Resource Manager_ to handle various resources utilized within the engine (such as audio, textures, and shaders). Expanding the engine with new resources is made simple through the `ResourceLoaderBase` abstraction and the `IResourceManager.RegisterLoader` method.
 
-### Desktop Editor (Work in Progress)
+### [Desktop Editor (Work in Progress)](#editor)
 
 We're actively developing an editor application for creating games using _Final Engine_. This editor will grant users the ability to craft entities, components, systems, manage projects, scenes, and resources. Our goal is to offer a preview of the editor by 2024.
 

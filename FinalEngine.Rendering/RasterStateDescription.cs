@@ -33,6 +33,8 @@ public struct RasterStateDescription : IEquatable<RasterStateDescription>
 
     private RasterMode? fillMode;
 
+    private bool? gammaCorrectionEnabled;
+
     private WindingDirection? windingDirection;
 
     public bool CullEnabled { get; set; }
@@ -47,6 +49,12 @@ public struct RasterStateDescription : IEquatable<RasterStateDescription>
     {
         readonly get { return this.fillMode ?? RasterMode.Solid; }
         set { this.fillMode = value; }
+    }
+
+    public bool GammaCorrectionEnabled
+    {
+        readonly get { return this.gammaCorrectionEnabled ?? true; }
+        set { this.gammaCorrectionEnabled = value; }
     }
 
     public bool MultiSamplingEnabled { get; set; }

@@ -451,6 +451,16 @@ public class OpenGLInvoker : IOpenGLInvoker
         GL.NamedFramebufferDrawBuffers(fb, n, ref bufs);
     }
 
+    public void NamedFramebufferDrawBuffer(int framebuffer, DrawBufferMode buf)
+    {
+        GL.NamedFramebufferDrawBuffer(framebuffer, buf);
+    }
+
+    public void NamedFramebufferReadBuffer(int framebuffer, ReadBufferMode buf)
+    {
+        GL.NamedFramebufferReadBuffer(framebuffer, buf);
+    }
+
     private static void DebugCallback(
         DebugSource source,
         DebugType type,

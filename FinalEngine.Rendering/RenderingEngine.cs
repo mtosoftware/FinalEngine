@@ -52,7 +52,6 @@ public sealed class RenderingEngine : IRenderingEngine
             Intensity = 0.1f,
         };
 
-
         // Todo input from other project
         var right = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/right.png");
         var left = ResourceManager.Instance.LoadResource<ITexture2D>("Resources/Textures/skybox/left.png");
@@ -64,6 +63,7 @@ public sealed class RenderingEngine : IRenderingEngine
             renderDevice.Factory.CreateCubeTexture(new CubeTextureDescription(){Width = right.Description.Width, Height = right.Description.Height, WrapR = TextureWrapMode.Clamp,WrapS = TextureWrapMode.Clamp, WrapT = TextureWrapMode.Clamp },
                 right, left, top, bottom, back, front);
 
+        this.renderDevice.Initialize();
     }
 
     private IShaderProgram GeometryProgram
@@ -134,8 +134,6 @@ public sealed class RenderingEngine : IRenderingEngine
                 var type = kvp.Key;
                 var batch = kvp.Value;
 
-                this.PrepareLightingPass();
-
                 foreach (var light in batch)
                 {
                     if (light.Type == LightType.Ambient)
@@ -143,6 +141,7 @@ public sealed class RenderingEngine : IRenderingEngine
                         continue;
                     }
 
+                    this.PrepareLightingPass();
                     this.lightRenderer.Render(light);
                     this.RenderScene(camera);
                 }

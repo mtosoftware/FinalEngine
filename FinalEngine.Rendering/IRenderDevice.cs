@@ -32,4 +32,6 @@ public interface IRenderDevice
     void Clear(Color color, float depth = 1.0f, int stencil = 0);
 
     void DrawIndices(PrimitiveTopology topology, int first, int count);
+
+    void Initialize();
 }

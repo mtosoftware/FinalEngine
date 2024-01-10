@@ -5,10 +5,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AssimpNet" Version="4.1.0" />
+    <PackageReference Include="ImGui.NET" Version="1.88.0" />
     <PackageReference Include="System.IO.Abstractions" Version="20.0.4" />
   </ItemGroup>
 
@@ -22,85 +24,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Models\Dabrovic\00_skap.JPG">
+    <None Update="Resources\Textures\Bricks\bricks_diffuse.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Models\Dabrovic\01_STUB-bump.jpg">
+    <None Update="Resources\Textures\Bricks\bricks_displacement.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Models\Dabrovic\01_STUB.JPG">
+    <None Update="Resources\Textures\Bricks\bricks_normal.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Models\Dabrovic\01_St_kp-bump.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\01_St_kp.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\01_S_ba.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\01_S_kap-bump.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\01_S_kap.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\copyright.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\KAMEN-bump.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\KAMEN-stup.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\KAMEN.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\prozor1.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\reljef-bump.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\reljef.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\sponza.mtl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\sponza.obj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\sp_luk-bump.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\sp_luk.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\vrata_ko.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\vrata_kr.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\x01_st-bump.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Models\Dabrovic\x01_st.JPG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Textures\bricks_diffuse.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Textures\bricks_normal.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Textures\container.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Textures\container_specular.png">
+    <None Update="Resources\Textures\Bricks\bricks_specular.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

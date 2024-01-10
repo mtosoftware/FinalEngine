@@ -17,16 +17,16 @@ using SixLabors.ImageSharp.PixelFormats;
 
 public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
 {
-    private readonly IGPUResourceFactory factory;
-
     private readonly IFileSystem fileSystem;
 
     private readonly IImageInvoker invoker;
 
-    public Texture2DResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory)
+    private readonly IRenderDevice renderDevice;
+
+    public Texture2DResourceLoader(IFileSystem fileSystem, IRenderDevice renderDevice)
     {
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-        this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.invoker = new ImageInvoker();
     }
 
@@ -63,7 +63,9 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
                     }
                 }
 
-                return this.factory.CreateTexture2D(
+                var rasterState = this.renderDevice.Rasterizer.GetRasterState();
+
+                return this.renderDevice.Factory.CreateTexture2D(
                     new Texture2DDescription()
                     {
                         Width = width,
@@ -79,7 +81,9 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
 
                         GenerateMipmaps = true,
                     },
-                    pixels.ToArray());
+                    pixels.ToArray(),
+                    PixelFormat.Rgba,
+                    rasterState.GammaCorrectionEnabled ? SizedFormat.Srgba : SizedFormat.Rgb8);
             }
         }
     }
