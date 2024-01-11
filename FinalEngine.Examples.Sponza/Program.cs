@@ -5,7 +5,6 @@ using System.Numerics;
 using FinalEngine.Examples.Sponza;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
-using FinalEngine.Maths;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
@@ -135,6 +134,9 @@ internal class Program
 
         var material = new Material()
         {
+            DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_diffuse.tga"),
+            SpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_specular.tga"),
+            NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Bricks\\bricks_normal.tga"),
             Shininess = 16.0f,
         };
 
@@ -175,12 +177,13 @@ internal class Program
 
         var light = new Light()
         {
-            Type = LightType.Directional,
+            Type = LightType.Point,
             Intensity = 0.5f,
             Color = new Vector3(1f),
             Transform = new Transform()
             {
-                Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f)),
+                Position = new Vector3(0, 2, 0),
+                //Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f)),
             },
         };
 
