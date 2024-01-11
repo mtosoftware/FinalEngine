@@ -11,7 +11,7 @@ public interface IInputAssembler
 {
     void SetIndexBuffer(IIndexBuffer buffer);
 
-    void SetInputLayout(IInputLayout? layout);
+    void SetInputLayout(IInputLayout layout);
 
     void SetVertexBuffer(IVertexBuffer buffer);
 

@@ -35,7 +35,7 @@ public class OpenGLInputAssembler : IInputAssembler
         this.boundIndexBuffer.Bind();
     }
 
-    public void SetInputLayout(IInputLayout? layout)
+    public void SetInputLayout(IInputLayout layout)
     {
         ArgumentNullException.ThrowIfNull(layout, nameof(layout));
 
