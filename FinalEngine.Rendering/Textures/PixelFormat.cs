@@ -15,6 +15,4 @@ public enum PixelFormat
     Rgba,
 
     Depth,
-
-    DepthAndStencil,
 }
