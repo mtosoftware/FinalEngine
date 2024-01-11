@@ -83,7 +83,7 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
                     },
                     pixels.ToArray(),
                     PixelFormat.Rgba,
-                    rasterState.GammaCorrectionEnabled ? SizedFormat.Srgba : SizedFormat.Rgba8);
+                    SizedFormat.Rgba8);
             }
         }
     }

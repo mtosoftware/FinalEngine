@@ -53,7 +53,6 @@ public class OpenGLRasterizer : IRasterizer
         this.invoker.Cap(EnableCap.CullFace, description.CullEnabled);
         this.invoker.Cap(EnableCap.ScissorTest, description.ScissorEnabled);
         this.invoker.Cap(EnableCap.Multisample, description.MultiSamplingEnabled);
-        this.invoker.Cap(EnableCap.FramebufferSrgb, description.GammaCorrectionEnabled);
         this.invoker.CullFace(this.mapper.Forward<CullFaceMode>(description.CullMode));
         this.invoker.FrontFace(this.mapper.Forward<FrontFaceDirection>(description.WindingDirection));
         this.invoker.PolygonMode(MaterialFace.FrontAndBack, this.mapper.Forward<PolygonMode>(description.FillMode));

@@ -51,12 +51,6 @@ public struct RasterStateDescription : IEquatable<RasterStateDescription>
         set { this.fillMode = value; }
     }
 
-    public bool GammaCorrectionEnabled
-    {
-        readonly get { return this.gammaCorrectionEnabled ?? false; }
-        set { this.gammaCorrectionEnabled = value; }
-    }
-
     public bool MultiSamplingEnabled { get; set; }
 
     public bool ScissorEnabled { get; set; }
