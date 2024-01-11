@@ -24,17 +24,12 @@ public sealed class Mesh<TVertex> : IMesh
         TVertex[] vertices,
         int[] indices,
         IReadOnlyCollection<InputElement> inputElements,
-        int vertexStride,
-        CalculateNormals? calculateNormals = null,
-        CalculateTangents? calculateTangents = null)
+        int vertexStride)
     {
         ArgumentNullException.ThrowIfNull(factory, nameof(factory));
         ArgumentNullException.ThrowIfNull(vertices, nameof(vertices));
         ArgumentNullException.ThrowIfNull(indices, nameof(indices));
         ArgumentNullException.ThrowIfNull(inputElements, nameof(inputElements));
-
-        calculateNormals?.Invoke(vertices, indices);
-        calculateTangents?.Invoke(vertices, indices);
 
         this.vertexBuffer = factory.CreateVertexBuffer(
             BufferUsageType.Static,

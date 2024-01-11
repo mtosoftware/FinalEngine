@@ -123,14 +123,15 @@ internal class Program
             3
         ];
 
+        MeshVertex.CalculateNormals(vertices, indices);
+        MeshVertex.CalculateTangents(vertices, indices);
+
         var mesh = new Mesh<MeshVertex>(
             renderDevice.Factory,
             vertices,
             indices,
             MeshVertex.InputElements,
-            MeshVertex.SizeInBytes,
-            MeshVertex.CalculateNormals,
-            MeshVertex.CalculateTangents);
+            MeshVertex.SizeInBytes);
 
         var material = new Material()
         {
