@@ -5,12 +5,18 @@
 namespace FinalEngine.Rendering.Renderers;
 
 using System;
+using System.Collections.Generic;
+using System.Numerics;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 
-public sealed class LightRenderer : ILightRenderer
+public sealed class LightRenderer : IRenderQueue<Light>, ILightRenderer
 {
+    private readonly Light ambientLight;
+
+    private readonly Dictionary<LightType, IEnumerable<Light>> lightTypeToLightMap;
+
     private readonly IRenderDevice renderDevice;
 
     private IShaderProgram? ambientProgram;
@@ -24,6 +30,19 @@ public sealed class LightRenderer : ILightRenderer
     public LightRenderer(IRenderDevice renderDevice)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
+
+        this.lightTypeToLightMap = [];
+
+        this.ambientLight = new Light()
+        {
+            Type = LightType.Ambient,
+            Intensity = 0.1f,
+        };
+    }
+
+    public bool CanRender
+    {
+        get { return this.lightTypeToLightMap.Count != 0; }
     }
 
     private IShaderProgram AmbientProgram
@@ -46,7 +65,60 @@ public sealed class LightRenderer : ILightRenderer
         get { return this.spotProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\Lighting\\lighting-spot.fesp"); }
     }
 
-    public void Conclude()
+    public void Clear()
+    {
+        this.lightTypeToLightMap.Clear();
+    }
+
+    public void Enqueue(Light renderable)
+    {
+        ArgumentNullException.ThrowIfNull(renderable, nameof(renderable));
+
+        if (!this.lightTypeToLightMap.TryGetValue(renderable.Type, out var batch))
+        {
+            batch = new List<Light>();
+            this.lightTypeToLightMap.Add(renderable.Type, batch);
+        }
+
+        ((IList<Light>)batch).Add(renderable);
+    }
+
+    public void Render(Action renderScene)
+    {
+        ArgumentNullException.ThrowIfNull(renderScene, nameof(renderScene));
+
+        this.UpdateUniforms(this.ambientLight);
+        renderScene();
+
+        foreach (var kvp in this.lightTypeToLightMap)
+        {
+            var type = kvp.Key;
+            var batch = kvp.Value;
+
+            foreach (var light in batch)
+            {
+                if (light.Type == LightType.Ambient)
+                {
+                    continue;
+                }
+
+                this.Prepare();
+
+                this.UpdateUniforms(light);
+                renderScene();
+
+                this.Conclude();
+            }
+        }
+    }
+
+    public void SetAmbientLight(Vector3 color, float intensity)
+    {
+        this.ambientLight.Color = color;
+        this.ambientLight.Intensity = intensity;
+    }
+
+    private void Conclude()
     {
         this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
         {
@@ -61,7 +133,7 @@ public sealed class LightRenderer : ILightRenderer
         });
     }
 
-    public void Prepare()
+    private void Prepare()
     {
         this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
         {
@@ -76,36 +148,6 @@ public sealed class LightRenderer : ILightRenderer
             WriteEnabled = false,
             ComparisonMode = ComparisonMode.Equal,
         });
-    }
-
-    public void Render(Light light)
-    {
-        ArgumentNullException.ThrowIfNull(light, nameof(light));
-
-        switch (light.Type)
-        {
-            case LightType.Directional:
-                this.RenderDirectionalLight(light);
-                break;
-
-            case LightType.Point:
-                this.RenderPointLight(light);
-                break;
-
-            case LightType.Spot:
-                this.RenderSpotLight(light);
-                break;
-
-            case LightType.Ambient:
-                this.RenderAmbientLight();
-                break;
-
-            default:
-                throw new NotSupportedException($"The specified {nameof(light)} is not supported by the {nameof(LightRenderer)}.");
-        }
-
-        this.renderDevice.Pipeline.SetUniform("u_light.base.color", light.Color);
-        this.renderDevice.Pipeline.SetUniform("u_light.base.intensity", light.Intensity);
     }
 
     private void RenderAmbientLight()
@@ -144,5 +186,35 @@ public sealed class LightRenderer : ILightRenderer
         this.renderDevice.Pipeline.SetUniform("u_light.direction", light.Transform.Forward);
         this.renderDevice.Pipeline.SetUniform("u_light.radius", light.Radius);
         this.renderDevice.Pipeline.SetUniform("u_light.outerRadius", light.OuterRadius);
+    }
+
+    private void UpdateUniforms(Light light)
+    {
+        ArgumentNullException.ThrowIfNull(light, nameof(light));
+
+        switch (light.Type)
+        {
+            case LightType.Directional:
+                this.RenderDirectionalLight(light);
+                break;
+
+            case LightType.Point:
+                this.RenderPointLight(light);
+                break;
+
+            case LightType.Spot:
+                this.RenderSpotLight(light);
+                break;
+
+            case LightType.Ambient:
+                this.RenderAmbientLight();
+                break;
+
+            default:
+                throw new NotSupportedException($"The specified {nameof(light)} is not supported by the {nameof(LightRenderer)}.");
+        }
+
+        this.renderDevice.Pipeline.SetUniform("u_light.base.color", light.Color);
+        this.renderDevice.Pipeline.SetUniform("u_light.base.intensity", light.Intensity);
     }
 }

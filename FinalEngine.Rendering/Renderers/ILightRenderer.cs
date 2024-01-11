@@ -4,13 +4,12 @@
 
 namespace FinalEngine.Rendering.Renderers;
 
-using FinalEngine.Rendering.Lighting;
+using System;
+using System.Numerics;
 
 public interface ILightRenderer
 {
-    void Conclude();
+    void Render(Action renderScene);
 
-    void Prepare();
-
-    void Render(Light light);
+    void SetAmbientLight(Vector3 color, float intensity);
 }

@@ -9,20 +9,44 @@ using System.Collections.Generic;
 using FinalEngine.Rendering.Core;
 using FinalEngine.Rendering.Geometry;
 
-public sealed class GeometryRenderer : IGeometryRenderer
+public sealed class GeometryRenderer : IRenderQueue<Model>, IGeometryRenderer
 {
+    private readonly Dictionary<Model, IEnumerable<Transform>> modelToTransformMap;
+
     private readonly IRenderDevice renderDevice;
 
     public GeometryRenderer(IRenderDevice renderDevice)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
+        this.modelToTransformMap = [];
     }
 
-    public void Render(IDictionary<Model, IEnumerable<Transform>> modelToTransformMap)
+    public bool CanRender
     {
-        ArgumentNullException.ThrowIfNull(modelToTransformMap, nameof(modelToTransformMap));
+        get { return this.modelToTransformMap.Count != 0; }
+    }
 
-        foreach (var kvp in modelToTransformMap)
+    public void Clear()
+    {
+        this.modelToTransformMap.Clear();
+    }
+
+    public void Enqueue(Model renderable)
+    {
+        ArgumentNullException.ThrowIfNull(renderable, nameof(renderable));
+
+        if (!this.modelToTransformMap.TryGetValue(renderable, out var batch))
+        {
+            batch = new List<Transform>();
+            this.modelToTransformMap.Add(renderable, batch);
+        }
+
+        ((IList<Transform>)batch).Add(renderable.Transform);
+    }
+
+    public void Render()
+    {
+        foreach (var kvp in this.modelToTransformMap)
         {
             var model = kvp.Key;
             var batch = kvp.Value;
@@ -34,15 +58,10 @@ public sealed class GeometryRenderer : IGeometryRenderer
 
             foreach (var transform in batch)
             {
-                this.PrepareBatchInstance(transform);
+                this.UpdateUniforms(transform);
                 this.RenderBatchInstance(model.Mesh);
             }
         }
-    }
-
-    private void PrepareBatchInstance(Transform transform)
-    {
-        this.renderDevice.Pipeline.SetUniform("u_transform", transform.CreateTransformationMatrix());
     }
 
     private void RenderBatchInstance(IMesh? mesh)
@@ -71,5 +90,10 @@ public sealed class GeometryRenderer : IGeometryRenderer
         mesh.Bind(this.renderDevice.InputAssembler);
 
         return true;
+    }
+
+    private void UpdateUniforms(Transform transform)
+    {
+        this.renderDevice.Pipeline.SetUniform("u_transform", transform.CreateTransformationMatrix());
     }
 }

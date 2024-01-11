@@ -28,6 +28,8 @@ public sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
 
     private IShaderProgram? skyboxProgram;
 
+    private ITextureCube? texture;
+
     public SkyboxRenderer(IRenderDevice renderDevice)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
@@ -84,11 +86,9 @@ public sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public void Render(ITextureCube texture, ICamera camera)
+    public void Render(ICamera camera)
     {
-        ArgumentNullException.ThrowIfNull(texture, nameof(texture));
         ArgumentNullException.ThrowIfNull(camera, nameof(camera));
-
         ObjectDisposedException.ThrowIf(this.isDisposed, this);
 
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
@@ -120,6 +120,11 @@ public sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
 
         this.mesh!.Bind(this.renderDevice.InputAssembler);
         this.mesh.Draw(this.renderDevice);
+    }
+
+    public void SetSkybox(ITextureCube? texture)
+    {
+        this.texture = texture;
     }
 
     private void Dispose(bool disposing)

@@ -5,86 +5,36 @@
 namespace FinalEngine.Rendering;
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Numerics;
 using FinalEngine.Rendering.Core;
-using FinalEngine.Rendering.Geometry;
-using FinalEngine.Rendering.Lighting;
-using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Renderers;
-using FinalEngine.Rendering.Textures;
-using FinalEngine.Resources;
 
 public sealed class RenderingEngine : IRenderingEngine
 {
-    private readonly Light ambientLight;
-
-    private readonly IGeometryRenderer geometryRenderer;
-
     private readonly ILightRenderer lightRenderer;
 
-    private readonly Dictionary<LightType, IEnumerable<Light>> lightTypeToLightMap;
-
-    private readonly Dictionary<Model, IEnumerable<Transform>> modelToTransformationMap;
+    private readonly IRenderCoordinator renderCoordinator;
 
     private readonly IRenderDevice renderDevice;
 
+    private readonly ISceneRenderer sceneRenderer;
+
     private readonly ISkyboxRenderer skyboxRenderer;
 
-    private IShaderProgram? geometryProgram;
-
-    private ITextureCube? skyboxTexture;
-
-    public RenderingEngine(IRenderDevice renderDevice, IGeometryRenderer geometryRenderer, ILightRenderer lightRenderer, ISkyboxRenderer skyboxRenderer)
+    public RenderingEngine(
+        IRenderDevice renderDevice,
+        ILightRenderer lightRenderer,
+        ISkyboxRenderer skyboxRenderer,
+        ISceneRenderer sceneRenderer,
+        IRenderCoordinator renderCoordinator)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
-        this.geometryRenderer = geometryRenderer ?? throw new ArgumentNullException(nameof(geometryRenderer));
         this.lightRenderer = lightRenderer ?? throw new ArgumentNullException(nameof(lightRenderer));
         this.skyboxRenderer = skyboxRenderer ?? throw new ArgumentNullException(nameof(skyboxRenderer));
-
-        this.modelToTransformationMap = [];
-        this.lightTypeToLightMap = [];
-
-        this.ambientLight = new Light()
-        {
-            Type = LightType.Ambient,
-            Intensity = 0.1f,
-        };
+        this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
+        this.renderCoordinator = renderCoordinator ?? throw new ArgumentNullException(nameof(renderCoordinator));
 
         this.renderDevice.Initialize();
-    }
-
-    private IShaderProgram GeometryProgram
-    {
-        get { return this.geometryProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\standard-geometry.fesp"); }
-    }
-
-    public void Enqueue(Model model, Transform transform)
-    {
-        ArgumentNullException.ThrowIfNull(model, nameof(model));
-        ArgumentNullException.ThrowIfNull(transform, nameof(transform));
-
-        if (!this.modelToTransformationMap.TryGetValue(model, out var batch))
-        {
-            batch = new List<Transform>();
-            this.modelToTransformationMap.Add(model, batch);
-        }
-
-        ((IList<Transform>)batch).Add(transform);
-    }
-
-    public void Enqueue(Light light)
-    {
-        ArgumentNullException.ThrowIfNull(light, nameof(light));
-
-        if (!this.lightTypeToLightMap.TryGetValue(light.Type, out var batch))
-        {
-            batch = new List<Light>();
-            this.lightTypeToLightMap.Add(light.Type, batch);
-        }
-
-        ((IList<Light>)batch).Add(light);
     }
 
     public void Render(ICamera camera)
@@ -106,66 +56,25 @@ public sealed class RenderingEngine : IRenderingEngine
             MultiSamplingEnabled = true,
         });
 
-        if (this.lightTypeToLightMap.Count <= 0)
+        if (!this.renderCoordinator.CanRenderGeometry)
         {
-            this.renderDevice.Pipeline.SetShaderProgram(this.GeometryProgram);
-            this.RenderScene(camera);
+            return;
+        }
+
+        if (!this.renderCoordinator.CanRenderLights)
+        {
+            this.sceneRenderer.Render(camera, true);
         }
         else
         {
-            this.lightRenderer.Render(this.ambientLight);
-            this.RenderScene(camera);
-
-            foreach (var kvp in this.lightTypeToLightMap)
+            this.lightRenderer.Render(() =>
             {
-                var type = kvp.Key;
-                var batch = kvp.Value;
-
-                foreach (var light in batch)
-                {
-                    if (light.Type == LightType.Ambient)
-                    {
-                        continue;
-                    }
-
-                    this.lightRenderer.Prepare();
-                    this.lightRenderer.Render(light);
-                    this.RenderScene(camera);
-                    this.lightRenderer.Conclude();
-                }
-            }
+                this.sceneRenderer.Render(camera, false);
+            });
         }
 
-        if (this.skyboxTexture != null)
-        {
-            this.skyboxRenderer.Render(this.skyboxTexture, camera);
-        }
+        this.skyboxRenderer.Render(camera);
 
-        this.lightTypeToLightMap.Clear();
-        this.modelToTransformationMap.Clear();
-    }
-
-    public void SetAmbientLight(Vector3 color, float intensity)
-    {
-        this.ambientLight.Color = color;
-        this.ambientLight.Intensity = intensity;
-    }
-
-    public void SetSkybox(ITextureCube? skyboxTexture)
-    {
-        this.skyboxTexture = skyboxTexture;
-    }
-
-    private void RenderScene(ICamera camera)
-    {
-        this.UpdateCamera(camera);
-        this.geometryRenderer.Render(this.modelToTransformationMap);
-    }
-
-    private void UpdateCamera(ICamera camera)
-    {
-        this.renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
-        this.renderDevice.Pipeline.SetUniform("u_view", camera.View);
-        this.renderDevice.Pipeline.SetUniform("u_viewPosition", camera.Transform.Position);
+        this.renderCoordinator.ClearQueues();
     }
 }

@@ -4,9 +4,13 @@
 
 namespace FinalEngine.Rendering.Geometry;
 
+using FinalEngine.Rendering.Core;
+
 public sealed class Model
 {
     private IMaterial? material;
+
+    private Transform? transform;
 
     public IMaterial Material
     {
@@ -15,4 +19,10 @@ public sealed class Model
     }
 
     public IMesh? Mesh { get; set; }
+
+    public Transform Transform
+    {
+        get { return this.transform ??= new Transform(); }
+        set { this.transform = value; }
+    }
 }

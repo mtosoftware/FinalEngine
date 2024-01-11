@@ -146,9 +146,12 @@ internal class Program
         var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
 
         var geometryRenderer = new GeometryRenderer(renderDevice);
-        var lightRenderer = new LightRenderer(renderDevice.Pipeline);
+        var lightRenderer = new LightRenderer(renderDevice);
         var skyboxRenderer = new SkyboxRenderer(renderDevice);
-        var renderingEngine = new RenderingEngine(renderDevice, geometryRenderer, lightRenderer, skyboxRenderer);
+        var sceneRenderer = new SceneRenderer(renderDevice, geometryRenderer);
+        var renderCoordinator = new RenderCoordinator(geometryRenderer, lightRenderer);
+
+        var renderingEngine = new RenderingEngine(renderDevice, lightRenderer, skyboxRenderer, sceneRenderer, renderCoordinator);
 
         var right = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_right.png");
         var left = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_left.png");
@@ -172,7 +175,7 @@ internal class Program
            back,
            front);
 
-        renderingEngine.SetSkybox(cubeTexture);
+        skyboxRenderer.SetSkybox(cubeTexture);
 
         var controller = new ImGuiController(window.ClientSize.Width, window.ClientSize.Height);
 
@@ -180,7 +183,7 @@ internal class Program
         {
             Type = LightType.Point,
             Intensity = 0.5f,
-            Color = new Vector3(1f),
+            Color = new Vector3(0, 0, 1),
             Transform = new Transform()
             {
                 Position = new Vector3(0, 2, 0),
@@ -204,17 +207,22 @@ internal class Program
             keyboard.Update();
             mouse.Update();
 
-            renderingEngine.Enqueue(new Model()
+            geometryRenderer.Enqueue(new Model()
             {
                 Mesh = mesh,
                 Material = material,
-            }, new Transform());
+            });
 
-            renderingEngine.Enqueue(light);
+            lightRenderer.Enqueue(new Light()
+            {
+                Type = LightType.Point,
+                Transform = new Transform()
+                {
+                    Position = new Vector3(0, 2, 0),
+                },
+            });
 
             renderingEngine.Render(camera);
-
-            renderingEngine.SetSkybox(null);
 
             ImGui.End();
 
