@@ -49,7 +49,7 @@ public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
             this.invoker.NamedFramebufferDrawBuffers(this.rendererID, colorAttachmentCount, ref bufs[0]);
         }
 
-        depthTarget?.Attach(FramebufferAttachment.DepthStencilAttachment, this.rendererID);
+        depthTarget?.Attach(FramebufferAttachment.DepthAttachment, this.rendererID);
 
         if (colorAttachmentCount <= 0)
         {
