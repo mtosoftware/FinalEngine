@@ -6,6 +6,7 @@ namespace FinalEngine.Rendering;
 
 using System;
 using System.Drawing;
+using System.IO.Abstractions;
 using FinalEngine.Rendering.Core;
 using FinalEngine.Rendering.Renderers;
 
@@ -22,17 +23,23 @@ public sealed class RenderingEngine : IRenderingEngine
     private readonly ISkyboxRenderer skyboxRenderer;
 
     public RenderingEngine(
+        IFileSystem fileSystem,
         IRenderDevice renderDevice,
         ILightRenderer lightRenderer,
         ISkyboxRenderer skyboxRenderer,
         ISceneRenderer sceneRenderer,
         IRenderCoordinator renderCoordinator)
     {
+        ArgumentNullException.ThrowIfNull(fileSystem, nameof(fileSystem));
+
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.lightRenderer = lightRenderer ?? throw new ArgumentNullException(nameof(lightRenderer));
         this.skyboxRenderer = skyboxRenderer ?? throw new ArgumentNullException(nameof(skyboxRenderer));
         this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
         this.renderCoordinator = renderCoordinator ?? throw new ArgumentNullException(nameof(renderCoordinator));
+
+        this.renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
+        this.renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
 
         this.renderDevice.Initialize();
     }

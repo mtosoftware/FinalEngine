@@ -78,9 +78,6 @@ internal class Program
         ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(ResourceManager.Instance, renderDevice, fileSystem));
 
-        renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
-        renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
-
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);
         var gameTime = new GameTime(watchInvoker, 120.0f);
@@ -149,9 +146,16 @@ internal class Program
         var lightRenderer = new LightRenderer(renderDevice);
         var skyboxRenderer = new SkyboxRenderer(renderDevice);
         var sceneRenderer = new SceneRenderer(renderDevice, geometryRenderer);
+
         var renderCoordinator = new RenderCoordinator(geometryRenderer, lightRenderer);
 
-        var renderingEngine = new RenderingEngine(renderDevice, lightRenderer, skyboxRenderer, sceneRenderer, renderCoordinator);
+        var renderingEngine = new RenderingEngine(
+            fileSystem,
+            renderDevice,
+            lightRenderer,
+            skyboxRenderer,
+            sceneRenderer,
+            renderCoordinator);
 
         var right = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_right.png");
         var left = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_left.png");
