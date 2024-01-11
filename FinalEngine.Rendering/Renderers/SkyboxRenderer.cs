@@ -91,6 +91,11 @@ public sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
         ArgumentNullException.ThrowIfNull(camera, nameof(camera));
         ObjectDisposedException.ThrowIf(this.isDisposed, this);
 
+        if (this.texture == null)
+        {
+            return;
+        }
+
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
         {
             WriteEnabled = true,
@@ -116,7 +121,7 @@ public sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
         var viewNoTranslation = Matrix4x4.CreateScale(scale) * Matrix4x4.CreateFromQuaternion(rotation);
 
         this.renderDevice.Pipeline.SetUniform("u_view", viewNoTranslation);
-        this.renderDevice.Pipeline.SetTexture(texture, 0);
+        this.renderDevice.Pipeline.SetTexture(this.texture, 0);
 
         this.mesh!.Bind(this.renderDevice.InputAssembler);
         this.mesh.Draw(this.renderDevice);
