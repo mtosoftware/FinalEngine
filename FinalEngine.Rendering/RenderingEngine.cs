@@ -128,10 +128,10 @@ public sealed class RenderingEngine : IRenderingEngine
                         continue;
                     }
 
-                    this.PrepareLightingPass();
+                    this.lightRenderer.Prepare();
                     this.lightRenderer.Render(light);
                     this.RenderScene(camera);
-                    this.FinalizeLightingPass();
+                    this.lightRenderer.Conclude();
                 }
             }
         }
@@ -154,38 +154,6 @@ public sealed class RenderingEngine : IRenderingEngine
     public void SetSkybox(ITextureCube? skyboxTexture)
     {
         this.skyboxTexture = skyboxTexture;
-    }
-
-    private void FinalizeLightingPass()
-    {
-        this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
-        {
-            Enabled = false,
-        });
-
-        this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-        {
-            ReadEnabled = true,
-            ComparisonMode = ComparisonMode.Less,
-            WriteEnabled = true,
-        });
-    }
-
-    private void PrepareLightingPass()
-    {
-        this.renderDevice.OutputMerger.SetBlendState(new BlendStateDescription()
-        {
-            Enabled = true,
-            SourceMode = BlendMode.One,
-            DestinationMode = BlendMode.One,
-        });
-
-        this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
-        {
-            ReadEnabled = true,
-            WriteEnabled = false,
-            ComparisonMode = ComparisonMode.Equal,
-        });
     }
 
     private void RenderScene(ICamera camera)

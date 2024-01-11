@@ -214,6 +214,8 @@ internal class Program
 
             renderingEngine.Render(camera);
 
+            renderingEngine.SetSkybox(null);
+
             ImGui.End();
 
             controller.Render();

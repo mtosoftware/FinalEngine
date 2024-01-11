@@ -8,5 +8,9 @@ using FinalEngine.Rendering.Lighting;
 
 public interface ILightRenderer
 {
+    void Conclude();
+
+    void Prepare();
+
     void Render(Light light);
 }
