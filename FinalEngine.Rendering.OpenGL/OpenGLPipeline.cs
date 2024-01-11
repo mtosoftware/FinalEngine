@@ -78,6 +78,7 @@ public class OpenGLPipeline : IPipeline
 
         if (frameBuffer == null)
         {
+            this.boundFrameBuffer = null;
             this.invoker.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             return;
         }
