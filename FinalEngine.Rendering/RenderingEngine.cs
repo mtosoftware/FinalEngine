@@ -16,8 +16,6 @@ using FinalEngine.Rendering.Renderers;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 
-//// TODO: Consider storing caches lights and geometry in ILightRenderer and IGeometryRenderer and just providing properties to retrieve read only collections for them.
-
 public sealed class RenderingEngine : IRenderingEngine
 {
     private readonly Light ambientLight;
