@@ -23,7 +23,7 @@
   - [x] Diffuse Mapping
   - [x] Specular Mapping
   - [x] Normal Mapping
-  - [ ] Emissive Mapping
+  - [x] Emissive Mapping
   - [ ] Parallax Mapping
 
 ### Lighting and Shadows
