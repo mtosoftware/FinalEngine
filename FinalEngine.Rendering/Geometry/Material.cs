@@ -14,7 +14,7 @@ public sealed class Material : IMaterial
 
     private static readonly ITexture2D DefaultEmissionTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_emission.png");
 
-    private static readonly ITexture2D DefaultNormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_normal.jpg");
+    private static readonly ITexture2D DefaultNormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_normal.png");
 
     private static readonly ITexture2D DefaultSpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_specular.png");
 
