@@ -44,6 +44,8 @@ struct SpotLight
     float outerRadius;
 };
 
+uniform bool u_test;
+
 vec3 CalculateLight(LightBase light, Material material, vec3 direction, vec3 normal, vec3 viewPosition, vec3 fragPosition, vec2 texCoord)
 {
     normal = normalize(normal);
@@ -62,8 +64,13 @@ vec3 CalculateLight(LightBase light, Material material, vec3 direction, vec3 nor
     float specularShading = pow(max(dot(normal, halfWayDirection), 0.0), material.shininess);
     vec3 specularColor = specularShading * light.color * light.intensity * texture(material.specularTexture, texCoord).rgb;
 
-    return diffuseColor + specularColor;
+    // Calculate emission map here as it's a lighting effect.
+    vec3 emissionColor = texture(material.emissionTexture, texCoord).rgb;
+
+    return diffuseColor + specularColor + emissionColor;
 }
+
+
 
 vec3 CalculateDirectionalLight(DirectionalLight light, Material material, vec3 normal, vec3 viewPosition, vec3 fragPosition, vec2 texCoord)
 {
