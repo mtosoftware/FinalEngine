@@ -49,9 +49,8 @@ _Final Engine_ has a powerful forward rendering engine that encapsulates a blend
 - **Lighting**: Embodies the esteemed Blinn-Phong Lighting Model for lifelike illumination.
 - **Light Sources**: Encompasses Directional, Point, and Spot lights for scene ambiance.
 - **Global Illumination**: Augments scene realism through ambient lighting.
-- **Post Processing**: Introduces Gamma Correction, elevating the visual output quality.
 
-More rendering features are constantly being added to _Final Engine_.
+More rendering features are constantly being added to _Final Engine_, check out the [features](https://github.com/softwareantics/FinalEngine/blob/master/Documentation/RenderingFeatures.md) list.
 
 ### Entity-Component-System (ECS) Architecture
 
