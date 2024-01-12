@@ -40,10 +40,6 @@
 
 ### Visual Effects
 
-- [ ] Fog
-    - [ ] Linear
-    - [ ] Exponential
-    - [ ] Exponential Squared
 - [x] Skyboxes
 - [ ] Blending
 - [ ] Reflections and Refractions
@@ -59,3 +55,7 @@
   - [ ] Motion Blur
   - [ ] Depth of Field
   - [ ] Anti-Aliasing
+  - [ ] Fog
+    - [ ] Linear
+    - [ ] Exponential
+    - [ ] Exponential Squared
