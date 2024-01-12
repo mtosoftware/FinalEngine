@@ -12,11 +12,15 @@ public sealed class Material : IMaterial
 {
     private static readonly ITexture2D DefaultDiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_diffuse.png");
 
+    private static readonly ITexture2D DefaultEmissionTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_emission.png");
+
     private static readonly ITexture2D DefaultNormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_normal.jpg");
 
     private static readonly ITexture2D DefaultSpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\default_specular.png");
 
     private ITexture2D? diffuseTexture;
+
+    private ITexture2D? emissionTexture;
 
     private ITexture2D? normalTexture;
 
@@ -31,6 +35,12 @@ public sealed class Material : IMaterial
     {
         get { return this.diffuseTexture ??= DefaultDiffuseTexture; }
         set { this.diffuseTexture = value; }
+    }
+
+    public ITexture2D EmissionTexture
+    {
+        get { return this.emissionTexture ??= DefaultEmissionTexture; }
+        set { this.emissionTexture = value; }
     }
 
     public ITexture2D NormalTexture
@@ -54,10 +64,12 @@ public sealed class Material : IMaterial
         pipeline.SetUniform("u_material.diffuseTexture", 0);
         pipeline.SetUniform("u_material.specularTexture", 1);
         pipeline.SetUniform("u_material.normalTexture", 2);
+        pipeline.SetUniform("u_material.emissionMap", 3);
         pipeline.SetUniform("u_material.shininess", this.Shininess);
 
         pipeline.SetTexture(this.DiffuseTexture, 0);
         pipeline.SetTexture(this.SpecularTexture, 1);
         pipeline.SetTexture(this.NormalTexture, 2);
+        pipeline.SetTexture(this.EmissionTexture, 3);
     }
 }
