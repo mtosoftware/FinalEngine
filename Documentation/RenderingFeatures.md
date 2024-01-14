@@ -54,7 +54,7 @@
   - [ ] Bloom
   - [ ] Motion Blur
   - [ ] Depth of Field
-  - [ ] Anti-Aliasing
+  - [x] Anti-Aliasing
   - [ ] Fog
     - [ ] Linear
     - [ ] Exponential
