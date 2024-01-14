@@ -4,10 +4,13 @@
 
 namespace FinalEngine.Rendering.Core;
 
+using System.Drawing;
 using System.Numerics;
 
 public interface ICamera
 {
+    Rectangle Bounds { get; }
+
     Matrix4x4 Projection { get; }
 
     Transform Transform { get; }

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using FinalEngine.Rendering.Buffers;
 
-public sealed class Mesh<TVertex> : IMesh
+public sealed class Mesh<TVertex> : IMesh, IDisposable
     where TVertex : struct
 {
     private readonly IInputLayout inputLayout;

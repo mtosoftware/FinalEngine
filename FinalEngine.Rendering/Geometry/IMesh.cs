@@ -4,9 +4,7 @@
 
 namespace FinalEngine.Rendering.Geometry;
 
-using System;
-
-public interface IMesh : IDisposable
+public interface IMesh
 {
     void Bind(IInputAssembler inputAssembler);
 

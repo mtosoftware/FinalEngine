@@ -31,6 +31,11 @@ public sealed class Camera : ICamera
         this.isLocked = false;
     }
 
+    public Rectangle Bounds
+    {
+        get { return new Rectangle(0, 0, (int)this.width, (int)this.height); }
+    }
+
     public Matrix4x4 Projection
     {
         get { return Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(70.0f), this.width / this.height, 0.1f, 1000.0f); }

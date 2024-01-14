@@ -96,6 +96,7 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
     {
         ObjectDisposedException.ThrowIf(this.IsDisposed, this);
 
+        this.renderDevice.Pipeline.SetFrameBuffer(null);
         this.renderDevice.Pipeline.SetShaderProgram(this.ShaderProgram!);
 
         this.renderDevice.Pipeline.SetUniform("u_projection", this.Projection);
