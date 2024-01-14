@@ -81,7 +81,7 @@ internal class Program
 
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);
-        var gameTime = new GameTime(watchInvoker, 60.0f);
+        var gameTime = new GameTime(watchInvoker, 120.0f);
 
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -131,19 +131,19 @@ internal class Program
             Shininess = 16.0f,
         };
 
-        var model = ResourceManager.Instance.LoadResource<Model>("C:\\Users\\mathe\\Downloads\\main_sponza(1)\\Main.1_Sponza\\NewSponza_Main_Zup_002.fbx");
+        var model = ResourceManager.Instance.LoadResource<Model>("Resources\\Models\\Sponza\\sponza.obj");
 
         // Currently there is no parent-child relationship with transform, so we have to do this to scale and translate.
         if (model.RenderModel != null)
         {
-            model.RenderModel.Transform.Scale = new Vector3(0.0001f);
+            model.RenderModel.Transform.Scale = new Vector3(0.2f);
         }
 
         foreach (var child in model.Children)
         {
             if (child.RenderModel != null)
             {
-                child.RenderModel.Transform.Scale = new Vector3(0.0001f);
+                child.RenderModel.Transform.Scale = new Vector3(0.2f);
             }
         }
 
@@ -223,9 +223,9 @@ internal class Program
 
             geometryRenderer.Enqueue(model);
 
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 2; i++)
             {
-                for (var j = 0; j < 5; j++)
+                for (var j = 0; j < 2; j++)
                 {
                     lightRenderer.Enqueue(new Light()
                     {

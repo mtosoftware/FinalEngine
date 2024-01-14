@@ -63,6 +63,13 @@ public sealed class RenderingEngine : IRenderingEngine
             MultiSamplingEnabled = true,
         });
 
+        this.RenderScene(camera);
+
+        this.renderCoordinator.ClearQueues();
+    }
+
+    private void RenderScene(ICamera camera)
+    {
         if (!this.renderCoordinator.CanRenderGeometry)
         {
             return;
@@ -81,7 +88,5 @@ public sealed class RenderingEngine : IRenderingEngine
         }
 
         this.skyboxRenderer.Render(camera);
-
-        this.renderCoordinator.ClearQueues();
     }
 }
