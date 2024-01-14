@@ -4,25 +4,32 @@
 
 namespace FinalEngine.Rendering.Geometry;
 
-using FinalEngine.Rendering.Core;
+using System;
+using System.Collections.Generic;
+using FinalEngine.Resources;
 
-public sealed class Model
+public sealed class Model : IResource
 {
-    private IMaterial? material;
+    private readonly List<Model> children;
 
-    private Transform? transform;
-
-    public IMaterial Material
+    public Model(string name)
     {
-        get { return this.material ??= new Material(); }
-        set { this.material = value; }
+        this.Name = name;
+        this.children = [];
     }
 
-    public IMesh? Mesh { get; set; }
-
-    public Transform Transform
+    public IEnumerable<Model> Children
     {
-        get { return this.transform ??= new Transform(); }
-        set { this.transform = value; }
+        get { return this.children; }
+    }
+
+    public string Name { get; }
+
+    public RenderModel? RenderModel { get; set; }
+
+    public void AddChild(Model model)
+    {
+        ArgumentNullException.ThrowIfNull(model, nameof(model));
+        this.children.Add(model);
     }
 }

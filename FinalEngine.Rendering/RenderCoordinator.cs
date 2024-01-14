@@ -13,9 +13,9 @@ public sealed class RenderCoordinator : IRenderCoordinator
 {
     private readonly IRenderQueue<Light> lightRenderQueue;
 
-    private readonly IRenderQueue<Model> modelRenderQueue;
+    private readonly IRenderQueue<RenderModel> modelRenderQueue;
 
-    public RenderCoordinator(IRenderQueue<Model> modelRenderQueue, IRenderQueue<Light> lightRenderQueue)
+    public RenderCoordinator(IRenderQueue<RenderModel> modelRenderQueue, IRenderQueue<Light> lightRenderQueue)
     {
         this.modelRenderQueue = modelRenderQueue ?? throw new ArgumentNullException(nameof(modelRenderQueue));
         this.lightRenderQueue = lightRenderQueue ?? throw new ArgumentNullException(nameof(lightRenderQueue));

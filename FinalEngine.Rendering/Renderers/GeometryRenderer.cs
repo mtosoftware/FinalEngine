@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using FinalEngine.Rendering.Core;
 using FinalEngine.Rendering.Geometry;
 
-public sealed class GeometryRenderer : IRenderQueue<Model>, IGeometryRenderer
+public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<Model>, IGeometryRenderer
 {
-    private readonly Dictionary<Model, IEnumerable<Transform>> modelToTransformMap;
+    private readonly Dictionary<RenderModel, IEnumerable<Transform>> modelToTransformMap;
 
     private readonly IRenderDevice renderDevice;
 
@@ -31,7 +31,7 @@ public sealed class GeometryRenderer : IRenderQueue<Model>, IGeometryRenderer
         this.modelToTransformMap.Clear();
     }
 
-    public void Enqueue(Model renderable)
+    public void Enqueue(RenderModel renderable)
     {
         ArgumentNullException.ThrowIfNull(renderable, nameof(renderable));
 
@@ -42,6 +42,21 @@ public sealed class GeometryRenderer : IRenderQueue<Model>, IGeometryRenderer
         }
 
         ((IList<Transform>)batch).Add(renderable.Transform);
+    }
+
+    public void Enqueue(Model renderable)
+    {
+        ArgumentNullException.ThrowIfNull(renderable, nameof(renderable));
+
+        if (renderable.RenderModel != null)
+        {
+            this.Enqueue(renderable.RenderModel);
+        }
+
+        foreach (var child in renderable.Children)
+        {
+            this.Enqueue(child);
+        }
     }
 
     public void Render()
@@ -74,7 +89,7 @@ public sealed class GeometryRenderer : IRenderQueue<Model>, IGeometryRenderer
         mesh.Draw(this.renderDevice);
     }
 
-    private bool TryPrepareModel(Model model)
+    private bool TryPrepareModel(RenderModel model)
     {
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 

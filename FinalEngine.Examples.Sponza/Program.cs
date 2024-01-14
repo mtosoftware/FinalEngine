@@ -8,9 +8,10 @@ using FinalEngine.Input.Mouses;
 using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
-using FinalEngine.Rendering.Core;
+using FinalEngine.Rendering.Batching;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Lighting;
+using FinalEngine.Rendering.Loaders.Models;
 using FinalEngine.Rendering.Loaders.Shaders;
 using FinalEngine.Rendering.Loaders.Textures;
 using FinalEngine.Rendering.OpenGL;
@@ -21,7 +22,6 @@ using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
-using ImGuiNET;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -77,10 +77,11 @@ internal class Program
         ResourceManager.Instance.RegisterLoader(new ShaderResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new Texture2DResourceLoader(fileSystem, renderDevice));
         ResourceManager.Instance.RegisterLoader(new ShaderProgramResourceLoader(ResourceManager.Instance, renderDevice, fileSystem));
+        ResourceManager.Instance.RegisterLoader(new ModelResourceLoader(fileSystem, renderDevice));
 
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);
-        var gameTime = new GameTime(watchInvoker, 120.0f);
+        var gameTime = new GameTime(watchInvoker, 60.0f);
 
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -92,17 +93,9 @@ internal class Program
                 TextureCoordinate = new Vector2(0.0f),
             },
 
-            new MeshVertex()
-            {
-                Position = new Vector3(-fieldWidth, 0.0f, fieldDepth * 3),
-                TextureCoordinate = new Vector2(0.0f, 1.0f),
-            },
+            new MeshVertex() { Position = new Vector3(-fieldWidth, 0.0f, fieldDepth * 3), TextureCoordinate = new Vector2(0.0f, 1.0f), },
 
-            new MeshVertex()
-            {
-                Position = new Vector3(fieldWidth * 3, 0.0f, -fieldDepth),
-                TextureCoordinate = new Vector2(1.0f, 0.0f),
-            },
+            new MeshVertex() { Position = new Vector3(fieldWidth * 3, 0.0f, -fieldDepth), TextureCoordinate = new Vector2(1.0f, 0.0f), },
 
             new MeshVertex()
             {
@@ -138,6 +131,22 @@ internal class Program
             Shininess = 16.0f,
         };
 
+        var model = ResourceManager.Instance.LoadResource<Model>("C:\\Users\\mathe\\Downloads\\main_sponza(1)\\Main.1_Sponza\\NewSponza_Main_Zup_002.fbx");
+
+        // Currently there is no parent-child relationship with transform, so we have to do this to scale and translate.
+        if (model.RenderModel != null)
+        {
+            model.RenderModel.Transform.Scale = new Vector3(0.0001f);
+        }
+
+        foreach (var child in model.Children)
+        {
+            if (child.RenderModel != null)
+            {
+                child.RenderModel.Transform.Scale = new Vector3(0.0001f);
+            }
+        }
+
         bool isRunning = true;
 
         var camera = new Camera(window.ClientSize.Width, window.ClientSize.Height);
@@ -164,36 +173,37 @@ internal class Program
         var front = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_front.png");
         var back = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_back.png");
 
-        var cubeTexture = renderDevice.Factory.CreateCubeTexture(new TextureCubeDescription()
-        {
-            Width = right.Description.Width,
-            Height = right.Description.Height,
-            WrapR = TextureWrapMode.Clamp,
-            WrapS = TextureWrapMode.Clamp,
-            WrapT = TextureWrapMode.Clamp,
-        },
-           right,
-           left,
-           top,
-           bottom,
-           back,
-           front);
+        var cubeTexture = renderDevice.Factory.CreateCubeTexture(
+            new TextureCubeDescription()
+            {
+                Width = right.Description.Width,
+                Height = right.Description.Height,
+                WrapR = TextureWrapMode.Clamp,
+                WrapS = TextureWrapMode.Clamp,
+                WrapT = TextureWrapMode.Clamp,
+            },
+            right,
+            left,
+            top,
+            bottom,
+            back,
+            front);
 
         skyboxRenderer.SetSkybox(cubeTexture);
 
         var controller = new ImGuiController(window.ClientSize.Width, window.ClientSize.Height);
 
-        var light = new Light()
+        var dirLight = new Light()
         {
-            Type = LightType.Point,
-            Intensity = 0.5f,
-            Color = new Vector3(0, 0, 1),
-            Transform = new Transform()
-            {
-                Position = new Vector3(0, 2, 0),
-                //Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(45.0f)),
-            },
+            Type = LightType.Directional,
+            Intensity = 0.4f,
+            Color = new Vector3(0.4f),
+            Direction = new Vector3(-1),
         };
+
+        var binder = new TextureBinder(renderDevice.Pipeline);
+        var batcher = new SpriteBatcher(renderDevice.InputAssembler);
+        var drawer = new SpriteDrawer(renderDevice, batcher, binder, window.ClientSize.Width, window.ClientSize.Height);
 
         while (isRunning)
         {
@@ -211,24 +221,21 @@ internal class Program
             keyboard.Update();
             mouse.Update();
 
-            geometryRenderer.Enqueue(new Model()
-            {
-                Mesh = mesh,
-                Material = material,
-            });
+            geometryRenderer.Enqueue(model);
 
-            lightRenderer.Enqueue(new Light()
+            for (var i = 0; i < 5; i++)
             {
-                Type = LightType.Point,
-                Transform = new Transform()
+                for (var j = 0; j < 5; j++)
                 {
-                    Position = new Vector3(0, 2, 0),
-                },
-            });
+                    lightRenderer.Enqueue(new Light()
+                    {
+                        Type = LightType.Point,
+                        Position = new Vector3((i * 20) - 100, 4, (j * 20) - 50),
+                    });
+                }
+            }
 
             renderingEngine.Render(camera);
-
-            ImGui.End();
 
             controller.Render();
 

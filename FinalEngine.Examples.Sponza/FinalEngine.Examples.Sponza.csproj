@@ -38,4 +38,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Models\Sponza\" />
+  </ItemGroup>
+
 </Project>
