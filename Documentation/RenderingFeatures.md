@@ -8,14 +8,12 @@
 ### Geometry and Models
 
 - [x] Mesh Rendering
-- [ ] Terrain Rendering
 - [x] Model Loading (using Assimp)
 
 ### Camera and View Optimization
 
 - [x] Camera System
 - [ ] View Frustum Culling
-- [ ] Occlusion Culling
 
 ### Material and Shading
 
@@ -36,9 +34,7 @@
   - [x] Directional
   - [x] Point
   - [x] Spot
-  - [ ] Volumetric
 - [x] Global Illumination (Ambient Lighting)
-- [ ] Shadow Mapping
 
 ### Visual Effects
 
@@ -47,14 +43,9 @@
 
 ### Animation and Post Processing
 
-- [ ] Animation
-  - [ ] Skeletal Animation
 - [ ] Post Processing
   - [ ] Gamma Correction
   - [ ] High Dynamic Range (HDR)
-  - [ ] Bloom
-  - [ ] Motion Blur
-  - [ ] Depth of Field
   - [x] Anti-Aliasing
   - [ ] Fog
     - [ ] Linear
