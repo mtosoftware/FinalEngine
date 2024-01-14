@@ -37,8 +37,8 @@ public sealed class SceneRenderer : ISceneRenderer
             this.renderDevice.Pipeline.SetShaderProgram(this.GeometryProgram);
         }
 
-        this.geometryRenderer.Render();
         this.UpdateUniforms(camera);
+        this.geometryRenderer.Render();
     }
 
     private void UpdateUniforms(ICamera camera)
