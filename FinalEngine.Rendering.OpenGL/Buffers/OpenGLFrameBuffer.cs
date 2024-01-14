@@ -39,14 +39,10 @@ public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
 
         if (colorAttachmentCount > 0)
         {
-            Span<DrawBuffersEnum> bufs = stackalloc DrawBuffersEnum[colorAttachmentCount];
-
             for (int i = 0; i < colorAttachmentCount; i++)
             {
-                bufs[i] = DrawBuffersEnum.ColorAttachment0 + i;
+                this.invoker.NamedFramebufferDrawBuffer(this.rendererID, DrawBufferMode.ColorAttachment0 + i);
             }
-
-            this.invoker.NamedFramebufferDrawBuffers(this.rendererID, colorAttachmentCount, ref bufs[0]);
         }
 
         depthTarget?.Attach(FramebufferAttachment.DepthAttachment, this.rendererID);

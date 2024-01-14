@@ -48,6 +48,8 @@ public sealed class RenderingEngine : IRenderingEngine
     {
         ArgumentNullException.ThrowIfNull(camera, nameof(camera));
 
+        this.renderDevice.Pipeline.SetFrameBuffer(null);
+        this.renderDevice.Rasterizer.SetViewport(camera.Bounds);
         this.renderDevice.Clear(Color.Black);
 
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()

@@ -136,8 +136,6 @@ public interface IOpenGLInvoker
 
     void NamedFramebufferDrawBuffer(int framebuffer, DrawBufferMode buf);
 
-    void NamedFramebufferDrawBuffers(int fb, int n, ref DrawBuffersEnum bufs);
-
     void NamedFramebufferReadBuffer(int framebuffer, ReadBufferMode buf);
 
     void NamedFramebufferTexture(int framebuffer, FramebufferAttachment attachment, int texture, int level);
