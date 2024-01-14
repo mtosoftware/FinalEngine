@@ -9,7 +9,7 @@
 
 - [x] Mesh Rendering
 - [ ] Terrain Rendering
-- [ ] Model Loading
+- [x] Model Loading (using Assimp)
 
 ### Camera and View Optimization
 
