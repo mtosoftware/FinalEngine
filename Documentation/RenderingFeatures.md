@@ -45,7 +45,7 @@
 
 - [ ] Post Processing
   - [ ] Gamma Correction
-  - [ ] High Dynamic Range (HDR)
+  - [x] High Dynamic Range (HDR)
   - [x] Anti-Aliasing
   - [ ] Fog
     - [ ] Linear
