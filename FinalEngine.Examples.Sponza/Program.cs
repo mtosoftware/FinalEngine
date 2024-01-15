@@ -197,9 +197,20 @@ internal class Program
         var batcher = new SpriteBatcher(renderDevice.InputAssembler);
         var drawer = new SpriteDrawer(renderDevice, batcher, binder, window.ClientSize.Width, window.ClientSize.Height);
 
-        float exposure = 1.0f;
-        bool enabled = false;
-        int type = 0;
+        float hdrExposure = 1.0f;
+        bool hdrEnabled = false;
+        int hdrType = 0;
+
+        bool inversionEnabled = false;
+
+        var toneMapping = new ToneMappingRenderEffect()
+        {
+            Algorithm = (ToneMappingAlgorithm)hdrType,
+            Exposure = hdrExposure,
+            Enabled = hdrEnabled,
+        };
+
+        var inversion = new InversionRenderEffect();
 
         while (isRunning)
         {
@@ -217,17 +228,8 @@ internal class Program
             keyboard.Update();
             mouse.Update();
 
-            postRenderer.Enqueue(new ToneMappingRenderEffect()
-            {
-                Algorithm = (ToneMappingAlgorithm)type,
-                Exposure = exposure,
-                Enabled = enabled,
-            });
-
-            postRenderer.Enqueue(new InversionRenderEffect()
-            {
-                Enabled = false,
-            });
+            postRenderer.Enqueue(toneMapping);
+            postRenderer.Enqueue(inversion);
 
             geometryRenderer.Enqueue(model);
 
@@ -245,15 +247,18 @@ internal class Program
 
             ImGui.Begin("Tools");
 
-            ImGui.Checkbox("Enabled", ref enabled);
-            ImGui.DragFloat("Exposure", ref exposure);
-            ImGui.DragInt("Type", ref type, 1, 0, 1);
+            ImGui.Checkbox("HDR Enabled", ref hdrEnabled);
+            ImGui.DragFloat("HDR Exposure", ref hdrExposure);
+            ImGui.DragInt("HDR Type", ref hdrType, 1, 0, 1);
+            ImGui.Checkbox("Inversion Enabled", ref inversionEnabled);
 
             ImGui.End();
 
-            renderDevice.Pipeline.SetUniform("u_hdr.enabled", enabled);
-            renderDevice.Pipeline.SetUniform("u_hdr.exposure", exposure);
-            renderDevice.Pipeline.SetUniform("u_hdr.type", type);
+            toneMapping.Enabled = hdrEnabled;
+            toneMapping.Exposure = hdrExposure;
+            toneMapping.Algorithm = (ToneMappingAlgorithm)hdrType;
+
+            inversion.Enabled = inversionEnabled;
 
             renderingEngine.Render(camera);
 
