@@ -14,6 +14,8 @@ public sealed class RenderingEngine : IRenderingEngine
 {
     private readonly ILightRenderer lightRenderer;
 
+    private readonly IPostRenderer postRenderer;
+
     private readonly IRenderCoordinator renderCoordinator;
 
     private readonly IRenderDevice renderDevice;
@@ -28,6 +30,7 @@ public sealed class RenderingEngine : IRenderingEngine
         ILightRenderer lightRenderer,
         ISkyboxRenderer skyboxRenderer,
         ISceneRenderer sceneRenderer,
+        IPostRenderer postRenderer,
         IRenderCoordinator renderCoordinator)
     {
         ArgumentNullException.ThrowIfNull(fileSystem, nameof(fileSystem));
@@ -36,10 +39,12 @@ public sealed class RenderingEngine : IRenderingEngine
         this.lightRenderer = lightRenderer ?? throw new ArgumentNullException(nameof(lightRenderer));
         this.skyboxRenderer = skyboxRenderer ?? throw new ArgumentNullException(nameof(skyboxRenderer));
         this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
+        this.postRenderer = postRenderer ?? throw new ArgumentNullException(nameof(postRenderer));
         this.renderCoordinator = renderCoordinator ?? throw new ArgumentNullException(nameof(renderCoordinator));
 
         this.renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
         this.renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
+        this.renderDevice.Pipeline.AddShaderHeader("hdr", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\hdr.glsl"));
 
         this.renderDevice.Initialize();
     }
@@ -65,7 +70,17 @@ public sealed class RenderingEngine : IRenderingEngine
             MultiSamplingEnabled = true,
         });
 
-        this.RenderScene(camera);
+        if (!this.renderCoordinator.CanRenderEffects)
+        {
+            this.RenderScene(camera);
+        }
+        else
+        {
+            this.postRenderer.Render(camera, () =>
+            {
+                this.RenderScene(camera);
+            });
+        }
 
         this.renderCoordinator.ClearQueues();
     }

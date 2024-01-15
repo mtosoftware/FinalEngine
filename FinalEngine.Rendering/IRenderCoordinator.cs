@@ -6,6 +6,8 @@ namespace FinalEngine.Rendering;
 
 public interface IRenderCoordinator
 {
+    bool CanRenderEffects { get; }
+
     bool CanRenderGeometry { get; }
 
     bool CanRenderLights { get; }

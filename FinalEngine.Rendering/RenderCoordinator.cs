@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering;
 
 using System;
+using FinalEngine.Rendering.Effects;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Renderers;
@@ -15,10 +16,21 @@ public sealed class RenderCoordinator : IRenderCoordinator
 
     private readonly IRenderQueue<RenderModel> modelRenderQueue;
 
-    public RenderCoordinator(IRenderQueue<RenderModel> modelRenderQueue, IRenderQueue<Light> lightRenderQueue)
+    private readonly IRenderQueue<IRenderEffect> renderEffectQueue;
+
+    public RenderCoordinator(
+        IRenderQueue<RenderModel> modelRenderQueue,
+        IRenderQueue<Light> lightRenderQueue,
+        IRenderQueue<IRenderEffect> renderEffectQueue)
     {
         this.modelRenderQueue = modelRenderQueue ?? throw new ArgumentNullException(nameof(modelRenderQueue));
         this.lightRenderQueue = lightRenderQueue ?? throw new ArgumentNullException(nameof(lightRenderQueue));
+        this.renderEffectQueue = renderEffectQueue ?? throw new ArgumentNullException(nameof(renderEffectQueue));
+    }
+
+    public bool CanRenderEffects
+    {
+        get { return this.renderEffectQueue.CanRender; }
     }
 
     public bool CanRenderGeometry
@@ -35,5 +47,6 @@ public sealed class RenderCoordinator : IRenderCoordinator
     {
         this.modelRenderQueue.Clear();
         this.lightRenderQueue.Clear();
+        this.renderEffectQueue.Clear();
     }
 }

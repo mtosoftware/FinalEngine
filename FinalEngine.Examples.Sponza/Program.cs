@@ -9,6 +9,7 @@ using FinalEngine.Platform.Desktop.OpenTK;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Batching;
+using FinalEngine.Rendering.Effects;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Loaders.Models;
@@ -22,6 +23,7 @@ using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using FinalEngine.Runtime.Invocation;
+using ImGuiNET;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -47,6 +49,7 @@ internal class Program
 
             StartVisible = true,
 
+            DepthBits = 24,
             NumberOfSamples = 8,
         };
 
@@ -155,8 +158,9 @@ internal class Program
         var lightRenderer = new LightRenderer(renderDevice);
         var skyboxRenderer = new SkyboxRenderer(renderDevice);
         var sceneRenderer = new SceneRenderer(renderDevice, geometryRenderer);
+        var postRenderer = new PostRenderer(renderDevice, window.ClientSize.Width, window.ClientSize.Height);
 
-        var renderCoordinator = new RenderCoordinator(geometryRenderer, lightRenderer);
+        var renderCoordinator = new RenderCoordinator(geometryRenderer, lightRenderer, postRenderer);
 
         var renderingEngine = new RenderingEngine(
             fileSystem,
@@ -164,6 +168,7 @@ internal class Program
             lightRenderer,
             skyboxRenderer,
             sceneRenderer,
+            postRenderer,
             renderCoordinator);
 
         var right = ResourceManager.Instance.LoadResource<ITexture2D>("Resources\\Textures\\Skybox\\default_right.png");
@@ -205,6 +210,10 @@ internal class Program
         var batcher = new SpriteBatcher(renderDevice.InputAssembler);
         var drawer = new SpriteDrawer(renderDevice, batcher, binder, window.ClientSize.Width, window.ClientSize.Height);
 
+        float exposure = 1.0f;
+        bool enabled = false;
+        int type = 0;
+
         while (isRunning)
         {
             if (!gameTime.CanProcessNextFrame())
@@ -221,6 +230,13 @@ internal class Program
             keyboard.Update();
             mouse.Update();
 
+            postRenderer.Enqueue(new ToneMappingRenderEffect()
+            {
+                Algorithm = (ToneMappingAlgorithm)type,
+                Exposure = exposure,
+                Enabled = enabled,
+            });
+
             geometryRenderer.Enqueue(model);
 
             for (var i = 0; i < 2; i++)
@@ -234,6 +250,18 @@ internal class Program
                     });
                 }
             }
+
+            ImGui.Begin("Tools");
+
+            ImGui.Checkbox("Enabled", ref enabled);
+            ImGui.DragFloat("Exposure", ref exposure);
+            ImGui.DragInt("Type", ref type, 1, 0, 1);
+
+            ImGui.End();
+
+            renderDevice.Pipeline.SetUniform("u_hdr.enabled", enabled);
+            renderDevice.Pipeline.SetUniform("u_hdr.exposure", exposure);
+            renderDevice.Pipeline.SetUniform("u_hdr.type", type);
 
             renderingEngine.Render(camera);
 
