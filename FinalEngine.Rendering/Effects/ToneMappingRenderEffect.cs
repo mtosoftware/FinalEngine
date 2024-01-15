@@ -32,12 +32,12 @@ public sealed class ToneMappingRenderEffect : IRenderEffect
     {
         ArgumentNullException.ThrowIfNull(pipeline, nameof(pipeline));
 
-        pipeline.SetUniform("u_hdr.enabled", this.Enabled);
-        pipeline.SetUniform("u_hdr.type", (int)this.Algorithm);
+        pipeline.SetUniform("u_toneMapping.base.enabled", this.Enabled);
+        pipeline.SetUniform("u_toneMapping.type", (int)this.Algorithm);
 
         if (this.Algorithm == ToneMappingAlgorithm.Exposure)
         {
-            pipeline.SetUniform("u_hdr.exposure", this.Exposure);
+            pipeline.SetUniform("u_toneMapping.exposure", this.Exposure);
         }
     }
 }

@@ -135,20 +135,7 @@ internal class Program
         };
 
         var model = ResourceManager.Instance.LoadResource<Model>("Resources\\Models\\Sponza\\sponza.obj");
-
-        // Currently there is no parent-child relationship with transform, so we have to do this to scale and translate.
-        if (model.RenderModel != null)
-        {
-            model.RenderModel.Transform.Scale = new Vector3(0.2f);
-        }
-
-        foreach (var child in model.Children)
-        {
-            if (child.RenderModel != null)
-            {
-                child.RenderModel.Transform.Scale = new Vector3(0.2f);
-            }
-        }
+        SetSize(model);
 
         bool isRunning = true;
 
@@ -237,6 +224,11 @@ internal class Program
                 Enabled = enabled,
             });
 
+            postRenderer.Enqueue(new InversionRenderEffect()
+            {
+                Enabled = false,
+            });
+
             geometryRenderer.Enqueue(model);
 
             for (var i = 0; i < 2; i++)
@@ -278,5 +270,18 @@ internal class Program
         keyboard.Dispose();
         window.Dispose();
         nativeWindow.Dispose();
+    }
+
+    private static void SetSize(Model model)
+    {
+        if (model.RenderModel != null)
+        {
+            model.RenderModel.Transform.Scale = new Vector3(0.2f);
+        }
+
+        foreach (var child in model.Children)
+        {
+            SetSize(child);
+        }
     }
 }
