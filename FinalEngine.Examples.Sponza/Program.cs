@@ -54,7 +54,7 @@ internal class Program
 
         var window = new OpenTKWindow(nativeWindow)
         {
-            Title = "Final Engine - Vapor",
+            Title = "Final Engine",
         };
 
         var keyboardDevice = new OpenTKKeyboardDevice(nativeWindow);
