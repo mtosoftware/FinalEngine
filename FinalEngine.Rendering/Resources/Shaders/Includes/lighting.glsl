@@ -44,33 +44,40 @@ struct SpotLight
     float outerRadius;
 };
 
-uniform bool u_test;
-
 vec3 CalculateLight(LightBase light, Material material, vec3 direction, vec3 normal, vec3 viewPosition, vec3 fragPosition, vec2 texCoord)
 {
     normal = normalize(normal);
     direction = normalize(direction);
 
+    vec3 diffuseColor = vec3(0, 0, 0);
+    vec3 specularColor = vec3(0, 0, 0);
+
     // As the angle widens, diffuse shading decreases.
     float diffuseShading = max(dot(direction, normal), 0.0);
-    vec3 diffuseColor = diffuseShading * light.color * light.intensity * texture(material.diffuseTexture, texCoord).rgb;
 
-    // Now let's measure the angle between the normal and halfway point of the light and view direction.
-    vec3 viewDirection = normalize(viewPosition - fragPosition);
-    vec3 halfWayDirection = normalize(direction + viewDirection);
+    if (diffuseShading > 0)
+    {
+        diffuseColor = diffuseShading * light.color * light.intensity * texture(material.diffuseTexture, texCoord).rgb;
 
-    // As the angle widens, specular shading decreases.
-    // This is why we raise to the power of shininess.
-    float specularShading = pow(max(dot(normal, halfWayDirection), 0.0), material.shininess);
-    vec3 specularColor = specularShading * light.color * light.intensity * texture(material.specularTexture, texCoord).rgb;
+        // Now let's measure the angle between the normal and halfway point of the light and view direction.
+        vec3 viewDirection = normalize(viewPosition - fragPosition);
+        vec3 halfWayDirection = normalize(direction + viewDirection);
+
+        // As the angle widens, specular shading decreases.
+        // This is why we raise to the power of shininess.
+        float specularShading = pow(max(dot(normal, halfWayDirection), 0.0), material.shininess);
+
+        if (specularShading > 0)
+        {
+            specularColor = specularShading * light.color * light.intensity * texture(material.specularTexture, texCoord).rgb;
+        }
+    }
 
     // Calculate emission map here as it's a lighting effect.
     vec3 emissionColor = texture(material.emissionTexture, texCoord).rgb;
 
     return diffuseColor + specularColor + emissionColor;
 }
-
-
 
 vec3 CalculateDirectionalLight(DirectionalLight light, Material material, vec3 normal, vec3 viewPosition, vec3 fragPosition, vec2 texCoord)
 {

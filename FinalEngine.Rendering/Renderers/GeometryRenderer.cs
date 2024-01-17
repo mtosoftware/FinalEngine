@@ -11,37 +11,37 @@ using FinalEngine.Rendering.Geometry;
 
 public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<Model>, IGeometryRenderer
 {
-    private readonly Dictionary<RenderModel, IEnumerable<Transform>> modelToTransformMap;
+    private readonly Dictionary<IMaterial, IList<RenderModel>> materialToRenderModelMap;
 
     private readonly IRenderDevice renderDevice;
 
     public GeometryRenderer(IRenderDevice renderDevice)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
-        this.modelToTransformMap = [];
+        this.materialToRenderModelMap = [];
     }
 
     public bool CanRender
     {
-        get { return this.modelToTransformMap.Count != 0; }
+        get { return this.materialToRenderModelMap.Count != 0; }
     }
 
     public void Clear()
     {
-        this.modelToTransformMap.Clear();
+        this.materialToRenderModelMap.Clear();
     }
 
     public void Enqueue(RenderModel renderable)
     {
         ArgumentNullException.ThrowIfNull(renderable, nameof(renderable));
 
-        if (!this.modelToTransformMap.TryGetValue(renderable, out var batch))
+        if (!this.materialToRenderModelMap.TryGetValue(renderable.Material, out var batch))
         {
-            batch = new List<Transform>();
-            this.modelToTransformMap.Add(renderable, batch);
+            batch = new List<RenderModel>();
+            this.materialToRenderModelMap.Add(renderable.Material, batch);
         }
 
-        ((IList<Transform>)batch).Add(renderable.Transform);
+        batch.Add(renderable);
     }
 
     public void Enqueue(Model renderable)
@@ -61,20 +61,17 @@ public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<M
 
     public void Render()
     {
-        foreach (var kvp in this.modelToTransformMap)
+        foreach (var kvp in this.materialToRenderModelMap)
         {
-            var model = kvp.Key;
+            var material = kvp.Key;
             var batch = kvp.Value;
 
-            if (!this.TryPrepareModel(model))
-            {
-                continue;
-            }
+            material.Bind(this.renderDevice.Pipeline);
 
-            foreach (var transform in batch)
+            foreach (var renderModel in batch)
             {
-                this.UpdateUniforms(transform);
-                this.RenderBatchInstance(model.Mesh);
+                this.UpdateUniforms(renderModel.Transform);
+                this.RenderBatchInstance(renderModel.Mesh);
             }
         }
     }
@@ -86,25 +83,8 @@ public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<M
             return;
         }
 
-        mesh.Draw(this.renderDevice);
-    }
-
-    private bool TryPrepareModel(RenderModel model)
-    {
-        ArgumentNullException.ThrowIfNull(model, nameof(model));
-
-        var mesh = model.Mesh;
-        var material = model.Material;
-
-        if (mesh == null)
-        {
-            return false;
-        }
-
-        material.Bind(this.renderDevice.Pipeline);
         mesh.Bind(this.renderDevice.InputAssembler);
-
-        return true;
+        mesh.Draw(this.renderDevice);
     }
 
     private void UpdateUniforms(Transform transform)

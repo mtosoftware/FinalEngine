@@ -81,7 +81,7 @@ internal class Program
 
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);
-        var gameTime = new GameTime(watchInvoker, 120.0f);
+        var gameTime = new GameTime(watchInvoker, 10000.0f);
 
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -223,9 +223,9 @@ internal class Program
 
             geometryRenderer.Enqueue(model);
 
-            for (var i = 0; i < 2; i++)
+            for (var i = 0; i < 5; i++)
             {
-                for (var j = 0; j < 2; j++)
+                for (var j = 0; j < 5; j++)
                 {
                     lightRenderer.Enqueue(new Light()
                     {

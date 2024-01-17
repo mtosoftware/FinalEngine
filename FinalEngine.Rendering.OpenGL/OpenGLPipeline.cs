@@ -18,13 +18,9 @@ using OpenTK.Graphics.OpenGL4;
 
 public class OpenGLPipeline : IPipeline
 {
-    private const int InitialSizeCapacity = 50;
-
     private readonly IOpenGLInvoker invoker;
 
     private readonly Dictionary<string, string> nameToHeaderMap;
-
-    private readonly Dictionary<string, int> uniformLocations;
 
     private IOpenGLFrameBuffer? boundFrameBuffer;
 
@@ -35,7 +31,6 @@ public class OpenGLPipeline : IPipeline
     public OpenGLPipeline(IOpenGLInvoker invoker)
     {
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
-        this.uniformLocations = new Dictionary<string, int>(InitialSizeCapacity);
         this.nameToHeaderMap = [];
     }
 
@@ -105,8 +100,6 @@ public class OpenGLPipeline : IPipeline
         {
             throw new ArgumentException($"The specified {nameof(program)} parameter is not of type {nameof(IOpenGLShaderProgram)}.", nameof(program));
         }
-
-        this.uniformLocations.Clear();
 
         this.boundProgram = glProgram;
         this.boundProgram.Bind();
@@ -254,18 +247,6 @@ public class OpenGLPipeline : IPipeline
             return false;
         }
 
-        if (!this.uniformLocations.TryGetValue(name, out location))
-        {
-            location = this.boundProgram.GetUniformLocation(name);
-
-            if (location == -1)
-            {
-                return false;
-            }
-
-            this.uniformLocations.Add(name, location);
-        }
-
-        return true;
+        return this.boundProgram.TryGetUniformLocation(name, out location);
     }
 }

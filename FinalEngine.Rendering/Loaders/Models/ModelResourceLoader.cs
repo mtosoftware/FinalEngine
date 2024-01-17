@@ -46,7 +46,12 @@ public sealed class ModelResourceLoader : ResourceLoaderBase<Model>
             var flags = PostProcessSteps.Triangulate |
                         PostProcessSteps.FlipUVs |
                         PostProcessSteps.GenerateNormals |
-                        PostProcessSteps.CalculateTangentSpace;
+                        PostProcessSteps.CalculateTangentSpace |
+                        PostProcessSteps.OptimizeGraph |
+                        PostProcessSteps.OptimizeMeshes |
+                        PostProcessSteps.JoinIdenticalVertices |
+                        PostProcessSteps.RemoveRedundantMaterials |
+                        PostProcessSteps.SplitLargeMeshes;
 
             var scene = context.ImportFile(filePath, flags);
 
