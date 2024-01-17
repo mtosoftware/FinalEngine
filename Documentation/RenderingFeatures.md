@@ -23,9 +23,6 @@
   - [x] Normal Mapping
   - [x] Emissive Mapping
   - [ ] Parallax Mapping
-  - [ ] Reflection Mapping
-  - [ ] Refraction Mapping
-
 ### Lighting and Shadows
 
 - [x] Lighting
