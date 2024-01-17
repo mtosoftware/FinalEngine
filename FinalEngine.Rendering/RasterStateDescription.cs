@@ -33,6 +33,8 @@ public struct RasterStateDescription : IEquatable<RasterStateDescription>
 
     private RasterMode? fillMode;
 
+    private bool? gammaCorrectionEnabled;
+
     private WindingDirection? windingDirection;
 
     public bool CullEnabled { get; set; }
