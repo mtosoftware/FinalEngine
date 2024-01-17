@@ -72,34 +72,4 @@ public sealed class Material : IMaterial
         pipeline.SetTexture(this.NormalTexture, 2);
         pipeline.SetTexture(this.EmissionTexture, 3);
     }
-
-    public bool Equals(Material other)
-    {
-        if (other == null)
-        {
-            return false;
-        }
-
-        return ReferenceEquals(this.DiffuseTexture, other.DiffuseTexture) &&
-               ReferenceEquals(this.SpecularTexture, other.SpecularTexture) &&
-               ReferenceEquals(this.NormalTexture, other.NormalTexture) &&
-               ReferenceEquals(this.EmissionTexture, other.EmissionTexture) &&
-               this.Shininess == other.Shininess;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is Material material && this.Equals(material);
-    }
-
-    public override int GetHashCode()
-    {
-        const int accumulator = 17;
-
-        return (this.DiffuseTexture.GetHashCode() * accumulator) +
-               (this.SpecularTexture.GetHashCode() * accumulator) +
-               (this.NormalTexture.GetHashCode() * accumulator) +
-               (this.EmissionTexture.GetHashCode() * accumulator) +
-               (this.Shininess.GetHashCode() * accumulator);
-    }
 }

@@ -64,7 +64,7 @@ public sealed class ModelResourceLoader : ResourceLoaderBase<Model>
     {
         var result = new Material();
 
-        if (mesh.MaterialIndex >= 0)
+        if (mesh.MaterialIndex >= 0 && materials.Count > 0)
         {
             var assimpMaterial = materials[mesh.MaterialIndex];
 
@@ -92,14 +92,54 @@ public sealed class ModelResourceLoader : ResourceLoaderBase<Model>
         return result;
     }
 
+    private static Dictionary<int, IMaterial> PreLoadMaterials(AssimpScene scene, string? directory)
+    {
+        var indexToMaterialMap = new Dictionary<int, IMaterial>();
+
+        if (scene.HasMaterials)
+        {
+            for (int i = 0; i < scene.Materials.Count; i++)
+            {
+                var assimpMaterial = scene.Materials[i];
+                var material = new Material();
+
+                if (assimpMaterial.HasTextureDiffuse)
+                {
+                    material.DiffuseTexture = ResourceManager.Instance.LoadResource<ITexture2D>($"{directory}\\{assimpMaterial.TextureDiffuse.FilePath}");
+                }
+
+                if (assimpMaterial.HasTextureSpecular)
+                {
+                    material.SpecularTexture = ResourceManager.Instance.LoadResource<ITexture2D>($"{directory}\\{assimpMaterial.TextureSpecular.FilePath}");
+                }
+
+                if (assimpMaterial.HasTextureHeight)
+                {
+                    material.NormalTexture = ResourceManager.Instance.LoadResource<ITexture2D>($"{directory}\\{assimpMaterial.TextureHeight.FilePath}");
+                }
+
+                if (assimpMaterial.HasTextureEmissive)
+                {
+                    material.EmissionTexture = ResourceManager.Instance.LoadResource<ITexture2D>($"{directory}\\{assimpMaterial.TextureEmissive.FilePath}");
+                }
+
+                indexToMaterialMap.Add(i, material);
+            }
+        }
+
+        return indexToMaterialMap;
+    }
+
     private Model ProcessModel(AssimpScene scene, AssimpNode node, string? directory)
     {
         var model = new Model(node.Name);
 
+        var indexToMaterialMap = PreLoadMaterials(scene, directory);
+
         for (int i = 0; i < node.MeshCount; i++)
         {
             var mesh = scene.Meshes[node.MeshIndices[i]];
-            var renderModel = this.ProcessRenderModel(scene, mesh, directory);
+            var renderModel = this.ProcessRenderModel(scene, mesh, indexToMaterialMap);
 
             if (i == 0)
             {
@@ -121,7 +161,7 @@ public sealed class ModelResourceLoader : ResourceLoaderBase<Model>
         return model;
     }
 
-    private RenderModel ProcessRenderModel(AssimpScene scene, AssimpMesh mesh, string? directory)
+    private RenderModel ProcessRenderModel(AssimpScene scene, AssimpMesh mesh, IDictionary<int, IMaterial> indexToMaterialMap)
     {
         var vertices = new List<MeshVertex>();
         var indices = new List<int>();
@@ -177,7 +217,7 @@ public sealed class ModelResourceLoader : ResourceLoaderBase<Model>
         return new RenderModel()
         {
             Mesh = new Mesh<MeshVertex>(this.renderDevice.Factory, [.. vertices], [.. indices], MeshVertex.InputElements, MeshVertex.SizeInBytes),
-            Material = LoadMaterial(mesh, scene.Materials, directory),
+            Material = mesh.MaterialIndex >= 0 ? indexToMaterialMap[mesh.MaterialIndex] : new Material(),
         };
     }
 }
