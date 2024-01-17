@@ -254,18 +254,6 @@ public class OpenGLPipeline : IPipeline
             return false;
         }
 
-        if (!this.uniformLocations.TryGetValue(name, out location))
-        {
-            location = this.boundProgram.GetUniformLocation(name);
-
-            if (location == -1)
-            {
-                return false;
-            }
-
-            this.uniformLocations.Add(name, location);
-        }
-
-        return true;
+        return this.boundProgram.TryGetUniformLocation(name, out location);
     }
 }

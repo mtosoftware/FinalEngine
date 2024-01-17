@@ -13,6 +13,8 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
 {
     private readonly IOpenGLInvoker invoker;
 
+    private readonly Dictionary<string, int> uniformNameToLocationMap;
+
     private int rendererID;
 
     public OpenGLShaderProgram(IOpenGLInvoker invoker, IReadOnlyCollection<IOpenGLShader> shaders)
@@ -22,6 +24,7 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
 
         this.rendererID = this.invoker.CreateProgram();
+        this.uniformNameToLocationMap = [];
 
         foreach (var shader in shaders)
         {
@@ -63,12 +66,23 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public int GetUniformLocation(string name)
+    public bool TryGetUniformLocation(string name, out int location)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
         ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
-        return this.invoker.GetUniformLocation(this.rendererID, name);
+        if (!this.uniformNameToLocationMap.TryGetValue(name, out location))
+        {
+            location = this.GetUniformLocation(name);
+
+            if (location == -1)
+            {
+                return false;
+            }
+
+            this.uniformNameToLocationMap.Add(name, location);
+        }
+
+        return true;
     }
 
     protected virtual void Dispose(bool disposing)
@@ -85,5 +99,13 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
         }
 
         this.IsDisposed = true;
+    }
+
+    private int GetUniformLocation(string name)
+    {
+        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+
+        return this.invoker.GetUniformLocation(this.rendererID, name);
     }
 }
