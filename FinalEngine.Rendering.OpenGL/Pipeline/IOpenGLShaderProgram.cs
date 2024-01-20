@@ -10,5 +10,5 @@ public interface IOpenGLShaderProgram : IShaderProgram
 {
     void Bind();
 
-    int GetUniformLocation(string name);
+    bool TryGetUniformLocation(string name, out int location);
 }
