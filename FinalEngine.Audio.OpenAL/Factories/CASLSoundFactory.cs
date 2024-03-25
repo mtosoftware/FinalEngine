@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using CASLSound = CASL.Sound;
 using ICASLSound = CASL.ISound;
 
-[ExcludeFromCodeCoverage]
+[ExcludeFromCodeCoverage(Justification = "Invocation")]
 internal sealed class CASLSoundFactory : ICASLSoundFactory
 {
     public ICASLSound CreateSound(string filePath)

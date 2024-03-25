@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
 	  <AnalysisMode>All</AnalysisMode>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
     <NoWarn>SA0001</NoWarn>
   </PropertyGroup>

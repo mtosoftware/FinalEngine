@@ -9,6 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using FinalEngine.Resources.Exceptions;
 
+/// <summary>
+/// Provides a standard implementation of an <see cref="IResourceManager"/>.
+/// </summary>
+///
+/// <seealso cref="IResourceManager" />
 public class ResourceManager : IResourceManager
 {
     private static IResourceManager? instance;
@@ -17,17 +22,30 @@ public class ResourceManager : IResourceManager
 
     private readonly Dictionary<Type, IResourceLoaderInternal> typeToLoaderMap;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ResourceManager"/> class.
+    /// </summary>
     public ResourceManager()
     {
         this.typeToLoaderMap = [];
         this.pathToResourceDataMap = [];
     }
 
+    /// <summary>
+    /// Finalizes an instance of the <see cref="ResourceManager"/> class.
+    /// </summary>
     ~ResourceManager()
     {
         this.Dispose(false);
     }
 
+    /// <summary>
+    /// Gets the instance.
+    /// </summary>
+    ///
+    /// <value>
+    /// The instance.
+    /// </value>
     public static IResourceManager Instance
     {
         get
@@ -36,14 +54,54 @@ public class ResourceManager : IResourceManager
         }
     }
 
+    /// <summary>
+    /// Gets a value indicating whether this <see cref="ResourceManager"/> is disposed.
+    /// </summary>
+    ///
+    /// <value>
+    ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+    /// </value>
     protected bool IsDisposed { get; private set; }
 
+    /// <summary>
+    ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// </summary>
     public void Dispose()
     {
         this.Dispose(true);
         GC.SuppressFinalize(this);
     }
 
+    /// <summary>
+    /// Loads a resource at the specified <paramref name="filePath"/>.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of resource to load.
+    /// </typeparam>
+    ///
+    /// <param name="filePath">
+    /// The file path of the resource to load.
+    /// </param>
+    ///
+    /// <remarks>
+    /// The typical implementation of <see cref="IResourceManager"/> should attempt to cache resources; this way if <see cref="LoadResource{T}(string)"/> is called for the same file a reference the already loaded resource can be fetched.
+    /// </remarks>
+    ///
+    /// <returns>
+    /// The loaded resource, of type <typeparamref name="T"/>.
+    /// </returns>
+    ///
+    /// <exception cref="ResourceLoaderNotRegisteredException">
+    /// The specified <typeparamref name="T"/> parameter does not have an associated registered loader. You should call <see cref="RegisterLoader{T}(ResourceLoaderBase{T})"/> on the resource type you wish to load.
+    /// </exception>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="ResourceManager"/> has been disposed.
+    /// </exception>
+    ///
+    /// <exception cref="ArgumentException">
+    /// The specified <paramref name="filePath"/> parameter cannot be null, empty or consist of only whitespace characters.
+    /// </exception>
     public T LoadResource<T>(string filePath)
         where T : IResource
     {
@@ -66,6 +124,29 @@ public class ResourceManager : IResourceManager
         return (T)resourceData.Reference;
     }
 
+    /// <summary>
+    /// Registers the specified <paramref name="loader"/> to this <see cref="IResourceManager"/>.
+    /// </summary>
+    ///
+    /// <typeparam name="T">
+    /// The type of resource that can be loaded.
+    /// </typeparam>
+    ///
+    /// <param name="loader">
+    /// The resource loader to be used when attempting to resolve a resource of type <typeparamref name="T"/>.
+    /// </param>
+    ///
+    /// <remarks>
+    /// The typical implementation of an <see cref="IResourceManager"/> should likely throw a <see cref="ResourceLoaderNotRegisteredException"/> if a loader of the specified <typeparamref name="T"/> type has already been registered.
+    /// </remarks>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="ResourceManager"/> has been disposed.
+    /// </exception>
+    ///
+    /// <exception cref="ArgumentException">
+    /// The specified <paramref name="loader"/> parameter cannot be null.
+    /// </exception>
     public void RegisterLoader<T>(ResourceLoaderBase<T> loader)
         where T : IResource
     {
@@ -80,7 +161,22 @@ public class ResourceManager : IResourceManager
         this.typeToLoaderMap.Add(typeof(T), loader);
     }
 
-    public void UnloadResource(IResource? resource)
+    /// <summary>
+    /// Unloads the specified  <paramref name="resource"/> from this <see cref="IResourceManager"/> (calling it's dispose method if <see cref="IDisposable"/> is implemented and there are no references).
+    /// </summary>
+    ///
+    /// <param name="resource">
+    /// The resource to unload.
+    /// </param>
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// The <see cref="ResourceManager"/> has been disposed.
+    /// </exception>
+    ///
+    /// <exception cref="ArgumentException">
+    /// The specified <paramref name="resource"/> parameter cannot be null.
+    /// </exception>
+    public void UnloadResource(IResource resource)
     {
         ObjectDisposedException.ThrowIf(this.IsDisposed, this);
         ArgumentNullException.ThrowIfNull(resource, nameof(resource));
@@ -107,6 +203,13 @@ public class ResourceManager : IResourceManager
         }
     }
 
+    /// <summary>
+    ///   Releases unmanaged and - optionally - managed resources.
+    /// </summary>
+    ///
+    /// <param name="disposing">
+    ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+    /// </param>
     protected virtual void Dispose(bool disposing)
     {
         if (this.IsDisposed)
