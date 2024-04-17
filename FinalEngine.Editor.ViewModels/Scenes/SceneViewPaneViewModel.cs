@@ -13,13 +13,13 @@ using Microsoft.Extensions.Logging;
 
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
-    private readonly ISceneRenderer sceneRenderer;
+    private readonly IViewRenderer sceneRenderer;
 
     private ICommand? renderCommand;
 
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
-        ISceneRenderer sceneRenderer)
+        IViewRenderer sceneRenderer)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 

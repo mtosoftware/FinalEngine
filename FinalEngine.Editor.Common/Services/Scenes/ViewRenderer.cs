@@ -8,7 +8,7 @@ using System;
 using System.Drawing;
 using FinalEngine.Rendering;
 
-public sealed class SceneRenderer : ISceneRenderer
+public sealed class ViewRenderer : IViewRenderer
 {
     private readonly IRenderDevice renderDevice;
 
@@ -18,7 +18,7 @@ public sealed class SceneRenderer : ISceneRenderer
 
     private bool isInitialized;
 
-    public SceneRenderer(IRenderPipeline renderPipeline, IRenderDevice renderDevice, ISceneManager sceneManager)
+    public ViewRenderer(IRenderPipeline renderPipeline, IRenderDevice renderDevice, ISceneManager sceneManager)
     {
         this.renderPipeline = renderPipeline ?? throw new ArgumentNullException(nameof(renderPipeline));
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));

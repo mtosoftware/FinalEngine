@@ -90,7 +90,7 @@ public partial class App : Application
 
         services.AddSingleton<IApplicationContext, ApplicationContext>();
         services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
-        services.AddSingleton<ISceneRenderer, SceneRenderer>();
+        services.AddSingleton<IViewRenderer, ViewRenderer>();
         services.AddSingleton<ISceneManager, SceneManager>();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();

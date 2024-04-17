@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Editor.Common.Services.Scenes;
 
-public interface ISceneRenderer
+public interface IViewRenderer
 {
     void Render();
 }
