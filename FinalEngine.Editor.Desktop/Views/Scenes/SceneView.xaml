@@ -7,11 +7,13 @@
              xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Scenes;assembly=FinalEngine.Editor.ViewModels"
              xmlns:glwpf="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:SceneViewPaneViewModel}">
+             d:DataContext="{d:DesignInstance Type=vm:SceneViewPaneViewModel}"
+             SizeChanged="SceneView_SizeChanged">
     <Grid>
         <glwpf:GLWpfControl x:Name="glWpfControl"
                             RegisterToEventsDirectly="False"
                             CanInvokeOnHandledEvents="False"
-                            Render="{eb:EventBinding RenderCommand.Execute, `null`}" />
+                            Render="{eb:EventBinding RenderCommand.Execute, `null`}">
+        </glwpf:GLWpfControl>
     </Grid>
 </UserControl>

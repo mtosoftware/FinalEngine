@@ -8,13 +8,9 @@ public interface IPaneViewModel
 {
     string ContentID { get; set; }
 
-    int Height { get; set; }
-
     bool IsActive { get; set; }
 
     bool IsSelected { get; set; }
 
     string Title { get; set; }
-
-    int Width { get; set; }
 }

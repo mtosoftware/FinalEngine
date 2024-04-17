@@ -37,7 +37,6 @@ public sealed class ViewRenderer : IViewRenderer
 
     public void AdjustView(int width, int height)
     {
-        return;
         this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, width, height));
     }
 

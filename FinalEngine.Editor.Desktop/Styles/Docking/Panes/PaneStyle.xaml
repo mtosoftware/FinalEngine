@@ -10,7 +10,5 @@
         <Setter Property="ContentId" Value="{Binding Model.ContentID}" />
         <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
         <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
-        <Setter Property="Width" Value="{Binding Model.Width, Mode=TwoWay}" />
-        <Setter Property="Height" Value="{Binding Model.Height, Mode=TwoWay}" />
     </Style>
 </ResourceDictionary>

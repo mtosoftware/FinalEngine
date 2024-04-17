@@ -5,6 +5,7 @@
 namespace FinalEngine.Editor.ViewModels.Scenes;
 
 using System;
+using System.Drawing;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
@@ -14,6 +15,8 @@ using Microsoft.Extensions.Logging;
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
     private readonly IViewRenderer viewRenderer;
+
+    private IRelayCommand<Size>? adjustRenderSizeCommand;
 
     private ICommand? renderCommand;
 
@@ -31,15 +34,23 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
         logger.LogInformation($"Initializing {this.Title}...");
     }
 
+    public ICommand AdjustRenderSizeCommand
+    {
+        get { return this.adjustRenderSizeCommand ??= new RelayCommand<Size>(this.AdjustRenderSize); }
+    }
+
     public ICommand RenderCommand
     {
         get { return this.renderCommand ??= new RelayCommand(this.Render); }
     }
 
+    private void AdjustRenderSize(Size size)
+    {
+        this.viewRenderer.AdjustView(size.Width, size.Height);
+    }
+
     private void Render()
     {
-        //// TODO: Add issue to adjust view only if the width/height changes.
-        this.viewRenderer.AdjustView(this.Width, this.Height);
         this.viewRenderer.Render();
     }
 }
