@@ -141,15 +141,4 @@ public class OpenGLRenderDevice : IRenderDevice
     {
         this.invoker.DrawElements(this.mapper.Forward<PrimitiveType>(topology), count, DrawElementsType.UnsignedInt, first);
     }
-
-    public void Initialize()
-    {
-        this.Rasterizer.SetRasterState(default);
-
-        this.OutputMerger.SetStencilState(default);
-        this.OutputMerger.SetDepthState(default);
-        this.OutputMerger.SetBlendState(default);
-
-        this.Pipeline.SetFrameBuffer(null);
-    }
 }

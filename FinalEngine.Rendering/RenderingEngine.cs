@@ -40,8 +40,6 @@ public sealed class RenderingEngine : IRenderingEngine
 
         this.renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
         this.renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
-
-        this.renderDevice.Initialize();
     }
 
     public void Render(ICamera camera)
