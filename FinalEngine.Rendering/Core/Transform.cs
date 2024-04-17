@@ -5,8 +5,9 @@
 namespace FinalEngine.Rendering.Core;
 
 using System.Numerics;
+using FinalEngine.ECS;
 
-public class Transform
+public class Transform : IEntityComponent
 {
     public Transform()
     {

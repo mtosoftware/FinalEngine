@@ -134,7 +134,7 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
 
     private bool CanRemove()
     {
-        return this.component.GetType() != typeof(TagComponent);
+        return this.component.GetType() != typeof(Tag);
     }
 
     private void Remove()

@@ -78,7 +78,7 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
     {
         this.categorizedComponentTypes.Clear();
 
-        var assembly = Assembly.GetAssembly(typeof(TagComponent)) ?? throw new TypeAccessException("Failed to initialize core engine components.");
+        var assembly = Assembly.GetAssembly(typeof(Tag)) ?? throw new TypeAccessException("Failed to initialize core engine components.");
 
         var categoryToTypeMap = this.typeResolver.GetCategorizedTypes(assembly);
 

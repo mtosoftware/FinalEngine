@@ -12,14 +12,6 @@
         <glwpf:GLWpfControl x:Name="glWpfControl"
                             RegisterToEventsDirectly="False"
                             CanInvokeOnHandledEvents="False"
-                            Render="{eb:EventBinding RenderCommand.Execute, `null`}">
-            <glwpf:GLWpfControl.Settings>
-                <glwpf:GLWpfControlSettings MajorVersion="4"
-                                            MinorVersion="5"
-                                            GraphicsContextFlags="ForwardCompatible"
-                                            GraphicsProfile="Core"
-                                            RenderContinuously="True" />
-            </glwpf:GLWpfControl.Settings>
-        </glwpf:GLWpfControl>
+                            Render="{eb:EventBinding RenderCommand.Execute, `null`}" />
     </Grid>
 </UserControl>

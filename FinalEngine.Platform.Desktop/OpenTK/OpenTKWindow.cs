@@ -8,7 +8,6 @@ using System;
 using System.Drawing;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using global::OpenTK.Mathematics;
-using global::OpenTK.Windowing.Common;
 
 public class OpenTKWindow : IWindow, IEventsProcessor
 {
@@ -17,7 +16,6 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     public OpenTKWindow(INativeWindowInvoker nativeWindow)
     {
         this.nativeWindow = nativeWindow ?? throw new ArgumentNullException(nameof(nativeWindow));
-        this.nativeWindow.VSync = VSyncMode.Off;
     }
 
     ~OpenTKWindow()
@@ -114,7 +112,7 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     public void ProcessEvents()
     {
         ObjectDisposedException.ThrowIf(this.IsDisposed, this);
-        this.nativeWindow.ProcessWindowEvents(false);
+        this.nativeWindow.ProcessEvents();
     }
 
     protected virtual void Dispose(bool disposing)

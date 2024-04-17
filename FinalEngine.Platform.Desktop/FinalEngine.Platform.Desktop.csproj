@@ -23,9 +23,7 @@
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	  <PackageReference Include="OpenTK.Core" Version="4.8.0" />
-	  <PackageReference Include="OpenTK.Windowing.Common" Version="4.8.0" />
-	  <PackageReference Include="OpenTK.Windowing.Desktop" Version="4.8.0" />
+	  <PackageReference Include="OpenTK" Version="[4.3.0]" />
 	  <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

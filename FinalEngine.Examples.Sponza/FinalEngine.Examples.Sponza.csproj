@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="AssimpNet" Version="4.1.0" />
     <PackageReference Include="ImGui.NET" Version="1.88.0" />
-    <PackageReference Include="System.IO.Abstractions" Version="20.0.4" />
+    <PackageReference Include="System.IO.Abstractions" Version="21.0.2" />
   </ItemGroup>
 
   <ItemGroup>

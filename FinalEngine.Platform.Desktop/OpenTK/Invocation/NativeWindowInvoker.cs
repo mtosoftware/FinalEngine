@@ -22,11 +22,6 @@ public sealed class NativeWindowInvoker : NativeWindow, INativeWindowInvoker
         get { return new MouseStateInvoker(this.MouseState); }
     }
 
-    public new void ProcessWindowEvents(bool waitForEvents)
-    {
-        NativeWindow.ProcessWindowEvents(waitForEvents);
-    }
-
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);

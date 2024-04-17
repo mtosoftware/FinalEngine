@@ -194,7 +194,7 @@ public class OpenTKWindowTests
         this.window.ProcessEvents();
 
         // Assert
-        this.nativeWindow.Verify(x => x.ProcessWindowEvents(false), Times.Once);
+        this.nativeWindow.Verify(x => x.ProcessEvents(), Times.Once);
     }
 
     [Test]

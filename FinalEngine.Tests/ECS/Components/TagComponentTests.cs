@@ -10,12 +10,12 @@ using NUnit.Framework;
 [TestFixture]
 public sealed class TagComponentTests
 {
-    private TagComponent component;
+    private Tag component;
 
     [SetUp]
     public void Setup()
     {
-        this.component = new TagComponent();
+        this.component = new Tag();
     }
 
     [Test]

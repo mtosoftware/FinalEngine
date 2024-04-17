@@ -11,7 +11,7 @@ using System.Linq;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.ECS.Exceptions;
-using FinalEngine.Rendering.Components.Core;
+using FinalEngine.Rendering.Core;
 using Microsoft.Extensions.Logging;
 
 public sealed class Scene : IScene
@@ -42,12 +42,12 @@ public sealed class Scene : IScene
 
         var entity = new Entity(uniqueID);
 
-        entity.AddComponent(new TagComponent()
+        entity.AddComponent(new Tag()
         {
             Name = tag,
         });
 
-        entity.AddComponent(new TransformComponent());
+        entity.AddComponent(new Transform());
 
         this.world.AddEntity(entity);
         this.entities.Add(entity);

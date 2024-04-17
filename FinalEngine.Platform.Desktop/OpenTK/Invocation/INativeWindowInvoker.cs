@@ -42,9 +42,7 @@ public interface INativeWindowInvoker : IDisposable
 
     string Title { get; set; }
 
-    VSyncMode VSync { get; set; }
-
     void Close();
 
-    void ProcessWindowEvents(bool waitForEvents);
+    void ProcessEvents();
 }
