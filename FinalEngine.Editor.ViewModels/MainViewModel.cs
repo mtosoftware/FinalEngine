@@ -16,6 +16,7 @@ using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Services;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Layout;
+using FinalEngine.Runtime;
 using Microsoft.Extensions.Logging;
 
 public sealed class MainViewModel : ObservableObject, IMainViewModel
@@ -43,10 +44,12 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         IViewPresenter viewPresenter,
         IApplicationContext applicationContext,
         ILayoutManager layoutManager,
-        IFactory<IDockViewModel> dockViewModelFactory)
+        IFactory<IDockViewModel> dockViewModelFactory,
+        IEngineInitializer engineInitializer)
     {
         ArgumentNullException.ThrowIfNull(applicationContext, nameof(applicationContext));
         ArgumentNullException.ThrowIfNull(dockViewModelFactory, nameof(dockViewModelFactory));
+        ArgumentNullException.ThrowIfNull(engineInitializer, nameof(engineInitializer));
 
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
@@ -54,6 +57,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
 
         this.DockViewModel = dockViewModelFactory.Create();
         this.Title = applicationContext.Title;
+
+        engineInitializer.RegisterLoaders();
     }
 
     public ICommand CreateEntityCommand

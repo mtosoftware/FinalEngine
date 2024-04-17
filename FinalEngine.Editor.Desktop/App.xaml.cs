@@ -33,6 +33,8 @@ using FinalEngine.Editor.ViewModels.Services.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.OpenGL;
+using FinalEngine.Resources;
+using FinalEngine.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -79,10 +81,14 @@ public partial class App : Application
 
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
+        services.AddSingleton<IResourceManager>(ResourceManager.Instance);
+
         services.AddTransient<IEntityWorld, EntityWorld>();
 
         services.AddSingleton<IRenderPipeline, OpenGLRenderPipeline>();
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
+
+        services.AddSingleton<IEngineInitializer, EngineInitializer>();
 
         services.AddSingleton<IFileSystem, FileSystem>();
 

@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Audio.OpenAL\FinalEngine.Audio.OpenAL.csproj" />
     <ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
     <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
     <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.csproj" />
