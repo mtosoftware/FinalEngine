@@ -59,6 +59,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.Title = applicationContext.Title;
 
         engineInitializer.RegisterLoaders();
+        engineInitializer.LinkShaderHeaders();
     }
 
     public ICommand CreateEntityCommand

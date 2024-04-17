@@ -10,11 +10,15 @@ public abstract class PaneViewModelBase : ObservableObject, IPaneViewModel
 {
     private string? contentID;
 
+    private int height;
+
     private bool isActive;
 
     private bool isSelected;
 
     private string? title;
+
+    private int width;
 
     protected PaneViewModelBase()
     {
@@ -25,6 +29,12 @@ public abstract class PaneViewModelBase : ObservableObject, IPaneViewModel
     {
         get { return this.contentID ?? string.Empty; }
         set { this.SetProperty(ref this.contentID, value); }
+    }
+
+    public int Height
+    {
+        get { return this.height; }
+        set { this.SetProperty(ref this.height, value); }
     }
 
     public bool IsActive
@@ -43,5 +53,11 @@ public abstract class PaneViewModelBase : ObservableObject, IPaneViewModel
     {
         get { return this.title ?? string.Empty; }
         set { this.SetProperty(ref this.title, value); }
+    }
+
+    public int Width
+    {
+        get { return this.width; }
+        set { this.SetProperty(ref this.width, value); }
     }
 }

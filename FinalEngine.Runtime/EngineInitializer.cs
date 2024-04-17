@@ -28,6 +28,12 @@ public sealed class EngineInitializer : IEngineInitializer
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
     }
 
+    public void LinkShaderHeaders()
+    {
+        this.renderDevice.Pipeline.AddShaderHeader("lighting", this.fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
+        this.renderDevice.Pipeline.AddShaderHeader("material", this.fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
+    }
+
     public void RegisterLoaders()
     {
         this.resourceManager.RegisterLoader(new SoundResourceLoader(this.fileSystem));

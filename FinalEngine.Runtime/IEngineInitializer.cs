@@ -6,5 +6,7 @@ namespace FinalEngine.Runtime;
 
 public interface IEngineInitializer
 {
+    void LinkShaderHeaders();
+
     void RegisterLoaders();
 }

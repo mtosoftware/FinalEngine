@@ -13,17 +13,17 @@ using Microsoft.Extensions.Logging;
 
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
-    private readonly IViewRenderer sceneRenderer;
+    private readonly IViewRenderer viewRenderer;
 
     private ICommand? renderCommand;
 
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
-        IViewRenderer sceneRenderer)
+        IViewRenderer viewRenderer)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
-        this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
+        this.viewRenderer = viewRenderer ?? throw new ArgumentNullException(nameof(viewRenderer));
 
         this.Title = "Scene View";
         this.ContentID = "SceneView";
@@ -38,6 +38,8 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     private void Render()
     {
-        this.sceneRenderer.Render();
+        //// TODO: Add issue to adjust view only if the width/height changes.
+        this.viewRenderer.AdjustView(this.Width, this.Height);
+        this.viewRenderer.Render();
     }
 }

@@ -37,9 +37,6 @@ public sealed class RenderingEngine : IRenderingEngine
         this.skyboxRenderer = skyboxRenderer ?? throw new ArgumentNullException(nameof(skyboxRenderer));
         this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
         this.renderCoordinator = renderCoordinator ?? throw new ArgumentNullException(nameof(renderCoordinator));
-
-        this.renderDevice.Pipeline.AddShaderHeader("lighting", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\lighting.glsl"));
-        this.renderDevice.Pipeline.AddShaderHeader("material", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\material.glsl"));
     }
 
     public void Render(ICamera camera)
