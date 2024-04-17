@@ -52,15 +52,18 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
 
                 for (int y = 0; y < image.Height; y++)
                 {
-                    var row = image.GetPixelRowSpan(y);
-
-                    for (int x = 0; x < image.Width; x++)
+                    image.ProcessPixelRows(processor =>
                     {
-                        pixels.Add(row[x].R);
-                        pixels.Add(row[x].G);
-                        pixels.Add(row[x].B);
-                        pixels.Add(row[x].A);
-                    }
+                        for (int x = 0; x < image.Width; x++)
+                        {
+                            var pixel = processor.GetRowSpan(y);
+
+                            pixels.Add(pixel[x].R);
+                            pixels.Add(pixel[x].G);
+                            pixels.Add(pixel[x].B);
+                            pixels.Add(pixel[x].A);
+                        }
+                    });
                 }
 
                 var rasterState = this.renderDevice.Rasterizer.GetRasterState();

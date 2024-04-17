@@ -81,7 +81,7 @@ internal class Program
 
         var watch = new Stopwatch();
         var watchInvoker = new StopwatchInvoker(watch);
-        var gameTime = new GameTime(watchInvoker, 10000.0f);
+        var gameTime = new GameTime(watchInvoker, 120.0f);
 
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -189,7 +189,7 @@ internal class Program
             back,
             front);
 
-        skyboxRenderer.SetSkybox(cubeTexture);
+        //skyboxRenderer.SetSkybox(cubeTexture);
 
         var controller = new ImGuiController(window.ClientSize.Width, window.ClientSize.Height);
 
@@ -223,17 +223,17 @@ internal class Program
 
             geometryRenderer.Enqueue(model);
 
-            for (var i = 0; i < 5; i++)
-            {
-                for (var j = 0; j < 5; j++)
-                {
-                    lightRenderer.Enqueue(new Light()
-                    {
-                        Type = LightType.Point,
-                        Position = new Vector3((i * 20) - 100, 4, (j * 20) - 50),
-                    });
-                }
-            }
+            ////for (var i = 0; i < 5; i++)
+            ////{
+            ////    for (var j = 0; j < 5; j++)
+            ////    {
+            ////        lightRenderer.Enqueue(new Light()
+            ////        {
+            ////            Type = LightType.Point,
+            ////            Position = new Vector3((i * 20) - 100, 4, (j * 20) - 50),
+            ////        });
+            ////    }
+            ////}
 
             renderingEngine.Render(camera);
 
