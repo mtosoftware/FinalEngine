@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Renderers;
 
 using System;
 using System.Collections.Generic;
-using FinalEngine.Rendering.Core;
+using FinalEngine.Rendering.Components;
 using FinalEngine.Rendering.Geometry;
 
 public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<Model>, IGeometryRenderer
@@ -87,7 +87,7 @@ public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<M
         mesh.Draw(this.renderDevice);
     }
 
-    private void UpdateUniforms(Transform transform)
+    private void UpdateUniforms(TransformComponent transform)
     {
         this.renderDevice.Pipeline.SetUniform("u_transform", transform.CreateTransformationMatrix());
     }

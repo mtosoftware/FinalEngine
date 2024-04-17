@@ -2,10 +2,11 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Core;
+namespace FinalEngine.Rendering.Geometry;
 
 using System.Drawing;
 using System.Numerics;
+using FinalEngine.Rendering.Components;
 
 public interface ICamera
 {
@@ -13,7 +14,7 @@ public interface ICamera
 
     Matrix4x4 Projection { get; }
 
-    Transform Transform { get; }
+    TransformComponent Transform { get; }
 
     Matrix4x4 View { get; }
 }

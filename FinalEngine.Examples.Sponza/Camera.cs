@@ -6,7 +6,8 @@ using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.Maths;
 using FinalEngine.Rendering;
-using FinalEngine.Rendering.Core;
+using FinalEngine.Rendering.Components;
+using FinalEngine.Rendering.Geometry;
 
 public sealed class Camera : ICamera
 {
@@ -22,7 +23,7 @@ public sealed class Camera : ICamera
     {
         this.width = width;
         this.height = height;
-        this.Transform = new Transform()
+        this.Transform = new TransformComponent()
         {
             Position = new Vector3(0, 50, 0),
             Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(45.0f)),
@@ -41,7 +42,7 @@ public sealed class Camera : ICamera
         get { return Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(70.0f), this.width / this.height, 0.1f, 1000.0f); }
     }
 
-    public Transform Transform { get; }
+    public TransformComponent Transform { get; }
 
     public Matrix4x4 View
     {

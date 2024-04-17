@@ -32,7 +32,11 @@ using FinalEngine.Editor.ViewModels.Services.Entities;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using FinalEngine.Rendering;
+using FinalEngine.Rendering.Geometry;
+using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.OpenGL;
+using FinalEngine.Rendering.Renderers;
+using FinalEngine.Rendering.Systems.Queues;
 using FinalEngine.Resources;
 using FinalEngine.Runtime;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,10 +87,28 @@ public partial class App : Application
 
         services.AddSingleton<IResourceManager>(ResourceManager.Instance);
 
-        services.AddTransient<IEntityWorld, EntityWorld>();
+        services.AddTransient<IEntityWorld>(x =>
+        {
+            var world = new EntityWorld();
+
+            world.AddSystem(new RenderModelRenderQueueSystem(x.GetRequiredService<IRenderQueue<RenderModel>>()));
+
+            return world;
+        });
 
         services.AddSingleton<IRenderPipeline, OpenGLRenderPipeline>();
         services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
+
+        services.AddSingleton<IGeometryRenderer, GeometryRenderer>();
+        services.AddSingleton<ISceneRenderer, SceneRenderer>();
+        services.AddSingleton<ILightRenderer, LightRenderer>();
+        services.AddSingleton<IRenderCoordinator, RenderCoordinator>();
+        services.AddSingleton<IRenderingEngine, RenderingEngine>();
+
+        //// TODO: ILightRenderer and IGeometryRenderer should just implement IRenderQueue directly.
+        services.AddSingleton<IRenderQueue<Model>>(x => (IRenderQueue<Model>)x.GetRequiredService<IGeometryRenderer>());
+        services.AddSingleton<IRenderQueue<RenderModel>>(x => (IRenderQueue<RenderModel>)x.GetRequiredService<IGeometryRenderer>());
+        services.AddSingleton<IRenderQueue<Light>>(x => (IRenderQueue<Light>)x.GetRequiredService<ILightRenderer>());
 
         services.AddSingleton<IEngineInitializer, EngineInitializer>();
 

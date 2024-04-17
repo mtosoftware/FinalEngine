@@ -11,7 +11,6 @@ namespace FinalEngine.Rendering.Renderers;
 
 using System;
 using System.Numerics;
-using FinalEngine.Rendering.Core;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Primitives;

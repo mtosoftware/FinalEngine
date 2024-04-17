@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Rendering.Renderers;
 
-using FinalEngine.Rendering.Core;
+using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Textures;
 
 public interface ISkyboxRenderer

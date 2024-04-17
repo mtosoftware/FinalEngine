@@ -4,9 +4,12 @@
 
 namespace FinalEngine.Rendering;
 
-using FinalEngine.Rendering.Core;
+using System.Drawing;
+using FinalEngine.Rendering.Geometry;
 
 public interface IRenderingEngine
 {
+    Color ClearColor { get; }
+
     void Render(ICamera camera);
 }

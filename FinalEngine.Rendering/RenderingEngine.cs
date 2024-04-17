@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering;
 using System;
 using System.Drawing;
 using System.IO.Abstractions;
-using FinalEngine.Rendering.Core;
+using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;
 
 public sealed class RenderingEngine : IRenderingEngine
@@ -20,13 +20,10 @@ public sealed class RenderingEngine : IRenderingEngine
 
     private readonly ISceneRenderer sceneRenderer;
 
-    private readonly ISkyboxRenderer skyboxRenderer;
-
     public RenderingEngine(
         IFileSystem fileSystem,
         IRenderDevice renderDevice,
         ILightRenderer lightRenderer,
-        ISkyboxRenderer skyboxRenderer,
         ISceneRenderer sceneRenderer,
         IRenderCoordinator renderCoordinator)
     {
@@ -34,10 +31,13 @@ public sealed class RenderingEngine : IRenderingEngine
 
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.lightRenderer = lightRenderer ?? throw new ArgumentNullException(nameof(lightRenderer));
-        this.skyboxRenderer = skyboxRenderer ?? throw new ArgumentNullException(nameof(skyboxRenderer));
         this.sceneRenderer = sceneRenderer ?? throw new ArgumentNullException(nameof(sceneRenderer));
         this.renderCoordinator = renderCoordinator ?? throw new ArgumentNullException(nameof(renderCoordinator));
+
+        this.ClearColor = Color.FromArgb(255, 30, 30, 30);
     }
+
+    public Color ClearColor { get; set; }
 
     public void Render(ICamera camera)
     {
@@ -45,7 +45,7 @@ public sealed class RenderingEngine : IRenderingEngine
 
         this.renderDevice.Pipeline.SetFrameBuffer(null);
         this.renderDevice.Rasterizer.SetViewport(camera.Bounds);
-        this.renderDevice.Clear(Color.Black);
+        this.renderDevice.Clear(this.ClearColor);
 
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
         {
@@ -83,7 +83,5 @@ public sealed class RenderingEngine : IRenderingEngine
                 this.sceneRenderer.Render(camera, false);
             });
         }
-
-        this.skyboxRenderer.Render(camera);
     }
 }
