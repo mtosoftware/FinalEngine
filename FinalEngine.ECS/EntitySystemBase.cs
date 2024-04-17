@@ -65,7 +65,5 @@ public abstract class EntitySystemBase
     {
     }
 
-    protected virtual void Process([NotNull] IEnumerable<Entity> entities)
-    {
-    }
+    protected abstract void Process([NotNull] IEnumerable<Entity> entities);
 }
