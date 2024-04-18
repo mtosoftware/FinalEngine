@@ -55,7 +55,10 @@ public abstract class EntitySystemBase
         this.entities.Clear();
     }
 
-    protected abstract bool IsMatch([NotNull] IReadOnlyEntity entity);
+    protected virtual bool IsMatch([NotNull] IReadOnlyEntity entity)
+    {
+        return false;
+    }
 
     protected virtual void OnEntityAdded(Entity entity)
     {

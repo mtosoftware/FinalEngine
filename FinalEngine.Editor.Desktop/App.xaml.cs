@@ -13,6 +13,7 @@ using FinalEngine.Editor.Common.Models.Scenes;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Environment;
 using FinalEngine.Editor.Common.Services.Scenes;
+using FinalEngine.Editor.Desktop.Extensions;
 using FinalEngine.Editor.Desktop.Services.Actions;
 using FinalEngine.Editor.Desktop.Services.Layout;
 using FinalEngine.Editor.Desktop.Views;
@@ -90,6 +91,7 @@ public partial class App : Application
         });
 
         services.AddRuntime();
+        services.AddEditorPlatform();
 
         services.AddTransient<IScene, Scene>();
 

@@ -35,7 +35,6 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
 
     private IVertexBuffer? vertexBuffer;
 
-    //// TODO: Projection width and height should be customizable and not set in constructor for DI.
     public SpriteDrawer(IRenderDevice renderDevice, ISpriteBatcher batcher, ITextureBinder binder, int projectionWidth, int projectionHeight)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));

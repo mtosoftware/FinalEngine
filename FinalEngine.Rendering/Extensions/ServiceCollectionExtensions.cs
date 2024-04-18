@@ -45,7 +45,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IRenderCoordinator, RenderCoordinator>();
         services.AddSingleton<IRenderingEngine, RenderingEngine>();
 
-        // TODO: Model should be IModel? Think about a better solution to the whole thing tbh.
         services.AddResourceLoader<ITexture2D, Texture2DResourceLoader>();
         services.AddResourceLoader<IShader, ShaderResourceLoader>();
         services.AddResourceLoader<IShaderProgram, ShaderProgramResourceLoader>();

@@ -29,7 +29,6 @@ internal sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
 
     private ITextureCube? texture;
 
-    //// TODO: Fix this for DI stuff.
     public SkyboxRenderer(IRenderDevice renderDevice)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));

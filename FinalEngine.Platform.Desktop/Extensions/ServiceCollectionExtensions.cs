@@ -31,7 +31,7 @@ public static class ServiceCollectionExtensions
                 Profile = ContextProfile.Core,
 
                 AutoLoadBindings = false,
-                StartVisible = true,
+                StartVisible = false,
 
                 WindowBorder = WindowBorder.Fixed,
                 WindowState = WindowState.Normal,
