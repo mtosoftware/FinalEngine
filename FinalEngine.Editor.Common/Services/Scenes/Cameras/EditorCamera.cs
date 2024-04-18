@@ -15,7 +15,7 @@ using FinalEngine.Rendering.Geometry;
 
 public sealed class EditorCamera : ICamera
 {
-    private const float FarPlane = 1000.0f;
+    private const float FarPlane = 10000.0f;
 
     private const float FieldOfView = 70.0f;
 

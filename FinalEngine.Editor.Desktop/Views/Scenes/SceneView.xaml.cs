@@ -41,6 +41,7 @@ public partial class SceneView : UserControl
             GraphicsProfile = ContextProfile.Compatability,
             GraphicsContextFlags = ContextFlags.ForwardCompatible,
             RenderContinuously = true,
+            UseDeviceDpi = true,
         });
 
         KeyboardDevice.Initialize(this);
