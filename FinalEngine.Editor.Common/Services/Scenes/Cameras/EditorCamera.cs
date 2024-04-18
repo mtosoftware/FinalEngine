@@ -15,17 +15,30 @@ using FinalEngine.Rendering.Geometry;
 
 public sealed class EditorCamera : ICamera
 {
+    private const float FarPlane = 1000.0f;
+
+    private const float FieldOfView = 70.0f;
+
+    private const float MouseSensitivity = 0.25f;
+
+    private const float MoveSpeed = 0.5f;
+
+    private const float NearPlane = 0.1f;
+
+    private readonly IKeyboard keyboard;
+
+    private readonly IMouse mouse;
+
     private bool isLocked;
 
-    private float speed;
-
-    public EditorCamera()
+    public EditorCamera(IKeyboard keyboard, IMouse mouse)
     {
-        this.ViewportWidth = 1280;
-        this.ViewportHeight = 720;
+        this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
+        this.mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
 
-        this.speed = 0.5f;
         this.isLocked = false;
+
+        this.Bounds = new Rectangle(0, 0, 1280, 720);
 
         this.Transform = new TransformComponent()
         {
@@ -34,14 +47,11 @@ public sealed class EditorCamera : ICamera
         };
     }
 
-    public Rectangle Bounds
-    {
-        get { return new Rectangle(0, 0, this.ViewportWidth, this.ViewportHeight); }
-    }
+    public Rectangle Bounds { get; set; }
 
     public Matrix4x4 Projection
     {
-        get { return Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(70.0f), this.ViewportWidth / this.ViewportHeight, 0.1f, 1000.0f); }
+        get { return Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FieldOfView), this.AspectRatio, NearPlane, FarPlane); }
     }
 
     public TransformComponent Transform { get; }
@@ -51,82 +61,82 @@ public sealed class EditorCamera : ICamera
         get { return this.Transform.CreateViewMatrix(Vector3.UnitY); }
     }
 
-    public int ViewportHeight { get; set; }
-
-    public int ViewportWidth { get; set; }
-
-    public void Update(IKeyboard keyboard, IMouse mouse)
+    private int AspectRatio
     {
-        ArgumentNullException.ThrowIfNull(keyboard, nameof(keyboard));
-        ArgumentNullException.ThrowIfNull(mouse, nameof(mouse));
+        get { return this.Bounds.Width / this.Bounds.Height; }
+    }
 
-        float moveAmount = this.speed;
+    public void Update()
+    {
+        ArgumentNullException.ThrowIfNull(this.keyboard, nameof(this.keyboard));
+        ArgumentNullException.ThrowIfNull(this.mouse, nameof(this.mouse));
 
-        if (keyboard.IsKeyDown(Key.W))
+        float moveAmount = MoveSpeed;
+
+        if (this.keyboard.IsKeyDown(Key.W))
         {
             this.Transform.Translate(this.Transform.Forward, moveAmount);
         }
 
-        if (keyboard.IsKeyDown(Key.S))
+        if (this.keyboard.IsKeyDown(Key.S))
         {
             this.Transform.Translate(this.Transform.Forward, -moveAmount);
         }
 
-        if (keyboard.IsKeyDown(Key.A))
+        if (this.keyboard.IsKeyDown(Key.A))
         {
             this.Transform.Translate(this.Transform.Left, -moveAmount);
         }
 
-        if (keyboard.IsKeyDown(Key.D))
+        if (this.keyboard.IsKeyDown(Key.D))
         {
             this.Transform.Translate(this.Transform.Left, moveAmount);
         }
 
-        if (keyboard.IsKeyDown(Key.Z))
+        if (this.keyboard.IsKeyDown(Key.Z))
         {
             this.Transform.Translate(this.Transform.Up, moveAmount);
         }
 
-        if (keyboard.IsKeyDown(Key.X))
+        if (this.keyboard.IsKeyDown(Key.X))
         {
             this.Transform.Translate(this.Transform.Down, moveAmount);
         }
 
-        if (keyboard.IsKeyReleased(Key.Escape))
+        if (this.keyboard.IsKeyReleased(Key.Escape))
         {
             this.isLocked = false;
         }
 
-        var viewport = new Rectangle(0, 0, this.ViewportWidth, this.ViewportHeight);
-        var centerPosition = new Vector2(viewport.Width / 2, viewport.Height / 2);
+        var centerPosition = new Vector2(this.Bounds.Width / 2, this.Bounds.Height / 2);
 
-        if (mouse.IsButtonReleased(MouseButton.Right))
+        if (this.mouse.IsButtonReleased(MouseButton.Right))
         {
-            mouse.Location = new PointF(centerPosition.X, centerPosition.Y);
+            this.mouse.Location = new PointF(centerPosition.X, centerPosition.Y);
 
             this.isLocked = true;
         }
 
         if (this.isLocked)
         {
-            var deltaPosition = new Vector2(mouse.Location.X - centerPosition.X, mouse.Location.Y - centerPosition.Y);
+            var deltaPosition = new Vector2(this.mouse.Location.X - centerPosition.X, this.mouse.Location.Y - centerPosition.Y);
 
             bool canRotateX = deltaPosition.X != 0;
             bool canRotateY = deltaPosition.Y != 0;
 
             if (canRotateX)
             {
-                this.Transform.Rotate(this.Transform.Left, -MathHelper.DegreesToRadians(deltaPosition.Y * this.speed));
+                this.Transform.Rotate(this.Transform.Left, -MathHelper.DegreesToRadians(deltaPosition.Y * MouseSensitivity));
             }
 
             if (canRotateY)
             {
-                this.Transform.Rotate(Vector3.UnitY, -MathHelper.DegreesToRadians(deltaPosition.X * this.speed));
+                this.Transform.Rotate(Vector3.UnitY, -MathHelper.DegreesToRadians(deltaPosition.X * MouseSensitivity));
             }
 
             if (canRotateX || canRotateY)
             {
-                mouse.Location = new PointF(
+                this.mouse.Location = new PointF(
                     centerPosition.X,
                     centerPosition.Y);
             }

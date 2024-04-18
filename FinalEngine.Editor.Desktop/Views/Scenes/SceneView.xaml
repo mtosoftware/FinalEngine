@@ -11,8 +11,6 @@
              SizeChanged="SceneView_SizeChanged">
     <Grid>
         <glwpf:GLWpfControl x:Name="glWpfControl"
-                            RegisterToEventsDirectly="False"
-                            CanInvokeOnHandledEvents="False"
                             Render="{eb:EventBinding RenderCommand.Execute, `null`}">
         </glwpf:GLWpfControl>
     </Grid>

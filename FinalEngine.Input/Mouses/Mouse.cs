@@ -33,11 +33,6 @@ internal sealed class Mouse : IMouse, IDisposable
         this.device.Scroll += this.Device_Scroll;
     }
 
-    public PointF Delta
-    {
-        get { return this.device.LocationDelta; }
-    }
-
     public PointF Location
     {
         get

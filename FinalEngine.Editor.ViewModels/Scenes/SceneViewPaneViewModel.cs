@@ -10,10 +10,19 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
+using FinalEngine.Input.Keyboards;
+using FinalEngine.Input.Mouses;
+using FinalEngine.Rendering.Geometry;
 using Microsoft.Extensions.Logging;
 
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
+    private readonly ICamera camera;
+
+    private readonly IKeyboard keyboard;
+
+    private readonly IMouse mouse;
+
     private readonly ISceneViewRenderer viewRenderer;
 
     private IRelayCommand<Size>? adjustRenderSizeCommand;
@@ -22,10 +31,16 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
-        ISceneViewRenderer viewRenderer)
+        ISceneViewRenderer viewRenderer,
+        IKeyboard keyboard,
+        IMouse mouse,
+        ICamera camera)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
+        this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
+        this.mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
+        this.camera = camera ?? throw new ArgumentNullException(nameof(camera));
         this.viewRenderer = viewRenderer ?? throw new ArgumentNullException(nameof(viewRenderer));
 
         this.Title = "Scene View";
@@ -51,6 +66,10 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     private void Render()
     {
+        this.camera.Update();
+        this.keyboard.Update();
+        this.mouse.Update();
+
         this.viewRenderer.Render();
     }
 }

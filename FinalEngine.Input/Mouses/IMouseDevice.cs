@@ -17,7 +17,5 @@ public interface IMouseDevice
 
     event EventHandler<MouseScrollEventArgs>? Scroll;
 
-    public PointF LocationDelta { get; }
-
     void SetCursorLocation(PointF location);
 }

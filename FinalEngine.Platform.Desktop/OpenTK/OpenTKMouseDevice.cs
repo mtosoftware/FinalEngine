@@ -35,11 +35,6 @@ internal sealed class OpenTKMouseDevice : IMouseDevice
 
     public event EventHandler<MouseScrollEventArgs>? Scroll;
 
-    public PointF LocationDelta
-    {
-        get { return new PointF(this.nativeWindow.MouseState.Delta.X, this.nativeWindow.MouseState.Delta.Y); }
-    }
-
     public void SetCursorLocation(PointF location)
     {
         this.nativeWindow.MousePosition = new Vector2(location.X, location.Y);

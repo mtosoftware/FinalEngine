@@ -9,6 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 [SuppressMessage("Design", "CA1027:Mark enums with FlagsAttribute", Justification = "Not required by API")]
 public enum MouseButton
 {
+    Unknown = -1,
+
     Button1 = 0,
 
     Left = Button1,

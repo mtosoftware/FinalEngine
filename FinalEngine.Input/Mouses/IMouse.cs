@@ -8,8 +8,6 @@ using System.Drawing;
 
 public interface IMouse
 {
-    PointF Delta { get; }
-
     PointF Location { get; set; }
 
     double WheelOffset { get; }

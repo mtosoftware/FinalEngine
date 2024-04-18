@@ -10,11 +10,13 @@ using FinalEngine.Rendering.Components;
 
 public interface ICamera
 {
-    Rectangle Bounds { get; }
+    Rectangle Bounds { get; set; }
 
     Matrix4x4 Projection { get; }
 
     TransformComponent Transform { get; }
 
     Matrix4x4 View { get; }
+
+    void Update();
 }

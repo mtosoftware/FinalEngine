@@ -5,7 +5,7 @@
 namespace FinalEngine.Editor.Common.Services.Scenes;
 
 using System;
-using FinalEngine.Editor.Common.Services.Scenes.Cameras;
+using System.Drawing;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;
@@ -13,7 +13,7 @@ using FinalEngine.Resources;
 
 public sealed class SceneViewRenderer : ISceneViewRenderer
 {
-    private readonly EditorCamera camera;
+    private readonly ICamera camera;
 
     private readonly IRenderingEngine renderingEngine;
 
@@ -27,20 +27,23 @@ public sealed class SceneViewRenderer : ISceneViewRenderer
 
     private Model model;
 
-    public SceneViewRenderer(IRenderPipeline renderPipeline, ISceneManager sceneManager, IRenderingEngine renderingEngine, IRenderQueue<RenderModel> renderQueue)
+    public SceneViewRenderer(
+        IRenderPipeline renderPipeline,
+        ICamera camera,
+        ISceneManager sceneManager,
+        IRenderingEngine renderingEngine,
+        IRenderQueue<RenderModel> renderQueue)
     {
         this.renderPipeline = renderPipeline ?? throw new ArgumentNullException(nameof(renderPipeline));
+        this.camera = camera ?? throw new ArgumentNullException(nameof(camera));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
         this.renderingEngine = renderingEngine ?? throw new ArgumentNullException(nameof(renderingEngine));
         this.renderQueue = renderQueue ?? throw new ArgumentNullException(nameof(renderQueue));
-
-        this.camera = new EditorCamera();
     }
 
     public void AdjustView(int width, int height)
     {
-        this.camera.ViewportWidth = width;
-        this.camera.ViewportHeight = height;
+        this.camera.Bounds = new Rectangle(0, 0, width, height);
     }
 
     public void Render()
