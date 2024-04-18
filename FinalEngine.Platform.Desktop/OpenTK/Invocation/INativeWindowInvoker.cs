@@ -10,7 +10,7 @@ using global::OpenTK.Mathematics;
 using global::OpenTK.Windowing.Common;
 
 [SuppressMessage("Design", "CA1003:Use generic event handler instances", Justification = "Required by Invocation")]
-public interface INativeWindowInvoker : IDisposable
+internal interface INativeWindowInvoker : IDisposable
 {
     event Action<KeyboardKeyEventArgs> KeyDown;
 

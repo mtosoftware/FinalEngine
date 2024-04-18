@@ -7,7 +7,7 @@ namespace FinalEngine.Runtime;
 using System;
 using FinalEngine.Runtime.Invocation;
 
-public class GameTime : IGameTime
+public sealed class GameTime : IGameTime
 {
     private const double OneSecondAsMilliSeconds = 1000.0d;
 

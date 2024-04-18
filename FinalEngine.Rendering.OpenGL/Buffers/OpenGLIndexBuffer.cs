@@ -13,10 +13,12 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLIndexBuffer<T> : IOpenGLIndexBuffer
+internal sealed class OpenGLIndexBuffer<T> : IOpenGLIndexBuffer
     where T : struct
 {
     private readonly IOpenGLInvoker invoker;
+
+    private bool isDisposed;
 
     private int rendererID;
 
@@ -43,11 +45,9 @@ public class OpenGLIndexBuffer<T> : IOpenGLIndexBuffer
 
     public BufferUsageType Type { get; }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Bind()
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.invoker.BindBuffer(BufferTarget.ElementArrayBuffer, this.rendererID);
     }
 
@@ -60,16 +60,16 @@ public class OpenGLIndexBuffer<T> : IOpenGLIndexBuffer
     public void Update<TData>(IReadOnlyCollection<TData> data)
         where TData : struct
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         ArgumentNullException.ThrowIfNull(data, nameof(data));
 
         this.Length = data.Count;
         this.invoker.NamedBufferSubData(this.rendererID, IntPtr.Zero, this.Length * Marshal.SizeOf<TData>(), data.ToArray());
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -80,6 +80,6 @@ public class OpenGLIndexBuffer<T> : IOpenGLIndexBuffer
             this.rendererID = -1;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

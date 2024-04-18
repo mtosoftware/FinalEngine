@@ -10,7 +10,7 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLRasterizer : IRasterizer
+internal sealed class OpenGLRasterizer : IRasterizer
 {
     private readonly IOpenGLInvoker invoker;
 

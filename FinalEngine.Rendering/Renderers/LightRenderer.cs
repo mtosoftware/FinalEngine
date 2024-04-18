@@ -11,7 +11,7 @@ using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 
-public sealed class LightRenderer : IRenderQueue<Light>, ILightRenderer
+internal sealed class LightRenderer : IRenderQueue<Light>, ILightRenderer
 {
     private readonly Light ambientLight;
 

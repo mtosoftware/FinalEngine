@@ -9,7 +9,7 @@ using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Renderers;
 
-public sealed class RenderCoordinator : IRenderCoordinator
+internal sealed class RenderCoordinator : IRenderCoordinator
 {
     private readonly IRenderQueue<Light> lightRenderQueue;
 

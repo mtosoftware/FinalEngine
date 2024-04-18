@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers;
 using System.Collections.Generic;
 using FinalEngine.Rendering.Buffers;
 
-public interface IOpenGLVertexBuffer : IVertexBuffer
+internal interface IOpenGLVertexBuffer : IVertexBuffer
 {
     void Bind();
 

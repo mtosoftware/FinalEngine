@@ -1,10 +1,14 @@
-// <copyright file="IResourceLoaderInternal.cs" company="Software Antics">
+// <copyright file="IResourceLoader.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Resources;
 
-internal interface IResourceLoaderInternal
+using System;
+
+public interface IResourceLoader
 {
+    Type GetResourceType();
+
     IResource LoadResource(string filePath);
 }

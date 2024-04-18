@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Editor.ViewMode
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{A1CA475F-9507-444C-B07A-33607BF389C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Library", "Game.Library\Game.Library.csproj", "{D97A05DB-1E5C-4790-83BB-F3DA3BB69ED3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game.Library", "Game.Library\Game.Library.csproj", "{D97A05DB-1E5C-4790-83BB-F3DA3BB69ED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,7 +6,6 @@ namespace FinalEngine.Rendering.OpenGL;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.OpenGL.Invocation;
@@ -22,17 +21,11 @@ using TKBlendEquationMode = OpenTK.Graphics.OpenGL4.BlendEquationMode;
 using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
 using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
 
-public class OpenGLRenderDevice : IRenderDevice
+internal sealed class OpenGLRenderDevice : IRenderDevice
 {
     private readonly IOpenGLInvoker invoker;
 
     private readonly EnumMapper mapper;
-
-    [ExcludeFromCodeCoverage]
-    public OpenGLRenderDevice()
-        : this(new OpenGLInvoker())
-    {
-    }
 
     public OpenGLRenderDevice(IOpenGLInvoker invoker)
     {

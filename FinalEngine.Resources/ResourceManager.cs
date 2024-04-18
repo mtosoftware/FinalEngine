@@ -14,13 +14,15 @@ using FinalEngine.Resources.Exceptions;
 /// </summary>
 ///
 /// <seealso cref="IResourceManager" />
-public class ResourceManager : IResourceManager
+public sealed class ResourceManager : IResourceManager
 {
     private static IResourceManager? instance;
 
     private readonly Dictionary<string, ResourceData> pathToResourceDataMap;
 
-    private readonly Dictionary<Type, IResourceLoaderInternal> typeToLoaderMap;
+    private readonly Dictionary<Type, IResourceLoader> typeToLoaderMap;
+
+    private bool isDisposed;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResourceManager"/> class.
@@ -53,15 +55,6 @@ public class ResourceManager : IResourceManager
             return instance ??= new ResourceManager();
         }
     }
-
-    /// <summary>
-    /// Gets a value indicating whether this <see cref="ResourceManager"/> is disposed.
-    /// </summary>
-    ///
-    /// <value>
-    ///   <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
-    /// </value>
-    protected bool IsDisposed { get; private set; }
 
     /// <summary>
     ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -105,7 +98,7 @@ public class ResourceManager : IResourceManager
     public T LoadResource<T>(string filePath)
         where T : IResource
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));
 
         if (!this.typeToLoaderMap.TryGetValue(typeof(T), out var loader))
@@ -150,15 +143,21 @@ public class ResourceManager : IResourceManager
     public void RegisterLoader<T>(ResourceLoaderBase<T> loader)
         where T : IResource
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        this.RegisterLoader(typeof(T), loader);
+    }
+
+    public void RegisterLoader(Type type, IResourceLoader loader)
+    {
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
+        ArgumentNullException.ThrowIfNull(type, nameof(type));
         ArgumentNullException.ThrowIfNull(loader, nameof(loader));
 
-        if (this.typeToLoaderMap.ContainsKey(typeof(T)))
+        if (this.typeToLoaderMap.ContainsKey(type))
         {
-            throw new ArgumentException($"The specified {nameof(T)} parameter has already been registered to a resource loader.", nameof(T));
+            throw new ArgumentException($"The specified {nameof(type)} parameter has already been registered to a resource loader.", nameof(type));
         }
 
-        this.typeToLoaderMap.Add(typeof(T), loader);
+        this.typeToLoaderMap.Add(type, loader);
     }
 
     /// <summary>
@@ -178,7 +177,7 @@ public class ResourceManager : IResourceManager
     /// </exception>
     public void UnloadResource(IResource resource)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         ArgumentNullException.ThrowIfNull(resource, nameof(resource));
 
         for (int i = this.pathToResourceDataMap.Count - 1; i >= 0; i--)
@@ -210,9 +209,9 @@ public class ResourceManager : IResourceManager
     /// <param name="disposing">
     ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
     /// </param>
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -238,7 +237,7 @@ public class ResourceManager : IResourceManager
             this.typeToLoaderMap.Clear();
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 
     private sealed class ResourceData

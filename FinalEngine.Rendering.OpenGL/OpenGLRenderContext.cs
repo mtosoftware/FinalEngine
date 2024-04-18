@@ -5,23 +5,16 @@
 namespace FinalEngine.Rendering.OpenGL;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.OpenGL.Invocation;
 using OpenTK;
 using OpenTK.Windowing.Common;
 
-public class OpenGLRenderContext : IRenderContext
+internal sealed class OpenGLRenderContext : IRenderContext
 {
     private readonly IGraphicsContext context;
 
     private readonly IOpenGLInvoker invoker;
-
-    [ExcludeFromCodeCoverage]
-    public OpenGLRenderContext(IBindingsContext bindings, IGraphicsContext context)
-        : this(new OpenGLInvoker(), bindings, context)
-    {
-    }
 
     public OpenGLRenderContext(IOpenGLInvoker invoker, IBindingsContext bindings, IGraphicsContext context)
     {

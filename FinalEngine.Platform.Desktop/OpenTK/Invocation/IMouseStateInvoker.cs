@@ -6,7 +6,7 @@ namespace FinalEngine.Platform.Desktop.OpenTK.Invocation;
 
 using global::OpenTK.Mathematics;
 
-public interface IMouseStateInvoker
+internal interface IMouseStateInvoker
 {
     public Vector2 Delta { get; }
 }

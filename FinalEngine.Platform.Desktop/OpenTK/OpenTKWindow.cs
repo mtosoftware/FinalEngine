@@ -9,9 +9,11 @@ using System.Drawing;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using global::OpenTK.Mathematics;
 
-public class OpenTKWindow : IWindow, IEventsProcessor
+internal sealed class OpenTKWindow : IWindow, IEventsProcessor
 {
     private readonly INativeWindowInvoker nativeWindow;
+
+    private bool isDisposed;
 
     public OpenTKWindow(INativeWindowInvoker nativeWindow)
     {
@@ -27,7 +29,7 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             return new Size(this.nativeWindow.ClientSize.X, this.nativeWindow.ClientSize.Y);
         }
     }
@@ -36,7 +38,7 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             return this.nativeWindow.IsExiting;
         }
     }
@@ -45,7 +47,7 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             return this.nativeWindow.IsFocused;
         }
     }
@@ -54,13 +56,13 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             return new Size(this.nativeWindow.Size.X, this.nativeWindow.Size.Y);
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             this.nativeWindow.Size = new Vector2i(value.Width, value.Height);
         }
     }
@@ -69,13 +71,13 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             return this.nativeWindow.Title;
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             this.nativeWindow.Title = value;
         }
     }
@@ -84,22 +86,20 @@ public class OpenTKWindow : IWindow, IEventsProcessor
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             return this.nativeWindow.IsVisible;
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
             this.nativeWindow.IsVisible = value;
         }
     }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Close()
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.nativeWindow.Close();
     }
 
@@ -111,13 +111,13 @@ public class OpenTKWindow : IWindow, IEventsProcessor
 
     public void ProcessEvents()
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.nativeWindow.ProcessEvents();
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -127,6 +127,6 @@ public class OpenTKWindow : IWindow, IEventsProcessor
             this.nativeWindow.Dispose();
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

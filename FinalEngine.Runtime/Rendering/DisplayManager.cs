@@ -9,7 +9,7 @@ using System.Drawing;
 using FinalEngine.Platform;
 using FinalEngine.Rendering;
 
-public class DisplayManager : IDisplayManager
+internal sealed class DisplayManager : IDisplayManager
 {
     private readonly IRasterizer rasterizer;
 

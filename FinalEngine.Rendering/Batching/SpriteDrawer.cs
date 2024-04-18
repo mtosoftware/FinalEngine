@@ -13,7 +13,7 @@ using FinalEngine.Rendering.Primitives;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources;
 
-public class SpriteDrawer : ISpriteDrawer, IDisposable
+internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
 {
     private readonly ISpriteBatcher batcher;
 
@@ -29,10 +29,13 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
     private IIndexBuffer? indexBuffer;
 
+    private bool isDisposed;
+
     private IShaderProgram? shaderProgram;
 
     private IVertexBuffer? vertexBuffer;
 
+    //// TODO: Projection width and height should be customizable and not set in constructor for DI.
     public SpriteDrawer(IRenderDevice renderDevice, ISpriteBatcher batcher, ITextureBinder binder, int projectionWidth, int projectionHeight)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
@@ -85,8 +88,6 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
     public Matrix4x4 Transform { get; set; }
 
-    protected bool IsDisposed { get; private set; }
-
     private IShaderProgram ShaderProgram
     {
         get { return this.shaderProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\Batching\\sprite-geometry.fesp"); }
@@ -94,7 +95,7 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
     public void Begin()
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
 
         this.renderDevice.Pipeline.SetFrameBuffer(null);
         this.renderDevice.Pipeline.SetShaderProgram(this.ShaderProgram!);
@@ -123,7 +124,7 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
     public void Draw(ITexture2D texture, Color color, Vector2 origin, Vector2 position, float rotation, Vector2 scale)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         ArgumentNullException.ThrowIfNull(texture, nameof(texture));
 
         if (this.batcher.ShouldReset || this.binder.ShouldReset)
@@ -137,7 +138,7 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
 
     public void End()
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
 
         this.batcher.Update(this.vertexBuffer!);
 
@@ -148,9 +149,9 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
         this.renderDevice.DrawIndices(PrimitiveTopology.Triangle, 0, this.batcher.CurrentIndexCount);
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -170,6 +171,6 @@ public class SpriteDrawer : ISpriteDrawer, IDisposable
             }
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

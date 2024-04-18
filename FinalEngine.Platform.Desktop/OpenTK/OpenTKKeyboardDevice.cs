@@ -9,7 +9,7 @@ using FinalEngine.Input.Keyboards;
 using FinalEngine.Platform.Desktop.OpenTK.Invocation;
 using global::OpenTK.Windowing.Common;
 
-public class OpenTKKeyboardDevice : IKeyboardDevice
+internal sealed class OpenTKKeyboardDevice : IKeyboardDevice
 {
     public OpenTKKeyboardDevice(INativeWindowInvoker nativeWindow)
     {

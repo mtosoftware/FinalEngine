@@ -6,7 +6,7 @@ namespace FinalEngine.Input.Keyboards;
 
 using System;
 
-public class KeyEventArgs : EventArgs
+public sealed class KeyEventArgs : EventArgs
 {
     public bool Alt
     {

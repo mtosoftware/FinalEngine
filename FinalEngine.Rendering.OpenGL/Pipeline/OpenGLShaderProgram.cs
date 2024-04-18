@@ -9,11 +9,13 @@ using System.Collections.Generic;
 using FinalEngine.Rendering.Exceptions;
 using FinalEngine.Rendering.OpenGL.Invocation;
 
-public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
+internal sealed class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
 {
     private readonly IOpenGLInvoker invoker;
 
     private readonly Dictionary<string, int> uniformNameToLocationMap;
+
+    private bool isDisposed;
 
     private int rendererID;
 
@@ -52,11 +54,9 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
         this.Dispose(false);
     }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Bind()
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.invoker.UseProgram(this.rendererID);
     }
 
@@ -83,9 +83,9 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
         return true;
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -96,6 +96,6 @@ public class OpenGLShaderProgram : IOpenGLShaderProgram, IDisposable
             this.rendererID = -1;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

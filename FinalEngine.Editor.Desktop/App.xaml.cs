@@ -5,7 +5,6 @@
 namespace FinalEngine.Editor.Desktop;
 
 using System.Diagnostics;
-using System.IO.Abstractions;
 using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
@@ -31,14 +30,10 @@ using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Entities;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Layout;
-using FinalEngine.Rendering;
 using FinalEngine.Rendering.Geometry;
-using FinalEngine.Rendering.Lighting;
-using FinalEngine.Rendering.OpenGL;
 using FinalEngine.Rendering.Renderers;
 using FinalEngine.Rendering.Systems.Queues;
-using FinalEngine.Resources;
-using FinalEngine.Runtime;
+using FinalEngine.Runtime.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -85,34 +80,16 @@ public partial class App : Application
 
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
-        services.AddSingleton<IResourceManager>(ResourceManager.Instance);
-
         services.AddTransient<IEntityWorld>(x =>
         {
             var world = new EntityWorld();
 
-            world.AddSystem(new RenderModelRenderQueueSystem(x.GetRequiredService<IRenderQueue<RenderModel>>()));
+            world.AddSystem(new RenderModelQueueEntitySystem(x.GetRequiredService<IRenderQueue<RenderModel>>()));
 
             return world;
         });
 
-        services.AddSingleton<IRenderPipeline, OpenGLRenderPipeline>();
-        services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
-
-        services.AddSingleton<IGeometryRenderer, GeometryRenderer>();
-        services.AddSingleton<ISceneRenderer, SceneRenderer>();
-        services.AddSingleton<ILightRenderer, LightRenderer>();
-        services.AddSingleton<IRenderCoordinator, RenderCoordinator>();
-        services.AddSingleton<IRenderingEngine, RenderingEngine>();
-
-        //// TODO: ILightRenderer and IGeometryRenderer should just implement IRenderQueue directly.
-        services.AddSingleton<IRenderQueue<Model>>(x => (IRenderQueue<Model>)x.GetRequiredService<IGeometryRenderer>());
-        services.AddSingleton<IRenderQueue<RenderModel>>(x => (IRenderQueue<RenderModel>)x.GetRequiredService<IGeometryRenderer>());
-        services.AddSingleton<IRenderQueue<Light>>(x => (IRenderQueue<Light>)x.GetRequiredService<ILightRenderer>());
-
-        services.AddSingleton<IEngineInitializer, EngineInitializer>();
-
-        services.AddSingleton<IFileSystem, FileSystem>();
+        services.AddRuntime();
 
         services.AddTransient<IScene, Scene>();
 

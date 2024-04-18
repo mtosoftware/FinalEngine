@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering.OpenGL.Textures;
 using FinalEngine.Rendering.Textures;
 using OpenTK.Graphics.OpenGL4;
 
-public interface IOpenGLTexture : ITexture
+internal interface IOpenGLTexture : ITexture
 {
     void Attach(FramebufferAttachment type, int framebuffer);
 

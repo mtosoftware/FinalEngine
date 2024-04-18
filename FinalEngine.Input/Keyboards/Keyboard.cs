@@ -7,7 +7,7 @@ namespace FinalEngine.Input.Keyboards;
 using System;
 using System.Collections.Generic;
 
-public sealed class Keyboard : IKeyboard, IDisposable
+internal sealed class Keyboard : IKeyboard, IDisposable
 {
     private readonly IKeyboardDevice device;
 

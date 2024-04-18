@@ -6,7 +6,7 @@ namespace FinalEngine.Input.Mouses;
 
 using System;
 
-public class MouseButtonEventArgs : EventArgs
+public sealed class MouseButtonEventArgs : EventArgs
 {
     public MouseButton Button { get; init; }
 }

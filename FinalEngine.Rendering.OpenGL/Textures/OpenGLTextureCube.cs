@@ -13,9 +13,11 @@ using OpenTK.Graphics.OpenGL4;
 using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
 using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
 
-public class OpenGLTextureCube : ITextureCube, IOpenGLTexture, IDisposable
+internal sealed class OpenGLTextureCube : ITextureCube, IOpenGLTexture, IDisposable
 {
     private readonly IOpenGLInvoker invoker;
+
+    private bool isDisposed;
 
     private int rendererID;
 
@@ -83,17 +85,15 @@ public class OpenGLTextureCube : ITextureCube, IOpenGLTexture, IDisposable
 
     public SizedFormat InternalFormat { get; }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Attach(FramebufferAttachment type, int framebuffer)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         throw new NotImplementedException();
     }
 
     public void Bind(int unit)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.invoker.BindTextureUnit(unit, this.rendererID);
     }
 
@@ -133,9 +133,9 @@ public class OpenGLTextureCube : ITextureCube, IOpenGLTexture, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -146,6 +146,6 @@ public class OpenGLTextureCube : ITextureCube, IOpenGLTexture, IDisposable
             this.rendererID = -1;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

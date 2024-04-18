@@ -11,7 +11,7 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLInputLayout : IOpenGLInputLayout
+internal sealed class OpenGLInputLayout : IOpenGLInputLayout
 {
     private readonly IOpenGLInvoker invoker;
 

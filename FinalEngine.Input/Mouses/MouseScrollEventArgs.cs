@@ -6,7 +6,7 @@ namespace FinalEngine.Input.Mouses;
 
 using System;
 
-public class MouseScrollEventArgs : EventArgs
+public sealed class MouseScrollEventArgs : EventArgs
 {
     public double Offset { get; init; }
 }

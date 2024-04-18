@@ -13,7 +13,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
 [ExcludeFromCodeCoverage]
-public class OpenGLInvoker : IOpenGLInvoker
+internal sealed class OpenGLInvoker : IOpenGLInvoker
 {
     private static readonly DebugProc DebugProcCallback = DebugCallback;
 

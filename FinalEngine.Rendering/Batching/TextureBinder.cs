@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using FinalEngine.Rendering.Textures;
 
-public class TextureBinder : ITextureBinder
+internal sealed class TextureBinder : ITextureBinder
 {
     private readonly IPipeline pipeline;
 

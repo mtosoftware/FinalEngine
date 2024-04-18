@@ -57,6 +57,8 @@ public interface IResourceManager : IDisposable
     void RegisterLoader<T>(ResourceLoaderBase<T> loader)
                 where T : IResource;
 
+    void RegisterLoader(Type type, IResourceLoader loader);
+
     /// <summary>
     /// Unloads the specified  <paramref name="resource"/> from this <see cref="IResourceManager"/> (calling it's dispose method if <see cref="IDisposable"/> is implemented and there are no references).
     /// </summary>

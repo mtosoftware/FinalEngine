@@ -10,7 +10,7 @@ using global::OpenTK.Mathematics;
 using global::OpenTK.Windowing.GraphicsLibraryFramework;
 
 [ExcludeFromCodeCoverage(Justification = "Invocation")]
-public class MouseStateInvoker : IMouseStateInvoker
+internal sealed class MouseStateInvoker : IMouseStateInvoker
 {
     private readonly MouseState state;
 

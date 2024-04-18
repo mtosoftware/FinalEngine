@@ -10,7 +10,7 @@ using System.IO.Abstractions;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;
 
-public sealed class RenderingEngine : IRenderingEngine
+internal sealed class RenderingEngine : IRenderingEngine
 {
     private readonly ILightRenderer lightRenderer;
 

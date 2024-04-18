@@ -8,9 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using global::OpenTK.Windowing.Desktop;
 
 [ExcludeFromCodeCoverage(Justification = "Invocation")]
-public sealed class NativeWindowInvoker : NativeWindow, INativeWindowInvoker
+internal sealed class NativeWindowInvoker : NativeWindow, INativeWindowInvoker
 {
-    public NativeWindowInvoker(NativeWindowSettings settings)
+    internal NativeWindowInvoker(NativeWindowSettings settings)
         : base(settings)
     {
     }

@@ -11,9 +11,11 @@ using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLShader : IOpenGLShader, IDisposable
+internal sealed class OpenGLShader : IOpenGLShader, IDisposable
 {
     private readonly IOpenGLInvoker invoker;
+
+    private bool isDisposed;
 
     private int rendererID;
 
@@ -45,11 +47,9 @@ public class OpenGLShader : IOpenGLShader, IDisposable
 
     public PipelineTarget EntryPoint { get; }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Attach(int program)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.invoker.AttachShader(program, this.rendererID);
     }
 
@@ -59,9 +59,9 @@ public class OpenGLShader : IOpenGLShader, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -72,6 +72,6 @@ public class OpenGLShader : IOpenGLShader, IDisposable
             this.rendererID = -1;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

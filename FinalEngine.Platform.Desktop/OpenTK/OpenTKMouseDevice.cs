@@ -13,7 +13,7 @@ using TKMouseButtonEventArgs = global::OpenTK.Windowing.Common.MouseButtonEventA
 using TKMouseMoveEventArgs = global::OpenTK.Windowing.Common.MouseMoveEventArgs;
 using TKMouseWheelEventArgs = global::OpenTK.Windowing.Common.MouseWheelEventArgs;
 
-public class OpenTKMouseDevice : IMouseDevice
+internal sealed class OpenTKMouseDevice : IMouseDevice
 {
     private readonly INativeWindowInvoker nativeWindow;
 

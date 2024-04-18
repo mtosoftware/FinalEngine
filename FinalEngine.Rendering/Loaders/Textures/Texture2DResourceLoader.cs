@@ -15,7 +15,7 @@ using FinalEngine.Rendering.Vapor.Settings;
 using FinalEngine.Resources;
 using SixLabors.ImageSharp.PixelFormats;
 
-public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
+internal sealed class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
 {
     private readonly IFileSystem fileSystem;
 
@@ -30,7 +30,7 @@ public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
         this.invoker = new ImageInvoker();
     }
 
-    public TextureQualitySettings TextureQualitySettings { get; set; }
+    internal TextureQualitySettings TextureQualitySettings { get; set; }
 
     public override ITexture2D LoadResource(string filePath)
     {

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.OpenGL.Buffers;
 
-public class OpenGLInputAssembler : IInputAssembler
+internal sealed class OpenGLInputAssembler : IInputAssembler
 {
     private IOpenGLIndexBuffer? boundIndexBuffer;
 

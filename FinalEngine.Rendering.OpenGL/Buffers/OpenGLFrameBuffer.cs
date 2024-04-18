@@ -12,9 +12,11 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Rendering.OpenGL.Textures;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
+internal sealed class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
 {
     private readonly IOpenGLInvoker invoker;
+
+    private bool isDisposed;
 
     private int rendererID;
 
@@ -66,8 +68,6 @@ public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
         this.Dispose(false);
     }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Bind()
     {
         this.invoker.BindFramebuffer(FramebufferTarget.Framebuffer, this.rendererID);
@@ -79,9 +79,9 @@ public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -92,6 +92,6 @@ public class OpenGLFrameBuffer : IFrameBuffer, IOpenGLFrameBuffer
             this.rendererID = -1;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

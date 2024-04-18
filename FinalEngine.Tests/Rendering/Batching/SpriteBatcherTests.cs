@@ -17,7 +17,7 @@ using NUnit.Framework;
 
 public class SpriteBatcherTests
 {
-    private const int MaxCapacity = 1000;
+    private const int MaxCapacity = 10000;
 
     private SpriteBatcher batcher;
 
@@ -83,27 +83,7 @@ public class SpriteBatcherTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            new SpriteBatcher(null, MaxCapacity);
-        });
-    }
-
-    [Test]
-    public void ConstructorShouldThrowArgumentOutOfRangeExceptionWhenMaxCapacityIsEqualToZero()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            new SpriteBatcher(this.inputAssembler.Object, 0);
-        });
-    }
-
-    [Test]
-    public void ConstructorShouldThrowArgumentOutOfRangeExceptionWhenMaxCapacityIsLessThanZero()
-    {
-        // Act and assert
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            new SpriteBatcher(this.inputAssembler.Object, -1);
+            new SpriteBatcher(null);
         });
     }
 
@@ -160,7 +140,7 @@ public class SpriteBatcherTests
     {
         this.inputAssembler = new Mock<IInputAssembler>();
         this.vertexBuffer = new Mock<IVertexBuffer>();
-        this.batcher = new SpriteBatcher(this.inputAssembler.Object, MaxCapacity);
+        this.batcher = new SpriteBatcher(this.inputAssembler.Object);
     }
 
     [Test]

@@ -16,7 +16,7 @@ using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLPipeline : IPipeline
+internal sealed class OpenGLPipeline : IPipeline
 {
     private readonly IOpenGLInvoker invoker;
 

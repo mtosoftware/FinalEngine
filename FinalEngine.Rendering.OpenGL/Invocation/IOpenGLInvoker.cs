@@ -10,7 +10,7 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
-public interface IOpenGLInvoker
+internal interface IOpenGLInvoker
 {
     void AttachShader(int program, int shader);
 

@@ -13,10 +13,12 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLVertexBuffer<T> : IOpenGLVertexBuffer
+internal sealed class OpenGLVertexBuffer<T> : IOpenGLVertexBuffer
     where T : struct
 {
     private readonly IOpenGLInvoker invoker;
+
+    private bool isDisposed;
 
     private int rendererID;
 
@@ -43,11 +45,9 @@ public class OpenGLVertexBuffer<T> : IOpenGLVertexBuffer
 
     public BufferUsageType Type { get; }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Bind()
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.invoker.BindVertexBuffer(0, this.rendererID, IntPtr.Zero, this.Stride);
     }
 
@@ -60,7 +60,7 @@ public class OpenGLVertexBuffer<T> : IOpenGLVertexBuffer
     public void Update<TData>(IReadOnlyCollection<TData> data, int stride)
         where TData : struct
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         ArgumentNullException.ThrowIfNull(data, nameof(data));
 
         this.Stride = stride;
@@ -68,9 +68,9 @@ public class OpenGLVertexBuffer<T> : IOpenGLVertexBuffer
         this.invoker.NamedBufferSubData(this.rendererID, IntPtr.Zero, data.Count * Marshal.SizeOf<TData>(), data.ToArray());
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -81,6 +81,6 @@ public class OpenGLVertexBuffer<T> : IOpenGLVertexBuffer
             this.rendererID = -1;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

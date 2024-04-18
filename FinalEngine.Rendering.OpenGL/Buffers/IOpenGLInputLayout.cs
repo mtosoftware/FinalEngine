@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers;
 
 using FinalEngine.Rendering.Buffers;
 
-public interface IOpenGLInputLayout : IInputLayout
+internal interface IOpenGLInputLayout : IInputLayout
 {
     void Bind();
 

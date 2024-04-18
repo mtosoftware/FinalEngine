@@ -9,7 +9,7 @@ using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 
-public sealed class SceneRenderer : ISceneRenderer
+internal sealed class SceneRenderer : ISceneRenderer
 {
     private readonly IGeometryRenderer geometryRenderer;
 

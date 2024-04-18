@@ -8,7 +8,7 @@ using System.IO;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-public interface IImageInvoker
+internal interface IImageInvoker
 {
     Image<TPixel> Load<TPixel>(Stream stream)
         where TPixel : unmanaged, IPixel<TPixel>;

@@ -16,7 +16,7 @@ using FinalEngine.Resources;
 /// </summary>
 ///
 /// <seealso cref="ResourceLoaderBase{TResource}"/>
-public class SoundResourceLoader : ResourceLoaderBase<ISound>
+internal sealed class SoundResourceLoader : ResourceLoaderBase<ISound>
 {
     private readonly ICASLSoundFactory factory;
 

@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.OpenGL.Buffers;
 
 using FinalEngine.Rendering.Buffers;
 
-public interface IOpenGLFrameBuffer : IFrameBuffer
+internal interface IOpenGLFrameBuffer : IFrameBuffer
 {
     void Bind();
 }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using FinalEngine.Rendering.Components;
 using FinalEngine.Rendering.Geometry;
 
-public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<Model>, IGeometryRenderer
+internal sealed class GeometryRenderer : IGeometryRenderer, IRenderQueue<RenderModel>
 {
     private readonly Dictionary<IMaterial, IList<RenderModel>> materialToRenderModelMap;
 
@@ -42,21 +42,6 @@ public sealed class GeometryRenderer : IRenderQueue<RenderModel>, IRenderQueue<M
         }
 
         batch.Add(renderable);
-    }
-
-    public void Enqueue(Model renderable)
-    {
-        ArgumentNullException.ThrowIfNull(renderable, nameof(renderable));
-
-        if (renderable.RenderModel != null)
-        {
-            this.Enqueue(renderable.RenderModel);
-        }
-
-        foreach (var child in renderable.Children)
-        {
-            this.Enqueue(child);
-        }
     }
 
     public void Render()

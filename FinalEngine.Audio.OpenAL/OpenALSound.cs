@@ -9,14 +9,14 @@ using System.Diagnostics.CodeAnalysis;
 using CASLSound = CASL.Sound;
 using ICASLSound = CASL.ISound;
 
-public sealed class OpenALSound : ISound, IDisposable
+internal sealed class OpenALSound : ISound, IDisposable
 {
     private bool isDisposed;
 
     private ICASLSound? sound;
 
     [ExcludeFromCodeCoverage]
-    public OpenALSound(string filePath)
+    internal OpenALSound(string filePath)
         : this(new CASLSound(filePath))
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));

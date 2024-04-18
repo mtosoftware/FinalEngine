@@ -20,7 +20,7 @@ using AssimpNode = Assimp.Node;
 using AssimpScene = Assimp.Scene;
 using Material = Geometry.Material;
 
-public sealed class ModelResourceLoader : ResourceLoaderBase<Model>
+internal sealed class ModelResourceLoader : ResourceLoaderBase<Model>
 {
     private readonly IFileSystem fileSystem;
 

@@ -14,11 +14,11 @@ using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;
 
 [EntitySystemProcess(ExecutionType = GameLoopType.Render)]
-public sealed class RenderModelRenderQueueSystem : EntitySystemBase
+public sealed class RenderModelQueueEntitySystem : EntitySystemBase
 {
     private readonly IRenderQueue<RenderModel> renderQueue;
 
-    public RenderModelRenderQueueSystem(IRenderQueue<RenderModel> renderQueue)
+    public RenderModelQueueEntitySystem(IRenderQueue<RenderModel> renderQueue)
     {
         this.renderQueue = renderQueue ?? throw new ArgumentNullException(nameof(renderQueue));
     }

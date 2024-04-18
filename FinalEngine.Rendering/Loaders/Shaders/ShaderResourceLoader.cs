@@ -12,7 +12,7 @@ using FinalEngine.Rendering;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 
-public sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
+internal sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
 {
     private readonly IFileSystem fileSystem;
 

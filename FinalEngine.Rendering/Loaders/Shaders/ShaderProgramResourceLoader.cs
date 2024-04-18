@@ -11,7 +11,7 @@ using System.Text.Json;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Resources;
 
-public sealed class ShaderProgramResourceLoader : ResourceLoaderBase<IShaderProgram>
+internal sealed class ShaderProgramResourceLoader : ResourceLoaderBase<IShaderProgram>
 {
     private readonly IFileSystem fileSystem;
 

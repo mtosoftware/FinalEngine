@@ -19,7 +19,7 @@ using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
 using PixelFormat = FinalEngine.Rendering.Textures.PixelFormat;
 
-public class OpenGLGPUResourceFactory : IGPUResourceFactory
+internal sealed class OpenGLGPUResourceFactory : IGPUResourceFactory
 {
     private readonly IOpenGLInvoker invoker;
 

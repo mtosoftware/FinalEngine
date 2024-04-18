@@ -14,9 +14,11 @@ using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
 using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;
 using TKTextureWrapMode = OpenTK.Graphics.OpenGL4.TextureWrapMode;
 
-public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
+internal sealed class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
 {
     private readonly IOpenGLInvoker invoker;
+
+    private bool isDisposed;
 
     private int rendererID;
 
@@ -79,17 +81,15 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
 
     public SizedFormat InternalFormat { get; }
 
-    protected bool IsDisposed { get; private set; }
-
     public void Attach(FramebufferAttachment type, int framebuffer)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.invoker.NamedFramebufferTexture(framebuffer, type, this.rendererID, 0);
     }
 
     public void Bind(int unit)
     {
-        ObjectDisposedException.ThrowIf(this.IsDisposed, this);
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
         this.invoker.BindTextureUnit(unit, this.rendererID);
     }
 
@@ -129,9 +129,9 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
-        if (this.IsDisposed)
+        if (this.isDisposed)
         {
             return;
         }
@@ -142,6 +142,6 @@ public class OpenGLTexture2D : ITexture2D, IOpenGLTexture, IDisposable
             this.rendererID = -1;
         }
 
-        this.IsDisposed = true;
+        this.isDisposed = true;
     }
 }

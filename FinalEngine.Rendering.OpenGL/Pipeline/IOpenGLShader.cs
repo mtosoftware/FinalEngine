@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.OpenGL.Pipeline;
 
 using FinalEngine.Rendering.Pipeline;
 
-public interface IOpenGLShader : IShader
+internal interface IOpenGLShader : IShader
 {
     void Attach(int program);
 }

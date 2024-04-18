@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-public sealed class Mouse : IMouse, IDisposable
+internal sealed class Mouse : IMouse, IDisposable
 {
     private readonly List<MouseButton> buttonsDown;
 

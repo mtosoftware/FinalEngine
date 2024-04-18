@@ -10,7 +10,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 [ExcludeFromCodeCoverage(Justification = "Invocation")]
-public class ImageInvoker : IImageInvoker
+internal sealed class ImageInvoker : IImageInvoker
 {
     public Image<TPixel> Load<TPixel>(Stream stream)
         where TPixel : unmanaged, IPixel<TPixel>

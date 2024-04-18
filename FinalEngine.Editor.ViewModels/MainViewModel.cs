@@ -45,11 +45,11 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         IApplicationContext applicationContext,
         ILayoutManager layoutManager,
         IFactory<IDockViewModel> dockViewModelFactory,
-        IEngineInitializer engineInitializer)
+        IRuntimeContext runtimeContext)
     {
         ArgumentNullException.ThrowIfNull(applicationContext, nameof(applicationContext));
         ArgumentNullException.ThrowIfNull(dockViewModelFactory, nameof(dockViewModelFactory));
-        ArgumentNullException.ThrowIfNull(engineInitializer, nameof(engineInitializer));
+        ArgumentNullException.ThrowIfNull(runtimeContext, nameof(runtimeContext));
 
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
@@ -58,8 +58,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.DockViewModel = dockViewModelFactory.Create();
         this.Title = applicationContext.Title;
 
-        engineInitializer.RegisterLoaders();
-        engineInitializer.LinkShaderHeaders();
+        runtimeContext.Initialize();
     }
 
     public ICommand CreateEntityCommand

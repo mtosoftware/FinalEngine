@@ -11,23 +11,20 @@ using System.Numerics;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Primitives;
 
-public class SpriteBatcher : ISpriteBatcher
+internal sealed class SpriteBatcher : ISpriteBatcher
 {
+    private const int MaxCapacity = 10000;
+
     private readonly IInputAssembler inputAssembler;
 
     private readonly List<SpriteVertex> vertices;
 
-    public SpriteBatcher(IInputAssembler inputAssembler, int maxCapacity = 10000)
+    public SpriteBatcher(IInputAssembler inputAssembler)
     {
         this.inputAssembler = inputAssembler ?? throw new ArgumentNullException(nameof(inputAssembler));
 
-        if (maxCapacity <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(maxCapacity), $"The specified {nameof(maxCapacity)} parameter must be greater than zero.");
-        }
-
-        this.MaxVertexCount = maxCapacity * 4;
-        this.MaxIndexCount = maxCapacity * 6;
+        this.MaxVertexCount = MaxCapacity * 4;
+        this.MaxIndexCount = MaxCapacity * 6;
 
         this.vertices = new List<SpriteVertex>(this.MaxVertexCount);
     }

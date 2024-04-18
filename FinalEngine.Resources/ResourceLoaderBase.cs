@@ -18,10 +18,15 @@ using System;
 /// You should implement this interface if there is a resource type you wish to load via an <see cref="IResourceManager"/>. Please note that the implementation should (usually) be able to function without a resource manager.
 /// </remarks>
 ///
-/// <seealso cref="IResourceLoaderInternal" />
-public abstract class ResourceLoaderBase<TResource> : IResourceLoaderInternal
+/// <seealso cref="IResourceLoader" />
+public abstract class ResourceLoaderBase<TResource> : IResourceLoader
     where TResource : IResource
 {
+    Type IResourceLoader.GetResourceType()
+    {
+        return typeof(TResource);
+    }
+
     /// <summary>
     /// Loads a resource from the specified <paramref name="filePath"/>.
     /// </summary>
@@ -35,7 +40,7 @@ public abstract class ResourceLoaderBase<TResource> : IResourceLoaderInternal
     /// </returns>
     public abstract TResource LoadResource(string filePath);
 
-    IResource IResourceLoaderInternal.LoadResource(string filePath)
+    IResource IResourceLoader.LoadResource(string filePath)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));
         return this.LoadResource(filePath);

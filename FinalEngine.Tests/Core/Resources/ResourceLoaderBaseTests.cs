@@ -19,7 +19,7 @@ public class ResourceLoaderBaseTests
     public void LoadResourceInternalShouldInvokeLoadResourceWhenFilePathIsNotNullEmptyOrWhitespaceCharacters()
     {
         // Act
-        (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(FilePath);
+        (this.resourceLoader.Object as IResourceLoader)?.LoadResource(FilePath);
 
         // Assert
         this.resourceLoader.Verify(x => x.LoadResource(FilePath));
@@ -31,7 +31,7 @@ public class ResourceLoaderBaseTests
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
-            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(string.Empty);
+            (this.resourceLoader.Object as IResourceLoader)?.LoadResource(string.Empty);
         });
     }
 
@@ -41,7 +41,7 @@ public class ResourceLoaderBaseTests
         // Act and assert
         Assert.Throws<ArgumentException>(() =>
         {
-            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource("\t\r\n");
+            (this.resourceLoader.Object as IResourceLoader)?.LoadResource("\t\r\n");
         });
     }
 
@@ -51,7 +51,7 @@ public class ResourceLoaderBaseTests
         // Act and assert
         Assert.Throws<ArgumentNullException>(() =>
         {
-            (this.resourceLoader.Object as IResourceLoaderInternal)?.LoadResource(null);
+            (this.resourceLoader.Object as IResourceLoader)?.LoadResource(null);
         });
     }
 

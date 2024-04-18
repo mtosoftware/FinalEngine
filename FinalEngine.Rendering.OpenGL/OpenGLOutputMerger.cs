@@ -9,7 +9,7 @@ using FinalEngine.Rendering.OpenGL.Invocation;
 using FinalEngine.Utilities;
 using OpenTK.Graphics.OpenGL4;
 
-public class OpenGLOutputMerger : IOutputMerger
+internal sealed class OpenGLOutputMerger : IOutputMerger
 {
     private readonly IOpenGLInvoker invoker;
 

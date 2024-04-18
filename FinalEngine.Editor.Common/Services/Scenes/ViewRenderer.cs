@@ -5,32 +5,34 @@
 namespace FinalEngine.Editor.Common.Services.Scenes;
 
 using System;
-using System.Drawing;
 using FinalEngine.Editor.Common.Services.Scenes.Cameras;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;
+using FinalEngine.Resources;
 
 public sealed class ViewRenderer : IViewRenderer
 {
     private readonly EditorCamera camera;
 
-    private readonly IRenderDevice renderDevice;
-
     private readonly IRenderingEngine renderingEngine;
 
     private readonly IRenderPipeline renderPipeline;
+
+    private readonly IRenderQueue<RenderModel> renderQueue;
 
     private readonly ISceneManager sceneManager;
 
     private bool isInitialized;
 
-    public ViewRenderer(IRenderPipeline renderPipeline, IRenderDevice renderDevice, ISceneManager sceneManager, IRenderingEngine renderingEngine, IRenderQueue<Model> renderQueue)
+    private Model model;
+
+    public ViewRenderer(IRenderPipeline renderPipeline, ISceneManager sceneManager, IRenderingEngine renderingEngine, IRenderQueue<RenderModel> renderQueue)
     {
         this.renderPipeline = renderPipeline ?? throw new ArgumentNullException(nameof(renderPipeline));
-        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
         this.renderingEngine = renderingEngine ?? throw new ArgumentNullException(nameof(renderingEngine));
+        this.renderQueue = renderQueue ?? throw new ArgumentNullException(nameof(renderQueue));
 
         this.camera = new EditorCamera();
     }
@@ -39,13 +41,29 @@ public sealed class ViewRenderer : IViewRenderer
     {
         this.camera.ViewportWidth = width;
         this.camera.ViewportHeight = height;
-
-        this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, width, height));
     }
 
     public void Render()
     {
         this.Initialize();
+
+        if (this.model.RenderModel != null)
+        {
+            this.renderQueue.Enqueue(this.model.RenderModel);
+        }
+
+        if (this.model.Children != null)
+        {
+            foreach (var child in this.model.Children)
+            {
+                if (child.RenderModel == null)
+                {
+                    continue;
+                }
+
+                this.renderQueue.Enqueue(child.RenderModel);
+            }
+        }
 
         this.sceneManager.ActiveScene.Render();
         this.renderingEngine.Render(this.camera);
@@ -59,6 +77,8 @@ public sealed class ViewRenderer : IViewRenderer
         }
 
         this.renderPipeline.Initialize();
+
+        this.model = ResourceManager.Instance.LoadResource<Model>("Resources\\Models\\Sponza\\Sponza.obj");
 
         this.isInitialized = true;
     }

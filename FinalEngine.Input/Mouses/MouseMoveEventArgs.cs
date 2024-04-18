@@ -7,7 +7,7 @@ namespace FinalEngine.Input.Mouses;
 using System;
 using System.Drawing;
 
-public class MouseMoveEventArgs : EventArgs
+public sealed class MouseMoveEventArgs : EventArgs
 {
     public PointF Location { get; init; }
 }

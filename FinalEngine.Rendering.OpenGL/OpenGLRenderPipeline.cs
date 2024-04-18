@@ -7,18 +7,13 @@ namespace FinalEngine.Rendering.OpenGL;
 using System;
 using FinalEngine.Rendering.OpenGL.Invocation;
 
-public sealed class OpenGLRenderPipeline : IRenderPipeline
+internal sealed class OpenGLRenderPipeline : IRenderPipeline
 {
     private readonly IOpenGLInvoker invoker;
 
     private bool isDisposed;
 
     private int vao;
-
-    public OpenGLRenderPipeline()
-        : this(new OpenGLInvoker())
-    {
-    }
 
     public OpenGLRenderPipeline(IOpenGLInvoker invoker)
     {
