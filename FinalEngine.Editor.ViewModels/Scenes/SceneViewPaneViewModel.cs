@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
-    private readonly IViewRenderer viewRenderer;
+    private readonly ISceneViewRenderer viewRenderer;
 
     private IRelayCommand<Size>? adjustRenderSizeCommand;
 
@@ -22,7 +22,7 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
-        IViewRenderer viewRenderer)
+        ISceneViewRenderer viewRenderer)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 

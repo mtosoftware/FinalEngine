@@ -1,4 +1,4 @@
-// <copyright file="ViewRenderer.cs" company="Software Antics">
+// <copyright file="SceneViewRenderer.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -11,7 +11,7 @@ using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;
 using FinalEngine.Resources;
 
-public sealed class ViewRenderer : IViewRenderer
+public sealed class SceneViewRenderer : ISceneViewRenderer
 {
     private readonly EditorCamera camera;
 
@@ -27,7 +27,7 @@ public sealed class ViewRenderer : IViewRenderer
 
     private Model model;
 
-    public ViewRenderer(IRenderPipeline renderPipeline, ISceneManager sceneManager, IRenderingEngine renderingEngine, IRenderQueue<RenderModel> renderQueue)
+    public SceneViewRenderer(IRenderPipeline renderPipeline, ISceneManager sceneManager, IRenderingEngine renderingEngine, IRenderQueue<RenderModel> renderQueue)
     {
         this.renderPipeline = renderPipeline ?? throw new ArgumentNullException(nameof(renderPipeline));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));

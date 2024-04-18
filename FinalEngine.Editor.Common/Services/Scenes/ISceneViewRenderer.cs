@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Editor.Common.Services.Scenes;
 
-public interface IViewRenderer
+public interface ISceneViewRenderer
 {
     void AdjustView(int width, int height);
 
