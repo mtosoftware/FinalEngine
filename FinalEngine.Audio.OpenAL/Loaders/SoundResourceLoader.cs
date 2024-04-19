@@ -5,7 +5,6 @@
 namespace FinalEngine.Audio.OpenAL.Loaders;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Abstractions;
 using FinalEngine.Audio.OpenAL.Factories;
@@ -21,19 +20,6 @@ internal sealed class SoundResourceLoader : ResourceLoaderBase<ISound>
     private readonly ICASLSoundFactory factory;
 
     private readonly IFileSystem fileSystem;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SoundResourceLoader"/> class.
-    /// </summary>
-    ///
-    /// <param name="fileSystem">
-    /// The file system used to load <see cref="ISound"/> resources.
-    /// </param>
-    [ExcludeFromCodeCoverage(Justification = "Cannot unit test")]
-    public SoundResourceLoader(IFileSystem fileSystem)
-        : this(fileSystem, new CASLSoundFactory())
-    {
-    }
 
     internal SoundResourceLoader(IFileSystem fileSystem, ICASLSoundFactory factory)
     {
