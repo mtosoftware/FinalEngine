@@ -22,5 +22,5 @@ public interface IKeyboard
 
     bool IsKeyReleased(Key key);
 
-    void Update();
+    internal void Update();
 }

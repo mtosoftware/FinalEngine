@@ -18,5 +18,5 @@ public interface IMouse
 
     bool IsButtonReleased(MouseButton button);
 
-    void Update();
+    internal void Update();
 }
