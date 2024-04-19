@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using global::OpenTK.Mathematics;
 using global::OpenTK.Windowing.Common;
+using global::OpenTK.Windowing.Desktop;
 
 [SuppressMessage("Design", "CA1003:Use generic event handler instances", Justification = "Required by Invocation")]
 internal interface INativeWindowInvoker : IDisposable
@@ -25,6 +26,8 @@ internal interface INativeWindowInvoker : IDisposable
     event Action<MouseWheelEventArgs> MouseWheel;
 
     Vector2i ClientSize { get; }
+
+    IGLFWGraphicsContext Context { get; }
 
     bool IsDisposed { get; }
 
