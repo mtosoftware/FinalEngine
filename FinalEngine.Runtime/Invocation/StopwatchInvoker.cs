@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 [ExcludeFromCodeCoverage(Justification = "Invocation")]
-public class StopwatchInvoker : IStopwatchInvoker
+internal sealed class StopwatchInvoker : IStopwatchInvoker
 {
     private readonly Stopwatch watch;
 

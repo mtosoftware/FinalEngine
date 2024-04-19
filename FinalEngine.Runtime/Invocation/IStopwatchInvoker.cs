@@ -6,7 +6,7 @@ namespace FinalEngine.Runtime.Invocation;
 
 using System;
 
-public interface IStopwatchInvoker
+internal interface IStopwatchInvoker
 {
     TimeSpan Elapsed { get; }
 

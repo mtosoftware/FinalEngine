@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Exceptions;
 
 using System;
 
-public class FrameBufferTargetException : Exception
+public sealed class FrameBufferTargetException : Exception
 {
     public FrameBufferTargetException()
     {

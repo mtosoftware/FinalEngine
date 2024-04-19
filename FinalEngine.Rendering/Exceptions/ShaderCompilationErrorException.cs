@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering.Exceptions;
 using System;
 
 [Serializable]
-public class ShaderCompilationErrorException : Exception
+public sealed class ShaderCompilationErrorException : Exception
 {
     public ShaderCompilationErrorException()
     {

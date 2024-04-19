@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 [ExcludeFromCodeCoverage(Justification = "Invocation")]
-public class RuntimeInformationInvoker : IRuntimeInformationInvoker
+internal sealed class RuntimeInformationInvoker : IRuntimeInformationInvoker
 {
     public bool IsOSPlatform(OSPlatform platform)
     {

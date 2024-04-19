@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering.Exceptions;
 using System;
 
 [Serializable]
-public class ProgramLinkingException : Exception
+public sealed class ProgramLinkingException : Exception
 {
     public ProgramLinkingException()
     {

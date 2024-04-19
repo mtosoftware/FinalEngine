@@ -16,7 +16,7 @@ using System;
 ///
 /// <seealso cref="Exception" />
 [Serializable]
-public class ResourceLoaderNotRegisteredException : Exception
+internal sealed class ResourceLoaderNotRegisteredException : Exception
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ResourceLoaderNotRegisteredException"/> class.

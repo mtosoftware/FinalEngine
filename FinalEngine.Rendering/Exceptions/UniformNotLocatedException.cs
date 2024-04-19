@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering.Exceptions;
 using System;
 
 [Serializable]
-public class UniformNotLocatedException : Exception
+internal sealed class UniformNotLocatedException : Exception
 {
     public UniformNotLocatedException()
     {

@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering.Exceptions;
 using System;
 
 [Serializable]
-public class RenderContextException : Exception
+public sealed class RenderContextException : Exception
 {
     public RenderContextException()
     {

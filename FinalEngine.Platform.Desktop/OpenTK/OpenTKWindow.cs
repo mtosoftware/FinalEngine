@@ -25,6 +25,11 @@ internal sealed class OpenTKWindow : IWindow, IEventsProcessor
         this.Dispose(false);
     }
 
+    public bool CanProcessEvents
+    {
+        get { return !this.IsExiting; }
+    }
+
     public Size ClientSize
     {
         get

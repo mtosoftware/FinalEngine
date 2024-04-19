@@ -16,13 +16,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPlatform(this IServiceCollection services)
+    public static IServiceCollection AddPlatform(this IServiceCollection services, PlatformSettings settings)
     {
         ArgumentNullException.ThrowIfNull(services, nameof(services));
+        ArgumentNullException.ThrowIfNull(settings, nameof(settings));
 
         services.AddSingleton<INativeWindowInvoker>(x =>
         {
-            var settings = new NativeWindowSettings()
+            var nativeWindowSettings = new NativeWindowSettings()
             {
                 API = ContextAPI.OpenGL,
                 APIVersion = new Version(4, 6),
@@ -34,22 +35,30 @@ public static class ServiceCollectionExtensions
 
                 WindowBorder = WindowBorder.Fixed,
                 WindowState = WindowState.Normal,
-                Size = new Vector2i(1280, 720),
+
+                Size = new Vector2i(settings.ClientSize.Width, settings.ClientSize.Height),
+                Title = settings.Title,
 
                 StartVisible = true,
 
                 NumberOfSamples = 8,
             };
 
-            return new NativeWindowInvoker(settings);
+            return new NativeWindowInvoker(nativeWindowSettings);
         });
 
-        services.AddSingleton<IGLFWGraphicsContext>(x =>
+        services.AddSingleton<IGraphicsContext>(x =>
         {
             return x.GetRequiredService<INativeWindowInvoker>().Context;
         });
 
         services.AddSingleton<IWindow, OpenTKWindow>();
+
+        services.AddSingleton<IEventsProcessor>(x =>
+        {
+            return (IEventsProcessor)x.GetRequiredService<IWindow>();
+        });
+
         services.AddSingleton<IKeyboardDevice, OpenTKKeyboardDevice>();
         services.AddSingleton<IMouseDevice, OpenTKMouseDevice>();
 

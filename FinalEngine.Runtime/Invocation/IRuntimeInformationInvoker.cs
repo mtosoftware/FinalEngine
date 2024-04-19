@@ -6,7 +6,7 @@ namespace FinalEngine.Runtime.Invocation;
 
 using System.Runtime.InteropServices;
 
-public interface IRuntimeInformationInvoker
+internal interface IRuntimeInformationInvoker
 {
     bool IsOSPlatform(OSPlatform platform);
 }

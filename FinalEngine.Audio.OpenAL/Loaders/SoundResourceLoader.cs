@@ -21,7 +21,7 @@ internal sealed class SoundResourceLoader : ResourceLoaderBase<ISound>
 
     private readonly IFileSystem fileSystem;
 
-    internal SoundResourceLoader(IFileSystem fileSystem, ICASLSoundFactory factory)
+    public SoundResourceLoader(IFileSystem fileSystem, ICASLSoundFactory factory)
     {
         this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         this.factory = factory ?? throw new ArgumentNullException(nameof(factory));

@@ -24,4 +24,14 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddResourceManager(this IServiceCollection services)
+    {
+        ArgumentNullException.ThrowIfNull(services, nameof(services));
+
+        services.AddSingleton<IResourceLoaderFetcher, ResourceLoaderFetcher>();
+        services.AddSingleton<IResourceManager>(ResourceManager.Instance);
+
+        return services;
+    }
 }

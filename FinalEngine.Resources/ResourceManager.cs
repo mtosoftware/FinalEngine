@@ -16,7 +16,7 @@ using FinalEngine.Resources.Exceptions;
 /// <seealso cref="IResourceManager" />
 public sealed class ResourceManager : IResourceManager
 {
-    private static IResourceManager? instance;
+    private static ResourceManager? instance;
 
     private readonly Dictionary<string, ResourceData> pathToResourceDataMap;
 
@@ -48,7 +48,7 @@ public sealed class ResourceManager : IResourceManager
     /// <value>
     /// The instance.
     /// </value>
-    public static IResourceManager Instance
+    public static ResourceManager Instance
     {
         get
         {

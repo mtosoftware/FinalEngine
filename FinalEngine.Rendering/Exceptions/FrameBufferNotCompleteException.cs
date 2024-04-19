@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Exceptions;
 
 using System;
 
-public class FrameBufferNotCompleteException : Exception
+public sealed class FrameBufferNotCompleteException : Exception
 {
     public FrameBufferNotCompleteException()
     {
