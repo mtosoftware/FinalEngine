@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Vapor.Settings;
+namespace FinalEngine.Rendering.Settings;
 
 using System;
 using FinalEngine.Rendering.Textures;

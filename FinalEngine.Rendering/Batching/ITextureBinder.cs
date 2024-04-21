@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Batching;
 
 using FinalEngine.Rendering.Textures;
 
-public interface ITextureBinder
+internal interface ITextureBinder
 {
     bool ShouldReset { get; }
 

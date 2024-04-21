@@ -5,11 +5,10 @@
 namespace FinalEngine.Editor.Desktop.Extensions;
 
 using System;
-using FinalEngine.Editor.Common.Services.Scenes.Cameras;
+using System.IO.Abstractions;
 using FinalEngine.Editor.Desktop.Views.Scenes;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
-using FinalEngine.Rendering.Geometry;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
@@ -18,10 +17,9 @@ public static class ServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services, nameof(services));
 
+        services.AddSingleton<IFileSystem, FileSystem>();
         services.AddSingleton<IKeyboardDevice>(SceneView.KeyboardDevice);
         services.AddSingleton<IMouseDevice>(SceneView.MouseDevice);
-
-        services.AddSingleton<ICamera, EditorCamera>();
 
         return services;
     }

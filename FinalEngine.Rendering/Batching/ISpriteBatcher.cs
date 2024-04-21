@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Numerics;
 using FinalEngine.Rendering.Buffers;
 
-public interface ISpriteBatcher
+internal interface ISpriteBatcher
 {
     int CurrentIndexCount { get; }
 

@@ -9,15 +9,20 @@ using System.Collections.Generic;
 using System.Reflection;
 using FinalEngine.ECS.Attributes;
 using FinalEngine.ECS.Exceptions;
+using FinalEngine.ECS.Resolving;
 
-public class EntityWorld : IEntityWorld
+internal sealed class EntityWorld : IEntityWorld
 {
     private readonly List<Entity> entities;
 
+    private readonly IEntitySystemResolver resolver;
+
     private readonly List<EntitySystemBase> systems;
 
-    public EntityWorld()
+    public EntityWorld(IEntitySystemResolver resolver)
     {
+        this.resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
+
         this.entities = [];
         this.systems = [];
     }
@@ -59,6 +64,12 @@ public class EntityWorld : IEntityWorld
         }
 
         this.systems.Add(system);
+    }
+
+    public void AddSystem<TSystem>()
+        where TSystem : EntitySystemBase
+    {
+        this.AddSystem(this.resolver.GetEntitySystem<TSystem>());
     }
 
     public void ProcessAll(GameLoopType type)

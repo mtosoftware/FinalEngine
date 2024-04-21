@@ -16,7 +16,7 @@ using FinalEngine.Editor.ViewModels.Docking;
 using FinalEngine.Editor.ViewModels.Services;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Layout;
-using FinalEngine.Runtime;
+using FinalEngine.Resources;
 using Microsoft.Extensions.Logging;
 
 public sealed class MainViewModel : ObservableObject, IMainViewModel
@@ -45,11 +45,13 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         IApplicationContext applicationContext,
         ILayoutManager layoutManager,
         IFactory<IDockViewModel> dockViewModelFactory,
-        IRuntimeContext runtimeContext)
+        IResourceManager resourceManager,
+        IResourceLoaderFetcher fetcher)
     {
         ArgumentNullException.ThrowIfNull(applicationContext, nameof(applicationContext));
         ArgumentNullException.ThrowIfNull(dockViewModelFactory, nameof(dockViewModelFactory));
-        ArgumentNullException.ThrowIfNull(runtimeContext, nameof(runtimeContext));
+        ArgumentNullException.ThrowIfNull(resourceManager, nameof(resourceManager));
+        ArgumentNullException.ThrowIfNull(fetcher, nameof(fetcher));
 
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
@@ -58,7 +60,12 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.DockViewModel = dockViewModelFactory.Create();
         this.Title = applicationContext.Title;
 
-        runtimeContext.Initialize();
+        var loaders = fetcher.GetResourceLoaders();
+
+        foreach (var loader in loaders)
+        {
+            resourceManager.RegisterLoader(loader.GetResourceType(), loader);
+        }
     }
 
     public ICommand CreateEntityCommand

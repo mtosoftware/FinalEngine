@@ -6,6 +6,7 @@ namespace FinalEngine.Runtime.Extensions;
 
 using System;
 using System.IO.Abstractions;
+using FinalEngine.ECS.Extensions;
 using FinalEngine.Input.Extensions;
 using FinalEngine.Rendering.Extensions;
 using FinalEngine.Resources.Extensions;
@@ -27,6 +28,7 @@ public static class ServiceCollectionExtensions
             return new GameTime(120.0d);
         });
 
+        services.AddECS();
         services.AddInput();
         services.AddRendering();
         services.AddResourceManager();

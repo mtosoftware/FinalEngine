@@ -9,4 +9,6 @@ using FinalEngine.Editor.Common.Models.Scenes;
 public interface ISceneManager
 {
     IScene ActiveScene { get; }
+
+    void Initialize();
 }

@@ -5,11 +5,11 @@
 namespace FinalEngine.Rendering.Extensions;
 
 using System;
-using FinalEngine.Rendering.Geometry;
-using FinalEngine.Rendering.Loaders.Models;
+using FinalEngine.Rendering.Batching;
 using FinalEngine.Rendering.Loaders.Shaders;
 using FinalEngine.Rendering.Loaders.Textures;
 using FinalEngine.Rendering.Pipeline;
+using FinalEngine.Rendering.Systems;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources.Extensions;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,14 +20,15 @@ public static class ServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services, nameof(services));
 
-        //// TODO: Sprite drawer.
-        //// TODO: Entity Systems
-        //// TODO: Rendering Engine
+        services.AddSingleton<ISpriteBatcher, SpriteBatcher>();
+        services.AddSingleton<ITextureBinder, TextureBinder>();
+        services.AddSingleton<ISpriteDrawer, SpriteDrawer>();
 
-        services.AddResourceLoader<Model, ModelResourceLoader>();
         services.AddResourceLoader<IShader, ShaderResourceLoader>();
         services.AddResourceLoader<IShaderProgram, ShaderProgramResourceLoader>();
         services.AddResourceLoader<ITexture2D, Texture2DResourceLoader>();
+
+        services.AddSingleton<SpriteRenderEntitySystem>();
 
         return services;
     }

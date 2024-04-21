@@ -2,18 +2,19 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.TestGame;
+namespace FinalEngine.Example.Desktop;
 
 using FinalEngine.Runtime;
-using FinalEngine.Runtime.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 internal static class Program
 {
     internal static void Main()
     {
+        var startup = new Startup();
         var services = new ServiceCollection();
-        services.AddRuntime<Game>();
+
+        startup.ConfigureServices(services);
 
         services.BuildServiceProvider().GetRequiredService<IEngineDriver>().Start();
     }

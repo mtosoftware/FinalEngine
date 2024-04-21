@@ -17,7 +17,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.ViewModels.Editing.DataTypes;
-using FinalEngine.Editor.ViewModels.Exceptions.Inspectors;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 
 public sealed class EntityComponentViewModel : ObservableObject, IEntityComponentViewModel
@@ -104,7 +103,8 @@ public sealed class EntityComponentViewModel : ObservableObject, IEntityComponen
                     break;
 
                 default:
-                    throw new PropertyTypeNotFoundException(type.Name);
+                    break;
+                    //throw new PropertyTypeNotFoundException(type.Name);
             }
         }
     }

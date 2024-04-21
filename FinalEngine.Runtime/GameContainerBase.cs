@@ -5,15 +5,15 @@
 namespace FinalEngine.Runtime;
 
 using System;
+using FinalEngine.ECS;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.Platform;
 using FinalEngine.Rendering;
+using FinalEngine.Rendering.Batching;
 using FinalEngine.Resources;
 using FinalEngine.Runtime.Services;
 using Microsoft.Extensions.DependencyInjection;
-
-//// TODO: Dispose of resources and also engine driver dispose lmao
 
 public abstract class GameContainerBase : IDisposable
 {
@@ -24,6 +24,8 @@ public abstract class GameContainerBase : IDisposable
         this.Mouse = ServiceLocator.Provider.GetRequiredService<IMouse>();
         this.RenderDevice = ServiceLocator.Provider.GetRequiredService<IRenderDevice>();
         this.ResourceManager = ServiceLocator.Provider.GetRequiredService<IResourceManager>();
+        this.Drawer = ServiceLocator.Provider.GetRequiredService<ISpriteDrawer>();
+        this.World = ServiceLocator.Provider.GetRequiredService<IEntityWorld>();
 
         var fetcher = ServiceLocator.Provider.GetRequiredService<IResourceLoaderFetcher>();
         var loaders = fetcher.GetResourceLoaders();
@@ -39,17 +41,21 @@ public abstract class GameContainerBase : IDisposable
         this.Dispose(false);
     }
 
+    protected ISpriteDrawer Drawer { get; private set; }
+
     protected bool IsDisposed { get; private set; }
 
-    protected IKeyboard Keyboard { get; }
+    protected IKeyboard Keyboard { get; private set; }
 
-    protected IMouse Mouse { get; }
+    protected IMouse Mouse { get; private set; }
 
     protected IRenderDevice RenderDevice { get; }
 
-    protected IResourceManager ResourceManager { get; }
+    protected IResourceManager ResourceManager { get; private set; }
 
-    protected IWindow Window { get; }
+    protected IWindow Window { get; private set; }
+
+    protected IEntityWorld World { get; private set; }
 
     public void Dispose()
     {
@@ -72,6 +78,7 @@ public abstract class GameContainerBase : IDisposable
 
     public virtual void Render(float delta)
     {
+        this.World.ProcessAll(GameLoopType.Render);
     }
 
     public virtual void UnloadContent()
@@ -80,6 +87,7 @@ public abstract class GameContainerBase : IDisposable
 
     public virtual void Update(float delta)
     {
+        this.World.ProcessAll(GameLoopType.Update);
     }
 
     protected virtual void Dispose(bool disposing)
@@ -91,6 +99,35 @@ public abstract class GameContainerBase : IDisposable
 
         if (disposing)
         {
+            if (this.Drawer != null)
+            {
+                ((IDisposable)this.Drawer).Dispose();
+                this.Drawer = null!;
+            }
+
+            if (this.ResourceManager != null)
+            {
+                this.ResourceManager.Dispose();
+                this.ResourceManager = null!;
+            }
+
+            if (this.Mouse != null)
+            {
+                ((IDisposable)this.Mouse).Dispose();
+                this.Mouse = null!;
+            }
+
+            if (this.Keyboard != null)
+            {
+                ((IDisposable)this.Keyboard).Dispose();
+                this.Keyboard = null!;
+            }
+
+            if (this.Window != null)
+            {
+                this.Window.Dispose();
+                this.Window = null!;
+            }
         }
 
         this.IsDisposed = true;

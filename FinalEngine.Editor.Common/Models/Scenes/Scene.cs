@@ -55,6 +55,12 @@ public sealed class Scene : IScene
         this.logger.LogInformation($"Added {nameof(Entity)} to {nameof(Scene)} with ID: '{uniqueID}'.");
     }
 
+    public void AddSystem<TSystem>()
+        where TSystem : EntitySystemBase
+    {
+        this.world.AddSystem<TSystem>();
+    }
+
     public void RemoveEntity(Guid uniqueIdentifier)
     {
         this.logger.LogInformation($"Removing {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueIdentifier}'.");
@@ -74,6 +80,12 @@ public sealed class Scene : IScene
         this.entities.Remove(entity);
 
         this.logger.LogInformation($"Removed {nameof(Entity)} from {nameof(Scene)} with ID: '{uniqueIdentifier}'.");
+    }
+
+    public void RemoveSystem<TSystem>()
+        where TSystem : EntitySystemBase
+    {
+        this.world.RemoveSystem(typeof(TSystem));
     }
 
     public void Render()

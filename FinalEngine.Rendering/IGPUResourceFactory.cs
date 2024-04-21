@@ -11,16 +11,6 @@ using FinalEngine.Rendering.Textures;
 
 public interface IGPUResourceFactory
 {
-    ITextureCube CreateCubeTexture(
-        TextureCubeDescription description,
-        ITexture2D right,
-        ITexture2D left,
-        ITexture2D top,
-        ITexture2D bottom,
-        ITexture2D back,
-        ITexture2D front,
-        SizedFormat internalFormat = SizedFormat.Rgba8);
-
     IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D>? colorTargets, ITexture2D? depthTarget = null);
 
     IIndexBuffer CreateIndexBuffer<T>(BufferUsageType type, IReadOnlyCollection<T> data, int sizeInBytes)

@@ -4,7 +4,9 @@
 
 namespace FinalEngine.Runtime;
 
-public interface IEngineDriver
+using System;
+
+public interface IEngineDriver : IDisposable
 {
     void Start();
 }

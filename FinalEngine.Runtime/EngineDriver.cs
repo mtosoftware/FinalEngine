@@ -15,15 +15,17 @@ internal sealed class EngineDriver : IEngineDriver
 {
     private readonly IEventsProcessor eventsProcessor;
 
-    private readonly GameContainerBase game;
-
     private readonly IGameTime gameTime;
 
     private readonly IInputDriver inputDriver;
 
     private readonly IRenderContext renderContext;
 
-    private bool isRunning;
+    private GameContainerBase? game;
+
+    private bool isDisposed;
+
+    private IRenderPipeline? renderPipeline;
 
     public EngineDriver(IServiceProvider serviceProvider)
     {
@@ -34,27 +36,31 @@ internal sealed class EngineDriver : IEngineDriver
         this.gameTime = serviceProvider.GetRequiredService<IGameTime>();
         this.inputDriver = serviceProvider.GetRequiredService<IInputDriver>();
         this.renderContext = serviceProvider.GetRequiredService<IRenderContext>();
+        this.renderPipeline = serviceProvider.GetRequiredService<IRenderPipeline>();
         this.game = serviceProvider.GetRequiredService<GameContainerBase>();
+    }
+
+    ~EngineDriver()
+    {
+        this.Dispose(false);
+    }
+
+    public void Dispose()
+    {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     public void Start()
     {
-        if (this.isRunning)
-        {
-            return;
-        }
+        ObjectDisposedException.ThrowIf(this.isDisposed, this);
 
-        this.Run();
-    }
+        this.renderPipeline!.Initialize();
 
-    private void Run()
-    {
-        this.isRunning = true;
-
-        this.game.Initialize();
+        this.game!.Initialize();
         this.game.LoadContent();
 
-        while (this.isRunning && this.eventsProcessor.CanProcessEvents)
+        while (this.eventsProcessor.CanProcessEvents)
         {
             if (!this.gameTime.CanProcessNextFrame())
             {
@@ -73,5 +79,30 @@ internal sealed class EngineDriver : IEngineDriver
 
         this.game.UnloadContent();
         this.game.Dispose();
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (this.isDisposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            if (this.game != null)
+            {
+                this.game.Dispose();
+                this.game = null;
+            }
+
+            if (this.renderPipeline != null)
+            {
+                this.renderPipeline.Dispose();
+                this.renderPipeline = null;
+            }
+        }
+
+        this.isDisposed = true;
     }
 }

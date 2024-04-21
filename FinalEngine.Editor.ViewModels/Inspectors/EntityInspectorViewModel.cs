@@ -15,6 +15,7 @@ using FinalEngine.ECS;
 using FinalEngine.ECS.Components.Core;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using FinalEngine.Editor.ViewModels.Services.Entities;
+using FinalEngine.Rendering.Components;
 
 public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspectorViewModel
 {
@@ -64,6 +65,24 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
         this.IntializeComponentTypes();
     }
 
+    private void InitializeComponentTypesFromAssembly<T>()
+        where T : IEntityComponent
+    {
+        var assembly = Assembly.GetAssembly(typeof(T)) ?? throw new TypeAccessException("Failed to initialize core engine components.");
+
+        var categoryToTypeMap = this.typeResolver.GetCategorizedTypes(assembly);
+
+        foreach (var kvp in categoryToTypeMap)
+        {
+            var typeViewModels = kvp.Value.Select(x =>
+            {
+                return new EntityComponentTypeViewModel(this.messenger, this.entity, x);
+            });
+
+            this.categorizedComponentTypes.Add(new EntityComponentCategoryViewModel(kvp.Key, typeViewModels));
+        }
+    }
+
     private void InitializeEntityComponents()
     {
         this.componentViewModels.Clear();
@@ -78,18 +97,7 @@ public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspecto
     {
         this.categorizedComponentTypes.Clear();
 
-        var assembly = Assembly.GetAssembly(typeof(TagComponent)) ?? throw new TypeAccessException("Failed to initialize core engine components.");
-
-        var categoryToTypeMap = this.typeResolver.GetCategorizedTypes(assembly);
-
-        foreach (var kvp in categoryToTypeMap)
-        {
-            var typeViewModels = kvp.Value.Select(x =>
-            {
-                return new EntityComponentTypeViewModel(this.messenger, this.entity, x);
-            });
-
-            this.categorizedComponentTypes.Add(new EntityComponentCategoryViewModel(kvp.Key, typeViewModels));
-        }
+        this.InitializeComponentTypesFromAssembly<TagComponent>();
+        this.InitializeComponentTypesFromAssembly<TransformComponent>();
     }
 }

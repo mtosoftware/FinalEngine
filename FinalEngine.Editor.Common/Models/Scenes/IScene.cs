@@ -14,7 +14,13 @@ public interface IScene
 
     void AddEntity(string tag, Guid uniqueID);
 
+    void AddSystem<TSystem>()
+        where TSystem : EntitySystemBase;
+
     void RemoveEntity(Guid uniqueIdentifier);
+
+    void RemoveSystem<TSystem>()
+        where TSystem : EntitySystemBase;
 
     void Render();
 }

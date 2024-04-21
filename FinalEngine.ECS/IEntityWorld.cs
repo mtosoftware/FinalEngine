@@ -10,6 +10,9 @@ public interface IEntityWorld
 {
     void AddEntity(Entity entity);
 
+    void AddSystem<TSystem>()
+            where TSystem : EntitySystemBase;
+
     void AddSystem(EntitySystemBase system);
 
     void ProcessAll(GameLoopType type);

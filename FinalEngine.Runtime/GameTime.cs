@@ -7,7 +7,7 @@ namespace FinalEngine.Runtime;
 using System;
 using FinalEngine.Runtime.Invocation;
 
-internal sealed class GameTime : IGameTime
+public sealed class GameTime : IGameTime
 {
     private const double OneSecondAsMilliSeconds = 1000.0d;
 
@@ -22,7 +22,7 @@ internal sealed class GameTime : IGameTime
     {
     }
 
-    public GameTime(IStopwatchInvoker watch, double frameCap)
+    internal GameTime(IStopwatchInvoker watch, double frameCap)
     {
         this.watch = watch ?? throw new ArgumentNullException(nameof(watch));
 
@@ -38,7 +38,7 @@ internal sealed class GameTime : IGameTime
 
     public static float FrameRate { get; private set; }
 
-    public bool CanProcessNextFrame()
+    bool IGameTime.CanProcessNextFrame()
     {
         if (!this.watch.IsRunning)
         {

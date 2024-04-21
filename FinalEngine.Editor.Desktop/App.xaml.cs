@@ -7,7 +7,8 @@ namespace FinalEngine.Editor.Desktop;
 using System.Diagnostics;
 using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
-using FinalEngine.ECS;
+using FinalEngine.Audio.OpenAL.Extensions;
+using FinalEngine.ECS.Extensions;
 using FinalEngine.Editor.Common.Extensions;
 using FinalEngine.Editor.Common.Models.Scenes;
 using FinalEngine.Editor.Common.Services.Application;
@@ -31,10 +32,10 @@ using FinalEngine.Editor.ViewModels.Services.Actions;
 using FinalEngine.Editor.ViewModels.Services.Entities;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Layout;
-using FinalEngine.Rendering.Geometry;
-using FinalEngine.Rendering.Renderers;
-using FinalEngine.Rendering.Systems.Queues;
-using FinalEngine.Runtime.Extensions;
+using FinalEngine.Input.Extensions;
+using FinalEngine.Rendering.Extensions;
+using FinalEngine.Rendering.OpenGL.Extensions;
+using FinalEngine.Resources.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -81,23 +82,18 @@ public partial class App : Application
 
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
-        services.AddTransient<IEntityWorld>(x =>
-        {
-            var world = new EntityWorld();
-
-            world.AddSystem(new RenderModelQueueEntitySystem(x.GetRequiredService<IRenderQueue<RenderModel>>()));
-
-            return world;
-        });
-
-        services.AddRuntime();
+        services.AddECS();
+        services.AddOpenGL();
+        services.AddOpenAL();
+        services.AddInput();
+        services.AddRendering();
+        services.AddResourceManager();
         services.AddEditorPlatform();
 
         services.AddTransient<IScene, Scene>();
 
         services.AddSingleton<IApplicationContext, ApplicationContext>();
         services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
-        services.AddSingleton<ISceneViewRenderer, SceneViewRenderer>();
         services.AddSingleton<ISceneManager, SceneManager>();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();

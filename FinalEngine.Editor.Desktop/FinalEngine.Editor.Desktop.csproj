@@ -45,9 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Audio.OpenAL\FinalEngine.Audio.OpenAL.csproj" />
     <ProjectReference Include="..\FinalEngine.Editor.ViewModels\FinalEngine.Editor.ViewModels.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering.OpenGL\FinalEngine.Rendering.OpenGL.csproj" />
-    <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
   </ItemGroup>
 
   <ItemGroup>

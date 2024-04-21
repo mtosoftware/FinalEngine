@@ -9,7 +9,5 @@ using FinalEngine.Editor.ViewModels.Docking.Panes;
 
 public interface ISceneViewPaneViewModel : IPaneViewModel
 {
-    ICommand AdjustRenderSizeCommand { get; }
-
     ICommand RenderCommand { get; }
 }

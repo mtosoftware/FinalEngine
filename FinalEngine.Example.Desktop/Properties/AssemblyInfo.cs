@@ -8,6 +8,6 @@ using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("FinalEngine.TestGame")]
-[assembly: AssemblyDescription("An example game made with Final Engine.")]
-[assembly: Guid("47DD5D00-DF7E-400C-A05D-80FFA7A651FA")]
+[assembly: AssemblyTitle("FinalEngine.Example.Desktop")]
+[assembly: AssemblyDescription("An example game that can run on the desktop platform using Final Engine.")]
+[assembly: Guid("20363ADC-39BE-4927-AACB-9D118AB82B94")]

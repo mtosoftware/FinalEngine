@@ -11,7 +11,9 @@ using FinalEngine.Rendering.Textures;
 
 public interface ISpriteDrawer
 {
-    Matrix4x4 Projection { get; set; }
+    int ProjectionHeight { get; set; }
+
+    int ProjectionWidth { get; set; }
 
     Matrix4x4 Transform { get; set; }
 

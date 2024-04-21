@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Runtime;
 
-public interface IGameTime
+internal interface IGameTime
 {
     bool CanProcessNextFrame();
 }

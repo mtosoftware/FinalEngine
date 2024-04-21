@@ -10,8 +10,8 @@ using System.IO;
 using System.IO.Abstractions;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Loaders.Invocation;
+using FinalEngine.Rendering.Settings;
 using FinalEngine.Rendering.Textures;
-using FinalEngine.Rendering.Vapor.Settings;
 using FinalEngine.Resources;
 using SixLabors.ImageSharp.PixelFormats;
 

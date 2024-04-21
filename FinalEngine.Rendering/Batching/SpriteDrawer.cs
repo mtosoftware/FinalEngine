@@ -21,10 +21,6 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
 
     private readonly IInputLayout inputLayout;
 
-    private readonly int projectionHeight;
-
-    private readonly int projectionWidth;
-
     private readonly IRenderDevice renderDevice;
 
     private IIndexBuffer? indexBuffer;
@@ -35,7 +31,7 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
 
     private IVertexBuffer? vertexBuffer;
 
-    public SpriteDrawer(IRenderDevice renderDevice, ISpriteBatcher batcher, ITextureBinder binder, int projectionWidth, int projectionHeight)
+    public SpriteDrawer(IRenderDevice renderDevice, ISpriteBatcher batcher, ITextureBinder binder)
     {
         this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.batcher = batcher ?? throw new ArgumentNullException(nameof(batcher));
@@ -71,11 +67,9 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
             indices,
             indices.Length * sizeof(int));
 
-        this.Projection = Matrix4x4.CreateOrthographicOffCenter(0, projectionWidth, projectionHeight, 0, -1, 1);
+        this.ProjectionWidth = this.renderDevice.Rasterizer.GetViewport().Width;
+        this.ProjectionHeight = this.renderDevice.Rasterizer.GetViewport().Height;
         this.Transform = Matrix4x4.CreateTranslation(Vector3.Zero);
-
-        this.projectionWidth = projectionWidth;
-        this.projectionHeight = projectionHeight;
     }
 
     ~SpriteDrawer()
@@ -83,7 +77,14 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
         this.Dispose(false);
     }
 
-    public Matrix4x4 Projection { get; set; }
+    public Matrix4x4 Projection
+    {
+        get { return Matrix4x4.CreateOrthographicOffCenter(0, this.ProjectionWidth, this.ProjectionHeight, 0, -1, 1); }
+    }
+
+    public int ProjectionHeight { get; set; }
+
+    public int ProjectionWidth { get; set; }
 
     public Matrix4x4 Transform { get; set; }
 
@@ -101,7 +102,7 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
 
         this.renderDevice.Pipeline.SetUniform("u_projection", this.Projection);
         this.renderDevice.Pipeline.SetUniform("u_transform", this.Transform);
-        this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, this.projectionWidth, this.projectionHeight));
+        this.renderDevice.Rasterizer.SetViewport(new Rectangle(0, 0, this.ProjectionWidth, this.ProjectionHeight));
 
         this.renderDevice.OutputMerger.SetBlendState(
             new BlendStateDescription()

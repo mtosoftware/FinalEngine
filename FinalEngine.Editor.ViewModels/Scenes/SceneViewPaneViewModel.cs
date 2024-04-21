@@ -10,38 +10,29 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
-using FinalEngine.Input.Keyboards;
-using FinalEngine.Input.Mouses;
-using FinalEngine.Rendering.Geometry;
+using FinalEngine.Rendering;
+using FinalEngine.Rendering.Systems;
 using Microsoft.Extensions.Logging;
 
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
-    private readonly ICamera camera;
+    private static bool isInitialized;
 
-    private readonly IKeyboard keyboard;
+    private readonly IRenderDevice renderDevice;
 
-    private readonly IMouse mouse;
-
-    private readonly ISceneViewRenderer viewRenderer;
-
-    private IRelayCommand<Size>? adjustRenderSizeCommand;
+    private readonly ISceneManager sceneManager;
 
     private ICommand? renderCommand;
 
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
-        ISceneViewRenderer viewRenderer,
-        IKeyboard keyboard,
-        IMouse mouse,
-        ICamera camera)
+        IRenderDevice renderDevice,
+        ISceneManager sceneManager)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
-        this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
-        this.mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
-        this.camera = camera ?? throw new ArgumentNullException(nameof(camera));
-        this.viewRenderer = viewRenderer ?? throw new ArgumentNullException(nameof(viewRenderer));
+        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
+        this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
 
         this.Title = "Scene View";
         this.ContentID = "SceneView";
@@ -49,27 +40,21 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
         logger.LogInformation($"Initializing {this.Title}...");
     }
 
-    public ICommand AdjustRenderSizeCommand
-    {
-        get { return this.adjustRenderSizeCommand ??= new RelayCommand<Size>(this.AdjustRenderSize); }
-    }
-
     public ICommand RenderCommand
     {
         get { return this.renderCommand ??= new RelayCommand(this.Render); }
     }
 
-    private void AdjustRenderSize(Size size)
-    {
-        this.viewRenderer.AdjustView(size.Width, size.Height);
-    }
-
     private void Render()
     {
-        this.camera.Update();
-        this.keyboard.Update();
-        this.mouse.Update();
+        if (!isInitialized)
+        {
+            this.sceneManager.Initialize();
+            this.sceneManager.ActiveScene.AddSystem<SpriteRenderEntitySystem>();
+            isInitialized = true;
+        }
 
-        this.viewRenderer.Render();
+        this.renderDevice.Clear(Color.Black);
+        this.sceneManager.ActiveScene.Render();
     }
 }
