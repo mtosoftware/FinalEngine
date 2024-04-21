@@ -12,21 +12,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddRuntime<TGame>(this IServiceCollection services, Action<GameSettings> configure)
+    public static IServiceCollection AddRuntime<TGame>(this IServiceCollection services)
         where TGame : GameContainerBase
     {
         ArgumentNullException.ThrowIfNull(services, nameof(services));
-        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
-        var settings = new GameSettings();
-        configure(settings);
-
-        services.AddCoreRuntime<TGame>(settings);
+        services.AddCoreRuntime<TGame>();
 
         services.AddOpenAL();
         services.AddOpenGL();
 
-        services.AddPlatform(settings.PlatformSettings);
+        services.AddPlatform();
 
         return services;
     }

@@ -13,11 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCoreRuntime<TGame>(this IServiceCollection services, GameSettings settings)
+    public static IServiceCollection AddCoreRuntime<TGame>(this IServiceCollection services)
         where TGame : GameContainerBase
     {
         ArgumentNullException.ThrowIfNull(services, nameof(services));
-        ArgumentNullException.ThrowIfNull(settings, nameof(settings));
 
         services.AddSingleton<IFileSystem, FileSystem>();
         services.AddSingleton<IEngineDriver, EngineDriver>();
@@ -25,7 +24,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<IGameTime>(x =>
         {
-            return new GameTime(settings.FrameCap);
+            return new GameTime(120.0d);
         });
 
         services.AddInput();

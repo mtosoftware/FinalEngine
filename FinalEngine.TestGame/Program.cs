@@ -5,16 +5,15 @@
 namespace FinalEngine.TestGame;
 
 using FinalEngine.Runtime;
+using FinalEngine.Runtime.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 internal static class Program
 {
     internal static void Main()
     {
-        var startup = new Startup();
         var services = new ServiceCollection();
-
-        startup.ConfigureServices(services);
+        services.AddRuntime<Game>();
 
         services.BuildServiceProvider().GetRequiredService<IEngineDriver>().Start();
     }

@@ -8,6 +8,8 @@ using System;
 using FinalEngine.Input;
 using FinalEngine.Platform;
 using FinalEngine.Rendering;
+using FinalEngine.Runtime.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class EngineDriver : IEngineDriver
 {
@@ -23,18 +25,16 @@ internal sealed class EngineDriver : IEngineDriver
 
     private bool isRunning;
 
-    public EngineDriver(
-        GameContainerBase game,
-        IEventsProcessor eventsProcessor,
-        IGameTime gameTime,
-        IInputDriver inputDriver,
-        IRenderContext renderContext)
+    public EngineDriver(IServiceProvider serviceProvider)
     {
-        this.game = game ?? throw new ArgumentNullException(nameof(game));
-        this.eventsProcessor = eventsProcessor ?? throw new ArgumentNullException(nameof(eventsProcessor));
-        this.gameTime = gameTime ?? throw new ArgumentNullException(nameof(gameTime));
-        this.inputDriver = inputDriver ?? throw new ArgumentNullException(nameof(inputDriver));
-        this.renderContext = renderContext ?? throw new ArgumentNullException(nameof(renderContext));
+        ArgumentNullException.ThrowIfNull(serviceProvider, nameof(serviceProvider));
+        ServiceLocator.SetServiceProvider(serviceProvider);
+
+        this.eventsProcessor = serviceProvider.GetRequiredService<IEventsProcessor>();
+        this.gameTime = serviceProvider.GetRequiredService<IGameTime>();
+        this.inputDriver = serviceProvider.GetRequiredService<IInputDriver>();
+        this.renderContext = serviceProvider.GetRequiredService<IRenderContext>();
+        this.game = serviceProvider.GetRequiredService<GameContainerBase>();
     }
 
     public void Start()

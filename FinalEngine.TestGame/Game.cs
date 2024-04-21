@@ -6,23 +6,13 @@ namespace FinalEngine.TestGame;
 
 using System.Drawing;
 using FinalEngine.Input.Keyboards;
-using FinalEngine.Input.Mouses;
-using FinalEngine.Platform;
-using FinalEngine.Rendering;
-using FinalEngine.Resources;
 using FinalEngine.Runtime;
 
 internal sealed class Game : GameContainerBase
 {
-    public Game(
-        IWindow window,
-        IKeyboard keyboard,
-        IMouse mouse,
-        IRenderDevice renderDevice,
-        IResourceManager resourceManager,
-        IResourceLoaderFetcher fetcher)
-        : base(window, keyboard, mouse, renderDevice, resourceManager, fetcher)
+    public Game()
     {
+        this.Window.Title = "My new game";
     }
 
     public override void Render(float delta)

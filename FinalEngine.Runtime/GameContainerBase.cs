@@ -10,25 +10,22 @@ using FinalEngine.Input.Mouses;
 using FinalEngine.Platform;
 using FinalEngine.Rendering;
 using FinalEngine.Resources;
+using FinalEngine.Runtime.Services;
+using Microsoft.Extensions.DependencyInjection;
+
+//// TODO: Dispose of resources and also engine driver dispose lmao
 
 public abstract class GameContainerBase : IDisposable
 {
-    protected GameContainerBase(
-        IWindow window,
-        IKeyboard keyboard,
-        IMouse mouse,
-        IRenderDevice renderDevice,
-        IResourceManager resourceManager,
-        IResourceLoaderFetcher fetcher)
+    protected GameContainerBase()
     {
-        ArgumentNullException.ThrowIfNull(fetcher, nameof(fetcher));
+        this.Window = ServiceLocator.Provider.GetRequiredService<IWindow>();
+        this.Keyboard = ServiceLocator.Provider.GetRequiredService<IKeyboard>();
+        this.Mouse = ServiceLocator.Provider.GetRequiredService<IMouse>();
+        this.RenderDevice = ServiceLocator.Provider.GetRequiredService<IRenderDevice>();
+        this.ResourceManager = ServiceLocator.Provider.GetRequiredService<IResourceManager>();
 
-        this.Window = window ?? throw new ArgumentNullException(nameof(window));
-        this.Keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
-        this.Mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
-        this.RenderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
-        this.ResourceManager = resourceManager ?? throw new ArgumentNullException(nameof(resourceManager));
-
+        var fetcher = ServiceLocator.Provider.GetRequiredService<IResourceLoaderFetcher>();
         var loaders = fetcher.GetResourceLoaders();
 
         foreach (var loader in loaders)

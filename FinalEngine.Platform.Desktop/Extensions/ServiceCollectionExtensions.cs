@@ -16,10 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPlatform(this IServiceCollection services, PlatformSettings settings)
+    public static IServiceCollection AddPlatform(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services, nameof(services));
-        ArgumentNullException.ThrowIfNull(settings, nameof(settings));
 
         services.AddSingleton<INativeWindowInvoker>(x =>
         {
@@ -36,8 +35,8 @@ public static class ServiceCollectionExtensions
                 WindowBorder = WindowBorder.Fixed,
                 WindowState = WindowState.Normal,
 
-                Size = new Vector2i(settings.ClientSize.Width, settings.ClientSize.Height),
-                Title = settings.Title,
+                Size = new Vector2i(1280, 720),
+                Title = "Game",
 
                 StartVisible = true,
 
